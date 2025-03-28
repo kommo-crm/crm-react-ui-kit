@@ -1,0 +1,51 @@
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  margin: 0;
+  font: inherit;
+  color: var(--crm-ui-kit-filter-tabs-tab-text-color);
+  text-align: inherit;
+  cursor: pointer;
+  outline: none;
+
+  z-index: var(--crm-ui-kit-filter-tabs-tab-z-index);
+  background-color: var(--crm-ui-kit-filter-tabs-tab-background-color);
+  border-width: var(--crm-ui-kit-filter-tabs-tab-border-width);
+  border-style: var(--crm-ui-kit-filter-tabs-tab-border-style);
+  border-color: transparent;
+  border-radius: var(--crm-ui-kit-filter-tabs-tab-border-radius);
+  user-select: none;
+
+  & > * {
+    color: inherit;
+    transform: translateY(1px);
+  }
+
+  &:hover {
+    background-color: var(--crm-ui-kit-filter-tabs-tab-hover-background-color);
+    color: var(--crm-ui-kit-filter-tabs-tab-action-color);
+  }
+
+  &:focus-visible {
+    outline-color: var(--crm-ui-kit-filter-tabs-tab-focus-visible-outline-color);
+    outline-width: var(--crm-ui-kit-filter-tabs-tab-focus-visible-outline-width);
+    outline-style: var(--crm-ui-kit-filter-tabs-tab-focus-visible-outline-style);
+    outline-offset: var(--crm-ui-kit-filter-tabs-tab-focus-visible-outline-offset);
+  }
+
+  &:disabled {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+.selected {
+  color: var(--crm-ui-kit-filter-tabs-tab-action-color);
+  border-color: var(--crm-ui-kit-filter-tabs-tab-action-color);
+}

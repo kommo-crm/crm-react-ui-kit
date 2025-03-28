@@ -1,0 +1,27 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as CheckboxGroupStories from './CheckboxGroup.stories.tsx';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { CheckboxGroupTheme, CheckboxGroupItemRootTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/CheckboxGroup/Themes" of={CheckboxGroupStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={CheckboxGroupStories.Default} />
+
+## CheckboxGroupTheme
+
+```jsx
+import { CheckboxGroupTheme } from '@kommo-crm/crm-react-ui-kit/CheckboxGroup';
+```
+
+<ThemeVisualization theme={CheckboxGroupTheme} />
+
+## CheckboxGroupItemRootTheme
+
+```jsx
+import { CheckboxGroupItemRootTheme } from '@kommo-crm/crm-react-ui-kit/CheckboxGroup';
+```
+
+<ThemeVisualization theme={CheckboxGroupItemRootTheme} />

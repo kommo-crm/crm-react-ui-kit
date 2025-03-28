@@ -1,0 +1,35 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as FilterTabsStories from './FilterTabs.stories.tsx';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { FilterTabsTheme, TabPrimaryTheme, FilterTabsItemRootTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/FilterTabs/Themes" of={FilterTabsStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={FilterTabsStories.Default} />
+
+## FilterTabsTheme
+
+```jsx
+import { FilterTabsTheme } from '@kommo-crm/crm-react-ui-kit/FilterTabs';
+```
+
+<ThemeVisualization theme={FilterTabsTheme} />
+
+## FilterTabsItemRootTheme
+
+```jsx
+import { FilterTabsItemRootTheme } from '@kommo-crm/crm-react-ui-kit/FilterTabs';
+```
+
+<ThemeVisualization theme={FilterTabsItemRootTheme} />
+
+## TabPrimaryTheme
+
+```jsx
+import { TabPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/FilterTabs';
+```
+
+<ThemeVisualization theme={TabPrimaryTheme} />
