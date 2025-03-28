@@ -2,6 +2,8 @@
 
 > Ready-to-use React components that implement the design of [Kommo](https://www.kommo.com/)
 
+[Storybook](https://storybook.kommo.com) preview
+
 ## Installation
 
 | npm                                 | yarn                                   | pnpm                                   |
