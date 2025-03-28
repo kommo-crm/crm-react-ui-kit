@@ -25,7 +25,6 @@ yarn install && yarn build
 | `yarn lint`            | Lints your code                    |
 | `yarn storybook`       | Start Storybook on port 6006       |
 | `yarn build-storybook` | Build Storybook for static hosting |
-| `yarn test-storybook`  | Run Storybook tests                |
 
 ## Testing
 

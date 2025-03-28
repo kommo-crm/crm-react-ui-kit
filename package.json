@@ -126,7 +126,6 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook",
     "docker:clear-playwright-cache": "./scripts/generate_env.docker.sh && docker compose --env-file=./.env.docker rm -f && docker volume rm crm-react-ui-kit_playwright_cache",
     "test": "jest --maxWorkers 2",
     "test:e2e": "./scripts/generate_env.docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
