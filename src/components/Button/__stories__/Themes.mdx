@@ -1,0 +1,46 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as ButtonStories from './Button.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import {
+  ButtonPrimaryTheme,
+  ButtonNeutralTheme,
+  ButtonSecondaryTheme,
+} from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Button/Themes" of={ButtonStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## ButtonNeutralTheme
+
+```jsx
+import { ButtonNeutralTheme } from '@kommo-crm/crm-react-ui-kit/Button';
+```
+
+<ThemeVisualization
+  theme={ButtonNeutralTheme}
+  of={ButtonStories.ButtonNeutral}
+/>
+
+## ButtonPrimaryTheme
+
+```jsx
+import { ButtonPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Button';
+```
+
+<ThemeVisualization
+  theme={ButtonPrimaryTheme}
+  of={ButtonStories.ButtonPrimary}
+/>
+
+## ButtonSecondaryTheme
+
+```jsx
+import { ButtonSecondaryTheme } from '@kommo-crm/crm-react-ui-kit/Button';
+```
+
+<ThemeVisualization
+  theme={ButtonSecondaryTheme}
+  of={ButtonStories.ButtonSecondary}
+/>

@@ -1,0 +1,9 @@
+.item_root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disabled {
+  opacity: var(--crm-ui-kit-radio-group-item-root-disabled-opacity);
+}

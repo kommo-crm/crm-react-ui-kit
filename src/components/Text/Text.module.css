@@ -1,0 +1,46 @@
+.text {
+  display: inline-block;
+  font-family: var(--crm-ui-kit-text-font), Arial, sans-serif;
+  color: var(--crm-ui-kit-text-color);
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.line_clamp {
+  display: -webkit-box;
+  overflow: hidden;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+
+  white-space: wrap;
+  word-break: break-word;
+}
+
+.s {
+  font-size: var(--crm-ui-kit-text-size-s-font-size);
+  line-height: var(--crm-ui-kit-text-size-s-line-height);
+}
+
+.m {
+  font-size: var(--crm-ui-kit-text-size-m-font-size);
+  line-height: var(--crm-ui-kit-text-size-m-line-height);
+}
+
+.ms {
+  font-size: var(--crm-ui-kit-text-size-ms-font-size);
+  line-height: var(--crm-ui-kit-text-size-ms-line-height);
+}
+
+.l {
+  font-size: var(--crm-ui-kit-text-size-l-font-size);
+  line-height: var(--crm-ui-kit-text-size-l-line-height);
+}
+
+.xl {
+  font-size: var(--crm-ui-kit-text-size-xl-font-size);
+  line-height: var(--crm-ui-kit-text-size-xl-line-height);
+}

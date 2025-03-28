@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist/",
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "paths": {
+      "src/*": ["./src/*"],
+      "@storybook-utils/*": ["./storybook/*"],
+      "@crm-react-ui-kit-e2e/test": ["./src/tests/e2e/index.playwright"],
+      "@i18n": [".storybook/i18n.ts"]
+    }
+  },
+  "include": ["./**/*.tsx", "./**/*.ts", ".storybook/**/*"],
+  "exclude": ["node_modules"]
+}

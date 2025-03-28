@@ -1,0 +1,52 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as TextStories from './Text.stories';
+import {
+  TextPrimaryTheme,
+  TextSecondaryLightTheme,
+  TextSecondaryDarkTheme,
+  TextErrorTheme,
+} from '..';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { i18n } from '@i18n';
+
+<Meta title="Typography/Themes" of={TextStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## TextPrimaryTheme
+
+```jsx
+import { TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
+```
+
+<ThemeVisualization theme={TextPrimaryTheme} of={TextStories.TextPrimary} />
+
+## TextSecondaryLightTheme
+
+```jsx
+import { TextSecondaryLightTheme } from '@kommo-crm/crm-react-ui-kit/Text';
+```
+
+<ThemeVisualization
+  theme={TextSecondaryLightTheme}
+  of={TextStories.TextSecondaryLight}
+/>
+
+## TextSecondaryDarkTheme
+
+```jsx
+import { TextSecondaryDarkTheme } from '@kommo-crm/crm-react-ui-kit/Text';
+```
+
+<ThemeVisualization
+  theme={TextSecondaryDarkTheme}
+  of={TextStories.TextSecondaryDark}
+/>
+
+## TextErrorTheme
+
+```jsx
+import { TextErrorTheme } from '@kommo-crm/crm-react-ui-kit/Text';
+```
+
+<ThemeVisualization theme={TextErrorTheme} of={TextStories.TextError} />

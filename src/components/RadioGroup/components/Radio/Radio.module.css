@@ -1,0 +1,49 @@
+.wrapper {
+  width: var(--crm-ui-kit-radio-size);
+  height: var(--crm-ui-kit-radio-size);
+}
+
+.radio {
+  --crm-ui-kit-radio-box-size: calc(
+    var(--crm-ui-kit-radio-size) - (var(--crm-ui-kit-radio-border-width) * 2)
+  );
+
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: var(--crm-ui-kit-radio-z-index);
+  width: var(--crm-ui-kit-radio-box-size);
+  height: var(--crm-ui-kit-radio-box-size);
+  background-color: var(--crm-ui-kit-radio-background-color);
+  border-width: var(--crm-ui-kit-radio-border-width);
+  border-style: var(--crm-ui-kit-radio-border-style);
+  border-color: var(--crm-ui-kit-radio-border-color);
+  border-radius: var(--crm-ui-kit-radio-border-radius);
+  user-select: none;
+}
+
+.input {
+  &:checked ~ .radio:after {
+    content: '';
+    width: var(--crm-ui-kit-radio-checked-circle-size);
+    height: var(--crm-ui-kit-radio-checked-circle-size);
+    border-radius: 50%;
+    background-color: var(--crm-ui-kit-radio-checked-circle-color);
+  }
+
+  &:focus-visible ~ .radio {
+    outline-color: var(--crm-ui-kit-radio-focus-visible-outline-color);
+    outline-width: var(--crm-ui-kit-radio-focus-visible-outline-width);
+    outline-style: var(--crm-ui-kit-radio-focus-visible-outline-style);
+    border-radius: 50%;
+    outline-offset: var(--crm-ui-kit-radio-focus-visible-outline-offset);
+  }
+
+  &:disabled ~ .radio {
+    cursor: default;
+    background: transparent;
+  }
+}

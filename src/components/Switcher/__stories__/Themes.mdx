@@ -1,0 +1,17 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as SwitcherStories from './Switcher.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { SwitcherPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Switcher/Themes" of={SwitcherStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## SwitcherPrimaryTheme
+
+```jsx
+import { SwitcherPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Switcher';
+```
+
+<ThemeVisualization theme={SwitcherPrimaryTheme} of={SwitcherStories.Default} />

@@ -1,0 +1,17 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as SpinnerStories from './Spinner.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { SpinnerPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Spinner/Themes" of={SpinnerStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## SpinnerPrimaryTheme
+
+```jsx
+import { SpinnerPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Spinner';
+```
+
+<ThemeVisualization theme={SpinnerPrimaryTheme} of={SpinnerStories.Default} />

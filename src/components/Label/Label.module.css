@@ -1,0 +1,45 @@
+.wrapper:not(:last-child) {
+  margin-bottom: var(--crm-ui-kit-label-group-margin-bottom);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.top .text_container {
+  margin-bottom: var(--crm-ui-kit-label-spacing);
+}
+
+.centered {
+  align-items: center;
+}
+
+.left,
+.right {
+  display: inline-flex;
+}
+
+.left {
+  flex-direction: row;
+
+  & .text_container {
+    margin-right: var(--crm-ui-kit-label-spacing);
+  }
+}
+
+.right {
+  flex-direction: row-reverse;
+
+  & .text_container {
+    margin-left: var(--crm-ui-kit-label-spacing);
+  }
+}
+
+.text_container {
+  width: var(--crm-ui-kit-label-text-width);
+}
+
+.text_description {
+  margin-top: var(--crm-ui-kit-label-description-spacing);
+}

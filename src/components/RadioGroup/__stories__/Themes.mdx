@@ -1,0 +1,39 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as RadioGroupStories from './RadioGroup.stories.tsx';
+import { ThemeVisualization } from '@storybook-utils/components';
+import {
+  RadioGroupTheme,
+  RadioGroupItemRootTheme,
+  RadioPrimaryTheme,
+} from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/RadioGroup/Themes" of={RadioGroupStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={RadioGroupStories.Default} />
+
+## RadioGroupPrimaryTheme
+
+```jsx
+import { RadioGroupTheme } from '@kommo-crm/crm-react-ui-kit/RadioGroup';
+```
+
+<ThemeVisualization theme={RadioGroupTheme} />
+
+## RadioGroupItemRootTheme
+
+```jsx
+import { RadioGroupItemRootTheme } from '@kommo-crm/crm-react-ui-kit/RadioGroup';
+```
+
+<ThemeVisualization theme={RadioGroupItemRootTheme} />
+
+## RadioPrimaryTheme
+
+```jsx
+import { RadioPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/RadioGroup';
+```
+
+<ThemeVisualization theme={RadioPrimaryTheme} />

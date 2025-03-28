@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src"
+  },
+  "exclude": [
+    ".storybook/**/*",
+    "node_modules",
+    "vite.config.ts",
+    "dist",
+    "playwright-ct.config.ts",
+    "jest.config.ts",
+    "playwright",
+    "storybook",
+    "locales",
+    "src/**/*.e2e-playground.tsx",
+    "src/**/*.test.tsx",
+    "src/**/*.stories.tsx",
+    "src/tests/**",
+    "stories/source/**"
+  ]
+}

@@ -1,0 +1,31 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as TextAreaStories from './TextArea.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { TextareaLightTheme, TextareaDarkTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/TextArea/Themes" of={TextAreaStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## TextareaLightTheme
+
+```jsx
+import { TextareaLightTheme } from '@kommo-crm/crm-react-ui-kit/TextArea';
+```
+
+<ThemeVisualization
+  theme={TextareaLightTheme}
+  of={TextAreaStories.TextareaLight}
+/>
+
+## TextareaDarkTheme
+
+```jsx
+import { TextareaDarkTheme } from '@kommo-crm/crm-react-ui-kit/TextArea';
+```
+
+<ThemeVisualization
+  theme={TextareaDarkTheme}
+  of={TextAreaStories.TextareaDark}
+/>

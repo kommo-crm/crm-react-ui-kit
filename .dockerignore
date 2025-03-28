@@ -1,0 +1,5 @@
+node_modules
+.swc
+.cache
+__diff_output
+playwright

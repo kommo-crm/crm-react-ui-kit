@@ -1,0 +1,16 @@
+.link {
+  color: var(--crm-ui-kit-link-color);
+  text-decoration: var(--crm-ui-kit-link-text-decoration);
+
+  &:hover {
+    color: var(--crm-ui-kit-link-hover-color);
+  }
+
+  &:focus-visible {
+    outline-color: var(--crm-ui-kit-link-focus-visible-outline-color);
+    outline-width: var(--crm-ui-kit-link-focus-visible-outline-width);
+    outline-style: var(--crm-ui-kit-link-focus-visible-outline-style);
+    border-radius: var(--crm-ui-kit-link-focus-visible-border-radius);
+    outline-offset: var(--crm-ui-kit-link-focus-visible-outline-offset);
+  }
+}

@@ -1,0 +1,47 @@
+import { Meta, Title } from '@storybook/blocks';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta title="Getting Started/Getting Started" />
+
+<Title>{i18n.t('Native Kommo controls')}</Title>
+
+<ReactMarkdown>
+  {i18n.t(
+    'This is a sandbox with descriptions of **components** that can be used in widgets within the system.'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    'The components are implemented for `ReactJS` and are connected as an `npm` package.'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    'We also support a [**Legacy Storybook**](https://developers.kommo.com/docs/native-control) with a smaller set of components used in the old stack.'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {'## ' + i18n.t('Install the package using one of the following methods')}
+</ReactMarkdown>
+
+**npm:**
+
+```sh
+npm i @kommo-crm/crm-react-ui-kit
+```
+
+**yarn:**
+
+```sh
+yarn add @kommo-crm/crm-react-ui-kit
+```
+
+**pnpm:**
+
+```sh
+pnpm add @kommo-crm/crm-react-ui-kit
+```

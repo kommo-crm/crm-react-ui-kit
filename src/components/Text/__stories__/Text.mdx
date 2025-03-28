@@ -1,0 +1,19 @@
+import { Title, Meta, Canvas, Controls } from '@storybook/blocks';
+import { CodeBlock } from '@storybook-utils/components';
+import * as TextStories from './Text.stories';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta of={TextStories} />
+
+<Title>Text</Title>
+
+<Canvas of={TextStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Usage')}</ReactMarkdown>
+
+<CodeBlock of={TextStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Props')}</ReactMarkdown>
+
+<Controls />

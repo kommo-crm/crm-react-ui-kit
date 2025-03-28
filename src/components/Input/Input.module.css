@@ -1,0 +1,96 @@
+.wrapper {
+  --crm-ui-kit-base-input-height: calc(
+    var(--crm-ui-kit-input-height) -
+      calc(var(--crm-ui-kit-input-border-width) * 2)
+  );
+  --crm-ui-kit-base-input-font-size: var(--crm-ui-kit-input-font-size);
+  --crm-ui-kit-base-input-line-height: var(--crm-ui-kit-input-line-height);
+  --crm-ui-kit-base-input-padding-left: var(--crm-ui-kit-input-padding-left);
+  --crm-ui-kit-base-input-padding-right: var(--crm-ui-kit-input-padding-right);
+  --crm-ui-kit-base-input-color: var(--crm-ui-kit-input-color);
+  --crm-ui-kit-base-input-placeholder-color: var(
+    --crm-ui-kit-input-placeholder-color
+  );
+  --crm-ui-kit-base-input-disabled-color: var(
+    --crm-ui-kit-input-disabled-color
+  );
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.input_container {
+  display: flex;
+  width: calc(
+    var(--crm-ui-kit-input-width) -
+      calc(var(--crm-ui-kit-input-border-width) * 2)
+  );
+  height: var(--crm-ui-kit-input-height);
+
+  border-top: var(--crm-ui-kit-input-border-top);
+  border-bottom: var(--crm-ui-kit-input-border-bottom);
+  border-left: var(--crm-ui-kit-input-border-left);
+  border-right: var(--crm-ui-kit-input-border-right);
+  border-radius: var(--crm-ui-kit-input-border-radius);
+  background: var(--crm-ui-kit-input-background-color);
+}
+
+.after {
+  min-width: var(--crm-ui-kit-input-after-min-width);
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+
+.has_after {
+  padding-right: 0;
+}
+
+.invalid {
+  border-color: var(--crm-ui-kit-input-error-border-color);
+
+  border-top: var(--crm-ui-kit-input-error-border-top);
+  border-bottom: var(--crm-ui-kit-input-error-border-bottom);
+  border-left: var(--crm-ui-kit-input-error-border-left);
+  border-right: var(--crm-ui-kit-input-error-border-right);
+
+  & input::placeholder {
+    color: var(--crm-ui-kit-input-error-placeholder-color);
+  }
+
+  & input {
+    color: var(--crm-ui-kit-input-error-color);
+  }
+}
+
+.disabled {
+  opacity: var(--crm-ui-kit-input-disabled-opacity);
+
+  border-top: var(--crm-ui-kit-input-disabled-border-top);
+  border-bottom: var(--crm-ui-kit-input-disabled-border-bottom);
+  border-left: var(--crm-ui-kit-input-disabled-border-left);
+  border-right: var(--crm-ui-kit-input-disabled-border-right);
+}
+
+.invalid_description {
+  margin-top: var(--crm-ui-kit-input-error-description-offset-placement-bottom);
+}
+
+.invalid_description_right {
+  flex-direction: row;
+
+  & .invalid_description {
+    align-self: center;
+
+    margin-top: 0px;
+    margin-left: var(
+      --crm-ui-kit-input-error-description-offset-placement-right
+    );
+  }
+}

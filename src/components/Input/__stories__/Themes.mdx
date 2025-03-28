@@ -1,0 +1,25 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as InputStories from './Input.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { InputLightTheme, InputDarkTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Input/Themes" of={InputStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## InputLightTheme
+
+```jsx
+import { InputLightTheme } from '@kommo-crm/crm-react-ui-kit/Input';
+```
+
+<ThemeVisualization theme={InputLightTheme} of={InputStories.InputLight} />
+
+## InputDarkTheme
+
+```jsx
+import { InputDarkTheme } from '@kommo-crm/crm-react-ui-kit/Input';
+```
+
+<ThemeVisualization theme={InputDarkTheme} of={InputStories.InputDark} />

@@ -1,0 +1,30 @@
+services:
+  crm-react-ui-kit:
+    image: ${IMAGE}
+    ipc: host
+    user: root
+    working_dir: '/app'
+    command: sh -c "
+      apt-get update &&
+      apt-get install -y python3 build-essential &&
+      corepack enable &&
+      YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
+      yarn test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-}
+      "
+    volumes:
+      - ./:/app
+      # Exclude node_modules.
+      - /app/node_modules
+      # Cache the node_modules installed inside the container and cache the directory.
+      - yarn_cache:/yarn
+      - node_modules_cache:/app/node_modules
+      - playwright_cache:/app/playwright/.cache
+      # Exclude anything that won't be needed in the container.
+      - /app/.git
+      - /app/.cache
+      - /app/.swc
+
+volumes:
+  yarn_cache:
+  node_modules_cache:
+  playwright_cache:

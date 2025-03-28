@@ -1,0 +1,100 @@
+.wrapper {
+  --crm-ui-kit-base-input-font-size: var(--crm-ui-kit-inline-input-font-size);
+  --crm-ui-kit-base-input-line-height: var(
+    --crm-ui-kit-inline-input-line-height
+  );
+  --crm-ui-kit-base-input-padding-left: var(
+    --crm-ui-kit-inline-input-padding-left
+  );
+  --crm-ui-kit-base-input-height: var(--crm-ui-kit-inline-input-height);
+  --crm-ui-kit-base-input-padding-right: var(
+    --crm-ui-kit-inline-input-padding-right
+  );
+  --crm-ui-kit-base-input-color: var(--crm-ui-kit-inline-input-color);
+  --crm-ui-kit-base-input-placeholder-color: var(
+    --crm-ui-kit-inline-input-placeholder-color
+  );
+  --crm-ui-kit-base-input-disabled-color: var(
+    --crm-ui-kit-inline-input-disabled-color
+  );
+
+  display: flex;
+  width: 100%;
+}
+
+.input_container {
+  display: flex;
+  width: var(--crm-ui-kit-inline-input-width);
+
+  align-items: flex-end;
+  background: transparent;
+  border: none;
+  border-radius: 0%;
+  border-color: var(--crm-ui-kit-inline-input-border-color);
+  border-bottom-style: var(--crm-ui-kit-inline-input-border-style);
+  border-bottom-width: var(--crm-ui-kit-inline-input-border-width);
+
+  &:focus-within {
+    border-color: var(--crm-ui-kit-inline-input-focus-border-color);
+  }
+}
+
+.after_container {
+  display: flex;
+  margin-left: var(--crm-ui-kit-inline-input-invalid-description-offset);
+}
+
+.after {
+  min-width: var(--crm-ui-kit-inline-input-after-min-width);
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+
+.has_after {
+  padding-right: 0;
+}
+
+.invalid_description_container {
+  position: relative;
+  justify-content: center;
+  width: auto;
+  margin-left: calc(
+    var(--crm-ui-kit-inline-input-invalid-description-offset) +
+      var(--crm-ui-kit-inline-input-invalid-description-arrow-width)
+  );
+
+  padding: var(--crm-ui-kit-inline-input-invalid-description-padding-x)
+    var(--crm-ui-kit-inline-input-invalid-description-padding-y);
+  border-radius: var(
+    --crm-ui-kit-inline-input-invalid-description-border-radius
+  );
+  background-color: var(
+    --crm-ui-kit-inline-input-invalid-description-background-color
+  );
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: var(--crm-ui-kit-inline-input-invalid-description-arrow-left);
+    top: var(--crm-ui-kit-inline-input-invalid-description-arrow-top);
+    rotate: -90deg;
+
+    border-left: var(--crm-ui-kit-inline-input-invalid-description-arrow-width)
+      solid transparent;
+    border-right: var(--crm-ui-kit-inline-input-invalid-description-arrow-width)
+      solid transparent;
+    border-bottom: var(
+        --crm-ui-kit-inline-input-invalid-description-arrow-width
+      )
+      solid var(--crm-ui-kit-inline-input-invalid-description-background-color);
+  }
+
+  & .invalid_description {
+    color: var(--crm-ui-kit-inline-input-invalid-description-color);
+  }
+}
+
+.disabled {
+  opacity: var(--crm-ui-kit-inline-input-disabled-opacity);
+}

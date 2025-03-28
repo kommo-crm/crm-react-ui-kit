@@ -1,0 +1,76 @@
+.wrapper {
+  display: flex;
+  width: var(--crm-ui-kit-textarea-width);
+  flex-direction: column;
+}
+
+.textarea_container {
+  flex: 1;
+  border-width: var(--crm-ui-kit-textarea-border-width);
+  border-style: var(--crm-ui-kit-textarea-border-style);
+  border-color: var(--crm-ui-kit-textarea-border-color);
+  border-radius: var(--crm-ui-kit-textarea-border-radius);
+  background: var(--crm-ui-kit-textarea-background-color);
+  /* Using for scrollbar offset */
+  padding-right: var(--crm-ui-kit-textarea-scrollbar-offset);
+}
+
+.textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+
+  min-height: var(--crm-ui-kit-textarea-min-height);
+  padding: var(--crm-ui-kit-textarea-padding-top)
+    var(--crm-ui-kit-textarea-padding-horizontal)
+    var(--crm-ui-kit-textarea-padding-bottom);
+
+  font-size: var(--crm-ui-kit-textarea-font-size);
+  line-height: var(--crm-ui-kit-textarea-line-height);
+  font-weight: var(--crm-ui-kit-textarea-font-weight);
+  color: var(--crm-ui-kit-textarea-color);
+  /* Only for Firefox */
+  scrollbar-color: var(--crm-ui-kit-palette-scrollbar-thumb-background) inherit;
+
+  outline: none;
+  border: none;
+  border-radius: inherit;
+  background: inherit;
+  resize: none;
+
+  &::placeholder {
+    font-weight: inherit;
+    color: var(--crm-ui-kit-textarea-placeholder-color);
+  }
+
+  &:not(.placeholder_visible):focus::placeholder {
+    color: transparent;
+  }
+
+  &:disabled {
+    background: var(--crm-ui-kit-textarea-disabled-background-color);
+    color: var(--crm-ui-kit-textarea-disabled-color);
+  }
+
+  /* &:focus-visible {
+    outline-color: var(--crm-ui-kit-textarea-focus-visible-outline-color);
+    outline-width: var(--crm-ui-kit-textarea-focus-visible-outline-width);
+    outline-style: var(--crm-ui-kit-textarea-focus-visible-outline-style);
+    border-radius: var(--crm-ui-kit-textarea-focus-visible-border-radius);
+    outline-offset: var(--crm-ui-kit-textarea-focus-visible-outline-offset);
+  } */
+}
+
+.disabled {
+  border-color: var(--crm-ui-kit-textarea-disabled-border-color);
+  opacity: var(--crm-ui-kit-textarea-disabled-opacity);
+}
+
+.invalid_description {
+  color: var(--crm-ui-kit-textarea-error-color);
+  margin-top: var(--crm-ui-kit-textarea-spacing);
+}
+
+.invalid {
+  border-color: var(--crm-ui-kit-textarea-error-border-color);
+}

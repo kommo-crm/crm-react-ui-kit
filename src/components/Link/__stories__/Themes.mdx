@@ -1,0 +1,17 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as LinkStories from './Link.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { LinkPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Link/Themes" of={LinkStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## LinkPrimaryTheme
+
+```jsx
+import { LinkPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Link';
+```
+
+<ThemeVisualization theme={LinkPrimaryTheme} of={LinkStories.Default} />

@@ -1,0 +1,30 @@
+.sb-show-main,
+.docs-story {
+  background: var(--crm-ui-kit-palette-background-default);
+}
+
+/* It is necessary that the headings does not move off when switching themes */
+.sbdocs :is(h1, h2, h3, h4, h5, h6) a {
+  margin-left: -24px;
+}
+
+.docs-story-with-grid {
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px !important;
+  background-position:
+    16px 16px,
+    16px 16px,
+    16px 16px,
+    16px 16px !important;
+  background-blend-mode: difference !important;
+  background-image: linear-gradient(
+      rgba(130, 130, 130, 0.5) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(130, 130, 130, 0.5) 1px, transparent 1px),
+    linear-gradient(rgba(130, 130, 130, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(130, 130, 130, 0.25) 1px, transparent 1px) !important;
+}

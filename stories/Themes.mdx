@@ -1,0 +1,102 @@
+import { Meta, Title, ColorPalette, ColorItem } from '@storybook/blocks';
+import { CodeBlock } from '@storybook-utils/components';
+import { SPINNER_WITH_CUSTOM_THEME } from './source/Themes';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta title="Getting Started/Component theming" />
+
+<Title>{i18n.t('Component theming')}</Title>
+
+<ReactMarkdown>
+  {i18n.t(
+    "A theme in the library is a set of design tokens in the form of CSS variables. Here's an example of how it might look:"
+  )}
+</ReactMarkdown>
+
+```css
+.MyComponent {
+  color: var(--crm-ui-kit-color-cultured);
+  background: var(--crm-ui-kit-color-blueberry);
+}
+```
+
+<ReactMarkdown>{'# ' + i18n.t('Component themes')}</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    'Each component has a `props.theme` property to style it. All components have predefined themes that can be found at:'
+  )}
+</ReactMarkdown>
+
+```jsx
+import { ThemeName } from @kommo-crm/crm-react-ui-kit/ComponentName
+```
+
+<ReactMarkdown>{i18n.t('Where: ')}</ReactMarkdown>
+
+<ReactMarkdown>
+  {'> ' +
+    i18n.t(
+      '`ComponentName` is the name of the component which theme you want to use.'
+    )}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {'> ' + i18n.t('`ThemeName` is the name of its theme.')}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    'For more details about a component’s themes, refer to its `Themes` documentation.'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>{'# ' + i18n.t('Creating a custom theme')}</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    "If you can't find a suitable theme for your component, you can create your own."
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    'Let’s explore creating a component using [`<Spinner />`](/?path=/docs/components-spinner--docs) as an example.'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {'## ' + i18n.t('Design tokens of the component')}
+</ReactMarkdown>
+
+<ColorPalette>
+  <ColorItem
+    title="--crm-ui-kit-spinner-border-color"
+    subtitle="var(--crm-ui-kit-spinner-border-color)"
+    colors={['#158fd2']}
+  />
+</ColorPalette>
+
+<ReactMarkdown>{'## ' + i18n.t('Creating a custom theme')}</ReactMarkdown>
+
+<ReactMarkdown>{'### ' + i18n.t('Create a theme object')}</ReactMarkdown>
+
+**my-theme.tsx**
+
+```jsx
+import { type SpinnerTheme } from '@kommo-crm/crm-react-ui-kit/Spinner';
+
+export const MySpinnerTheme: SpinnerTheme = {
+  '--crm-ui-kit-spinner-border-color': '#aaffaa',
+  '--crm-ui-kit-spinner-circle-size': '24px',
+  '--crm-ui-kit-spinner-border-width': '4px',
+  '--crm-ui-kit-spinner-border-style': 'solid',
+};
+```
+
+<ReactMarkdown>{'### ' + i18n.t('Apply to your page')}</ReactMarkdown>
+
+**my-component.tsx**
+
+<CodeBlock language="jsx" code={SPINNER_WITH_CUSTOM_THEME} />

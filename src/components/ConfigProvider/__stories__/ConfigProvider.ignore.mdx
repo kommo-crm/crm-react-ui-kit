@@ -1,0 +1,16 @@
+import { Meta, Title, ArgTypes } from '@storybook/blocks';
+import { ConfigProvider } from '../ConfigProvider';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta title="API/ConfigProvider/Docs" />
+
+<Title>ConfigProvider</Title>
+
+```jsx
+import { ConfigProvider } from '@kommo-crm/crm-react-ui-kit';
+```
+
+<ReactMarkdown>{'# ' + i18n.t('Parameters')}</ReactMarkdown>
+
+<ArgTypes of={ConfigProvider} />

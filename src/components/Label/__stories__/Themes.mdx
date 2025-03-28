@@ -1,0 +1,27 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as LabelStories from './Label.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { LabelTheme, LabelGroupTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Label/Themes" of={LabelStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={LabelStories.Default} />
+
+## LabelTheme
+
+```jsx
+import { LabelTheme } from '@kommo-crm/crm-react-ui-kit/Label';
+```
+
+<ThemeVisualization theme={LabelTheme} />
+
+## LabelGroupTheme
+
+```jsx
+import { LabelGroupTheme } from '@kommo-crm/crm-react-ui-kit/Label';
+```
+
+<ThemeVisualization theme={LabelGroupTheme} />

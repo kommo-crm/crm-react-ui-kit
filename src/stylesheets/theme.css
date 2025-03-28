@@ -1,0 +1,210 @@
+:root {
+  --crm-ui-kit-base-font-size: 15px;
+
+  --crm-ui-kit-color-white: #ffffff;
+  --crm-ui-kit-color-white-smoke: #f1f1f1;
+  --crm-ui-kit-color-platinum: #e3e3e3;
+  --crm-ui-kit-color-very-light-gray: #cdcdcd;
+  --crm-ui-kit-color-bright-gray: #ededed;
+  --crm-ui-kit-color-cultured: #f5f5f5;
+  --crm-ui-kit-color-platinum-mist: #e8eaeb;
+  --crm-ui-kit-color-silver-sand: #c5c5c5;
+  --crm-ui-kit-color-dark-gray: #aaaaaa;
+  --crm-ui-kit-color-lotion: #fcfcfc;
+  --crm-ui-kit-color-philippine-silver: #b5b5b5;
+  --crm-ui-kit-color-spanish-gray: #92989b;
+  --crm-ui-kit-color-dusk-gray: #69768d;
+  --crm-ui-kit-color-weldon-blue: #8092ad;
+  --crm-ui-kit-color-dusk-teal: #516570;
+  --crm-ui-kit-color-slate-blue: #596683;
+  --crm-ui-kit-color-steel-blue: #6a7991;
+  --crm-ui-kit-color-yankees-blue: #153043;
+  --crm-ui-kit-color-nato-blue: #132b3c;
+  --crm-ui-kit-color-deep-navy-blue: #19374d;
+  --crm-ui-kit-color-dark-slate-gray: #284860;
+  --crm-ui-kit-color-cello: #394e5f;
+  --crm-ui-kit-color-shadow-blue: #7f8ba4;
+  --crm-ui-kit-color-dark-silver: #6b6d72;
+  --crm-ui-kit-color-bright-blue: #158fd2;
+  --crm-ui-kit-color-blueberry: #4c8bf7;
+  --crm-ui-kit-color-dodger-blue: #1691ff;
+  --crm-ui-kit-color-cobalt-blue: #0057a9;
+  --crm-ui-kit-color-cerulean-blue: #4077d6;
+  --crm-ui-kit-color-azure-blue: #4d85e6;
+  --crm-ui-kit-color-navy-blue: #013d75;
+  --crm-ui-kit-color-onyx: #363b44;
+  --crm-ui-kit-color-dark-gunmetal: #0f2231;
+  --crm-ui-ki-color-mustard-yellow: #e5b023;
+  --crm-ui-kit-color-goldenrod: #d2a01a;
+  --crm-ui-kit-color-amber: #dba922;
+  --crm-ui-kit-color-error: #f37575;
+  --crm-ui-kit-color-light-gray: #eaeaea;
+  --crm-ui-kit-color-dark-slate: #394e5f;
+  --crm-ui-kit-color-dreams-violet: #a294da;
+  --crm-ui-kit-color-tolopea: #0e0142;
+  --crm-ui-kit-color-dark-slate-blue: #264154;
+  --crm-ui-kit-color-grey: #b3b6bd;
+  --crm-ui-kit-color-light-grey: #dfdfdf;
+  --crm-ui-kit-color-ghost-white: #f5f7fc;
+  --crm-ui-kit-color-lavender: #e5eeff;
+  --crm-ui-kit-color-metallic-blue: #264b79;
+  --crm-ui-kit-color-anti-flash-white: #f2f2f2;
+  --crm-ui-kit-color-pure-white: #fcfcfc;
+  --crm-ui-kit-color-cloud-white: #f8f8f9;
+  --crm-ui-kit-color-deep-teal: #142f41;
+  --crm-ui-kit-color-deep-blue: #142d3f;
+  --crm-ui-kit-color-misty-rose: #fde1e1;
+  --crm-ui-kit-color-panache: #edf7f1;
+  --crm-ui-kit-color-zumthor: #e5eeff;
+  --crm-ui-kit-color-orange-white: #fef7ec;
+  --crm-ui-kit-color-japanese-indigo: #2b3d43;
+
+  --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-onyx);
+  --crm-ui-kit-palette-text-secondary-light: var(
+    --crm-ui-kit-color-spanish-gray
+  );
+  --crm-ui-kit-palette-text-secondary-dark: var(--crm-ui-kit-color-dark-silver);
+
+  --crm-ui-kit-palette-active-element-900: var(--crm-ui-kit-color-blueberry);
+
+  --crm-ui-kit-palette-border-default: var(--crm-ui-kit-color-silver-sand);
+  --crm-ui-kit-palette-border-primary: var(--crm-ui-kit-color-platinum);
+  --crm-ui-kit-palette-switcher-border-default: var(
+    --crm-ui-kit-color-dusk-teal
+  );
+  --crm-ui-kit-palette-border-active: var(--crm-ui-kit-color-blueberry);
+  --crm-ui-kit-palette-border-error: var(--crm-ui-kit-color-error);
+  --crm-ui-kit-palette-background-default: var(--crm-ui-kit-color-cultured);
+  --crm-ui-kit-palette-background-primary: var(--crm-ui-kit-color-white);
+  --crm-ui-kit-palette-background-primary-disabled: var(
+    --crm-ui-kit-color-white-smoke
+  );
+
+  --crm-ui-kit-palette-surface-background-color: var(
+    --crm-ui-kit-color-ghost-white
+  );
+  --crm-ui-kit-palette-surface-hover-background-color: var(
+    --crm-ui-kit-color-lavender
+  );
+  --crm-ui-kit-palette-surface-text-color: var(--crm-ui-kit-color-onyx);
+
+  --crm-ui-kit-palette-link-primary: var(--crm-ui-kit-color-cobalt-blue);
+  --crm-ui-kit-palette-link-hover-primary: var(--crm-ui-kit-color-navy-blue);
+
+  --crm-ui-kit-palette-focus-visible-color: var(--crm-ui-kit-color-cobalt-blue);
+
+  --crm-ui-kit-palette-placeholder-primary: var(
+    --crm-ui-kit-color-philippine-silver
+  );
+  --crm-ui-kit-palette-placeholder-default: var(--crm-ui-kit-color-dark-gray);
+
+  /* 
+   * Because the colors are redefined depending on default | alternative
+   * Managing a variable in theme.css
+  */
+  --crm-ui-kit-palette-button-classic-hover-background: var(
+    --crm-ui-kit-color-lotion
+  );
+
+  --crm-ui-kit-palette-focus-visible-outline-width: 2px;
+  --crm-ui-kit-palette-focus-visible-border-radius: 3px;
+  --crm-ui-kit-palette-focus-visible-outline-offset: 1px;
+  --crm-ui-kit-palette-focus-visible-outline-style: solid;
+
+  /* Scrollbar */
+  --crm-ui-kit-palette-scrollbar-width: 7px;
+  --crm-ui-kit-palette-scrollbar-track-background: inherit;
+  --crm-ui-kit-palette-scrollbar-thumb-background: var(
+    --crm-ui-kit-color-very-light-gray
+  );
+  --crm-ui-kit-palette-scrollbar-track-border-radius: 3px;
+  --crm-ui-kit-palette-scrollbar-thumb-border-radius: 30px;
+
+  --crm-ui-kit-disabled-opacity: 0.6;
+
+  --crm-ui-kit-palette-content-block-box-shadow: 0 2px 1px 0
+    var(--crm-ui-kit-color-bright-gray);
+
+  --crm-ui-kit-palette-callout-error-background-color: var(
+    --crm-ui-kit-color-misty-rose
+  );
+  --crm-ui-kit-palette-callout-warning-background-color: var(
+    --crm-ui-kit-color-orange-white
+  );
+  --crm-ui-kit-palette-callout-info-background-color: var(
+    --crm-ui-kit-color-zumthor
+  );
+  --crm-ui-kit-palette-callout-success-background-color: var(
+    --crm-ui-kit-color-panache
+  );
+
+  --crm-ui-kit-palette-accordion-item-box-shadow: 0px 1px 6px 2px
+    rgba(0, 19, 45, 0.06);
+}
+
+:root[data-crm-ui-kit-theme='alternative'] {
+  --crm-ui-kit-palette-background-default: var(
+    --crm-ui-kit-color-dark-gunmetal
+  );
+  --crm-ui-kit-palette-background-primary: var(--crm-ui-kit-color-yankees-blue);
+  --crm-ui-kit-palette-background-primary-disabled: var(
+    --crm-ui-kit-color-nato-blue
+  );
+  --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-anti-flash-white);
+  --crm-ui-kit-palette-text-secondary-light: var(
+    --crm-ui-kit-color-shadow-blue
+  );
+  --crm-ui-kit-palette-text-secondary-dark: var(--crm-ui-kit-color-weldon-blue);
+
+  --crm-ui-kit-palette-link-primary: var(--crm-ui-kit-color-dodger-blue);
+
+  --crm-ui-kit-palette-box-shadow-default: var(--crm-ui-kit-color-nato-blue);
+
+  --crm-ui-kit-palette-border-default: var(--crm-ui-kit-color-slate-blue);
+  --crm-ui-kit-palette-border-primary: var(--crm-ui-kit-color-dark-slate-gray);
+
+  --crm-ui-kit-palette-placeholder-primary: var(--crm-ui-kit-color-dusk-gray);
+  --crm-ui-kit-palette-placeholder-default: var(--crm-ui-kit-color-steel-blue);
+
+  --crm-ui-kit-palette-surface-background-color: var(
+    --crm-ui-kit-color-dark-gunmetal
+  );
+  --crm-ui-kit-palette-surface-hover-background-color: var(
+    --crm-ui-kit-color-metallic-blue
+  );
+  --crm-ui-kit-palette-surface-text-color: var(
+    --crm-ui-kit-color-anti-flash-white
+  );
+
+  --crm-ui-kit-palette-link-hover-primary: var(--crm-ui-kit-color-dodger-blue);
+
+  --crm-ui-kit-palette-scrollbar-thumb-background: var(
+    --crm-ui-kit-color-cello
+  );
+
+  --crm-ui-kit-palette-button-classic-hover-background: var(
+    --crm-ui-kit-color-deep-navy-blue
+  );
+
+  /*
+   * In the dark theme ContentBlock
+   * must not have a box-shadow.
+  */
+  --crm-ui-kit-palette-content-block-box-shadow: none;
+
+  --crm-ui-kit-palette-callout-error-background-color: var(
+    --crm-ui-kit-color-dark-gunmetal
+  );
+  --crm-ui-kit-palette-callout-warning-background-color: var(
+    --crm-ui-kit-color-japanese-indigo
+  );
+  --crm-ui-kit-palette-callout-info-background-color: var(
+    --crm-ui-kit-color-metallic-blue
+  );
+  --crm-ui-kit-palette-callout-success-background-color: var(
+    --crm-ui-kit-color-dark-gunmetal
+  );
+
+  --crm-ui-kit-palette-accordion-item-box-shadow: 0px 1px 6px 2px
+    rgba(0, 19, 45, 0.06);
+}

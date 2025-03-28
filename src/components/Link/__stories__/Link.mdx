@@ -1,0 +1,19 @@
+import { Title, Meta, Canvas, Controls } from '@storybook/blocks';
+import { CodeBlock } from '@storybook-utils/components';
+import * as LinkStories from './Link.stories';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta of={LinkStories} />
+
+<Title>Link</Title>
+
+<Canvas of={LinkStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Usage')}</ReactMarkdown>
+
+<CodeBlock of={LinkStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Props')}</ReactMarkdown>
+
+<Controls />

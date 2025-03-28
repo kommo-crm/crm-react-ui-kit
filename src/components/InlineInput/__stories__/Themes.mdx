@@ -1,0 +1,27 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as InlineInputStories from './InlineInput.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { InlineInputPrimaryTheme, InlineInputPrimaryFocusedTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/InlineInput/Themes" of={InlineInputStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={InlineInputStories.Default} />
+
+## InlineInputPrimaryTheme
+
+```jsx
+import { InlineInputPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/InlineInput';
+```
+
+<ThemeVisualization theme={InlineInputPrimaryTheme} />
+
+## InlineInputPrimaryFocusedTheme
+
+```jsx
+import { InlineInputPrimaryFocusedTheme } from '@kommo-crm/crm-react-ui-kit/InlineInput';
+```
+
+<ThemeVisualization theme={InlineInputPrimaryFocusedTheme} />

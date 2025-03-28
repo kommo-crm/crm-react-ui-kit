@@ -1,0 +1,97 @@
+.wrapper {
+  /* Determine the height using the formula */
+  --crm-ui-kit-switcher-height: calc(
+    var(--crm-ui-kit-switcher-circle-size) +
+      (var(--crm-ui-kit-switcher-border-width) * 2)
+  );
+  /* Determine the length using the formula */
+  --crm-ui-kit-switcher-width: calc(
+    (var(--crm-ui-kit-switcher-border-width) * 2) +
+      var(--crm-ui-kit-switcher-circle-size) +
+      var(--crm-ui-kit-switcher-line-width)
+  );
+
+  width: var(--crm-ui-kit-switcher-width);
+  height: var(--crm-ui-kit-switcher-height);
+}
+
+.switcher {
+  position: relative;
+  overflow: visible;
+  display: block;
+  width: var(--crm-ui-kit-switcher-width);
+  height: var(--crm-ui-kit-switcher-height);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 0;
+
+  /* Slider Track in the `checked` state */
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    right: inherit;
+    top: 50%;
+    height: var(--crm-ui-kit-switcher-border-width);
+    width: var(--crm-ui-kit-switcher-line-width);
+    background: var(--crm-ui-kit-switcher-border-color);
+    border-radius: var(--crm-ui-kit-switcher-line-border-radius);
+    box-shadow: none;
+  }
+
+  /* Slider Thumb in the `checked` state */
+  &:after {
+    content: '';
+    position: absolute;
+    right: 1px;
+    left: inherit;
+    top: calc(
+      50% - (var(--crm-ui-kit-switcher-circle-size) / 2) -
+        var(--crm-ui-kit-switcher-border-width)
+    );
+    width: var(--crm-ui-kit-switcher-circle-size);
+    height: var(--crm-ui-kit-switcher-circle-size);
+    border-radius: 50%;
+    border-color: transparent;
+    border-width: var(--crm-ui-kit-switcher-border-width);
+    border-style: solid;
+    background: var(--crm-ui-kit-switcher-active-element-color);
+    box-shadow: none;
+  }
+}
+
+.input {
+  &:disabled + .switcher {
+    opacity: var(--crm-ui-kit-switcher-disabled-opacity);
+    cursor: default;
+  }
+
+  &:focus-visible + .switcher {
+    outline-color: var(--crm-ui-kit-switcher-focus-visible-outline-color);
+    outline-width: var(--crm-ui-kit-switcher-focus-visible-outline-width);
+    outline-style: var(--crm-ui-kit-switcher-focus-visible-outline-style);
+    border-radius: var(--crm-ui-kit-switcher-focus-visible-border-radius);
+    outline-offset: var(--crm-ui-kit-switcher-focus-visible-outline-offset);
+  }
+
+  &:not(:checked) + .switcher {
+    /* Slider Thumb in the `unchecked` state */
+    &:before {
+      right: 0px;
+      left: inherit;
+      top: 50%;
+      background: var(--crm-ui-kit-switcher-border-color);
+    }
+
+    /* Slider Track in the `unchecked` state */
+    &:after {
+      left: 1px;
+      right: inherit;
+      border-color: var(--crm-ui-kit-switcher-border-color);
+      border-width: var(--crm-ui-kit-switcher-border-width);
+      border-style: solid;
+      background: inherit;
+    }
+  }
+}

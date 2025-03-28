@@ -1,0 +1,37 @@
+@import '../src/stylesheets/theme.css';
+@import '../src/stylesheets/icons.css';
+@import '../public/fonts/ptsans.css';
+
+/*
+ * Disable properties that may affect the screenshot. 
+ */
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
+  caret-color: transparent !important;
+  -webkit-font-smoothing: antialiased !important;
+  font-family: PT Sans;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.testComponentParamsContent {
+  color: var(--playwright-text);
+}
+
+:root {
+  --playwright-background: white;
+  --playwright-border: gray;
+  --playwright-text: black;
+}
+
+:root[data-crm-ui-kit-theme='alternative'] {
+  --playwright-background: #0f2231;
+  --playwright-border: #07131d;
+  --playwright-text: white;
+}

@@ -1,0 +1,19 @@
+import { Title, Meta, Canvas, Controls } from '@storybook/blocks';
+import { CodeBlock } from '@storybook-utils/components';
+import * as RadioGroupStories from './RadioGroup.stories';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta of={RadioGroupStories} />
+
+<Title>RadioGroup</Title>
+
+<Canvas of={RadioGroupStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Usage')}</ReactMarkdown>
+
+<CodeBlock of={RadioGroupStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Props')}</ReactMarkdown>
+
+<Controls />

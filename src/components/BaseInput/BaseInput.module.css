@@ -1,0 +1,30 @@
+.input {
+  padding: 0;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: var(--crm-ui-kit-base-input-font-size);
+  line-height: var(--crm-ui-kit-base-input-line-height);
+  background: inherit;
+  color: var(--crm-ui-kit-base-input-color);
+  padding-left: var(--crm-ui-kit-base-input-padding-left);
+  padding-right: var(--crm-ui-kit-base-input-padding-right);
+  height: var(--crm-ui-kit-base-input-height);
+
+  outline: none;
+  border-radius: inherit;
+  border: none;
+
+  &::placeholder {
+    font-weight: normal;
+    color: var(--crm-ui-kit-base-input-placeholder-color);
+  }
+
+  &:not(.placeholder_visible):focus::placeholder {
+    color: transparent;
+  }
+
+  &:disabled {
+    color: var(--crm-ui-kit-base-input-disabled-color);
+  }
+}

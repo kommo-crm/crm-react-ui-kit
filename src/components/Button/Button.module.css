@@ -1,0 +1,104 @@
+@keyframes buttonShakeAnimation {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25%,
+  75% {
+    transform: translateX(-10px);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+.button {
+  z-index: var(--crm-ui-kit-button-z-index);
+  height: var(--crm-ui-kit-button-height);
+  padding: var(--crm-ui-kit-button-padding);
+  font-size: var(--crm-ui-kit-button-font-size);
+  font-weight: var(--crm-ui-kit-button-font-weight);
+  line-height: var(--crm-ui-kit-button-line-height);
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: middle;
+  color: var(--crm-ui-kit-button-color);
+  border-width: var(--crm-ui-kit-button-border-width);
+  border-radius: var(--crm-ui-kit-button-border-radius);
+  border-color: var(--crm-ui-kit-button-border-color);
+  border-style: var(--crm-ui-kit-button-border-style);
+  background: var(--crm-ui-kit-button-background-color);
+  outline: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+
+  + .button {
+    margin-left: var(--crm-ui-kit-button-sibling-element-spacing);
+  }
+
+  &:not(.disabled):active {
+    transform: translateY(1px);
+  }
+
+  &:not(.disabled):hover {
+    color: var(--crm-ui-kit-button-hover-color);
+    background: var(--crm-ui-kit-button-hover-background-color);
+    border-width: var(--crm-ui-kit-button-hover-border-width);
+    border-radius: var(--crm-ui-kit-button-hover-border-radius);
+    border-color: var(--crm-ui-kit-button-hover-border-color);
+    border-style: var(--crm-ui-kit-button-hover-border-style);
+  }
+}
+
+.disabled {
+  color: var(--crm-ui-kit-button-disabled-color);
+  background: var(--crm-ui-kit-button-disabled-background-color);
+  border-color: var(--crm-ui-kit-button-disabled-border-color);
+  opacity: var(--crm-ui-kit-button-disabled-opacity);
+  cursor: default;
+}
+
+.content {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.before {
+  display: inline-flex;
+  margin-right: var(--crm-ui-kit-button-elements-spacing);
+}
+
+.after {
+  display: inline-flex;
+  margin-left: var(--crm-ui-kit-button-elements-spacing);
+}
+
+.spinner_container {
+  position: relative;
+  margin: auto;
+  height: 14px;
+  width: 12px;
+}
+
+.invalid {
+  animation: 0.3s buttonShakeAnimation;
+  animation-fill-mode: both;
+}
+
+.success {
+  color: var(--crm-ui-kit-button-success-color);
+  background: var(--crm-ui-kit-button-success-background-color);
+  border-color: var(--crm-ui-kit-button-success-border-color);
+
+  &:not(.disabled):hover {
+    background: var(--crm-ui-kit-button-success-hover-background-color);
+    border-color: var(--crm-ui-kit-button-success-border-color);
+  }
+}
