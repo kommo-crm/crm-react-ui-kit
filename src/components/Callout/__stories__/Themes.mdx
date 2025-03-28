@@ -1,0 +1,57 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as Callout from './Callout.stories';
+import { CalloutErrorTheme } from '../themes/CalloutError.theme';
+import { CalloutInfoTheme } from '../themes/CalloutInfo.theme';
+import { CalloutSuccessTheme } from '../themes/CalloutSuccess.theme';
+import { CalloutWarningTheme } from '../themes/CalloutWarning.theme';
+import { omit } from 'src/utils';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Callout/Themes" of={Callout} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## CalloutWarningTheme
+
+```jsx
+import { CalloutWarningTheme } from '@kommo-crm/crm-react-ui-kit/Callout';
+```
+
+<ThemeVisualization
+  theme={omit(CalloutWarningTheme, ['Icon'])}
+  of={Callout.CalloutWarning}
+/>
+
+## CalloutErrorTheme
+
+```jsx
+import { CalloutErrorTheme } from '@kommo-crm/crm-react-ui-kit/Callout';
+```
+
+<ThemeVisualization
+  theme={omit(CalloutErrorTheme, ['Icon'])}
+  of={Callout.CalloutError}
+/>
+
+## CalloutSuccessTheme
+
+```jsx
+import { CalloutSuccessTheme } from '@kommo-crm/crm-react-ui-kit/Callout';
+```
+
+<ThemeVisualization
+  theme={omit(CalloutSuccessTheme, ['Icon'])}
+  of={Callout.CalloutSuccess}
+/>
+
+## CalloutInfoTheme
+
+```jsx
+import { CalloutInfoTheme } from '@kommo-crm/crm-react-ui-kit/Callout';
+```
+
+<ThemeVisualization
+  theme={omit(CalloutInfoTheme, ['Icon'])}
+  of={Callout.CalloutInfo}
+/>

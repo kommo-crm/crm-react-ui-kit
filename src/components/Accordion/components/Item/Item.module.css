@@ -1,0 +1,66 @@
+.wrapper {
+  margin-bottom: var(--crm-ui-kit-accordion-item-margin-bottom);
+  background-color: var(--crm-ui-kit-accordion-item-background-color);
+  border: 1px solid var(--crm-ui-kit-accordion-item-border-color);
+  border-radius: var(--crm-ui-kit-accordion-item-border-radius);
+  box-shadow: var(--crm-ui-kit-accordion-item-box-shadow);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--crm-ui-kit-accordion-item-padding);
+}
+
+.header_left {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.before_title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.chevron_container {
+  transform: rotate(-90deg);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: auto;
+}
+
+.chevron_icon {
+  color: var(--crm-ui-kit-accordion-item-chevron-icon-color);
+}
+
+.content {
+  padding: var(--crm-ui-kit-accordion-item-padding);
+  padding-top: 0;
+  word-break: break-word;
+}
+
+.active {
+  .content {
+    display: block;
+  }
+
+  .chevron_container {
+    transform: rotate(0);
+  }
+}
+
+.content {
+  display: none;
+}

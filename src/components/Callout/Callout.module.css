@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  padding: var(--crm-ui-kit-callout-padding);
+  background-color: var(--crm-ui-kit-callout-background-color);
+  border-radius: var(--crm-ui-kit-callout-border-radius);
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-right: 8px;
+  color: var(--crm-ui-kit-callout-icon-color);
+}

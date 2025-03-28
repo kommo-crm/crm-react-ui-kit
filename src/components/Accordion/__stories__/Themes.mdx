@@ -1,0 +1,27 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as AccordionStories from './Accordion.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { AccordionTheme, AccordionItemTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Accordion/Themes" of={AccordionStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={AccordionStories.Default} />
+
+## AccordionTheme
+
+```jsx
+import { AccordionTheme } from '@kommo-crm/crm-react-ui-kit/Accordion';
+```
+
+<ThemeVisualization theme={AccordionTheme} />
+
+## AccordionItemTheme
+
+```jsx
+import { AccordionItemTheme } from '@kommo-crm/crm-react-ui-kit/Accordion';
+```
+
+<ThemeVisualization theme={AccordionItemTheme} />
