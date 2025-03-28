@@ -1,13 +1,16 @@
-FROM node:20-alpine as build
+FROM node:20-alpine AS build
 WORKDIR /app
-COPY . .
-RUN apk add --update python3 make g++;
+
+COPY package.json yarn.lock ./
+
 RUN yarn install --immutable;
+
+COPY . .
+
 RUN yarn build-storybook
 
 FROM nginx:stable-alpine
 COPY --from=build /app/storybook-static /var/www/nginx
-COPY --from=build /app/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/nginx/server.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
