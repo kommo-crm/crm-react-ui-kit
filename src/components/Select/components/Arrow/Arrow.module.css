@@ -1,0 +1,8 @@
+.wrapper {
+  display: flex;
+
+  width: var(--crm-ui-kit-select-arrow-width);
+  height: var(--crm-ui-kit-select-arrow-height);
+
+  margin: var(--crm-ui-kit-select-margin);
+}

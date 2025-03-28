@@ -1,0 +1,44 @@
+.button {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+  z-index: var(--crm-ui-kit-select-button-z-index);
+
+  width: var(--crm-ui-kit-select-button-width);
+  height: var(--crm-ui-kit-select-button-height);
+
+  padding: var(--crm-ui-kit-select-button-padding);
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+
+  border: var(--crm-ui-kit-select-button-border);
+  border-radius: var(--crm-ui-kit-select-button-border-radius);
+
+  background: var(--crm-ui-kit-select-button-background-color);
+  color: var(--crm-ui-kit-select-button-color);
+  font-size: var(--crm-ui-kit-select-button-font-size);
+  line-height: var(--crm-ui-kit-select-button-line-height);
+  cursor: pointer;
+
+  outline: none;
+
+  &:focus-visible {
+    border: var(--crm-ui-kit-select-button-focus-visible-border);
+  }
+}
+
+.invalid {
+  border: var(--crm-ui-kit-select-button-error-border);
+  color: var(--crm-ui-kit-select-button-error-color);
+}
+
+.disabled {
+  border: var(--crm-ui-kit-select-button-disabled-border);
+  opacity: var(--crm-ui-kit-select-button-disabled-border-opacity);
+
+  cursor: initial;
+}

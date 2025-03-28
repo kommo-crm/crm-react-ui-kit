@@ -1,0 +1,63 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as SelectStories from './Select.stories.tsx';
+import { ThemeVisualization } from '@storybook-utils/components';
+import {
+  SelectRootTheme,
+  SelectItemTheme,
+  SelectListTheme,
+  SelectButtonLightTheme,
+  SelectButtonDarkTheme,
+} from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Select/Themes" of={SelectStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={SelectStories.Default} />
+
+## SelectRootTheme
+
+```jsx
+import { SelectRootTheme } from '@kommo-crm/crm-react-ui-kit/Select';
+```
+
+<ThemeVisualization theme={SelectRootTheme} />
+
+## SelectItemTheme
+
+```jsx
+import { SelectItemTheme } from '@kommo-crm/crm-react-ui-kit/Select';
+```
+
+<ThemeVisualization theme={SelectItemTheme} />
+
+## SelectListTheme
+
+```jsx
+import { SelectListTheme } from '@kommo-crm/crm-react-ui-kit/Select';
+```
+
+<ThemeVisualization theme={SelectListTheme} />
+
+## SelectButtonLightTheme
+
+```jsx
+import { SelectButtonLightTheme } from '@kommo-crm/crm-react-ui-kit/Select';
+```
+
+<ThemeVisualization
+  theme={SelectButtonLightTheme}
+  of={SelectStories.SelectButtonLight}
+/>
+
+## SelectButtonDarkTheme
+
+```jsx
+import { SelectButtonDarkTheme } from '@kommo-crm/crm-react-ui-kit/Select';
+```
+
+<ThemeVisualization
+  theme={SelectButtonDarkTheme}
+  of={SelectStories.SelectButtonDark}
+/>

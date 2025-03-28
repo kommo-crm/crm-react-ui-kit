@@ -1,0 +1,8 @@
+.select {
+  position: relative;
+  z-index: var(--crm-ui-kit-select-z-index);
+}
+
+.opened {
+  z-index: var(--crm-ui-kit-select-opened-z-index);
+}

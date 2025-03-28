@@ -1,0 +1,32 @@
+.item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: var(--crm-ui-kit-select-item-padding);
+  margin: var(--crm-ui-kit-select-item-margin);
+  box-sizing: border-box;
+
+  cursor: pointer;
+  list-style-type: none;
+
+  font-size: var(--crm-ui-kit-select-item-font-size);
+  font-weight: var(--crm-ui-kit-select-item-font-weight);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+
+  &:hover {
+    background-color: var(--crm-ui-kit-select-item-hover-background-color);
+  }
+}
+
+.selected {
+  background: var(--crm-ui-kit-select-item-selected-background);
+
+  background-color: var(--crm-ui-kit-select-item-selected-background-color);
+}
+
+.hovered {
+  background-color: var(--crm-ui-kit-select-item-hovered-background-color);
+}

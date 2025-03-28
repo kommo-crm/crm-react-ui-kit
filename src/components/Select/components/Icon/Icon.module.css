@@ -1,0 +1,6 @@
+.wrapper {
+  width: var(--crm-ui-kit-select-icon-width);
+  height: var(--crm-ui-kit-select-icon-height);
+
+  margin: var(--crm-ui-kit-select-icon-margin);
+}
