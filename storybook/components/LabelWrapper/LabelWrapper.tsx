@@ -22,11 +22,9 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
       textPlacement={textPlacement}
       isCentered={isCentered}
       text={
-        text || (
-          <Text theme={TextPrimaryTheme} size="l">
-            {i18n.t('Click me')}
-          </Text>
-        )
+        <Text theme={TextPrimaryTheme} size="l">
+          {text || i18n.t('Click me')}
+        </Text>
       }
     >
       {children}
