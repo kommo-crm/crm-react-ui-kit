@@ -1,0 +1,7 @@
+.block {
+  box-sizing: var(--crm-ui-kit-content-block-box-sizing);
+  padding: var(--crm-ui-kit-content-block-padding);
+  border-radius: var(--crm-ui-kit-content-block-border-radius);
+  box-shadow: var(--crm-ui-kit-content-block-box-shadow);
+  background: var(--crm-ui-kit-content-block-background);
+}
