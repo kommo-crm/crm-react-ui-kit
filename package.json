@@ -1,11 +1,11 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "20"
+    "node": ">=20"
   },
   "exports": {
     ".": {
