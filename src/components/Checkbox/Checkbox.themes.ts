@@ -43,7 +43,7 @@ export const CheckboxBaseValues: Omit<
   '--crm-ui-kit-checkbox-checked-background':
     'var(--crm-ui-kit-checkbox-background-color) var(--crm-ui-kit-icon-checked-mark) no-repeat center / 70%',
   '--crm-ui-kit-checkbox-indeterminate-background':
-    'var(--crm-ui-kit-checkbox-background-color) var(--crm-ui-kit-icon-minus) no-repeat 75% 60% / 75%',
+    'var(--crm-ui-kit-checkbox-background-color) var(--crm-ui-kit-icon-minus) no-repeat center',
 
   '--crm-ui-kit-checkbox-focus-visible-outline-color':
     'var(--crm-ui-kit-palette-focus-visible-color)',
