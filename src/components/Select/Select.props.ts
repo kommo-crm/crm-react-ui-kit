@@ -73,6 +73,10 @@ export type SelectProps = {
    */
   children?: React.ReactNode;
   /**
+   * Flag whether the list is open.
+   */
+  isOpen?: boolean;
+  /**
    * Flag whether the list is initially open.
    */
   isDefaultOpen?: boolean;

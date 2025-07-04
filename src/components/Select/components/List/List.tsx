@@ -37,7 +37,7 @@ const ListPortal = (props: ListPortalProps) => {
 };
 
 export const List = forwardRef<L, ListProps>((props, ref) => {
-  const { container, children, theme } = props;
+  const { container, children, theme, className } = props;
 
   const {
     isOpened,
@@ -109,6 +109,7 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
   return (
     <ListPortal container={container}>
       <BaseList
+        className={className}
         ref={mergeRefs(listRef, ref)}
         isOpened={isOpened}
         theme={theme}
