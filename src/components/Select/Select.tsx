@@ -38,11 +38,13 @@ export const Select = forwardRef<D, SelectProps>((props, ref) => {
     className,
     children,
     isDisabled = false,
+    isOpen: isOpenProp = false,
     isDefaultOpen = false,
     isInvalid = false,
   } = props;
 
   const isControlled = 'value' in props;
+  const isOpenControlled = 'isOpen' in props;
 
   const themeClassName = useThemeClassName<SelectRootThemeType>(theme);
 
@@ -51,10 +53,11 @@ export const Select = forwardRef<D, SelectProps>((props, ref) => {
   const [defaultValue, setDefaultValue] = useState(defaultValueProp);
 
   const selected = isControlled ? valueProp : defaultValue;
+  const isOpen = isOpenControlled ? isOpenProp : isOpened;
 
   const handleOpen = useCallback(
     (open: boolean) => {
-      if (!isDisabled) {
+      if (!isDisabled && !isOpenControlled) {
         setIsOpened(open);
         onOpenChange(open);
       }
@@ -83,7 +86,7 @@ export const Select = forwardRef<D, SelectProps>((props, ref) => {
       hoveredIndex={hoveredIndex}
       onHoveredIndexChange={handleHoveredIndexChange}
       onChange={handleChange}
-      isOpened={isOpened}
+      isOpened={isOpen}
       onOpen={handleOpen}
       isDisabled={isDisabled}
       isInvalid={isInvalid}
@@ -92,7 +95,7 @@ export const Select = forwardRef<D, SelectProps>((props, ref) => {
     >
       <div
         className={cx(s.select, themeClassName, className, {
-          [s.opened]: isOpened,
+          [s.opened]: isOpen,
         })}
         ref={ref}
       >
