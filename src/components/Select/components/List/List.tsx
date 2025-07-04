@@ -37,13 +37,7 @@ const ListPortal = (props: ListPortalProps) => {
 };
 
 export const List = forwardRef<L, ListProps>((props, ref) => {
-  const {
-    container,
-    children,
-    theme,
-    className,
-    isFocusAfterOpenEnabled = true,
-  } = props;
+  const { container, children, theme, className } = props;
 
   const {
     isOpened,
@@ -107,14 +101,15 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     /**
      * When opening the list, we transfer focus to it.
      */
-    if (isFocusAfterOpenEnabled && isOpened) {
+    if (isOpened) {
       listRef.current?.focus();
     }
-  }, [isFocusAfterOpenEnabled, isOpened]);
+  }, [isOpened]);
 
   return (
     <ListPortal container={container}>
       <BaseList
+        className={className}
         ref={mergeRefs(listRef, ref)}
         isOpened={isOpened}
         theme={theme}
@@ -122,7 +117,6 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
         onToggle={handleListToggle}
         onSelect={handleItemSelect}
         hoveredIndex={value ? itemsMap[value.value] : hoveredIndex}
-        className={className}
       >
         {children}
       </BaseList>

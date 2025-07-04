@@ -13,11 +13,4 @@ export type ListPortalProps = {
   container?: Element | DocumentFragment | null;
 };
 
-export type SelectListProps = {
-  /**
-   * Flag which enables the focus on it after opening the List.
-   */
-  isFocusAfterOpenEnabled?: boolean;
-};
-
-export type ListProps = BaseListProps & ListPortalProps & SelectListProps;
+export type ListProps = BaseListProps & ListPortalProps;
