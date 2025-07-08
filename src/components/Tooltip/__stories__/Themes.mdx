@@ -1,0 +1,17 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as TooltipStories from './Tooltip.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { TooltipPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Tooltip/Tooltip" of={TooltipStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## TooltipPrimaryTheme
+
+```jsx
+import { TooltipPrimaryTheme } from '@packages/crm-react-ui-kit/Tooltip';
+```
+
+<ThemeVisualization theme={TooltipPrimaryTheme} of={TooltipStories.Default} />

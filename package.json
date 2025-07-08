@@ -31,6 +31,7 @@
     "./ContentBlock": "./dist/components/ContentBlock/index.js",
     "./Callout": "./dist/components/Callout/index.js",
     "./Accordion": "./dist/components/Accordion/index.js",
+    "./Tooltip": "./dist/components/Tooltip/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -44,6 +45,7 @@
     "./assets/ContentBlock.css": "./dist/assets/ContentBlock.css",
     "./assets/Callout.css": "./dist/assets/Callout.css",
     "./assets/Accordion.css": "./dist/assets/Accordion.css",
+    "./assets/Tooltip.css": "./dist/assets/Tooltip.css",
     "./assets/CheckboxGroup.css": "./dist/assets/CheckboxGroup.css",
     "./assets/FilterTabs.css": "./dist/assets/FilterTabs.css",
     "./assets/Button.css": "./dist/assets/Button.css",
@@ -108,6 +110,9 @@
       ],
       "Accordion": [
         "./dist/components/Accordion/index.d.ts"
+      ],
+      "Tooltip": [
+        "./dist/components/Tooltip/index.d.ts"
       ]
     }
   },
@@ -206,7 +211,8 @@
     "i18next-browser-languagedetector": "8.0.4",
     "nanoid": "3.3.4",
     "react-i18next": "15.4.1",
-    "react-markdown": "10.0.1"
+    "react-markdown": "10.0.1",
+    "react-tiny-popover": "8.1.6"
   },
   "peerDependencies": {
     "@types/react": "*",
