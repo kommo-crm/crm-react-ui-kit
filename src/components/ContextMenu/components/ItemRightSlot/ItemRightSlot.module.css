@@ -1,0 +1,6 @@
+.right_slot {
+  display: flex;
+
+  margin: var(--crm-ui-kit-context-menu-item-right-slot-margin);
+  padding: var(--crm-ui-kit-context-menu-item-right-slot-padding);
+}

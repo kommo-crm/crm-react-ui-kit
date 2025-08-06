@@ -26,9 +26,10 @@ const preview: Preview = {
       storySort: {
         order: [
           'Getting Started',
-          ['Getting Started', 'How to use', 'Component theming'],
+          ['Getting Started', 'Component theming'],
           'Typography',
           'Components',
+          ['*', 'ContextMenu', ['SubSelect']],
         ],
       },
     },

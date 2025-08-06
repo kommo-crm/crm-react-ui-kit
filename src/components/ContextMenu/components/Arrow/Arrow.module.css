@@ -1,0 +1,14 @@
+.arrow {
+  /* Shift arrow upward to compensate for border size and cut off 1px at the bottom
+     to avoid visual gap during scaling or pixel snapping artifacts */
+  transform: translateY(
+    calc(-1 * var(--crm-ui-kit-context-menu-arrow-border-size) - 1px)
+  );
+  fill: var(--crm-ui-kit-context-menu-arrow-fill);
+}
+
+.arrow_border {
+  /* 0.5px shift helps prevent a visible seam or subpixel gap during scaling */
+  transform: translateY(-0.5px);
+  fill: var(--crm-ui-kit-context-menu-arrow-border-color);
+}

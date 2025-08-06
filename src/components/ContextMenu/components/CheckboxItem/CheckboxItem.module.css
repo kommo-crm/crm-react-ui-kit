@@ -1,0 +1,32 @@
+.checkbox_item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  outline: none;
+
+  padding: var(--crm-ui-kit-context-menu-checkbox-item-padding);
+  gap: var(--crm-ui-kit-context-menu-checkbox-item-gap);
+  color: var(--crm-ui-kit-context-menu-checkbox-item-color);
+  background-color: var(
+    --crm-ui-kit-context-menu-checkbox-item-background-color
+  );
+
+  &[data-disabled] {
+    color: var(--crm-ui-kit-context-menu-checkbox-item-disabled-color);
+  }
+
+  &[data-highlighted] {
+    background-color: var(
+      --crm-ui-kit-context-menu-checkbox-item-hovered-background-color
+    );
+  }
+
+  &[data-state='checked'] {
+    color: var(--crm-ui-kit-context-menu-checkbox-item-checked-color);
+  }
+
+  &[data-has-icon] {
+    padding: var(--crm-ui-kit-context-menu-checkbox-item-with-icon-padding);
+  }
+}

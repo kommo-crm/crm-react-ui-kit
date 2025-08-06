@@ -1,0 +1,48 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as SubSelect from './SubSelect.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import {
+  ContextMenuSubSelectContentTheme,
+  ContextMenuSubSelectItemTheme,
+  ContextMenuSubSelectTriggerTheme,
+  ContextMenuSubSelectValueTheme,
+} from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/ContextMenu/SubSelect/Themes" of={SubSelect} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={SubSelect.Default} />
+
+## ContextMenuSubSelectTriggerTheme
+
+```jsx
+import { ContextMenuSubSelectTriggerTheme } from '@kommo-crm/crm-react-ui-kit/ContextMenu/SubSelect';
+```
+
+<ThemeVisualization theme={ContextMenuSubSelectTriggerTheme} />
+
+## ContextMenuSubSelectValueTheme
+
+```jsx
+import { ContextMenuSubSelectValueTheme } from '@kommo-crm/crm-react-ui-kit/ContextMenu/SubSelect';
+```
+
+<ThemeVisualization theme={ContextMenuSubSelectValueTheme} />
+
+## ContextMenuSubSelectContentTheme
+
+```jsx
+import { ContextMenuSubSelectContentTheme } from '@kommo-crm/crm-react-ui-kit/ContextMenu/SubSelect';
+```
+
+<ThemeVisualization theme={ContextMenuSubSelectContentTheme} />
+
+## ContextMenuSubSelectItemTheme
+
+```jsx
+import { ContextMenuSubSelectItemTheme } from '@kommo-crm/crm-react-ui-kit/ContextMenu/SubSelect';
+```
+
+<ThemeVisualization theme={ContextMenuSubSelectItemTheme} />

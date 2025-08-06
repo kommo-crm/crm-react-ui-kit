@@ -1,0 +1,6 @@
+.separator {
+  width: var(--crm-ui-kit-context-menu-separator-width);
+  height: var(--crm-ui-kit-context-menu-separator-height);
+  margin: var(--crm-ui-kit-context-menu-separator-margin);
+  background-color: var(--crm-ui-kit-context-menu-separator-color);
+}

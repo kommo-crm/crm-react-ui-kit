@@ -1,0 +1,41 @@
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  outline: none;
+
+  padding: var(--crm-ui-kit-context-menu-sub-select-item-padding);
+  gap: var(--crm-ui-kit-context-menu-sub-select-item-gap);
+  color: var(--crm-ui-kit-context-menu-sub-select-item-color);
+
+  &[data-disabled] {
+    color: var(--crm-ui-kit-context-menu-sub-select-item-disabled-color);
+  }
+
+  &[data-danger] {
+    color: var(--crm-ui-kit-context-menu-sub-select-item-danger-color);
+  }
+
+  &[data-highlighted] {
+    background-color: var(
+      --crm-ui-kit-context-menu-sub-select-item-hovered-background-color
+    );
+  }
+
+  &[data-active] {
+    color: var(--crm-ui-kit-context-menu-sub-select-item-active-color);
+  }
+
+  &[data-has-icon] {
+    padding: var(--crm-ui-kit-context-menu-sub-select-item-with-icon-padding);
+  }
+}
+
+.sort_icon {
+  color: var(--crm-ui-kit-context-menu-sub-select-item-sort-icon-color);
+
+  &.asc {
+    transform: var(--crm-ui-kit-context-menu-sub-select-item-sort-icon-asc-transform);
+  }
+}

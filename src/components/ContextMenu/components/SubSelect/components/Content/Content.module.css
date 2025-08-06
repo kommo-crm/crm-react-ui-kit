@@ -1,0 +1,9 @@
+.content {
+  min-width: 100px;
+  background-color: var(--crm-ui-kit-context-menu-sub-select-content-background-color);
+  border: var(--crm-ui-kit-context-menu-sub-select-content-border-size) solid
+    var(--crm-ui-kit-context-menu-sub-select-content-border-color);
+  border-radius: var(--crm-ui-kit-context-menu-sub-select-content-border-radius);
+  overflow: var(--crm-ui-kit-context-menu-sub-select-content-overflow);
+  box-shadow: var(--crm-ui-kit-context-menu-sub-select-content-box-shadow);
+}

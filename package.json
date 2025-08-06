@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -201,6 +201,7 @@
   },
   "dependencies": {
     "@kommo-crm/react-hooks": "^1.0.0",
+    "@radix-ui/react-dropdown-menu": "2.1.15",
     "classnames": "2.5.1",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.4",

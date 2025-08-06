@@ -1,0 +1,5 @@
+.item_indicator {
+  display: flex;
+
+  color: var(--crm-ui-kit-context-menu-item-indicator-color);
+}

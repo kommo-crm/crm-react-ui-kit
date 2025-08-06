@@ -1,0 +1,33 @@
+import React, { forwardRef } from 'react';
+import { RadioItem as RadixDropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
+import cx from 'classnames';
+
+import { useThemeClassName } from 'src/hooks/useThemeClassName';
+
+import type { RadioItemProps } from './RadioItem.props';
+
+import s from './RadioItem.module.css';
+
+const DISPLAY_NAME = 'ContextMenu.RadioItem';
+
+export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
+  ({ theme, className, children, icon, text, isDisabled, ...props }, ref) => {
+    const themeClassName = useThemeClassName(theme);
+
+    return (
+      <RadixDropdownMenuRadioItem
+        ref={ref}
+        className={cx(s.radio_item, themeClassName, className)}
+        disabled={isDisabled}
+        data-has-icon={icon ? '' : undefined}
+        {...props}
+      >
+        {icon}
+        {text}
+        {children}
+      </RadixDropdownMenuRadioItem>
+    );
+  }
+);
+
+RadioItem.displayName = DISPLAY_NAME;

@@ -23,6 +23,8 @@ export default {
   'Centered': 'Centered',
   'Custom Themes': 'Custom Themes',
   'Autosize': 'Autosize',
+  'Positions': 'Positions',
+  'Hover Mode': 'Hover Mode',
 
   /* Used in docs */
   'Design tokens': 'Design tokens',
@@ -86,4 +88,19 @@ export default {
 
   /* TextArea */
   'Required field': 'Required field',
+
+  /* ContextMenu */
+  'Workspace': 'Workspace',
+  'Workspace ID': 'Workspace ID',
+  'Change Workspace': 'Change Workspace',
+  'Date': 'Date',
+  'Sort by': 'Sort by',
+  'Contacts': 'Contacts',
+  'Contact': 'Contact',
+  'Delete All': 'Delete All',
+  'Technical support': 'Technical support',
+  'Autoupdate': 'Autoupdate',
+  'Select Theme': 'Select Theme',
+  'Light': 'Light',
+  'Dark': 'Dark',
 };

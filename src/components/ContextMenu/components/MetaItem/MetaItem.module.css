@@ -1,0 +1,34 @@
+.meta_item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  outline: none;
+
+  padding: var(--crm-ui-kit-context-menu-meta-item-padding);
+  gap: var(--crm-ui-kit-context-menu-meta-item-gap);
+  color: var(--crm-ui-kit-context-menu-meta-item-color);
+
+  &[data-has-icon] {
+    padding: var(--crm-ui-kit-context-menu-meta-item-with-icon-padding);
+  }
+}
+
+.label {
+  margin: var(--crm-ui-kit-context-menu-meta-item-label-margin);
+  font-weight: var(--crm-ui-kit-context-menu-meta-item-label-font-weight);
+  color: var(--crm-ui-kit-context-menu-meta-item-label-color);
+}
+
+.copy_icon {
+  cursor: copy;
+
+  margin: var(--crm-ui-kit-context-menu-meta-item-copy-icon-margin);
+  color: var(--crm-ui-kit-context-menu-meta-item-copy-icon-color);
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}

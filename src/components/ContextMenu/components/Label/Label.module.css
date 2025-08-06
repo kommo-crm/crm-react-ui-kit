@@ -1,0 +1,15 @@
+.label {
+  position: relative;
+  display: flex;
+  user-select: none;
+  outline: none;
+
+  padding: var(--crm-ui-kit-context-menu-label-padding);
+  gap: var(--crm-ui-kit-context-menu-label-gap);
+  color: var(--crm-ui-kit-context-menu-label-color);
+  font-weight: var(--crm-ui-kit-context-menu-label-font-weight);
+
+  &[data-has-icon] {
+    padding: var(--crm-ui-kit-context-menu-label-with-icon-padding);
+  }
+}

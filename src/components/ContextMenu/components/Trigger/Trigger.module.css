@@ -1,0 +1,6 @@
+.button {
+  all: unset;
+
+  color: var(--crm-ui-kit-context-menu-trigger-color);
+}
+

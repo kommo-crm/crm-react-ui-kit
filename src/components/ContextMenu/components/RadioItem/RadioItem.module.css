@@ -1,0 +1,34 @@
+.radio_item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  outline: none;
+
+  padding: var(--crm-ui-kit-context-menu-radio-item-padding);
+  gap: var(--crm-ui-kit-context-menu-radio-item-gap);
+  color: var(--crm-ui-kit-context-menu-radio-item-color);
+  background-color: var(--crm-ui-kit-context-menu-radio-item-background-color);
+
+  &[data-disabled] {
+    color: var(--crm-ui-kit-context-menu-radio-item-disabled-color);
+  }
+
+  &[data-danger] {
+    color: var(--crm-ui-kit-context-menu-radio-item-danger-color);
+  }
+
+  &[data-highlighted] {
+    background-color: var(
+      --crm-ui-kit-context-menu-radio-item-hovered-background-color
+    );
+  }
+
+  &[data-state='checked'] {
+    color: var(--crm-ui-kit-context-menu-radio-item-checked-color);
+  }
+
+  &[data-has-icon] {
+    padding: var(--crm-ui-kit-context-menu-radio-item-with-icon-padding);
+  }
+}

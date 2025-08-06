@@ -23,6 +23,8 @@ export default {
   'Centered': 'Centrado',
   'Custom Themes': 'Temas personalizados',
   'Autosize': 'Ajuste automático',
+  'Positions': 'Posiciones',
+  'Hover Mode': 'Modo de Desplazamiento',
 
   /* Used in docs */
   'Design tokens': 'Tokens de diseño',
@@ -86,4 +88,19 @@ export default {
 
   /* TextArea */
   'Required field': 'Campo requerido',
+
+  /* ContextMenu */
+  'Workspace': 'Espacio de trabajo',
+  'Workspace ID': 'ID del espacio de trabajo',
+  'Change Workspace': 'Cambiar espacio de trabajo',
+  'Date': 'Fecha',
+  'Sort by': 'Ordenar por',
+  'Contacts': 'Contactos',
+  'Contact': 'Contacto',
+  'Delete All': 'Eliminar todo',
+  'Technical support': 'Soporte técnico',
+  'Autoupdate': 'Actualización automática',
+  'Select Theme': 'Seleccionar tema',
+  'Light': 'Claro',
+  'Dark': 'Oscuro',
 };

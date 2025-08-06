@@ -1,0 +1,4 @@
+.root {
+  display: inline-block;
+  z-index: var('--crm-ui-kit-context-menu-z-index');
+}
