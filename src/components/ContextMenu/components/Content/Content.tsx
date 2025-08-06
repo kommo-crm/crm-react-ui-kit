@@ -1,8 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
+
+import { LevelProvider } from '../LevelProvider';
 
 import type { ContentProps } from './Content.props';
 
@@ -22,7 +24,13 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     },
     ref
   ) => {
+    const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
+
     const themeClassName = useThemeClassName(theme);
+
+    const registerItemWithItem = useCallback(() => {
+      setHasItemWithIcon(true);
+    }, []);
 
     return (
       <RadixDropdownMenuContent
@@ -32,7 +40,12 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         arrowPadding={arrowPadding}
         {...props}
       >
-        {children}
+        <LevelProvider
+          hasItemWithIcon={hasItemWithIcon}
+          registerItemWithItem={registerItemWithItem}
+        >
+          {children}
+        </LevelProvider>
       </RadixDropdownMenuContent>
     );
   }

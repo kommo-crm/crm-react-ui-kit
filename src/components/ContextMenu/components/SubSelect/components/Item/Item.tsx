@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -8,11 +8,15 @@ import { Text } from 'src/components/Text';
 
 import DefaultSortIcon from 'src/icons/directionArrowDown.svg';
 
+import { useContextMenuContext } from 'src/components/ContextMenu/ContextMenu.context';
+
 import { TextContextMenuTheme } from '../../../Text';
 
 import { useSubSelectContext } from '../../SubSelect.context';
 
 import { SortDirection } from '../../SubSelect.enums';
+
+import { useLevelProviderContext } from '../../../LevelProvider';
 
 import type { SubSelectItemProps } from './Item.props';
 
@@ -35,7 +39,17 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
     },
     ref
   ) => {
+    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
+    const { hasItemWithIcon, registerItemWithItem } =
+      useLevelProviderContext(DISPLAY_NAME);
+
     const themeClassName = useThemeClassName(theme);
+
+    useEffect(() => {
+      if (icon) {
+        registerItemWithItem();
+      }
+    }, [icon]);
 
     const {
       value: selectedItem,
@@ -77,7 +91,9 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
         disabled={isDisabled}
         data-danger={isDanger ? '' : undefined}
         data-active={isActive ? '' : undefined}
-        data-has-icon={icon ? '' : undefined}
+        data-no-icon-align={
+          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
+        }
         onSelect={handleSelect}
         {...props}
       >

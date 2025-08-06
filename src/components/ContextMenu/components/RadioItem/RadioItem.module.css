@@ -28,7 +28,9 @@
     color: var(--crm-ui-kit-context-menu-radio-item-checked-color);
   }
 
-  &[data-has-icon] {
-    padding: var(--crm-ui-kit-context-menu-radio-item-with-icon-padding);
+  &[data-no-icon-align] {
+    padding: var(
+      --crm-ui-kit-context-menu-radio-item-without-icon-align-padding
+    );
   }
 }

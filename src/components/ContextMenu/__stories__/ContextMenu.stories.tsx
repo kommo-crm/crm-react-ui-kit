@@ -223,7 +223,8 @@ function App() {
 
 const renderSubSelectMenu = (
   key: string,
-  mode: ContextMenuMode = ContextMenuMode.CLICK
+  mode: ContextMenuMode = ContextMenuMode.HOVER,
+  disableItemIconAlign = false
 ) => {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState('light');
@@ -237,7 +238,12 @@ const renderSubSelectMenu = (
   };
 
   return (
-    <ContextMenu.Root theme={ContextMenuRootTheme} key={key} mode={mode}>
+    <ContextMenu.Root
+      theme={ContextMenuRootTheme}
+      key={key}
+      mode={mode}
+      disableItemIconAlign={disableItemIconAlign}
+    >
       <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
@@ -467,8 +473,14 @@ export const Positions: Story = {
   },
 };
 
-export const HoverMode: Story = {
+export const ClickMode: Story = {
   render: () => {
-    return renderSubSelectMenu('', ContextMenuMode.HOVER);
+    return renderSubSelectMenu('', ContextMenuMode.CLICK);
+  },
+};
+
+export const DisabledAutoAlign: Story = {
+  render: () => {
+    return renderSubSelectMenu('', ContextMenuMode.HOVER, true);
   },
 };

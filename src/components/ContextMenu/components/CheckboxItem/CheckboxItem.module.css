@@ -26,7 +26,7 @@
     color: var(--crm-ui-kit-context-menu-checkbox-item-checked-color);
   }
 
-  &[data-has-icon] {
-    padding: var(--crm-ui-kit-context-menu-checkbox-item-with-icon-padding);
+  &[data-no-icon-align] {
+    padding: var(--crm-ui-kit-context-menu-checkbox-item-without-icon-align-padding);
   }
 }

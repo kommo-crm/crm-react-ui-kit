@@ -2,7 +2,7 @@ type ContextMenuSubSelectValueThemeKey =
   | '--crm-ui-kit-context-menu-sub-select-value-padding'
   | '--crm-ui-kit-context-menu-sub-select-value-gap'
   | '--crm-ui-kit-context-menu-sub-select-value-color'
-  | '--crm-ui-kit-context-menu-sub-select-value-with-icon-padding'
+  | '--crm-ui-kit-context-menu-sub-select-value-without-icon-align-padding'
   | '--crm-ui-kit-context-menu-sub-select-value-label-margin'
   | '--crm-ui-kit-context-menu-sub-select-value-label-font-weight'
   | '--crm-ui-kit-context-menu-sub-select-value-label-color'
@@ -16,7 +16,8 @@ export const ContextMenuSubSelectValueTheme: ContextMenuSubSelectValueThemeType 
     '--crm-ui-kit-context-menu-sub-select-value-color':
       'var(--crm-ui-kit-palette-text-primary)',
 
-    '--crm-ui-kit-context-menu-sub-select-value-with-icon-padding': '0',
+    '--crm-ui-kit-context-menu-sub-select-value-without-icon-align-padding':
+      '0',
 
     '--crm-ui-kit-context-menu-sub-select-value-label-margin': '0 8px 0 0',
     '--crm-ui-kit-context-menu-sub-select-value-label-font-weight': '400',

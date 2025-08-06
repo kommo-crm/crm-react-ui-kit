@@ -9,7 +9,7 @@
   color: var(--crm-ui-kit-context-menu-label-color);
   font-weight: var(--crm-ui-kit-context-menu-label-font-weight);
 
-  &[data-has-icon] {
-    padding: var(--crm-ui-kit-context-menu-label-with-icon-padding);
+  &[data-no-icon-align] {
+    padding: var(--crm-ui-kit-context-menu-label-without-icon-align-padding);
   }
 }

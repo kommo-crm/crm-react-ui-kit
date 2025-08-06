@@ -5,7 +5,7 @@ type ContextMenuItemThemeKey =
   | '--crm-ui-kit-context-menu-item-disabled-color'
   | '--crm-ui-kit-context-menu-item-danger-color'
   | '--crm-ui-kit-context-menu-item-hovered-background-color'
-  | '--crm-ui-kit-context-menu-item-with-icon-padding';
+  | '--crm-ui-kit-context-menu-item-without-icon-align-padding';
 
 export const ContextMenuItemTheme: ContextMenuItemThemeType = {
   '--crm-ui-kit-context-menu-item-gap': '8px',
@@ -22,7 +22,7 @@ export const ContextMenuItemTheme: ContextMenuItemThemeType = {
   '--crm-ui-kit-context-menu-item-hovered-background-color':
     'var(--crm-ui-kit-palette-background-default)',
 
-  '--crm-ui-kit-context-menu-item-with-icon-padding': '10px 16px',
+  '--crm-ui-kit-context-menu-item-without-icon-align-padding': '10px 16px',
 };
 
 export type ContextMenuItemThemeType = {

@@ -3,7 +3,7 @@ type ContextMenuLabelThemeKey =
   | '--crm-ui-kit-context-menu-label-gap'
   | '--crm-ui-kit-context-menu-label-color'
   | '--crm-ui-kit-context-menu-label-font-weight'
-  | '--crm-ui-kit-context-menu-label-with-icon-padding';
+  | '--crm-ui-kit-context-menu-label-without-icon-align-padding';
 
 export const ContextMenuLabelTheme: ContextMenuLabelThemeType = {
   '--crm-ui-kit-context-menu-label-gap': '8px',
@@ -11,7 +11,7 @@ export const ContextMenuLabelTheme: ContextMenuLabelThemeType = {
   '--crm-ui-kit-context-menu-label-color':
     'var(--crm-ui-kit-palette-text-primary)',
   '--crm-ui-kit-context-menu-label-font-weight': '700',
-  '--crm-ui-kit-context-menu-label-with-icon-padding': '10px 16px',
+  '--crm-ui-kit-context-menu-label-without-icon-align-padding': '10px 16px',
 };
 
 export type ContextMenuLabelThemeType = {

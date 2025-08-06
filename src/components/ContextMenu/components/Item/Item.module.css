@@ -23,7 +23,7 @@
     );
   }
 
-  &[data-has-icon] {
-    padding: var(--crm-ui-kit-context-menu-item-with-icon-padding);
+  &[data-no-icon-align] {
+    padding: var(--crm-ui-kit-context-menu-item-without-icon-align-padding);
   }
 }

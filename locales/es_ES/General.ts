@@ -24,7 +24,8 @@ export default {
   'Custom Themes': 'Temas personalizados',
   'Autosize': 'Ajuste automático',
   'Positions': 'Posiciones',
-  'Hover Mode': 'Modo de Desplazamiento',
+  'Click Mode': 'Modo de Clic',
+  'Disabled Auto Align': 'Alineación Automática Deshabilitada',
 
   /* Used in docs */
   'Design tokens': 'Tokens de diseño',

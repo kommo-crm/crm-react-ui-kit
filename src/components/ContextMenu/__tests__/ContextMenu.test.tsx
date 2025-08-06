@@ -22,6 +22,8 @@ import {
   ContextMenuRootProps,
 } from 'src/components/ContextMenu';
 
+import { ContextMenuMode } from '../ContextMenu.enums';
+
 const DATA_ROOT_TEST_ID = 'ContextMenuRoot';
 const DATA_ITEM_TEST_ID = 'ContextMenuItem';
 const DATA_TRIGGER_TEST_ID = 'ContextMenuTrigger';
@@ -41,6 +43,7 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
     return (
       <ContextMenu.Root
         theme={ContextMenuRootTheme}
+        mode={ContextMenuMode.CLICK}
         {...props}
         data-testid={DATA_ROOT_TEST_ID}
       >

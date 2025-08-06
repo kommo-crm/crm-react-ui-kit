@@ -27,8 +27,8 @@
     color: var(--crm-ui-kit-context-menu-sub-select-item-active-color);
   }
 
-  &[data-has-icon] {
-    padding: var(--crm-ui-kit-context-menu-sub-select-item-with-icon-padding);
+  &[data-no-icon-align] {
+    padding: var(--crm-ui-kit-context-menu-sub-select-item-without-icon-align-padding);
   }
 }
 
@@ -36,6 +36,8 @@
   color: var(--crm-ui-kit-context-menu-sub-select-item-sort-icon-color);
 
   &.asc {
-    transform: var(--crm-ui-kit-context-menu-sub-select-item-sort-icon-asc-transform);
+    transform: var(
+      --crm-ui-kit-context-menu-sub-select-item-sort-icon-asc-transform
+    );
   }
 }

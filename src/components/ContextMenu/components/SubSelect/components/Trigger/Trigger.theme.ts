@@ -5,7 +5,7 @@ type ContextMenuSubSelectTriggerThemeKey =
   | '--crm-ui-kit-context-menu-sub-select-trigger-background-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-disabled-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-hovered-background-color'
-  | '--crm-ui-kit-context-menu-sub-select-trigger-with-icon-padding'
+  | '--crm-ui-kit-context-menu-sub-select-trigger-without-icon-align-padding'
   | '--crm-ui-kit-context-menu-sub-select-trigger-opened-background-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-chevron-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-chevron-margin'
@@ -27,7 +27,7 @@ export const ContextMenuSubSelectTriggerTheme: ContextMenuSubSelectTriggerThemeT
     '--crm-ui-kit-context-menu-sub-select-trigger-hovered-background-color':
       'var(--crm-ui-kit-palette-background-default)',
 
-    '--crm-ui-kit-context-menu-sub-select-trigger-with-icon-padding':
+    '--crm-ui-kit-context-menu-sub-select-trigger-without-icon-align-padding':
       '10px 16px',
 
     '--crm-ui-kit-context-menu-sub-select-trigger-opened-background-color':

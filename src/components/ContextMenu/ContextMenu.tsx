@@ -40,9 +40,10 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
       className,
       theme,
       children,
-      mode = ContextMenuMode.CLICK,
-      autoCloseDelay = 200,
+      mode = ContextMenuMode.HOVER,
+      autoCloseDelay = 100,
       onOpen,
+      disableItemIconAlign = false,
       ...props
     },
     ref
@@ -109,6 +110,10 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
     }, [mode, open, isInsideContent]);
 
     const handleOpenChange = (value: boolean) => {
+      if (mode === ContextMenuMode.HOVER) {
+        return;
+      }
+
       setOpen(value);
 
       if (value) {
@@ -140,6 +145,8 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
       <ContextMenuProvider
         triggerRef={triggerRef}
         autoCloseDelay={autoCloseDelay}
+        disableItemIconAlign={disableItemIconAlign}
+        mode={mode}
       >
         <RadixDropdownMenuRoot
           onOpenChange={handleOpenChange}

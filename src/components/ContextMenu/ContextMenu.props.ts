@@ -32,9 +32,13 @@ export type ContextMenuRootProps = Omit<
    * - `click`: menu opens on click, closes on outside click.
    * - `hover`: menu opens and closes on mouse hover.
    *
-   * @default ContextMenuMode.Click
+   * @default ContextMenuMode.Hover
    */
   mode?: ContextMenuMode;
+  /**
+   * Flag that disables item alignment if at least one item has an icon.
+   */
+  disableItemIconAlign?: boolean;
 };
 
 export interface ContextMenuContextProps {
@@ -46,8 +50,19 @@ export interface ContextMenuContextProps {
    */
   triggerRef: React.RefObject<HTMLDivElement>;
   /**
+   * Defines how the menu is triggered.
+   *
+   * - `click`: menu opens on click, closes on outside click.
+   * - `hover`: menu opens and closes on mouse hover.
+   */
+  mode: ContextMenuMode;
+  /**
    * Delay (in milliseconds) before automatically closing the menu
-   * in `hover` mode when the cursor leaves the menu area.
+   * in `hover` mode and submenus when the cursor leaves the menu area.
    */
   autoCloseDelay: number;
+  /**
+   * Flag that disables item alignment if at least one item has an icon.
+   */
+  disableItemIconAlign: boolean;
 }

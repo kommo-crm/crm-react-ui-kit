@@ -8,7 +8,7 @@ type ContextMenuSubSelectItemThemeKey =
   | '--crm-ui-kit-context-menu-sub-select-item-active-color'
   | '--crm-ui-kit-context-menu-sub-select-item-sort-icon-color'
   | '--crm-ui-kit-context-menu-sub-select-item-sort-icon-asc-transform'
-  | '--crm-ui-kit-context-menu-sub-select-item-with-icon-padding';
+  | '--crm-ui-kit-context-menu-sub-select-item-without-icon-align-padding';
 
 export const ContextMenuSubSelectItemTheme: ContextMenuSubSelectItemThemeType =
   {
@@ -33,7 +33,8 @@ export const ContextMenuSubSelectItemTheme: ContextMenuSubSelectItemThemeType =
     '--crm-ui-kit-context-menu-sub-select-item-sort-icon-asc-transform':
       'rotate(180deg)',
 
-    '--crm-ui-kit-context-menu-sub-select-item-with-icon-padding': '10px 16px',
+    '--crm-ui-kit-context-menu-sub-select-item-without-icon-align-padding':
+      '10px 16px',
   };
 
 export type ContextMenuSubSelectItemThemeType = {

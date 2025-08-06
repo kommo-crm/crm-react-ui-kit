@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
@@ -10,6 +10,10 @@ import MetaItemDefaultCopyIcon from 'src/icons/copyButton.svg';
 import { TextContextMenuTheme } from '../Text';
 
 import { copyToClipboard } from '../../utils/copyToClipboard';
+
+import { useContextMenuContext } from '../../ContextMenu.context';
+
+import { useLevelProviderContext } from '../LevelProvider';
 
 import type { MetaItemProps } from './MetaItem.props';
 
@@ -34,7 +38,18 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
     },
     ref
   ) => {
+    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
+    const { hasItemWithIcon, registerItemWithItem } =
+      useLevelProviderContext(DISPLAY_NAME);
+
     const themeClassName = useThemeClassName(theme);
+
+    useEffect(() => {
+      if (icon) {
+        registerItemWithItem();
+      }
+    }, [icon]);
+
     const handleCopy = () => (onCopy ? onCopy(value) : copyToClipboard(value));
     const CopyIcon = copyIcon || MetaItemDefaultCopyIcon;
 
@@ -42,7 +57,9 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
       <div
         ref={ref}
         className={cx(s.meta_item, themeClassName, className)}
-        data-has-icon={icon ? '' : undefined}
+        data-no-icon-align={
+          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
+        }
         {...props}
       >
         {icon}

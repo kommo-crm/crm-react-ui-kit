@@ -19,8 +19,10 @@
     );
   }
 
-  &[data-has-icon] {
-    padding: var(--crm-ui-kit-context-menu-sub-trigger-with-icon-padding);
+  &[data-no-icon-align] {
+    padding: var(
+      --crm-ui-kit-context-menu-sub-trigger-without-icon-align-padding
+    );
   }
 
   &[data-state='open'] {

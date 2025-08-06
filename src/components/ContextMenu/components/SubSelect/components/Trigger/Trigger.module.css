@@ -21,9 +21,9 @@
     );
   }
 
-  &[data-has-icon] {
+  &[data-no-icon-align] {
     padding: var(
-      --crm-ui-kit-context-menu-sub-select-trigger-with-icon-padding
+      --crm-ui-kit-context-menu-sub-select-trigger-without-icon-align-padding
     );
   }
 

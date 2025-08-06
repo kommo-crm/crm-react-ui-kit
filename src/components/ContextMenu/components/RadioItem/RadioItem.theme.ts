@@ -6,7 +6,7 @@ type ContextMenuRadioItemThemeKey =
   | '--crm-ui-kit-context-menu-radio-item-disabled-color'
   | '--crm-ui-kit-context-menu-radio-item-hovered-background-color'
   | '--crm-ui-kit-context-menu-radio-item-checked-color'
-  | '--crm-ui-kit-context-menu-radio-item-with-icon-padding';
+  | '--crm-ui-kit-context-menu-radio-item-without-icon-align-padding';
 
 export const ContextMenuRadioItemTheme: ContextMenuRadioItemThemeType = {
   '--crm-ui-kit-context-menu-radio-item-padding': '10px 16px 10px 40px',
@@ -24,7 +24,8 @@ export const ContextMenuRadioItemTheme: ContextMenuRadioItemThemeType = {
   '--crm-ui-kit-context-menu-radio-item-checked-color':
     'var(--crm-ui-kit-palette-active-element-900)',
 
-  '--crm-ui-kit-context-menu-radio-item-with-icon-padding': '10px 16px',
+  '--crm-ui-kit-context-menu-radio-item-without-icon-align-padding':
+    '10px 16px',
 };
 
 export type ContextMenuRadioItemThemeType = {

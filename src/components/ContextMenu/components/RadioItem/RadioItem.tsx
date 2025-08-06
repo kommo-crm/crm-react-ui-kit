@@ -1,8 +1,12 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { RadioItem as RadixDropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
+
+import { useLevelProviderContext } from '../LevelProvider';
+
+import { useContextMenuContext } from '../../ContextMenu.context';
 
 import type { RadioItemProps } from './RadioItem.props';
 
@@ -12,14 +16,26 @@ const DISPLAY_NAME = 'ContextMenu.RadioItem';
 
 export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
   ({ theme, className, children, icon, text, isDisabled, ...props }, ref) => {
+    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
+    const { hasItemWithIcon, registerItemWithItem } =
+      useLevelProviderContext(DISPLAY_NAME);
+
     const themeClassName = useThemeClassName(theme);
+
+    useEffect(() => {
+      if (icon) {
+        registerItemWithItem();
+      }
+    }, [icon]);
 
     return (
       <RadixDropdownMenuRadioItem
         ref={ref}
         className={cx(s.radio_item, themeClassName, className)}
         disabled={isDisabled}
-        data-has-icon={icon ? '' : undefined}
+        data-no-icon-align={
+          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
+        }
         {...props}
       >
         {icon}
