@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
@@ -9,7 +9,7 @@ import MetaItemDefaultCopyIcon from 'src/icons/copyButton.svg';
 
 import { TextContextMenuTheme } from '../Text';
 
-import { copyToClipboard } from '../../utils/copyToClipboard';
+import { copyToClipboard } from '../../utils';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
 
@@ -39,16 +39,9 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
     ref
   ) => {
     const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-    const { hasItemWithIcon, registerItemWithItem } =
-      useLevelProviderContext(DISPLAY_NAME);
+    const { hasItemWithIcon } = useLevelProviderContext(DISPLAY_NAME);
 
     const themeClassName = useThemeClassName(theme);
-
-    useEffect(() => {
-      if (icon) {
-        registerItemWithItem();
-      }
-    }, [icon]);
 
     const handleCopy = () => (onCopy ? onCopy(value) : copyToClipboard(value));
     const CopyIcon = copyIcon || MetaItemDefaultCopyIcon;

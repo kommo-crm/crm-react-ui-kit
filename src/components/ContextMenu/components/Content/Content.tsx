@@ -1,10 +1,14 @@
-import React, { forwardRef, useCallback, useState } from 'react';
+import React, { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
 import { LevelProvider } from '../LevelProvider';
+
+import { hasAnyItemWithIcon } from '../../utils';
+
+import { useContextMenuContext } from '../../ContextMenu.context';
 
 import type { ContentProps } from './Content.props';
 
@@ -26,11 +30,19 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
   ) => {
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
 
+    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
+
     const themeClassName = useThemeClassName(theme);
 
-    const registerItemWithItem = useCallback(() => {
-      setHasItemWithIcon(true);
-    }, []);
+    if (!disableItemIconAlign) {
+      const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
+
+      useLayoutEffect(() => {
+        if (hasIcon) {
+          setHasItemWithIcon(true);
+        }
+      }, [hasIcon]);
+    }
 
     return (
       <RadixDropdownMenuContent
@@ -40,10 +52,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         arrowPadding={arrowPadding}
         {...props}
       >
-        <LevelProvider
-          hasItemWithIcon={hasItemWithIcon}
-          registerItemWithItem={registerItemWithItem}
-        >
+        <LevelProvider hasItemWithIcon={hasItemWithIcon}>
           {children}
         </LevelProvider>
       </RadixDropdownMenuContent>

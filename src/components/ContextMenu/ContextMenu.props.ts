@@ -19,7 +19,7 @@ export type ContextMenuRootProps = Omit<
    * Delay in milliseconds before the menu closes
    * when the user stops hovering over it.
    *
-   * Defaults to 200ms. Set to 0 for immediate close.
+   * Defaults to 100ms. Set to 0 for immediate close.
    */
   autoCloseDelay?: number;
   /**

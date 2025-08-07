@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -40,16 +40,9 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
     ref
   ) => {
     const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-    const { hasItemWithIcon, registerItemWithItem } =
-      useLevelProviderContext(DISPLAY_NAME);
+    const { hasItemWithIcon } = useLevelProviderContext(DISPLAY_NAME);
 
     const themeClassName = useThemeClassName(theme);
-
-    useEffect(() => {
-      if (icon) {
-        registerItemWithItem();
-      }
-    }, [icon]);
 
     const {
       value: selectedItem,

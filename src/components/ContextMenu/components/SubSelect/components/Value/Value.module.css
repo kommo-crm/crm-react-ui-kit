@@ -8,12 +8,6 @@
   padding: var(--crm-ui-kit-context-menu-sub-select-value-padding);
   gap: var(--crm-ui-kit-context-menu-sub-select-value-gap);
   color: var(--crm-ui-kit-context-menu-sub-select-value-color);
-
-  &[data-no-icon-align] {
-    padding: var(
-      --crm-ui-kit-context-menu-sub-select-value-without-icon-align-padding
-    );
-  }
 }
 
 .label {

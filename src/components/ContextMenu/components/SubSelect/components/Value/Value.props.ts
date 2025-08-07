@@ -14,10 +14,6 @@ export interface SubSelectValueProps {
    */
   theme: ContextMenuSubSelectValueThemeType;
   /**
-   * Icon to the left of the label.
-   */
-  icon?: React.ReactElement;
-  /**
    * Label or key to display on the left side.
    */
   label: string;

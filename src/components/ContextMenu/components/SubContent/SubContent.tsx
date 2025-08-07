@@ -1,10 +1,14 @@
-import React, { forwardRef, useCallback, useState } from 'react';
+import React, { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
 import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
 import { LevelProvider } from '../LevelProvider';
+
+import { hasAnyItemWithIcon } from '../../utils';
+
+import { useContextMenuContext } from '../../ContextMenu.context';
 
 import type { SubContentProps } from './SubContent.props';
 
@@ -26,11 +30,19 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
   ) => {
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
 
+    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
+
     const themeClassName = useThemeClassName(theme);
 
-    const registerItemWithItem = useCallback(() => {
-      setHasItemWithIcon(true);
-    }, []);
+    if (!disableItemIconAlign) {
+      const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
+
+      useLayoutEffect(() => {
+        if (hasIcon) {
+          setHasItemWithIcon(true);
+        }
+      }, [hasIcon]);
+    }
 
     return (
       <RadixDropdownMenuSubContent
@@ -40,10 +52,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
         collisionPadding={collisionPadding}
         {...props}
       >
-        <LevelProvider
-          hasItemWithIcon={hasItemWithIcon}
-          registerItemWithItem={registerItemWithItem}
-        >
+        <LevelProvider hasItemWithIcon={hasItemWithIcon}>
           {children}
         </LevelProvider>
       </RadixDropdownMenuSubContent>
