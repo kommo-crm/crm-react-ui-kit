@@ -62,4 +62,11 @@ export interface ContextMenuContextProps {
    * @default 100
    */
   hoverOpenDelay: number;
+  /**
+   * Temporarily enables hover-based closing behavior for the menu.
+   * When called, the menu will close on hover outside until it hides.
+   *
+   * It only makes sense when mode is `ContextMenuMode.CLICK`
+   */
+  enableTemporaryHoverClose: () => void;
 }

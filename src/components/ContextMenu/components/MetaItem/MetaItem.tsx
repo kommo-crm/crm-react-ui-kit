@@ -11,6 +11,10 @@ import { TextContextMenuTheme } from '../Text';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
+import { useContextMenuContext } from '../../ContextMenu.context';
+
+import { ContextMenuMode } from '../../ContextMenu.enums';
+
 import { copyToClipboard } from './utils';
 
 import type { MetaItemProps } from './MetaItem.props';
@@ -39,8 +43,17 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
     const themeClassName = useThemeClassName(theme);
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
+    const { mode, enableTemporaryHoverClose } =
+      useContextMenuContext(DISPLAY_NAME);
 
-    const handleCopy = () => (onCopy ? onCopy(value) : copyToClipboard(value));
+    const handleCopy = () => {
+      if (mode === ContextMenuMode.CLICK) {
+        enableTemporaryHoverClose();
+      }
+
+      return onCopy ? onCopy(value) : copyToClipboard(value);
+    };
+
     const CopyIcon = copyIcon || MetaItemDefaultCopyIcon;
 
     return (

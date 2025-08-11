@@ -42,13 +42,14 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
   ) => {
     const [open, setOpen] = useState(false);
     const [isInsideContent, setIsInsideContent] = useState(false);
+    const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
 
     const triggerRef = useRef<HTMLButtonElement>(null);
     const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
-      if (mode !== ContextMenuMode.HOVER || !open) {
+      if (!open || (mode !== ContextMenuMode.HOVER && !temporaryHoverClose)) {
         return;
       }
 
@@ -61,9 +62,10 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
         closeTimeoutRef.current = setTimeout(() => {
           setOpen(false);
           setIsInsideContent(false);
+          setTemporaryHoverClose(false);
         }, hoverCloseDelay);
       }
-    }, [mode, open, isInsideContent]);
+    }, [mode, open, isInsideContent, temporaryHoverClose, hoverCloseDelay]);
 
     const handleOpenChange = (value: boolean) => {
       setOpen(value);
@@ -74,26 +76,30 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
     };
 
     const handleMouseEnter = () => {
-      if (mode !== ContextMenuMode.HOVER) {
+      if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
         return;
       }
 
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-        hoverTimeoutRef.current = null;
-      }
-
-      hoverTimeoutRef.current = setTimeout(() => {
-        if (!open) {
-          setOpen(true);
+      if (open) {
+        setIsInsideContent(true);
+      } else {
+        if (hoverTimeoutRef.current) {
+          clearTimeout(hoverTimeoutRef.current);
+          hoverTimeoutRef.current = null;
         }
 
-        setIsInsideContent(true);
-      }, hoverOpenDelay);
+        hoverTimeoutRef.current = setTimeout(() => {
+          if (!open) {
+            setOpen(true);
+          }
+
+          setIsInsideContent(true);
+        }, hoverOpenDelay);
+      }
     };
 
     const handleMouseLeave = () => {
-      if (mode !== ContextMenuMode.HOVER) {
+      if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
         return;
       }
 
@@ -110,6 +116,10 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
         triggerRef={triggerRef}
         hoverCloseDelay={hoverCloseDelay}
         hoverOpenDelay={hoverOpenDelay}
+        enableTemporaryHoverClose={() => {
+          setIsInsideContent(true);
+          setTemporaryHoverClose(true);
+        }}
         mode={mode}
       >
         <RadixDropdownMenuRoot

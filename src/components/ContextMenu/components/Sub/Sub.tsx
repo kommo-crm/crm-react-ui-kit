@@ -30,9 +30,14 @@ export const Sub = ({ children, ...props }: SubProps) => {
 
   const handleMouseEnter = () => {
     clearTimers();
-    openTimeoutRef.current = window.setTimeout(() => {
+
+    if (open) {
       setOpen(true);
-    }, hoverOpenDelay);
+    } else {
+      openTimeoutRef.current = window.setTimeout(() => {
+        setOpen(true);
+      }, hoverOpenDelay);
+    }
   };
 
   const handleMouseLeave = () => {
