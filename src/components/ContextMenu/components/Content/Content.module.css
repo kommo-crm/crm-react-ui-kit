@@ -1,5 +1,6 @@
 .content {
-  min-width: 100px;
+  min-width: 50px;
+
   background-color: var(--crm-ui-kit-context-menu-content-background-color);
   border: var(--crm-ui-kit-context-menu-content-border-size) solid
     var(--crm-ui-kit-context-menu-content-border-color);

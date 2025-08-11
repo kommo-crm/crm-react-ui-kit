@@ -1,6 +1,6 @@
 type ContextMenuSubSelectItemThemeKey =
-  | '--crm-ui-kit-context-menu-sub-select-item-padding'
   | '--crm-ui-kit-context-menu-sub-select-item-gap'
+  | '--crm-ui-kit-context-menu-sub-select-item-padding'
   | '--crm-ui-kit-context-menu-sub-select-item-color'
   | '--crm-ui-kit-context-menu-sub-select-item-disabled-color'
   | '--crm-ui-kit-context-menu-sub-select-item-danger-color'

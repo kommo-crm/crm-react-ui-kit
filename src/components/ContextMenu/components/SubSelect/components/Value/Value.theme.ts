@@ -1,6 +1,6 @@
 type ContextMenuSubSelectValueThemeKey =
-  | '--crm-ui-kit-context-menu-sub-select-value-padding'
   | '--crm-ui-kit-context-menu-sub-select-value-gap'
+  | '--crm-ui-kit-context-menu-sub-select-value-padding'
   | '--crm-ui-kit-context-menu-sub-select-value-color'
   | '--crm-ui-kit-context-menu-sub-select-value-label-margin'
   | '--crm-ui-kit-context-menu-sub-select-value-label-font-weight'

@@ -8,10 +8,10 @@ import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
 
 import {
   ContextMenu,
-  ContextMenuRootTheme,
   ContextMenuTriggerTheme,
   ContextMenuArrowTheme,
   ContextMenuContentTheme,
+  ContextMenuMode,
 } from 'src/components/ContextMenu';
 
 import { ContextMenuSubSelectItemTheme } from '../components/Item';
@@ -44,13 +44,16 @@ const renderContextMenuSubSelect = async (props?: Partial<SubSelectProps>) => {
     const [selected, setSelected] = useState<SubSelectOption>();
 
     return (
-      <ContextMenu.Root theme={ContextMenuRootTheme} open>
+      <ContextMenu.Root mode={ContextMenuMode.CLICK} open>
         <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
           <ContextMenuTriggerIcon />
         </ContextMenu.Trigger>
 
         <ContextMenu.Portal>
-          <ContextMenu.Content theme={ContextMenuContentTheme} sideOffset={5}>
+          <ContextMenu.Content
+            theme={ContextMenuContentTheme}
+            disableAutoPositioning
+          >
             <ContextMenu.SubSelect.Root
               value={selected}
               sortDirection={sortDir}

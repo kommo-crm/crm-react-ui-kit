@@ -28,9 +28,9 @@ export const Value = forwardRef<HTMLDivElement, SubSelectValueProps>(
     },
     ref
   ) => {
-    const { value } = useSubSelectContext(DISPLAY_NAME);
-
     const themeClassName = useThemeClassName(theme);
+
+    const { value } = useSubSelectContext(DISPLAY_NAME);
 
     return (
       <div

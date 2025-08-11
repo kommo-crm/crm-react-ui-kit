@@ -8,9 +8,11 @@
   gap: var(--crm-ui-kit-context-menu-sub-trigger-gap);
   color: var(--crm-ui-kit-context-menu-sub-trigger-color);
   background-color: var(--crm-ui-kit-context-menu-sub-trigger-background-color);
+  cursor: var(--crm-ui-kit-context-menu-sub-trigger-cursor);
 
   &[data-disabled] {
     color: var(--crm-ui-kit-context-menu-sub-trigger-disabled-color);
+    cursor: var(--crm-ui-kit-context-menu-sub-trigger-disabled-cursor);
   }
 
   &[data-highlighted] {

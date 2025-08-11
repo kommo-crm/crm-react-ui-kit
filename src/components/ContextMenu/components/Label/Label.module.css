@@ -1,7 +1,6 @@
 .label {
   position: relative;
   display: flex;
-  user-select: none;
   outline: none;
 
   padding: var(--crm-ui-kit-context-menu-label-padding);

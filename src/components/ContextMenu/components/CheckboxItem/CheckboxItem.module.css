@@ -11,9 +11,11 @@
   background-color: var(
     --crm-ui-kit-context-menu-checkbox-item-background-color
   );
+  cursor: var(--crm-ui-kit-context-menu-checkbox-item-cursor);
 
   &[data-disabled] {
     color: var(--crm-ui-kit-context-menu-checkbox-item-disabled-color);
+    cursor: var(--crm-ui-kit-context-menu-checkbox-item-disabled-cursor);
   }
 
   &[data-highlighted] {

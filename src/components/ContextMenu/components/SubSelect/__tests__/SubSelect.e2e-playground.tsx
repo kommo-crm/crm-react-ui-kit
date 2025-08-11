@@ -11,7 +11,7 @@ import {
   ContextMenu,
   ContextMenuArrowTheme,
   ContextMenuContentTheme,
-  ContextMenuRootTheme,
+  ContextMenuMode,
   ContextMenuTriggerTheme,
 } from 'src/components/ContextMenu';
 
@@ -84,7 +84,7 @@ export const SubSelectPlayground = (
             padding: '10px',
           }}
         >
-          <ContextMenu.Root theme={ContextMenuRootTheme} open>
+          <ContextMenu.Root mode={ContextMenuMode.CLICK} open>
             <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
               <ContextMenuTriggerIcon />
             </ContextMenu.Trigger>

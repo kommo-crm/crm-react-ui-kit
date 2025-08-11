@@ -9,7 +9,6 @@ import { Text } from 'src/components/Text';
 
 import {
   ContextMenu,
-  ContextMenuRootTheme,
   ContextMenuTriggerTheme,
   ContextMenuItemTheme,
   ContextMenuCheckboxItemTheme,
@@ -42,10 +41,9 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
 
     return (
       <ContextMenu.Root
-        theme={ContextMenuRootTheme}
         mode={ContextMenuMode.CLICK}
-        {...props}
         data-testid={DATA_ROOT_TEST_ID}
+        {...props}
       >
         <ContextMenu.Trigger
           theme={ContextMenuTriggerTheme}
@@ -57,6 +55,7 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
         <ContextMenu.Portal>
           <ContextMenu.Content
             theme={ContextMenuContentTheme}
+            disableAutoPositioning
             data-testid={DATA_CONTENT_TEST_ID}
           >
             <ContextMenu.MetaItem

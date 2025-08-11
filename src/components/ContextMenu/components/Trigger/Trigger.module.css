@@ -1,6 +1,9 @@
 .button {
   all: unset;
+  display: flex;
 
+  padding: var(--crm-ui-kit-context-menu-trigger-padding);
   color: var(--crm-ui-kit-context-menu-trigger-color);
+  cursor: var(--crm-ui-kit-context-menu-trigger-cursor);
 }
 

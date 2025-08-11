@@ -7,7 +7,6 @@ import ContextMenuCheckIcon from 'src/icons/check.svg';
 
 import {
   ContextMenu,
-  ContextMenuRootTheme,
   ContextMenuTriggerTheme,
   ContextMenuItemTheme,
   ContextMenuSeparatorTheme,
@@ -223,8 +222,7 @@ function App() {
 
 const renderSubSelectMenu = (
   key: string,
-  mode: ContextMenuMode = ContextMenuMode.HOVER,
-  disableItemIconAlign = false
+  mode: ContextMenuMode = ContextMenuMode.CLICK
 ) => {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState('light');
@@ -238,12 +236,7 @@ const renderSubSelectMenu = (
   };
 
   return (
-    <ContextMenu.Root
-      theme={ContextMenuRootTheme}
-      key={key}
-      mode={mode}
-      disableItemIconAlign={disableItemIconAlign}
-    >
+    <ContextMenu.Root key={key} mode={mode}>
       <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
@@ -404,7 +397,7 @@ const meta = {
   },
   component: ContextMenu,
   args: {
-    theme: ContextMenuRootTheme,
+    mode: ContextMenuMode.CLICK,
   },
 } satisfies Meta<typeof ContextMenu>;
 
@@ -473,14 +466,8 @@ export const Positions: Story = {
   },
 };
 
-export const ClickMode: Story = {
+export const HoverMode: Story = {
   render: () => {
-    return renderSubSelectMenu('', ContextMenuMode.CLICK);
-  },
-};
-
-export const DisabledAutoAlign: Story = {
-  render: () => {
-    return renderSubSelectMenu('', ContextMenuMode.HOVER, true);
+    return renderSubSelectMenu('', ContextMenuMode.HOVER);
   },
 };

@@ -4,9 +4,7 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
-import { useLevelProviderContext } from '../LevelProvider';
-
-import { useContextMenuContext } from '../../ContextMenu.context';
+import { useLevelContext } from '../../providers/LevelProvider';
 
 import type { RadioItemProps } from './RadioItem.props';
 
@@ -16,19 +14,16 @@ const DISPLAY_NAME = 'ContextMenu.RadioItem';
 
 export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
   ({ theme, className, children, icon, text, isDisabled, ...props }, ref) => {
-    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-    const { hasItemWithIcon } = useLevelProviderContext(DISPLAY_NAME);
-
     const themeClassName = useThemeClassName(theme);
+
+    const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuRadioItem
         ref={ref}
         className={cx(s.radio_item, themeClassName, className)}
         disabled={isDisabled}
-        data-no-icon-align={
-          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
-        }
+        data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         {...props}
       >
         {icon}

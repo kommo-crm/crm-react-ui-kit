@@ -4,9 +4,7 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
-import { useContextMenuContext } from '../../ContextMenu.context';
-
-import { useLevelProviderContext } from '../LevelProvider';
+import { useLevelContext } from '../../providers/LevelProvider';
 
 import type { LabelProps } from './Label.props';
 
@@ -16,18 +14,15 @@ const DISPLAY_NAME = 'ContextMenu.Label';
 
 export const Label = forwardRef<HTMLDivElement, LabelProps>(
   ({ theme, className, children, icon, text, ...props }, ref) => {
-    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-    const { hasItemWithIcon } = useLevelProviderContext(DISPLAY_NAME);
-
     const themeClassName = useThemeClassName(theme);
+
+    const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuLabel
         ref={ref}
         className={cx(s.label, themeClassName, className)}
-        data-no-icon-align={
-          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
-        }
+        data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         {...props}
       >
         {icon}

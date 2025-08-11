@@ -2,7 +2,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  user-select: none;
   outline: none;
 
   padding: var(--crm-ui-kit-context-menu-meta-item-padding);
@@ -23,7 +22,7 @@
 }
 
 .copy_icon {
-  cursor: copy;
+  cursor: pointer;
 
   margin: var(--crm-ui-kit-context-menu-meta-item-copy-icon-margin);
   color: var(--crm-ui-kit-context-menu-meta-item-copy-icon-color);

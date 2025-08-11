@@ -1,12 +1,8 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
-import cx from 'classnames';
-
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
 import { ContextMenuRootProps } from './ContextMenu.props';
 import { ContextMenuMode } from './ContextMenu.enums';
-import { ContextMenuRootThemeType } from './ContextMenu.theme';
 import { ContextMenuType } from './ContextMenu.types';
 
 import { Trigger } from './components/Trigger/Trigger';
@@ -30,90 +26,46 @@ import { Separator } from './components/Separator/Separator';
 
 import { ContextMenuProvider } from './ContextMenu.context';
 
-import s from './ContextMenu.module.css';
-
 const DISPLAY_NAME = 'ContextMenu';
 
 export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
   (
     {
-      className,
-      theme,
       children,
-      mode = ContextMenuMode.HOVER,
-      autoCloseDelay = 100,
+      mode,
+      hoverCloseDelay = 200,
+      hoverOpenDelay = 100,
       onOpen,
-      disableItemIconAlign = false,
       ...props
     },
     ref
   ) => {
-    const themeClassName = useThemeClassName<ContextMenuRootThemeType>(theme);
-
-    const triggerRef = useRef<HTMLDivElement>(null);
-    const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const isInsideTriggerRef = useRef(false);
-
     const [open, setOpen] = useState(false);
     const [isInsideContent, setIsInsideContent] = useState(false);
+
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
       if (mode !== ContextMenuMode.HOVER || !open) {
         return;
       }
 
-      const clearCloseTimer = () => {
+      if (isInsideContent) {
         if (closeTimeoutRef.current) {
           clearTimeout(closeTimeoutRef.current);
           closeTimeoutRef.current = null;
         }
-      };
-
-      const startCloseTimer = () => {
-        if (!closeTimeoutRef.current) {
-          closeTimeoutRef.current = setTimeout(() => {
-            setOpen(false);
-            setIsInsideContent(false);
-            isInsideTriggerRef.current = false;
-          }, autoCloseDelay);
-        }
-      };
-
-      const checkMouse = (e: MouseEvent) => {
-        const x = e.clientX;
-        const y = e.clientY;
-        const triggerRect = triggerRef.current?.getBoundingClientRect();
-
-        isInsideTriggerRef.current = triggerRect
-          ? x >= triggerRect.left &&
-            x <= triggerRect.right &&
-            y >= triggerRect.top &&
-            y <= triggerRect.bottom
-          : false;
-
-        if (isInsideTriggerRef.current || isInsideContent) {
-          clearCloseTimer();
-        } else {
-          startCloseTimer();
-        }
-      };
-
-      document.addEventListener('mousemove', checkMouse);
-
-      return () => {
-        document.removeEventListener('mousemove', checkMouse);
-
-        if (closeTimeoutRef.current) {
-          clearTimeout(closeTimeoutRef.current);
-        }
-      };
+      } else if (!closeTimeoutRef.current) {
+        closeTimeoutRef.current = setTimeout(() => {
+          setOpen(false);
+          setIsInsideContent(false);
+        }, hoverCloseDelay);
+      }
     }, [mode, open, isInsideContent]);
 
     const handleOpenChange = (value: boolean) => {
-      if (mode === ContextMenuMode.HOVER) {
-        return;
-      }
-
       setOpen(value);
 
       if (value) {
@@ -126,16 +78,28 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
         return;
       }
 
-      if (!isInsideTriggerRef.current && !open) {
-        setOpen(true);
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
       }
 
-      setIsInsideContent(true);
+      hoverTimeoutRef.current = setTimeout(() => {
+        if (!open) {
+          setOpen(true);
+        }
+
+        setIsInsideContent(true);
+      }, hoverOpenDelay);
     };
 
     const handleMouseLeave = () => {
-      if (mode !== ContextMenuMode.HOVER || isInsideTriggerRef.current) {
+      if (mode !== ContextMenuMode.HOVER) {
         return;
+      }
+
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
       }
 
       setIsInsideContent(false);
@@ -144,18 +108,18 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
     return (
       <ContextMenuProvider
         triggerRef={triggerRef}
-        autoCloseDelay={autoCloseDelay}
-        disableItemIconAlign={disableItemIconAlign}
+        hoverCloseDelay={hoverCloseDelay}
+        hoverOpenDelay={hoverOpenDelay}
         mode={mode}
       >
         <RadixDropdownMenuRoot
           onOpenChange={handleOpenChange}
           open={open}
+          modal={false}
           {...props}
         >
           <div
             ref={ref}
-            className={cx(s.root, themeClassName, className)}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

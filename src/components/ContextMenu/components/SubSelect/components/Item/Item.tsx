@@ -8,15 +8,13 @@ import { Text } from 'src/components/Text';
 
 import DefaultSortIcon from 'src/icons/directionArrowDown.svg';
 
-import { useContextMenuContext } from 'src/components/ContextMenu/ContextMenu.context';
-
 import { TextContextMenuTheme } from '../../../Text';
 
 import { useSubSelectContext } from '../../SubSelect.context';
 
 import { SortDirection } from '../../SubSelect.enums';
 
-import { useLevelProviderContext } from '../../../LevelProvider';
+import { useLevelContext } from '../../../../providers/LevelProvider';
 
 import type { SubSelectItemProps } from './Item.props';
 
@@ -39,10 +37,9 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
     },
     ref
   ) => {
-    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-    const { hasItemWithIcon } = useLevelProviderContext(DISPLAY_NAME);
-
     const themeClassName = useThemeClassName(theme);
+
+    const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
 
     const {
       value: selectedItem,
@@ -84,9 +81,7 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
         disabled={isDisabled}
         data-danger={isDanger ? '' : undefined}
         data-active={isActive ? '' : undefined}
-        data-no-icon-align={
-          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
-        }
+        data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         onSelect={handleSelect}
         {...props}
       >

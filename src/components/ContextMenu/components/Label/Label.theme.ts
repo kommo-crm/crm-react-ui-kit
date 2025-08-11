@@ -1,6 +1,6 @@
 type ContextMenuLabelThemeKey =
-  | '--crm-ui-kit-context-menu-label-padding'
   | '--crm-ui-kit-context-menu-label-gap'
+  | '--crm-ui-kit-context-menu-label-padding'
   | '--crm-ui-kit-context-menu-label-color'
   | '--crm-ui-kit-context-menu-label-font-weight'
   | '--crm-ui-kit-context-menu-label-without-icon-align-padding';

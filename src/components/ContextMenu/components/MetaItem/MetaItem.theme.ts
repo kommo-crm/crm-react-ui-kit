@@ -1,6 +1,6 @@
 type ContextMenuMetaItemThemeKey =
-  | '--crm-ui-kit-context-menu-meta-item-padding'
   | '--crm-ui-kit-context-menu-meta-item-gap'
+  | '--crm-ui-kit-context-menu-meta-item-padding'
   | '--crm-ui-kit-context-menu-meta-item-color'
   | '--crm-ui-kit-context-menu-meta-item-without-icon-align-padding'
   | '--crm-ui-kit-context-menu-meta-item-label-margin'

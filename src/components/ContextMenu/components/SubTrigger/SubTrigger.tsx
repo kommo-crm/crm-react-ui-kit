@@ -6,9 +6,7 @@ import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
 import ChevronRightIcon from 'src/icons/chevronRight.svg';
 
-import { useContextMenuContext } from '../../ContextMenu.context';
-
-import { useLevelProviderContext } from '../LevelProvider';
+import { useLevelContext } from '../../providers/LevelProvider';
 
 import type { SubTriggerProps } from './SubTrigger.props';
 
@@ -30,19 +28,16 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
     },
     ref
   ) => {
-    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-    const { hasItemWithIcon } = useLevelProviderContext(DISPLAY_NAME);
-
     const themeClassName = useThemeClassName(theme);
+
+    const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuSubTrigger
         ref={ref}
         className={cx(s.sub_trigger, themeClassName, className)}
         disabled={isDisabled}
-        data-no-icon-align={
-          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
-        }
+        data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         {...props}
       >
         {icon}

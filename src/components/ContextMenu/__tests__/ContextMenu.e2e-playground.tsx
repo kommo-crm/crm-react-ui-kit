@@ -22,7 +22,6 @@ import {
   ContextMenuLabelTheme,
   ContextMenuMetaItemTheme,
   ContextMenuRadioItemTheme,
-  ContextMenuRootTheme,
   ContextMenuSeparatorTheme,
   ContextMenuSubContentTheme,
   ContextMenuSubTriggerTheme,
@@ -204,7 +203,7 @@ export const ContextMenuPlayground = (
             padding: '10px',
           }}
         >
-          <ContextMenu {...itemProps} theme={ContextMenuRootTheme} />
+          <ContextMenu.Root {...itemProps} />
         </div>
       )}
     </ComponentPlayground>

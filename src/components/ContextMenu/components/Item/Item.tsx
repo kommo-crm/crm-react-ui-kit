@@ -4,9 +4,7 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
-import { useContextMenuContext } from '../../ContextMenu.context';
-
-import { useLevelProviderContext } from '../LevelProvider';
+import { useLevelContext } from '../../providers/LevelProvider';
 
 import type { ItemProps } from './Item.props';
 
@@ -19,10 +17,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
     { theme, className, children, icon, text, isDisabled, isDanger, ...props },
     ref
   ) => {
-    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-    const { hasItemWithIcon } = useLevelProviderContext(DISPLAY_NAME);
-
     const themeClassName = useThemeClassName(theme);
+
+    const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuItem
@@ -30,9 +27,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         className={cx(s.item, themeClassName, className)}
         disabled={isDisabled}
         data-danger={isDanger ? '' : undefined}
-        data-no-icon-align={
-          icon || (!disableItemIconAlign && !hasItemWithIcon) ? '' : undefined
-        }
+        data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         {...props}
       >
         {icon}

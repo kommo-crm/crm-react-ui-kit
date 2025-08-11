@@ -1,10 +1,8 @@
 export { ContextMenu } from './ContextMenu';
 export { type ContextMenuRootProps } from './ContextMenu.props';
 export { type ContextMenuType } from './ContextMenu.types';
-export {
-  ContextMenuRootTheme,
-  type ContextMenuRootThemeType,
-} from './ContextMenu.theme';
+
+export { ContextMenuMode } from './ContextMenu.enums';
 
 export {
   ContextMenuItemTheme,

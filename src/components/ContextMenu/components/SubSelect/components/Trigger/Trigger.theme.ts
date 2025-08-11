@@ -1,6 +1,6 @@
 type ContextMenuSubSelectTriggerThemeKey =
-  | '--crm-ui-kit-context-menu-sub-select-trigger-padding'
   | '--crm-ui-kit-context-menu-sub-select-trigger-gap'
+  | '--crm-ui-kit-context-menu-sub-select-trigger-padding'
   | '--crm-ui-kit-context-menu-sub-select-trigger-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-background-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-disabled-color'

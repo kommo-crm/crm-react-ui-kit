@@ -4,11 +4,9 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
-import { LevelProvider } from '../LevelProvider';
+import { LevelProvider } from '../../providers/LevelProvider';
 
 import { hasAnyItemWithIcon } from '../../utils';
-
-import { useContextMenuContext } from '../../ContextMenu.context';
 
 import type { SubContentProps } from './SubContent.props';
 
@@ -28,21 +26,17 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
     },
     ref
   ) => {
-    const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
-
-    const { disableItemIconAlign } = useContextMenuContext(DISPLAY_NAME);
-
     const themeClassName = useThemeClassName(theme);
 
-    if (!disableItemIconAlign) {
-      const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
+    const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
 
-      useLayoutEffect(() => {
-        if (hasIcon) {
-          setHasItemWithIcon(true);
-        }
-      }, [hasIcon]);
-    }
+    const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
+
+    useLayoutEffect(() => {
+      if (hasIcon) {
+        setHasItemWithIcon(true);
+      }
+    }, [hasIcon]);
 
     return (
       <RadixDropdownMenuSubContent

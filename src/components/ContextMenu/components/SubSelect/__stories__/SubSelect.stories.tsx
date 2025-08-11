@@ -15,10 +15,10 @@ import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
 
 import {
   ContextMenu,
-  ContextMenuRootTheme,
   ContextMenuTriggerTheme,
   ContextMenuArrowTheme,
   ContextMenuContentTheme,
+  ContextMenuMode,
 } from 'src/components/ContextMenu';
 
 import { i18n } from '@i18n';
@@ -63,7 +63,7 @@ function App() {
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
-        <ContextMenu.Content theme={ContextMenuContentTheme} sideOffset={5}>
+        <ContextMenu.Content theme={ContextMenuContentTheme}>
           <ContextMenu.SubSelect.Root
             value={selected}
             sortDirection={sortDir}
@@ -142,13 +142,18 @@ const meta = {
     const [selected, setSelected] = useState<SubSelectOption>();
 
     return (
-      <ContextMenu.Root theme={ContextMenuRootTheme}>
+      <ContextMenu.Root mode={ContextMenuMode.CLICK}>
         <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
           <ContextMenuTriggerIcon />
         </ContextMenu.Trigger>
 
         <ContextMenu.Portal>
-          <ContextMenu.Content theme={ContextMenuContentTheme} sideOffset={5}>
+          <ContextMenu.Content
+            theme={ContextMenuContentTheme}
+            collisionBoundary={
+              document.querySelector('.docs-story') as HTMLElement
+            }
+          >
             <ContextMenu.SubSelect.Root
               value={selected}
               sortDirection={sortDir}

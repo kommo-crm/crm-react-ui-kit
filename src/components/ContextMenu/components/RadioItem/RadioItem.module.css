@@ -9,9 +9,11 @@
   gap: var(--crm-ui-kit-context-menu-radio-item-gap);
   color: var(--crm-ui-kit-context-menu-radio-item-color);
   background-color: var(--crm-ui-kit-context-menu-radio-item-background-color);
+  cursor: var(--crm-ui-kit-context-menu-radio-item-cursor);
 
   &[data-disabled] {
     color: var(--crm-ui-kit-context-menu-radio-item-disabled-color);
+    cursor: var(--crm-ui-kit-context-menu-radio-item-disabled-cursor);
   }
 
   &[data-danger] {

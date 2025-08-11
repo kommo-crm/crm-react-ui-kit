@@ -4,5 +4,5 @@ import { LevelProviderContextProps } from './LevelProvider.props';
 
 const DISPLAY_NAME = 'ContextMenu.LevelProvider';
 
-export const [LevelProvider, useLevelProviderContext] =
+export const [LevelProvider, useLevelContext] =
   createComponentContext<LevelProviderContextProps>(DISPLAY_NAME);
