@@ -242,7 +242,12 @@ const renderSubSelectMenu = (
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
-        <ContextMenu.Content theme={ContextMenuContentTheme}>
+        <ContextMenu.Content
+          theme={ContextMenuContentTheme}
+          collisionBoundary={
+            document.querySelector('.docs-story') as HTMLElement
+          }
+        >
           <ContextMenu.MetaItem
             theme={ContextMenuMetaItemTheme}
             label={i18n.t('Workspace')}
