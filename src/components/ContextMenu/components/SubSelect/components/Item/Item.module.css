@@ -8,6 +8,8 @@
   padding: var(--crm-ui-kit-context-menu-sub-select-item-padding);
   gap: var(--crm-ui-kit-context-menu-sub-select-item-gap);
   color: var(--crm-ui-kit-context-menu-sub-select-item-color);
+  background-color: var(--crm-ui-kit-context-menu-sub-select-item-background-color);
+  cursor: var(--crm-ui-kit-context-menu-sub-select-item-cursor);
 
   &[data-disabled] {
     color: var(--crm-ui-kit-context-menu-sub-select-item-disabled-color);
@@ -28,7 +30,9 @@
   }
 
   &[data-no-icon-align] {
-    padding: var(--crm-ui-kit-context-menu-sub-select-item-without-icon-align-padding);
+    padding: var(
+      --crm-ui-kit-context-menu-sub-select-item-without-icon-align-padding
+    );
   }
 }
 

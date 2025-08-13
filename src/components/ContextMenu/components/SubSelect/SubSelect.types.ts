@@ -1,4 +1,6 @@
-import { SubSelectProps } from './SubSelect.props';
+import { ForwardRefExoticComponent, RefAttributes } from 'react';
+
+import { ContextMenuSubSelectRootProps } from './SubSelect.props';
 
 import { SubSelectTriggerProps } from './components/Trigger/Trigger.props';
 import { SubSelectContentProps } from './components/Content/Content.props';
@@ -21,10 +23,13 @@ export type SubSelectOption = {
   sortable?: boolean;
 };
 
-export type SubSelectComponentType = React.FC<SubSelectProps>;
+export type ContextMenuSubSelectComponentType = ForwardRefExoticComponent<
+  ContextMenuSubSelectRootProps & RefAttributes<HTMLDivElement>
+>;
 
-export interface SubSelectType extends SubSelectComponentType {
-  Root: SubSelectComponentType;
+export interface ContextMenuSubSelectType
+  extends ContextMenuSubSelectComponentType {
+  Root: ContextMenuSubSelectComponentType;
   Trigger: React.FC<SubSelectTriggerProps>;
   Value: React.FC<SubSelectValueProps>;
   Content: React.FC<SubSelectContentProps>;

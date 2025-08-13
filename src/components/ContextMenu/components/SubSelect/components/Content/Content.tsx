@@ -1,12 +1,19 @@
 import React, { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
 import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropdown-menu';
+import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
 import { hasAnyItemWithIcon } from 'src/components/ContextMenu/utils';
 
+import { useContextMenuContext } from 'src/components/ContextMenu/ContextMenu.context';
+
+import { ContextMenuMode } from 'src/components/ContextMenu/ContextMenu.enums';
+
 import { LevelProvider } from '../../../../providers/LevelProvider';
+
+import { useContextMenuSubSelectContext } from '../../SubSelect.context';
 
 import type { SubSelectContentProps } from './Content.props';
 
@@ -28,6 +35,14 @@ export const Content = forwardRef<HTMLDivElement, SubSelectContentProps>(
   ) => {
     const themeClassName = useThemeClassName(theme);
 
+    const { animatedOpen, startAnimation, open } =
+      useContextMenuSubSelectContext(DISPLAY_NAME);
+    const {
+      animationDuration,
+      animatedOpen: animatedFullOpen,
+      mode,
+    } = useContextMenuContext(DISPLAY_NAME);
+
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
 
     const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
@@ -38,18 +53,34 @@ export const Content = forwardRef<HTMLDivElement, SubSelectContentProps>(
       }
     }, [hasIcon]);
 
+    useLayoutEffect(() => {
+      if (open) {
+        startAnimation();
+      }
+    }, [open]);
+
+    const springStyles = useSpring({
+      opacity:
+        animatedOpen && (animatedFullOpen || mode === ContextMenuMode.CLICK)
+          ? 1
+          : 0,
+      config: { duration: animationDuration, easing: easings.easeInOutCubic },
+    });
+
     return (
-      <RadixDropdownMenuSubContent
-        ref={ref}
-        className={cx(s.content, themeClassName, className)}
-        sideOffset={sideOffset}
-        collisionPadding={collisionPadding}
-        {...props}
-      >
-        <LevelProvider hasItemWithIcon={hasItemWithIcon}>
-          {children}
-        </LevelProvider>
-      </RadixDropdownMenuSubContent>
+      <LevelProvider hasItemWithIcon={hasItemWithIcon}>
+        <animated.div style={springStyles}>
+          <RadixDropdownMenuSubContent
+            ref={ref}
+            className={cx(s.content, themeClassName, className)}
+            sideOffset={sideOffset}
+            collisionPadding={collisionPadding}
+            {...props}
+          >
+            {children}
+          </RadixDropdownMenuSubContent>
+        </animated.div>
+      </LevelProvider>
     );
   }
 );

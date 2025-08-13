@@ -7,7 +7,7 @@ import { Text } from 'src/components/Text';
 
 import { TextContextMenuTheme } from '../../../Text';
 
-import { useSubSelectContext } from '../../SubSelect.context';
+import { useContextMenuSubSelectContext } from '../../SubSelect.context';
 
 import type { SubSelectValueProps } from './Value.props';
 
@@ -30,7 +30,7 @@ export const Value = forwardRef<HTMLDivElement, SubSelectValueProps>(
   ) => {
     const themeClassName = useThemeClassName(theme);
 
-    const { value } = useSubSelectContext(DISPLAY_NAME);
+    const { value } = useContextMenuSubSelectContext(DISPLAY_NAME);
 
     return (
       <div

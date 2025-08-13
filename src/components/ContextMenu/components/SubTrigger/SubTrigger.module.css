@@ -26,12 +26,6 @@
       --crm-ui-kit-context-menu-sub-trigger-without-icon-align-padding
     );
   }
-
-  &[data-state='open'] {
-    background-color: var(
-      --crm-ui-kit-context-menu-sub-trigger-opened-background-color
-    );
-  }
 }
 
 .chevron {

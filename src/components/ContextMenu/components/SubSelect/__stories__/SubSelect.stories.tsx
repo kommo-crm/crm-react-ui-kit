@@ -108,6 +108,61 @@ const subSelectOptions: SubSelectOption[] = [
   { option: i18n.t('Name'), value: 'name' },
 ];
 
+const renderMenu = (mode = ContextMenuMode.CLICK) => {
+  const [sortDir, setSortDir] = useState<SortDirection>();
+  const [selected, setSelected] = useState<SubSelectOption>();
+
+  return (
+    <ContextMenu.Root mode={mode}>
+      <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+        <ContextMenuTriggerIcon />
+      </ContextMenu.Trigger>
+
+      <ContextMenu.Portal>
+        <ContextMenu.Content
+          theme={ContextMenuContentTheme}
+          collisionBoundary={
+            document.querySelector('.docs-story') as HTMLElement
+          }
+        >
+          <ContextMenu.SubSelect.Root
+            value={selected}
+            sortDirection={sortDir}
+            onChange={(value, dir) => {
+              setSelected(value);
+              setSortDir(dir);
+            }}
+          >
+            <ContextMenu.SubSelect.Trigger
+              theme={ContextMenuSubSelectTriggerTheme}
+            >
+              <ContextMenu.SubSelect.Value
+                theme={ContextMenuSubSelectValueTheme}
+                label={i18n.t('Sort by')}
+                placeholder="Placeholder"
+              />
+            </ContextMenu.SubSelect.Trigger>
+
+            <ContextMenu.SubSelect.Content
+              theme={ContextMenuSubSelectContentTheme}
+            >
+              {subSelectOptions.map((option) => (
+                <ContextMenu.SubSelect.Item
+                  theme={ContextMenuSubSelectItemTheme}
+                  key={option.value}
+                  item={option}
+                />
+              ))}
+            </ContextMenu.SubSelect.Content>
+          </ContextMenu.SubSelect.Root>
+
+          <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+        </ContextMenu.Content>
+      </ContextMenu.Portal>
+    </ContextMenu.Root>
+  );
+};
+
 const meta = {
   title: 'Components/ContextMenu/SubSelect',
   parameters: {
@@ -137,60 +192,7 @@ const meta = {
   args: {
     onChange: action('onChange'),
   },
-  render: () => {
-    const [sortDir, setSortDir] = useState<SortDirection>();
-    const [selected, setSelected] = useState<SubSelectOption>();
-
-    return (
-      <ContextMenu.Root mode={ContextMenuMode.CLICK}>
-        <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
-          <ContextMenuTriggerIcon />
-        </ContextMenu.Trigger>
-
-        <ContextMenu.Portal>
-          <ContextMenu.Content
-            theme={ContextMenuContentTheme}
-            collisionBoundary={
-              document.querySelector('.docs-story') as HTMLElement
-            }
-          >
-            <ContextMenu.SubSelect.Root
-              value={selected}
-              sortDirection={sortDir}
-              onChange={(value, dir) => {
-                setSelected(value);
-                setSortDir(dir);
-              }}
-            >
-              <ContextMenu.SubSelect.Trigger
-                theme={ContextMenuSubSelectTriggerTheme}
-              >
-                <ContextMenu.SubSelect.Value
-                  theme={ContextMenuSubSelectValueTheme}
-                  label={i18n.t('Sort by')}
-                  placeholder="Placeholder"
-                />
-              </ContextMenu.SubSelect.Trigger>
-
-              <ContextMenu.SubSelect.Content
-                theme={ContextMenuSubSelectContentTheme}
-              >
-                {subSelectOptions.map((option) => (
-                  <ContextMenu.SubSelect.Item
-                    theme={ContextMenuSubSelectItemTheme}
-                    key={option.value}
-                    item={option}
-                  />
-                ))}
-              </ContextMenu.SubSelect.Content>
-            </ContextMenu.SubSelect.Root>
-
-            <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
-          </ContextMenu.Content>
-        </ContextMenu.Portal>
-      </ContextMenu.Root>
-    );
-  },
+  render: () => renderMenu(),
 } satisfies Meta<typeof ContextMenu.SubSelect.Root>;
 
 export default meta;
@@ -198,3 +200,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const HoverMode: Story = {
+  render: () => renderMenu(ContextMenuMode.HOVER),
+};

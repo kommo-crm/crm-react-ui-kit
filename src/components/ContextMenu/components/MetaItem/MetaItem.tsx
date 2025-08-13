@@ -60,6 +60,7 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
       <div
         ref={ref}
         className={cx(s.meta_item, themeClassName, className)}
+        data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         {...props}
       >

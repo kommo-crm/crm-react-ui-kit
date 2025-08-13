@@ -9,7 +9,6 @@ type ContextMenuSubTriggerThemeKey =
   | '--crm-ui-kit-context-menu-sub-trigger-danger-color'
   | '--crm-ui-kit-context-menu-sub-trigger-hovered-background-color'
   | '--crm-ui-kit-context-menu-sub-trigger-without-icon-align-padding'
-  | '--crm-ui-kit-context-menu-sub-trigger-opened-background-color'
   | '--crm-ui-kit-context-menu-sub-trigger-chevron-color'
   | '--crm-ui-kit-context-menu-sub-trigger-chevron-margin'
   | '--crm-ui-kit-context-menu-sub-trigger-chevron-padding';
@@ -19,7 +18,8 @@ export const ContextMenuSubTriggerTheme: ContextMenuSubTriggerThemeType = {
   '--crm-ui-kit-context-menu-sub-trigger-gap': '8px',
   '--crm-ui-kit-context-menu-sub-trigger-color':
     'var(--crm-ui-kit-palette-text-primary)',
-  '--crm-ui-kit-context-menu-sub-trigger-background-color': 'transparent',
+  '--crm-ui-kit-context-menu-sub-trigger-background-color':
+    'var(--crm-ui-kit-palette-background-primary)',
   '--crm-ui-kit-context-menu-sub-trigger-cursor': 'pointer',
 
   '--crm-ui-kit-context-menu-sub-trigger-disabled-color':
@@ -34,9 +34,6 @@ export const ContextMenuSubTriggerTheme: ContextMenuSubTriggerThemeType = {
 
   '--crm-ui-kit-context-menu-sub-trigger-without-icon-align-padding':
     '10px 16px',
-
-  '--crm-ui-kit-context-menu-sub-trigger-opened-background-color':
-    'var(--crm-ui-kit-palette-background-default)',
 
   '--crm-ui-kit-context-menu-sub-trigger-chevron-color':
     'var(--crm-ui-kit-palette-text-primary)',

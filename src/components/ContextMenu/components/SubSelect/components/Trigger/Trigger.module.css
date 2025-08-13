@@ -10,6 +10,7 @@
   background-color: var(
     --crm-ui-kit-context-menu-sub-select-trigger-background-color
   );
+  cursor: var(--crm-ui-kit-context-menu-sub-select-trigger-cursor);
 
   &[data-disabled] {
     color: var(--crm-ui-kit-context-menu-sub-select-trigger-disabled-color);
@@ -24,12 +25,6 @@
   &[data-no-icon-align] {
     padding: var(
       --crm-ui-kit-context-menu-sub-select-trigger-without-icon-align-padding
-    );
-  }
-
-  &[data-state='open'] {
-    background-color: var(
-      --crm-ui-kit-context-menu-sub-select-trigger-opened-background-color
     );
   }
 }

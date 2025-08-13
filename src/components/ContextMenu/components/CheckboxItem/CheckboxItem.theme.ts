@@ -15,7 +15,8 @@ export const ContextMenuCheckboxItemTheme: ContextMenuCheckboxItemThemeType = {
   '--crm-ui-kit-context-menu-checkbox-item-gap': '8px',
   '--crm-ui-kit-context-menu-checkbox-item-color':
     'var(--crm-ui-kit-palette-text-primary)',
-  '--crm-ui-kit-context-menu-checkbox-item-background-color': 'transparent',
+  '--crm-ui-kit-context-menu-checkbox-item-background-color':
+    'var(--crm-ui-kit-palette-background-primary)',
   '--crm-ui-kit-context-menu-checkbox-item-cursor': 'pointer',
 
   '--crm-ui-kit-context-menu-checkbox-item-disabled-color':

@@ -2,6 +2,7 @@ type ContextMenuMetaItemThemeKey =
   | '--crm-ui-kit-context-menu-meta-item-gap'
   | '--crm-ui-kit-context-menu-meta-item-padding'
   | '--crm-ui-kit-context-menu-meta-item-color'
+  | '--crm-ui-kit-context-menu-meta-item-background-color'
   | '--crm-ui-kit-context-menu-meta-item-without-icon-align-padding'
   | '--crm-ui-kit-context-menu-meta-item-label-margin'
   | '--crm-ui-kit-context-menu-meta-item-label-font-weight'
@@ -14,6 +15,8 @@ export const ContextMenuMetaItemTheme: ContextMenuMetaItemThemeType = {
   '--crm-ui-kit-context-menu-meta-item-padding': '10px 16px 10px 40px',
   '--crm-ui-kit-context-menu-meta-item-color':
     'var(--crm-ui-kit-palette-text-primary)',
+  '--crm-ui-kit-context-menu-meta-item-background-color':
+    'var(--crm-ui-kit-palette-background-primary)',
 
   '--crm-ui-kit-context-menu-meta-item-without-icon-align-padding': '10px 16px',
 

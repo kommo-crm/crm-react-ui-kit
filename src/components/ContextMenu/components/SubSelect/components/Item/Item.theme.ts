@@ -2,6 +2,8 @@ type ContextMenuSubSelectItemThemeKey =
   | '--crm-ui-kit-context-menu-sub-select-item-gap'
   | '--crm-ui-kit-context-menu-sub-select-item-padding'
   | '--crm-ui-kit-context-menu-sub-select-item-color'
+  | '--crm-ui-kit-context-menu-sub-select-item-background-color'
+  | '--crm-ui-kit-context-menu-sub-select-item-cursor'
   | '--crm-ui-kit-context-menu-sub-select-item-disabled-color'
   | '--crm-ui-kit-context-menu-sub-select-item-danger-color'
   | '--crm-ui-kit-context-menu-sub-select-item-hovered-background-color'
@@ -16,6 +18,9 @@ export const ContextMenuSubSelectItemTheme: ContextMenuSubSelectItemThemeType =
     '--crm-ui-kit-context-menu-sub-select-item-padding': '10px 16px 10px 40px',
     '--crm-ui-kit-context-menu-sub-select-item-color':
       'var(--crm-ui-kit-palette-text-primary)',
+    '--crm-ui-kit-context-menu-sub-select-item-background-color':
+      'var(--crm-ui-kit-palette-background-primary)',
+    '--crm-ui-kit-context-menu-sub-select-item-cursor': 'pointer',
 
     '--crm-ui-kit-context-menu-sub-select-item-disabled-color':
       'var(--crm-ui-kit-palette-text-secondary-light)',

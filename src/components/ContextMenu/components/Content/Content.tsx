@@ -1,20 +1,20 @@
-import React, {
-  forwardRef,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
+import { useSpring, animated, easings } from '@react-spring/web';
+
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
+
+import { mergeRefs } from 'src/lib/utils';
 
 import { LevelProvider } from '../../providers/LevelProvider';
 
 import { hasAnyItemWithIcon } from '../../utils';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
+
+import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { ContentProps } from './Content.props';
 
@@ -33,7 +33,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       children,
       arrowPadding = 5,
       collisionBoundary,
-      direction = [Direction.RIGHT, Direction.BOTTOM],
+      direction = Direction.UP_RIGHT,
       disableAutoPositioning = false,
       ...props
     },
@@ -42,14 +42,15 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const themeClassName = useThemeClassName(theme);
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
-    const [align, setAlign] = useState<'start' | 'end'>(
-      direction[0] === Direction.RIGHT ? 'start' : 'end'
-    );
     const [isPositioned, setIsPositioned] = useState(false);
+    const [align, setAlign] = useState<'start' | 'end'>(
+      direction === Direction.UP_RIGHT || direction === Direction.DOWN_RIGHT
+        ? 'start'
+        : 'end'
+    );
 
-    const contentRef = useRef<HTMLDivElement | null>(null);
-
-    const { triggerRef } = useContextMenuContext(DISPLAY_NAME);
+    const { triggerRef, contentRef, animatedOpen, animationDuration, mode } =
+      useContextMenuContext(DISPLAY_NAME);
 
     const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
 
@@ -58,20 +59,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         setHasItemWithIcon(true);
       }
     }, [hasIcon]);
-
-    const setContentRef = (node: HTMLDivElement | null) => {
-      contentRef.current = node;
-
-      if (!ref) {
-        return;
-      }
-
-      if (typeof ref === 'function') {
-        ref(node);
-      } else {
-        ref.current = node;
-      }
-    };
 
     useLayoutEffect(() => {
       if (disableAutoPositioning || !triggerRef?.current) {
@@ -106,7 +93,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
         const boundaryRect = boundaryEl.getBoundingClientRect();
 
-        if (direction[0] === Direction.RIGHT) {
+        if (
+          direction === Direction.UP_RIGHT ||
+          direction === Direction.DOWN_RIGHT
+        ) {
           const spaceRight = boundaryRect.right - triggerRect.right;
 
           setAlign(spaceRight < contentRect.width ? 'end' : 'start');
@@ -135,26 +125,40 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       };
     }, [direction[0], collisionBoundary, triggerRef]);
 
+    const springStyles = useSpring({
+      opacity:
+        (isPositioned && animatedOpen) || mode === ContextMenuMode.CLICK
+          ? 1
+          : 0,
+      config: { duration: animationDuration, easing: easings.easeInOutCubic },
+    });
+
     return (
-      <RadixDropdownMenuContent
-        ref={setContentRef}
-        className={cx(s.content, themeClassName, className)}
-        style={{
-          ...(style || {}),
-          ...(disableAutoPositioning || isPositioned
-            ? { opacity: 1, pointerEvents: 'auto' }
-            : { opacity: 0, pointerEvents: 'none' }),
-        }}
-        collisionBoundary={collisionBoundary}
-        side={direction[1]}
-        align={align}
-        arrowPadding={arrowPadding}
-        {...props}
-      >
-        <LevelProvider hasItemWithIcon={hasItemWithIcon}>
-          {children}
-        </LevelProvider>
-      </RadixDropdownMenuContent>
+      <LevelProvider hasItemWithIcon={hasItemWithIcon}>
+        <animated.div style={springStyles}>
+          <RadixDropdownMenuContent
+            ref={mergeRefs(contentRef, ref)}
+            className={cx(s.content, themeClassName, className)}
+            style={{
+              ...(style || {}),
+              pointerEvents:
+                disableAutoPositioning || isPositioned ? 'auto' : 'none',
+            }}
+            collisionBoundary={collisionBoundary}
+            side={
+              direction === Direction.UP_RIGHT ||
+              direction === Direction.UP_LEFT
+                ? 'top'
+                : 'bottom'
+            }
+            align={align}
+            arrowPadding={arrowPadding}
+            {...props}
+          >
+            {children}
+          </RadixDropdownMenuContent>
+        </animated.div>
+      </LevelProvider>
     );
   }
 );

@@ -11,4 +11,5 @@
   /* 0.5px shift helps prevent a visible seam or subpixel gap during scaling */
   transform: translateY(-0.5px);
   fill: var(--crm-ui-kit-context-menu-arrow-border-color);
+  overflow: visible;
 }

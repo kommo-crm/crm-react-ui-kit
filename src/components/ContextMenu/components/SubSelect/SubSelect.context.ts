@@ -1,10 +1,14 @@
 import { createComponentContext } from 'src/lib/react';
 
-import { SubSelectContextProps } from './SubSelect.props';
+import { ContextMenuSubSelectContextProps } from './SubSelect.props';
 
 const DISPLAY_NAME = 'ContextMenu.SubSelect';
 
-const [SubSelectProvider, useSubSelectContext] =
-  createComponentContext<SubSelectContextProps>(DISPLAY_NAME);
+const [ContextMenuSubSelectProvider, useContextMenuSubSelectContext] =
+  createComponentContext<ContextMenuSubSelectContextProps>(DISPLAY_NAME);
 
-export { SubSelectProvider, useSubSelectContext, DISPLAY_NAME };
+export {
+  ContextMenuSubSelectProvider,
+  useContextMenuSubSelectContext,
+  DISPLAY_NAME,
+};

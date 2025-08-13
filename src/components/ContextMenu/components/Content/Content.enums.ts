@@ -1,18 +1,18 @@
 export enum Direction {
   /**
-   * Left side.
+   * Up and to the left.
    */
-  LEFT = 'left',
+  UP_LEFT = 'up_left',
   /**
-   * Right side.
+   * Up and to the right.
    */
-  RIGHT = 'right',
+  UP_RIGHT = 'up_right',
   /**
-   * Top side.
+   * Down and to the left.
    */
-  TOP = 'top',
+  DOWN_LEFT = 'down_left',
   /**
-   * Bottom side.
+   * Down and to the right.
    */
-  BOTTOM = 'bottom',
+  DOWN_RIGHT = 'down_right',
 }

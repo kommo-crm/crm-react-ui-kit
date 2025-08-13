@@ -8,6 +8,7 @@
   padding: var(--crm-ui-kit-context-menu-item-padding);
   gap: var(--crm-ui-kit-context-menu-item-gap);
   color: var(--crm-ui-kit-context-menu-item-color);
+  background-color: var(--crm-ui-kit-context-menu-item-background-color);
   cursor: var(--crm-ui-kit-context-menu-item-cursor);
 
   &[data-disabled] {

@@ -25,22 +25,22 @@ export type ContextMenuRootProps = Omit<
    */
   hoverCloseDelay?: number;
   /**
-   * Delay in milliseconds before the menu opens
-   * when the user hovering on it.
+   * The duration of the menu and submenus opening/closing animation in milliseconds.
    *
-   * @default 100
+   * @default 150
    */
-  hoverOpenDelay?: number;
+  animationDuration?: number;
 };
 
 export interface ContextMenuContextProps {
   /**
    * Reference to the DOM element that acts as the menu trigger.
-   *
-   * Used for positioning calculations and detecting
-   * whether the cursor is inside the trigger area.
    */
   triggerRef: React.RefObject<HTMLButtonElement>;
+  /**
+   * Reference to the DOM element containing the menu content.
+   */
+  contentRef: React.RefObject<HTMLDivElement>;
   /**
    * Defines how the menu is triggered.
    *
@@ -51,17 +51,8 @@ export interface ContextMenuContextProps {
   /**
    * Delay in milliseconds before the menu closes
    * when the user stops hovering over it.
-   *
-   * @default 200
    */
   hoverCloseDelay: number;
-  /**
-   * Delay in milliseconds before the menu opens
-   * when the user hovering on it.
-   *
-   * @default 100
-   */
-  hoverOpenDelay: number;
   /**
    * Temporarily enables hover-based closing behavior for the menu.
    * When called, the menu will close on hover outside until it hides.
@@ -69,4 +60,22 @@ export interface ContextMenuContextProps {
    * It only makes sense when mode is `ContextMenuMode.CLICK`
    */
   enableTemporaryHoverClose: () => void;
+  /**
+   * CSS color value inherited from the background of the
+   * first/last menu item depending on the menu side.
+   */
+  inheritedArrowColor: string | null;
+  /**
+   * Indicates whether the menu is fully open and ready to display
+   * its content (used to coordinate animations).
+   */
+  animatedOpen: boolean;
+  /**
+   * The duration of the menu and submenus opening/closing animation in milliseconds.
+   */
+  animationDuration: number;
+  /**
+   * Immediately closes the menu without waiting for any hover or animation delays.
+   */
+  closeMenuImmediately: () => void;
 }

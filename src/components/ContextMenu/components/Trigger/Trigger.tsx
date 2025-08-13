@@ -4,7 +4,11 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
+import { mergeRefs } from 'src/lib/utils';
+
 import { useContextMenuContext } from '../../ContextMenu.context';
+
+import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { TriggerProps } from './Trigger.props';
 
@@ -16,16 +20,22 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   ({ theme, className, children, ...props }, ref) => {
     const themeClassName = useThemeClassName(theme);
 
-    const { triggerRef } = useContextMenuContext(DISPLAY_NAME);
+    const { triggerRef, mode } = useContextMenuContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuTrigger
         ref={ref}
         className={cx(s.button, themeClassName, className)}
         asChild
+        onPointerDown={(e) => {
+          if (mode === ContextMenuMode.HOVER) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
         {...props}
       >
-        <button ref={triggerRef}>{children}</button>
+        <button ref={mergeRefs(triggerRef, ref)}>{children}</button>
       </RadixDropdownMenuTrigger>
     );
   }

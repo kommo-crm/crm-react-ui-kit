@@ -4,6 +4,8 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
+import { useContextMenuContext } from '../../ContextMenu.context';
+
 import type { ArrowProps } from './Arrow.props';
 
 import s from './Arrow.module.css';
@@ -12,20 +14,25 @@ const DISPLAY_NAME = 'ContextMenu.Arrow';
 
 export const Arrow = forwardRef<SVGSVGElement, ArrowProps>(
   ({ theme, className, ...props }, ref) => {
+    const { inheritedArrowColor } = useContextMenuContext(DISPLAY_NAME);
+
     const themeClassName = useThemeClassName(theme);
 
     return (
-      <>
+      <span data-arrow>
         <RadixDropdownMenuArrow
           className={cx(s.arrow_border, themeClassName, className)}
           {...props}
         />
         <RadixDropdownMenuArrow
           className={cx(s.arrow, themeClassName, className)}
+          style={{
+            ...(inheritedArrowColor ? { fill: inheritedArrowColor } : {}),
+          }}
           ref={ref}
           {...props}
         />
-      </>
+      </span>
     );
   }
 );

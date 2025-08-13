@@ -5,7 +5,7 @@ import type { ContextMenuSubTriggerThemeType } from './SubTrigger.theme';
 
 type RadixSubTriggerProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuSubTrigger>,
-  'disabled' | 'textValue'
+  'disabled' | 'textValue' | 'asChild'
 >;
 
 export type SubTriggerProps = RadixSubTriggerProps & {

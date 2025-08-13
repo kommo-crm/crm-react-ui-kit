@@ -34,19 +34,148 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
       children,
       mode,
       hoverCloseDelay = 200,
-      hoverOpenDelay = 100,
+      animationDuration = 150,
       onOpen,
       ...props
     },
     ref
   ) => {
     const [open, setOpen] = useState(false);
+    const [animatedOpen, setAnimatedOpen] = useState(false);
     const [isInsideContent, setIsInsideContent] = useState(false);
     const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
+    const [inheritedArrowColor, setInheritedArrowColor] = useState<
+      string | null
+    >(null);
 
     const triggerRef = useRef<HTMLButtonElement>(null);
-    const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const clearTimers = () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
+    };
+
+    const requestClose = () => {
+      clearTimers();
+
+      if (mode === ContextMenuMode.HOVER) {
+        setAnimatedOpen(false);
+
+        closeTimerRef.current = setTimeout(() => {
+          setOpen(false);
+          setIsInsideContent(false);
+          setTemporaryHoverClose(false);
+        }, animationDuration);
+      } else {
+        setOpen(false);
+        setIsInsideContent(false);
+        setTemporaryHoverClose(false);
+      }
+    };
+
+    const closeImmediately = () => {
+      clearTimers();
+
+      setAnimatedOpen(false);
+      setOpen(false);
+      setIsInsideContent(false);
+      setTemporaryHoverClose(false);
+    };
+
+    useEffect(() => {
+      if (!open) {
+        return;
+      }
+
+      const raf = requestAnimationFrame(() => {
+        const updateColor = (item: Element) => {
+          setInheritedArrowColor(getComputedStyle(item).backgroundColor);
+        };
+
+        if (!contentRef.current) {
+          return;
+        }
+
+        const side = contentRef.current?.dataset.side;
+
+        if (!side) {
+          return;
+        }
+
+        const items = Array.from(contentRef.current.children);
+
+        if (!items.length) {
+          return;
+        }
+
+        let targetItem = side === 'bottom' ? items[0] : items[items.length - 1];
+
+        if (!targetItem) {
+          return;
+        }
+
+        if (targetItem.hasAttribute('data-arrow')) {
+          const index = side === 'bottom' ? 1 : items.length - 2;
+
+          targetItem = items[index];
+        }
+
+        if (
+          (targetItem.hasAttribute('data-wrapper') ||
+            targetItem.getAttribute('role') === 'group') &&
+          targetItem.children
+        ) {
+          const targetItemChildren = Array.from(targetItem.children);
+
+          targetItem =
+            side === 'bottom'
+              ? targetItemChildren[0]
+              : targetItemChildren[targetItemChildren.length - 1];
+        }
+
+        if (!targetItem.hasAttribute('data-item')) {
+          return;
+        }
+
+        updateColor(targetItem);
+
+        const itemObserver = new MutationObserver(() =>
+          updateColor(targetItem)
+        );
+
+        itemObserver.observe(targetItem, {
+          attributes: true,
+          attributeFilter: ['style', 'class', 'data-highlighted', 'data-state'],
+        });
+
+        const root = document.documentElement;
+        const themeObserver = new MutationObserver(() =>
+          updateColor(targetItem)
+        );
+
+        themeObserver.observe(root, {
+          attributes: true,
+          attributeFilter: ['data-crm-ui-kit-theme'],
+        });
+
+        return () => {
+          itemObserver.disconnect();
+          themeObserver.disconnect();
+        };
+      });
+
+      return () => cancelAnimationFrame(raf);
+    }, [open]);
 
     useEffect(() => {
       if (!open || (mode !== ContextMenuMode.HOVER && !temporaryHoverClose)) {
@@ -54,24 +183,32 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
       }
 
       if (isInsideContent) {
-        if (closeTimeoutRef.current) {
-          clearTimeout(closeTimeoutRef.current);
-          closeTimeoutRef.current = null;
+        if (hoverTimeoutRef.current) {
+          clearTimeout(hoverTimeoutRef.current);
+          hoverTimeoutRef.current = null;
         }
-      } else if (!closeTimeoutRef.current) {
-        closeTimeoutRef.current = setTimeout(() => {
-          setOpen(false);
-          setIsInsideContent(false);
-          setTemporaryHoverClose(false);
+      } else if (!hoverTimeoutRef.current) {
+        hoverTimeoutRef.current = setTimeout(() => {
+          requestClose();
         }, hoverCloseDelay);
       }
     }, [mode, open, isInsideContent, temporaryHoverClose, hoverCloseDelay]);
 
     const handleOpenChange = (value: boolean) => {
-      setOpen(value);
-
       if (value) {
-        onOpen?.(value);
+        if (closeTimerRef.current) {
+          clearTimeout(closeTimerRef.current);
+          closeTimerRef.current = null;
+        }
+
+        if (mode === ContextMenuMode.HOVER) {
+          setAnimatedOpen(true);
+        }
+
+        setOpen(true);
+        onOpen?.(true);
+      } else {
+        requestClose();
       }
     };
 
@@ -88,13 +225,18 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
           hoverTimeoutRef.current = null;
         }
 
-        hoverTimeoutRef.current = setTimeout(() => {
-          if (!open) {
-            setOpen(true);
+        if (open) {
+          setIsInsideContent(true);
+        } else {
+          if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = null;
           }
 
+          setAnimatedOpen(true);
+          setOpen(true);
           setIsInsideContent(true);
-        }, hoverOpenDelay);
+        }
       }
     };
 
@@ -114,13 +256,17 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
     return (
       <ContextMenuProvider
         triggerRef={triggerRef}
+        contentRef={contentRef}
+        inheritedArrowColor={inheritedArrowColor}
         hoverCloseDelay={hoverCloseDelay}
-        hoverOpenDelay={hoverOpenDelay}
         enableTemporaryHoverClose={() => {
           setIsInsideContent(true);
           setTemporaryHoverClose(true);
         }}
         mode={mode}
+        animatedOpen={animatedOpen}
+        animationDuration={animationDuration}
+        closeMenuImmediately={closeImmediately}
       >
         <RadixDropdownMenuRoot
           onOpenChange={handleOpenChange}

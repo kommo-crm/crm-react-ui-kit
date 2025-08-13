@@ -1,5 +1,6 @@
 import React, { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
 import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropdown-menu';
+import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
@@ -7,6 +8,12 @@ import { useThemeClassName } from 'src/hooks/useThemeClassName';
 import { LevelProvider } from '../../providers/LevelProvider';
 
 import { hasAnyItemWithIcon } from '../../utils';
+
+import { useContextMenuSubContext } from '../Sub/Sub.context';
+
+import { useContextMenuContext } from '../../ContextMenu.context';
+
+import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { SubContentProps } from './SubContent.props';
 
@@ -28,6 +35,14 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
   ) => {
     const themeClassName = useThemeClassName(theme);
 
+    const { animatedOpen, startAnimation } =
+      useContextMenuSubContext(DISPLAY_NAME);
+    const {
+      animationDuration,
+      animatedOpen: animatedFullOpen,
+      mode,
+    } = useContextMenuContext(DISPLAY_NAME);
+
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
 
     const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
@@ -38,18 +53,32 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       }
     }, [hasIcon]);
 
+    useLayoutEffect(() => {
+      startAnimation();
+    }, []);
+
+    const springStyles = useSpring({
+      opacity:
+        animatedOpen && (animatedFullOpen || mode === ContextMenuMode.CLICK)
+          ? 1
+          : 0,
+      config: { duration: animationDuration, easing: easings.easeInOutCubic },
+    });
+
     return (
-      <RadixDropdownMenuSubContent
-        ref={ref}
-        className={cx(s.sub_content, themeClassName, className)}
-        sideOffset={sideOffset}
-        collisionPadding={collisionPadding}
-        {...props}
-      >
-        <LevelProvider hasItemWithIcon={hasItemWithIcon}>
-          {children}
-        </LevelProvider>
-      </RadixDropdownMenuSubContent>
+      <LevelProvider hasItemWithIcon={hasItemWithIcon}>
+        <animated.div style={springStyles}>
+          <RadixDropdownMenuSubContent
+            ref={ref}
+            className={cx(s.sub_content, themeClassName, className)}
+            sideOffset={sideOffset}
+            collisionPadding={collisionPadding}
+            {...props}
+          >
+            {children}
+          </RadixDropdownMenuSubContent>
+        </animated.div>
+      </LevelProvider>
     );
   }
 );

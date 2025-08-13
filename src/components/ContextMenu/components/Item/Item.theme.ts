@@ -2,6 +2,7 @@ type ContextMenuItemThemeKey =
   | '--crm-ui-kit-context-menu-item-gap'
   | '--crm-ui-kit-context-menu-item-padding'
   | '--crm-ui-kit-context-menu-item-color'
+  | '--crm-ui-kit-context-menu-item-background-color'
   | '--crm-ui-kit-context-menu-item-cursor'
   | '--crm-ui-kit-context-menu-item-disabled-color'
   | '--crm-ui-kit-context-menu-item-disabled-cursor'
@@ -14,6 +15,8 @@ export const ContextMenuItemTheme: ContextMenuItemThemeType = {
   '--crm-ui-kit-context-menu-item-padding': '10px 16px 10px 40px',
   '--crm-ui-kit-context-menu-item-color':
     'var(--crm-ui-kit-palette-text-primary)',
+  '--crm-ui-kit-context-menu-item-background-color':
+    'var(--crm-ui-kit-palette-background-primary)',
   '--crm-ui-kit-context-menu-item-cursor': 'pointer',
 
   '--crm-ui-kit-context-menu-item-disabled-color':

@@ -6,6 +6,7 @@
   padding: var(--crm-ui-kit-context-menu-label-padding);
   gap: var(--crm-ui-kit-context-menu-label-gap);
   color: var(--crm-ui-kit-context-menu-label-color);
+  background-color: var(--crm-ui-kit-context-menu-label-background-color);
   font-weight: var(--crm-ui-kit-context-menu-label-font-weight);
 
   &[data-no-icon-align] {

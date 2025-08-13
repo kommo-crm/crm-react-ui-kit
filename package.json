@@ -202,6 +202,7 @@
   "dependencies": {
     "@kommo-crm/react-hooks": "^1.0.0",
     "@radix-ui/react-dropdown-menu": "2.1.15",
+    "@react-spring/web": "10.0.1",
     "classnames": "2.5.1",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.4",

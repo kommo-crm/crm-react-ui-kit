@@ -3,10 +3,10 @@ type ContextMenuSubSelectTriggerThemeKey =
   | '--crm-ui-kit-context-menu-sub-select-trigger-padding'
   | '--crm-ui-kit-context-menu-sub-select-trigger-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-background-color'
+  | '--crm-ui-kit-context-menu-sub-select-trigger-cursor'
   | '--crm-ui-kit-context-menu-sub-select-trigger-disabled-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-hovered-background-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-without-icon-align-padding'
-  | '--crm-ui-kit-context-menu-sub-select-trigger-opened-background-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-chevron-color'
   | '--crm-ui-kit-context-menu-sub-select-trigger-chevron-margin'
   | '--crm-ui-kit-context-menu-sub-select-trigger-chevron-padding';
@@ -19,7 +19,8 @@ export const ContextMenuSubSelectTriggerTheme: ContextMenuSubSelectTriggerThemeT
     '--crm-ui-kit-context-menu-sub-select-trigger-color':
       'var(--crm-ui-kit-palette-text-primary)',
     '--crm-ui-kit-context-menu-sub-select-trigger-background-color':
-      'transparent',
+      'var(--crm-ui-kit-palette-background-primary)',
+    '--crm-ui-kit-context-menu-sub-select-trigger-cursor': 'pointer',
 
     '--crm-ui-kit-context-menu-sub-select-trigger-disabled-color':
       'var(--crm-ui-kit-palette-text-secondary-light)',
@@ -29,9 +30,6 @@ export const ContextMenuSubSelectTriggerTheme: ContextMenuSubSelectTriggerThemeT
 
     '--crm-ui-kit-context-menu-sub-select-trigger-without-icon-align-padding':
       '10px 16px',
-
-    '--crm-ui-kit-context-menu-sub-select-trigger-opened-background-color':
-      'var(--crm-ui-kit-palette-background-default)',
 
     '--crm-ui-kit-context-menu-sub-select-trigger-chevron-color':
       'var(--crm-ui-kit-palette-text-primary)',

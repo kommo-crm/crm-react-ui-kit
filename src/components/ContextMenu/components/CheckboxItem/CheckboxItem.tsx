@@ -6,6 +6,8 @@ import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
+import { useContextMenuContext } from '../../ContextMenu.context';
+
 import type { CheckboxItemProps } from './CheckboxItem.props';
 
 import s from './CheckboxItem.module.css';
@@ -30,6 +32,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
     const themeClassName = useThemeClassName(theme);
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
+    const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuCheckboxItem
@@ -37,6 +40,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         className={cx(s.checkbox_item, themeClassName, className)}
         disabled={isDisabled}
         checked={isChecked}
+        data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         onCheckedChange={(checked) => {
           if (onChange) {
@@ -47,6 +51,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
             onChange(event);
           }
         }}
+        onSelect={() => closeMenuImmediately()}
         {...props}
       >
         {icon}

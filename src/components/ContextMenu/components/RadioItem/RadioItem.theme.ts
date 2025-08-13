@@ -15,7 +15,8 @@ export const ContextMenuRadioItemTheme: ContextMenuRadioItemThemeType = {
   '--crm-ui-kit-context-menu-radio-item-gap': '8px',
   '--crm-ui-kit-context-menu-radio-item-color':
     'var(--crm-ui-kit-palette-text-primary)',
-  '--crm-ui-kit-context-menu-radio-item-background-color': 'transparent',
+  '--crm-ui-kit-context-menu-radio-item-background-color':
+    'var(--crm-ui-kit-palette-background-primary)',
   '--crm-ui-kit-context-menu-radio-item-cursor': 'pointer',
 
   '--crm-ui-kit-context-menu-radio-item-disabled-color':
