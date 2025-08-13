@@ -49,8 +49,14 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         : 'end'
     );
 
-    const { triggerRef, contentRef, animatedOpen, animationDuration, mode } =
-      useContextMenuContext(DISPLAY_NAME);
+    const {
+      triggerRef,
+      contentRef,
+      animatedOpen,
+      animationDuration,
+      mode,
+      temporaryHoverClose,
+    } = useContextMenuContext(DISPLAY_NAME);
 
     const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
 
@@ -127,7 +133,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const springStyles = useSpring({
       opacity:
-        (isPositioned && animatedOpen) || mode === ContextMenuMode.CLICK
+        (mode === ContextMenuMode.CLICK && !temporaryHoverClose) ||
+        (isPositioned && animatedOpen)
           ? 1
           : 0,
       config: { duration: animationDuration, easing: easings.easeInOutCubic },

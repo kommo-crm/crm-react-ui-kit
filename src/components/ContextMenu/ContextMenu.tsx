@@ -68,7 +68,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
     const requestClose = () => {
       clearTimers();
 
-      if (mode === ContextMenuMode.HOVER) {
+      if (mode === ContextMenuMode.HOVER || temporaryHoverClose) {
         setAnimatedOpen(false);
 
         closeTimerRef.current = setTimeout(() => {
@@ -201,7 +201,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
           closeTimerRef.current = null;
         }
 
-        if (mode === ContextMenuMode.HOVER) {
+        if (mode === ContextMenuMode.HOVER || temporaryHoverClose) {
           setAnimatedOpen(true);
         }
 
@@ -259,7 +259,9 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
         contentRef={contentRef}
         inheritedArrowColor={inheritedArrowColor}
         hoverCloseDelay={hoverCloseDelay}
+        temporaryHoverClose={temporaryHoverClose}
         enableTemporaryHoverClose={() => {
+          setAnimatedOpen(true);
           setIsInsideContent(true);
           setTemporaryHoverClose(true);
         }}

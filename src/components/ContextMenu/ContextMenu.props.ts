@@ -54,6 +54,10 @@ export interface ContextMenuContextProps {
    */
   hoverCloseDelay: number;
   /**
+   * Indicates whether the menu is in a temporary hover-close state.
+   */
+  temporaryHoverClose: boolean;
+  /**
    * Temporarily enables hover-based closing behavior for the menu.
    * When called, the menu will close on hover outside until it hides.
    *
