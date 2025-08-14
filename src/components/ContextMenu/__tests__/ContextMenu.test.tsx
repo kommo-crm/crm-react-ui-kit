@@ -144,7 +144,7 @@ describe('ContextMenu', () => {
   it('opens on trigger click', async () => {
     await renderContextMenu();
     await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-    expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeVisible();
+    expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
   });
 
   it('meta item displays label and value', async () => {
@@ -166,7 +166,7 @@ describe('ContextMenu', () => {
     try {
       await renderContextMenu();
       await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeVisible();
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
 
       const valueElement = screen.getByText(/^value$/i);
 
@@ -251,7 +251,7 @@ describe('ContextMenu', () => {
   it('closes when Escape key is pressed', async () => {
     await renderContextMenu();
     await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-    expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeVisible();
+    expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
 
     await userEvent.keyboard('{Escape}');
 

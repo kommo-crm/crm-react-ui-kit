@@ -36,11 +36,12 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
       hoverCloseDelay = 200,
       animationDuration = 150,
       onOpen,
+      open: initialOpen,
       ...props
     },
     ref
   ) => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(initialOpen || false);
     const [animatedOpen, setAnimatedOpen] = useState(false);
     const [isInsideContent, setIsInsideContent] = useState(false);
     const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
@@ -141,6 +142,13 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
             side === 'bottom'
               ? targetItemChildren[0]
               : targetItemChildren[targetItemChildren.length - 1];
+
+          if (targetItem.hasAttribute('data-content-wrapper')) {
+            targetItem =
+              side === 'bottom'
+                ? targetItemChildren[1]
+                : targetItemChildren[targetItemChildren.length - 2];
+          }
         }
 
         if (!targetItem.hasAttribute('data-item')) {
@@ -195,6 +203,10 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
     }, [mode, open, isInsideContent, temporaryHoverClose, hoverCloseDelay]);
 
     const handleOpenChange = (value: boolean) => {
+      if (mode === ContextMenuMode.CLICK && initialOpen !== undefined) {
+        return;
+      }
+
       if (value) {
         if (closeTimerRef.current) {
           clearTimeout(closeTimerRef.current);

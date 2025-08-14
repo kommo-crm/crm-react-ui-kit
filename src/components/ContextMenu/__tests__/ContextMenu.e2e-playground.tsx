@@ -21,6 +21,7 @@ import {
   ContextMenuItemTheme,
   ContextMenuLabelTheme,
   ContextMenuMetaItemTheme,
+  ContextMenuMode,
   ContextMenuRadioItemTheme,
   ContextMenuSeparatorTheme,
   ContextMenuSubContentTheme,
@@ -76,7 +77,7 @@ export const ContextMenuPlayground = (
                     </ContextMenu.ItemRightSlot>
                   </ContextMenu.Item>
 
-                  <ContextMenu.Sub open={true}>
+                  <ContextMenu.Sub mode={ContextMenuMode.CLICK} open>
                     <ContextMenu.SubTrigger
                       theme={ContextMenuSubTriggerTheme}
                       text={
@@ -193,6 +194,7 @@ export const ContextMenuPlayground = (
             </>,
           ],
           open: [true],
+          mode: [ContextMenuMode.CLICK],
         },
       ]}
     >

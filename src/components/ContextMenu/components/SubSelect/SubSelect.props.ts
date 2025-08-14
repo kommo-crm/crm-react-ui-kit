@@ -1,5 +1,7 @@
 import { type DropdownMenuSubProps as RadixDropdownMenuSubProps } from '@radix-ui/react-dropdown-menu';
 
+import { ContextMenuMode } from '../../ContextMenu.enums';
+
 import { SubSelectOption } from './SubSelect.types';
 import { SortDirection } from './SubSelect.enums';
 
@@ -16,6 +18,12 @@ export type ContextMenuSubSelectRootProps = RadixDropdownMenuSubProps & {
    * Change handler for value or direction.
    */
   onChange: (value: SubSelectOption, sortDirection?: SortDirection) => void;
+  /**
+   * Defines how the SubSelect is triggered.
+   *
+   * @default ContextMenuMode.HOVER
+   */
+  mode?: ContextMenuMode;
 };
 
 export interface ContextMenuSubSelectContextProps {
@@ -43,4 +51,8 @@ export interface ContextMenuSubSelectContextProps {
    * Indicates whether the sub-select menu is currently open.
    */
   open: boolean;
+  /**
+   * Defines how the SubSelect is triggered.
+   */
+  mode: ContextMenuMode;
 }

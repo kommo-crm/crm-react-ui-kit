@@ -6,6 +6,8 @@ import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
 import ChevronRightIcon from 'src/icons/chevronRight.svg';
 
+import { ContextMenuMode } from 'src/components/ContextMenu/ContextMenu.enums';
+
 import { useLevelContext } from '../../../../providers/LevelProvider';
 
 import { useContextMenuSubSelectContext } from '../../SubSelect.context';
@@ -34,7 +36,8 @@ export const Trigger = forwardRef<HTMLDivElement, SubSelectTriggerProps>(
     const [isActive, setIsActive] = useState(false);
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-    const { animatedOpen } = useContextMenuSubSelectContext(DISPLAY_NAME);
+    const { animatedOpen, mode, open } =
+      useContextMenuSubSelectContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuSubTrigger
@@ -43,7 +46,11 @@ export const Trigger = forwardRef<HTMLDivElement, SubSelectTriggerProps>(
         disabled={isDisabled}
         data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
-        data-highlighted={animatedOpen || isActive ? '' : undefined}
+        data-highlighted={
+          animatedOpen || isActive || (mode === ContextMenuMode.CLICK && open)
+            ? ''
+            : undefined
+        }
         onFocus={() => setIsActive(true)}
         onMouseEnter={() => setIsActive(true)}
         onBlur={() => setIsActive(false)}

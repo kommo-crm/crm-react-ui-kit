@@ -10,6 +10,8 @@ import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
+import { ContextMenuMode } from '../../ContextMenu.enums';
+
 import type { SubTriggerProps } from './SubTrigger.props';
 
 import s from './SubTrigger.module.css';
@@ -35,7 +37,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
     const [isActive, setIsActive] = useState(false);
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-    const { animatedOpen } = useContextMenuSubContext(DISPLAY_NAME);
+    const { animatedOpen, mode, open } = useContextMenuSubContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuSubTrigger
@@ -44,7 +46,11 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         disabled={isDisabled}
         data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
-        data-highlighted={animatedOpen || isActive ? '' : undefined}
+        data-highlighted={
+          animatedOpen || isActive || (mode === ContextMenuMode.CLICK && open)
+            ? ''
+            : undefined
+        }
         onFocus={() => setIsActive(true)}
         onMouseEnter={() => setIsActive(true)}
         onBlur={() => setIsActive(false)}

@@ -33,7 +33,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       children,
       arrowPadding = 5,
       collisionBoundary,
-      direction = Direction.UP_RIGHT,
+      direction = Direction.DOWN_RIGHT,
       disableAutoPositioning = false,
       ...props
     },
@@ -133,16 +133,20 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const springStyles = useSpring({
       opacity:
-        (mode === ContextMenuMode.CLICK && !temporaryHoverClose) ||
-        (isPositioned && animatedOpen)
+        isPositioned &&
+        ((mode === ContextMenuMode.CLICK && !temporaryHoverClose) ||
+          animatedOpen)
           ? 1
           : 0,
-      config: { duration: animationDuration, easing: easings.easeInOutCubic },
+      config:
+        mode === ContextMenuMode.CLICK && !temporaryHoverClose
+          ? { duration: 0 }
+          : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
     return (
       <LevelProvider hasItemWithIcon={hasItemWithIcon}>
-        <animated.div style={springStyles}>
+        <animated.div style={springStyles} data-content-wrapper>
           <RadixDropdownMenuContent
             ref={mergeRefs(contentRef, ref)}
             className={cx(s.content, themeClassName, className)}

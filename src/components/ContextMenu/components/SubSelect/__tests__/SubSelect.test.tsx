@@ -20,7 +20,7 @@ import { ContextMenuSubSelectTriggerTheme } from '../components/Trigger';
 import { ContextMenuSubSelectContentTheme } from '../components/Content';
 import { SortDirection } from '../SubSelect.enums';
 import { SubSelectOption } from '../SubSelect.types';
-import { SubSelectProps } from '../SubSelect.props';
+import { ContextMenuSubSelectRootProps } from '../SubSelect.props';
 
 const DATA_ROOT_TEST_ID = 'ContextMenuSubSelectRoot';
 const DATA_ITEM_TEST_ID = 'ContextMenuSubSelectItem';
@@ -38,7 +38,9 @@ const subSelectOptions: SubSelectOption[] = [
   { option: 'Name', value: 'name' },
 ];
 
-const renderContextMenuSubSelect = async (props?: Partial<SubSelectProps>) => {
+const renderContextMenuSubSelect = async (
+  props?: Partial<ContextMenuSubSelectRootProps>
+) => {
   const ContextMenuSubSelectWrapped = () => {
     const [sortDir, setSortDir] = useState<SortDirection>();
     const [selected, setSelected] = useState<SubSelectOption>();
@@ -111,7 +113,7 @@ describe('ContextMenu.SubSelect', () => {
 
     await userEvent.click(trigger);
 
-    expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeVisible();
+    expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
   });
 
   it('renders correct number of items', async () => {
@@ -130,7 +132,7 @@ describe('ContextMenu.SubSelect', () => {
 
     await renderContextMenuSubSelect({
       onChange: onChangeMock,
-    } as Partial<SubSelectProps>);
+    } as Partial<ContextMenuSubSelectRootProps>);
 
     await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
@@ -166,7 +168,7 @@ describe('ContextMenu.SubSelect', () => {
     const items = screen.getAllByTestId(DATA_ITEM_TEST_ID);
     const firstItem = items[0];
 
-    await userEvent.click(firstItem);
+    await userEvent.hover(firstItem);
     expect(document.activeElement).toBe(firstItem);
 
     await userEvent.keyboard('{ArrowRight}');

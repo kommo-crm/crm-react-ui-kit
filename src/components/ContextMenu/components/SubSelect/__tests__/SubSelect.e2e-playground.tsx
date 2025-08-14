@@ -24,7 +24,7 @@ import {
   SubSelectOption,
 } from '..';
 
-import { SubSelectProps } from '../SubSelect.props';
+import { ContextMenuSubSelectRootProps } from '../SubSelect.props';
 
 const subSelectOptions: SubSelectOption[] = [
   { option: 'Date', value: 'date', sortable: true },
@@ -32,7 +32,7 @@ const subSelectOptions: SubSelectOption[] = [
 ];
 
 export const SubSelectPlayground = (
-  props: ComponentPlaygroundProps<SubSelectProps>
+  props: ComponentPlaygroundProps<ContextMenuSubSelectRootProps>
 ) => {
   const children = [
     <>
@@ -57,27 +57,30 @@ export const SubSelectPlayground = (
   ];
 
   return (
-    <ComponentPlayground<SubSelectProps>
+    <ComponentPlayground<ContextMenuSubSelectRootProps>
       {...props}
       propSets={[
         {
           children,
           open: [false],
+          mode: [ContextMenuMode.CLICK],
         },
         {
           children,
           open: [true],
+          mode: [ContextMenuMode.CLICK],
           value: [undefined, subSelectOptions[1]],
         },
         {
           children,
           open: [true],
+          mode: [ContextMenuMode.CLICK],
           value: [subSelectOptions[0]],
           sortDirection: [SortDirection.ASC, SortDirection.DESC],
         },
       ]}
     >
-      {(itemProps: SubSelectProps) => (
+      {(itemProps: ContextMenuSubSelectRootProps) => (
         <div
           style={{
             height: '120px',
@@ -90,10 +93,7 @@ export const SubSelectPlayground = (
             </ContextMenu.Trigger>
 
             <ContextMenu.Portal>
-              <ContextMenu.Content
-                theme={ContextMenuContentTheme}
-                sideOffset={5}
-              >
+              <ContextMenu.Content theme={ContextMenuContentTheme}>
                 <ContextMenu.SubSelect.Root {...itemProps} />
 
                 <ContextMenu.Arrow theme={ContextMenuArrowTheme} />

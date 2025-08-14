@@ -10,8 +10,13 @@ import { ContextMenuSubProvider } from './Sub.context';
 const DISPLAY_NAME = 'ContextMenu.Sub';
 
 export const Sub = forwardRef<HTMLDivElement, SubProps>(
-  ({ children, ...props }, ref) => {
-    const [open, setOpen] = useState(false);
+  (
+    { children, mode = ContextMenuMode.HOVER, open: initialOpen, ...props },
+    ref
+  ) => {
+    const [open, setOpen] = useState(
+      initialOpen === undefined ? false : initialOpen
+    );
     const [animatedOpen, setAnimatedOpen] = useState(false);
     const [pendingOpen, setPendingOpen] = useState(false);
 
@@ -22,7 +27,7 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
       hoverCloseDelay,
       animationDuration,
       animatedOpen: animatedFullOpen,
-      mode,
+      mode: rootMode,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const clearTimers = () => {
@@ -58,6 +63,10 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
     }, [pendingOpen, animatedFullOpen]);
 
     const handleMouseEnter = () => {
+      if (mode === ContextMenuMode.CLICK) {
+        return;
+      }
+
       clearTimers();
 
       if (open) {
@@ -66,7 +75,7 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
         return;
       }
 
-      if (mode !== ContextMenuMode.CLICK && !animatedFullOpen) {
+      if (rootMode !== ContextMenuMode.CLICK && !animatedFullOpen) {
         setPendingOpen(true);
 
         return;
@@ -76,6 +85,10 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
     };
 
     const handleMouseLeave = () => {
+      if (mode === ContextMenuMode.CLICK) {
+        return;
+      }
+
       clearTimers();
       setPendingOpen(false);
 
@@ -88,10 +101,26 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
     };
 
     const handleOpenChange = (value: boolean) => {
+      if (mode === ContextMenuMode.CLICK) {
+        if (initialOpen === undefined) {
+          setOpen(value);
+          setAnimatedOpen(value);
+          setPendingOpen(false);
+        }
+
+        return;
+      }
+
+      if (rootMode !== ContextMenuMode.CLICK) {
+        setOpen(value);
+
+        return;
+      }
+
       if (value) {
         clearTimers();
 
-        if (mode !== ContextMenuMode.CLICK && !animatedFullOpen) {
+        if (rootMode !== ContextMenuMode.CLICK && !animatedFullOpen) {
           setPendingOpen(true);
 
           return;
@@ -107,6 +136,8 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
       <ContextMenuSubProvider
         animatedOpen={animatedOpen}
         startAnimation={() => setAnimatedOpen(true)}
+        mode={mode}
+        open={open}
       >
         <RadixDropdownMenuSub
           open={open}

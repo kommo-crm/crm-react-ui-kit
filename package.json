@@ -31,6 +31,7 @@
     "./ContentBlock": "./dist/components/ContentBlock/index.js",
     "./Callout": "./dist/components/Callout/index.js",
     "./Accordion": "./dist/components/Accordion/index.js",
+    "./ContextMenu": "./dist/components/ContextMenu/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -108,6 +109,9 @@
       ],
       "Accordion": [
         "./dist/components/Accordion/index.d.ts"
+      ],
+      "ContextMenu": [
+        "./dist/components/ContextMenu/index.d.ts"
       ]
     }
   },

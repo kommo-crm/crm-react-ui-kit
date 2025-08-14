@@ -35,12 +35,12 @@ export const Content = forwardRef<HTMLDivElement, SubSelectContentProps>(
   ) => {
     const themeClassName = useThemeClassName(theme);
 
-    const { animatedOpen, startAnimation, open } =
+    const { animatedOpen, startAnimation, open, mode } =
       useContextMenuSubSelectContext(DISPLAY_NAME);
     const {
       animationDuration,
       animatedOpen: animatedFullOpen,
-      mode,
+      mode: rootMode,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
@@ -54,22 +54,29 @@ export const Content = forwardRef<HTMLDivElement, SubSelectContentProps>(
     }, [hasIcon]);
 
     useLayoutEffect(() => {
-      if (open) {
+      if (open && mode === ContextMenuMode.HOVER) {
         startAnimation();
       }
     }, [open]);
 
-    const springStyles = useSpring({
-      opacity:
-        animatedOpen && (animatedFullOpen || mode === ContextMenuMode.CLICK)
-          ? 1
-          : 0,
-      config: { duration: animationDuration, easing: easings.easeInOutCubic },
-    });
+    const springStyles =
+      mode === ContextMenuMode.CLICK
+        ? { opacity: 1 }
+        : useSpring({
+            opacity:
+              animatedOpen &&
+              (animatedFullOpen || rootMode === ContextMenuMode.CLICK)
+                ? 1
+                : 0,
+            config: {
+              duration: animationDuration,
+              easing: easings.easeInOutCubic,
+            },
+          });
 
     return (
       <LevelProvider hasItemWithIcon={hasItemWithIcon}>
-        <animated.div style={springStyles}>
+        <animated.div style={springStyles} data-content-wrapper>
           <RadixDropdownMenuSubContent
             ref={ref}
             className={cx(s.content, themeClassName, className)}

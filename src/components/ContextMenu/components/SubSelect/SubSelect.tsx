@@ -19,125 +19,159 @@ const DISPLAY_NAME = 'ContextMenu.SubSelect';
 export const SubSelect = forwardRef<
   HTMLDivElement,
   ContextMenuSubSelectRootProps
->(({ value, sortDirection, onChange, children, ...props }, ref) => {
-  const [open, setOpen] = useState(false);
-  const [animatedOpen, setAnimatedOpen] = useState(false);
-  const [pendingOpen, setPendingOpen] = useState(false);
-
-  const openTimeoutRef = useRef<number | null>(null);
-  const closeTimeoutRef = useRef<number | null>(null);
-
-  const {
-    hoverCloseDelay,
-    animationDuration,
-    animatedOpen: animatedFullOpen,
-    mode,
-  } = useContextMenuContext(DISPLAY_NAME);
-
-  const clearTimers = () => {
-    if (openTimeoutRef.current) {
-      clearTimeout(openTimeoutRef.current);
-      openTimeoutRef.current = null;
-    }
-
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-  };
-
-  const requestClose = () => {
-    setAnimatedOpen(false);
-
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-    }
-
-    closeTimeoutRef.current = window.setTimeout(
-      () => setOpen(false),
-      animationDuration
+>(
+  (
+    {
+      value,
+      sortDirection,
+      onChange,
+      children,
+      mode = ContextMenuMode.HOVER,
+      open: initialOpen,
+      ...props
+    },
+    ref
+  ) => {
+    const [open, setOpen] = useState(
+      initialOpen === undefined ? false : initialOpen
     );
-  };
+    const [animatedOpen, setAnimatedOpen] = useState(false);
+    const [pendingOpen, setPendingOpen] = useState(false);
 
-  useEffect(() => {
-    if (pendingOpen && animatedFullOpen) {
-      setOpen(true);
-      setPendingOpen(false);
-    }
-  }, [pendingOpen, animatedFullOpen]);
+    const openTimeoutRef = useRef<number | null>(null);
+    const closeTimeoutRef = useRef<number | null>(null);
 
-  const handleMouseEnter = () => {
-    clearTimers();
+    const {
+      hoverCloseDelay,
+      animationDuration,
+      animatedOpen: animatedFullOpen,
+      mode: rootMode,
+    } = useContextMenuContext(DISPLAY_NAME);
 
-    if (open) {
-      setAnimatedOpen(true);
+    const clearTimers = () => {
+      if (openTimeoutRef.current) {
+        clearTimeout(openTimeoutRef.current);
+        openTimeoutRef.current = null;
+      }
 
-      return;
-    }
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = null;
+      }
+    };
 
-    if (mode !== ContextMenuMode.CLICK && !animatedFullOpen) {
-      setPendingOpen(true);
+    const requestClose = () => {
+      setAnimatedOpen(false);
 
-      return;
-    }
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
 
-    setOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    clearTimers();
-    setPendingOpen(false);
-
-    if (open) {
       closeTimeoutRef.current = window.setTimeout(
-        requestClose,
-        hoverCloseDelay
+        () => setOpen(false),
+        animationDuration
       );
-    }
-  };
+    };
 
-  const handleOpenChange = (val: boolean) => {
-    if (val) {
+    useEffect(() => {
+      if (pendingOpen && animatedFullOpen) {
+        setOpen(true);
+        setPendingOpen(false);
+      }
+    }, [pendingOpen, animatedFullOpen]);
+
+    const handleMouseEnter = () => {
+      if (mode === ContextMenuMode.CLICK) {
+        return;
+      }
+
       clearTimers();
 
-      if (mode !== ContextMenuMode.CLICK && !animatedFullOpen) {
+      if (open) {
+        setAnimatedOpen(true);
+
+        return;
+      }
+
+      if (rootMode !== ContextMenuMode.CLICK && !animatedFullOpen) {
         setPendingOpen(true);
 
         return;
       }
 
       setOpen(true);
-    } else {
-      requestClose();
-    }
-  };
+    };
 
-  return (
-    <ContextMenuSubSelectProvider
-      value={value}
-      sortDirection={sortDirection}
-      onChange={onChange}
-      animatedOpen={animatedOpen}
-      startAnimation={() => setAnimatedOpen(true)}
-      open={open}
-    >
-      <RadixDropdownMenuSub
+    const handleMouseLeave = () => {
+      if (mode === ContextMenuMode.CLICK) {
+        return;
+      }
+
+      clearTimers();
+      setPendingOpen(false);
+
+      if (open) {
+        closeTimeoutRef.current = window.setTimeout(
+          requestClose,
+          hoverCloseDelay
+        );
+      }
+    };
+
+    const handleOpenChange = (val: boolean) => {
+      if (mode === ContextMenuMode.CLICK) {
+        if (initialOpen === undefined) {
+          setOpen(val);
+          setAnimatedOpen(val);
+          setPendingOpen(false);
+        }
+
+        return;
+      }
+
+      if (val) {
+        clearTimers();
+
+        if (rootMode !== ContextMenuMode.CLICK && !animatedFullOpen) {
+          setPendingOpen(true);
+
+          return;
+        }
+
+        setOpen(true);
+      } else {
+        requestClose();
+      }
+    };
+
+    return (
+      <ContextMenuSubSelectProvider
+        value={value}
+        sortDirection={sortDirection}
+        onChange={onChange}
+        animatedOpen={animatedOpen}
+        startAnimation={() => setAnimatedOpen(true)}
         open={open}
-        onOpenChange={handleOpenChange}
-        {...props}
+        mode={mode}
       >
-        <div
-          ref={ref}
-          data-wrapper
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+        <RadixDropdownMenuSub
+          open={open}
+          onOpenChange={handleOpenChange}
+          {...props}
         >
-          {children}
-        </div>
-      </RadixDropdownMenuSub>
-    </ContextMenuSubSelectProvider>
-  );
-}) as ContextMenuSubSelectType;
+          <div
+            ref={ref}
+            data-wrapper
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {children}
+          </div>
+        </RadixDropdownMenuSub>
+      </ContextMenuSubSelectProvider>
+    );
+  }
+) as ContextMenuSubSelectType;
 
 SubSelect.displayName = DISPLAY_NAME;
 
