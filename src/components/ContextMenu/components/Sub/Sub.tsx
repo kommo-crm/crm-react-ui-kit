@@ -100,24 +100,18 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
       }
     };
 
-    const handleOpenChange = (value: boolean) => {
+    const handleOpenChange = (val: boolean) => {
       if (mode === ContextMenuMode.CLICK) {
         if (initialOpen === undefined) {
-          setOpen(value);
-          setAnimatedOpen(value);
+          setOpen(val);
+          setAnimatedOpen(val);
           setPendingOpen(false);
         }
 
         return;
       }
 
-      if (rootMode !== ContextMenuMode.CLICK) {
-        setOpen(value);
-
-        return;
-      }
-
-      if (value) {
+      if (val) {
         clearTimers();
 
         if (rootMode !== ContextMenuMode.CLICK && !animatedFullOpen) {
