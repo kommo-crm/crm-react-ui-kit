@@ -227,12 +227,13 @@ function App() {
 const renderSubSelectMenu = (
   menuProps: ContextMenuRootProps & {
     key?: string;
+    isMinimalistic?: boolean;
   } = {
     key: 'menu',
     mode: ContextMenuMode.CLICK,
+    isMinimalistic: false,
   },
   contentProps?: Omit<ContentProps, 'theme'>,
-  hasArrow = true,
   additionalLabel = false
 ) => {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
@@ -355,57 +356,66 @@ const renderSubSelectMenu = (
             </ContextMenu.Portal>
           </ContextMenu.Sub>
 
-          <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+          {!menuProps.isMinimalistic && (
+            <>
+              <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
 
-          <ContextMenu.CheckboxItem
-            theme={ContextMenuCheckboxItemTheme}
-            isChecked={autoupdateChecked}
-            onChange={handleAutoupdateChange}
-            text={
-              <Text theme={TextContextMenuTheme} size="l">
-                {i18n.t('Autoupdate')}
-              </Text>
-            }
-          >
-            <ContextMenu.ItemIndicator theme={ContextMenuItemIndicatorTheme}>
-              <ContextMenuCheckIcon />
-            </ContextMenu.ItemIndicator>
-          </ContextMenu.CheckboxItem>
+              <ContextMenu.CheckboxItem
+                theme={ContextMenuCheckboxItemTheme}
+                isChecked={autoupdateChecked}
+                onChange={handleAutoupdateChange}
+                text={
+                  <Text theme={TextContextMenuTheme} size="l">
+                    {i18n.t('Autoupdate')}
+                  </Text>
+                }
+              >
+                <ContextMenu.ItemIndicator
+                  theme={ContextMenuItemIndicatorTheme}
+                >
+                  <ContextMenuCheckIcon />
+                </ContextMenu.ItemIndicator>
+              </ContextMenu.CheckboxItem>
 
-          <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+              <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
 
-          <ContextMenu.Label
-            theme={ContextMenuLabelTheme}
-            text={
-              <Text theme={TextContextMenuTheme} size="l">
-                {i18n.t('Select Theme')}
-              </Text>
-            }
-          />
+              <ContextMenu.Label
+                theme={ContextMenuLabelTheme}
+                text={
+                  <Text theme={TextContextMenuTheme} size="l">
+                    {i18n.t('Select Theme')}
+                  </Text>
+                }
+              />
 
-          <ContextMenu.RadioGroup value={theme} onChange={handleThemeChange}>
-            <ContextMenu.RadioItem
-              theme={ContextMenuRadioItemTheme}
-              value="light"
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  {i18n.t('Light')}
-                </Text>
-              }
-            />
+              <ContextMenu.RadioGroup
+                value={theme}
+                onChange={handleThemeChange}
+              >
+                <ContextMenu.RadioItem
+                  theme={ContextMenuRadioItemTheme}
+                  value="light"
+                  text={
+                    <Text theme={TextContextMenuTheme} size="l">
+                      {i18n.t('Light')}
+                    </Text>
+                  }
+                />
 
-            <ContextMenu.RadioItem
-              theme={ContextMenuRadioItemTheme}
-              value="dark"
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  {i18n.t('Dark')}
-                </Text>
-              }
-            />
-          </ContextMenu.RadioGroup>
+                <ContextMenu.RadioItem
+                  theme={ContextMenuRadioItemTheme}
+                  value="dark"
+                  text={
+                    <Text theme={TextContextMenuTheme} size="l">
+                      {i18n.t('Dark')}
+                    </Text>
+                  }
+                />
+              </ContextMenu.RadioGroup>
+            </>
+          )}
 
-          {hasArrow && <ContextMenu.Arrow theme={ContextMenuArrowTheme} />}
+          <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
         </ContextMenu.Content>
       </ContextMenu.Portal>
     </ContextMenu.Root>
@@ -517,9 +527,12 @@ export const Positions: Story = {
           {centralPositions.map((dir, i) => (
             <div key={dir}>
               {renderSubSelectMenu(
-                { key: `menu-center-${i}`, mode: ContextMenuMode.CLICK },
+                {
+                  key: `menu-center-${i}`,
+                  mode: ContextMenuMode.CLICK,
+                  isMinimalistic: true,
+                },
                 { direction: dir, sideOffset: 10 },
-                false,
                 true
               )}
             </div>

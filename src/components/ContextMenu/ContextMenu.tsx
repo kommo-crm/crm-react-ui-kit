@@ -207,6 +207,10 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
 
           updateColor(targetItem);
 
+          if (itemObserver) {
+            itemObserver.disconnect();
+          }
+
           itemObserver = new MutationObserver(() => updateColor(targetItem));
 
           itemObserver.observe(targetItem, {

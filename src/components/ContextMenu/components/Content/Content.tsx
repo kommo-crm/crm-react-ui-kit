@@ -92,12 +92,18 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       }
 
       const contentElement = contentRef.current;
-      const firstChild = contentElement.firstElementChild;
+      const label = contentElement.firstElementChild;
+      const item = contentElement.children[1];
+      const trigger = triggerRef.current;
 
-      if (firstChild && firstChild.hasAttribute('data-label')) {
-        const labelHeight = firstChild.getBoundingClientRect().height;
+      if (label && label.hasAttribute('data-label') && trigger) {
+        const labelHeight = label.getBoundingClientRect().height;
+        const itemHeight = item.getBoundingClientRect().height;
+        const triggerHeight = trigger.getBoundingClientRect().height;
 
-        setLabelOffset(-labelHeight);
+        const dynamicOffset = (triggerHeight - itemHeight) / 2;
+
+        setLabelOffset(-labelHeight + dynamicOffset);
       } else {
         setLabelOffset(undefined);
       }
