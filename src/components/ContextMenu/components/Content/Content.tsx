@@ -83,8 +83,12 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       if (
         disableLabelOffset ||
         !contentRef.current ||
-        (direction !== Direction.LEFT_DOWN &&
-          direction !== Direction.RIGHT_DOWN)
+        [
+          Direction.DOWN_LEFT,
+          Direction.DOWN_RIGHT,
+          Direction.UP_LEFT,
+          Direction.UP_RIGHT,
+        ].includes(direction)
       ) {
         setLabelOffset(undefined);
 
@@ -103,9 +107,17 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
         const dynamicOffset = (triggerHeight - itemHeight) / 2;
 
-        setLabelOffset(-labelHeight + dynamicOffset);
-      } else {
-        setLabelOffset(undefined);
+        if (
+          direction === Direction.LEFT_UP ||
+          direction === Direction.RIGHT_UP
+        ) {
+          setLabelOffset(dynamicOffset - 2);
+        } else if (
+          direction === Direction.LEFT_DOWN ||
+          direction === Direction.RIGHT_DOWN
+        ) {
+          setLabelOffset(-labelHeight + dynamicOffset);
+        }
       }
     }, [disableLabelOffset, children, direction]);
 

@@ -225,11 +225,10 @@ function App() {
 `;
 
 const renderSubSelectMenu = (
+  key: string = 'menu',
   menuProps: ContextMenuRootProps & {
-    key?: string;
     isMinimalistic?: boolean;
   } = {
-    key: 'menu',
     mode: ContextMenuMode.CLICK,
     isMinimalistic: false,
   },
@@ -248,7 +247,7 @@ const renderSubSelectMenu = (
   };
 
   return (
-    <ContextMenu.Root {...menuProps}>
+    <ContextMenu.Root {...menuProps} key={key}>
       <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
@@ -503,8 +502,7 @@ export const Positions: Story = {
               alignItems: pos.align,
             }}
           >
-            {renderSubSelectMenu({
-              key: `menu-${i}`,
+            {renderSubSelectMenu(`menu-${i}`, {
               mode: ContextMenuMode.CLICK,
             })}
           </div>
@@ -527,8 +525,8 @@ export const Positions: Story = {
           {centralPositions.map((dir, i) => (
             <div key={dir}>
               {renderSubSelectMenu(
+                `menu-center-${i}`,
                 {
-                  key: `menu-center-${i}`,
                   mode: ContextMenuMode.CLICK,
                   isMinimalistic: true,
                 },
@@ -545,6 +543,6 @@ export const Positions: Story = {
 
 export const HoverMode: Story = {
   render: () => {
-    return renderSubSelectMenu({ mode: ContextMenuMode.HOVER });
+    return renderSubSelectMenu('menu-hover', { mode: ContextMenuMode.HOVER });
   },
 };
