@@ -13,7 +13,7 @@ import s from './Arrow.module.css';
 const DISPLAY_NAME = 'ContextMenu.Arrow';
 
 export const Arrow = forwardRef<SVGSVGElement, ArrowProps>(
-  ({ theme, className, ...props }, ref) => {
+  ({ theme, className, ...rest }, ref) => {
     const { inheritedArrowColor } = useContextMenuContext(DISPLAY_NAME);
 
     const themeClassName = useThemeClassName(theme);
@@ -22,7 +22,7 @@ export const Arrow = forwardRef<SVGSVGElement, ArrowProps>(
       <span data-arrow>
         <RadixDropdownMenuArrow
           className={cx(s.arrow_border, themeClassName, className)}
-          {...props}
+          {...rest}
         />
         <RadixDropdownMenuArrow
           className={cx(s.arrow, themeClassName, className)}
@@ -30,7 +30,7 @@ export const Arrow = forwardRef<SVGSVGElement, ArrowProps>(
             ...(inheritedArrowColor ? { fill: inheritedArrowColor } : {}),
           }}
           ref={ref}
-          {...props}
+          {...rest}
         />
       </span>
     );

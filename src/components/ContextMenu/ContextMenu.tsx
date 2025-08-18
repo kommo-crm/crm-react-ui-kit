@@ -1,4 +1,10 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
 import { ContextMenuRootProps } from './ContextMenu.props';
@@ -37,7 +43,8 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
       animationDuration = 150,
       onOpen,
       open: initialOpen,
-      ...props
+      disableLabelOffset = false,
+      ...rest
     },
     ref
   ) => {
@@ -93,7 +100,7 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
       setTemporaryHoverClose(false);
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (!open) {
         return;
       }
@@ -103,82 +110,139 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
           setInheritedArrowColor(getComputedStyle(item).backgroundColor);
         };
 
-        if (!contentRef.current) {
-          return;
-        }
-
-        const side = contentRef.current?.dataset.side;
-
-        if (!side) {
-          return;
-        }
-
-        const items = Array.from(contentRef.current.children);
-
-        if (!items.length) {
-          return;
-        }
-
-        let targetItem = side === 'bottom' ? items[0] : items[items.length - 1];
-
-        if (!targetItem) {
-          return;
-        }
-
-        if (targetItem.hasAttribute('data-arrow')) {
-          const index = side === 'bottom' ? 1 : items.length - 2;
-
-          targetItem = items[index];
-        }
-
-        if (
-          (targetItem.hasAttribute('data-wrapper') ||
-            targetItem.getAttribute('role') === 'group') &&
-          targetItem.children
-        ) {
-          const targetItemChildren = Array.from(targetItem.children);
-
-          targetItem =
-            side === 'bottom'
-              ? targetItemChildren[0]
-              : targetItemChildren[targetItemChildren.length - 1];
-
-          if (targetItem.hasAttribute('data-content-wrapper')) {
-            targetItem =
-              side === 'bottom'
-                ? targetItemChildren[1]
-                : targetItemChildren[targetItemChildren.length - 2];
+        const resolveTargetItem = () => {
+          if (!contentRef.current) {
+            return;
           }
-        }
 
-        if (!targetItem.hasAttribute('data-item')) {
-          return;
-        }
+          const side = contentRef.current?.dataset.side;
+          const align = contentRef.current?.dataset.align;
 
-        updateColor(targetItem);
+          if (!side || !align) {
+            return;
+          }
 
-        const itemObserver = new MutationObserver(() =>
-          updateColor(targetItem)
-        );
+          const items = Array.from(contentRef.current.children);
 
-        itemObserver.observe(targetItem, {
+          if (!items.length) {
+            return;
+          }
+
+          let index =
+            side === 'bottom' || (side !== 'top' && align === 'start')
+              ? 0
+              : items.length - 1;
+
+          let targetItem = items[index];
+
+          if (!targetItem) {
+            return;
+          }
+
+          if (targetItem.hasAttribute('data-arrow')) {
+            if (side === 'bottom' || (side !== 'top' && align === 'start')) {
+              index += 1;
+            } else {
+              index -= 1;
+            }
+
+            targetItem = items[index];
+
+            if (!targetItem) {
+              return;
+            }
+          }
+
+          if (
+            !disableLabelOffset &&
+            targetItem.hasAttribute('data-label') &&
+            ['left', 'right'].includes(contentRef.current.dataset.side ?? '') &&
+            contentRef.current.dataset.align === 'start'
+          ) {
+            if (side === 'bottom' || (side !== 'top' && align === 'start')) {
+              index += 1;
+            } else {
+              index -= 1;
+            }
+
+            targetItem = items[index];
+
+            if (!targetItem) {
+              return;
+            }
+          }
+
+          if (
+            (targetItem.hasAttribute('data-wrapper') ||
+              targetItem.getAttribute('role') === 'group') &&
+            targetItem.children
+          ) {
+            const targetItemChildren = Array.from(targetItem.children);
+
+            targetItem =
+              side === 'bottom' || (side !== 'top' && align === 'start')
+                ? targetItemChildren[0]
+                : targetItemChildren[targetItemChildren.length - 1];
+
+            if (targetItem.hasAttribute('data-content-wrapper')) {
+              targetItem =
+                side === 'bottom' || (side !== 'top' && align === 'start')
+                  ? targetItemChildren[1]
+                  : targetItemChildren[targetItemChildren.length - 2];
+            }
+          }
+
+          return targetItem.hasAttribute('data-item') ? targetItem : null;
+        };
+
+        let itemObserver: MutationObserver | null = null;
+        let themeObserver: MutationObserver | null = null;
+
+        const handleUpdate = () => {
+          const targetItem = resolveTargetItem();
+
+          if (!targetItem) {
+            return;
+          }
+
+          updateColor(targetItem);
+
+          itemObserver = new MutationObserver(() => updateColor(targetItem));
+
+          itemObserver.observe(targetItem, {
+            attributes: true,
+            attributeFilter: [
+              'style',
+              'class',
+              'data-highlighted',
+              'data-state',
+            ],
+          });
+
+          const root = document.documentElement;
+
+          themeObserver = new MutationObserver(() => updateColor(targetItem));
+
+          themeObserver.observe(root, {
+            attributes: true,
+            attributeFilter: ['data-crm-ui-kit-theme'],
+          });
+        };
+
+        handleUpdate();
+
+        const content = contentRef.current!;
+        const sideAlignObserver = new MutationObserver(handleUpdate);
+
+        sideAlignObserver.observe(content, {
           attributes: true,
-          attributeFilter: ['style', 'class', 'data-highlighted', 'data-state'],
-        });
-
-        const root = document.documentElement;
-        const themeObserver = new MutationObserver(() =>
-          updateColor(targetItem)
-        );
-
-        themeObserver.observe(root, {
-          attributes: true,
-          attributeFilter: ['data-crm-ui-kit-theme'],
+          attributeFilter: ['data-side', 'data-align'],
         });
 
         return () => {
-          itemObserver.disconnect();
-          themeObserver.disconnect();
+          itemObserver?.disconnect();
+          themeObserver?.disconnect();
+          sideAlignObserver.disconnect();
         };
       });
 
@@ -281,12 +345,13 @@ export const ContextMenu = forwardRef<HTMLDivElement, ContextMenuRootProps>(
         animatedOpen={animatedOpen}
         animationDuration={animationDuration}
         closeMenuImmediately={closeImmediately}
+        disableLabelOffset={disableLabelOffset}
       >
         <RadixDropdownMenuRoot
           onOpenChange={handleOpenChange}
           open={open}
           modal={false}
-          {...props}
+          {...rest}
         >
           <div
             ref={ref}

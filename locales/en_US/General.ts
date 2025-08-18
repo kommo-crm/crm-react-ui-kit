@@ -104,4 +104,5 @@ export default {
   'Select Theme': 'Select Theme',
   'Light': 'Light',
   'Dark': 'Dark',
+  'Label': 'Label',
 };

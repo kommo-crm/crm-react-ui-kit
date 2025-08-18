@@ -104,4 +104,5 @@ export default {
   'Select Theme': 'Selecionar tema',
   'Light': 'Claro',
   'Dark': 'Escuro',
+  'Label': 'Rótulo',
 };

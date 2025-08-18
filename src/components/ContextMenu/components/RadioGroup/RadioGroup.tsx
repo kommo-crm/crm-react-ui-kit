@@ -7,7 +7,7 @@ const DISPLAY_NAME = 'ContextMenu.RadioGroup';
 
 export const RadioGroup = ({
   onChange,
-  ...props
+  ...rest
 }: RadioGroupProps): JSX.Element => {
   const handleValueChange = (value: string) => {
     if (onChange) {
@@ -20,7 +20,7 @@ export const RadioGroup = ({
   };
 
   return (
-    <RadixDropdownMenuRadioGroup {...props} onValueChange={handleValueChange} />
+    <RadixDropdownMenuRadioGroup {...rest} onValueChange={handleValueChange} />
   );
 };
 

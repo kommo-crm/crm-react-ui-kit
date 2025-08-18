@@ -30,6 +30,12 @@ export type ContextMenuRootProps = Omit<
    * @default 150
    */
   animationDuration?: number;
+  /**
+   * Whether to disable the label offset.
+   *
+   * @default false
+   */
+  disableLabelOffset?: boolean;
 };
 
 export interface ContextMenuContextProps {
@@ -82,4 +88,8 @@ export interface ContextMenuContextProps {
    * Immediately closes the menu without waiting for any hover or animation delays.
    */
   closeMenuImmediately: () => void;
+  /**
+   * Whether to disable the label offset.
+   */
+  disableLabelOffset: boolean;
 }

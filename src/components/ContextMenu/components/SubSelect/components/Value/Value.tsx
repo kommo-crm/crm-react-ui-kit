@@ -24,7 +24,7 @@ export const Value = forwardRef<HTMLDivElement, SubSelectValueProps>(
       label,
       placeholder = '',
       separator = ':',
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -36,7 +36,7 @@ export const Value = forwardRef<HTMLDivElement, SubSelectValueProps>(
       <div
         ref={ref}
         className={cx(s.value, themeClassName, className)}
-        {...props}
+        {...rest}
       >
         <Text theme={TextContextMenuTheme} size="l">
           <span className={cx(s.label)}>

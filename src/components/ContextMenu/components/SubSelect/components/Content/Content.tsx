@@ -29,7 +29,7 @@ export const Content = forwardRef<HTMLDivElement, SubSelectContentProps>(
       children,
       sideOffset = 4,
       collisionPadding = 10,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -82,7 +82,7 @@ export const Content = forwardRef<HTMLDivElement, SubSelectContentProps>(
             className={cx(s.content, themeClassName, className)}
             sideOffset={sideOffset}
             collisionPadding={collisionPadding}
-            {...props}
+            {...rest}
           >
             {children}
           </RadixDropdownMenuSubContent>

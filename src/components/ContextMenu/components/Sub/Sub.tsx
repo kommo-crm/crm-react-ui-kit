@@ -11,7 +11,7 @@ const DISPLAY_NAME = 'ContextMenu.Sub';
 
 export const Sub = forwardRef<HTMLDivElement, SubProps>(
   (
-    { children, mode = ContextMenuMode.HOVER, open: initialOpen, ...props },
+    { children, mode = ContextMenuMode.HOVER, open: initialOpen, ...rest },
     ref
   ) => {
     const [open, setOpen] = useState(
@@ -136,7 +136,7 @@ export const Sub = forwardRef<HTMLDivElement, SubProps>(
         <RadixDropdownMenuSub
           open={open}
           onOpenChange={handleOpenChange}
-          {...props}
+          {...rest}
         >
           <div
             ref={ref}

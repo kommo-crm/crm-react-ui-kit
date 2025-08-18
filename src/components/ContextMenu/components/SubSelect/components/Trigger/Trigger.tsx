@@ -27,7 +27,7 @@ export const Trigger = forwardRef<HTMLDivElement, SubSelectTriggerProps>(
       icon,
       chevron = <ChevronRightIcon />,
       isDisabled,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -55,7 +55,7 @@ export const Trigger = forwardRef<HTMLDivElement, SubSelectTriggerProps>(
         onMouseEnter={() => setIsActive(true)}
         onBlur={() => setIsActive(false)}
         onMouseLeave={() => setIsActive(false)}
-        {...props}
+        {...rest}
       >
         {icon}
         {children}

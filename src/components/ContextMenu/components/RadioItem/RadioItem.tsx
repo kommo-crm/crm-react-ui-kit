@@ -15,7 +15,7 @@ import s from './RadioItem.module.css';
 const DISPLAY_NAME = 'ContextMenu.RadioItem';
 
 export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
-  ({ theme, className, children, icon, text, isDisabled, ...props }, ref) => {
+  ({ theme, className, children, icon, text, isDisabled, ...rest }, ref) => {
     const themeClassName = useThemeClassName(theme);
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
@@ -29,7 +29,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         onSelect={() => closeMenuImmediately()}
-        {...props}
+        {...rest}
       >
         {icon}
         {text}

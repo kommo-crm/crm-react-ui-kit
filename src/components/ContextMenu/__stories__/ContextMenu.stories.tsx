@@ -28,7 +28,11 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
+import { ContextMenuRootProps } from '../ContextMenu.props';
+
 import { ContextMenuMode } from '../ContextMenu.enums';
+import { Direction } from '../components/Content';
+import { ContentProps } from '../components/Content/Content.props';
 
 const USAGE = `
 import { useState } from "react";
@@ -221,8 +225,14 @@ function App() {
 `;
 
 const renderSubSelectMenu = (
-  key: string,
-  mode: ContextMenuMode = ContextMenuMode.CLICK
+  menuProps: ContextMenuRootProps & {
+    key?: string;
+  } = {
+    key: 'menu',
+    mode: ContextMenuMode.CLICK,
+  },
+  contentProps?: Omit<ContentProps, 'theme'>,
+  hasArrow = true
 ) => {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState('light');
@@ -236,18 +246,30 @@ const renderSubSelectMenu = (
   };
 
   return (
-    <ContextMenu.Root key={key} mode={mode}>
+    <ContextMenu.Root {...menuProps}>
       <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
         <ContextMenu.Content
-          theme={ContextMenuContentTheme}
           collisionBoundary={
             document.querySelector('.docs-story') as HTMLElement
           }
+          theme={ContextMenuContentTheme}
+          {...contentProps}
         >
+          {!menuProps.disableLabelOffset && (
+            <ContextMenu.Label
+              theme={ContextMenuLabelTheme}
+              text={
+                <Text theme={TextContextMenuTheme} size="l">
+                  {i18n.t('Label')}
+                </Text>
+              }
+            />
+          )}
+
           <ContextMenu.MetaItem
             theme={ContextMenuMetaItemTheme}
             label={i18n.t('Workspace')}
@@ -382,7 +404,7 @@ const renderSubSelectMenu = (
             />
           </ContextMenu.RadioGroup>
 
-          <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+          {hasArrow && <ContextMenu.Arrow theme={ContextMenuArrowTheme} />}
         </ContextMenu.Content>
       </ContextMenu.Portal>
     </ContextMenu.Root>
@@ -416,7 +438,7 @@ export const Default: Story = {
       <div
         style={{
           width: '100%',
-          marginBottom: '320px',
+          marginBottom: '380px',
           display: 'flex',
           justifyContent: 'center',
         }}
@@ -426,7 +448,7 @@ export const Default: Story = {
     ),
   ],
   render: () => {
-    return renderSubSelectMenu('');
+    return renderSubSelectMenu();
   },
 };
 
@@ -439,6 +461,13 @@ export const Positions: Story = {
       { justify: 'flex-start', align: 'flex-end' },
       { justify: 'center', align: 'flex-end' },
       { justify: 'flex-end', align: 'flex-end' },
+    ];
+
+    const centralPositions = [
+      Direction.LEFT_DOWN,
+      Direction.RIGHT_DOWN,
+      Direction.LEFT_UP,
+      Direction.RIGHT_UP,
     ];
 
     return (
@@ -463,9 +492,37 @@ export const Positions: Story = {
               alignItems: pos.align,
             }}
           >
-            {renderSubSelectMenu(`menu-${i}`)}
+            {renderSubSelectMenu({
+              key: `menu-${i}`,
+              mode: ContextMenuMode.CLICK,
+            })}
           </div>
         ))}
+
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gridTemplateRows: '1fr 1fr',
+            gap: '16px',
+            justifyItems: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {centralPositions.map((dir, i) => (
+            <div key={dir}>
+              {renderSubSelectMenu(
+                { key: `menu-center-${i}`, mode: ContextMenuMode.CLICK },
+                { direction: dir, sideOffset: 10 },
+                false
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     );
   },
@@ -473,6 +530,6 @@ export const Positions: Story = {
 
 export const HoverMode: Story = {
   render: () => {
-    return renderSubSelectMenu('', ContextMenuMode.HOVER);
+    return renderSubSelectMenu({ mode: ContextMenuMode.HOVER });
   },
 };

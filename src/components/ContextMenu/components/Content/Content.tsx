@@ -22,6 +22,18 @@ import { Direction } from './Content.enums';
 
 import s from './Content.module.css';
 
+const directionToSide: Record<Direction, 'top' | 'bottom' | 'left' | 'right'> =
+  {
+    [Direction.UP_LEFT]: 'top',
+    [Direction.UP_RIGHT]: 'top',
+    [Direction.DOWN_LEFT]: 'bottom',
+    [Direction.DOWN_RIGHT]: 'bottom',
+    [Direction.LEFT_UP]: 'left',
+    [Direction.LEFT_DOWN]: 'left',
+    [Direction.RIGHT_UP]: 'right',
+    [Direction.RIGHT_DOWN]: 'right',
+  };
+
 const DISPLAY_NAME = 'ContextMenu.Content';
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
@@ -35,7 +47,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       collisionBoundary,
       direction = Direction.DOWN_RIGHT,
       disableAutoPositioning = false,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -44,9 +56,15 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
     const [isPositioned, setIsPositioned] = useState(false);
     const [align, setAlign] = useState<'start' | 'end'>(
-      direction === Direction.UP_RIGHT || direction === Direction.DOWN_RIGHT
+      direction === Direction.UP_RIGHT ||
+        direction === Direction.DOWN_RIGHT ||
+        direction === Direction.RIGHT_UP ||
+        direction === Direction.RIGHT_DOWN
         ? 'start'
         : 'end'
+    );
+    const [labelOffset, setLabelOffset] = useState<number | undefined>(
+      undefined
     );
 
     const {
@@ -56,9 +74,34 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       animationDuration,
       mode,
       temporaryHoverClose,
+      disableLabelOffset,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
+
+    useLayoutEffect(() => {
+      if (
+        disableLabelOffset ||
+        !contentRef.current ||
+        (direction !== Direction.LEFT_DOWN &&
+          direction !== Direction.RIGHT_DOWN)
+      ) {
+        setLabelOffset(undefined);
+
+        return;
+      }
+
+      const contentElement = contentRef.current;
+      const firstChild = contentElement.firstElementChild;
+
+      if (firstChild && firstChild.hasAttribute('data-label')) {
+        const labelHeight = firstChild.getBoundingClientRect().height;
+
+        setLabelOffset(-labelHeight);
+      } else {
+        setLabelOffset(undefined);
+      }
+    }, [disableLabelOffset, children, direction]);
 
     useLayoutEffect(() => {
       if (hasIcon) {
@@ -99,19 +142,75 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
         const boundaryRect = boundaryEl.getBoundingClientRect();
 
-        if (
-          direction === Direction.UP_RIGHT ||
-          direction === Direction.DOWN_RIGHT
-        ) {
-          const spaceRight = boundaryRect.right - triggerRect.right;
+        const fits = {
+          right: boundaryRect.right - triggerRect.right >= contentRect.width,
+          left: triggerRect.left - boundaryRect.left >= contentRect.width,
+          bottom:
+            boundaryRect.bottom - triggerRect.bottom >= contentRect.height,
+          top: triggerRect.top - boundaryRect.top >= contentRect.height,
+        };
 
-          setAlign(spaceRight < contentRect.width ? 'end' : 'start');
-        } else {
-          const spaceLeft = triggerRect.left - boundaryRect.left;
+        let alignCandidate: 'start' | 'end' = 'start';
 
-          setAlign(spaceLeft < contentRect.width ? 'start' : 'end');
+        switch (direction) {
+          case Direction.UP_RIGHT:
+
+          case Direction.DOWN_RIGHT: {
+            if (fits.right) {
+              alignCandidate = 'start';
+            } else if (fits.left) {
+              alignCandidate = 'end';
+            } else {
+              alignCandidate = 'start';
+            }
+
+            break;
+          }
+
+          case Direction.UP_LEFT:
+
+          case Direction.DOWN_LEFT: {
+            if (fits.left) {
+              alignCandidate = 'end';
+            } else if (fits.right) {
+              alignCandidate = 'start';
+            } else {
+              alignCandidate = 'end';
+            }
+
+            break;
+          }
+
+          case Direction.RIGHT_DOWN:
+
+          case Direction.LEFT_DOWN: {
+            if (fits.bottom) {
+              alignCandidate = 'start';
+            } else if (fits.top) {
+              alignCandidate = 'end';
+            } else {
+              alignCandidate = 'start';
+            }
+
+            break;
+          }
+
+          case Direction.RIGHT_UP:
+
+          case Direction.LEFT_UP: {
+            if (fits.top) {
+              alignCandidate = 'end';
+            } else if (fits.bottom) {
+              alignCandidate = 'start';
+            } else {
+              alignCandidate = 'end';
+            }
+
+            break;
+          }
         }
 
+        setAlign(alignCandidate);
         setIsPositioned(true);
       };
 
@@ -156,15 +255,11 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
                 disableAutoPositioning || isPositioned ? 'auto' : 'none',
             }}
             collisionBoundary={collisionBoundary}
-            side={
-              direction === Direction.UP_RIGHT ||
-              direction === Direction.UP_LEFT
-                ? 'top'
-                : 'bottom'
-            }
+            side={directionToSide[direction]}
             align={align}
             arrowPadding={arrowPadding}
-            {...props}
+            alignOffset={labelOffset}
+            {...rest}
           >
             {children}
           </RadixDropdownMenuContent>

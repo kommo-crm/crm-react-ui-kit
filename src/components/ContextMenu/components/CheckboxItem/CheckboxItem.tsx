@@ -25,7 +25,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onChange,
       isDisabled,
       isChecked,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -52,7 +52,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           }
         }}
         onSelect={() => closeMenuImmediately()}
-        {...props}
+        {...rest}
       >
         {icon}
         {text}

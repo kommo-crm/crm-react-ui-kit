@@ -28,7 +28,7 @@ export const SubSelect = forwardRef<
       children,
       mode = ContextMenuMode.HOVER,
       open: initialOpen,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -157,7 +157,7 @@ export const SubSelect = forwardRef<
         <RadixDropdownMenuSub
           open={open}
           onOpenChange={handleOpenChange}
-          {...props}
+          {...rest}
         >
           <div
             ref={ref}

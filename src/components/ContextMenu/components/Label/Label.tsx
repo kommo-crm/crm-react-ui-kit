@@ -13,7 +13,7 @@ import s from './Label.module.css';
 const DISPLAY_NAME = 'ContextMenu.Label';
 
 export const Label = forwardRef<HTMLDivElement, LabelProps>(
-  ({ theme, className, children, icon, text, ...props }, ref) => {
+  ({ theme, className, children, icon, text, ...rest }, ref) => {
     const themeClassName = useThemeClassName(theme);
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
@@ -23,7 +23,8 @@ export const Label = forwardRef<HTMLDivElement, LabelProps>(
         ref={ref}
         className={cx(s.label, themeClassName, className)}
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
-        {...props}
+        data-label
+        {...rest}
       >
         {icon}
         {text}

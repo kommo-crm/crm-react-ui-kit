@@ -156,7 +156,7 @@ describe('ContextMenu', () => {
   });
 
   it('copies meta item value to clipboard when copy action invoked', async () => {
-    const originalClipboard = (global.navigator as any).clipboard;
+    const originalClipboard = global.navigator.clipboard;
     const writeTextMock = jest.fn().mockResolvedValue(undefined);
 
     (global.navigator as any).clipboard = {

@@ -16,7 +16,7 @@ const DISPLAY_NAME = 'ContextMenu.Item';
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>(
   (
-    { theme, className, children, icon, text, isDisabled, isDanger, ...props },
+    { theme, className, children, icon, text, isDisabled, isDanger, ...rest },
     ref
   ) => {
     const themeClassName = useThemeClassName(theme);
@@ -33,7 +33,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         data-danger={isDanger ? '' : undefined}
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         onSelect={() => closeMenuImmediately()}
-        {...props}
+        {...rest}
       >
         {icon}
         {text}

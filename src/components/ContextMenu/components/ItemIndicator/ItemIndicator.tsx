@@ -11,14 +11,14 @@ import s from './ItemIndicator.module.css';
 const DISPLAY_NAME = 'ContextMenu.ItemIndicator';
 
 export const ItemIndicator = forwardRef<HTMLDivElement, ItemIndicatorProps>(
-  ({ theme, className, children, ...props }, ref) => {
+  ({ theme, className, children, ...rest }, ref) => {
     const themeClassName = useThemeClassName(theme);
 
     return (
       <RadixDropdownMenuItemIndicator
         ref={ref}
         className={cx(s.item_indicator, themeClassName, className)}
-        {...props}
+        {...rest}
       >
         {children}
       </RadixDropdownMenuItemIndicator>

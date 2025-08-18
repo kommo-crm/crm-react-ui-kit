@@ -28,7 +28,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       text,
       chevron = <ChevronRightIcon />,
       isDisabled,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -55,7 +55,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         onMouseEnter={() => setIsActive(true)}
         onBlur={() => setIsActive(false)}
         onMouseLeave={() => setIsActive(false)}
-        {...props}
+        {...rest}
       >
         {icon}
         {text}

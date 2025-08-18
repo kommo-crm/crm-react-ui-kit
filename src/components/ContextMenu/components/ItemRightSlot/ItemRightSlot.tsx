@@ -10,14 +10,14 @@ import s from './ItemRightSlot.module.css';
 const DISPLAY_NAME = 'ContextMenu.ItemRightSlot';
 
 export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
-  ({ theme, className, children, ...props }, ref) => {
+  ({ theme, className, children, ...rest }, ref) => {
     const themeClassName = useThemeClassName(theme);
 
     return (
       <div
         ref={ref}
         className={cx(s.right_slot, themeClassName, className)}
-        {...props}
+        {...rest}
       >
         {children}
       </div>

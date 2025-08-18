@@ -17,7 +17,7 @@ import s from './Trigger.module.css';
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  ({ theme, className, children, ...props }, ref) => {
+  ({ theme, className, children, ...rest }, ref) => {
     const themeClassName = useThemeClassName(theme);
 
     const { triggerRef, mode } = useContextMenuContext(DISPLAY_NAME);
@@ -33,7 +33,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
             e.stopPropagation();
           }
         }}
-        {...props}
+        {...rest}
       >
         <button ref={mergeRefs(triggerRef, ref)}>{children}</button>
       </RadixDropdownMenuTrigger>

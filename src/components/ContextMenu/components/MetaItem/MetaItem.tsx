@@ -36,7 +36,7 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
       separator = ':',
       isCopyable,
       onCopy,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -62,7 +62,7 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
         className={cx(s.meta_item, themeClassName, className)}
         data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
-        {...props}
+        {...rest}
       >
         {icon}
         <div className={cx(s.wrapper)}>

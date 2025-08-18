@@ -35,7 +35,7 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
       sortIcon,
       isDisabled,
       isDanger,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -88,7 +88,7 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
         data-active={isActive ? '' : undefined}
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         onSelect={handleSelect}
-        {...props}
+        {...rest}
       >
         {icon}
         <Text theme={TextContextMenuTheme} size="l">

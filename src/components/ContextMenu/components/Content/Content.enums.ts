@@ -15,4 +15,20 @@ export enum Direction {
    * Down and to the right.
    */
   DOWN_RIGHT = 'down_right',
+  /**
+   * Left and to the up.
+   */
+  LEFT_UP = 'left_up',
+  /**
+   * Left and to the down.
+   */
+  LEFT_DOWN = 'left_down',
+  /**
+   * Right and to the up.
+   */
+  RIGHT_UP = 'right_up',
+  /**
+   * Right and to the down.
+   */
+  RIGHT_DOWN = 'right_down',
 }
