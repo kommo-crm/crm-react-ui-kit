@@ -232,7 +232,8 @@ const renderSubSelectMenu = (
     mode: ContextMenuMode.CLICK,
   },
   contentProps?: Omit<ContentProps, 'theme'>,
-  hasArrow = true
+  hasArrow = true,
+  additionalLabel = false
 ) => {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState('light');
@@ -259,7 +260,7 @@ const renderSubSelectMenu = (
           theme={ContextMenuContentTheme}
           {...contentProps}
         >
-          {!menuProps.disableLabelOffset && (
+          {additionalLabel && (
             <ContextMenu.Label
               theme={ContextMenuLabelTheme}
               text={
@@ -518,7 +519,8 @@ export const Positions: Story = {
               {renderSubSelectMenu(
                 { key: `menu-center-${i}`, mode: ContextMenuMode.CLICK },
                 { direction: dir, sideOffset: 10 },
-                false
+                false,
+                true
               )}
             </div>
           ))}
