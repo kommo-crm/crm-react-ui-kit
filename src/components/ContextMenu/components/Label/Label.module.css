@@ -2,14 +2,13 @@
   position: relative;
   display: flex;
   outline: none;
-
-  padding: var(--crm-ui-kit-context-menu-label-padding);
-  gap: var(--crm-ui-kit-context-menu-label-gap);
-  color: var(--crm-ui-kit-context-menu-label-color);
-  background-color: var(--crm-ui-kit-context-menu-label-background-color);
-  font-weight: var(--crm-ui-kit-context-menu-label-font-weight);
+  padding: 10px 16px 10px 40px;
+  gap: 8px;
+  color: var(--crm-ui-kit-palette-text-primary);
+  background-color: var(--crm-ui-kit-palette-background-primary);
+  font-weight: 700;
 
   &[data-no-icon-align] {
-    padding: var(--crm-ui-kit-context-menu-label-without-icon-align-padding);
+    padding: 10px 16px;
   }
 }

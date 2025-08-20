@@ -1,5 +1,3 @@
-import type { ContextMenuSubSelectValueThemeType } from './Value.theme';
-
 export interface SubSelectValueProps {
   /**
    * Additional сhild elements.
@@ -9,10 +7,6 @@ export interface SubSelectValueProps {
    * Custom class.
    */
   className?: string;
-  /**
-   * Theme.
-   */
-  theme: ContextMenuSubSelectValueThemeType;
   /**
    * Label or key to display on the left side.
    */

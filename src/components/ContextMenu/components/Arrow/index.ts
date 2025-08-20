@@ -1,4 +1,2 @@
-export {
-  ContextMenuArrowTheme,
-  type ContextMenuArrowThemeType,
-} from './Arrow.theme';
+export { Arrow } from './Arrow';
+export { type ArrowProps } from './Arrow.props';

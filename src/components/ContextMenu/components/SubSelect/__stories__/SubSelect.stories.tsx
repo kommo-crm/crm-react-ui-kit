@@ -3,23 +3,13 @@ import { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import {
-  ContextMenuSubSelectContentTheme,
-  ContextMenuSubSelectItemTheme,
-  ContextMenuSubSelectTriggerTheme,
-  ContextMenuSubSelectValueTheme,
   SortDirection,
   SubSelectOption,
 } from 'src/components/ContextMenu/components/SubSelect';
 
 import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
 
-import {
-  ContextMenu,
-  ContextMenuTriggerTheme,
-  ContextMenuArrowTheme,
-  ContextMenuContentTheme,
-  ContextMenuMode,
-} from 'src/components/ContextMenu';
+import { ContextMenu, ContextMenuMode } from 'src/components/ContextMenu';
 
 import { i18n } from '@i18n';
 
@@ -29,23 +19,16 @@ const USAGE = `
 import { useState } from "react";
 
 import {
-  ContextMenuSubSelectContentTheme,
-  ContextMenuSubSelectItemTheme,
-  ContextMenuSubSelectTriggerTheme,
-  ContextMenuSubSelectValueTheme,
+  ContextMenu,
+  ContextMenuMode,
+} from '@kommo-crm/crm-react-ui-kit/ContextMenu';
+
+import {
   SortDirection,
   SubSelectOption,
 } from "@kommo-crm/crm-react-ui-kit/ContextMenu/components/SubSelect";
 
-import ContextMenuTriggerIcon from "./trigger.svg";
-
-import {
-  ContextMenu,
-  ContextMenuRootTheme,
-  ContextMenuTriggerTheme,
-  ContextMenuArrowTheme,
-  ContextMenuContentTheme,
-} from "@kommo-crm/crm-react-ui-kit/ContextMenu";
+import ContextMenuTriggerIcon from "public/icons/trigger.svg";
 
 const subSelectOptions: SubSelectOption[] = [
   { option: '${i18n.t('Date')}', value: 'date', sortable: true },
@@ -57,13 +40,13 @@ function App() {
   const [selected, setSelected] = useState<SubSelectOption>();
 
   return (
-    <ContextMenu.Root theme={ContextMenuRootTheme}>
-      <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+    <ContextMenu.Root mode={ContextMenuMode.CLICK}>
+      <ContextMenu.Trigger>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
-        <ContextMenu.Content theme={ContextMenuContentTheme}>
+        <ContextMenu.Content>
           <ContextMenu.SubSelect.Root
             value={selected}
             sortDirection={sortDir}
@@ -72,30 +55,21 @@ function App() {
               setSortDir(dir);
             }}
           >
-            <ContextMenu.SubSelect.Trigger
-              theme={ContextMenuSubSelectTriggerTheme}
-            >
+            <ContextMenu.SubSelect.Trigger>
               <ContextMenu.SubSelect.Value
-                theme={ContextMenuSubSelectValueTheme}
                 label="${i18n.t('Sort by')}"
                 placeholder="Placeholder"
               />
             </ContextMenu.SubSelect.Trigger>
 
-            <ContextMenu.SubSelect.Content
-              theme={ContextMenuSubSelectContentTheme}
-            >
+            <ContextMenu.SubSelect.Content>
               {subSelectOptions.map((option) => (
-                <ContextMenu.SubSelect.Item
-                  theme={ContextMenuSubSelectItemTheme}
-                  key={option.value}
-                  item={option}
-                />
+                <ContextMenu.SubSelect.Item key={option.value} item={option} />
               ))}
             </ContextMenu.SubSelect.Content>
           </ContextMenu.SubSelect.Root>
 
-          <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+          <ContextMenu.Arrow />
         </ContextMenu.Content>
       </ContextMenu.Portal>
     </ContextMenu.Root>
@@ -114,13 +88,12 @@ const renderMenu = (mode = ContextMenuMode.CLICK) => {
 
   return (
     <ContextMenu.Root mode={mode}>
-      <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+      <ContextMenu.Trigger>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
         <ContextMenu.Content
-          theme={ContextMenuContentTheme}
           collisionBoundary={
             document.querySelector('.docs-story') as HTMLElement
           }
@@ -133,30 +106,21 @@ const renderMenu = (mode = ContextMenuMode.CLICK) => {
               setSortDir(dir);
             }}
           >
-            <ContextMenu.SubSelect.Trigger
-              theme={ContextMenuSubSelectTriggerTheme}
-            >
+            <ContextMenu.SubSelect.Trigger>
               <ContextMenu.SubSelect.Value
-                theme={ContextMenuSubSelectValueTheme}
                 label={i18n.t('Sort by')}
                 placeholder="Placeholder"
               />
             </ContextMenu.SubSelect.Trigger>
 
-            <ContextMenu.SubSelect.Content
-              theme={ContextMenuSubSelectContentTheme}
-            >
+            <ContextMenu.SubSelect.Content>
               {subSelectOptions.map((option) => (
-                <ContextMenu.SubSelect.Item
-                  theme={ContextMenuSubSelectItemTheme}
-                  key={option.value}
-                  item={option}
-                />
+                <ContextMenu.SubSelect.Item key={option.value} item={option} />
               ))}
             </ContextMenu.SubSelect.Content>
           </ContextMenu.SubSelect.Root>
 
-          <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+          <ContextMenu.Arrow />
         </ContextMenu.Content>
       </ContextMenu.Portal>
     </ContextMenu.Root>

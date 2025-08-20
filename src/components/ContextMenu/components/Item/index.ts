@@ -1,4 +1,2 @@
-export {
-  ContextMenuItemTheme,
-  type ContextMenuItemThemeType,
-} from './Item.theme';
+export { Item } from './Item';
+export { type ItemProps } from './Item.props';

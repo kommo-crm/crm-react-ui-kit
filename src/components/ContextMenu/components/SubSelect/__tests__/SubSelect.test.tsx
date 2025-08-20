@@ -6,18 +6,8 @@ import userEvent from '@testing-library/user-event';
 
 import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
 
-import {
-  ContextMenu,
-  ContextMenuTriggerTheme,
-  ContextMenuArrowTheme,
-  ContextMenuContentTheme,
-  ContextMenuMode,
-} from 'src/components/ContextMenu';
+import { ContextMenu, ContextMenuMode } from 'src/components/ContextMenu';
 
-import { ContextMenuSubSelectItemTheme } from '../components/Item';
-import { ContextMenuSubSelectValueTheme } from '../components/Value';
-import { ContextMenuSubSelectTriggerTheme } from '../components/Trigger';
-import { ContextMenuSubSelectContentTheme } from '../components/Content';
 import { SortDirection } from '../SubSelect.enums';
 import { SubSelectOption } from '../SubSelect.types';
 import { ContextMenuSubSelectRootProps } from '../SubSelect.props';
@@ -47,15 +37,12 @@ const renderContextMenuSubSelect = async (
 
     return (
       <ContextMenu.Root mode={ContextMenuMode.CLICK} open>
-        <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+        <ContextMenu.Trigger>
           <ContextMenuTriggerIcon />
         </ContextMenu.Trigger>
 
         <ContextMenu.Portal>
-          <ContextMenu.Content
-            theme={ContextMenuContentTheme}
-            disableAutoPositioning
-          >
+          <ContextMenu.Content disableAutoPositioning>
             <ContextMenu.SubSelect.Root
               value={selected}
               sortDirection={sortDir}
@@ -66,24 +53,16 @@ const renderContextMenuSubSelect = async (
               data-testid={DATA_ROOT_TEST_ID}
               {...props}
             >
-              <ContextMenu.SubSelect.Trigger
-                theme={ContextMenuSubSelectTriggerTheme}
-                data-testid={DATA_TRIGGER_TEST_ID}
-              >
+              <ContextMenu.SubSelect.Trigger data-testid={DATA_TRIGGER_TEST_ID}>
                 <ContextMenu.SubSelect.Value
-                  theme={ContextMenuSubSelectValueTheme}
                   label="Sort by"
                   placeholder="Placeholder"
                 />
               </ContextMenu.SubSelect.Trigger>
 
-              <ContextMenu.SubSelect.Content
-                theme={ContextMenuSubSelectContentTheme}
-                data-testid={DATA_CONTENT_TEST_ID}
-              >
+              <ContextMenu.SubSelect.Content data-testid={DATA_CONTENT_TEST_ID}>
                 {subSelectOptions.map((option) => (
                   <ContextMenu.SubSelect.Item
-                    theme={ContextMenuSubSelectItemTheme}
                     key={option.value}
                     item={option}
                     data-testid={DATA_ITEM_TEST_ID}
@@ -92,7 +71,7 @@ const renderContextMenuSubSelect = async (
               </ContextMenu.SubSelect.Content>
             </ContextMenu.SubSelect.Root>
 
-            <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+            <ContextMenu.Arrow />
           </ContextMenu.Content>
         </ContextMenu.Portal>
       </ContextMenu.Root>

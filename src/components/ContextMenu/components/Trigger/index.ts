@@ -1,4 +1,2 @@
-export {
-  ContextMenuTriggerTheme,
-  type ContextMenuTriggerThemeType,
-} from './Trigger.theme';
+export { Trigger } from './Trigger';
+export { type TriggerProps } from './Trigger.props';

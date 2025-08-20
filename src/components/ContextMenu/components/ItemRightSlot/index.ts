@@ -1,4 +1,2 @@
-export {
-  ContextMenuItemRightSlotTheme,
-  type ContextMenuItemRightSlotThemeType,
-} from './ItemRightSlot.theme';
+export { ItemRightSlot } from './ItemRightSlot';
+export { type ItemRightSlotProps } from './ItemRightSlot.props';

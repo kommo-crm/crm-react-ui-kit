@@ -2,8 +2,6 @@ import React, { forwardRef, useState } from 'react';
 import { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-
 import ChevronRightIcon from 'src/icons/chevronRight.svg';
 
 import { useLevelContext } from '../../providers/LevelProvider';
@@ -21,7 +19,6 @@ const DISPLAY_NAME = 'ContextMenu.SubTrigger';
 export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
   (
     {
-      theme,
       className,
       children,
       icon,
@@ -32,8 +29,6 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
     },
     ref
   ) => {
-    const themeClassName = useThemeClassName(theme);
-
     const [isActive, setIsActive] = useState(false);
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
@@ -42,7 +37,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
     return (
       <RadixDropdownMenuSubTrigger
         ref={ref}
-        className={cx(s.sub_trigger, themeClassName, className)}
+        className={cx(s.sub_trigger, className)}
         disabled={isDisabled}
         data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}

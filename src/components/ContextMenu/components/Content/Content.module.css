@@ -1,10 +1,9 @@
 .content {
   min-width: 50px;
-
-  background-color: var(--crm-ui-kit-context-menu-content-background-color);
-  border: var(--crm-ui-kit-context-menu-content-border-size) solid
-    var(--crm-ui-kit-context-menu-content-border-color);
-  border-radius: var(--crm-ui-kit-context-menu-content-border-radius);
-  overflow: var(--crm-ui-kit-context-menu-content-overflow);
-  box-shadow: var(--crm-ui-kit-context-menu-content-box-shadow);
+  background-color: var(--crm-ui-kit-palette-background-primary);
+  border: 1px solid var(--crm-ui-kit-palette-border-default);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03),
+    0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 }

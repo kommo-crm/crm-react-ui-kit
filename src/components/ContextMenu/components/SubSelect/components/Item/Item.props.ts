@@ -3,18 +3,12 @@ import type { Item as RadixDropdownMenuSubSelectItem } from '@radix-ui/react-dro
 
 import { SubSelectOption } from '../../SubSelect.types';
 
-import type { ContextMenuSubSelectItemThemeType } from './Item.theme';
-
 type RadixSubSelectItemProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuSubSelectItem>,
   'disabled' | 'textValue'
 >;
 
 export type SubSelectItemProps = RadixSubSelectItemProps & {
-  /**
-   * Theme.
-   */
-  theme: ContextMenuSubSelectItemThemeType;
   /**
    * Icon to the left of the text.
    */

@@ -4,44 +4,38 @@
   align-items: center;
   user-select: none;
   outline: none;
-
-  padding: var(--crm-ui-kit-context-menu-sub-select-item-padding);
-  gap: var(--crm-ui-kit-context-menu-sub-select-item-gap);
-  color: var(--crm-ui-kit-context-menu-sub-select-item-color);
-  background-color: var(--crm-ui-kit-context-menu-sub-select-item-background-color);
-  cursor: var(--crm-ui-kit-context-menu-sub-select-item-cursor);
+  padding: 10px 16px 10px 40px;
+  gap: 8px;
+  color: var(--crm-ui-kit-palette-text-primary);
+  background-color: var(--crm-ui-kit-palette-background-primary);
+  cursor: pointer;
 
   &[data-disabled] {
-    color: var(--crm-ui-kit-context-menu-sub-select-item-disabled-color);
+    color: var(--crm-ui-kit-palette-text-secondary-light);
+    cursor: auto;
   }
 
   &[data-danger] {
-    color: var(--crm-ui-kit-context-menu-sub-select-item-danger-color);
+    color: var(--crm-ui-kit-color-error);
   }
 
   &[data-highlighted] {
-    background-color: var(
-      --crm-ui-kit-context-menu-sub-select-item-hovered-background-color
-    );
+    background-color: var(--crm-ui-kit-palette-background-default);
   }
 
   &[data-active] {
-    color: var(--crm-ui-kit-context-menu-sub-select-item-active-color);
+    color: var(--crm-ui-kit-palette-active-element-900);
   }
 
   &[data-no-icon-align] {
-    padding: var(
-      --crm-ui-kit-context-menu-sub-select-item-without-icon-align-padding
-    );
+    padding: 10px 16px;
   }
 }
 
 .sort_icon {
-  color: var(--crm-ui-kit-context-menu-sub-select-item-sort-icon-color);
+  color: inherit;
 
   &.asc {
-    transform: var(
-      --crm-ui-kit-context-menu-sub-select-item-sort-icon-asc-transform
-    );
+    transform: rotate(180deg);
   }
 }

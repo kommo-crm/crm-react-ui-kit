@@ -3,33 +3,28 @@
   display: flex;
   user-select: none;
   outline: none;
-
-  padding: var(--crm-ui-kit-context-menu-sub-trigger-padding);
-  gap: var(--crm-ui-kit-context-menu-sub-trigger-gap);
-  color: var(--crm-ui-kit-context-menu-sub-trigger-color);
-  background-color: var(--crm-ui-kit-context-menu-sub-trigger-background-color);
-  cursor: var(--crm-ui-kit-context-menu-sub-trigger-cursor);
+  padding: 10px 16px 10px 40px;
+  gap: 8px;
+  color: var(--crm-ui-kit-palette-text-primary);
+  background-color: var(--crm-ui-kit-palette-background-primary);
+  cursor: pointer;
 
   &[data-disabled] {
-    color: var(--crm-ui-kit-context-menu-sub-trigger-disabled-color);
-    cursor: var(--crm-ui-kit-context-menu-sub-trigger-disabled-cursor);
+    color: var(--crm-ui-kit-palette-text-secondary-light);
+    cursor: auto;
   }
 
   &[data-highlighted] {
-    background-color: var(
-      --crm-ui-kit-context-menu-sub-trigger-hovered-background-color
-    );
+    background-color: var(--crm-ui-kit-palette-background-default);
   }
 
   &[data-no-icon-align] {
-    padding: var(
-      --crm-ui-kit-context-menu-sub-trigger-without-icon-align-padding
-    );
+    padding: 10px 16px;
   }
 }
 
 .chevron {
-  margin: var(--crm-ui-kit-context-menu-sub-trigger-chevron-margin);
-  padding: var(--crm-ui-kit-context-menu-sub-trigger-chevron-padding);
+  margin-left: auto;
+  padding-left: 10px;
   color: var(--crm-ui-kit-palette-text-secondary-light);
 }

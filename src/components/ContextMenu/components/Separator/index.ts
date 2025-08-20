@@ -1,4 +1,2 @@
-export {
-  ContextMenuSeparatorTheme,
-  type ContextMenuSeparatorThemeType,
-} from './Separator.theme';
+export { Separator } from './Separator';
+export { type SeparatorProps } from './Separator.props';

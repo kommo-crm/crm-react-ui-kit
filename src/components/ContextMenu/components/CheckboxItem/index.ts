@@ -1,4 +1,2 @@
-export {
-  ContextMenuCheckboxItemTheme,
-  type ContextMenuCheckboxItemThemeType,
-} from './CheckboxItem.theme';
+export { CheckboxItem } from './CheckboxItem';
+export { type CheckboxItemProps } from './CheckboxItem.props';

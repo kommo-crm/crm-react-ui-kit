@@ -1,5 +1,3 @@
-import { ContextMenuItemRightSlotThemeType } from './ItemRightSlot.theme';
-
 export interface ItemRightSlotProps {
   /**
    * Child elements.
@@ -9,8 +7,4 @@ export interface ItemRightSlotProps {
    * Custom class on Wrapper.
    */
   className?: string;
-  /**
-   * Theme.
-   */
-  theme: ContextMenuItemRightSlotThemeType;
 }

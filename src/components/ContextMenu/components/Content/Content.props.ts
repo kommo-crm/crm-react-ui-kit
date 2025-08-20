@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 
-import { ContextMenuContentThemeType } from './Content.theme';
 import { Direction } from './Content.enums';
 
 type RadixContentProps = Omit<
@@ -10,10 +9,6 @@ type RadixContentProps = Omit<
 >;
 
 export type ContentProps = RadixContentProps & {
-  /**
-   * Theme.
-   */
-  theme: ContextMenuContentThemeType;
   /**
    * Preferred opening direction for the menu.
    */

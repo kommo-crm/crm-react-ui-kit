@@ -1,5 +1,3 @@
-import type { ContextMenuMetaItemThemeType } from './MetaItem.theme';
-
 export interface MetaItemProps {
   /**
    * Additional сhild elements.
@@ -9,10 +7,6 @@ export interface MetaItemProps {
    * Custom class.
    */
   className?: string;
-  /**
-   * Theme.
-   */
-  theme: ContextMenuMetaItemThemeType;
   /**
    * Icon to the left of the label.
    */

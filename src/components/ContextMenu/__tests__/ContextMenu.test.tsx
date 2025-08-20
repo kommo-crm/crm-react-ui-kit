@@ -9,19 +9,10 @@ import { Text } from 'src/components/Text';
 
 import {
   ContextMenu,
-  ContextMenuTriggerTheme,
-  ContextMenuItemTheme,
-  ContextMenuCheckboxItemTheme,
-  ContextMenuItemIndicatorTheme,
-  ContextMenuRadioItemTheme,
-  ContextMenuArrowTheme,
-  ContextMenuContentTheme,
   TextContextMenuTheme,
-  ContextMenuMetaItemTheme,
   ContextMenuRootProps,
-} from 'src/components/ContextMenu';
-
-import { ContextMenuMode } from '../ContextMenu.enums';
+  ContextMenuMode,
+} from '..';
 
 const DATA_ROOT_TEST_ID = 'ContextMenuRoot';
 const DATA_ITEM_TEST_ID = 'ContextMenuItem';
@@ -45,21 +36,16 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
         data-testid={DATA_ROOT_TEST_ID}
         {...props}
       >
-        <ContextMenu.Trigger
-          theme={ContextMenuTriggerTheme}
-          data-testid={DATA_TRIGGER_TEST_ID}
-        >
+        <ContextMenu.Trigger data-testid={DATA_TRIGGER_TEST_ID}>
           <ContextMenuTriggerIcon />
         </ContextMenu.Trigger>
 
         <ContextMenu.Portal>
           <ContextMenu.Content
-            theme={ContextMenuContentTheme}
             disableAutoPositioning
             data-testid={DATA_CONTENT_TEST_ID}
           >
             <ContextMenu.MetaItem
-              theme={ContextMenuMetaItemTheme}
               label="label"
               value="value"
               data-testid={DATA_ITEM_TEST_ID}
@@ -67,7 +53,6 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
             />
 
             <ContextMenu.Item
-              theme={ContextMenuItemTheme}
               text={
                 <Text theme={TextContextMenuTheme} size="l">
                   Item 1
@@ -77,7 +62,6 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
             />
 
             <ContextMenu.CheckboxItem
-              theme={ContextMenuCheckboxItemTheme}
               isChecked={autoupdateChecked}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setAutoupdateChecked(e.target.checked)
@@ -89,7 +73,7 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
               }
               data-testid={DATA_ITEM_TEST_ID}
             >
-              <ContextMenu.ItemIndicator theme={ContextMenuItemIndicatorTheme}>
+              <ContextMenu.ItemIndicator>
                 <ContextMenuCheckIcon />
               </ContextMenu.ItemIndicator>
             </ContextMenu.CheckboxItem>
@@ -102,7 +86,6 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
               data-testid={DATA_ITEM_TEST_ID}
             >
               <ContextMenu.RadioItem
-                theme={ContextMenuRadioItemTheme}
                 value="light"
                 text={
                   <Text theme={TextContextMenuTheme} size="l">
@@ -111,7 +94,6 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
                 }
               />
               <ContextMenu.RadioItem
-                theme={ContextMenuRadioItemTheme}
                 value="dark"
                 text={
                   <Text theme={TextContextMenuTheme} size="l">
@@ -121,7 +103,7 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
               />
             </ContextMenu.RadioGroup>
 
-            <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+            <ContextMenu.Arrow />
           </ContextMenu.Content>
         </ContextMenu.Portal>
       </ContextMenu.Root>

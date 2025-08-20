@@ -1,11 +1,9 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-
 import { Text } from 'src/components/Text';
 
-import { TextContextMenuTheme } from '../../../Text';
+import { TextContextMenuTheme } from 'src/components/ContextMenu/themes';
 
 import { useContextMenuSubSelectContext } from '../../SubSelect.context';
 
@@ -17,27 +15,13 @@ const DISPLAY_NAME = 'ContextMenu.SubSelect.Value';
 
 export const Value = forwardRef<HTMLDivElement, SubSelectValueProps>(
   (
-    {
-      theme,
-      className,
-      children,
-      label,
-      placeholder = '',
-      separator = ':',
-      ...rest
-    },
+    { className, children, label, placeholder = '', separator = ':', ...rest },
     ref
   ) => {
-    const themeClassName = useThemeClassName(theme);
-
     const { value } = useContextMenuSubSelectContext(DISPLAY_NAME);
 
     return (
-      <div
-        ref={ref}
-        className={cx(s.value, themeClassName, className)}
-        {...rest}
-      >
+      <div ref={ref} className={cx(s.value, className)} {...rest}>
         <Text theme={TextContextMenuTheme} size="l">
           <span className={cx(s.label)}>
             {label}

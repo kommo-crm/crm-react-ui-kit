@@ -1,4 +1,2 @@
-export {
-  ContextMenuSubTriggerTheme,
-  type ContextMenuSubTriggerThemeType,
-} from './SubTrigger.theme';
+export { SubTrigger } from './SubTrigger';
+export type { SubTriggerProps } from './SubTrigger.props';

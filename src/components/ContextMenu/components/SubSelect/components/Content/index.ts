@@ -1,4 +1,2 @@
-export {
-  ContextMenuSubSelectContentTheme,
-  type ContextMenuSubSelectContentThemeType,
-} from './Content.theme';
+export { Content } from './Content';
+export { type SubSelectContentProps } from './Content.props';

@@ -1,4 +1,2 @@
-export {
-  ContextMenuSubSelectTriggerTheme,
-  type ContextMenuSubSelectTriggerThemeType,
-} from './Trigger.theme';
+export { Trigger } from './Trigger';
+export type { SubSelectTriggerProps } from './Trigger.props';

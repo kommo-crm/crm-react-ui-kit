@@ -4,25 +4,16 @@
   align-items: center;
   user-select: none;
   outline: none;
-
-  padding: var(--crm-ui-kit-context-menu-sub-select-value-padding);
-  gap: var(--crm-ui-kit-context-menu-sub-select-value-gap);
-  color: var(--crm-ui-kit-context-menu-sub-select-value-color);
+  gap: 8px;
+  color: var(--crm-ui-kit-palette-text-primary);
 }
 
 .label {
-  margin: var(--crm-ui-kit-context-menu-sub-select-value-label-margin);
-  font-weight: var(
-    --crm-ui-kit-context-menu-sub-select-value-label-font-weight
-  );
-  color: var(--crm-ui-kit-context-menu-sub-select-value-label-color);
+  margin-right: 8px;
+  font-weight: 400;
+  color: var(--crm-ui-kit-palette-text-secondary-light);
 }
 
 .placeholder {
   display: inline;
-
-  font-weight: var(
-    --crm-ui-kit-context-menu-sub-select-value-placeholder-font-weight
-  );
-  color: var(--crm-ui-kit-context-menu-sub-select-value-placeholder-color);
 }

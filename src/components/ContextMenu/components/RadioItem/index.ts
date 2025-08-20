@@ -1,4 +1,2 @@
-export {
-  ContextMenuRadioItemTheme,
-  type ContextMenuRadioItemThemeType,
-} from './RadioItem.theme';
+export { RadioItem } from './RadioItem';
+export { type RadioItemProps } from './RadioItem.props';

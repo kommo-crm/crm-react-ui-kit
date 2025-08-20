@@ -1,4 +1,2 @@
-export {
-  ContextMenuItemIndicatorTheme,
-  type ContextMenuItemIndicatorThemeType,
-} from './ItemIndicator.theme';
+export { ItemIndicator } from './ItemIndicator';
+export { type ItemIndicatorProps } from './ItemIndicator.props';

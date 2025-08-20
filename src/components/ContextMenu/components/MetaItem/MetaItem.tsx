@@ -1,13 +1,11 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-
 import { Text } from 'src/components/Text';
 
 import MetaItemDefaultCopyIcon from 'src/icons/copyButton.svg';
 
-import { TextContextMenuTheme } from '../Text';
+import { TextContextMenuTheme } from 'src/components/ContextMenu/themes';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
@@ -26,7 +24,6 @@ const DISPLAY_NAME = 'ContextMenu.MetaItem';
 export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
   (
     {
-      theme,
       className,
       children,
       icon,
@@ -40,8 +37,6 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
     },
     ref
   ) => {
-    const themeClassName = useThemeClassName(theme);
-
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const { mode, enableTemporaryHoverClose } =
       useContextMenuContext(DISPLAY_NAME);
@@ -59,7 +54,7 @@ export const MetaItem = forwardRef<HTMLDivElement, MetaItemProps>(
     return (
       <div
         ref={ref}
-        className={cx(s.meta_item, themeClassName, className)}
+        className={cx(s.meta_item, className)}
         data-item
         data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
         {...rest}

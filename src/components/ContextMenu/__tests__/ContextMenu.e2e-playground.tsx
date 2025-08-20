@@ -11,24 +11,7 @@ import ContextMenuCheckIcon from 'src/icons/check.svg';
 
 import { Text } from 'src/components/Text';
 
-import {
-  ContextMenu,
-  ContextMenuArrowTheme,
-  ContextMenuCheckboxItemTheme,
-  ContextMenuContentTheme,
-  ContextMenuItemIndicatorTheme,
-  ContextMenuItemRightSlotTheme,
-  ContextMenuItemTheme,
-  ContextMenuLabelTheme,
-  ContextMenuMetaItemTheme,
-  ContextMenuMode,
-  ContextMenuRadioItemTheme,
-  ContextMenuSeparatorTheme,
-  ContextMenuSubContentTheme,
-  ContextMenuSubTriggerTheme,
-  ContextMenuTriggerTheme,
-  TextContextMenuTheme,
-} from '..';
+import { ContextMenu, ContextMenuMode, TextContextMenuTheme } from '..';
 import { type ContextMenuRootProps } from '../ContextMenu.props';
 
 export const ContextMenuPlayground = (
@@ -41,36 +24,28 @@ export const ContextMenuPlayground = (
         {
           children: [
             <>
-              <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+              <ContextMenu.Trigger>
                 <ContextMenuTriggerIcon />
               </ContextMenu.Trigger>
 
               <ContextMenu.Portal>
-                <ContextMenu.Content theme={ContextMenuContentTheme}>
-                  <ContextMenu.MetaItem
-                    theme={ContextMenuMetaItemTheme}
-                    label="Workspace"
-                    value="Kommo"
-                  />
+                <ContextMenu.Content>
+                  <ContextMenu.MetaItem label="Workspace" value="Kommo" />
 
                   <ContextMenu.MetaItem
-                    theme={ContextMenuMetaItemTheme}
                     label="Workspace ID"
                     value="33764107"
                     isCopyable
                   />
 
                   <ContextMenu.Item
-                    theme={ContextMenuItemTheme}
                     text={
                       <Text theme={TextContextMenuTheme} size="l">
                         Change Workspace
                       </Text>
                     }
                   >
-                    <ContextMenu.ItemRightSlot
-                      theme={ContextMenuItemRightSlotTheme}
-                    >
+                    <ContextMenu.ItemRightSlot>
                       <Text theme={TextContextMenuTheme} size="l">
                         ⌘+W
                       </Text>
@@ -79,7 +54,6 @@ export const ContextMenuPlayground = (
 
                   <ContextMenu.Sub mode={ContextMenuMode.CLICK} open>
                     <ContextMenu.SubTrigger
-                      theme={ContextMenuSubTriggerTheme}
                       text={
                         <Text theme={TextContextMenuTheme} size="l">
                           Contacts
@@ -88,11 +62,8 @@ export const ContextMenuPlayground = (
                     />
 
                     <ContextMenu.Portal>
-                      <ContextMenu.SubContent
-                        theme={ContextMenuSubContentTheme}
-                      >
+                      <ContextMenu.SubContent>
                         <ContextMenu.Item
-                          theme={ContextMenuItemTheme}
                           text={
                             <Text theme={TextContextMenuTheme} size="l">
                               Contact 1
@@ -101,7 +72,6 @@ export const ContextMenuPlayground = (
                         />
 
                         <ContextMenu.Item
-                          theme={ContextMenuItemTheme}
                           text={
                             <Text theme={TextContextMenuTheme} size="l">
                               Contact 2
@@ -111,7 +81,6 @@ export const ContextMenuPlayground = (
                         />
 
                         <ContextMenu.Item
-                          theme={ContextMenuItemTheme}
                           icon={<ContextMenuTrashcanIcon />}
                           text={
                             <Text theme={TextContextMenuTheme} size="l">
@@ -121,12 +90,9 @@ export const ContextMenuPlayground = (
                           isDanger
                         />
 
-                        <ContextMenu.Separator
-                          theme={ContextMenuSeparatorTheme}
-                        />
+                        <ContextMenu.Separator />
 
                         <ContextMenu.Item
-                          theme={ContextMenuItemTheme}
                           text={
                             <Text theme={TextContextMenuTheme} size="l">
                               Technical support
@@ -137,10 +103,9 @@ export const ContextMenuPlayground = (
                     </ContextMenu.Portal>
                   </ContextMenu.Sub>
 
-                  <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+                  <ContextMenu.Separator />
 
                   <ContextMenu.CheckboxItem
-                    theme={ContextMenuCheckboxItemTheme}
                     isChecked={true}
                     text={
                       <Text theme={TextContextMenuTheme} size="l">
@@ -148,17 +113,14 @@ export const ContextMenuPlayground = (
                       </Text>
                     }
                   >
-                    <ContextMenu.ItemIndicator
-                      theme={ContextMenuItemIndicatorTheme}
-                    >
+                    <ContextMenu.ItemIndicator>
                       <ContextMenuCheckIcon />
                     </ContextMenu.ItemIndicator>
                   </ContextMenu.CheckboxItem>
 
-                  <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+                  <ContextMenu.Separator />
 
                   <ContextMenu.Label
-                    theme={ContextMenuLabelTheme}
                     text={
                       <Text theme={TextContextMenuTheme} size="l">
                         Select Theme
@@ -168,7 +130,6 @@ export const ContextMenuPlayground = (
 
                   <ContextMenu.RadioGroup value={'light'}>
                     <ContextMenu.RadioItem
-                      theme={ContextMenuRadioItemTheme}
                       value="light"
                       text={
                         <Text theme={TextContextMenuTheme} size="l">
@@ -178,7 +139,6 @@ export const ContextMenuPlayground = (
                     />
 
                     <ContextMenu.RadioItem
-                      theme={ContextMenuRadioItemTheme}
                       value="dark"
                       text={
                         <Text theme={TextContextMenuTheme} size="l">
@@ -188,7 +148,7 @@ export const ContextMenuPlayground = (
                     />
                   </ContextMenu.RadioGroup>
 
-                  <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+                  <ContextMenu.Arrow />
                 </ContextMenu.Content>
               </ContextMenu.Portal>
             </>,

@@ -3,8 +3,6 @@ import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropd
 import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-
 import { LevelProvider } from '../../providers/LevelProvider';
 
 import { hasAnyItemWithIcon } from '../../utils';
@@ -23,18 +21,9 @@ const DISPLAY_NAME = 'ContextMenu.SubContent';
 
 export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
   (
-    {
-      theme,
-      className,
-      children,
-      sideOffset = 4,
-      collisionPadding = 10,
-      ...rest
-    },
+    { className, children, sideOffset = 4, collisionPadding = 10, ...rest },
     ref
   ) => {
-    const themeClassName = useThemeClassName(theme);
-
     const { animatedOpen, startAnimation, mode } =
       useContextMenuSubContext(DISPLAY_NAME);
     const {
@@ -79,7 +68,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
         <animated.div style={springStyles} data-content-wrapper>
           <RadixDropdownMenuSubContent
             ref={ref}
-            className={cx(s.sub_content, themeClassName, className)}
+            className={cx(s.sub_content, className)}
             sideOffset={sideOffset}
             collisionPadding={collisionPadding}
             {...rest}

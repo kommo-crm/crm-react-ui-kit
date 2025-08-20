@@ -2,15 +2,13 @@ import React, { forwardRef } from 'react';
 import { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-
 import { Text } from 'src/components/Text';
 
 import DefaultSortIcon from 'src/icons/directionArrowDown.svg';
 
 import { useContextMenuContext } from 'src/components/ContextMenu/ContextMenu.context';
 
-import { TextContextMenuTheme } from '../../../Text';
+import { TextContextMenuTheme } from 'src/components/ContextMenu/themes';
 
 import { useContextMenuSubSelectContext } from '../../SubSelect.context';
 
@@ -27,7 +25,6 @@ const DISPLAY_NAME = 'ContextMenu.SubSelect.Item';
 export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
   (
     {
-      theme,
       className,
       children,
       icon,
@@ -39,8 +36,6 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
     },
     ref
   ) => {
-    const themeClassName = useThemeClassName(theme);
-
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
     const {
@@ -81,7 +76,7 @@ export const Item = forwardRef<HTMLDivElement, SubSelectItemProps>(
     return (
       <RadixDropdownMenuItem
         ref={ref}
-        className={cx(s.item, themeClassName, className)}
+        className={cx(s.item, className)}
         disabled={isDisabled}
         data-item
         data-danger={isDanger ? '' : undefined}

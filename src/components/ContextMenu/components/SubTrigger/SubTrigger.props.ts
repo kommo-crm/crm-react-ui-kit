@@ -1,18 +1,12 @@
 import type { ComponentPropsWithoutRef, ReactElement } from 'react';
 import type { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-dropdown-menu';
 
-import type { ContextMenuSubTriggerThemeType } from './SubTrigger.theme';
-
 type RadixSubTriggerProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuSubTrigger>,
   'disabled' | 'textValue' | 'asChild'
 >;
 
 export type SubTriggerProps = RadixSubTriggerProps & {
-  /**
-   * Theme.
-   */
-  theme: ContextMenuSubTriggerThemeType;
   /**
    * Icon to the left of the text.
    */

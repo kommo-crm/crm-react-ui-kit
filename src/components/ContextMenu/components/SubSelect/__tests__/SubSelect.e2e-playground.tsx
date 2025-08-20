@@ -7,22 +7,9 @@ import {
 
 import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
 
-import {
-  ContextMenu,
-  ContextMenuArrowTheme,
-  ContextMenuContentTheme,
-  ContextMenuMode,
-  ContextMenuTriggerTheme,
-} from 'src/components/ContextMenu';
+import { ContextMenu, ContextMenuMode } from 'src/components/ContextMenu';
 
-import {
-  ContextMenuSubSelectContentTheme,
-  ContextMenuSubSelectItemTheme,
-  ContextMenuSubSelectTriggerTheme,
-  ContextMenuSubSelectValueTheme,
-  SortDirection,
-  SubSelectOption,
-} from '..';
+import { SortDirection, SubSelectOption } from '..';
 
 import { ContextMenuSubSelectRootProps } from '../SubSelect.props';
 
@@ -36,21 +23,16 @@ export const SubSelectPlayground = (
 ) => {
   const children = [
     <>
-      <ContextMenu.SubSelect.Trigger theme={ContextMenuSubSelectTriggerTheme}>
+      <ContextMenu.SubSelect.Trigger>
         <ContextMenu.SubSelect.Value
-          theme={ContextMenuSubSelectValueTheme}
           label="Sort by"
           placeholder="Placeholder"
         />
       </ContextMenu.SubSelect.Trigger>
 
-      <ContextMenu.SubSelect.Content theme={ContextMenuSubSelectContentTheme}>
+      <ContextMenu.SubSelect.Content>
         {subSelectOptions.map((option) => (
-          <ContextMenu.SubSelect.Item
-            theme={ContextMenuSubSelectItemTheme}
-            key={option.value}
-            item={option}
-          />
+          <ContextMenu.SubSelect.Item key={option.value} item={option} />
         ))}
       </ContextMenu.SubSelect.Content>
     </>,
@@ -88,15 +70,15 @@ export const SubSelectPlayground = (
           }}
         >
           <ContextMenu.Root mode={ContextMenuMode.CLICK} open>
-            <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+            <ContextMenu.Trigger>
               <ContextMenuTriggerIcon />
             </ContextMenu.Trigger>
 
             <ContextMenu.Portal>
-              <ContextMenu.Content theme={ContextMenuContentTheme}>
+              <ContextMenu.Content>
                 <ContextMenu.SubSelect.Root {...itemProps} />
 
-                <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+                <ContextMenu.Arrow />
               </ContextMenu.Content>
             </ContextMenu.Portal>
           </ContextMenu.Root>

@@ -5,23 +5,7 @@ import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
 import ContextMenuTrashcanIcon from 'src/icons/trashcan.svg';
 import ContextMenuCheckIcon from 'src/icons/check.svg';
 
-import {
-  ContextMenu,
-  ContextMenuTriggerTheme,
-  ContextMenuItemTheme,
-  ContextMenuSeparatorTheme,
-  ContextMenuCheckboxItemTheme,
-  ContextMenuItemIndicatorTheme,
-  ContextMenuLabelTheme,
-  ContextMenuRadioItemTheme,
-  ContextMenuArrowTheme,
-  ContextMenuSubContentTheme,
-  ContextMenuContentTheme,
-  ContextMenuItemRightSlotTheme,
-  TextContextMenuTheme,
-  ContextMenuSubTriggerTheme,
-  ContextMenuMetaItemTheme,
-} from 'src/components/ContextMenu';
+import { ContextMenu, TextContextMenuTheme } from 'src/components/ContextMenu';
 import { Text } from 'src/components/Text';
 
 import { CanvasCentered } from '@storybook-utils/constants';
@@ -39,21 +23,8 @@ import { useState } from "react";
 
 import {
   ContextMenu,
-  ContextMenuRootTheme,
-  ContextMenuTriggerTheme,
-  ContextMenuItemTheme,
-  ContextMenuSeparatorTheme,
-  ContextMenuCheckboxItemTheme,
-  ContextMenuItemIndicatorTheme,
-  ContextMenuLabelTheme,
-  ContextMenuRadioItemTheme,
-  ContextMenuArrowTheme,
-  ContextMenuSubContentTheme,
-  ContextMenuContentTheme,
-  ContextMenuItemRightSlotTheme,
-  TextContextMenuTheme,
-  ContextMenuSubTriggerTheme,
-  ContextMenuMetaItemTheme,
+  ContextMenuMode,
+  TextContextMenuTheme
 } from "@kommo-crm/crm-react-ui-kit/ContextMenu";
 
 import { Text } from "@kommo-crm/crm-react-ui-kit/Text";
@@ -75,35 +46,32 @@ function App() {
   };
 
   return (
-    <ContextMenu.Root theme={ContextMenuRootTheme}>
-      <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+    <ContextMenu.Root mode={ContextMenuMode.CLICK}>
+      <ContextMenu.Trigger>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
-        <ContextMenu.Content theme={ContextMenuContentTheme}>
+        <ContextMenu.Content>
           <ContextMenu.MetaItem
-            theme={ContextMenuMetaItemTheme}
             label=${i18n.t('Workspace')}
             value="Kommo"
           />
 
           <ContextMenu.MetaItem
-            theme={ContextMenuMetaItemTheme}
             label=${i18n.t('Workspace ID')}
             value="33764107"
             isCopyable
           />
 
           <ContextMenu.Item
-            theme={ContextMenuItemTheme}
             text={
               <Text theme={TextContextMenuTheme} size="l">
                 ${i18n.t('Change Workspace')}
               </Text>
             }
           >
-            <ContextMenu.ItemRightSlot theme={ContextMenuItemRightSlotTheme}>
+            <ContextMenu.ItemRightSlot>
               <Text theme={TextContextMenuTheme} size="l">
                 ⌘+W
               </Text>
@@ -112,7 +80,6 @@ function App() {
 
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger
-              theme={ContextMenuSubTriggerTheme}
               text={
                 <Text theme={TextContextMenuTheme} size="l">
                   ${i18n.t('Contacts')}
@@ -121,9 +88,8 @@ function App() {
             />
 
             <ContextMenu.Portal>
-              <ContextMenu.SubContent theme={ContextMenuSubContentTheme}>
+              <ContextMenu.SubContent>
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
                       ${i18n.t('Contact')} 1
@@ -132,7 +98,6 @@ function App() {
                 />
 
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
                       ${i18n.t('Contact')} 2
@@ -142,7 +107,6 @@ function App() {
                 />
 
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   icon={<ContextMenuTrashcanIcon />}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
@@ -152,10 +116,9 @@ function App() {
                   isDanger
                 />
 
-                <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+                <ContextMenu.Separator />
 
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
                       ${i18n.t('Technical support')}
@@ -166,10 +129,9 @@ function App() {
             </ContextMenu.Portal>
           </ContextMenu.Sub>
 
-          <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+          <ContextMenu.Separator />
 
           <ContextMenu.CheckboxItem
-            theme={ContextMenuCheckboxItemTheme}
             isChecked={autoupdateChecked}
             onChange={handleAutoupdateChange}
             text={
@@ -178,15 +140,14 @@ function App() {
               </Text>
             }
           >
-            <ContextMenu.ItemIndicator theme={ContextMenuItemIndicatorTheme}>
+            <ContextMenu.ItemIndicator>
               <ContextMenuCheckIcon />
             </ContextMenu.ItemIndicator>
           </ContextMenu.CheckboxItem>
 
-          <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+          <ContextMenu.Separator />
 
           <ContextMenu.Label
-            theme={ContextMenuLabelTheme}
             text={
               <Text theme={TextContextMenuTheme} size="l">
                 ${i18n.t('Select Theme')}
@@ -196,7 +157,6 @@ function App() {
 
           <ContextMenu.RadioGroup value={theme} onChange={handleThemeChange}>
             <ContextMenu.RadioItem
-              theme={ContextMenuRadioItemTheme}
               value="light"
               text={
                 <Text theme={TextContextMenuTheme} size="l">
@@ -206,7 +166,6 @@ function App() {
             />
 
             <ContextMenu.RadioItem
-              theme={ContextMenuRadioItemTheme}
               value="dark"
               text={
                 <Text theme={TextContextMenuTheme} size="l">
@@ -216,7 +175,7 @@ function App() {
             />
           </ContextMenu.RadioGroup>
 
-          <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+          <ContextMenu.Arrow />
         </ContextMenu.Content>
       </ContextMenu.Portal>
     </ContextMenu.Root>
@@ -248,7 +207,7 @@ const renderSubSelectMenu = (
 
   return (
     <ContextMenu.Root {...menuProps} key={key}>
-      <ContextMenu.Trigger theme={ContextMenuTriggerTheme}>
+      <ContextMenu.Trigger>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
 
@@ -257,12 +216,10 @@ const renderSubSelectMenu = (
           collisionBoundary={
             document.querySelector('.docs-story') as HTMLElement
           }
-          theme={ContextMenuContentTheme}
           {...contentProps}
         >
           {additionalLabel && (
             <ContextMenu.Label
-              theme={ContextMenuLabelTheme}
               text={
                 <Text theme={TextContextMenuTheme} size="l">
                   {i18n.t('Label')}
@@ -271,28 +228,22 @@ const renderSubSelectMenu = (
             />
           )}
 
-          <ContextMenu.MetaItem
-            theme={ContextMenuMetaItemTheme}
-            label={i18n.t('Workspace')}
-            value="Kommo"
-          />
+          <ContextMenu.MetaItem label={i18n.t('Workspace')} value="Kommo" />
 
           <ContextMenu.MetaItem
-            theme={ContextMenuMetaItemTheme}
             label={i18n.t('Workspace ID')}
             value="33764107"
             isCopyable
           />
 
           <ContextMenu.Item
-            theme={ContextMenuItemTheme}
             text={
               <Text theme={TextContextMenuTheme} size="l">
                 {i18n.t('Change Workspace')}
               </Text>
             }
           >
-            <ContextMenu.ItemRightSlot theme={ContextMenuItemRightSlotTheme}>
+            <ContextMenu.ItemRightSlot>
               <Text theme={TextContextMenuTheme} size="l">
                 ⌘+W
               </Text>
@@ -301,7 +252,6 @@ const renderSubSelectMenu = (
 
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger
-              theme={ContextMenuSubTriggerTheme}
               text={
                 <Text theme={TextContextMenuTheme} size="l">
                   {i18n.t('Contacts')}
@@ -310,9 +260,8 @@ const renderSubSelectMenu = (
             />
 
             <ContextMenu.Portal>
-              <ContextMenu.SubContent theme={ContextMenuSubContentTheme}>
+              <ContextMenu.SubContent>
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
                       {i18n.t('Contact')} 1
@@ -321,7 +270,6 @@ const renderSubSelectMenu = (
                 />
 
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
                       {i18n.t('Contact')} 2
@@ -331,7 +279,6 @@ const renderSubSelectMenu = (
                 />
 
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   icon={<ContextMenuTrashcanIcon />}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
@@ -341,10 +288,9 @@ const renderSubSelectMenu = (
                   isDanger
                 />
 
-                <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+                <ContextMenu.Separator />
 
                 <ContextMenu.Item
-                  theme={ContextMenuItemTheme}
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
                       {i18n.t('Technical support')}
@@ -357,10 +303,9 @@ const renderSubSelectMenu = (
 
           {!menuProps.isMinimalistic && (
             <>
-              <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+              <ContextMenu.Separator />
 
               <ContextMenu.CheckboxItem
-                theme={ContextMenuCheckboxItemTheme}
                 isChecked={autoupdateChecked}
                 onChange={handleAutoupdateChange}
                 text={
@@ -369,17 +314,14 @@ const renderSubSelectMenu = (
                   </Text>
                 }
               >
-                <ContextMenu.ItemIndicator
-                  theme={ContextMenuItemIndicatorTheme}
-                >
+                <ContextMenu.ItemIndicator>
                   <ContextMenuCheckIcon />
                 </ContextMenu.ItemIndicator>
               </ContextMenu.CheckboxItem>
 
-              <ContextMenu.Separator theme={ContextMenuSeparatorTheme} />
+              <ContextMenu.Separator />
 
               <ContextMenu.Label
-                theme={ContextMenuLabelTheme}
                 text={
                   <Text theme={TextContextMenuTheme} size="l">
                     {i18n.t('Select Theme')}
@@ -392,7 +334,6 @@ const renderSubSelectMenu = (
                 onChange={handleThemeChange}
               >
                 <ContextMenu.RadioItem
-                  theme={ContextMenuRadioItemTheme}
                   value="light"
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
@@ -402,7 +343,6 @@ const renderSubSelectMenu = (
                 />
 
                 <ContextMenu.RadioItem
-                  theme={ContextMenuRadioItemTheme}
                   value="dark"
                   text={
                     <Text theme={TextContextMenuTheme} size="l">
@@ -414,7 +354,7 @@ const renderSubSelectMenu = (
             </>
           )}
 
-          <ContextMenu.Arrow theme={ContextMenuArrowTheme} />
+          <ContextMenu.Arrow />
         </ContextMenu.Content>
       </ContextMenu.Portal>
     </ContextMenu.Root>

@@ -4,8 +4,6 @@ import cx from 'classnames';
 
 import { useSpring, animated, easings } from '@react-spring/web';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-
 import { mergeRefs } from 'src/lib/utils';
 
 import { LevelProvider } from '../../providers/LevelProvider';
@@ -39,7 +37,6 @@ const DISPLAY_NAME = 'ContextMenu.Content';
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   (
     {
-      theme,
       style,
       className,
       children,
@@ -51,8 +48,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     },
     ref
   ) => {
-    const themeClassName = useThemeClassName(theme);
-
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
     const [isPositioned, setIsPositioned] = useState(false);
     const [align, setAlign] = useState<'start' | 'end'>(
@@ -266,7 +261,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         <animated.div style={springStyles} data-content-wrapper>
           <RadixDropdownMenuContent
             ref={mergeRefs(contentRef, ref)}
-            className={cx(s.content, themeClassName, className)}
+            className={cx(s.content, className)}
             style={{
               ...(style || {}),
               pointerEvents:

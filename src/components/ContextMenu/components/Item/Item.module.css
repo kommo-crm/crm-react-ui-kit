@@ -4,29 +4,30 @@
   align-items: center;
   user-select: none;
   outline: none;
-
-  padding: var(--crm-ui-kit-context-menu-item-padding);
-  gap: var(--crm-ui-kit-context-menu-item-gap);
-  color: var(--crm-ui-kit-context-menu-item-color);
-  background-color: var(--crm-ui-kit-context-menu-item-background-color);
-  cursor: var(--crm-ui-kit-context-menu-item-cursor);
+  padding: 10px 16px 10px 40px;
+  gap: 8px;
+  color: var(--crm-ui-kit-palette-text-primary);
+  background-color: var(--crm-ui-kit-palette-background-primary);
+  cursor: pointer;
 
   &[data-disabled] {
-    color: var(--crm-ui-kit-context-menu-item-disabled-color);
-    cursor: var(--crm-ui-kit-context-menu-item-disabled-cursor);
+    color: var(--crm-ui-kit-palette-text-secondary-light);
+    cursor: auto;
   }
 
   &[data-danger] {
-    color: var(--crm-ui-kit-context-menu-item-danger-color);
+    color: var(--crm-ui-kit-color-error);
   }
 
   &[data-highlighted] {
-    background-color: var(
-      --crm-ui-kit-context-menu-item-hovered-background-color
-    );
+    background-color: var(--crm-ui-kit-palette-background-default);
+  }
+
+  &[data-state='checked'] {
+    color: var(--crm-ui-kit-palette-active-element-900);
   }
 
   &[data-no-icon-align] {
-    padding: var(--crm-ui-kit-context-menu-item-without-icon-align-padding);
+    padding: 10px 16px;
   }
 }
