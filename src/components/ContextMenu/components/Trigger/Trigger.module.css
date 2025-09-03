@@ -1,8 +1,0 @@
-.button {
-  all: unset;
-
-  display: flex;
-  padding: 4px;
-  color: var(--crm-ui-kit-palette-text-secondary-dark);
-  cursor: pointer;
-}

@@ -3,16 +3,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
-import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
-import ContextMenuCheckIcon from 'src/icons/check.svg';
-import { Text } from 'src/components/Text';
+import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
+import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 
-import {
-  ContextMenu,
-  TextContextMenuTheme,
-  ContextMenuRootProps,
-  ContextMenuMode,
-} from '..';
+import { Text, TextTheme, TextPrimaryTheme } from 'src/components/Text';
+
+import { ContextMenu, ContextMenuRootProps, ContextMenuMode } from '..';
 
 const DATA_ROOT_TEST_ID = 'ContextMenuRoot';
 const DATA_ITEM_TEST_ID = 'ContextMenuItem';
@@ -24,6 +20,11 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
+
+const TextContextMenuTheme: TextTheme = {
+  ...TextPrimaryTheme,
+  '--crm-ui-kit-text-color': 'inherit',
+};
 
 const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
   const ContextMenuWrapped = () => {
@@ -45,34 +46,23 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
             disableAutoPositioning
             data-testid={DATA_CONTENT_TEST_ID}
           >
-            <ContextMenu.MetaItem
-              label="label"
-              value="value"
-              data-testid={DATA_ITEM_TEST_ID}
-              isCopyable
-            />
-
-            <ContextMenu.Item
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  Item 1
-                </Text>
-              }
-              data-testid={DATA_ITEM_TEST_ID}
-            />
+            <ContextMenu.Item data-testid={DATA_ITEM_TEST_ID}>
+              <Text theme={TextContextMenuTheme} size="l">
+                Item 1
+              </Text>
+            </ContextMenu.Item>
 
             <ContextMenu.CheckboxItem
               isChecked={autoupdateChecked}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setAutoupdateChecked(e.target.checked)
               }
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  Autoupdate
-                </Text>
-              }
               data-testid={DATA_ITEM_TEST_ID}
             >
+              <Text theme={TextContextMenuTheme} size="l">
+                Autoupdate
+              </Text>
+
               <ContextMenu.ItemIndicator>
                 <ContextMenuCheckIcon />
               </ContextMenu.ItemIndicator>
@@ -85,22 +75,16 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
               }
               data-testid={DATA_ITEM_TEST_ID}
             >
-              <ContextMenu.RadioItem
-                value="light"
-                text={
-                  <Text theme={TextContextMenuTheme} size="l">
-                    Light
-                  </Text>
-                }
-              />
-              <ContextMenu.RadioItem
-                value="dark"
-                text={
-                  <Text theme={TextContextMenuTheme} size="l">
-                    Dark
-                  </Text>
-                }
-              />
+              <ContextMenu.RadioItem value="light">
+                <Text theme={TextContextMenuTheme} size="l">
+                  Light
+                </Text>
+              </ContextMenu.RadioItem>
+              <ContextMenu.RadioItem value="dark">
+                <Text theme={TextContextMenuTheme} size="l">
+                  Dark
+                </Text>
+              </ContextMenu.RadioItem>
             </ContextMenu.RadioGroup>
 
             <ContextMenu.Arrow />

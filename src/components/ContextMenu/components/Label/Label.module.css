@@ -6,7 +6,6 @@
   gap: 8px;
   color: var(--crm-ui-kit-palette-text-primary);
   background-color: var(--crm-ui-kit-palette-background-primary);
-  font-weight: 700;
 
   &[data-no-icon-align] {
     padding: 10px 16px;

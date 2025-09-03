@@ -1,18 +1,18 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 
-import { Direction } from './Content.enums';
+import { DirectionType } from './Content.types';
 
 type RadixContentProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuContent>,
-  'avoidCollisions' | 'asChild' | 'forceMount'
+  'avoidCollisions'
 >;
 
 export type ContentProps = RadixContentProps & {
   /**
    * Preferred opening direction for the menu.
    */
-  direction?: Direction;
+  direction?: DirectionType;
   /**
    * The element used as the collision boundary.
    * By default this is the viewport, though you can

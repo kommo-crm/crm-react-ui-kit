@@ -1,0 +1,28 @@
+import { DirectionType } from '../../components/Content';
+
+export interface UseContentPositioningOptions {
+  /**
+   * The direction of the content.
+   */
+  direction: DirectionType;
+  /**
+   * Whether to disable auto positioning.
+   */
+  disableAutoPositioning: boolean;
+  /**
+   * The reference to the trigger element.
+   */
+  triggerRef: React.RefObject<HTMLElement>;
+  /**
+   * The reference to the content element.
+   */
+  contentRef: React.RefObject<HTMLElement>;
+  /**
+   * The boundary of the collision.
+   */
+  collisionBoundary?: Element | null;
+  /**
+   * The children of the content.
+   */
+  children: React.ReactNode;
+}

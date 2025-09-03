@@ -22,9 +22,3 @@
     padding: 10px 16px;
   }
 }
-
-.chevron {
-  margin-left: auto;
-  padding-left: 10px;
-  color: var(--crm-ui-kit-palette-text-secondary-light);
-}

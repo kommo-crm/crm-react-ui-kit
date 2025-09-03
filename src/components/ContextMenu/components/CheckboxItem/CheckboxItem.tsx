@@ -1,10 +1,14 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useId } from 'react';
 import { CheckboxItem as RadixDropdownMenuCheckboxItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
+
+import { hasItemIcon } from '../../utils';
+
+import { useContextMenuItemFocus } from '../../hooks';
 
 import type { CheckboxItemProps } from './CheckboxItem.props';
 
@@ -13,21 +17,19 @@ import s from './CheckboxItem.module.css';
 const DISPLAY_NAME = 'ContextMenu.CheckboxItem';
 
 export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
-  (
-    {
-      className,
-      children,
-      icon,
-      text,
-      onChange,
-      isDisabled,
-      isChecked,
-      ...rest
-    },
-    ref
-  ) => {
+  ({ className, children, onChange, isDisabled, isChecked, ...rest }, ref) => {
+    const id = useId();
+
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
+
+    const { dataHighlighted, onFocus, onMouseEnter, onBlur, onMouseLeave } =
+      useContextMenuItemFocus({
+        displayName: DISPLAY_NAME,
+        id,
+        isDisabled,
+        isNotSelectable: false,
+      });
 
     return (
       <RadixDropdownMenuCheckboxItem
@@ -36,7 +38,9 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         disabled={isDisabled}
         checked={isChecked}
         data-item
-        data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
+        data-no-icon-align={
+          hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
+        }
         onCheckedChange={(checked) => {
           if (onChange) {
             const event = {
@@ -47,10 +51,13 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           }
         }}
         onSelect={() => closeMenuImmediately()}
+        data-highlighted={dataHighlighted}
+        onFocus={onFocus}
+        onMouseEnter={onMouseEnter}
+        onBlur={onBlur}
+        onMouseLeave={onMouseLeave}
         {...rest}
       >
-        {icon}
-        {text}
         {children}
       </RadixDropdownMenuCheckboxItem>
     );

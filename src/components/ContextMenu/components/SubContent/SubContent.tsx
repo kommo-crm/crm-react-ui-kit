@@ -1,11 +1,9 @@
-import React, { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
+import React, { forwardRef, useLayoutEffect, useState } from 'react';
 import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropdown-menu';
 import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
 
 import { LevelProvider } from '../../providers/LevelProvider';
-
-import { hasAnyItemWithIcon } from '../../utils';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
@@ -24,7 +22,9 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
     { className, children, sideOffset = 4, collisionPadding = 10, ...rest },
     ref
   ) => {
-    const { animatedOpen, startAnimation, mode } =
+    const [activeItemId, setActiveItemId] = useState<string | null>(null);
+
+    const { animatedOpen, startAnimation, mode, onMouseEnter, onMouseLeave } =
       useContextMenuSubContext(DISPLAY_NAME);
     const {
       animationDuration,
@@ -33,14 +33,6 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
     } = useContextMenuContext(DISPLAY_NAME);
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
-
-    const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
-
-    useLayoutEffect(() => {
-      if (hasIcon) {
-        setHasItemWithIcon(true);
-      }
-    }, [hasIcon]);
 
     useLayoutEffect(() => {
       if (mode === ContextMenuMode.HOVER) {
@@ -64,8 +56,22 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
           });
 
     return (
-      <LevelProvider hasItemWithIcon={hasItemWithIcon}>
-        <animated.div style={springStyles} data-content-wrapper>
+      <LevelProvider
+        hasItemWithIcon={hasItemWithIcon}
+        setHasItemWithIcon={setHasItemWithIcon}
+        activeItemId={activeItemId}
+        setActiveItemId={setActiveItemId}
+      >
+        <animated.div
+          style={{
+            position: 'fixed',
+            zIndex: Number.MAX_SAFE_INTEGER,
+            ...springStyles,
+          }}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          data-content-wrapper
+        >
           <RadixDropdownMenuSubContent
             ref={ref}
             className={cx(s.sub_content, className)}

@@ -1,5 +1,5 @@
 .right_slot {
   display: flex;
-  padding: 0 0 0 16px;
-  margin: 0 0 0 auto;
+  padding-left: 16px;
+  margin-left: auto;
 }

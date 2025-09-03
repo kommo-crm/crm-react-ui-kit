@@ -10,28 +10,28 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { TriggerProps } from './Trigger.props';
 
-import s from './Trigger.module.css';
-
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   ({ className, children, ...rest }, ref) => {
-    const { triggerRef, mode } = useContextMenuContext(DISPLAY_NAME);
+    const { triggerRef, mode, onMouseEnter, onMouseLeave } =
+      useContextMenuContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuTrigger
-        ref={ref}
-        className={cx(s.button, className)}
-        asChild
+        ref={mergeRefs(triggerRef, ref)}
+        className={cx(className)}
         onPointerDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
             e.preventDefault();
             e.stopPropagation();
           }
         }}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         {...rest}
       >
-        <button ref={mergeRefs(triggerRef, ref)}>{children}</button>
+        {children}
       </RadixDropdownMenuTrigger>
     );
   }

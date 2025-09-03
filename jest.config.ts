@@ -16,8 +16,6 @@ const config: Config.InitialOptions = {
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
     '^src$': '<rootDir>/src/index.ts',
-    '^@kommo-crm/react-hooks$':
-      '<rootDir>/node_modules/@kommo-crm/react-hooks/dist/index.js',
   },
 };
 

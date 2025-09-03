@@ -10,7 +10,11 @@
   background-color: var(--crm-ui-kit-palette-background-primary);
   cursor: pointer;
 
-  &[data-disabled] {
+  &[data-has-submenu] {
+    padding: 0 0 0 40px;
+  }
+
+  &[data-disabled]:not([data-not-selectable]) {
     color: var(--crm-ui-kit-palette-text-secondary-light);
     cursor: auto;
   }
@@ -19,15 +23,16 @@
     color: var(--crm-ui-kit-color-error);
   }
 
-  &[data-highlighted] {
+  &[data-highlighted]:not([data-not-selectable]) {
     background-color: var(--crm-ui-kit-palette-background-default);
   }
 
-  &[data-state='checked'] {
-    color: var(--crm-ui-kit-palette-active-element-900);
+  &[data-not-selectable] {
+    cursor: auto;
+    user-select: text;
   }
 
   &[data-no-icon-align] {
-    padding: 10px 16px;
+    padding-left: 16px;
   }
 }

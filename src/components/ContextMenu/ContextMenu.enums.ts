@@ -1,4 +1,4 @@
-export enum ContextMenuMode {
+export const enum ContextMenuMode {
   /**
    * Menu opens on click and closes on outside click.
    */

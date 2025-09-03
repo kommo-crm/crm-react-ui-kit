@@ -4,5 +4,11 @@ import { LevelProviderContextProps } from './LevelProvider.props';
 
 const DISPLAY_NAME = 'ContextMenu.LevelProvider';
 
+/**
+ * It solves two problems in itself:
+ *
+ * 1) Level-by-level positioning on the left edge, depending on the presence of the icon
+ * 2) Level-by-level (For nested Sub components) pointing when working in an inactive tab
+ */
 export const [LevelProvider, useLevelContext] =
   createComponentContext<LevelProviderContextProps>(DISPLAY_NAME);

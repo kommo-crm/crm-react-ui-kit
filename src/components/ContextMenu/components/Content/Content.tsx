@@ -1,4 +1,4 @@
-import React, { forwardRef, useLayoutEffect, useMemo, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -8,29 +8,19 @@ import { mergeRefs } from 'src/lib/utils';
 
 import { LevelProvider } from '../../providers/LevelProvider';
 
-import { hasAnyItemWithIcon } from '../../utils';
-
 import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
+
+import { useContentPositioning } from '../../hooks';
 
 import type { ContentProps } from './Content.props';
 
 import { Direction } from './Content.enums';
 
-import s from './Content.module.css';
+import { directionToSide } from './Content.utils';
 
-const directionToSide: Record<Direction, 'top' | 'bottom' | 'left' | 'right'> =
-  {
-    [Direction.UP_LEFT]: 'top',
-    [Direction.UP_RIGHT]: 'top',
-    [Direction.DOWN_LEFT]: 'bottom',
-    [Direction.DOWN_RIGHT]: 'bottom',
-    [Direction.LEFT_UP]: 'left',
-    [Direction.LEFT_DOWN]: 'left',
-    [Direction.RIGHT_UP]: 'right',
-    [Direction.RIGHT_DOWN]: 'right',
-  };
+import s from './Content.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.Content';
 
@@ -49,18 +39,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     ref
   ) => {
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
-    const [isPositioned, setIsPositioned] = useState(false);
-    const [align, setAlign] = useState<'start' | 'end'>(
-      direction === Direction.UP_RIGHT ||
-        direction === Direction.DOWN_RIGHT ||
-        direction === Direction.RIGHT_UP ||
-        direction === Direction.RIGHT_DOWN
-        ? 'start'
-        : 'end'
-    );
-    const [labelOffset, setLabelOffset] = useState<number | undefined>(
-      undefined
-    );
+    const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
     const {
       triggerRef,
@@ -69,179 +48,18 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       animationDuration,
       mode,
       temporaryHoverClose,
-      disableLabelOffset,
+      onMouseEnter,
+      onMouseLeave,
     } = useContextMenuContext(DISPLAY_NAME);
 
-    const hasIcon = useMemo(() => hasAnyItemWithIcon(children), [children]);
-
-    useLayoutEffect(() => {
-      if (
-        disableLabelOffset ||
-        !contentRef.current ||
-        [
-          Direction.DOWN_LEFT,
-          Direction.DOWN_RIGHT,
-          Direction.UP_LEFT,
-          Direction.UP_RIGHT,
-        ].includes(direction)
-      ) {
-        setLabelOffset(undefined);
-
-        return;
-      }
-
-      const contentElement = contentRef.current;
-      const label = contentElement.firstElementChild;
-      const item = contentElement.children[1];
-      const trigger = triggerRef.current;
-
-      if (label && label.hasAttribute('data-label') && trigger) {
-        const labelHeight = label.getBoundingClientRect().height;
-        const itemHeight = item.getBoundingClientRect().height;
-        const triggerHeight = trigger.getBoundingClientRect().height;
-
-        const dynamicOffset = (triggerHeight - itemHeight) / 2;
-
-        if (
-          direction === Direction.LEFT_UP ||
-          direction === Direction.RIGHT_UP
-        ) {
-          setLabelOffset(dynamicOffset - 2);
-        } else if (
-          direction === Direction.LEFT_DOWN ||
-          direction === Direction.RIGHT_DOWN
-        ) {
-          setLabelOffset(-labelHeight + dynamicOffset);
-        }
-      }
-    }, [disableLabelOffset, children, direction]);
-
-    useLayoutEffect(() => {
-      if (hasIcon) {
-        setHasItemWithIcon(true);
-      }
-    }, [hasIcon]);
-
-    useLayoutEffect(() => {
-      if (disableAutoPositioning || !triggerRef?.current) {
-        return;
-      }
-
-      let ro: ResizeObserver | null = null;
-      let mounted = true;
-
-      const boundaryEl =
-        (collisionBoundary instanceof Element && collisionBoundary) ||
-        document.documentElement;
-
-      const measureAndAdjust = () => {
-        if (!mounted) {
-          return;
-        }
-
-        const triggerEl = triggerRef.current;
-        const el = contentRef.current;
-
-        if (!triggerEl || !el) {
-          return;
-        }
-
-        const triggerRect = triggerEl.getBoundingClientRect();
-        const contentRect = el.getBoundingClientRect();
-
-        if (contentRect.width <= 0) {
-          return;
-        }
-
-        const boundaryRect = boundaryEl.getBoundingClientRect();
-
-        const fits = {
-          right: boundaryRect.right - triggerRect.right >= contentRect.width,
-          left: triggerRect.left - boundaryRect.left >= contentRect.width,
-          bottom:
-            boundaryRect.bottom - triggerRect.bottom >= contentRect.height,
-          top: triggerRect.top - boundaryRect.top >= contentRect.height,
-        };
-
-        let alignCandidate: 'start' | 'end' = 'start';
-
-        switch (direction) {
-          case Direction.UP_RIGHT:
-
-          case Direction.DOWN_RIGHT: {
-            if (fits.right) {
-              alignCandidate = 'start';
-            } else if (fits.left) {
-              alignCandidate = 'end';
-            } else {
-              alignCandidate = 'start';
-            }
-
-            break;
-          }
-
-          case Direction.UP_LEFT:
-
-          case Direction.DOWN_LEFT: {
-            if (fits.left) {
-              alignCandidate = 'end';
-            } else if (fits.right) {
-              alignCandidate = 'start';
-            } else {
-              alignCandidate = 'end';
-            }
-
-            break;
-          }
-
-          case Direction.RIGHT_DOWN:
-
-          case Direction.LEFT_DOWN: {
-            if (fits.bottom) {
-              alignCandidate = 'start';
-            } else if (fits.top) {
-              alignCandidate = 'end';
-            } else {
-              alignCandidate = 'start';
-            }
-
-            break;
-          }
-
-          case Direction.RIGHT_UP:
-
-          case Direction.LEFT_UP: {
-            if (fits.top) {
-              alignCandidate = 'end';
-            } else if (fits.bottom) {
-              alignCandidate = 'start';
-            } else {
-              alignCandidate = 'end';
-            }
-
-            break;
-          }
-        }
-
-        setAlign(alignCandidate);
-        setIsPositioned(true);
-      };
-
-      requestAnimationFrame(measureAndAdjust);
-
-      if (contentRef.current && typeof ResizeObserver !== 'undefined') {
-        ro = new ResizeObserver(measureAndAdjust);
-        ro.observe(contentRef.current);
-      }
-
-      return () => {
-        mounted = false;
-
-        if (ro) {
-          ro.disconnect();
-        }
-      };
-    }, [direction[0], collisionBoundary, triggerRef]);
+    const { align, labelOffset, isPositioned } = useContentPositioning({
+      direction,
+      disableAutoPositioning,
+      triggerRef,
+      contentRef,
+      collisionBoundary,
+      children,
+    });
 
     const springStyles = useSpring({
       opacity:
@@ -257,8 +75,20 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     });
 
     return (
-      <LevelProvider hasItemWithIcon={hasItemWithIcon}>
-        <animated.div style={springStyles} data-content-wrapper>
+      <LevelProvider
+        hasItemWithIcon={hasItemWithIcon}
+        setHasItemWithIcon={setHasItemWithIcon}
+        activeItemId={activeItemId}
+        setActiveItemId={setActiveItemId}
+      >
+        <animated.div
+          style={{
+            zIndex: Number.MAX_SAFE_INTEGER,
+            position: 'fixed',
+            ...springStyles,
+          }}
+          data-content-wrapper
+        >
           <RadixDropdownMenuContent
             ref={mergeRefs(contentRef, ref)}
             className={cx(s.content, className)}
@@ -272,6 +102,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
             align={align}
             arrowPadding={arrowPadding}
             alignOffset={labelOffset}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
             {...rest}
           >
             {children}

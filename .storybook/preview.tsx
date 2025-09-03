@@ -21,6 +21,15 @@ const preview: Preview = {
         // This will remove the "Show code" button from Canvas
         sourceState: 'none',
       },
+      source: {
+        /**
+         * Completely hide auto-generated source code.
+         *
+         * More info provided in this comment:
+         * https://github.com/kommo-crm/crm-react-ui-kit/pull/11#discussion_r2315256940
+         */
+        code: 'hidden',
+      },
     },
     options: {
       storySort: {
@@ -29,7 +38,6 @@ const preview: Preview = {
           ['Getting Started', 'Component theming'],
           'Typography',
           'Components',
-          ['*', 'ContextMenu', ['SubSelect']],
         ],
       },
     },

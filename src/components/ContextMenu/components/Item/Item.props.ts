@@ -1,20 +1,12 @@
-import type { ComponentPropsWithoutRef, ReactElement } from 'react';
+import type { ComponentPropsWithoutRef } from 'react';
 import type { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 
 type RadixItemProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuItem>,
-  'disabled' | 'textValue'
+  'disabled'
 >;
 
 export type ItemProps = RadixItemProps & {
-  /**
-   * Icon to the left of the text.
-   */
-  icon?: ReactElement;
-  /**
-   * Child text element. Use the Text component.
-   */
-  text?: ReactElement;
   /**
    * Whether the item is disabled.
    */
@@ -23,4 +15,12 @@ export type ItemProps = RadixItemProps & {
    * Whether the item is dangerous (adds `data-danger`).
    */
   isDanger?: boolean;
+  /**
+   * Whether the item is not selectable.
+   */
+  isNotSelectable?: boolean;
+  /**
+   * Whether the item has a submenu.
+   */
+  hasSubmenu?: boolean;
 };

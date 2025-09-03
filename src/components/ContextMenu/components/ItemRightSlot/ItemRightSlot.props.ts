@@ -1,4 +1,6 @@
-export interface ItemRightSlotProps {
+import { ComponentPropsWithoutRef } from 'react';
+
+export interface ItemRightSlotProps extends ComponentPropsWithoutRef<'div'> {
   /**
    * Child elements.
    */

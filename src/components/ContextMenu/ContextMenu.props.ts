@@ -1,6 +1,6 @@
 import { type DropdownMenuProps as RadixDropdownMenuRootProps } from '@radix-ui/react-dropdown-menu';
 
-import { ContextMenuMode } from './ContextMenu.enums';
+import { ContextMenuModeType } from './ContextMenu.types';
 
 export type ContextMenuRootProps = Omit<
   RadixDropdownMenuRootProps,
@@ -16,26 +16,12 @@ export type ContextMenuRootProps = Omit<
    * - `click`: menu opens on click, closes on outside click.
    * - `hover`: menu opens and closes on mouse hover.
    */
-  mode: ContextMenuMode;
+  mode: ContextMenuModeType;
   /**
-   * Delay in milliseconds before the menu closes
-   * when the user stops hovering over it.
-   *
-   * @default 200
+   * Whether the menu should close when another menu is opened.
+   * It only works in conjunction with other similar menus.
    */
-  hoverCloseDelay?: number;
-  /**
-   * The duration of the menu and submenus opening/closing animation in milliseconds.
-   *
-   * @default 150
-   */
-  animationDuration?: number;
-  /**
-   * Whether to disable the label offset.
-   *
-   * @default false
-   */
-  disableLabelOffset?: boolean;
+  autoCloseOnOtherOpen?: boolean;
 };
 
 export interface ContextMenuContextProps {
@@ -53,7 +39,7 @@ export interface ContextMenuContextProps {
    * - `click`: menu opens on click, closes on outside click.
    * - `hover`: menu opens and closes on mouse hover.
    */
-  mode: ContextMenuMode;
+  mode: ContextMenuModeType;
   /**
    * Delay in milliseconds before the menu closes
    * when the user stops hovering over it.
@@ -67,7 +53,7 @@ export interface ContextMenuContextProps {
    * Temporarily enables hover-based closing behavior for the menu.
    * When called, the menu will close on hover outside until it hides.
    *
-   * It only makes sense when mode is `ContextMenuMode.CLICK`
+   * It only makes sense when mode is `click`
    */
   enableTemporaryHoverClose: () => void;
   /**
@@ -89,7 +75,11 @@ export interface ContextMenuContextProps {
    */
   closeMenuImmediately: () => void;
   /**
-   * Whether to disable the label offset.
+   * Called when the mouse enters the ContextMenu element.
    */
-  disableLabelOffset: boolean;
+  onMouseEnter: () => void;
+  /**
+   * Called when the mouse leaves the ContextMenu element.
+   */
+  onMouseLeave: () => void;
 }

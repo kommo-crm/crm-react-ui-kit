@@ -1,14 +1,16 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
-
-import ChevronRightIcon from 'src/icons/chevronRight.svg';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
+
+import { hasItemIcon } from '../../utils';
+
+import { useContextMenuItemFocus } from '../../hooks';
 
 import type { SubTriggerProps } from './SubTrigger.props';
 
@@ -17,22 +19,24 @@ import s from './SubTrigger.module.css';
 const DISPLAY_NAME = 'ContextMenu.SubTrigger';
 
 export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
-  (
-    {
-      className,
-      children,
-      icon,
-      text,
-      chevron = <ChevronRightIcon />,
-      isDisabled,
-      ...rest
-    },
-    ref
-  ) => {
-    const [isActive, setIsActive] = useState(false);
-
+  ({ className, children, isDisabled, ...rest }, ref) => {
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-    const { animatedOpen, mode, open } = useContextMenuSubContext(DISPLAY_NAME);
+    const { animatedOpen, mode, open, onMouseEnter, onMouseLeave, triggerId } =
+      useContextMenuSubContext(DISPLAY_NAME);
+    const {
+      dataHighlighted,
+      onFocus,
+      onMouseEnter: handleMouseEnter,
+      onBlur,
+      onMouseLeave: handleMouseLeave,
+    } = useContextMenuItemFocus({
+      displayName: DISPLAY_NAME,
+      id: triggerId,
+      isDisabled,
+      isNotSelectable: false,
+      onMouseEnter,
+      onMouseLeave,
+    });
 
     return (
       <RadixDropdownMenuSubTrigger
@@ -40,25 +44,24 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         className={cx(s.sub_trigger, className)}
         disabled={isDisabled}
         data-item
-        data-no-icon-align={icon || !hasItemWithIcon ? '' : undefined}
+        data-no-icon-align={
+          hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
+        }
         data-highlighted={
-          animatedOpen || isActive || (mode === ContextMenuMode.CLICK && open)
+          animatedOpen ||
+          dataHighlighted === '' ||
+          (mode === ContextMenuMode.CLICK && open)
             ? ''
             : undefined
         }
-        onFocus={() => setIsActive(true)}
-        onMouseEnter={() => setIsActive(true)}
-        onBlur={() => setIsActive(false)}
-        onMouseLeave={() => setIsActive(false)}
+        data-submenu-trigger
+        onFocus={onFocus}
+        onMouseEnter={handleMouseEnter}
+        onBlur={onBlur}
+        onMouseLeave={handleMouseLeave}
         {...rest}
       >
-        {icon}
-        {text}
         {children}
-        {chevron &&
-          React.cloneElement(chevron, {
-            className: cx(s.chevron, chevron.props.className),
-          })}
       </RadixDropdownMenuSubTrigger>
     );
   }

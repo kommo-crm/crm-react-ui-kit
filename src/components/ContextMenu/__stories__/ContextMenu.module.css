@@ -1,0 +1,21 @@
+.trigger {
+  all: unset;
+
+  display: flex;
+  padding: 4px;
+  color: var(--crm-ui-kit-palette-text-secondary-dark);
+  cursor: pointer;
+}
+
+.subTrigger {
+  all: unset;
+
+  display: flex;
+  padding: 10px 16px;
+  color: var(--crm-ui-kit-palette-text-secondary-dark);
+  cursor: pointer;
+}
+
+.contextMenuRightSlot {
+  padding: 0;
+}

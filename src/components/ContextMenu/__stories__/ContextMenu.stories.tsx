@@ -1,37 +1,53 @@
 import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
-import ContextMenuTriggerIcon from 'src/icons/trigger.svg';
-import ContextMenuTrashcanIcon from 'src/icons/trashcan.svg';
-import ContextMenuCheckIcon from 'src/icons/check.svg';
+import ChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
+import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
+import ContextMenuTrashcanIcon from '@storybook-utils/icons/trashcan.svg';
+import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 
-import { ContextMenu, TextContextMenuTheme } from 'src/components/ContextMenu';
-import { Text } from 'src/components/Text';
+import { ContextMenu } from 'src/components/ContextMenu';
+import {
+  Text,
+  TextPrimaryTheme,
+  TextSecondaryDarkTheme,
+  type TextTheme,
+} from 'src/components/Text';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
+import { Button, ButtonNeutralTheme } from 'src/components/Button';
+
 import { ContextMenuRootProps } from '../ContextMenu.props';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
-import { Direction } from '../components/Content';
 import { ContentProps } from '../components/Content/Content.props';
+
+import s from './ContextMenu.module.css';
+
+const TextContextMenuTheme: TextTheme = {
+  ...TextPrimaryTheme,
+  '--crm-ui-kit-text-color': 'inherit',
+};
 
 const USAGE = `
 import { useState } from "react";
 
+import { ContextMenu } from 'src/components/ContextMenu';
 import {
-  ContextMenu,
-  ContextMenuMode,
-  TextContextMenuTheme
-} from "@kommo-crm/crm-react-ui-kit/ContextMenu";
-
-import { Text } from "@kommo-crm/crm-react-ui-kit/Text";
+  Text,
+  TextPrimaryTheme,
+  TextSecondaryDarkTheme,
+  type TextTheme,
+} from 'src/components/Text';
 
 import ContextMenuTriggerIcon from 'public/icons/trigger.svg';
 import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';
 import ContextMenuCheckIcon from 'public/icons/check.svg';
+import ChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
 
 function App() {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
@@ -45,86 +61,71 @@ function App() {
     setTheme(e.target.value);
   };
 
-  return (
-    <ContextMenu.Root mode={ContextMenuMode.CLICK}>
+  <ContextMenu.Root mode="click">
       <ContextMenu.Trigger>
         <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
-        <ContextMenu.Content>
-          <ContextMenu.MetaItem
-            label=${i18n.t('Workspace')}
-            value="Kommo"
-          />
+        <ContextMenu.Content
+          collisionBoundary={
+            document.querySelector('.docs-story') as HTMLElement
+          }
+          direction="down-right"
+          sideOffset={5}
+        >
+          <ContextMenu.Label>
+            <Text theme={TextSecondaryDarkTheme} size="l">
+              ${i18n.t('Label')}
+            </Text>
+          </ContextMenu.Label>
 
-          <ContextMenu.MetaItem
-            label=${i18n.t('Workspace ID')}
-            value="33764107"
-            isCopyable
-          />
+          <ContextMenu.Item isNotSelectable>
+            <Text theme={TextContextMenuTheme} size="l">
+              <b>${i18n.t('Workspace')}:</b> Kommo
+            </Text>
+          </ContextMenu.Item>
 
-          <ContextMenu.Item
-            text={
-              <Text theme={TextContextMenuTheme} size="l">
-                ${i18n.t('Change Workspace')}
-              </Text>
-            }
-          >
-            <ContextMenu.ItemRightSlot>
-              <Text theme={TextContextMenuTheme} size="l">
-                ⌘+W
-              </Text>
-            </ContextMenu.ItemRightSlot>
+          <ContextMenu.Item>
+            <Text theme={TextContextMenuTheme} size="l">
+              ${i18n.t('Change Workspace')}
+            </Text>
           </ContextMenu.Item>
 
           <ContextMenu.Sub>
-            <ContextMenu.SubTrigger
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  ${i18n.t('Contacts')}
-                </Text>
-              }
-            />
+            <ContextMenu.SubTrigger>
+              <Text theme={TextContextMenuTheme} size="l">
+                ${i18n.t('Contacts')}
+              </Text>
+
+              <ContextMenu.ItemRightSlot>
+                <ChevronRightIcon />
+              </ContextMenu.ItemRightSlot>
+            </ContextMenu.SubTrigger>
 
             <ContextMenu.Portal>
               <ContextMenu.SubContent>
-                <ContextMenu.Item
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      ${i18n.t('Contact')} 1
-                    </Text>
-                  }
-                />
+                <ContextMenu.Item>
+                  <Text theme={TextContextMenuTheme} size="l">
+                    ${i18n.t('Contact')} 1
+                  </Text>
+                </ContextMenu.Item>
 
-                <ContextMenu.Item
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      ${i18n.t('Contact')} 2
-                    </Text>
-                  }
-                  isDisabled
-                />
+                <ContextMenu.Item isDisabled>
+                  <Text theme={TextContextMenuTheme} size="l">
+                    ${i18n.t('Contact')} 2
+                  </Text>
+                </ContextMenu.Item>
 
-                <ContextMenu.Item
-                  icon={<ContextMenuTrashcanIcon />}
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      ${i18n.t('Delete All')}
-                    </Text>
-                  }
-                  isDanger
-                />
+                <ContextMenu.Item isDanger>
+                  <ContextMenu.ItemIcon>
+                    <ContextMenuTrashcanIcon />
+                  </ContextMenu.ItemIcon>
 
-                <ContextMenu.Separator />
-
-                <ContextMenu.Item
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      ${i18n.t('Technical support')}
-                    </Text>
-                  }
-                />
+                  <Text theme={TextContextMenuTheme} size="l">
+                    ${i18n.t('Delete All')}
+                  </Text>
+                </ContextMenu.Item>
               </ContextMenu.SubContent>
             </ContextMenu.Portal>
           </ContextMenu.Sub>
@@ -134,45 +135,39 @@ function App() {
           <ContextMenu.CheckboxItem
             isChecked={autoupdateChecked}
             onChange={handleAutoupdateChange}
-            text={
-              <Text theme={TextContextMenuTheme} size="l">
-                ${i18n.t('Autoupdate')}
-              </Text>
-            }
           >
             <ContextMenu.ItemIndicator>
               <ContextMenuCheckIcon />
             </ContextMenu.ItemIndicator>
+
+            <Text theme={TextContextMenuTheme} size="l">
+              ${i18n.t('Autoupdate')}
+            </Text>
           </ContextMenu.CheckboxItem>
 
           <ContextMenu.Separator />
 
-          <ContextMenu.Label
-            text={
+          <ContextMenu.Label>
+            <Text theme={TextSecondaryDarkTheme} size="l">
+              ${i18n.t('Select Theme')}
+            </Text>
+          </ContextMenu.Label>
+
+          <ContextMenu.RadioGroup
+            value={theme}
+            onChange={handleThemeChange}
+          >
+            <ContextMenu.RadioItem value="light">
               <Text theme={TextContextMenuTheme} size="l">
-                ${i18n.t('Select Theme')}
+                ${i18n.t('Light')}
               </Text>
-            }
-          />
+            </ContextMenu.RadioItem>
 
-          <ContextMenu.RadioGroup value={theme} onChange={handleThemeChange}>
-            <ContextMenu.RadioItem
-              value="light"
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  ${i18n.t('Light')}
-                </Text>
-              }
-            />
-
-            <ContextMenu.RadioItem
-              value="dark"
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  ${i18n.t('Dark')}
-                </Text>
-              }
-            />
+            <ContextMenu.RadioItem value="dark">
+              <Text theme={TextContextMenuTheme} size="l">
+                ${i18n.t('Dark')}
+              </Text>
+            </ContextMenu.RadioItem>
           </ContextMenu.RadioGroup>
 
           <ContextMenu.Arrow />
@@ -183,32 +178,30 @@ function App() {
 }
 `;
 
-const renderSubSelectMenu = (
-  key: string = 'menu',
-  menuProps: ContextMenuRootProps & {
-    isMinimalistic?: boolean;
-  } = {
-    mode: ContextMenuMode.CLICK,
-    isMinimalistic: false,
-  },
-  contentProps?: Omit<ContentProps, 'theme'>,
-  additionalLabel = false
-) => {
+const StoryComponent = ({
+  mode,
+  direction,
+  onCheckboxChange,
+  onRadioChange,
+  button = <ContextMenuTriggerIcon />,
+  isTriggerAsChild = false,
+}: ContextMenuRootProps & {
+  direction?: ContentProps['direction'];
+  onCheckboxChange?: (checked: boolean) => void;
+  onRadioChange?: (value: string) => void;
+  button?: React.ReactNode;
+  isTriggerAsChild?: boolean;
+}) => {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState('light');
 
-  const handleAutoupdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAutoupdateChecked(e.target.checked);
-  };
-
-  const handleThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTheme(e.target.value);
-  };
-
   return (
-    <ContextMenu.Root {...menuProps} key={key}>
-      <ContextMenu.Trigger>
-        <ContextMenuTriggerIcon />
+    <ContextMenu.Root mode={mode}>
+      <ContextMenu.Trigger
+        className={isTriggerAsChild ? '' : s.trigger}
+        asChild={isTriggerAsChild}
+      >
+        {button}
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
@@ -216,143 +209,193 @@ const renderSubSelectMenu = (
           collisionBoundary={
             document.querySelector('.docs-story') as HTMLElement
           }
-          {...contentProps}
+          direction={direction}
+          sideOffset={5}
         >
-          {additionalLabel && (
-            <ContextMenu.Label
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  {i18n.t('Label')}
-                </Text>
-              }
-            />
-          )}
+          <ContextMenu.Label>
+            <Text theme={TextSecondaryDarkTheme} size="l">
+              {i18n.t('Label')}
+            </Text>
+          </ContextMenu.Label>
 
-          <ContextMenu.MetaItem label={i18n.t('Workspace')} value="Kommo" />
+          <ContextMenu.Item isNotSelectable>
+            <Text theme={TextContextMenuTheme} size="l">
+              <b>{i18n.t('Workspace')}:</b> Kommo
+            </Text>
+          </ContextMenu.Item>
 
-          <ContextMenu.MetaItem
-            label={i18n.t('Workspace ID')}
-            value="33764107"
-            isCopyable
-          />
-
-          <ContextMenu.Item
-            text={
-              <Text theme={TextContextMenuTheme} size="l">
-                {i18n.t('Change Workspace')}
-              </Text>
-            }
-          >
-            <ContextMenu.ItemRightSlot>
-              <Text theme={TextContextMenuTheme} size="l">
-                ⌘+W
-              </Text>
-            </ContextMenu.ItemRightSlot>
+          <ContextMenu.Item>
+            <Text theme={TextContextMenuTheme} size="l">
+              {i18n.t('Change Workspace')}
+            </Text>
           </ContextMenu.Item>
 
           <ContextMenu.Sub>
-            <ContextMenu.SubTrigger
-              text={
-                <Text theme={TextContextMenuTheme} size="l">
-                  {i18n.t('Contacts')}
-                </Text>
-              }
-            />
+            <ContextMenu.SubTrigger>
+              <Text theme={TextContextMenuTheme} size="l">
+                {i18n.t('Contacts')}
+              </Text>
+
+              <ContextMenu.ItemRightSlot>
+                <ChevronRightIcon />
+              </ContextMenu.ItemRightSlot>
+            </ContextMenu.SubTrigger>
 
             <ContextMenu.Portal>
               <ContextMenu.SubContent>
-                <ContextMenu.Item
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      {i18n.t('Contact')} 1
-                    </Text>
-                  }
-                />
+                <ContextMenu.Item>
+                  <Text theme={TextContextMenuTheme} size="l">
+                    {i18n.t('Contact')} 1
+                  </Text>
+                </ContextMenu.Item>
 
-                <ContextMenu.Item
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      {i18n.t('Contact')} 2
-                    </Text>
-                  }
-                  isDisabled
-                />
+                <ContextMenu.Item isDisabled>
+                  <Text theme={TextContextMenuTheme} size="l">
+                    {i18n.t('Contact')} 2
+                  </Text>
+                </ContextMenu.Item>
 
-                <ContextMenu.Item
-                  icon={<ContextMenuTrashcanIcon />}
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      {i18n.t('Delete All')}
-                    </Text>
-                  }
-                  isDanger
-                />
+                <ContextMenu.Item isDanger>
+                  <ContextMenu.ItemIcon>
+                    <ContextMenuTrashcanIcon />
+                  </ContextMenu.ItemIcon>
 
-                <ContextMenu.Separator />
-
-                <ContextMenu.Item
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      {i18n.t('Technical support')}
-                    </Text>
-                  }
-                />
+                  <Text theme={TextContextMenuTheme} size="l">
+                    {i18n.t('Delete All')}
+                  </Text>
+                </ContextMenu.Item>
               </ContextMenu.SubContent>
             </ContextMenu.Portal>
           </ContextMenu.Sub>
 
-          {!menuProps.isMinimalistic && (
-            <>
-              <ContextMenu.Separator />
+          <ContextMenu.Separator />
 
-              <ContextMenu.CheckboxItem
-                isChecked={autoupdateChecked}
-                onChange={handleAutoupdateChange}
-                text={
-                  <Text theme={TextContextMenuTheme} size="l">
-                    {i18n.t('Autoupdate')}
-                  </Text>
-                }
-              >
-                <ContextMenu.ItemIndicator>
-                  <ContextMenuCheckIcon />
-                </ContextMenu.ItemIndicator>
-              </ContextMenu.CheckboxItem>
+          <ContextMenu.CheckboxItem
+            isChecked={autoupdateChecked}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setAutoupdateChecked(e.target.checked);
+              onCheckboxChange?.(e.target.checked);
+            }}
+          >
+            <ContextMenu.ItemIndicator>
+              <ContextMenuCheckIcon />
+            </ContextMenu.ItemIndicator>
 
-              <ContextMenu.Separator />
+            <Text theme={TextContextMenuTheme} size="l">
+              {i18n.t('Autoupdate')}
+            </Text>
+          </ContextMenu.CheckboxItem>
 
-              <ContextMenu.Label
-                text={
-                  <Text theme={TextContextMenuTheme} size="l">
-                    {i18n.t('Select Theme')}
-                  </Text>
-                }
-              />
+          <ContextMenu.Separator />
 
-              <ContextMenu.RadioGroup
-                value={theme}
-                onChange={handleThemeChange}
-              >
-                <ContextMenu.RadioItem
-                  value="light"
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      {i18n.t('Light')}
-                    </Text>
-                  }
-                />
+          <ContextMenu.Label>
+            <Text theme={TextSecondaryDarkTheme} size="l">
+              {i18n.t('Select Theme')}
+            </Text>
+          </ContextMenu.Label>
 
-                <ContextMenu.RadioItem
-                  value="dark"
-                  text={
-                    <Text theme={TextContextMenuTheme} size="l">
-                      {i18n.t('Dark')}
-                    </Text>
-                  }
-                />
-              </ContextMenu.RadioGroup>
-            </>
-          )}
+          <ContextMenu.RadioGroup
+            value={theme}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setTheme(e.target.value);
+              onRadioChange?.(e.target.value);
+            }}
+          >
+            <ContextMenu.RadioItem value="light">
+              <Text theme={TextContextMenuTheme} size="l">
+                {i18n.t('Light')}
+              </Text>
+            </ContextMenu.RadioItem>
+
+            <ContextMenu.RadioItem value="dark">
+              <Text theme={TextContextMenuTheme} size="l">
+                {i18n.t('Dark')}
+              </Text>
+            </ContextMenu.RadioItem>
+          </ContextMenu.RadioGroup>
+
+          <ContextMenu.Item hasSubmenu>
+            <Text theme={TextContextMenuTheme} size="l">
+              Change Workspace
+            </Text>
+
+            <ContextMenu.ItemRightSlot
+              className={s.contextMenuRightSlot}
+              onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onBlur={(e: React.FocusEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onFocus={(e: React.FocusEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onKeyUp={(e: React.KeyboardEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onKeyPress={(e: React.KeyboardEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onPointerDown={(e: React.PointerEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onPointerUp={(e: React.PointerEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onPointerEnter={(e: React.PointerEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onPointerLeave={(e: React.PointerEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+              onPointerMove={(e: React.PointerEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+              }}
+            >
+              <ContextMenu.Sub mode={ContextMenuMode.CLICK}>
+                <ContextMenu.SubTrigger className={s.subTrigger}>
+                  {button}
+                </ContextMenu.SubTrigger>
+
+                <ContextMenu.Portal>
+                  <ContextMenu.SubContent sideOffset={5}>
+                    <ContextMenu.Label>
+                      <Text theme={TextSecondaryDarkTheme} size="l">
+                        {i18n.t('Label')}
+                      </Text>
+                    </ContextMenu.Label>
+
+                    <ContextMenu.Item>
+                      <Text theme={TextContextMenuTheme} size="l">
+                        {i18n.t('Change Workspace')}
+                      </Text>
+                    </ContextMenu.Item>
+
+                    <ContextMenu.Item>
+                      <Text theme={TextContextMenuTheme} size="l">
+                        {i18n.t('Change Workspace')}
+                      </Text>
+                    </ContextMenu.Item>
+                  </ContextMenu.SubContent>
+                </ContextMenu.Portal>
+              </ContextMenu.Sub>
+            </ContextMenu.ItemRightSlot>
+          </ContextMenu.Item>
+
+          <ContextMenu.Item>
+            <Text theme={TextContextMenuTheme} size="l">
+              {i18n.t('Change Workspace')}
+            </Text>
+          </ContextMenu.Item>
 
           <ContextMenu.Arrow />
         </ContextMenu.Content>
@@ -361,8 +404,9 @@ const renderSubSelectMenu = (
   );
 };
 
-const meta = {
+const meta: Meta<typeof StoryComponent> = {
   title: 'Components/ContextMenu',
+  component: StoryComponent,
   parameters: {
     ...CanvasCentered,
     docs: {
@@ -371,53 +415,115 @@ const meta = {
         language: 'jsx',
       },
     },
+    layout: 'fullscreen',
   },
-  component: ContextMenu,
   args: {
     mode: ContextMenuMode.CLICK,
+    direction: 'down-right',
+    onCheckboxChange: action('onCheckboxChange'),
+    onRadioChange: action('onRadioChange'),
   },
-} satisfies Meta<typeof ContextMenu>;
+  argTypes: {
+    mode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    direction: {
+      control: 'select',
+      options: [
+        'down-right',
+        'down-left',
+        'up-right',
+        'up-left',
+        'right-up',
+        'right-down',
+        'left-up',
+        'left-down',
+      ] satisfies ContentProps['direction'][],
+    },
+  },
+  render: (args) => {
+    const { direction } = args;
+    let alignItems: 'flex-start' | 'center' | 'flex-end' = 'center';
+
+    if (direction?.startsWith('down') || direction?.endsWith('down')) {
+      alignItems = 'flex-start';
+    } else if (direction?.startsWith('up') || direction?.endsWith('up')) {
+      alignItems = 'flex-end';
+    }
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems,
+          minHeight: '380px',
+          height: '100%',
+          padding: '20px',
+          marginTop: direction?.endsWith('down') ? '40px' : undefined,
+        }}
+      >
+        <StoryComponent {...args} />
+      </div>
+    );
+  },
+};
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  decorators: [
-    (Story) => (
+export const Default: Story = {};
+
+export const Modes: Story = {
+  render: (args) => {
+    return (
       <div
         style={{
-          width: '100%',
-          marginBottom: '380px',
           display: 'flex',
-          justifyContent: 'center',
+          alignItems: 'start',
+          minHeight: '380px',
+          height: '100%',
+          padding: '20px',
+          gap: '40px',
         }}
       >
-        <Story />
+        <StoryComponent
+          {...args}
+          mode={ContextMenuMode.CLICK}
+          button={
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Click me!')}</Button>
+          }
+          isTriggerAsChild
+        />
+        <StoryComponent
+          {...args}
+          mode={ContextMenuMode.HOVER}
+          button={
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me!')}</Button>
+          }
+          isTriggerAsChild
+        />
       </div>
-    ),
-  ],
-  render: () => {
-    return renderSubSelectMenu();
+    );
   },
 };
 
-export const Positions: Story = {
-  render: () => {
-    const positions = [
-      { justify: 'flex-start', align: 'flex-start' },
-      { justify: 'center', align: 'flex-start' },
-      { justify: 'flex-end', align: 'flex-start' },
-      { justify: 'flex-start', align: 'flex-end' },
-      { justify: 'center', align: 'flex-end' },
-      { justify: 'flex-end', align: 'flex-end' },
+export const Directions: Story = {
+  render: (args) => {
+    const cornerDirections: ContentProps['direction'][] = [
+      'down-right',
+      'down-left',
+      'up-right',
+      'up-left',
     ];
 
-    const centralPositions = [
-      Direction.LEFT_DOWN,
-      Direction.RIGHT_DOWN,
-      Direction.LEFT_UP,
-      Direction.RIGHT_UP,
+    const centralDirections: ContentProps['direction'][] = [
+      'left-down',
+      'right-down',
+      'left-up',
+      'right-up',
     ];
 
     return (
@@ -425,26 +531,34 @@ export const Positions: Story = {
         style={{
           position: 'relative',
           width: '100%',
-          height: '90vh',
-          display: 'flex',
-          flexWrap: 'wrap',
+          height: '100vh',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gridTemplateRows: '1fr 1fr',
+          gap: '0',
+          padding: '20px',
           boxSizing: 'border-box',
         }}
       >
-        {positions.map((pos, i) => (
+        {cornerDirections.map((dir) => (
           <div
-            key={i}
+            key={dir}
             style={{
-              width: '33.33%',
-              height: '50%',
               display: 'flex',
-              justifyContent: pos.justify,
-              alignItems: pos.align,
+              justifyContent: dir?.includes('right') ? 'start' : 'end',
+              alignItems: dir?.includes('up') ? 'end' : 'start',
             }}
           >
-            {renderSubSelectMenu(`menu-${i}`, {
-              mode: ContextMenuMode.CLICK,
-            })}
+            <StoryComponent
+              {...args}
+              direction={dir}
+              button={
+                <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
+                  {dir}
+                </Button>
+              }
+              isTriggerAsChild
+            />
           </div>
         ))}
 
@@ -458,31 +572,31 @@ export const Positions: Story = {
             gridTemplateColumns: '1fr 1fr',
             gridTemplateRows: '1fr 1fr',
             gap: '16px',
-            justifyItems: 'center',
-            alignItems: 'center',
           }}
         >
-          {centralPositions.map((dir, i) => (
-            <div key={dir}>
-              {renderSubSelectMenu(
-                `menu-center-${i}`,
-                {
-                  mode: ContextMenuMode.CLICK,
-                  isMinimalistic: true,
-                },
-                { direction: dir, sideOffset: 10 },
-                true
-              )}
+          {centralDirections.map((dir) => (
+            <div
+              key={dir}
+              style={{
+                display: 'flex',
+                justifyContent: dir?.includes('right') ? 'start' : 'end',
+                alignItems: dir?.includes('up') ? 'end' : 'start',
+              }}
+            >
+              <StoryComponent
+                {...args}
+                direction={dir}
+                button={
+                  <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
+                    {dir}
+                  </Button>
+                }
+                isTriggerAsChild
+              />
             </div>
           ))}
         </div>
       </div>
     );
-  },
-};
-
-export const HoverMode: Story = {
-  render: () => {
-    return renderSubSelectMenu('menu-hover', { mode: ContextMenuMode.HOVER });
   },
 };

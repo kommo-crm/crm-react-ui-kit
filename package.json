@@ -204,7 +204,7 @@
     "vite-plugin-svgr": "4.2.0"
   },
   "dependencies": {
-    "@kommo-crm/react-hooks": "^1.0.0",
+    "@kommo-crm/react-hooks": "^1.0.3",
     "@radix-ui/react-dropdown-menu": "2.1.15",
     "@react-spring/web": "10.0.1",
     "classnames": "2.5.1",

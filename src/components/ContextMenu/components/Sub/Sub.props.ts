@@ -29,4 +29,16 @@ export interface ContextMenuSubContextProps {
    * Defines how the submenu is triggered.
    */
   mode: ContextMenuMode;
+  /**
+   * Called when the mouse enters the Sub element.
+   */
+  onMouseEnter: () => void;
+  /**
+   * Called when the mouse leaves the Sub element.
+   */
+  onMouseLeave: () => void;
+  /**
+   * The id of the trigger of the submenu.
+   */
+  triggerId: string;
 }

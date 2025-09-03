@@ -12,7 +12,6 @@ import { SubTriggerProps } from './components/SubTrigger/SubTrigger.props';
 import { ContentProps } from './components/Content/Content.props';
 import { ArrowProps } from './components/Arrow/Arrow.props';
 import { ItemProps } from './components/Item/Item.props';
-import { MetaItemProps } from './components/MetaItem/MetaItem.props';
 import { LabelProps } from './components/Label/Label.props';
 import { CheckboxItemProps } from './components/CheckboxItem/CheckboxItem.props';
 import { ItemIndicatorProps } from './components/ItemIndicator/ItemIndicator.props';
@@ -20,7 +19,14 @@ import { RadioItemProps } from './components/RadioItem/RadioItem.props';
 import { SubContentProps } from './components/SubContent/SubContent.props';
 import { SeparatorProps } from './components/Separator/Separator.props';
 import { ItemRightSlotProps } from './components/ItemRightSlot/ItemRightSlot.props';
-import { SubSelect } from './components/SubSelect/SubSelect';
+import { ItemIconProps } from './components/ItemIcon/ItemIcon.props';
+
+import { ContextMenuMode } from './ContextMenu.enums';
+
+/**
+ * String literal type version of ContextMenuMode
+ */
+export type ContextMenuModeType = `${ContextMenuMode}`;
 
 export type ContextMenuComponentType = ForwardRefExoticComponent<
   ContextMenuRootProps & RefAttributes<HTMLDivElement>
@@ -32,13 +38,11 @@ export interface ContextMenuType extends ContextMenuComponentType {
   Sub: typeof Sub;
   Group: typeof Group;
   RadioGroup: typeof RadioGroup;
-  SubSelect: typeof SubSelect;
   Trigger: React.FC<TriggerProps>;
   SubTrigger: React.FC<SubTriggerProps>;
   Content: React.FC<ContentProps>;
   Arrow: React.FC<ArrowProps>;
   Item: React.FC<ItemProps>;
-  MetaItem: React.FC<MetaItemProps>;
   Label: React.FC<LabelProps>;
   CheckboxItem: React.FC<CheckboxItemProps>;
   ItemIndicator: React.FC<ItemIndicatorProps>;
@@ -46,4 +50,5 @@ export interface ContextMenuType extends ContextMenuComponentType {
   SubContent: React.FC<SubContentProps>;
   Separator: React.FC<SeparatorProps>;
   ItemRightSlot: React.FC<ItemRightSlotProps>;
+  ItemIcon: React.FC<ItemIconProps>;
 }

@@ -1,34 +1,42 @@
-export enum Direction {
+export const enum Direction {
   /**
-   * Up and to the left trigger side.
+   * ContextMenu opens vertically up and in the direction
+   * from the right side of the trigger to the left.
    */
-  UP_LEFT = 'up_left',
+  UP_LEFT = 'up-left',
   /**
-   * Up and to the right trigger side.
+   * ContextMenu opens vertically up and in the direction
+   * from the left side of the trigger to the right.
    */
-  UP_RIGHT = 'up_right',
+  UP_RIGHT = 'up-right',
   /**
-   * Down and to the left trigger side.
+   * ContextMenu opens vertically down and in the direction
+   * from the right side of the trigger to the left.
    */
-  DOWN_LEFT = 'down_left',
+  DOWN_LEFT = 'down-left',
   /**
-   * Down and to the right trigger side.
+   * ContextMenu opens vertically down and in the direction
+   * from the left side of the trigger to the right.
    */
-  DOWN_RIGHT = 'down_right',
+  DOWN_RIGHT = 'down-right',
   /**
-   * Left and to the up trigger side.
+   * ContextMenu opens horizontally left and in the direction
+   * from the bottom side of the trigger to the top.
    */
-  LEFT_UP = 'left_up',
+  LEFT_UP = 'left-up',
   /**
-   * Left and to the down trigger side.
+   * ContextMenu opens horizontally left and in the direction
+   * from the top side of the trigger to the bottom.
    */
-  LEFT_DOWN = 'left_down',
+  LEFT_DOWN = 'left-down',
   /**
-   * Right and to the up trigger side.
+   * ContextMenu opens horizontally right and in the direction
+   * from the bottom side of the trigger to the top.
    */
-  RIGHT_UP = 'right_up',
+  RIGHT_UP = 'right-up',
   /**
-   * Right and to the down trigger side.
+   * ContextMenu opens horizontally right and in the direction
+   * from the top side of the trigger to the bottom.
    */
-  RIGHT_DOWN = 'right_down',
+  RIGHT_DOWN = 'right-down',
 }
