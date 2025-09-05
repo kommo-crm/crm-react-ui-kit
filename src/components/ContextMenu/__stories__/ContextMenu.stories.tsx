@@ -482,12 +482,38 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Modes: Story = {
+  argTypes: {
+    mode: { control: false },
+    subMenuMode: { control: false },
+    direction: {
+      control: 'select',
+      options: [
+        'down-right',
+        'down-left',
+        'up-right',
+        'up-left',
+        'right-up',
+        'right-down',
+        'left-up',
+        'left-down',
+      ] satisfies ContentProps['direction'][],
+    },
+  },
   render: (args) => {
+    const { direction } = args;
+    let alignItems: 'flex-start' | 'center' | 'flex-end' = 'center';
+
+    if (direction?.startsWith('down') || direction?.endsWith('down')) {
+      alignItems = 'flex-start';
+    } else if (direction?.startsWith('up') || direction?.endsWith('up')) {
+      alignItems = 'flex-end';
+    }
+
     return (
       <div
         style={{
           display: 'flex',
-          alignItems: 'start',
+          alignItems,
           minHeight: '320px',
           height: '100%',
           padding: '20px',
@@ -518,6 +544,17 @@ export const Modes: Story = {
 };
 
 export const Directions: Story = {
+  argTypes: {
+    mode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    subMenuMode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    direction: { control: false },
+  },
   render: (args) => {
     const cornerDirections: ContentProps['direction'][] = [
       'down-right',
