@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import ChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
 import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
 import ContextMenuTrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
+import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
 
 import { ContextMenu } from 'src/components/ContextMenu';
 import {
@@ -28,8 +28,6 @@ import { ContentProps } from '../components/Content/Content.props';
 
 import { ContextMenuModeType } from '../ContextMenu.types';
 
-import s from './ContextMenu.module.css';
-
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
   '--crm-ui-kit-text-color': 'inherit',
@@ -49,7 +47,9 @@ import {
 import ContextMenuTriggerIcon from 'public/icons/trigger.svg';
 import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';
 import ContextMenuCheckIcon from 'public/icons/check.svg';
-import ChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
+import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
+
+import s from './ContextMenu.module.css';
 
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
@@ -71,8 +71,13 @@ function App() {
   return (
     <ContextMenu.Root mode="click">
       <ContextMenu.Trigger
-        className={isTriggerAsChild ? '' : s.trigger}
-        asChild={isTriggerAsChild}
+        style={{
+          all: 'unset',
+          display: 'flex',
+          padding: '4px',
+          color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+          cursor: 'pointer',
+        }}
       >
         {button}
       </ContextMenu.Trigger>
@@ -104,7 +109,15 @@ function App() {
 
             <ContextMenu.ItemRightSlot>
               <ContextMenu.SubRoot mode="hover" isCloseWithRootMenu>
-                <ContextMenu.SubRoot.Trigger className={s.subTrigger}>
+                <ContextMenu.SubRoot.Trigger
+                  style={{
+                    all: 'unset',
+                    display: 'flex',
+                    padding: '10px 16px',
+                    color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+                    cursor: 'pointer',
+                  }}
+                >
                   <ContextMenuTriggerIcon />
                 </ContextMenu.SubRoot.Trigger>
 
@@ -171,7 +184,7 @@ function App() {
               </Text>
 
               <ContextMenu.ItemRightSlot>
-                <ChevronRightIcon />
+                <ContextMenuChevronRightIcon />
               </ContextMenu.ItemRightSlot>
             </ContextMenu.SubTrigger>
 
@@ -232,7 +245,17 @@ const StoryComponent = ({
   return (
     <ContextMenu.Root mode={mode}>
       <ContextMenu.Trigger
-        className={isTriggerAsChild ? '' : s.trigger}
+        style={
+          isTriggerAsChild
+            ? {}
+            : {
+                all: 'unset',
+                display: 'flex',
+                padding: '4px',
+                color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+                cursor: 'pointer',
+              }
+        }
         asChild={isTriggerAsChild}
       >
         {button}
@@ -265,7 +288,15 @@ const StoryComponent = ({
 
             <ContextMenu.ItemRightSlot>
               <ContextMenu.SubRoot mode={subMenuMode} isCloseWithRootMenu>
-                <ContextMenu.SubRoot.Trigger className={s.subTrigger}>
+                <ContextMenu.SubRoot.Trigger
+                  style={{
+                    all: 'unset',
+                    display: 'flex',
+                    padding: '10px 16px',
+                    color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+                    cursor: 'pointer',
+                  }}
+                >
                   <ContextMenuTriggerIcon />
                 </ContextMenu.SubRoot.Trigger>
 
@@ -335,7 +366,7 @@ const StoryComponent = ({
               </Text>
 
               <ContextMenu.ItemRightSlot>
-                <ChevronRightIcon />
+                <ContextMenuChevronRightIcon />
               </ContextMenu.ItemRightSlot>
             </ContextMenu.SubTrigger>
 
@@ -457,7 +488,7 @@ export const Modes: Story = {
         style={{
           display: 'flex',
           alignItems: 'start',
-          minHeight: '380px',
+          minHeight: '320px',
           height: '100%',
           padding: '20px',
           gap: '40px',

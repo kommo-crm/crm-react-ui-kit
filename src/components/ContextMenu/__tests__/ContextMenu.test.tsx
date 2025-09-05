@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
-import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
-import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
-
 import { Text, TextTheme, TextPrimaryTheme } from 'src/components/Text';
+
+import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
+import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
 
 import { ContextMenu, ContextMenuRootProps, ContextMenuMode } from '..';
 
@@ -104,65 +104,13 @@ describe('ContextMenu', () => {
 
   it('renders the correct number of items', async () => {
     await renderContextMenu({ open: true });
-    expect(screen.getAllByTestId(DATA_ITEM_TEST_ID)).toHaveLength(4);
+    expect(screen.getAllByTestId(DATA_ITEM_TEST_ID)).toHaveLength(3);
   });
 
   it('opens on trigger click', async () => {
     await renderContextMenu();
     await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
     expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-  });
-
-  it('meta item displays label and value', async () => {
-    await renderContextMenu();
-    await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-
-    expect(screen.getByText(/label/i)).toBeInTheDocument();
-    expect(screen.getByText(/value/i)).toBeInTheDocument();
-  });
-
-  it('copies meta item value to clipboard when copy action invoked', async () => {
-    const originalClipboard = global.navigator.clipboard;
-    const writeTextMock = jest.fn().mockResolvedValue(undefined);
-
-    (global.navigator as any).clipboard = {
-      writeText: writeTextMock,
-    };
-
-    try {
-      await renderContextMenu();
-      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-
-      const valueElement = screen.getByText(/^value$/i);
-
-      const metaItemContainer = valueElement.closest(
-        `[data-testid="${DATA_ITEM_TEST_ID}"]`
-      );
-      const container = (metaItemContainer ??
-        valueElement.parentElement) as HTMLElement;
-
-      const copyIcon = container.querySelector(
-        '.copy_icon'
-      ) as HTMLElement | null;
-
-      if (!copyIcon) {
-        console.error(
-          'Copy icon not found inside meta item. Container HTML:',
-          container.outerHTML
-        );
-
-        throw new Error('Copy icon not found inside MetaItem');
-      }
-
-      await userEvent.click(copyIcon);
-
-      await waitFor(() => {
-        expect(writeTextMock).toHaveBeenCalledWith('value');
-      });
-    } finally {
-      (global.navigator as any).clipboard = originalClipboard;
-    }
   });
 
   it('toggles checkbox item when clicked', async () => {

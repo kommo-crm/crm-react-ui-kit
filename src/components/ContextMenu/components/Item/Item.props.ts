@@ -19,6 +19,12 @@ export type ItemProps = RadixItemProps & {
    * Whether the item is not selectable.
    */
   isNotSelectable?: boolean;
+  /**
+   * A function for checking the presence of an icon.
+   *
+   * By default, the `hasItemIcon` from utils is used.
+   */
+  hasIconCheckFn?: (children: React.ReactNode) => boolean;
 };
 
 export interface ContextMenuItemContextProps {

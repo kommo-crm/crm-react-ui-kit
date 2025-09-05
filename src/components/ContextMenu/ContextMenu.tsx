@@ -34,7 +34,7 @@ export const ContextMenu = ({
   children,
   mode,
   onOpen,
-  open: initialOpen,
+  defaultOpen,
   ...rest
 }: ContextMenuRootProps) => {
   const {
@@ -54,7 +54,7 @@ export const ContextMenu = ({
     enableTemporaryHoverClose,
   } = useContextMenu({
     mode: mode as ContextMenuMode,
-    initialOpen,
+    defaultOpen,
     onOpen,
     animationDuration: ANIMATION_DURATION,
     hoverCloseDelay: HOVER_CLOSE_DELAY,

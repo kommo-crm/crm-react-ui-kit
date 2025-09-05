@@ -1,4 +1,11 @@
-import React, { forwardRef, useRef, useId, useState, useEffect } from 'react';
+import React, {
+  forwardRef,
+  useRef,
+  useId,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 import { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -22,7 +29,15 @@ const DISPLAY_NAME = 'ContextMenu.Item';
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>(
   (
-    { className, children, isDisabled, isDanger, isNotSelectable, ...rest },
+    {
+      className,
+      children,
+      isDisabled,
+      isDanger,
+      isNotSelectable,
+      hasIconCheckFn = hasItemIcon,
+      ...rest
+    },
     ref
   ) => {
     const id = useId();
@@ -44,6 +59,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         hasSubmenu,
       });
 
+    /**
+     * Set the hasSubmenu state based on the presence of a submenu trigger.
+     */
     useEffect(() => {
       if (!itemRef.current) {
         return;
@@ -54,6 +72,14 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
       setHasSubmenu(Boolean(trigger));
     }, [itemRef]);
 
+    /**
+     * Set the hasIcon state based on the presence of an icon.
+     */
+    const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
+
+    /**
+     * Handle the keydown event for the item.
+     */
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (hasSubmenu && e.key === 'ArrowRight') {
         setSubMenuOpen(true);
@@ -72,9 +98,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
           disabled={isDisabled || isNotSelectable}
           data-item
           data-danger={isDanger ? '' : undefined}
-          data-no-icon-align={
-            hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
-          }
+          data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
           data-not-selectable={isNotSelectable ? '' : undefined}
           data-has-submenu={hasSubmenu ? '' : undefined}
           onSelect={(e) => {

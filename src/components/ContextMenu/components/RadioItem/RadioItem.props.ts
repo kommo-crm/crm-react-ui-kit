@@ -11,4 +11,10 @@ export type RadioItemProps = RadixRadioItemProps & {
    * Whether the RadioItem is disabled.
    */
   isDisabled?: boolean;
+  /**
+   * A function for checking the presence of an icon.
+   *
+   * By default, the `hasItemIcon` from utils is used.
+   */
+  hasIconCheckFn?: (children: React.ReactNode) => boolean;
 };

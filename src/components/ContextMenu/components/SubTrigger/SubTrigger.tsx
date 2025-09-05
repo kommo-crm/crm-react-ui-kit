@@ -24,6 +24,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
     const {
       mode,
       open,
+      defaultOpen,
       setOpen,
       animatedOpen,
       onMouseEnter,
@@ -68,27 +69,29 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         onBlur={onBlur}
         onMouseLeave={handleMouseLeave}
         onClick={(e) => {
-          if (mode === ContextMenuMode.CLICK) {
+          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
+          }
 
+          if (defaultOpen === undefined) {
             setOpen(!open);
           }
         }}
         onPointerEnter={(e) => {
-          if (mode === ContextMenuMode.CLICK) {
+          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
           }
         }}
         onPointerMove={(e) => {
-          if (mode === ContextMenuMode.CLICK) {
+          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
           }
         }}
         onPointerLeave={(e) => {
-          if (mode === ContextMenuMode.CLICK) {
+          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
           }

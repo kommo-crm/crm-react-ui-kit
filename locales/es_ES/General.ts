@@ -23,8 +23,8 @@ export default {
   'Centered': 'Centrado',
   'Custom Themes': 'Temas personalizados',
   'Autosize': 'Ajuste automático',
-  'Directions': 'Directions',
-  'Modes': 'Modes',
+  'Directions': 'Direcciones',
+  'Modes': 'Modos',
 
   /* Used in docs */
   'Design tokens': 'Tokens de diseño',

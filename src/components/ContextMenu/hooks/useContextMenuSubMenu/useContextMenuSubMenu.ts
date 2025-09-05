@@ -11,7 +11,7 @@ import { UseContextMenuSubMenuOptions } from './useContextMenuSubMenu.types';
 export const useContextMenuSubMenu = ({
   displayName,
   mode: rootMode,
-  initialOpen,
+  defaultOpen,
   animationDuration,
   subMenuOpen,
   setSubMenuOpen,
@@ -21,7 +21,7 @@ export const useContextMenuSubMenu = ({
 }: UseContextMenuSubMenuOptions) => {
   const triggerId = useId();
 
-  const [open, setOpen] = useState(subMenuOpen || initialOpen || false);
+  const [open, setOpen] = useState(subMenuOpen || defaultOpen || false);
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
@@ -105,7 +105,7 @@ export const useContextMenuSubMenu = ({
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (mode === ContextMenuMode.CLICK && initialOpen !== undefined) {
+    if (mode === ContextMenuMode.CLICK && defaultOpen !== undefined) {
       return;
     }
 

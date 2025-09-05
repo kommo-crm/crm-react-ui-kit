@@ -10,14 +10,14 @@ import { UseContextMenuOptions } from './useContextMenu.types';
 
 export const useContextMenu = ({
   mode: rootMode,
-  initialOpen,
+  defaultOpen,
   animationDuration,
   hoverCloseDelay,
   onOpen,
 }: UseContextMenuOptions) => {
   const id = useId();
 
-  const [open, setOpen] = useState(initialOpen || false);
+  const [open, setOpen] = useState(defaultOpen || false);
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
@@ -90,7 +90,7 @@ export const useContextMenu = ({
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (mode === ContextMenuMode.CLICK && initialOpen !== undefined) {
+    if (mode === ContextMenuMode.CLICK && defaultOpen !== undefined) {
       return;
     }
 

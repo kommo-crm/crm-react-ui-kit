@@ -10,9 +10,10 @@ export interface UseContextMenuSubMenuOptions {
    */
   mode: ContextMenuModeType;
   /**
-   * Whether the context menu is initially open.
+   * The open state of the dropdown menu when it is initially rendered.
+   * Use when you do not need to control its open state.
    */
-  initialOpen?: boolean;
+  defaultOpen?: boolean;
   /**
    * The duration of the animation.
    */

@@ -1,4 +1,4 @@
-import React, { forwardRef, useId } from 'react';
+import React, { forwardRef, useId, useMemo } from 'react';
 import { CheckboxItem as RadixDropdownMenuCheckboxItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -17,7 +17,18 @@ import s from './CheckboxItem.module.css';
 const DISPLAY_NAME = 'ContextMenu.CheckboxItem';
 
 export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
-  ({ className, children, onChange, isDisabled, isChecked, ...rest }, ref) => {
+  (
+    {
+      className,
+      children,
+      onChange,
+      isDisabled,
+      isChecked,
+      hasIconCheckFn = hasItemIcon,
+      ...rest
+    },
+    ref
+  ) => {
     const id = useId();
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
@@ -31,6 +42,8 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         isNotSelectable: false,
       });
 
+    const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
+
     return (
       <RadixDropdownMenuCheckboxItem
         ref={ref}
@@ -38,9 +51,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         disabled={isDisabled}
         checked={isChecked}
         data-item
-        data-no-icon-align={
-          hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
-        }
+        data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
         onCheckedChange={(checked) => {
           if (onChange) {
             const event = {

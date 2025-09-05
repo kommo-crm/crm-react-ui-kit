@@ -1,4 +1,4 @@
-import React, { forwardRef, useId } from 'react';
+import React, { forwardRef, useId, useMemo } from 'react';
 import { RadioItem as RadixDropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -17,7 +17,10 @@ import s from './RadioItem.module.css';
 const DISPLAY_NAME = 'ContextMenu.RadioItem';
 
 export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
-  ({ className, children, isDisabled, ...rest }, ref) => {
+  (
+    { className, children, isDisabled, hasIconCheckFn = hasItemIcon, ...rest },
+    ref
+  ) => {
     const id = useId();
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
@@ -31,15 +34,15 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         isNotSelectable: false,
       });
 
+    const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
+
     return (
       <RadixDropdownMenuRadioItem
         ref={ref}
         className={cx(s.radio_item, className)}
         disabled={isDisabled}
         data-item
-        data-no-icon-align={
-          hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
-        }
+        data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
         onSelect={() => closeMenuImmediately(true)}
         data-highlighted={dataHighlighted}
         onFocus={onFocus}

@@ -71,7 +71,7 @@ export function useContextMenuSub(
    */
   const handleMouseEnter = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
-      if (defaultOpen !== undefined || mode === ContextMenuMode.CLICK) {
+      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -127,7 +127,15 @@ export function useContextMenuSub(
    */
   const handleOpenChange = useCallback(
     (val: boolean) => {
-      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
+      if (defaultOpen !== undefined) {
+        setOpen(defaultOpen);
+        setAnimatedOpen(defaultOpen);
+        setPendingOpen(false);
+
+        return;
+      }
+
+      if (mode === ContextMenuMode.CLICK) {
         setOpen(val);
         setAnimatedOpen(val);
         setPendingOpen(false);

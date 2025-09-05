@@ -20,7 +20,7 @@ export const SubRoot = ({
   children,
   mode = ContextMenuMode.HOVER,
   onOpen,
-  open: initialOpen,
+  defaultOpen,
   isCloseWithRootMenu = false,
   ...rest
 }: ContextMenuSubRootProps) => {
@@ -54,7 +54,7 @@ export const SubRoot = ({
   } = useContextMenuSubMenu({
     displayName: DISPLAY_NAME,
     mode: mode,
-    initialOpen,
+    defaultOpen,
     onOpen,
     animationDuration,
     subMenuOpen: subMenuOpenContext,
