@@ -143,7 +143,7 @@ function App() {
 
                     <ContextMenu.Label>
                       <Text theme={TextSecondaryDarkTheme} size="l">
-                        ${i18n.t('Select Theme')}
+                        ${i18n.t('Theme')}
                       </Text>
                     </ContextMenu.Label>
 
@@ -171,7 +171,7 @@ function App() {
 
           <ContextMenu.Item>
             <Text theme={TextContextMenuTheme} size="l">
-              ${i18n.t('Change Workspace')}
+              ${i18n.t('Switch Workspace')}
             </Text>
           </ContextMenu.Item>
 
@@ -322,7 +322,7 @@ const StoryComponent = ({
 
                     <ContextMenu.Label>
                       <Text theme={TextSecondaryDarkTheme} size="l">
-                        {i18n.t('Select Theme')}
+                        {i18n.t('Theme')}
                       </Text>
                     </ContextMenu.Label>
 
@@ -353,7 +353,7 @@ const StoryComponent = ({
 
           <ContextMenu.Item>
             <Text theme={TextContextMenuTheme} size="l">
-              {i18n.t('Change Workspace')}
+              {i18n.t('Switch Workspace')}
             </Text>
           </ContextMenu.Item>
 

@@ -90,16 +90,16 @@ export default {
   'Required field': 'Campo requerido',
 
   /* ContextMenu */
-  'Label': 'Etiqueta',
+  'Label': 'Título',
   'Workspace': 'Espacio de Trabajo',
-  'Workspace Settings': 'Configuración del Espacio de Trabajo',
-  'Change Workspace': 'Cambiar el Espacio de Trabajo',
+  'Workspace Settings': 'Configuración del Espacio',
+  'Switch Workspace': 'Cambiar Espacio de Trabajo',
   'Contacts': 'Contactos',
   'Autoupdate': 'Actualización automática',
-  'Select Theme': 'Seleccionar Tema',
-  'Light': 'Luz',
+  'Theme': 'Tema',
+  'Light': 'Claro',
   'Dark': 'Oscuro',
   'Contact': 'Contacto',
-  'Delete All': 'Borrar Todo',
-  'Hover me': 'Desplázate sobre mí',
+  'Delete All': 'Eliminar Todo',
+  'Hover me': 'Pasa el cursor',
 };

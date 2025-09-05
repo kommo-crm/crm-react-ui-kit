@@ -23,7 +23,7 @@ export default {
   'Centered': 'Centralizado',
   'Custom Themes': 'Temas personalizados',
   'Autosize': 'Dimensionamento automático',
-  'Directions': 'Direcções',
+  'Directions': 'Direções',
   'Modes': 'Modos',
 
   /* Used in docs */
@@ -90,16 +90,16 @@ export default {
   'Required field': 'Campo obrigatório',
 
   /* ContextMenu */
-  'Label': 'Rótulo',
-  'Workspace': 'Espaço de Trabalho',
-  'Workspace Settings': 'Definições Da Área De Trabalho',
-  'Change Workspace': 'Alterar Espaço De Trabalho',
+  'Label': 'Título',
+  'Workspace': 'Área de Trabalho',
+  'Workspace Settings': 'Configurações de trabalho',
+  'Switch Workspace': 'Alternar Área de Trabalho',
   'Contacts': 'Contactos',
-  'Autoupdate': 'Autoupdate',
-  'Select Theme': 'Selecionar Tema',
-  'Light': 'Luz',
+  'Autoupdate': 'Atualização automática',
+  'Theme': 'Tema',
+  'Light': 'Claro',
   'Dark': 'Escuro',
   'Contact': 'Contacto',
-  'Delete All': 'Apagar Tudo',
-  'Hover me': 'Passe o mouse sobre mim',
+  'Delete All': 'Excluir Tudo',
+  'Hover me': 'Passar o mouse',
 };

@@ -117,7 +117,7 @@ const ContextMenuComponent = ({
 
                     <ContextMenu.Label>
                       <Text theme={TextSecondaryDarkTheme} size="l">
-                        Select Theme
+                        Theme
                       </Text>
                     </ContextMenu.Label>
 
@@ -147,7 +147,7 @@ const ContextMenuComponent = ({
 
           <ContextMenu.Item>
             <Text theme={TextContextMenuTheme} size="l">
-              Change Workspace
+              Switch Workspace
             </Text>
           </ContextMenu.Item>
 
