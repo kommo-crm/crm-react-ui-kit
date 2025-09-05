@@ -28,7 +28,7 @@ const preview: Preview = {
          * More info provided in this comment:
          * https://github.com/kommo-crm/crm-react-ui-kit/pull/11#discussion_r2315256940
          */
-        code: 'hidden',
+        code: '@todo',
       },
     },
     options: {
