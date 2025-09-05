@@ -30,6 +30,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       style,
       className,
       children,
+      alignOffset,
       arrowPadding = 5,
       collisionBoundary,
       direction = Direction.DOWN_RIGHT,
@@ -54,6 +55,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const { align, labelOffset, isPositioned } = useContentPositioning({
       direction,
+      alignOffset,
       disableAutoPositioning,
       triggerRef,
       contentRef,

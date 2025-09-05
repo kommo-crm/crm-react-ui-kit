@@ -6,6 +6,10 @@ export interface UseContentPositioningOptions {
    */
   direction: DirectionType;
   /**
+   * The offset of the content.
+   */
+  alignOffset?: number;
+  /**
    * Whether to disable auto positioning.
    */
   disableAutoPositioning: boolean;

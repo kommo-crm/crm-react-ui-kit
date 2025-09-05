@@ -6,6 +6,7 @@ import { UseContentPositioningOptions } from './useContentPositioning.types';
 
 export function useContentPositioning({
   direction,
+  alignOffset,
   disableAutoPositioning,
   triggerRef,
   contentRef,
@@ -20,7 +21,7 @@ export function useContentPositioning({
       ? 'start'
       : 'end'
   );
-  const [labelOffset, setLabelOffset] = useState<number>();
+  const [labelOffset, setLabelOffset] = useState<number>(alignOffset ?? 0);
   const [isPositioned, setIsPositioned] = useState(false);
 
   /**
@@ -29,6 +30,7 @@ export function useContentPositioning({
   useLayoutEffect(() => {
     if (
       !contentRef.current ||
+      disableAutoPositioning ||
       [
         Direction.DOWN_LEFT,
         Direction.DOWN_RIGHT,
@@ -36,30 +38,29 @@ export function useContentPositioning({
         Direction.UP_RIGHT,
       ].includes(direction as Direction)
     ) {
-      setLabelOffset(undefined);
-
       return;
     }
 
     const contentElement = contentRef.current;
     const label = contentElement.firstElementChild;
-    const item = contentElement.children[1];
+    const item = contentElement.children[1].hasAttribute('data-separator')
+      ? contentElement.children[2]
+      : contentElement.children[1];
     const trigger = triggerRef.current;
 
     if (label && label.hasAttribute('data-label') && trigger) {
       const labelHeight = label.getBoundingClientRect().height;
       const itemHeight = item.getBoundingClientRect().height;
       const triggerHeight = trigger.getBoundingClientRect().height;
-
       const dynamicOffset = (triggerHeight - itemHeight) / 2;
 
       if (direction === Direction.LEFT_UP || direction === Direction.RIGHT_UP) {
-        setLabelOffset(dynamicOffset - 2);
+        setLabelOffset(labelOffset + dynamicOffset - 2);
       } else if (
         direction === Direction.LEFT_DOWN ||
         direction === Direction.RIGHT_DOWN
       ) {
-        setLabelOffset(-labelHeight + dynamicOffset);
+        setLabelOffset(labelOffset - labelHeight + dynamicOffset);
       }
     }
   }, [children, direction, contentRef, triggerRef]);

@@ -14,6 +14,7 @@ export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
       <RadixDropdownMenuSeparator
         ref={ref}
         className={cx(s.separator, className)}
+        data-separator
         {...rest}
       />
     );
