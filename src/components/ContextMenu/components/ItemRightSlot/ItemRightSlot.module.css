@@ -3,3 +3,7 @@
   padding-left: 16px;
   margin-left: auto;
 }
+
+.right_slot[data-submenu-right-slot] {
+  padding-left: 0;
+}

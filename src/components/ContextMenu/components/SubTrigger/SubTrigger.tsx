@@ -6,11 +6,11 @@ import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
-import { ContextMenuMode } from '../../ContextMenu.enums';
-
 import { hasItemIcon } from '../../utils';
 
 import { useContextMenuItemFocus } from '../../hooks';
+
+import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { SubTriggerProps } from './SubTrigger.props';
 
@@ -21,8 +21,16 @@ const DISPLAY_NAME = 'ContextMenu.SubTrigger';
 export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
   ({ className, children, isDisabled, ...rest }, ref) => {
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-    const { animatedOpen, mode, open, onMouseEnter, onMouseLeave, triggerId } =
-      useContextMenuSubContext(DISPLAY_NAME);
+    const {
+      mode,
+      open,
+      setOpen,
+      animatedOpen,
+      onMouseEnter,
+      onMouseLeave,
+      triggerId,
+    } = useContextMenuSubContext(DISPLAY_NAME);
+
     const {
       dataHighlighted,
       onFocus,
@@ -59,6 +67,32 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         onMouseEnter={handleMouseEnter}
         onBlur={onBlur}
         onMouseLeave={handleMouseLeave}
+        onClick={(e) => {
+          if (mode === ContextMenuMode.CLICK) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            setOpen(!open);
+          }
+        }}
+        onPointerEnter={(e) => {
+          if (mode === ContextMenuMode.CLICK) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+        onPointerMove={(e) => {
+          if (mode === ContextMenuMode.CLICK) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+        onPointerLeave={(e) => {
+          if (mode === ContextMenuMode.CLICK) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
         {...rest}
       >
         {children}

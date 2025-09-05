@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useId } from 'react';
+import React, { forwardRef, useRef, useId, useState, useEffect } from 'react';
 import { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -14,24 +14,21 @@ import { useContextMenuItemFocus } from '../../hooks';
 
 import type { ItemProps } from './Item.props';
 
+import { ContextMenuItemProvider } from './Item.context';
+
 import s from './Item.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.Item';
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>(
   (
-    {
-      className,
-      children,
-      isDisabled,
-      isDanger,
-      isNotSelectable,
-      hasSubmenu,
-      ...rest
-    },
+    { className, children, isDisabled, isDanger, isNotSelectable, ...rest },
     ref
   ) => {
     const id = useId();
+
+    const [subMenuOpen, setSubMenuOpen] = useState(false);
+    const [hasSubmenu, setHasSubmenu] = useState(false);
 
     const itemRef = useRef<HTMLDivElement>(null);
 
@@ -44,53 +41,63 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>(
         id,
         isDisabled,
         isNotSelectable: false,
+        hasSubmenu,
       });
+
+    useEffect(() => {
+      if (!itemRef.current) {
+        return;
+      }
+
+      const trigger = itemRef.current.querySelector('[data-submenu-trigger]');
+
+      setHasSubmenu(Boolean(trigger));
+    }, [itemRef]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (hasSubmenu && e.key === 'ArrowRight') {
-        const slot = itemRef.current?.querySelector('[data-submenu-trigger]');
-
-        console.log('🔵 handleKeyDown →', slot);
-
-        if (slot instanceof HTMLElement) {
-          slot.click();
-          e.preventDefault();
-        }
+        setSubMenuOpen(true);
       }
     };
 
     return (
-      <RadixDropdownMenuItem
-        ref={mergeRefs(ref, itemRef)}
-        className={cx(s.item, className)}
-        disabled={isDisabled || isNotSelectable}
-        data-item
-        data-danger={isDanger ? '' : undefined}
-        data-no-icon-align={
-          hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
-        }
-        data-not-selectable={isNotSelectable ? '' : undefined}
-        data-has-submenu={hasSubmenu ? '' : undefined}
-        onSelect={(e) => {
-          if (isNotSelectable) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            return;
-          }
-
-          closeMenuImmediately();
-        }}
-        data-highlighted={dataHighlighted}
-        onFocus={onFocus}
-        onMouseEnter={onMouseEnter}
-        onBlur={onBlur}
-        onMouseLeave={onMouseLeave}
-        onKeyDown={handleKeyDown}
-        {...rest}
+      <ContextMenuItemProvider
+        hasSubmenu={hasSubmenu}
+        subMenuOpen={subMenuOpen}
+        setSubMenuOpen={setSubMenuOpen}
       >
-        {children}
-      </RadixDropdownMenuItem>
+        <RadixDropdownMenuItem
+          ref={mergeRefs(ref, itemRef)}
+          className={cx(s.item, className)}
+          disabled={isDisabled || isNotSelectable}
+          data-item
+          data-danger={isDanger ? '' : undefined}
+          data-no-icon-align={
+            hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
+          }
+          data-not-selectable={isNotSelectable ? '' : undefined}
+          data-has-submenu={hasSubmenu ? '' : undefined}
+          onSelect={(e) => {
+            if (isNotSelectable) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              return;
+            }
+
+            closeMenuImmediately(true);
+          }}
+          data-highlighted={subMenuOpen || dataHighlighted}
+          onFocus={onFocus}
+          onMouseEnter={onMouseEnter}
+          onBlur={onBlur}
+          onMouseLeave={onMouseLeave}
+          onKeyDown={handleKeyDown}
+          {...rest}
+        >
+          {children}
+        </RadixDropdownMenuItem>
+      </ContextMenuItemProvider>
     );
   }
 );

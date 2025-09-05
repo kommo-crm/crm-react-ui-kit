@@ -1,22 +1,34 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Sub as RadixDropdownMenuSub } from '@radix-ui/react-dropdown-menu';
 
-import { ContextMenuMode } from '../../ContextMenu.enums';
+import { ContextMenuModeType } from '../../ContextMenu.types';
 
 export type SubProps = ComponentPropsWithoutRef<typeof RadixDropdownMenuSub> & {
   /**
    * Defines how the submenu is triggered.
    *
-   * @default ContextMenuMode.HOVER
+   * @default "hover"
    */
-  mode?: ContextMenuMode;
+  mode?: ContextMenuModeType;
 };
 
 export interface ContextMenuSubContextProps {
   /**
+   * Defines how the submenu is triggered.
+   */
+  mode: ContextMenuModeType;
+  /**
+   * Indicates whether the submenu is initially open.
+   */
+  defaultOpen?: boolean;
+  /**
    * Indicates whether the submenu's open animation is currently active.
    */
   animatedOpen: boolean;
+  /**
+   * Sets the open state of the submenu.
+   */
+  setOpen: (open: boolean) => void;
   /**
    * Indicates whether the submenu is currently open.
    */
@@ -26,17 +38,13 @@ export interface ContextMenuSubContextProps {
    */
   startAnimation: () => void;
   /**
-   * Defines how the submenu is triggered.
-   */
-  mode: ContextMenuMode;
-  /**
    * Called when the mouse enters the Sub element.
    */
-  onMouseEnter: () => void;
+  onMouseEnter: (e: React.MouseEvent<HTMLElement>) => void;
   /**
    * Called when the mouse leaves the Sub element.
    */
-  onMouseLeave: () => void;
+  onMouseLeave: (e: React.MouseEvent<HTMLElement>) => void;
   /**
    * The id of the trigger of the submenu.
    */

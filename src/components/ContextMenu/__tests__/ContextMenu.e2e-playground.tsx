@@ -47,7 +47,7 @@ export const ContextMenuPlayground = (
                     </ContextMenu.ItemRightSlot>
                   </ContextMenu.Item>
 
-                  <ContextMenu.Sub mode={ContextMenuMode.CLICK} open>
+                  <ContextMenu.Sub defaultOpen>
                     <ContextMenu.SubTrigger>
                       <Text theme={TextContextMenuTheme} size="l">
                         Contacts

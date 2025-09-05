@@ -23,9 +23,8 @@ export default {
   'Centered': 'Centered',
   'Custom Themes': 'Custom Themes',
   'Autosize': 'Autosize',
-  'Positions': 'Positions',
-  'Hover Mode': 'Hover Mode',
-  'Disabled Auto Align': 'Disabled Auto Align',
+  'Directions': 'Directions',
+  'Modes': 'Modes',
 
   /* Used in docs */
   'Design tokens': 'Design tokens',
@@ -91,18 +90,16 @@ export default {
   'Required field': 'Required field',
 
   /* ContextMenu */
+  'Label': 'Label',
   'Workspace': 'Workspace',
-  'Workspace ID': 'Workspace ID',
+  'Workspace Settings': 'Workspace Settings',
   'Change Workspace': 'Change Workspace',
-  'Date': 'Date',
-  'Sort by': 'Sort by',
   'Contacts': 'Contacts',
-  'Contact': 'Contact',
-  'Delete All': 'Delete All',
-  'Technical support': 'Technical support',
   'Autoupdate': 'Autoupdate',
   'Select Theme': 'Select Theme',
   'Light': 'Light',
   'Dark': 'Dark',
-  'Label': 'Label',
+  'Contact': 'Contact',
+  'Delete All': 'Delete All',
+  'Hover me': 'Hover me',
 };

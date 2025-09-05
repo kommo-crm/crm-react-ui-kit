@@ -9,6 +9,7 @@ export const useContextMenuItemFocus = ({
   id,
   isDisabled,
   isNotSelectable,
+  hasSubmenu,
   onMouseEnter,
   onMouseLeave,
 }: UseContextMenuItemFocusOptions) => {
@@ -22,26 +23,38 @@ export const useContextMenuItemFocus = ({
       onMouseEnter: undefined,
       onBlur: undefined,
       onMouseLeave: undefined,
+      onKeyDown: undefined,
     };
   }
 
   return {
     dataHighlighted: isFocused ? '' : undefined,
     onFocus: () => {
-      setActiveItemId(id);
+      if (!hasSubmenu) {
+        setActiveItemId(id);
+      }
+
       setIsFocused(!isDisabled);
     },
-    onMouseEnter: () => {
-      setActiveItemId(id);
+    onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
+      if (!hasSubmenu) {
+        setActiveItemId(id);
+      }
+
       setIsFocused(!isDisabled);
-      onMouseEnter?.();
+      onMouseEnter?.(e);
     },
     onBlur: () => {
       setIsFocused(false);
     },
-    onMouseLeave: () => {
+    onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
       setIsFocused(false);
-      onMouseLeave?.();
+      onMouseLeave?.(e);
+    },
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (hasSubmenu && e.key === 'ArrowLeft') {
+        setIsFocused(false);
+      }
     },
   };
 };

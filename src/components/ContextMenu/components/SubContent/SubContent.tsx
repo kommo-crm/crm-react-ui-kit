@@ -9,8 +9,6 @@ import { useContextMenuSubContext } from '../Sub/Sub.context';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
 
-import { ContextMenuMode } from '../../ContextMenu.enums';
-
 import type { SubContentProps } from './SubContent.props';
 
 import s from './SubContent.module.css';
@@ -24,36 +22,52 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
   ) => {
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
-    const { animatedOpen, startAnimation, mode, onMouseEnter, onMouseLeave } =
-      useContextMenuSubContext(DISPLAY_NAME);
     const {
-      animationDuration,
-      animatedOpen: animatedFullOpen,
-      mode: rootMode,
-    } = useContextMenuContext(DISPLAY_NAME);
+      animatedOpen,
+      startAnimation,
+      onMouseEnter,
+      onMouseLeave,
+      defaultOpen,
+    } = useContextMenuSubContext(DISPLAY_NAME);
+    const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
+    const [isPositioned, setIsPositioned] = useState(false);
 
     useLayoutEffect(() => {
-      if (mode === ContextMenuMode.HOVER) {
-        startAnimation();
-      }
+      startAnimation();
     }, []);
 
-    const springStyles =
-      mode === ContextMenuMode.CLICK
-        ? { opacity: 1 }
-        : useSpring({
-            opacity:
-              animatedOpen &&
-              (animatedFullOpen || rootMode === ContextMenuMode.CLICK)
-                ? 1
-                : 0,
-            config: {
-              duration: animationDuration,
-              easing: easings.easeInOutCubic,
-            },
-          });
+    /**
+     * Handles the prerender of the submenu (needed for the icons).
+     */
+    useLayoutEffect(() => {
+      let raf: number;
+
+      if (animatedOpen) {
+        setIsPositioned(false);
+        raf = requestAnimationFrame(() => {
+          setIsPositioned(true);
+        });
+      } else {
+        setIsPositioned(false);
+      }
+
+      return () => {
+        if (raf) {
+          cancelAnimationFrame(raf);
+        }
+      };
+    }, [animatedOpen]);
+
+    const springStyles = useSpring({
+      opacity:
+        (isPositioned && animatedOpen) || defaultOpen !== undefined ? 1 : 0,
+      config:
+        defaultOpen === undefined
+          ? { duration: animationDuration, easing: easings.easeInOutCubic }
+          : { duration: 0 },
+    });
 
     return (
       <LevelProvider

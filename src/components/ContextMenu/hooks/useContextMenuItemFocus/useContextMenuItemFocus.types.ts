@@ -16,11 +16,15 @@ export interface UseContextMenuItemFocusOptions {
    */
   isNotSelectable?: boolean;
   /**
+   * Whether the item has a submenu.
+   */
+  hasSubmenu?: boolean;
+  /**
    * The callback function to be called when the mouse enters the item.
    */
-  onMouseEnter?: () => void;
+  onMouseEnter?: (e: React.MouseEvent<HTMLElement>) => void;
   /**
    * The callback function to be called when the mouse leaves the item.
    */
-  onMouseLeave?: () => void;
+  onMouseLeave?: (e: React.MouseEvent<HTMLElement>) => void;
 }

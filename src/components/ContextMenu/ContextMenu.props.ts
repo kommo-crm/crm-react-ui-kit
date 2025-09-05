@@ -22,6 +22,10 @@ export type ContextMenuRootProps = Omit<
    * It only works in conjunction with other similar menus.
    */
   autoCloseOnOtherOpen?: boolean;
+  /**
+   * Whether the menu is a submenu.
+   */
+  isSubmenu?: boolean;
 };
 
 export interface ContextMenuContextProps {
@@ -73,13 +77,34 @@ export interface ContextMenuContextProps {
   /**
    * Immediately closes the menu without waiting for any hover or animation delays.
    */
-  closeMenuImmediately: () => void;
+  closeMenuImmediately: (closeRootMenu?: boolean) => void;
   /**
    * Called when the mouse enters the ContextMenu element.
    */
-  onMouseEnter: () => void;
+  onMouseEnter: (e: React.MouseEvent<HTMLElement>) => void;
   /**
    * Called when the mouse leaves the ContextMenu element.
    */
-  onMouseLeave: () => void;
+  onMouseLeave: (e: React.MouseEvent<HTMLElement>) => void;
+  /**
+   * Whether the submenu is open.
+   *
+   * @remarks
+   * This prop is only used for `SubRoot` (submenu) components.
+   */
+  subMenuOpen?: boolean;
+  /**
+   * The callback function to be called when the submenu is opened.
+   *
+   * @remarks
+   * This prop is only used for `SubRoot` (submenu) components.
+   */
+  setSubMenuOpen?: (open: boolean) => void;
+  /**
+   * The id of the trigger.
+   *
+   * @remarks
+   * This prop is only used for `SubRoot` (submenu) components.
+   */
+  triggerId?: string;
 }

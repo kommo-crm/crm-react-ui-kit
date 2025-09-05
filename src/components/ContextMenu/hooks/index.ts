@@ -1,4 +1,5 @@
 export { useContextMenu } from './useContextMenu/useContextMenu';
+export { useContextMenuSubMenu } from './useContextMenuSubMenu/useContextMenuSubMenu';
 export { useInheritedArrowColor } from './useInheritedArrowColor/useInheritedArrowColor';
 export { useContentPositioning } from './useContentPositioning/useContentPositioning';
 export { useContextMenuSub } from './useContextMenuSub/useContextMenuSub';

@@ -26,6 +26,8 @@ import { ContextMenuRootProps } from '../ContextMenu.props';
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContentProps } from '../components/Content/Content.props';
 
+import { ContextMenuModeType } from '../ContextMenu.types';
+
 import s from './ContextMenu.module.css';
 
 const TextContextMenuTheme: TextTheme = {
@@ -49,6 +51,11 @@ import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';
 import ContextMenuCheckIcon from 'public/icons/check.svg';
 import ChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
 
+const TextContextMenuTheme: TextTheme = {
+  ...TextPrimaryTheme,
+  '--crm-ui-kit-text-color': 'inherit',
+};
+
 function App() {
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState("light");
@@ -61,9 +68,13 @@ function App() {
     setTheme(e.target.value);
   };
 
-  <ContextMenu.Root mode="click">
-      <ContextMenu.Trigger>
-        <ContextMenuTriggerIcon />
+  return (
+    <ContextMenu.Root mode="click">
+      <ContextMenu.Trigger
+        className={isTriggerAsChild ? '' : s.trigger}
+        asChild={isTriggerAsChild}
+      >
+        {button}
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
@@ -88,9 +99,70 @@ function App() {
 
           <ContextMenu.Item>
             <Text theme={TextContextMenuTheme} size="l">
+              ${i18n.t('Workspace Settings')}
+            </Text>
+
+            <ContextMenu.ItemRightSlot>
+              <ContextMenu.SubRoot mode="hover" isCloseWithRootMenu>
+                <ContextMenu.SubRoot.Trigger className={s.subTrigger}>
+                  <ContextMenuTriggerIcon />
+                </ContextMenu.SubRoot.Trigger>
+
+                <ContextMenu.Portal>
+                  <ContextMenu.SubRoot.Content
+                    sideOffset={-10}
+                    alignOffset={16}
+                  >
+                    <ContextMenu.CheckboxItem
+                      isChecked={autoupdateChecked}
+                      onChange={handleAutoupdateChange}
+                    >
+                      <ContextMenu.ItemIndicator>
+                        <ContextMenuCheckIcon />
+                      </ContextMenu.ItemIndicator>
+
+                      <Text theme={TextContextMenuTheme} size="l">
+                        ${i18n.t('Autoupdate')}
+                      </Text>
+                    </ContextMenu.CheckboxItem>
+
+                    <ContextMenu.Separator />
+
+                    <ContextMenu.Label>
+                      <Text theme={TextSecondaryDarkTheme} size="l">
+                        ${i18n.t('Select Theme')}
+                      </Text>
+                    </ContextMenu.Label>
+
+                    <ContextMenu.RadioGroup
+                      value={theme}
+                      onChange={handleThemeChange}
+                    >
+                      <ContextMenu.RadioItem value="light">
+                        <Text theme={TextContextMenuTheme} size="l">
+                          ${i18n.t('Light')}
+                        </Text>
+                      </ContextMenu.RadioItem>
+
+                      <ContextMenu.RadioItem value="dark">
+                        <Text theme={TextContextMenuTheme} size="l">
+                          ${i18n.t('Dark')}
+                        </Text>
+                      </ContextMenu.RadioItem>
+                    </ContextMenu.RadioGroup>
+                  </ContextMenu.SubRoot.Content>
+                </ContextMenu.Portal>
+              </ContextMenu.SubRoot>
+            </ContextMenu.ItemRightSlot>
+          </ContextMenu.Item>
+
+          <ContextMenu.Item>
+            <Text theme={TextContextMenuTheme} size="l">
               ${i18n.t('Change Workspace')}
             </Text>
           </ContextMenu.Item>
+
+          <ContextMenu.Separator />
 
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger>
@@ -130,46 +202,6 @@ function App() {
             </ContextMenu.Portal>
           </ContextMenu.Sub>
 
-          <ContextMenu.Separator />
-
-          <ContextMenu.CheckboxItem
-            isChecked={autoupdateChecked}
-            onChange={handleAutoupdateChange}
-          >
-            <ContextMenu.ItemIndicator>
-              <ContextMenuCheckIcon />
-            </ContextMenu.ItemIndicator>
-
-            <Text theme={TextContextMenuTheme} size="l">
-              ${i18n.t('Autoupdate')}
-            </Text>
-          </ContextMenu.CheckboxItem>
-
-          <ContextMenu.Separator />
-
-          <ContextMenu.Label>
-            <Text theme={TextSecondaryDarkTheme} size="l">
-              ${i18n.t('Select Theme')}
-            </Text>
-          </ContextMenu.Label>
-
-          <ContextMenu.RadioGroup
-            value={theme}
-            onChange={handleThemeChange}
-          >
-            <ContextMenu.RadioItem value="light">
-              <Text theme={TextContextMenuTheme} size="l">
-                ${i18n.t('Light')}
-              </Text>
-            </ContextMenu.RadioItem>
-
-            <ContextMenu.RadioItem value="dark">
-              <Text theme={TextContextMenuTheme} size="l">
-                ${i18n.t('Dark')}
-              </Text>
-            </ContextMenu.RadioItem>
-          </ContextMenu.RadioGroup>
-
           <ContextMenu.Arrow />
         </ContextMenu.Content>
       </ContextMenu.Portal>
@@ -180,12 +212,14 @@ function App() {
 
 const StoryComponent = ({
   mode,
+  subMenuMode = mode,
   direction,
   onCheckboxChange,
   onRadioChange,
   button = <ContextMenuTriggerIcon />,
   isTriggerAsChild = false,
 }: ContextMenuRootProps & {
+  subMenuMode?: ContextMenuModeType;
   direction?: ContentProps['direction'];
   onCheckboxChange?: (checked: boolean) => void;
   onRadioChange?: (value: string) => void;
@@ -226,11 +260,75 @@ const StoryComponent = ({
 
           <ContextMenu.Item>
             <Text theme={TextContextMenuTheme} size="l">
+              {i18n.t('Workspace Settings')}
+            </Text>
+
+            <ContextMenu.ItemRightSlot>
+              <ContextMenu.SubRoot mode={subMenuMode} isCloseWithRootMenu>
+                <ContextMenu.SubRoot.Trigger className={s.subTrigger}>
+                  <ContextMenuTriggerIcon />
+                </ContextMenu.SubRoot.Trigger>
+
+                <ContextMenu.Portal>
+                  <ContextMenu.SubRoot.Content sideOffset={-5} alignOffset={16}>
+                    <ContextMenu.CheckboxItem
+                      isChecked={autoupdateChecked}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setAutoupdateChecked(e.target.checked);
+                        onCheckboxChange?.(e.target.checked);
+                      }}
+                    >
+                      <ContextMenu.ItemIndicator>
+                        <ContextMenuCheckIcon />
+                      </ContextMenu.ItemIndicator>
+
+                      <Text theme={TextContextMenuTheme} size="l">
+                        {i18n.t('Autoupdate')}
+                      </Text>
+                    </ContextMenu.CheckboxItem>
+
+                    <ContextMenu.Separator />
+
+                    <ContextMenu.Label>
+                      <Text theme={TextSecondaryDarkTheme} size="l">
+                        {i18n.t('Select Theme')}
+                      </Text>
+                    </ContextMenu.Label>
+
+                    <ContextMenu.RadioGroup
+                      value={theme}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setTheme(e.target.value);
+                        onRadioChange?.(e.target.value);
+                      }}
+                    >
+                      <ContextMenu.RadioItem value="light">
+                        <Text theme={TextContextMenuTheme} size="l">
+                          {i18n.t('Light')}
+                        </Text>
+                      </ContextMenu.RadioItem>
+
+                      <ContextMenu.RadioItem value="dark">
+                        <Text theme={TextContextMenuTheme} size="l">
+                          {i18n.t('Dark')}
+                        </Text>
+                      </ContextMenu.RadioItem>
+                    </ContextMenu.RadioGroup>
+                  </ContextMenu.SubRoot.Content>
+                </ContextMenu.Portal>
+              </ContextMenu.SubRoot>
+            </ContextMenu.ItemRightSlot>
+          </ContextMenu.Item>
+
+          <ContextMenu.Item>
+            <Text theme={TextContextMenuTheme} size="l">
               {i18n.t('Change Workspace')}
             </Text>
           </ContextMenu.Item>
 
-          <ContextMenu.Sub>
+          <ContextMenu.Separator />
+
+          <ContextMenu.Sub mode={subMenuMode}>
             <ContextMenu.SubTrigger>
               <Text theme={TextContextMenuTheme} size="l">
                 {i18n.t('Contacts')}
@@ -268,135 +366,6 @@ const StoryComponent = ({
             </ContextMenu.Portal>
           </ContextMenu.Sub>
 
-          <ContextMenu.Separator />
-
-          <ContextMenu.CheckboxItem
-            isChecked={autoupdateChecked}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setAutoupdateChecked(e.target.checked);
-              onCheckboxChange?.(e.target.checked);
-            }}
-          >
-            <ContextMenu.ItemIndicator>
-              <ContextMenuCheckIcon />
-            </ContextMenu.ItemIndicator>
-
-            <Text theme={TextContextMenuTheme} size="l">
-              {i18n.t('Autoupdate')}
-            </Text>
-          </ContextMenu.CheckboxItem>
-
-          <ContextMenu.Separator />
-
-          <ContextMenu.Label>
-            <Text theme={TextSecondaryDarkTheme} size="l">
-              {i18n.t('Select Theme')}
-            </Text>
-          </ContextMenu.Label>
-
-          <ContextMenu.RadioGroup
-            value={theme}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setTheme(e.target.value);
-              onRadioChange?.(e.target.value);
-            }}
-          >
-            <ContextMenu.RadioItem value="light">
-              <Text theme={TextContextMenuTheme} size="l">
-                {i18n.t('Light')}
-              </Text>
-            </ContextMenu.RadioItem>
-
-            <ContextMenu.RadioItem value="dark">
-              <Text theme={TextContextMenuTheme} size="l">
-                {i18n.t('Dark')}
-              </Text>
-            </ContextMenu.RadioItem>
-          </ContextMenu.RadioGroup>
-
-          <ContextMenu.Item hasSubmenu>
-            <Text theme={TextContextMenuTheme} size="l">
-              Change Workspace
-            </Text>
-
-            <ContextMenu.ItemRightSlot
-              className={s.contextMenuRightSlot}
-              onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onBlur={(e: React.FocusEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onFocus={(e: React.FocusEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onKeyUp={(e: React.KeyboardEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onKeyPress={(e: React.KeyboardEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onPointerDown={(e: React.PointerEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onPointerUp={(e: React.PointerEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onPointerEnter={(e: React.PointerEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onPointerLeave={(e: React.PointerEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-              onPointerMove={(e: React.PointerEvent<HTMLDivElement>) => {
-                e.stopPropagation();
-              }}
-            >
-              <ContextMenu.Sub mode={ContextMenuMode.CLICK}>
-                <ContextMenu.SubTrigger className={s.subTrigger}>
-                  {button}
-                </ContextMenu.SubTrigger>
-
-                <ContextMenu.Portal>
-                  <ContextMenu.SubContent sideOffset={5}>
-                    <ContextMenu.Label>
-                      <Text theme={TextSecondaryDarkTheme} size="l">
-                        {i18n.t('Label')}
-                      </Text>
-                    </ContextMenu.Label>
-
-                    <ContextMenu.Item>
-                      <Text theme={TextContextMenuTheme} size="l">
-                        {i18n.t('Change Workspace')}
-                      </Text>
-                    </ContextMenu.Item>
-
-                    <ContextMenu.Item>
-                      <Text theme={TextContextMenuTheme} size="l">
-                        {i18n.t('Change Workspace')}
-                      </Text>
-                    </ContextMenu.Item>
-                  </ContextMenu.SubContent>
-                </ContextMenu.Portal>
-              </ContextMenu.Sub>
-            </ContextMenu.ItemRightSlot>
-          </ContextMenu.Item>
-
-          <ContextMenu.Item>
-            <Text theme={TextContextMenuTheme} size="l">
-              {i18n.t('Change Workspace')}
-            </Text>
-          </ContextMenu.Item>
-
           <ContextMenu.Arrow />
         </ContextMenu.Content>
       </ContextMenu.Portal>
@@ -419,12 +388,17 @@ const meta: Meta<typeof StoryComponent> = {
   },
   args: {
     mode: ContextMenuMode.CLICK,
+    subMenuMode: ContextMenuMode.HOVER,
     direction: 'down-right',
     onCheckboxChange: action('onCheckboxChange'),
     onRadioChange: action('onRadioChange'),
   },
   argTypes: {
     mode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    subMenuMode: {
       control: 'radio',
       options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
     },
@@ -458,10 +432,10 @@ const meta: Meta<typeof StoryComponent> = {
           display: 'flex',
           justifyContent: 'center',
           alignItems,
-          minHeight: '380px',
+          minHeight: '320px',
           height: '100%',
           padding: '20px',
-          marginTop: direction?.endsWith('down') ? '40px' : undefined,
+          marginTop: direction?.endsWith('down') ? '60px' : undefined,
         }}
       >
         <StoryComponent {...args} />
@@ -492,16 +466,18 @@ export const Modes: Story = {
         <StoryComponent
           {...args}
           mode={ContextMenuMode.CLICK}
+          subMenuMode={ContextMenuMode.CLICK}
           button={
-            <Button theme={ButtonNeutralTheme}>{i18n.t('Click me!')}</Button>
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Click me')}</Button>
           }
           isTriggerAsChild
         />
         <StoryComponent
           {...args}
           mode={ContextMenuMode.HOVER}
+          subMenuMode={ContextMenuMode.HOVER}
           button={
-            <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me!')}</Button>
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me')}</Button>
           }
           isTriggerAsChild
         />

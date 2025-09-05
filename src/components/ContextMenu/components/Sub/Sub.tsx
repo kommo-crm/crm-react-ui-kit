@@ -1,9 +1,9 @@
 import React from 'react';
 import { Sub as RadixDropdownMenuSub } from '@radix-ui/react-dropdown-menu';
 
-import { ContextMenuMode } from '../../ContextMenu.enums';
-
 import { useContextMenuSub } from '../../hooks';
+
+import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { SubProps } from './Sub.props';
 import { ContextMenuSubProvider, DISPLAY_NAME } from './Sub.context';
@@ -11,25 +11,28 @@ import { ContextMenuSubProvider, DISPLAY_NAME } from './Sub.context';
 export const Sub = ({
   children,
   mode = ContextMenuMode.HOVER,
-  open: initialOpen,
+  defaultOpen,
   ...rest
 }: SubProps) => {
   const {
     open,
+    setOpen,
     animatedOpen,
     startAnimation,
     handleMouseEnter,
     handleMouseLeave,
     handleOpenChange,
     triggerId,
-  } = useContextMenuSub(DISPLAY_NAME, mode, initialOpen);
+  } = useContextMenuSub(DISPLAY_NAME, mode, defaultOpen);
 
   return (
     <ContextMenuSubProvider
-      animatedOpen={animatedOpen}
-      startAnimation={startAnimation}
       mode={mode}
       open={open}
+      setOpen={setOpen}
+      animatedOpen={animatedOpen}
+      defaultOpen={defaultOpen}
+      startAnimation={startAnimation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       triggerId={triggerId}

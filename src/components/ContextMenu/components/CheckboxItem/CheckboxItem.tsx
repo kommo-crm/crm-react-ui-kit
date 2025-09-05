@@ -50,7 +50,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
             onChange(event);
           }
         }}
-        onSelect={() => closeMenuImmediately()}
+        onSelect={() => closeMenuImmediately(true)}
         data-highlighted={dataHighlighted}
         onFocus={onFocus}
         onMouseEnter={onMouseEnter}

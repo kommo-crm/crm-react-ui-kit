@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
 import { useContextMenu } from './hooks';
@@ -23,6 +23,7 @@ import { RadioGroup } from './components/RadioGroup/RadioGroup';
 import { RadioItem } from './components/RadioItem/RadioItem';
 import { Separator } from './components/Separator/Separator';
 import { ItemIcon } from './components/ItemIcon/ItemIcon';
+import { SubRoot } from './components/SubRoot/SubRoot';
 
 import { ContextMenuProvider, DISPLAY_NAME } from './ContextMenu.context';
 
@@ -59,25 +60,6 @@ export const ContextMenu = ({
     hoverCloseDelay: HOVER_CLOSE_DELAY,
   });
 
-  // useEffect(() => {
-  //   const handleFocusIn = (e: FocusEvent) => {
-  //     console.log('🔵 focus IN →', e.target);
-  //   };
-
-  //   const handleFocusOut = (e: FocusEvent) => {
-  //     console.log('⚪ focus OUT →', e.target);
-  //     console.log('➡️ новый фокус →', e.relatedTarget);
-  //   };
-
-  //   document.addEventListener('focusin', handleFocusIn);
-  //   document.addEventListener('focusout', handleFocusOut);
-
-  //   return () => {
-  //     document.removeEventListener('focusin', handleFocusIn);
-  //     document.removeEventListener('focusout', handleFocusOut);
-  //   };
-  // }, []);
-
   return (
     <ContextMenuProvider
       mode={rootMode}
@@ -111,6 +93,7 @@ export const ContextMenu = ({
 ContextMenu.displayName = DISPLAY_NAME;
 
 ContextMenu.Root = ContextMenu;
+ContextMenu.SubRoot = SubRoot;
 ContextMenu.Trigger = Trigger;
 ContextMenu.Content = Content;
 ContextMenu.Portal = Portal;

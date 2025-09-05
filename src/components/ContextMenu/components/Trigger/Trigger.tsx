@@ -27,6 +27,12 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
             e.stopPropagation();
           }
         }}
+        onKeyDown={(e) => {
+          if (mode === ContextMenuMode.HOVER && e.key === 'ArrowDown') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         {...rest}

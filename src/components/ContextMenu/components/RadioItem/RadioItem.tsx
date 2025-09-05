@@ -40,7 +40,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         data-no-icon-align={
           hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
         }
-        onSelect={() => closeMenuImmediately()}
+        onSelect={() => closeMenuImmediately(true)}
         data-highlighted={dataHighlighted}
         onFocus={onFocus}
         onMouseEnter={onMouseEnter}

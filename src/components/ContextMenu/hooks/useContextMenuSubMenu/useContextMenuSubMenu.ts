@@ -1,26 +1,32 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 
 import { useInheritedArrowColor, useIsTouchDevice } from '..';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
-import { contextMenuBus } from '../../utils';
+import { useLevelContext } from '../../providers';
 
-import { UseContextMenuOptions } from './useContextMenu.types';
+import { UseContextMenuSubMenuOptions } from './useContextMenuSubMenu.types';
 
-export const useContextMenu = ({
+export const useContextMenuSubMenu = ({
+  displayName,
   mode: rootMode,
   initialOpen,
   animationDuration,
+  subMenuOpen,
+  setSubMenuOpen,
   hoverCloseDelay,
+  closeRootMenuImmediately,
   onOpen,
-}: UseContextMenuOptions) => {
-  const id = useId();
+}: UseContextMenuSubMenuOptions) => {
+  const triggerId = useId();
 
-  const [open, setOpen] = useState(initialOpen || false);
+  const [open, setOpen] = useState(subMenuOpen || initialOpen || false);
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
+
+  const { activeItemId } = useLevelContext(displayName);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -52,10 +58,15 @@ export const useContextMenu = ({
   /**
    * Closes the menu.
    */
-  const handleClose = () => {
+  const handleClose = (closeRootMenu: boolean = false) => {
+    setSubMenuOpen?.(false);
     setOpen(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
+
+    if (closeRootMenu) {
+      closeRootMenuImmediately?.();
+    }
   };
 
   /**
@@ -78,12 +89,16 @@ export const useContextMenu = ({
   /**
    * Closes the menu immediately.
    */
-  const closeMenuImmediately = () => {
+  const closeMenuImmediately = (closeRootMenu: boolean = false) => {
     clearTimers();
     setAnimatedOpen(false);
-    setOpen(false);
+    setSubMenuOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
+
+    if (closeRootMenu) {
+      closeRootMenuImmediately?.();
+    }
   };
 
   /**
@@ -104,10 +119,8 @@ export const useContextMenu = ({
         setAnimatedOpen(true);
       }
 
-      setOpen(true);
+      setSubMenuOpen?.(true);
       onOpen?.(true);
-
-      setTimeout(() => contextMenuBus.emit(id), 0);
     } else {
       requestClose();
     }
@@ -130,10 +143,8 @@ export const useContextMenu = ({
       }
 
       setAnimatedOpen(true);
-      setOpen(true);
+      setSubMenuOpen?.(true);
       setIsInsideContent(true);
-
-      setTimeout(() => contextMenuBus.emit(id), 0);
     }
   };
 
@@ -163,23 +174,31 @@ export const useContextMenu = ({
   };
 
   /**
-   * Closes the menu when the context menu bus emits an event.
+   * Synchronizes the local open state with the submenu open state.
+   */
+  useLayoutEffect(() => {
+    if (subMenuOpen !== undefined) {
+      setAnimatedOpen(subMenuOpen);
+    }
+  }, [subMenuOpen]);
+
+  /**
+   * Closes the submenu when the active item id changes.
    */
   useEffect(() => {
-    const unsubscribe = contextMenuBus.subscribe((openedId) => {
-      if (openedId !== id) {
-        closeMenuImmediately();
-      }
-    });
-
-    return unsubscribe;
-  }, [id]);
+    if (activeItemId !== triggerId && (open || subMenuOpen)) {
+      closeMenuImmediately();
+    }
+  }, [activeItemId, open, triggerId]);
 
   /**
    * Handles the hover close delay.
    */
   useEffect(() => {
-    if (!open || (mode !== ContextMenuMode.HOVER && !temporaryHoverClose)) {
+    if (
+      (!open && !animatedOpen) ||
+      (mode !== ContextMenuMode.HOVER && !temporaryHoverClose)
+    ) {
       return;
     }
 
@@ -215,5 +234,6 @@ export const useContextMenu = ({
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     enableTemporaryHoverClose,
+    triggerId,
   };
 };
