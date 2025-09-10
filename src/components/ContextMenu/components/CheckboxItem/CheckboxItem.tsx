@@ -39,7 +39,6 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         displayName: DISPLAY_NAME,
         id,
         isDisabled,
-        isNotSelectable: false,
       });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);

@@ -3,7 +3,7 @@ import type { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-
 
 type RadixSubTriggerProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuSubTrigger>,
-  'disabled' | 'textValue' | 'asChild'
+  'disabled' | 'textValue'
 >;
 
 export type SubTriggerProps = RadixSubTriggerProps & {

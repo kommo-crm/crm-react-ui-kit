@@ -28,7 +28,6 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       displayName: DISPLAY_NAME,
       id: triggerId || '',
       isDisabled: false,
-      isNotSelectable: false,
       onMouseEnter,
       onMouseLeave,
     });

@@ -12,10 +12,6 @@ export interface UseContextMenuItemFocusOptions {
    */
   isDisabled?: boolean;
   /**
-   * Whether the item is not selectable.
-   */
-  isNotSelectable?: boolean;
-  /**
    * Whether the item has a submenu.
    */
   hasSubmenu?: boolean;

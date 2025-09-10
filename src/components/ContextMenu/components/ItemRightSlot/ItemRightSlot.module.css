@@ -1,7 +1,9 @@
 .right_slot {
   display: flex;
-  padding-left: 16px;
+  align-items: center;
   margin-left: auto;
+  padding-left: 16px;
+  gap: 8px;
 }
 
 .right_slot[data-submenu-right-slot] {

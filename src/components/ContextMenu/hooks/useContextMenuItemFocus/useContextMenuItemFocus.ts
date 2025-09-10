@@ -8,7 +8,6 @@ export const useContextMenuItemFocus = ({
   displayName,
   id,
   isDisabled,
-  isNotSelectable,
   hasSubmenu,
   onMouseEnter,
   onMouseLeave,
@@ -16,7 +15,7 @@ export const useContextMenuItemFocus = ({
   const [isFocused, setIsFocused] = useState(false);
   const { setActiveItemId } = useLevelContext(displayName);
 
-  if (isNotSelectable || isDisabled) {
+  if (isDisabled) {
     return {
       dataHighlighted: undefined,
       onFocus: undefined,

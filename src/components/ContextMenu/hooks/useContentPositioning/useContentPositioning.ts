@@ -6,7 +6,7 @@ import { UseContentPositioningOptions } from './useContentPositioning.types';
 
 export function useContentPositioning({
   direction,
-  alignOffset,
+  alignOffset = 0,
   disableAutoPositioning,
   triggerRef,
   contentRef,
@@ -21,7 +21,7 @@ export function useContentPositioning({
       ? 'start'
       : 'end'
   );
-  const [labelOffset, setLabelOffset] = useState<number>(alignOffset ?? 0);
+  const [labelOffset, setLabelOffset] = useState<number>(alignOffset);
   const [isPositioned, setIsPositioned] = useState(false);
 
   /**
@@ -55,12 +55,12 @@ export function useContentPositioning({
       const dynamicOffset = (triggerHeight - itemHeight) / 2;
 
       if (direction === Direction.LEFT_UP || direction === Direction.RIGHT_UP) {
-        setLabelOffset(labelOffset + dynamicOffset - 2);
+        setLabelOffset(alignOffset + dynamicOffset - 2);
       } else if (
         direction === Direction.LEFT_DOWN ||
         direction === Direction.RIGHT_DOWN
       ) {
-        setLabelOffset(labelOffset - labelHeight + dynamicOffset);
+        setLabelOffset(alignOffset - labelHeight + dynamicOffset);
       }
     }
   }, [children, direction, contentRef, triggerRef]);

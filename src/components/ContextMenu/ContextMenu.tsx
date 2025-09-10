@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
 import { useContextMenu } from './hooks';
@@ -26,69 +26,71 @@ import { ItemIcon } from './components/ItemIcon/ItemIcon';
 import { SubRoot } from './components/SubRoot/SubRoot';
 
 import { ContextMenuProvider, DISPLAY_NAME } from './ContextMenu.context';
+import { ContextMenuHandle, ContextMenuType } from './ContextMenu.types';
 
 const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
-export const ContextMenu = ({
-  children,
-  mode,
-  onOpen,
-  defaultOpen,
-  ...rest
-}: ContextMenuRootProps) => {
-  const {
-    mode: rootMode,
-    open,
-    onOpenChange,
-    triggerRef,
-    contentRef,
-    inheritedArrowColor,
-    animatedOpen,
-    animationDuration,
-    hoverCloseDelay,
-    temporaryHoverClose,
-    closeMenuImmediately,
-    onMouseEnter,
-    onMouseLeave,
-    enableTemporaryHoverClose,
-  } = useContextMenu({
-    mode: mode as ContextMenuMode,
-    defaultOpen,
-    onOpen,
-    animationDuration: ANIMATION_DURATION,
-    hoverCloseDelay: HOVER_CLOSE_DELAY,
-  });
+export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
+  ({ children, mode, onOpen, defaultOpen, ...rest }, ref) => {
+    const {
+      mode: rootMode,
+      open,
+      onOpenChange,
+      triggerRef,
+      contentRef,
+      inheritedArrowColor,
+      animatedOpen,
+      animationDuration,
+      hoverCloseDelay,
+      temporaryHoverClose,
+      closeMenuImmediately,
+      onMouseEnter,
+      onMouseLeave,
+      enableTemporaryHoverClose,
+    } = useContextMenu({
+      mode: mode as ContextMenuMode,
+      defaultOpen,
+      onOpen,
+      animationDuration: ANIMATION_DURATION,
+      hoverCloseDelay: HOVER_CLOSE_DELAY,
+    });
 
-  return (
-    <ContextMenuProvider
-      mode={rootMode}
-      triggerRef={triggerRef}
-      contentRef={contentRef}
-      inheritedArrowColor={inheritedArrowColor}
-      animatedOpen={animatedOpen}
-      animationDuration={animationDuration}
-      hoverCloseDelay={hoverCloseDelay}
-      temporaryHoverClose={temporaryHoverClose}
-      closeMenuImmediately={closeMenuImmediately}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      enableTemporaryHoverClose={enableTemporaryHoverClose}
-    >
-      <RadixDropdownMenuRoot
-        open={open}
-        onOpenChange={onOpenChange}
-        /**
-         * Necessary for hover mode to work correctly.
-         */
-        modal={false}
-        {...rest}
+    useImperativeHandle(ref, () => ({
+      closeMenuImmediately: closeMenuImmediately,
+      enableTemporaryHoverClose: enableTemporaryHoverClose,
+    }));
+
+    return (
+      <ContextMenuProvider
+        mode={rootMode}
+        triggerRef={triggerRef}
+        contentRef={contentRef}
+        inheritedArrowColor={inheritedArrowColor}
+        animatedOpen={animatedOpen}
+        animationDuration={animationDuration}
+        hoverCloseDelay={hoverCloseDelay}
+        temporaryHoverClose={temporaryHoverClose}
+        closeMenuImmediately={closeMenuImmediately}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        enableTemporaryHoverClose={enableTemporaryHoverClose}
       >
-        {children}
-      </RadixDropdownMenuRoot>
-    </ContextMenuProvider>
-  );
-};
+        <RadixDropdownMenuRoot
+          open={open}
+          onOpenChange={onOpenChange}
+          /**
+           * Necessary for hover mode to work correctly.
+           */
+          modal={false}
+          {...rest}
+        >
+          {children}
+        </RadixDropdownMenuRoot>
+      </ContextMenuProvider>
+    );
+  }
+) as ContextMenuType;
 
 ContextMenu.displayName = DISPLAY_NAME;
 

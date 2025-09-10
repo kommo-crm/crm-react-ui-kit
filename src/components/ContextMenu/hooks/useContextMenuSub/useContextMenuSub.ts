@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect, useCallback, useId } from 'react';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
-import { ContextMenuModeType } from '../../ContextMenu.types';
 import { useLevelContext } from '../../providers/LevelProvider';
 import { ContextMenuMode } from '../../ContextMenu.enums';
+import { useIsTouchDevice } from '..';
 
-export function useContextMenuSub(
-  displayName: string,
-  mode: ContextMenuModeType,
-  defaultOpen?: boolean
-) {
+import { UseContextMenuSubOptions } from './useContextMenuSub.types';
+
+export function useContextMenuSub({
+  displayName,
+  mode: initialMode,
+  defaultOpen,
+}: UseContextMenuSubOptions) {
   const triggerId = useId();
 
   const [open, setOpen] = useState(defaultOpen || false);
@@ -19,6 +21,8 @@ export function useContextMenuSub(
   const openTimeoutRef = useRef<number | null>(null);
   const closeTimeoutRef = useRef<number | null>(null);
 
+  const isTouchDevice = useIsTouchDevice();
+
   const {
     hoverCloseDelay,
     animationDuration,
@@ -27,6 +31,11 @@ export function useContextMenuSub(
   } = useContextMenuContext(displayName);
 
   const { activeItemId } = useLevelContext(displayName);
+
+  /**
+   * The mode of the ContextMenu.Root.
+   */
+  const mode = isTouchDevice ? ContextMenuMode.CLICK : initialMode;
 
   /**
    * Clears the timers.

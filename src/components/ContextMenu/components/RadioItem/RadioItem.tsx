@@ -31,7 +31,6 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         displayName: DISPLAY_NAME,
         id,
         isDisabled,
-        isNotSelectable: false,
       });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);

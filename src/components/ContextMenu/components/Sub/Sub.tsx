@@ -23,7 +23,11 @@ export const Sub = ({
     handleMouseLeave,
     handleOpenChange,
     triggerId,
-  } = useContextMenuSub(DISPLAY_NAME, mode, defaultOpen);
+  } = useContextMenuSub({
+    displayName: DISPLAY_NAME,
+    mode,
+    defaultOpen,
+  });
 
   return (
     <ContextMenuSubProvider

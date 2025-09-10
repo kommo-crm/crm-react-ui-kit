@@ -42,7 +42,6 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       displayName: DISPLAY_NAME,
       id: triggerId,
       isDisabled,
-      isNotSelectable: false,
       onMouseEnter,
       onMouseLeave,
     });
@@ -72,10 +71,10 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
           if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
-          }
 
-          if (defaultOpen === undefined) {
-            setOpen(!open);
+            if (defaultOpen === undefined) {
+              setOpen(!open);
+            }
           }
         }}
         onPointerEnter={(e) => {
