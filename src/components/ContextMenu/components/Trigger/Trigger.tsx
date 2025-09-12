@@ -29,7 +29,6 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         }}
         onKeyDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
-            e.preventDefault();
             e.stopPropagation();
 
             if (['Enter', ' ', 'ArrowDown'].includes(e.key)) {
