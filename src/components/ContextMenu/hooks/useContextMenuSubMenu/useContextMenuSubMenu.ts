@@ -24,6 +24,7 @@ export const useContextMenuSubMenu = ({
   const [open, setOpen] = useState(subMenuOpen || defaultOpen || false);
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
+  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
 
   const { activeItemId } = useLevelContext(displayName);
@@ -127,11 +128,27 @@ export const useContextMenuSubMenu = ({
   };
 
   /**
+   * The callback function to be called when the menu is opened by keyboard.
+   */
+  const onOpenByKeyboard = (value: boolean) => {
+    setOpenedByKeyboard(value);
+    handleOpenChange?.(value);
+  };
+
+  /**
    * Handles the mouse enter event.
    */
   const handleMouseEnter = () => {
+    setOpenedByKeyboard(false);
+
     if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
+    }
+
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+      setAnimatedOpen(true);
     }
 
     if (open) {
@@ -152,6 +169,8 @@ export const useContextMenuSubMenu = ({
    * Handles the mouse leave event.
    */
   const handleMouseLeave = () => {
+    setOpenedByKeyboard(false);
+
     if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
     }
@@ -202,6 +221,10 @@ export const useContextMenuSubMenu = ({
       return;
     }
 
+    if (openedByKeyboard) {
+      return;
+    }
+
     if (isInsideContent) {
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
@@ -223,6 +246,7 @@ export const useContextMenuSubMenu = ({
     open,
     mode,
     onOpenChange: handleOpenChange,
+    onOpenByKeyboard,
     inheritedArrowColor,
     triggerRef,
     contentRef,

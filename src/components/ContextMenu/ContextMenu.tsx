@@ -48,6 +48,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       onMouseEnter,
       onMouseLeave,
       enableTemporaryHoverClose,
+      onOpenByKeyboard,
     } = useContextMenu({
       mode: mode as ContextMenuMode,
       defaultOpen,
@@ -59,6 +60,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
     useImperativeHandle(ref, () => ({
       closeMenuImmediately: closeMenuImmediately,
       enableTemporaryHoverClose: enableTemporaryHoverClose,
+      onOpenByKeyboard: onOpenByKeyboard,
     }));
 
     return (
@@ -75,6 +77,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         enableTemporaryHoverClose={enableTemporaryHoverClose}
+        onOpenByKeyboard={onOpenByKeyboard}
       >
         <RadixDropdownMenuRoot
           open={open}

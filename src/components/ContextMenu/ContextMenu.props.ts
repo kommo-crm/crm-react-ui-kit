@@ -107,4 +107,8 @@ export interface ContextMenuContextProps {
    * This prop is only used for `SubRoot` (submenu) components.
    */
   triggerId?: string;
+  /**
+   * The callback function to be called when the menu is opened by keyboard.
+   */
+  onOpenByKeyboard: (value: boolean) => void;
 }

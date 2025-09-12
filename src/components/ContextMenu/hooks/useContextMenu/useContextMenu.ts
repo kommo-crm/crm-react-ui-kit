@@ -20,6 +20,7 @@ export const useContextMenu = ({
   const [open, setOpen] = useState(defaultOpen || false);
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
+  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -114,11 +115,27 @@ export const useContextMenu = ({
   };
 
   /**
+   * The callback function to be called when the menu is opened by keyboard.
+   */
+  const onOpenByKeyboard = (value: boolean) => {
+    setOpenedByKeyboard(value);
+    handleOpenChange?.(value);
+  };
+
+  /**
    * Handles the mouse enter event.
    */
   const handleMouseEnter = () => {
+    setOpenedByKeyboard(false);
+
     if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
+    }
+
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+      setAnimatedOpen(true);
     }
 
     if (open) {
@@ -141,6 +158,8 @@ export const useContextMenu = ({
    * Handles the mouse leave event.
    */
   const handleMouseLeave = () => {
+    setOpenedByKeyboard(false);
+
     if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
     }
@@ -183,6 +202,10 @@ export const useContextMenu = ({
       return;
     }
 
+    if (openedByKeyboard) {
+      return;
+    }
+
     if (isInsideContent) {
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
@@ -193,7 +216,14 @@ export const useContextMenu = ({
         requestClose();
       }, hoverCloseDelay);
     }
-  }, [mode, open, isInsideContent, temporaryHoverClose, hoverCloseDelay]);
+  }, [
+    mode,
+    open,
+    isInsideContent,
+    temporaryHoverClose,
+    hoverCloseDelay,
+    openedByKeyboard,
+  ]);
 
   /**
    * Updates the inherited arrow color when the menu is open.
@@ -204,6 +234,7 @@ export const useContextMenu = ({
     open,
     mode,
     onOpenChange: handleOpenChange,
+    onOpenByKeyboard,
     inheritedArrowColor,
     triggerRef,
     contentRef,

@@ -57,6 +57,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       onMouseLeave,
       enableTemporaryHoverClose,
       triggerId,
+      onOpenByKeyboard,
     } = useContextMenuSubMenu({
       displayName: DISPLAY_NAME,
       mode: mode,
@@ -72,6 +73,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
     useImperativeHandle(ref, () => ({
       closeMenuImmediately: closeMenuImmediately,
       enableTemporaryHoverClose: enableTemporaryHoverClose,
+      onOpenByKeyboard: onOpenByKeyboard,
     }));
 
     return (
@@ -91,6 +93,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         subMenuOpen={subMenuOpenContext}
         setSubMenuOpen={setSubMenuOpen}
         triggerId={triggerId}
+        onOpenByKeyboard={onOpenByKeyboard}
       >
         <RadixDropdownMenuRoot
           open={openContext || subMenuOpenContext}

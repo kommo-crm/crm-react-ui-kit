@@ -14,7 +14,7 @@ const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
   ({ className, children, ...rest }, ref) => {
-    const { triggerRef, mode, onMouseEnter, onMouseLeave } =
+    const { triggerRef, mode, onMouseEnter, onMouseLeave, onOpenByKeyboard } =
       useContextMenuContext(DISPLAY_NAME);
 
     return (
@@ -28,9 +28,15 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           }
         }}
         onKeyDown={(e) => {
-          if (mode === ContextMenuMode.HOVER && e.key === 'ArrowDown') {
+          if (mode === ContextMenuMode.HOVER) {
             e.preventDefault();
             e.stopPropagation();
+
+            if (['Enter', ' ', 'ArrowDown'].includes(e.key)) {
+              onOpenByKeyboard(true);
+            } else if (e.key === 'Escape') {
+              onOpenByKeyboard(false);
+            }
           }
         }}
         onMouseEnter={onMouseEnter}

@@ -36,6 +36,10 @@ export interface ContextMenuHandle {
    * Enables the temporary hover close.
    */
   enableTemporaryHoverClose: () => void;
+  /**
+   * The callback function to be called when the menu is opened by keyboard.
+   */
+  onOpenByKeyboard: (value: boolean) => void;
 }
 
 export type ContextMenuComponentType = ForwardRefExoticComponent<
