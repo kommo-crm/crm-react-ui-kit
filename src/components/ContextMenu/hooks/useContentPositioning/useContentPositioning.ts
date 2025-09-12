@@ -54,16 +54,21 @@ export function useContentPositioning({
       const triggerHeight = trigger.getBoundingClientRect().height;
       const dynamicOffset = (triggerHeight - itemHeight) / 2;
 
-      if (direction === Direction.LEFT_UP || direction === Direction.RIGHT_UP) {
+      if (
+        direction === Direction.LEFT_UP ||
+        direction === Direction.RIGHT_UP ||
+        align === 'end'
+      ) {
         setLabelOffset(alignOffset + dynamicOffset - 2);
       } else if (
-        direction === Direction.LEFT_DOWN ||
-        direction === Direction.RIGHT_DOWN
+        (direction === Direction.LEFT_DOWN ||
+          direction === Direction.RIGHT_DOWN) &&
+        align === 'start'
       ) {
         setLabelOffset(alignOffset - labelHeight + dynamicOffset);
       }
     }
-  }, [children, direction, contentRef, triggerRef]);
+  }, [children, direction, contentRef, triggerRef, align]);
 
   /**
    * Positions the content based on the direction and the trigger height.
