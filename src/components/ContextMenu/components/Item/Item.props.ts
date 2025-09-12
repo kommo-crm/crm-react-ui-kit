@@ -24,9 +24,9 @@ export type SelectableItemProps = RadixItemProps & {
 
 export type NotSelectableItemProps = React.ComponentPropsWithRef<'div'> & {
   /**
-   * Whether the item is not selectable.
+   * Whether the item is selectable.
    */
-  isNotSelectable?: boolean;
+  isSelectable?: false;
 };
 
 export type ItemProps = SelectableItemProps | NotSelectableItemProps;

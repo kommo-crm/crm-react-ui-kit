@@ -28,14 +28,14 @@ import s from './Item.module.css';
 const DISPLAY_NAME = 'ContextMenu.Item';
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
-  if ('isNotSelectable' in props && props.isNotSelectable) {
-    const { className, children, isNotSelectable, ...rest } = props;
+  if ('isSelectable' in props && props.isSelectable === false) {
+    const { className, children, ...rest } = props;
 
     return (
       <div
         ref={ref}
         className={cx(s.item, className)}
-        data-not-selectable={isNotSelectable}
+        data-not-selectable=""
         {...rest}
       >
         {children}

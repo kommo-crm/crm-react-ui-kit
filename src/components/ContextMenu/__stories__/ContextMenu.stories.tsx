@@ -96,7 +96,7 @@ function App() {
             </Text>
           </ContextMenu.Label>
 
-          <ContextMenu.Item isNotSelectable>
+          <ContextMenu.Item isSelectable={false}>
             <Text theme={TextContextMenuTheme} size="l">
               <b>${i18n.t('Workspace')}:</b> Kommo
             </Text>
@@ -275,7 +275,7 @@ const StoryComponent = ({
             </Text>
           </ContextMenu.Label>
 
-          <ContextMenu.Item isNotSelectable>
+          <ContextMenu.Item isSelectable={false}>
             <Text theme={TextContextMenuTheme} size="l">
               <b>{i18n.t('Workspace')}:</b> Kommo
             </Text>

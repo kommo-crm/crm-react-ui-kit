@@ -67,7 +67,7 @@ const ContextMenuComponent = ({
             </Text>
           </ContextMenu.Label>
 
-          <ContextMenu.Item isNotSelectable>
+          <ContextMenu.Item isSelectable={false}>
             <Text theme={TextContextMenuTheme} size="l">
               <b>Workspace:</b> Kommo
             </Text>
