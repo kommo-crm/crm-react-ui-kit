@@ -28,14 +28,28 @@ import s from './Item.module.css';
 const DISPLAY_NAME = 'ContextMenu.Item';
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
+  const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
+
   if ('isSelectable' in props && props.isSelectable === false) {
-    const { className, children, ...rest } = props;
+    const {
+      className,
+      children,
+      isSelectable,
+      hasIconCheckFn = hasItemIcon,
+      ...rest
+    } = props;
+
+    /**
+     * Set the hasIcon state based on the presence of an icon.
+     */
+    const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
     return (
       <div
         ref={ref}
         className={cx(s.item, className)}
-        data-not-selectable=""
+        data-not-selectable={!isSelectable}
+        data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
         {...rest}
       >
         {children}
@@ -61,7 +75,11 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
   const itemRef = useRef<HTMLDivElement>(null);
 
-  const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
+  /**
+   * Set the hasIcon state based on the presence of an icon.
+   */
+  const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
+
   const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
 
   const { dataHighlighted, onFocus, onMouseEnter, onBlur, onMouseLeave } =
@@ -84,11 +102,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
     setHasSubmenu(Boolean(trigger));
   }, [itemRef]);
-
-  /**
-   * Set the hasIcon state based on the presence of an icon.
-   */
-  const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
   /**
    * Handle the keydown event for the item.

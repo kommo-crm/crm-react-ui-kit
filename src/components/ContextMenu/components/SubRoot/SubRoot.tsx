@@ -71,9 +71,9 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
     });
 
     useImperativeHandle(ref, () => ({
-      closeMenuImmediately: closeMenuImmediately,
-      enableTemporaryHoverClose: enableTemporaryHoverClose,
-      onOpenByKeyboard: onOpenByKeyboard,
+      closeMenuImmediately,
+      enableTemporaryHoverClose,
+      onOpenByKeyboard,
     }));
 
     return (

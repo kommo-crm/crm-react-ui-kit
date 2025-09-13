@@ -58,9 +58,9 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
     });
 
     useImperativeHandle(ref, () => ({
-      closeMenuImmediately: closeMenuImmediately,
-      enableTemporaryHoverClose: enableTemporaryHoverClose,
-      onOpenByKeyboard: onOpenByKeyboard,
+      closeMenuImmediately,
+      enableTemporaryHoverClose,
+      onOpenByKeyboard,
     }));
 
     return (

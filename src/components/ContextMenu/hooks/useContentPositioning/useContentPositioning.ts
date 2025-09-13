@@ -43,29 +43,39 @@ export function useContentPositioning({
 
     const contentElement = contentRef.current;
     const label = contentElement.firstElementChild;
-    const item = contentElement.children[1].hasAttribute('data-separator')
-      ? contentElement.children[2]
-      : contentElement.children[1];
+    let item;
+
+    if (align === 'start') {
+      if (contentElement.children[1].hasAttribute('data-separator')) {
+        item = contentElement.children[2];
+      } else {
+        item = contentElement.children[1];
+      }
+    } else if (
+      contentElement.children[contentElement.children.length - 1].hasAttribute(
+        'data-arrow'
+      )
+    ) {
+      item = contentElement.children[contentElement.children.length - 2];
+    } else {
+      item = contentElement.children[contentElement.children.length - 1];
+    }
+
     const trigger = triggerRef.current;
 
-    if (label && label.hasAttribute('data-label') && trigger) {
-      const labelHeight = label.getBoundingClientRect().height;
+    if (trigger) {
       const itemHeight = item.getBoundingClientRect().height;
       const triggerHeight = trigger.getBoundingClientRect().height;
       const dynamicOffset = (triggerHeight - itemHeight) / 2;
 
-      if (
-        direction === Direction.LEFT_UP ||
-        direction === Direction.RIGHT_UP ||
-        align === 'end'
-      ) {
-        setLabelOffset(alignOffset + dynamicOffset - 2);
-      } else if (
-        (direction === Direction.LEFT_DOWN ||
-          direction === Direction.RIGHT_DOWN) &&
-        align === 'start'
-      ) {
-        setLabelOffset(alignOffset - labelHeight + dynamicOffset);
+      if (align === 'start') {
+        if (label && label.hasAttribute('data-label')) {
+          const labelHeight = label.getBoundingClientRect().height;
+
+          setLabelOffset(alignOffset - labelHeight + dynamicOffset);
+        }
+      } else {
+        setLabelOffset(alignOffset + dynamicOffset - 1);
       }
     }
   }, [children, direction, contentRef, triggerRef, align]);
