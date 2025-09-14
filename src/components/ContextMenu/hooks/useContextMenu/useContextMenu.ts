@@ -119,18 +119,18 @@ export const useContextMenu = ({
    */
   const onOpenByKeyboard = (value: boolean) => {
     setOpenedByKeyboard(value);
-    handleOpenChange?.(value);
+    handleOpenChange(value);
   };
 
   /**
    * Handles the mouse enter event.
    */
   const handleMouseEnter = () => {
-    setOpenedByKeyboard(false);
-
     if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
     }
+
+    setOpenedByKeyboard(false);
 
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
@@ -158,11 +158,11 @@ export const useContextMenu = ({
    * Handles the mouse leave event.
    */
   const handleMouseLeave = () => {
-    setOpenedByKeyboard(false);
-
     if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
     }
+
+    setOpenedByKeyboard(false);
 
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);

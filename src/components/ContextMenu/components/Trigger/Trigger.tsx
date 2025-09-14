@@ -13,7 +13,7 @@ import type { TriggerProps } from './Trigger.props';
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  ({ className, children, ...rest }, ref) => {
+  ({ className, children, onKeyDown, ...rest }, ref) => {
     const { triggerRef, mode, onMouseEnter, onMouseLeave, onOpenByKeyboard } =
       useContextMenuContext(DISPLAY_NAME);
 
@@ -37,6 +37,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
               onOpenByKeyboard(false);
             }
           }
+
+          onKeyDown?.(e);
         }}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}

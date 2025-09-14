@@ -23,6 +23,7 @@ export const Sub = ({
     handleMouseLeave,
     handleOpenChange,
     triggerId,
+    onOpenByKeyboard,
   } = useContextMenuSub({
     displayName: DISPLAY_NAME,
     mode,
@@ -39,6 +40,7 @@ export const Sub = ({
       startAnimation={startAnimation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onOpenByKeyboard={onOpenByKeyboard}
       triggerId={triggerId}
     >
       <RadixDropdownMenuSub

@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect, useCallback, useId } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
+import { useIsTouchDevice } from '..';
+import { ContextMenuMode } from '../../ContextMenu.enums';
 import { useContextMenuContext } from '../../ContextMenu.context';
 import { useLevelContext } from '../../providers/LevelProvider';
-import { ContextMenuMode } from '../../ContextMenu.enums';
-import { useIsTouchDevice } from '..';
 
 import { UseContextMenuSubOptions } from './useContextMenuSub.types';
 
@@ -16,192 +16,205 @@ export function useContextMenuSub({
 
   const [open, setOpen] = useState(defaultOpen || false);
   const [animatedOpen, setAnimatedOpen] = useState(false);
-  const [pendingOpen, setPendingOpen] = useState(false);
+  const [isInsideContent, setIsInsideContent] = useState(false);
+  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
 
-  const openTimeoutRef = useRef<number | null>(null);
-  const closeTimeoutRef = useRef<number | null>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isTouchDevice = useIsTouchDevice();
 
-  const {
-    hoverCloseDelay,
-    animationDuration,
-    animatedOpen: animatedFullOpen,
-    mode: rootMode,
-  } = useContextMenuContext(displayName);
+  const { hoverCloseDelay, animationDuration } =
+    useContextMenuContext(displayName);
 
   const { activeItemId } = useLevelContext(displayName);
 
   /**
-   * The mode of the ContextMenu.Root.
+   * The mode of the submenu.
    */
   const mode = isTouchDevice ? ContextMenuMode.CLICK : initialMode;
 
   /**
    * Clears the timers.
    */
-  const clearTimers = useCallback(() => {
-    if (openTimeoutRef.current) {
-      clearTimeout(openTimeoutRef.current);
-      openTimeoutRef.current = null;
+  const clearTimers = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
     }
 
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
     }
-  }, []);
+  };
+
+  /**
+   * Closes the submenu immediately.
+   */
+  const handleCloseImmediate = () => {
+    clearTimers();
+    setAnimatedOpen(false);
+    setOpen(false);
+    setIsInsideContent(false);
+    setOpenedByKeyboard(false);
+  };
 
   /**
    * Requests the close of the submenu.
    */
-  const requestClose = useCallback(() => {
-    setAnimatedOpen(false);
+  const requestClose = () => {
+    clearTimers();
 
-    if (mode === ContextMenuMode.CLICK) {
+    if (mode === ContextMenuMode.HOVER) {
+      setAnimatedOpen(false);
+
+      closeTimerRef.current = setTimeout(() => {
+        setOpen(false);
+        setIsInsideContent(false);
+        setOpenedByKeyboard(false);
+      }, animationDuration);
+    } else {
       setOpen(false);
-      setPendingOpen(false);
-
-      return;
+      setIsInsideContent(false);
+      setOpenedByKeyboard(false);
     }
-
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-    }
-
-    closeTimeoutRef.current = window.setTimeout(
-      () => setOpen(false),
-      animationDuration
-    );
-  }, [animationDuration]);
-
-  /**
-   * Handles the mouse enter event.
-   */
-  const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        return;
-      }
-
-      clearTimers();
-
-      if (open) {
-        setAnimatedOpen(true);
-
-        return;
-      }
-
-      if (rootMode !== ContextMenuMode.CLICK && !animatedFullOpen) {
-        setPendingOpen(true);
-
-        return;
-      }
-
-      setOpen(true);
-    },
-    [defaultOpen, rootMode, animatedFullOpen, open, clearTimers]
-  );
-
-  /**
-   * Handles the mouse leave event.
-   */
-  const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        return;
-      }
-
-      clearTimers();
-      setPendingOpen(false);
-
-      if (open) {
-        closeTimeoutRef.current = window.setTimeout(
-          requestClose,
-          hoverCloseDelay
-        );
-      }
-    },
-    [defaultOpen, open, hoverCloseDelay, clearTimers, requestClose]
-  );
+  };
 
   /**
    * Handles the open state change.
    */
-  const handleOpenChange = useCallback(
-    (val: boolean) => {
-      if (defaultOpen !== undefined) {
-        setOpen(defaultOpen);
-        setAnimatedOpen(defaultOpen);
-        setPendingOpen(false);
+  const handleOpenChange = (value: boolean) => {
+    if (defaultOpen !== undefined) {
+      setOpen(defaultOpen);
+      setAnimatedOpen(defaultOpen);
+      setOpenedByKeyboard(false);
 
-        return;
+      return;
+    }
+
+    if (mode === ContextMenuMode.CLICK) {
+      setOpen(value);
+      setAnimatedOpen(value);
+
+      return;
+    }
+
+    if (value) {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
       }
 
-      if (mode === ContextMenuMode.CLICK) {
-        setOpen(val);
-        setAnimatedOpen(val);
-        setPendingOpen(false);
-
-        return;
+      if (mode === ContextMenuMode.HOVER) {
+        setAnimatedOpen(true);
       }
 
-      if (val) {
-        clearTimers();
+      setOpen(true);
+    } else {
+      requestClose();
+    }
+  };
 
-        if (rootMode !== ContextMenuMode.CLICK && !animatedFullOpen) {
-          setPendingOpen(true);
+  /**
+   * The callback function to be called when the submenu is opened by keyboard.
+   */
+  const onOpenByKeyboard = (value: boolean) => {
+    setOpenedByKeyboard(value);
+    handleOpenChange(value);
+  };
 
-          return;
-        }
+  /**
+   * Handles the mouse enter event.
+   */
+  const handleMouseEnter = () => {
+    if (mode !== ContextMenuMode.HOVER) {
+      return;
+    }
 
-        setOpen(true);
-      } else {
-        requestClose();
+    setOpenedByKeyboard(false);
+
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+      setAnimatedOpen(true);
+    }
+
+    if (open) {
+      setIsInsideContent(true);
+    } else {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
       }
-    },
-    [defaultOpen, rootMode, animatedFullOpen, clearTimers, requestClose]
-  );
+
+      setAnimatedOpen(true);
+      setOpen(true);
+      setIsInsideContent(true);
+    }
+  };
+
+  /**
+   * Handles the mouse leave event.
+   */
+  const handleMouseLeave = () => {
+    if (mode !== ContextMenuMode.HOVER) {
+      return;
+    }
+
+    setOpenedByKeyboard(false);
+
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+
+    setIsInsideContent(false);
+  };
 
   /**
    * Closes the submenu when the active item id changes.
    */
   useEffect(() => {
     if (activeItemId !== triggerId && open && defaultOpen === undefined) {
-      clearTimers();
-      setAnimatedOpen(false);
-      setOpen(false);
-      setPendingOpen(false);
+      handleCloseImmediate();
     }
-  }, [activeItemId, open, clearTimers]);
+  }, [activeItemId, open, defaultOpen]);
 
   /**
-   * Handles the pending open state change.
+   * Handles the hover close delay.
    */
   useEffect(() => {
-    if (pendingOpen && animatedFullOpen) {
-      setOpen(true);
-      setPendingOpen(false);
+    if (!open || mode !== ContextMenuMode.HOVER) {
+      return;
     }
-  }, [pendingOpen, animatedFullOpen]);
 
-  /**
-   * Handles the open state change when the mode is click.
-   *
-   * This is necessary because we prescribe custom behavior for ContextMenuMode.CLICK
-   * that does not interfere with this default method.
-   */
-  useEffect(() => {
-    if (mode === ContextMenuMode.CLICK) {
-      handleOpenChange(open);
+    if (openedByKeyboard) {
+      return;
     }
-  }, [open, handleOpenChange]);
+
+    if (isInsideContent) {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+
+      return;
+    }
+
+    if (!hoverTimeoutRef.current) {
+      hoverTimeoutRef.current = setTimeout(() => {
+        requestClose();
+      }, hoverCloseDelay);
+    }
+
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+    };
+  }, [mode, open, isInsideContent, hoverCloseDelay, openedByKeyboard]);
 
   return {
     open,
@@ -211,6 +224,7 @@ export function useContextMenuSub({
     handleMouseEnter,
     handleMouseLeave,
     handleOpenChange,
+    onOpenByKeyboard,
     triggerId,
   };
 }

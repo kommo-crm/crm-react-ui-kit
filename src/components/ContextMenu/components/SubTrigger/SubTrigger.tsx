@@ -19,17 +19,17 @@ import s from './SubTrigger.module.css';
 const DISPLAY_NAME = 'ContextMenu.SubTrigger';
 
 export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
-  ({ className, children, isDisabled, ...rest }, ref) => {
+  ({ className, children, isDisabled, onKeyDown, ...rest }, ref) => {
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const {
       mode,
       open,
       defaultOpen,
       setOpen,
-      animatedOpen,
       onMouseEnter,
       onMouseLeave,
       triggerId,
+      onOpenByKeyboard,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
     const {
@@ -56,15 +56,28 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
           hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
         }
         data-highlighted={
-          animatedOpen ||
+          open ||
           dataHighlighted === '' ||
           (mode === ContextMenuMode.CLICK && open)
             ? ''
             : undefined
         }
         data-submenu-trigger
-        onFocus={onFocus}
         onMouseEnter={handleMouseEnter}
+        onKeyDown={(e) => {
+          if (mode === ContextMenuMode.HOVER) {
+            if (['Enter', ' ', 'ArrowRight'].includes(e.key)) {
+              onOpenByKeyboard(true);
+            } else if (e.key === 'ArrowLeft') {
+              onOpenByKeyboard(false);
+
+              (e.currentTarget as HTMLElement).focus();
+            }
+          }
+
+          onKeyDown?.(e);
+        }}
+        onFocus={onFocus}
         onBlur={onBlur}
         onMouseLeave={handleMouseLeave}
         onClick={(e) => {

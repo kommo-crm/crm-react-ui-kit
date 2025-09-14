@@ -49,4 +49,8 @@ export interface ContextMenuSubContextProps {
    * The id of the trigger of the submenu.
    */
   triggerId: string;
+  /**
+   * The callback function to be called when the submenu is opened by keyboard.
+   */
+  onOpenByKeyboard: (value: boolean) => void;
 }
