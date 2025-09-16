@@ -69,7 +69,7 @@ export function useContentPositioning({
       const dynamicOffset = (triggerHeight - itemHeight) / 2;
 
       if (align === 'start') {
-        if (label && label.hasAttribute('data-label')) {
+        if (label instanceof HTMLElement && label.hasAttribute('data-label')) {
           const labelHeight = label.getBoundingClientRect().height;
 
           setLabelOffset(alignOffset - labelHeight + dynamicOffset);
