@@ -28,8 +28,10 @@ export function useContentPositioning({
    * Calculates the label offset based on the direction and the trigger height.
    */
   useLayoutEffect(() => {
+    const contentEl = contentRef?.current;
+
     if (
-      !contentRef.current ||
+      !contentEl ||
       disableAutoPositioning ||
       [
         Direction.DOWN_LEFT,
@@ -41,44 +43,77 @@ export function useContentPositioning({
       return;
     }
 
-    const contentElement = contentRef.current;
-    const label = contentElement.firstElementChild;
-    let item;
+    const childrenCollection = contentEl.children;
+
+    if (!childrenCollection || childrenCollection.length === 0) {
+      return;
+    }
+
+    const label = contentEl.firstElementChild;
+    let item: Element | null = null;
 
     if (align === 'start') {
-      if (contentElement.children[1].hasAttribute('data-separator')) {
-        item = contentElement.children[2];
-      } else {
-        item = contentElement.children[1];
-      }
-    } else if (
-      contentElement.children[contentElement.children.length - 1].hasAttribute(
-        'data-arrow'
-      )
-    ) {
-      item = contentElement.children[contentElement.children.length - 2];
-    } else {
-      item = contentElement.children[contentElement.children.length - 1];
-    }
+      const second = childrenCollection.item(1);
 
-    const trigger = triggerRef.current;
+      if (second instanceof Element && second.hasAttribute('data-separator')) {
+        const third = childrenCollection.item(2);
 
-    if (trigger) {
-      const itemHeight = item.getBoundingClientRect().height;
-      const triggerHeight = trigger.getBoundingClientRect().height;
-      const dynamicOffset = (triggerHeight - itemHeight) / 2;
-
-      if (align === 'start') {
-        if (label instanceof HTMLElement && label.hasAttribute('data-label')) {
-          const labelHeight = label.getBoundingClientRect().height;
-
-          setLabelOffset(alignOffset - labelHeight + dynamicOffset);
+        if (third instanceof Element) {
+          item = third;
+        } else {
+          item = null;
         }
-      } else {
-        setLabelOffset(alignOffset + dynamicOffset - 1);
+      } else if (second instanceof Element) {
+        item = second;
+      }
+    } else {
+      const lastIndex = childrenCollection.length - 1;
+      const last = childrenCollection.item(lastIndex);
+
+      if (last instanceof Element && last.hasAttribute('data-arrow')) {
+        const prev = childrenCollection.item(lastIndex - 1);
+
+        if (prev instanceof Element) {
+          item = prev;
+        } else {
+          item = null;
+        }
+      } else if (last instanceof Element) {
+        item = last;
       }
     }
-  }, [children, direction, contentRef, triggerRef, align]);
+
+    const trigger = triggerRef?.current;
+
+    if (!trigger || !item) {
+      return;
+    }
+
+    const itemRect = item.getBoundingClientRect();
+    const triggerRect = (trigger as Element).getBoundingClientRect();
+
+    const itemHeight = itemRect.height;
+    const triggerHeight = triggerRect.height;
+    const dynamicOffset = (triggerHeight - itemHeight) / 2;
+
+    if (align === 'start') {
+      if (label instanceof Element && label.hasAttribute('data-label')) {
+        const labelHeight = label.getBoundingClientRect().height;
+
+        setLabelOffset(alignOffset - labelHeight + dynamicOffset);
+      }
+    } else {
+      setLabelOffset(alignOffset + dynamicOffset - 1);
+    }
+  }, [
+    children,
+    direction,
+    contentRef,
+    triggerRef,
+    align,
+    alignOffset,
+    disableAutoPositioning,
+  ]);
 
   /**
    * Positions the content based on the direction and the trigger height.
