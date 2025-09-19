@@ -11,6 +11,7 @@ export function useContextMenuSub({
   displayName,
   mode: initialMode,
   defaultOpen,
+  onOpen,
 }: UseContextMenuSubOptions) {
   const triggerId = useId();
 
@@ -56,6 +57,7 @@ export function useContextMenuSub({
     clearTimers();
     setAnimatedOpen(false);
     setOpen(false);
+    onOpen?.(false);
     setIsInsideContent(false);
     setOpenedByKeyboard(false);
   };
@@ -71,11 +73,13 @@ export function useContextMenuSub({
 
       closeTimerRef.current = setTimeout(() => {
         setOpen(false);
+        onOpen?.(false);
         setIsInsideContent(false);
         setOpenedByKeyboard(false);
       }, animationDuration);
     } else {
       setOpen(false);
+      onOpen?.(false);
       setIsInsideContent(false);
       setOpenedByKeyboard(false);
     }
@@ -87,6 +91,7 @@ export function useContextMenuSub({
   const handleOpenChange = (value: boolean) => {
     if (defaultOpen !== undefined) {
       setOpen(defaultOpen);
+      onOpen?.(defaultOpen);
       setAnimatedOpen(defaultOpen);
       setOpenedByKeyboard(false);
 
@@ -95,6 +100,7 @@ export function useContextMenuSub({
 
     if (mode === ContextMenuMode.CLICK) {
       setOpen(value);
+      onOpen?.(value);
       setAnimatedOpen(value);
 
       return;
@@ -111,6 +117,7 @@ export function useContextMenuSub({
       }
 
       setOpen(true);
+      onOpen?.(true);
     } else {
       requestClose();
     }
@@ -149,6 +156,7 @@ export function useContextMenuSub({
       }
 
       setAnimatedOpen(true);
+      onOpen?.(true);
       setOpen(true);
       setIsInsideContent(true);
     }

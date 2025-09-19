@@ -11,7 +11,9 @@ import { ContextMenuSubProvider, DISPLAY_NAME } from './Sub.context';
 export const Sub = ({
   children,
   mode = ContextMenuMode.HOVER,
+  onOpen,
   defaultOpen,
+
   ...rest
 }: SubProps) => {
   const {
@@ -28,6 +30,7 @@ export const Sub = ({
     displayName: DISPLAY_NAME,
     mode,
     defaultOpen,
+    onOpen,
   });
 
   return (

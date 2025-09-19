@@ -3,13 +3,20 @@ import { Sub as RadixDropdownMenuSub } from '@radix-ui/react-dropdown-menu';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
 
-export type SubProps = ComponentPropsWithoutRef<typeof RadixDropdownMenuSub> & {
+export type SubProps = Omit<
+  ComponentPropsWithoutRef<typeof RadixDropdownMenuSub>,
+  'onOpenChange'
+> & {
   /**
    * Defines how the submenu is triggered.
    *
    * @default "hover"
    */
   mode?: ContextMenuModeType;
+  /**
+   * Called when submenu open state changes.
+   */
+  onOpen?: (open: boolean) => void;
 };
 
 export interface ContextMenuSubContextProps {
