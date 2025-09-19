@@ -13,9 +13,25 @@ import type { TriggerProps } from './Trigger.props';
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  ({ className, children, onKeyDown, ...rest }, ref) => {
-    const { triggerRef, mode, onMouseEnter, onMouseLeave, onOpenByKeyboard } =
-      useContextMenuContext(DISPLAY_NAME);
+  (
+    {
+      className,
+      children,
+      onKeyDown,
+      onMouseEnter,
+      onMouseLeave,
+      onPointerDown,
+      ...rest
+    },
+    ref
+  ) => {
+    const {
+      triggerRef,
+      mode,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
+      onOpenByKeyboard,
+    } = useContextMenuContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuTrigger
@@ -26,6 +42,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
             e.preventDefault();
             e.stopPropagation();
           }
+
+          onPointerDown?.(e);
         }}
         onKeyDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
@@ -40,8 +58,16 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
 
           onKeyDown?.(e);
         }}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        onMouseEnter={(e) => {
+          onMouseEnterContext(e);
+
+          onMouseEnter?.(e);
+        }}
+        onMouseLeave={(e) => {
+          onMouseLeaveContext(e);
+
+          onMouseLeave?.(e);
+        }}
         {...rest}
       >
         {children}

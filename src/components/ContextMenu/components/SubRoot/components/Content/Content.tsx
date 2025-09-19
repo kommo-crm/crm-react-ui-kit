@@ -37,6 +37,9 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       collisionBoundary,
       direction = Direction.DOWN_RIGHT,
       disableAutoPositioning = false,
+      onMouseEnter,
+      onMouseLeave,
+      onKeyDown,
       ...rest
     },
     ref
@@ -51,8 +54,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       animationDuration,
       mode,
       temporaryHoverClose,
-      onMouseEnter,
-      onMouseLeave,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
       closeMenuImmediately,
     } = useContextMenuContext(DISPLAY_NAME);
 
@@ -79,11 +82,13 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'ArrowLeft') {
         closeMenuImmediately();
         focusParentItem(triggerRef.current);
       }
+
+      onKeyDown?.(e);
     };
 
     return (
@@ -114,9 +119,19 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
             align={align}
             arrowPadding={arrowPadding}
             alignOffset={labelOffset}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            onKeyDown={handleKeyDown}
+            onMouseEnter={(e) => {
+              onMouseEnterContext?.(e);
+
+              onMouseEnter?.(e);
+            }}
+            onMouseLeave={(e) => {
+              onMouseLeaveContext?.(e);
+
+              onMouseLeave?.(e);
+            }}
+            onKeyDown={(e) => {
+              handleKeyDown(e);
+            }}
             {...rest}
           >
             {children}

@@ -1,4 +1,4 @@
-.right_slot {
+.rightSlot {
   display: flex;
   align-items: center;
   margin-left: auto;
@@ -6,6 +6,6 @@
   gap: 8px;
 }
 
-.right_slot[data-submenu-right-slot] {
+.rightSlot[data-submenu-right-slot] {
   padding-left: 0;
 }

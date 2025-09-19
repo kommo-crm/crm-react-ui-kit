@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import { Trigger as RadixDropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
@@ -15,43 +14,77 @@ import type { TriggerProps } from './Trigger.props';
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  ({ className, children, ...rest }, ref) => {
-    const { triggerRef, mode, onMouseEnter, onMouseLeave, triggerId } =
-      useContextMenuContext(DISPLAY_NAME);
+  (
+    {
+      className,
+      children,
+      onFocus,
+      onBlur,
+      onMouseEnter,
+      onMouseLeave,
+      onPointerDown,
+      ...rest
+    },
+    ref
+  ) => {
+    const {
+      triggerRef,
+      mode,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
+      triggerId,
+    } = useContextMenuContext(DISPLAY_NAME);
 
     const {
-      onFocus,
-      onMouseEnter: handleMouseEnter,
-      onBlur,
-      onMouseLeave: handleMouseLeave,
+      dataHighlighted,
+      onFocus: handleItemFocus,
+      onMouseEnter: handleItemMouseEnter,
+      onBlur: handleItemBlur,
+      onMouseLeave: handleItemMouseLeave,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
       id: triggerId || '',
       isDisabled: false,
-      onMouseEnter,
-      onMouseLeave,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
     });
 
     return (
       <RadixDropdownMenuTrigger
         ref={mergeRefs(triggerRef, ref)}
-        className={cx(className)}
+        className={className}
+        data-highlighted={dataHighlighted}
         onPointerDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
             e.preventDefault();
           }
 
           e.stopPropagation();
+
+          onPointerDown?.(e);
         }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={(e) => {
+          handleItemMouseEnter?.(e);
+
+          onMouseEnter?.(e);
+        }}
+        onMouseLeave={(e) => {
+          handleItemMouseLeave?.(e);
+
+          onMouseLeave?.(e);
+        }}
         onFocus={(e) => {
           e.preventDefault();
           e.stopPropagation();
 
-          onFocus?.();
+          handleItemFocus?.();
+          onFocus?.(e);
         }}
-        onBlur={onBlur}
+        onBlur={(e) => {
+          handleItemBlur?.();
+
+          onBlur?.(e);
+        }}
         data-submenu-trigger
         {...rest}
       >

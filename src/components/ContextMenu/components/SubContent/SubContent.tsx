@@ -17,7 +17,15 @@ const DISPLAY_NAME = 'ContextMenu.SubContent';
 
 export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
   (
-    { className, children, sideOffset = 4, collisionPadding = 10, ...rest },
+    {
+      className,
+      children,
+      sideOffset = 4,
+      collisionPadding = 10,
+      onMouseEnter,
+      onMouseLeave,
+      ...rest
+    },
     ref
   ) => {
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
@@ -25,8 +33,8 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
     const {
       animatedOpen,
       startAnimation,
-      onMouseEnter,
-      onMouseLeave,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
       defaultOpen,
     } = useContextMenuSubContext(DISPLAY_NAME);
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
@@ -82,8 +90,16 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
             zIndex: Number.MAX_SAFE_INTEGER,
             ...springStyles,
           }}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
+          onMouseEnter={(e) => {
+            onMouseEnterContext?.(e);
+
+            onMouseEnter?.(e);
+          }}
+          onMouseLeave={(e) => {
+            onMouseLeaveContext?.(e);
+
+            onMouseLeave?.(e);
+          }}
           data-content-wrapper
         >
           <RadixDropdownMenuSubContent

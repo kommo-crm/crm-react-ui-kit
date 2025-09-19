@@ -64,6 +64,11 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     isDanger,
     hasIconCheckFn = hasItemIcon,
     onSelect,
+    onFocus,
+    onMouseEnter,
+    onBlur,
+    onMouseLeave,
+    onKeyDown,
 
     ...rest
   } = props as SelectableItemProps;
@@ -82,13 +87,18 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
   const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
 
-  const { dataHighlighted, onFocus, onMouseEnter, onBlur, onMouseLeave } =
-    useContextMenuItemFocus({
-      displayName: DISPLAY_NAME,
-      id,
-      isDisabled,
-      hasSubmenu,
-    });
+  const {
+    dataHighlighted,
+    onFocus: handleItemFocus,
+    onMouseEnter: handleItemMouseEnter,
+    onBlur: handleItemBlur,
+    onMouseLeave: handleItemMouseLeave,
+  } = useContextMenuItemFocus({
+    displayName: DISPLAY_NAME,
+    id,
+    isDisabled,
+    hasSubmenu,
+  });
 
   /**
    * Set the hasSubmenu state based on the presence of a submenu trigger.
@@ -106,10 +116,12 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
   /**
    * Handle the keydown event for the item.
    */
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (hasSubmenu && e.key === 'ArrowRight') {
       setSubMenuOpen(true);
     }
+
+    onKeyDown?.(e);
   };
 
   return (
@@ -132,10 +144,26 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           closeMenuImmediately(true);
         }}
         data-highlighted={subMenuOpen || dataHighlighted}
-        onFocus={onFocus}
-        onMouseEnter={onMouseEnter}
-        onBlur={onBlur}
-        onMouseLeave={onMouseLeave}
+        onFocus={(e) => {
+          handleItemFocus?.();
+
+          onFocus?.(e);
+        }}
+        onMouseEnter={(e) => {
+          handleItemMouseEnter?.(e);
+
+          onMouseEnter?.(e);
+        }}
+        onBlur={(e) => {
+          handleItemBlur?.();
+
+          onBlur?.(e);
+        }}
+        onMouseLeave={(e) => {
+          handleItemMouseLeave?.(e);
+
+          onMouseLeave?.(e);
+        }}
         onKeyDown={handleKeyDown}
         {...rest}
       >

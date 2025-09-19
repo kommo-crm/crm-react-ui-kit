@@ -12,7 +12,23 @@ import s from './ItemRightSlot.module.css';
 const DISPLAY_NAME = 'ContextMenu.ItemRightSlot';
 
 export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
-  ({ className, children, ...rest }, ref) => {
+  (
+    {
+      className,
+      children,
+      onClick,
+      onKeyDown,
+      onKeyUp,
+      onKeyPress,
+      onPointerDown,
+      onPointerUp,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerMove,
+      ...rest
+    },
+    ref
+  ) => {
     const slotRef = useRef<HTMLDivElement>(null);
     const [hasSubmenu, setHasSubmenu] = useState(false);
 
@@ -26,15 +42,27 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       setHasSubmenu(!!trigger);
     }, [children]);
 
-    const stopEventsHook = useStopContextMenuEvents();
-    const stopEvents = hasSubmenu ? stopEventsHook : {};
+    const defaultHandlers = {
+      onClick: onClick,
+      onKeyDown: onKeyDown,
+      onKeyUp: onKeyUp,
+      onKeyPress: onKeyPress,
+      onPointerDown: onPointerDown,
+      onPointerUp: onPointerUp,
+      onPointerEnter: onPointerEnter,
+      onPointerLeave: onPointerLeave,
+      onPointerMove: onPointerMove,
+    };
+
+    const stopEventsHook = useStopContextMenuEvents(defaultHandlers);
+    const handlers = hasSubmenu ? stopEventsHook : defaultHandlers;
 
     return (
       <div
         ref={mergeRefs(slotRef, ref)}
-        className={cx(s.right_slot, className)}
+        className={cx(s.rightSlot, className)}
         data-submenu-right-slot={hasSubmenu ? '' : undefined}
-        {...stopEvents}
+        {...handlers}
         {...rest}
       >
         {children}

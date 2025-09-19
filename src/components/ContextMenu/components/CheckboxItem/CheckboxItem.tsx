@@ -25,6 +25,11 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       isDisabled,
       isChecked,
       hasIconCheckFn = hasItemIcon,
+      onFocus,
+      onMouseEnter,
+      onBlur,
+      onMouseLeave,
+      onSelect,
       ...rest
     },
     ref
@@ -34,12 +39,17 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
 
-    const { dataHighlighted, onFocus, onMouseEnter, onBlur, onMouseLeave } =
-      useContextMenuItemFocus({
-        displayName: DISPLAY_NAME,
-        id,
-        isDisabled,
-      });
+    const {
+      dataHighlighted,
+      onFocus: handleItemFocus,
+      onMouseEnter: handleItemMouseEnter,
+      onBlur: handleItemBlur,
+      onMouseLeave: handleItemMouseLeave,
+    } = useContextMenuItemFocus({
+      displayName: DISPLAY_NAME,
+      id,
+      isDisabled,
+    });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
@@ -60,12 +70,32 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
             onChange(event);
           }
         }}
-        onSelect={() => closeMenuImmediately(true)}
         data-highlighted={dataHighlighted}
-        onFocus={onFocus}
-        onMouseEnter={onMouseEnter}
-        onBlur={onBlur}
-        onMouseLeave={onMouseLeave}
+        onSelect={(e) => {
+          closeMenuImmediately(true);
+
+          onSelect?.(e);
+        }}
+        onFocus={(e) => {
+          handleItemFocus?.();
+
+          onFocus?.(e);
+        }}
+        onMouseEnter={(e) => {
+          handleItemMouseEnter?.(e);
+
+          onMouseEnter?.(e);
+        }}
+        onBlur={(e) => {
+          handleItemBlur?.();
+
+          onBlur?.(e);
+        }}
+        onMouseLeave={(e) => {
+          handleItemMouseLeave?.(e);
+
+          onMouseLeave?.(e);
+        }}
         {...rest}
       >
         {children}

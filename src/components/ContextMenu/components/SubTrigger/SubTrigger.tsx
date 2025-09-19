@@ -19,31 +19,48 @@ import s from './SubTrigger.module.css';
 const DISPLAY_NAME = 'ContextMenu.SubTrigger';
 
 export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
-  ({ className, children, isDisabled, onKeyDown, ...rest }, ref) => {
+  (
+    {
+      className,
+      children,
+      isDisabled,
+      onKeyDown,
+      onFocus,
+      onBlur,
+      onClick,
+      onPointerEnter,
+      onPointerMove,
+      onPointerLeave,
+      onMouseEnter,
+      onMouseLeave,
+      ...rest
+    },
+    ref
+  ) => {
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const {
       mode,
       open,
       defaultOpen,
       setOpen,
-      onMouseEnter,
-      onMouseLeave,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
       triggerId,
       onOpenByKeyboard,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
     const {
       dataHighlighted,
-      onFocus,
-      onMouseEnter: handleMouseEnter,
-      onBlur,
-      onMouseLeave: handleMouseLeave,
+      onFocus: handleItemFocus,
+      onMouseEnter: handleItemMouseEnter,
+      onBlur: handleItemBlur,
+      onMouseLeave: handleItemMouseLeave,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
       id: triggerId,
       isDisabled,
-      onMouseEnter,
-      onMouseLeave,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
     });
 
     return (
@@ -63,7 +80,16 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
             : undefined
         }
         data-submenu-trigger
-        onMouseEnter={handleMouseEnter}
+        onMouseEnter={(e) => {
+          handleItemMouseEnter?.(e);
+
+          onMouseEnter?.(e);
+        }}
+        onMouseLeave={(e) => {
+          handleItemMouseLeave?.(e);
+
+          onMouseLeave?.(e);
+        }}
         onKeyDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
             if (['Enter', ' ', 'ArrowRight'].includes(e.key)) {
@@ -77,9 +103,16 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
 
           onKeyDown?.(e);
         }}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onMouseLeave={handleMouseLeave}
+        onFocus={(e) => {
+          handleItemFocus?.();
+
+          onFocus?.(e);
+        }}
+        onBlur={(e) => {
+          handleItemBlur?.();
+
+          onBlur?.(e);
+        }}
         onClick={(e) => {
           if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
@@ -89,24 +122,32 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
               setOpen(!open);
             }
           }
+
+          onClick?.(e);
         }}
         onPointerEnter={(e) => {
           if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
           }
+
+          onPointerEnter?.(e);
         }}
         onPointerMove={(e) => {
           if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
           }
+
+          onPointerMove?.(e);
         }}
         onPointerLeave={(e) => {
           if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
           }
+
+          onPointerLeave?.(e);
         }}
         {...rest}
       >

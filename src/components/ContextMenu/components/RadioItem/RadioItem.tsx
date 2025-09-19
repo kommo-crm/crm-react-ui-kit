@@ -18,7 +18,18 @@ const DISPLAY_NAME = 'ContextMenu.RadioItem';
 
 export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
   (
-    { className, children, isDisabled, hasIconCheckFn = hasItemIcon, ...rest },
+    {
+      className,
+      children,
+      isDisabled,
+      hasIconCheckFn = hasItemIcon,
+      onFocus,
+      onMouseEnter,
+      onBlur,
+      onMouseLeave,
+      onSelect,
+      ...rest
+    },
     ref
   ) => {
     const id = useId();
@@ -26,12 +37,17 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
 
-    const { dataHighlighted, onFocus, onMouseEnter, onBlur, onMouseLeave } =
-      useContextMenuItemFocus({
-        displayName: DISPLAY_NAME,
-        id,
-        isDisabled,
-      });
+    const {
+      dataHighlighted,
+      onFocus: handleItemFocus,
+      onMouseEnter: handleItemMouseEnter,
+      onBlur: handleItemBlur,
+      onMouseLeave: handleItemMouseLeave,
+    } = useContextMenuItemFocus({
+      displayName: DISPLAY_NAME,
+      id,
+      isDisabled,
+    });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
@@ -42,12 +58,32 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         disabled={isDisabled}
         data-item
         data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        onSelect={() => closeMenuImmediately(true)}
         data-highlighted={dataHighlighted}
-        onFocus={onFocus}
-        onMouseEnter={onMouseEnter}
-        onBlur={onBlur}
-        onMouseLeave={onMouseLeave}
+        onSelect={(e) => {
+          closeMenuImmediately(true);
+
+          onSelect?.(e);
+        }}
+        onFocus={(e) => {
+          handleItemFocus?.();
+
+          onFocus?.(e);
+        }}
+        onMouseEnter={(e) => {
+          handleItemMouseEnter?.(e);
+
+          onMouseEnter?.(e);
+        }}
+        onBlur={(e) => {
+          handleItemBlur?.();
+
+          onBlur?.(e);
+        }}
+        onMouseLeave={(e) => {
+          handleItemMouseLeave?.(e);
+
+          onMouseLeave?.(e);
+        }}
         {...rest}
       >
         {children}

@@ -35,6 +35,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       collisionBoundary,
       direction = Direction.DOWN_RIGHT,
       disableAutoPositioning = false,
+      onMouseEnter,
+      onMouseLeave,
       ...rest
     },
     ref
@@ -49,8 +51,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       animationDuration,
       mode,
       temporaryHoverClose,
-      onMouseEnter,
-      onMouseLeave,
+      onMouseEnter: onMouseEnterContext,
+      onMouseLeave: onMouseLeaveContext,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { align, labelOffset, isPositioned } = useContentPositioning({
@@ -104,8 +106,16 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
             align={align}
             arrowPadding={arrowPadding}
             alignOffset={labelOffset}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
+            onMouseEnter={(e) => {
+              onMouseEnterContext?.(e);
+
+              onMouseEnter?.(e);
+            }}
+            onMouseLeave={(e) => {
+              onMouseLeaveContext?.(e);
+
+              onMouseLeave?.(e);
+            }}
             {...rest}
           >
             {children}
