@@ -62,6 +62,7 @@ export const useContextMenuSubMenu = ({
   const handleClose = (closeRootMenu: boolean = false) => {
     setSubMenuOpen?.(false);
     setOpen(false);
+    onOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
 
@@ -94,6 +95,7 @@ export const useContextMenuSubMenu = ({
     clearTimers();
     setAnimatedOpen(false);
     setSubMenuOpen?.(false);
+    onOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
 
@@ -161,6 +163,7 @@ export const useContextMenuSubMenu = ({
 
       setAnimatedOpen(true);
       setSubMenuOpen?.(true);
+      onOpen?.(true);
       setIsInsideContent(true);
     }
   };

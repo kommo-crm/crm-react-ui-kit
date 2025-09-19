@@ -55,6 +55,7 @@ export const useContextMenu = ({
    */
   const handleClose = () => {
     setOpen(false);
+    onOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
   };
@@ -83,6 +84,7 @@ export const useContextMenu = ({
     clearTimers();
     setAnimatedOpen(false);
     setOpen(false);
+    onOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
   };
@@ -148,6 +150,7 @@ export const useContextMenu = ({
 
       setAnimatedOpen(true);
       setOpen(true);
+      onOpen?.(true);
       setIsInsideContent(true);
 
       setTimeout(() => contextMenuBus.emit(id), 0);
