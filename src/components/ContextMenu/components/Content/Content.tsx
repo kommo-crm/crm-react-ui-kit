@@ -87,7 +87,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       >
         <animated.div
           style={{
-            zIndex: Number.MAX_SAFE_INTEGER,
+            zIndex: Number.MAX_SAFE_INTEGER - 10,
             position: 'fixed',
             ...springStyles,
           }}

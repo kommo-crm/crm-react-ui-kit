@@ -87,7 +87,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
         <animated.div
           style={{
             position: 'fixed',
-            zIndex: Number.MAX_SAFE_INTEGER,
+            zIndex: Number.MAX_SAFE_INTEGER - 10,
             ...springStyles,
           }}
           onMouseEnter={(e) => {
