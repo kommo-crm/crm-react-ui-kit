@@ -1,6 +1,7 @@
 .sub_trigger {
   position: relative;
   display: flex;
+  align-items: center;
   user-select: none;
   outline: none;
   padding: 10px 16px 10px 40px;

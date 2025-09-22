@@ -1,6 +1,7 @@
 .label {
   position: relative;
   display: flex;
+  align-items: center;
   outline: none;
   padding: 10px 16px 10px 40px;
   color: var(--crm-ui-kit-palette-text-primary);
