@@ -3,7 +3,10 @@
   align-items: center;
   margin-left: auto;
   padding-left: 16px;
-  gap: 8px;
+}
+
+.rightSlot > :not(:last-child) {
+  margin-right: 8px;
 }
 
 .rightSlot[data-submenu-right-slot] {

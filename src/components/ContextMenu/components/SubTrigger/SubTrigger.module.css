@@ -4,7 +4,6 @@
   user-select: none;
   outline: none;
   padding: 10px 16px 10px 40px;
-  gap: 8px;
   color: var(--crm-ui-kit-palette-text-primary);
   background-color: var(--crm-ui-kit-palette-background-primary);
   cursor: pointer;
@@ -21,4 +20,8 @@
   &[data-no-icon-align] {
     padding: 10px 16px;
   }
+}
+
+.sub_trigger > :not(:last-child) {
+  margin-right: 8px;
 }
