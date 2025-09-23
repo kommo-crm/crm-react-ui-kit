@@ -14,6 +14,7 @@ export const useContextMenu = ({
   animationDuration,
   hoverCloseDelay,
   onOpen,
+  onAnimatedOpen,
 }: UseContextMenuOptions) => {
   const id = useId();
 
@@ -227,6 +228,13 @@ export const useContextMenu = ({
     hoverCloseDelay,
     openedByKeyboard,
   ]);
+
+  /**
+   * Handles the animated open state change.
+   */
+  useEffect(() => {
+    onAnimatedOpen?.(animatedOpen);
+  }, [animatedOpen]);
 
   /**
    * Updates the inherited arrow color when the menu is open.

@@ -36,7 +36,6 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     } = useContextMenuContext(DISPLAY_NAME);
 
     const {
-      dataHighlighted,
       onFocus: handleItemFocus,
       onMouseEnter: handleItemMouseEnter,
       onBlur: handleItemBlur,
@@ -53,7 +52,6 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       <RadixDropdownMenuTrigger
         ref={mergeRefs(triggerRef, ref)}
         className={className}
-        data-highlighted={dataHighlighted}
         onPointerDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
             e.preventDefault();

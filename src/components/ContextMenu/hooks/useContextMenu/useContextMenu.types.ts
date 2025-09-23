@@ -23,6 +23,10 @@ export interface UseContextMenuOptions {
    */
   onOpen?: (open: boolean) => void;
   /**
+   * The callback function to be called when the context menu is animated open.
+   */
+  onAnimatedOpen?: (open: boolean) => void;
+  /**
    * Whether the context menu should close when another menu is opened.
    */
   autoCloseOnOtherOpen?: boolean;

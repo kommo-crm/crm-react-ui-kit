@@ -25,6 +25,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       children,
       mode = ContextMenuMode.HOVER,
       onOpen,
+      onAnimatedOpen,
       defaultOpen,
       isCloseWithRootMenu = false,
       ...rest
@@ -63,6 +64,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       mode: mode,
       defaultOpen,
       onOpen,
+      onAnimatedOpen,
       animationDuration,
       subMenuOpen: subMenuOpenContext,
       setSubMenuOpen,

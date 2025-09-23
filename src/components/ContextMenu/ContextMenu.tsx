@@ -32,7 +32,7 @@ const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
 export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
-  ({ children, mode, onOpen, defaultOpen, ...rest }, ref) => {
+  ({ children, mode, onOpen, defaultOpen, onAnimatedOpen, ...rest }, ref) => {
     const {
       mode: rootMode,
       open,
@@ -53,6 +53,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       mode: mode as ContextMenuMode,
       defaultOpen,
       onOpen,
+      onAnimatedOpen,
       animationDuration: ANIMATION_DURATION,
       hoverCloseDelay: HOVER_CLOSE_DELAY,
     });

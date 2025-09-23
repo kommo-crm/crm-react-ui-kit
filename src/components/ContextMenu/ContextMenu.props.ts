@@ -11,6 +11,10 @@ export type ContextMenuRootProps = Omit<
    */
   onOpen?: (open: boolean) => void;
   /**
+   * Called whenever the animated open state of the menu changes.
+   */
+  onAnimatedOpen?: (open: boolean) => void;
+  /**
    * Defines how the menu is triggered.
    *
    * - `click`: menu opens on click, closes on outside click.
