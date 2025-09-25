@@ -6,6 +6,8 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { useLevelContext } from '../../providers';
 
+import { useContextMenuRootContext } from '../../ContextMenu.context';
+
 import { UseContextMenuSubMenuOptions } from './useContextMenuSubMenu.types';
 
 export const useContextMenuSubMenu = ({
@@ -30,6 +32,8 @@ export const useContextMenuSubMenu = ({
   const [hasHoveredContent, setHasHoveredContent] = useState(false);
 
   const { activeItemId } = useLevelContext(displayName);
+
+  const { onChildClickOpen } = useContextMenuRootContext(displayName);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -111,8 +115,12 @@ export const useContextMenuSubMenu = ({
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (mode === ContextMenuMode.CLICK && defaultOpen !== undefined) {
-      return;
+    if (mode === ContextMenuMode.CLICK) {
+      if (defaultOpen !== undefined) {
+        return;
+      }
+
+      onChildClickOpen?.(value);
     }
 
     if (value) {
@@ -284,5 +292,6 @@ export const useContextMenuSubMenu = ({
     enableTemporaryHoverClose,
     triggerId,
     handleContentMouseEnter,
+    hasHoveredContent,
   };
 };

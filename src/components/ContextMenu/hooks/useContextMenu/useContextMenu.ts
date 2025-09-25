@@ -23,6 +23,7 @@ export const useContextMenu = ({
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
+  const [isChildClickOpen, setIsChildClickOpen] = useState(false);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -68,6 +69,10 @@ export const useContextMenu = ({
     clearTimers();
 
     if (mode === ContextMenuMode.HOVER || temporaryHoverClose) {
+      if (isChildClickOpen) {
+        return;
+      }
+
       setAnimatedOpen(false);
 
       closeTimerRef.current = setTimeout(() => {
@@ -167,13 +172,12 @@ export const useContextMenu = ({
     }
 
     setOpenedByKeyboard(false);
+    setIsInsideContent(false);
 
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
     }
-
-    setIsInsideContent(false);
   };
 
   /**
@@ -183,6 +187,13 @@ export const useContextMenu = ({
     setAnimatedOpen(true);
     setIsInsideContent(true);
     setTemporaryHoverClose(true);
+  };
+
+  /**
+   * The callback function to be called when the menu is opened by child click.
+   */
+  const handleChildClickOpen = (value: boolean) => {
+    setIsChildClickOpen(value);
   };
 
   /**
@@ -257,5 +268,6 @@ export const useContextMenu = ({
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     enableTemporaryHoverClose,
+    onChildClickOpen: handleChildClickOpen,
   };
 };

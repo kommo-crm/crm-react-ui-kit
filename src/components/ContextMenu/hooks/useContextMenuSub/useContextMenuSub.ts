@@ -2,7 +2,10 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import { useIsTouchDevice } from '..';
 import { ContextMenuMode } from '../../ContextMenu.enums';
-import { useContextMenuContext } from '../../ContextMenu.context';
+import {
+  useContextMenuContext,
+  useContextMenuRootContext,
+} from '../../ContextMenu.context';
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { UseContextMenuSubOptions } from './useContextMenuSub.types';
@@ -29,6 +32,8 @@ export function useContextMenuSub({
 
   const { hoverCloseDelay, animationDuration } =
     useContextMenuContext(displayName);
+
+  const { onChildClickOpen } = useContextMenuRootContext(displayName);
 
   const { activeItemId } = useLevelContext(displayName);
 
@@ -225,6 +230,18 @@ export function useContextMenuSub({
       }
     };
   }, [mode, open, isInsideContent, hoverCloseDelay, openedByKeyboard]);
+
+  /**
+   * This effect is used to call the onChildClickOpen callback function
+   * when the submenu is opened or closed by child click.
+   */
+  useEffect(() => {
+    if (mode === ContextMenuMode.CLICK && open) {
+      onChildClickOpen?.(true);
+    } else if (mode === ContextMenuMode.CLICK && !open) {
+      onChildClickOpen?.(false);
+    }
+  }, [open, mode]);
 
   return {
     open,

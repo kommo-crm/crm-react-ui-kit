@@ -62,6 +62,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       triggerId,
       onOpenByKeyboard,
       handleContentMouseEnter,
+      hasHoveredContent,
     } = useContextMenuSubMenu({
       displayName: DISPLAY_NAME,
       mode: mode,
@@ -81,7 +82,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       onOpenByKeyboard,
     }));
 
-    const isOpen = openContext || subMenuOpenContext;
+    const isOpen = subMenuOpenContext || openContext;
 
     return (
       <ContextMenuProvider
@@ -111,7 +112,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         >
           {children}
 
-          {isOpen && (
+          {isOpen && !hasHoveredContent && (
             <div
               className={s.blocker}
               tabIndex={0}

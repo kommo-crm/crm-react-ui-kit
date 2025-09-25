@@ -25,7 +25,12 @@ import { Separator } from './components/Separator/Separator';
 import { ItemIcon } from './components/ItemIcon/ItemIcon';
 import { SubRoot } from './components/SubRoot/SubRoot';
 
-import { ContextMenuProvider, DISPLAY_NAME } from './ContextMenu.context';
+import {
+  ContextMenuProvider,
+  ContextMenuRootProvider,
+  DISPLAY_NAME,
+} from './ContextMenu.context';
+
 import { ContextMenuHandle, ContextMenuType } from './ContextMenu.types';
 
 const HOVER_CLOSE_DELAY = 200;
@@ -49,6 +54,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       onMouseLeave,
       enableTemporaryHoverClose,
       onOpenByKeyboard,
+      onChildClickOpen,
     } = useContextMenu({
       mode: mode as ContextMenuMode,
       defaultOpen,
@@ -65,33 +71,35 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
     }));
 
     return (
-      <ContextMenuProvider
-        mode={rootMode}
-        triggerRef={triggerRef}
-        contentRef={contentRef}
-        inheritedArrowColor={inheritedArrowColor}
-        animatedOpen={animatedOpen}
-        animationDuration={animationDuration}
-        hoverCloseDelay={hoverCloseDelay}
-        temporaryHoverClose={temporaryHoverClose}
-        closeMenuImmediately={closeMenuImmediately}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        enableTemporaryHoverClose={enableTemporaryHoverClose}
-        onOpenByKeyboard={onOpenByKeyboard}
-      >
-        <RadixDropdownMenuRoot
-          open={open}
-          onOpenChange={onOpenChange}
-          /**
-           * Necessary for hover mode to work correctly.
-           */
-          modal={false}
-          {...rest}
+      <ContextMenuRootProvider onChildClickOpen={onChildClickOpen}>
+        <ContextMenuProvider
+          mode={rootMode}
+          triggerRef={triggerRef}
+          contentRef={contentRef}
+          inheritedArrowColor={inheritedArrowColor}
+          animatedOpen={animatedOpen}
+          animationDuration={animationDuration}
+          hoverCloseDelay={hoverCloseDelay}
+          temporaryHoverClose={temporaryHoverClose}
+          closeMenuImmediately={closeMenuImmediately}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          enableTemporaryHoverClose={enableTemporaryHoverClose}
+          onOpenByKeyboard={onOpenByKeyboard}
         >
-          {children}
-        </RadixDropdownMenuRoot>
-      </ContextMenuProvider>
+          <RadixDropdownMenuRoot
+            open={open}
+            onOpenChange={onOpenChange}
+            /**
+             * Necessary for hover mode to work correctly.
+             */
+            modal={false}
+            {...rest}
+          >
+            {children}
+          </RadixDropdownMenuRoot>
+        </ContextMenuProvider>
+      </ContextMenuRootProvider>
     );
   }
 ) as ContextMenuType;

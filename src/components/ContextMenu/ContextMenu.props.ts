@@ -123,3 +123,10 @@ export interface ContextMenuContextProps {
    */
   onOpenByKeyboard: (value: boolean) => void;
 }
+
+export interface ContextMenuRootContextProps {
+  /**
+   * The callback function to be called when the menu is opened by child click.
+   */
+  onChildClickOpen: (value: boolean) => void;
+}
