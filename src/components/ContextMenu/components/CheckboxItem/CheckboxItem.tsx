@@ -30,6 +30,9 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onBlur,
       onMouseLeave,
       onSelect,
+      onClick,
+      isCloseMenuOnClick = true,
+
       ...rest
     },
     ref
@@ -37,7 +40,8 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
     const id = useId();
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-    const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
+    const { closeMenuImmediately, isCloseOnClick } =
+      useContextMenuContext(DISPLAY_NAME);
 
     const {
       dataHighlighted,
@@ -72,9 +76,20 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         }}
         data-highlighted={dataHighlighted}
         onSelect={(e) => {
-          closeMenuImmediately(true);
-
           onSelect?.(e);
+
+          if (isCloseOnClick && isCloseMenuOnClick) {
+            closeMenuImmediately(true);
+          }
+        }}
+        onClick={(e) => {
+          e.preventDefault();
+
+          onClick?.(e);
+
+          if (isCloseOnClick && isCloseMenuOnClick) {
+            closeMenuImmediately(true);
+          }
         }}
         onFocus={(e) => {
           handleItemFocus?.();

@@ -37,7 +37,18 @@ const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
 export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
-  ({ children, mode, onOpen, defaultOpen, onAnimatedOpen, ...rest }, ref) => {
+  (
+    {
+      children,
+      mode,
+      onOpen,
+      defaultOpen,
+      onAnimatedOpen,
+      isCloseOnClick = true,
+      ...rest
+    },
+    ref
+  ) => {
     const {
       mode: rootMode,
       open,
@@ -86,6 +97,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
           onMouseLeave={onMouseLeave}
           enableTemporaryHoverClose={enableTemporaryHoverClose}
           onOpenByKeyboard={onOpenByKeyboard}
+          isCloseOnClick={isCloseOnClick}
           isOpen={open}
         >
           <RadixDropdownMenuRoot

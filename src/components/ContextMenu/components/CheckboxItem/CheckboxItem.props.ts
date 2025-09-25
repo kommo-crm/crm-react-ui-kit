@@ -26,4 +26,8 @@ export type CheckboxItemProps = RadixCheckboxItemProps & {
    * By default, the `hasItemIcon` from utils is used.
    */
   hasIconCheckFn?: (children: React.ReactNode) => boolean;
+  /**
+   * Whether the CheckboxItem should close the menu when clicked.
+   */
+  isCloseMenuOnClick?: boolean;
 };

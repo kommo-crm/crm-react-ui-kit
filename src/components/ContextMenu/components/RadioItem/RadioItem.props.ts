@@ -17,4 +17,8 @@ export type RadioItemProps = RadixRadioItemProps & {
    * By default, the `hasItemIcon` from utils is used.
    */
   hasIconCheckFn?: (children: React.ReactNode) => boolean;
+  /**
+   * Whether the RadioItem should close the menu when clicked.
+   */
+  isCloseMenuOnClick?: boolean;
 };

@@ -28,6 +28,9 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onBlur,
       onMouseLeave,
       onSelect,
+      onClick,
+      isCloseMenuOnClick = true,
+
       ...rest
     },
     ref
@@ -35,7 +38,8 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
     const id = useId();
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-    const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
+    const { closeMenuImmediately, isCloseOnClick } =
+      useContextMenuContext(DISPLAY_NAME);
 
     const {
       dataHighlighted,
@@ -60,9 +64,20 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
         data-highlighted={dataHighlighted}
         onSelect={(e) => {
-          closeMenuImmediately(true);
-
           onSelect?.(e);
+
+          if (isCloseOnClick && isCloseMenuOnClick) {
+            closeMenuImmediately(true);
+          }
+        }}
+        onClick={(e) => {
+          e.preventDefault();
+
+          onClick?.(e);
+
+          if (isCloseOnClick && isCloseMenuOnClick) {
+            closeMenuImmediately(true);
+          }
         }}
         onFocus={(e) => {
           handleItemFocus?.();

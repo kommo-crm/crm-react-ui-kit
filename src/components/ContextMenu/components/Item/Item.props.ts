@@ -20,6 +20,12 @@ export type SelectableItemProps = RadixItemProps & {
    * By default, the `hasItemIcon` from utils is used.
    */
   hasIconCheckFn?: (children: React.ReactNode) => boolean;
+  /**
+   * Whether the item should close the menu when clicked.
+   *
+   * @default true
+   */
+  isCloseMenuOnClick?: boolean;
 };
 
 export type NotSelectableItemProps = React.ComponentPropsWithRef<'div'> & {

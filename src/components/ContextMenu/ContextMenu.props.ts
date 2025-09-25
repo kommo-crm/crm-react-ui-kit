@@ -30,6 +30,10 @@ export type ContextMenuRootProps = Omit<
    * Whether the menu is a submenu.
    */
   isSubmenu?: boolean;
+  /**
+   * Whether the menu should close when clicked.
+   */
+  isCloseOnClick?: boolean;
 };
 
 export interface ContextMenuContextProps {
@@ -119,6 +123,10 @@ export interface ContextMenuContextProps {
    * Whether the menu is open.
    */
   isOpen: boolean;
+  /**
+   * Whether the menu should close when clicked.
+   */
+  isCloseOnClick: boolean;
 }
 
 export interface ContextMenuRootContextProps {

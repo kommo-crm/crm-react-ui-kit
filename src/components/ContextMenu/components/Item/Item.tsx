@@ -70,6 +70,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onBlur,
     onMouseLeave,
     onKeyDown,
+    isCloseMenuOnClick = true,
 
     ...rest
   } = props as SelectableItemProps;
@@ -86,7 +87,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
    */
   const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
-  const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
+  const { closeMenuImmediately, isCloseOnClick } =
+    useContextMenuContext(DISPLAY_NAME);
 
   const {
     dataHighlighted,
@@ -142,14 +144,18 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         onSelect={(e) => {
           onSelect?.(e);
 
-          closeMenuImmediately(true);
+          if (isCloseOnClick && isCloseMenuOnClick) {
+            closeMenuImmediately(true);
+          }
         }}
         onClick={(e) => {
           e.preventDefault();
 
           onClick?.(e);
 
-          closeMenuImmediately(true);
+          if (isCloseOnClick && isCloseMenuOnClick) {
+            closeMenuImmediately(true);
+          }
         }}
         data-highlighted={subMenuOpen || dataHighlighted}
         onFocus={(e) => {

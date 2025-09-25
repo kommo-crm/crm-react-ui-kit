@@ -28,6 +28,8 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       onAnimatedOpen,
       defaultOpen,
       isCloseWithRootMenu = false,
+      isCloseOnClick = true,
+
       ...rest
     },
     ref
@@ -98,6 +100,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         setSubMenuOpen={setSubMenuOpen}
         triggerId={triggerId}
         onOpenByKeyboard={onOpenByKeyboard}
+        isCloseOnClick={isCloseOnClick}
         isOpen={isOpen}
       >
         <RadixDropdownMenuRoot
