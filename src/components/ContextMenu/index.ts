@@ -7,3 +7,5 @@ export {
   type ContextMenuHandle,
   type ContextMenuModeType,
 } from './ContextMenu.types';
+
+export { type ContextMenuSubHandle } from './components/Sub';

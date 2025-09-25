@@ -36,6 +36,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       defaultOpen,
+      open,
     } = useContextMenuSubContext(DISPLAY_NAME);
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
 
@@ -84,34 +85,36 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
       >
-        <animated.div
-          style={{
-            position: 'fixed',
-            zIndex: Number.MAX_SAFE_INTEGER - 10,
-            ...springStyles,
-          }}
-          onMouseEnter={(e) => {
-            onMouseEnterContext?.(e);
+        {open && (
+          <animated.div
+            style={{
+              position: 'fixed',
+              zIndex: Number.MAX_SAFE_INTEGER - 10,
+              ...springStyles,
+            }}
+            onMouseEnter={(e) => {
+              onMouseEnterContext?.(e);
 
-            onMouseEnter?.(e);
-          }}
-          onMouseLeave={(e) => {
-            onMouseLeaveContext?.(e);
+              onMouseEnter?.(e);
+            }}
+            onMouseLeave={(e) => {
+              onMouseLeaveContext?.(e);
 
-            onMouseLeave?.(e);
-          }}
-          data-content-wrapper
-        >
-          <RadixDropdownMenuSubContent
-            ref={ref}
-            className={cx(s.sub_content, className)}
-            sideOffset={sideOffset}
-            collisionPadding={collisionPadding}
-            {...rest}
+              onMouseLeave?.(e);
+            }}
+            data-content-wrapper
           >
-            {children}
-          </RadixDropdownMenuSubContent>
-        </animated.div>
+            <RadixDropdownMenuSubContent
+              ref={ref}
+              className={cx(s.sub_content, className)}
+              sideOffset={sideOffset}
+              collisionPadding={collisionPadding}
+              {...rest}
+            >
+              {children}
+            </RadixDropdownMenuSubContent>
+          </animated.div>
+        )}
       </LevelProvider>
     );
   }
