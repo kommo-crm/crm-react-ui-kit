@@ -27,6 +27,7 @@ export const useContextMenuSubMenu = ({
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
+  const [hasHoveredContent, setHasHoveredContent] = useState(false);
 
   const { activeItemId } = useLevelContext(displayName);
 
@@ -66,6 +67,7 @@ export const useContextMenuSubMenu = ({
     onOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
+    setHasHoveredContent(false);
 
     if (closeRootMenu) {
       closeRootMenuImmediately?.();
@@ -170,12 +172,23 @@ export const useContextMenuSubMenu = ({
   };
 
   /**
+   * Handles the mouse enter event of the content.
+   */
+  const handleContentMouseEnter = () => {
+    setHasHoveredContent(true);
+    setIsInsideContent(true);
+  };
+
+  /**
    * Handles the mouse leave event.
    */
   const handleMouseLeave = () => {
     setOpenedByKeyboard(false);
 
-    if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
+    if (
+      (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) ||
+      !hasHoveredContent
+    ) {
       return;
     }
 
@@ -270,5 +283,6 @@ export const useContextMenuSubMenu = ({
     onMouseLeave: handleMouseLeave,
     enableTemporaryHoverClose,
     triggerId,
+    handleContentMouseEnter,
   };
 };

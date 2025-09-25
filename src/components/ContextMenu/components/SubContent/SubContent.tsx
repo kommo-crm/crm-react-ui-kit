@@ -3,11 +3,15 @@ import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropd
 import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
 
+import { mergeRefs } from 'src/lib/utils';
+
 import { LevelProvider } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
+
+import { useContentPositioning } from '../../hooks/useContentPositioning/useContentPositioning';
 
 import type { SubContentProps } from './SubContent.props';
 
@@ -24,6 +28,9 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       collisionPadding = 10,
       onMouseEnter,
       onMouseLeave,
+      alignOffset,
+      disableAutoPositioning = false,
+
       ...rest
     },
     ref
@@ -36,8 +43,19 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       defaultOpen,
+      triggerRef,
+      contentRef,
     } = useContextMenuSubContext(DISPLAY_NAME);
+
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
+
+    const { labelOffset } = useContentPositioning({
+      alignOffset,
+      disableAutoPositioning,
+      triggerRef,
+      contentRef,
+      children,
+    });
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
     const [isPositioned, setIsPositioned] = useState(false);
@@ -103,10 +121,11 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
           data-content-wrapper
         >
           <RadixDropdownMenuSubContent
-            ref={ref}
+            ref={mergeRefs(ref, contentRef)}
             className={cx(s.sub_content, className)}
             sideOffset={sideOffset}
             collisionPadding={collisionPadding}
+            alignOffset={labelOffset}
             {...rest}
           >
             {children}

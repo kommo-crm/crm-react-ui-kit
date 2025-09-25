@@ -57,6 +57,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       closeMenuImmediately,
+      onContentMouseEnter,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { align, labelOffset, isPositioned } = useContentPositioning({
@@ -120,6 +121,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
             arrowPadding={arrowPadding}
             alignOffset={labelOffset}
             onMouseEnter={(e) => {
+              onContentMouseEnter?.();
+
               onMouseEnterContext?.(e);
 
               onMouseEnter?.(e);

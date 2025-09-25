@@ -20,6 +20,8 @@ export function useContextMenuSub({
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
 
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -234,5 +236,7 @@ export function useContextMenuSub({
     handleOpenChange,
     onOpenByKeyboard,
     triggerId,
+    triggerRef,
+    contentRef,
   };
 }

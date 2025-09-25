@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
-import { useStopContextMenuEvents } from '../../hooks/useStopContextMenuEvents/useStopContextMenuEvents';
+import { useStopContextMenuEvents } from '../../hooks';
 
 import type { ItemRightSlotProps } from './ItemRightSlot.props';
 

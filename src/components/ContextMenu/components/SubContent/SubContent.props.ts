@@ -3,4 +3,9 @@ import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropd
 
 export type SubContentProps = ComponentPropsWithoutRef<
   typeof RadixDropdownMenuSubContent
->;
+> & {
+  /**
+   * Whether to disable auto positioning.
+   */
+  disableAutoPositioning?: boolean;
+};

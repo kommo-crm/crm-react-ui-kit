@@ -17,7 +17,8 @@ export function useContentPositioning({
     direction === Direction.UP_RIGHT ||
       direction === Direction.DOWN_RIGHT ||
       direction === Direction.RIGHT_UP ||
-      direction === Direction.RIGHT_DOWN
+      direction === Direction.RIGHT_DOWN ||
+      !direction
       ? 'start'
       : 'end'
   );
@@ -119,7 +120,7 @@ export function useContentPositioning({
    * Positions the content based on the direction and the trigger height.
    */
   useLayoutEffect(() => {
-    if (disableAutoPositioning || !triggerRef?.current) {
+    if (disableAutoPositioning || !triggerRef?.current || !direction) {
       return;
     }
 

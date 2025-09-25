@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useRef,
-  useId,
-  useState,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { forwardRef, useId, useMemo } from 'react';
 import { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -17,11 +10,9 @@ import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus } from '../../hooks';
+import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import type { ItemProps, SelectableItemProps } from './Item.props';
-
-import { ContextMenuItemProvider } from './Item.context';
 
 import s from './Item.module.css';
 
@@ -75,17 +66,15 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
   const id = useId();
 
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
-  const [hasSubmenu, setHasSubmenu] = useState(false);
-
-  const itemRef = useRef<HTMLDivElement>(null);
-
   /**
    * Set the hasIcon state based on the presence of an icon.
    */
   const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
   const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
+
+  const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
+    useSubMenu({ onKeyDown });
 
   const {
     dataHighlighted,
@@ -100,76 +89,46 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     hasSubmenu,
   });
 
-  /**
-   * Set the hasSubmenu state based on the presence of a submenu trigger.
-   */
-  useEffect(() => {
-    if (!itemRef.current) {
-      return;
-    }
+  return withProvider(
+    <RadixDropdownMenuItem
+      ref={mergeRefs(ref, itemRef)}
+      className={cx(s.item, className)}
+      disabled={isDisabled}
+      data-item
+      data-danger={isDanger ? '' : undefined}
+      data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
+      data-has-submenu={hasSubmenu ? '' : undefined}
+      onSelect={(e) => {
+        onSelect?.(e);
 
-    const trigger = itemRef.current.querySelector('[data-submenu-trigger]');
+        closeMenuImmediately(true);
+      }}
+      data-highlighted={subMenuOpen || dataHighlighted}
+      onFocus={(e) => {
+        handleItemFocus?.();
 
-    setHasSubmenu(Boolean(trigger));
-  }, [itemRef]);
+        onFocus?.(e);
+      }}
+      onMouseEnter={(e) => {
+        handleItemMouseEnter?.(e);
 
-  /**
-   * Handle the keydown event for the item.
-   */
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (hasSubmenu && e.key === 'ArrowRight') {
-      setSubMenuOpen(true);
-    }
+        onMouseEnter?.(e);
+      }}
+      onBlur={(e) => {
+        handleItemBlur?.();
 
-    onKeyDown?.(e);
-  };
+        onBlur?.(e);
+      }}
+      onMouseLeave={(e) => {
+        handleItemMouseLeave?.(e);
 
-  return (
-    <ContextMenuItemProvider
-      hasSubmenu={hasSubmenu}
-      subMenuOpen={subMenuOpen}
-      setSubMenuOpen={setSubMenuOpen}
+        onMouseLeave?.(e);
+      }}
+      onKeyDown={handleKeyDown}
+      {...rest}
     >
-      <RadixDropdownMenuItem
-        ref={mergeRefs(ref, itemRef)}
-        className={cx(s.item, className)}
-        disabled={isDisabled}
-        data-item
-        data-danger={isDanger ? '' : undefined}
-        data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        data-has-submenu={hasSubmenu ? '' : undefined}
-        onSelect={(e) => {
-          onSelect?.(e);
-
-          closeMenuImmediately(true);
-        }}
-        data-highlighted={subMenuOpen || dataHighlighted}
-        onFocus={(e) => {
-          handleItemFocus?.();
-
-          onFocus?.(e);
-        }}
-        onMouseEnter={(e) => {
-          handleItemMouseEnter?.(e);
-
-          onMouseEnter?.(e);
-        }}
-        onBlur={(e) => {
-          handleItemBlur?.();
-
-          onBlur?.(e);
-        }}
-        onMouseLeave={(e) => {
-          handleItemMouseLeave?.(e);
-
-          onMouseLeave?.(e);
-        }}
-        onKeyDown={handleKeyDown}
-        {...rest}
-      >
-        {children}
-      </RadixDropdownMenuItem>
-    </ContextMenuItemProvider>
+      {children}
+    </RadixDropdownMenuItem>
   );
 });
 

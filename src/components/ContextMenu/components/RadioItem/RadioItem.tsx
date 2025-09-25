@@ -2,13 +2,15 @@ import React, { forwardRef, useId, useMemo } from 'react';
 import { RadioItem as RadixDropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
+import { mergeRefs } from 'src/lib/utils';
+
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus } from '../../hooks';
+import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import type { RadioItemProps } from './RadioItem.props';
 
@@ -28,6 +30,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onBlur,
       onMouseLeave,
       onSelect,
+      onKeyDown,
       ...rest
     },
     ref
@@ -36,6 +39,9 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
+
+    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
+      useSubMenu({ onKeyDown });
 
     const {
       dataHighlighted,
@@ -47,18 +53,19 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       displayName: DISPLAY_NAME,
       id,
       isDisabled,
+      hasSubmenu,
     });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
-    return (
+    return withProvider(
       <RadixDropdownMenuRadioItem
-        ref={ref}
+        ref={mergeRefs(ref, itemRef)}
         className={cx(s.radio_item, className)}
         disabled={isDisabled}
         data-item
         data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        data-highlighted={dataHighlighted}
+        data-highlighted={subMenuOpen || dataHighlighted}
         onSelect={(e) => {
           closeMenuImmediately(true);
 
@@ -84,6 +91,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
 
           onMouseLeave?.(e);
         }}
+        onKeyDown={handleKeyDown}
         {...rest}
       >
         {children}
