@@ -2,15 +2,13 @@ import React, { forwardRef, useId, useMemo } from 'react';
 import { CheckboxItem as RadixDropdownMenuCheckboxItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
-
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
+import { useContextMenuItemFocus } from '../../hooks';
 
 import type { CheckboxItemProps } from './CheckboxItem.props';
 
@@ -32,8 +30,6 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onBlur,
       onMouseLeave,
       onSelect,
-      onKeyDown,
-
       ...rest
     },
     ref
@@ -42,9 +38,6 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
 
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
     const { closeMenuImmediately } = useContextMenuContext(DISPLAY_NAME);
-
-    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-      useSubMenu({ onKeyDown });
 
     const {
       dataHighlighted,
@@ -56,14 +49,13 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       displayName: DISPLAY_NAME,
       id,
       isDisabled,
-      hasSubmenu,
     });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
-    return withProvider(
+    return (
       <RadixDropdownMenuCheckboxItem
-        ref={mergeRefs(ref, itemRef)}
+        ref={ref}
         className={cx(s.checkbox_item, className)}
         disabled={isDisabled}
         checked={isChecked}
@@ -78,7 +70,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
             onChange(event);
           }
         }}
-        data-highlighted={subMenuOpen || dataHighlighted}
+        data-highlighted={dataHighlighted}
         onSelect={(e) => {
           closeMenuImmediately(true);
 
@@ -104,7 +96,6 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
 
           onMouseLeave?.(e);
         }}
-        onKeyDown={handleKeyDown}
         {...rest}
       >
         {children}

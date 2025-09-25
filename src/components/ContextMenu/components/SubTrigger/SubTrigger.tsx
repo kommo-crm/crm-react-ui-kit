@@ -2,15 +2,13 @@ import React, { forwardRef } from 'react';
 import { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
-
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
+import { useContextMenuItemFocus } from '../../hooks';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -48,12 +46,8 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       triggerId,
-      triggerRef,
       onOpenByKeyboard,
     } = useContextMenuSubContext(DISPLAY_NAME);
-
-    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-      useSubMenu({ onKeyDown });
 
     const {
       dataHighlighted,
@@ -67,12 +61,11 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       isDisabled,
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
-      hasSubmenu,
     });
 
-    return withProvider(
+    return (
       <RadixDropdownMenuSubTrigger
-        ref={mergeRefs(ref, triggerRef, itemRef)}
+        ref={ref}
         className={cx(s.sub_trigger, className)}
         disabled={isDisabled}
         data-item
@@ -80,7 +73,6 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
           hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
         }
         data-highlighted={
-          subMenuOpen ||
           open ||
           dataHighlighted === '' ||
           (mode === ContextMenuMode.CLICK && open)
@@ -108,8 +100,6 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
               (e.currentTarget as HTMLElement).focus();
             }
           }
-
-          handleKeyDown?.(e);
 
           onKeyDown?.(e);
         }}

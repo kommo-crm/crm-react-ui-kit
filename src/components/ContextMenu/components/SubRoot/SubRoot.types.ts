@@ -1,10 +1,9 @@
 import type { ForwardRefExoticComponent, RefAttributes } from 'react';
 
-import { ContextMenuHandle } from '../../ContextMenu.types';
-
 import { ContentProps } from '../Content/Content.props';
+import { TriggerProps } from '../Trigger/Trigger.props';
 
-import { TriggerProps } from './components/Trigger/Trigger.props';
+import { ContextMenuHandle } from '../../ContextMenu.types';
 
 import { ContextMenuSubRootProps } from './SubRoot.props';
 

@@ -7,7 +7,7 @@ import {
 } from '../../ContextMenu.context';
 import { ContextMenuMode } from '../../ContextMenu.enums';
 import { useContextMenuSubMenu } from '../../hooks';
-import { useSubMenuContext } from '../../providers';
+import { useContextMenuItemContext } from '../Item/Item.context';
 
 import { ContextMenuHandle } from '../../ContextMenu.types';
 
@@ -16,8 +16,6 @@ import { Content } from './components/Content/Content';
 
 import { ContextMenuSubRootProps } from './SubRoot.props';
 import { ContextMenuSubRootType } from './SubRoot.types';
-
-import s from './SubRoot.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.SubRoot';
 
@@ -41,7 +39,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { subMenuOpen: subMenuOpenContext, setSubMenuOpen } =
-      useSubMenuContext(DISPLAY_NAME);
+      useContextMenuItemContext(DISPLAY_NAME);
 
     const closeRootMenuImmediately = isCloseWithRootMenu
       ? closeRootMenuImmediatelyContext
@@ -61,8 +59,6 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       enableTemporaryHoverClose,
       triggerId,
       onOpenByKeyboard,
-      handleContentMouseEnter,
-      hasHoveredContent,
     } = useContextMenuSubMenu({
       displayName: DISPLAY_NAME,
       mode: mode,
@@ -98,28 +94,19 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         enableTemporaryHoverClose={enableTemporaryHoverClose}
-        subMenuOpen={isOpen}
+        subMenuOpen={subMenuOpenContext}
         setSubMenuOpen={setSubMenuOpen}
         triggerId={triggerId}
         onOpenByKeyboard={onOpenByKeyboard}
-        onContentMouseEnter={handleContentMouseEnter}
         isOpen={isOpen}
       >
         <RadixDropdownMenuRoot
-          open={isOpen}
+          open={openContext || subMenuOpenContext}
           onOpenChange={onOpenChange}
           modal={false}
           {...rest}
         >
           {children}
-
-          {isOpen && !hasHoveredContent && (
-            <div
-              className={s.blocker}
-              tabIndex={0}
-              onFocus={(e) => e.preventDefault()}
-            />
-          )}
         </RadixDropdownMenuRoot>
       </ContextMenuProvider>
     );

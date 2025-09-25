@@ -4,7 +4,7 @@ export interface UseContentPositioningOptions {
   /**
    * The direction of the content.
    */
-  direction?: DirectionType;
+  direction: DirectionType;
   /**
    * The offset of the content.
    */

@@ -60,12 +60,4 @@ export interface ContextMenuSubContextProps {
    * The callback function to be called when the submenu is opened by keyboard.
    */
   onOpenByKeyboard: (value: boolean) => void;
-  /**
-   * Reference to the DOM element that acts as the submenu trigger.
-   */
-  triggerRef: React.RefObject<HTMLDivElement>;
-  /**
-   * Reference to the DOM element containing the submenu content.
-   */
-  contentRef: React.RefObject<HTMLDivElement>;
 }
