@@ -13,3 +13,12 @@ export type RadioGroupProps = RadixRadioGroupProps & {
    */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
+export type RadioGroupContextProps = {
+  /**
+   * Handler for the selected value.
+   *
+   * Automatically applied to all Radio buttons.
+   */
+  onChange: (value: string) => void;
+};

@@ -10,6 +10,8 @@ import { hasItemIcon } from '../../utils';
 
 import { useContextMenuItemFocus } from '../../hooks';
 
+import { useRadioGroupContext } from '../RadioGroup';
+
 import type { RadioItemProps } from './RadioItem.props';
 
 import s from './RadioItem.module.css';
@@ -30,6 +32,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
+      value,
 
       ...rest
     },
@@ -55,6 +58,8 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
+    const { onChange } = useRadioGroupContext(DISPLAY_NAME);
+
     return (
       <RadixDropdownMenuRadioItem
         ref={ref}
@@ -73,6 +78,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         onClick={(e) => {
           e.preventDefault();
 
+          onChange(value);
           onClick?.(e);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
@@ -99,6 +105,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
 
           onMouseLeave?.(e);
         }}
+        value={value}
         {...rest}
       >
         {children}

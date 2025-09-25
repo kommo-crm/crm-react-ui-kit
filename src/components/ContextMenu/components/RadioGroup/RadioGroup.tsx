@@ -2,8 +2,7 @@ import React from 'react';
 import { RadioGroup as RadixDropdownMenuRadioGroup } from '@radix-ui/react-dropdown-menu';
 
 import { RadioGroupProps } from './RadioGroup.props';
-
-const DISPLAY_NAME = 'ContextMenu.RadioGroup';
+import { RadioGroupProvider, DISPLAY_NAME } from './RadioGroup.context';
 
 export const RadioGroup = ({
   onChange,
@@ -20,7 +19,12 @@ export const RadioGroup = ({
   };
 
   return (
-    <RadixDropdownMenuRadioGroup {...rest} onValueChange={handleValueChange} />
+    <RadioGroupProvider onChange={handleValueChange}>
+      <RadixDropdownMenuRadioGroup
+        {...rest}
+        onValueChange={handleValueChange}
+      />
+    </RadioGroupProvider>
   );
 };
 

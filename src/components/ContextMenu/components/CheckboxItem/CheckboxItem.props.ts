@@ -3,7 +3,7 @@ import type { CheckboxItem as RadixDropdownMenuCheckboxItem } from '@radix-ui/re
 
 type RadixCheckboxItemProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuCheckboxItem>,
-  'disabled' | 'checked' | 'onCheckedChange'
+  'disabled' | 'checked'
 >;
 
 export type CheckboxItemProps = RadixCheckboxItemProps & {
@@ -11,7 +11,7 @@ export type CheckboxItemProps = RadixCheckboxItemProps & {
    * Callback that fires when the checked state changes.
    * Mimics the native input `onChange` event pattern.
    */
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLDivElement>) => void;
   /**
    * Whether the CheckboxItem is disabled.
    */

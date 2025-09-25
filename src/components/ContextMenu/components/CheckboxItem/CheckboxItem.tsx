@@ -32,6 +32,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
+      onCheckedChange,
 
       ...rest
     },
@@ -57,6 +58,18 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
+    const handleCheckedChange = (checked: boolean) => {
+      onCheckedChange?.(checked);
+
+      if (onChange) {
+        const event = {
+          target: { checked },
+        } as React.ChangeEvent<HTMLInputElement>;
+
+        onChange(event);
+      }
+    };
+
     return (
       <RadixDropdownMenuCheckboxItem
         ref={ref}
@@ -65,15 +78,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         checked={isChecked}
         data-item
         data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        onCheckedChange={(checked) => {
-          if (onChange) {
-            const event = {
-              target: { checked },
-            } as React.ChangeEvent<HTMLInputElement>;
-
-            onChange(event);
-          }
-        }}
+        onCheckedChange={handleCheckedChange}
         data-highlighted={dataHighlighted}
         onSelect={(e) => {
           onSelect?.(e);
@@ -86,6 +91,8 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           e.preventDefault();
 
           onClick?.(e);
+
+          handleCheckedChange(!isChecked);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
             closeMenuImmediately(true);
