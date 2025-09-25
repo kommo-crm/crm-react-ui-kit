@@ -47,6 +47,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const {
       triggerRef,
       contentRef,
+      isOpen,
       animatedOpen,
       animationDuration,
       mode,
@@ -85,42 +86,44 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
       >
-        <animated.div
-          style={{
-            zIndex: Number.MAX_SAFE_INTEGER - 10,
-            position: 'fixed',
-            ...springStyles,
-          }}
-          data-content-wrapper
-        >
-          <RadixDropdownMenuContent
-            ref={mergeRefs(contentRef, ref)}
-            className={cx(s.content, className)}
+        {isOpen && (
+          <animated.div
             style={{
-              ...(style || {}),
-              pointerEvents:
-                disableAutoPositioning || isPositioned ? 'auto' : 'none',
+              zIndex: Number.MAX_SAFE_INTEGER - 10,
+              position: 'fixed',
+              ...springStyles,
             }}
-            collisionBoundary={collisionBoundary}
-            side={directionToSide[direction]}
-            align={align}
-            arrowPadding={arrowPadding}
-            alignOffset={labelOffset}
-            onMouseEnter={(e) => {
-              onMouseEnterContext?.(e);
-
-              onMouseEnter?.(e);
-            }}
-            onMouseLeave={(e) => {
-              onMouseLeaveContext?.(e);
-
-              onMouseLeave?.(e);
-            }}
-            {...rest}
+            data-content-wrapper
           >
-            {children}
-          </RadixDropdownMenuContent>
-        </animated.div>
+            <RadixDropdownMenuContent
+              ref={mergeRefs(contentRef, ref)}
+              className={cx(s.content, className)}
+              style={{
+                ...(style || {}),
+                pointerEvents:
+                  disableAutoPositioning || isPositioned ? 'auto' : 'none',
+              }}
+              collisionBoundary={collisionBoundary}
+              side={directionToSide[direction]}
+              align={align}
+              arrowPadding={arrowPadding}
+              alignOffset={labelOffset}
+              onMouseEnter={(e) => {
+                onMouseEnterContext?.(e);
+
+                onMouseEnter?.(e);
+              }}
+              onMouseLeave={(e) => {
+                onMouseLeaveContext?.(e);
+
+                onMouseLeave?.(e);
+              }}
+              {...rest}
+            >
+              {children}
+            </RadixDropdownMenuContent>
+          </animated.div>
+        )}
       </LevelProvider>
     );
   }

@@ -86,6 +86,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
           onMouseLeave={onMouseLeave}
           enableTemporaryHoverClose={enableTemporaryHoverClose}
           onOpenByKeyboard={onOpenByKeyboard}
+          isOpen={open}
         >
           <RadixDropdownMenuRoot
             open={open}

@@ -122,6 +122,10 @@ export interface ContextMenuContextProps {
    * The callback function to be called when the menu is opened by keyboard.
    */
   onOpenByKeyboard: (value: boolean) => void;
+  /**
+   * Whether the menu is open.
+   */
+  isOpen: boolean;
 }
 
 export interface ContextMenuRootContextProps {

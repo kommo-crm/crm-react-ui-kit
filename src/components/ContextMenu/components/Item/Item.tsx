@@ -55,6 +55,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     isDanger,
     hasIconCheckFn = hasItemIcon,
     onSelect,
+    onClick,
     onFocus,
     onMouseEnter,
     onBlur,
@@ -100,6 +101,13 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
       data-has-submenu={hasSubmenu ? '' : undefined}
       onSelect={(e) => {
         onSelect?.(e);
+
+        closeMenuImmediately(true);
+      }}
+      onClick={(e) => {
+        e.preventDefault();
+
+        onClick?.(e);
 
         closeMenuImmediately(true);
       }}

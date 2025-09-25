@@ -103,6 +103,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         triggerId={triggerId}
         onOpenByKeyboard={onOpenByKeyboard}
         onContentMouseEnter={handleContentMouseEnter}
+        isOpen={isOpen}
       >
         <RadixDropdownMenuRoot
           open={isOpen}
