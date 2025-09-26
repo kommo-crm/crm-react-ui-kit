@@ -149,7 +149,13 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           }
         }}
         onClick={(e) => {
-          e.preventDefault();
+          const target = e.target as HTMLElement;
+
+          const isLink = target.closest('a');
+
+          if (!isLink) {
+            e.preventDefault();
+          }
 
           onClick?.(e);
 
