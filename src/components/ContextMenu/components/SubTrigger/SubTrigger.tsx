@@ -10,7 +10,7 @@ import { useContextMenuSubContext } from '../Sub/Sub.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus } from '../../hooks';
+import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -52,6 +52,9 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onOpenByKeyboard,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
+    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
+      useSubMenu({ onKeyDown });
+
     const {
       dataHighlighted,
       onFocus: handleItemFocus,
@@ -64,11 +67,12 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       isDisabled,
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
+      hasSubmenu,
     });
 
-    return (
+    return withProvider(
       <RadixDropdownMenuSubTrigger
-        ref={mergeRefs(triggerRef, ref)}
+        ref={mergeRefs(ref, triggerRef, itemRef)}
         className={cx(s.sub_trigger, className)}
         disabled={isDisabled}
         data-item
@@ -76,6 +80,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
           hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
         }
         data-highlighted={
+          subMenuOpen ||
           open ||
           dataHighlighted === '' ||
           (mode === ContextMenuMode.CLICK && open)
@@ -103,6 +108,8 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
               (e.currentTarget as HTMLElement).focus();
             }
           }
+
+          handleKeyDown?.(e);
 
           onKeyDown?.(e);
         }}

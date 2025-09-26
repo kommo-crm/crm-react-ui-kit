@@ -2,13 +2,15 @@ import React, { forwardRef, useId, useMemo } from 'react';
 import { CheckboxItem as RadixDropdownMenuCheckboxItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
+import { mergeRefs } from 'src/lib/utils';
+
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus } from '../../hooks';
+import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import type { CheckboxItemProps } from './CheckboxItem.props';
 
@@ -33,6 +35,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onClick,
       isCloseMenuOnClick = true,
       onCheckedChange,
+      onKeyDown,
 
       ...rest
     },
@@ -44,6 +47,9 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
     const { closeMenuImmediately, isCloseOnClick } =
       useContextMenuContext(DISPLAY_NAME);
 
+    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
+      useSubMenu({ onKeyDown });
+
     const {
       dataHighlighted,
       onFocus: handleItemFocus,
@@ -54,6 +60,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       displayName: DISPLAY_NAME,
       id,
       isDisabled,
+      hasSubmenu,
     });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
@@ -70,16 +77,24 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       }
     };
 
-    return (
+    return withProvider(
       <RadixDropdownMenuCheckboxItem
-        ref={ref}
+        ref={mergeRefs(ref, itemRef)}
         className={cx(s.checkbox_item, className)}
         disabled={isDisabled}
         checked={isChecked}
         data-item
         data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        onCheckedChange={handleCheckedChange}
-        data-highlighted={dataHighlighted}
+        onCheckedChange={(checked) => {
+          if (onChange) {
+            const event = {
+              target: { checked },
+            } as React.ChangeEvent<HTMLInputElement>;
+
+            onChange(event);
+          }
+        }}
+        data-highlighted={subMenuOpen || dataHighlighted}
         onSelect={(e) => {
           onSelect?.(e);
 
@@ -118,6 +133,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
 
           onMouseLeave?.(e);
         }}
+        onKeyDown={handleKeyDown}
         {...rest}
       >
         {children}

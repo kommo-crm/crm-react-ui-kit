@@ -2,13 +2,15 @@ import React, { forwardRef, useId, useMemo } from 'react';
 import { RadioItem as RadixDropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
+import { mergeRefs } from 'src/lib/utils';
+
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus } from '../../hooks';
+import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import { useRadioGroupContext } from '../RadioGroup';
 
@@ -33,6 +35,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onClick,
       isCloseMenuOnClick = true,
       value,
+      onKeyDown,
 
       ...rest
     },
@@ -44,6 +47,9 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
     const { closeMenuImmediately, isCloseOnClick } =
       useContextMenuContext(DISPLAY_NAME);
 
+    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
+      useSubMenu({ onKeyDown });
+
     const {
       dataHighlighted,
       onFocus: handleItemFocus,
@@ -54,20 +60,22 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       displayName: DISPLAY_NAME,
       id,
       isDisabled,
+      hasSubmenu,
     });
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
     const { onChange } = useRadioGroupContext(DISPLAY_NAME);
 
-    return (
+    return withProvider(
       <RadixDropdownMenuRadioItem
-        ref={ref}
+        ref={mergeRefs(ref, itemRef)}
         className={cx(s.radio_item, className)}
         disabled={isDisabled}
         data-item
         data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        data-highlighted={dataHighlighted}
+        data-highlighted={subMenuOpen || dataHighlighted}
+        value={value}
         onSelect={(e) => {
           onSelect?.(e);
 
@@ -105,7 +113,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
 
           onMouseLeave?.(e);
         }}
-        value={value}
+        onKeyDown={handleKeyDown}
         {...rest}
       >
         {children}

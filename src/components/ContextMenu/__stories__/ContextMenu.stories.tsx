@@ -96,6 +96,8 @@ function App() {
             </Text>
           </ContextMenu.Label>
 
+          <ContextMenu.Separator />
+
           <ContextMenu.Item isSelectable={false}>
             <Text theme={TextContextMenuTheme} size="l">
               <b>${i18n.t('Workspace')}:</b> Kommo
@@ -175,8 +177,6 @@ function App() {
             </Text>
           </ContextMenu.Item>
 
-          <ContextMenu.Separator />
-
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger>
               <Text theme={TextContextMenuTheme} size="l">
@@ -189,7 +189,15 @@ function App() {
             </ContextMenu.SubTrigger>
 
             <ContextMenu.Portal>
-              <ContextMenu.SubContent>
+              <ContextMenu.SubContent alignOffset={-2}>
+                <ContextMenu.Label>
+                  <Text theme={TextSecondaryDarkTheme} size="l">
+                    {i18n.t('Label')}
+                  </Text>
+                </ContextMenu.Label>
+
+                <ContextMenu.Separator />
+
                 <ContextMenu.Item>
                   <Text theme={TextContextMenuTheme} size="l">
                     ${i18n.t('Contact')} 1
@@ -275,6 +283,8 @@ const StoryComponent = ({
             </Text>
           </ContextMenu.Label>
 
+          <ContextMenu.Separator />
+
           <ContextMenu.Item isSelectable={false}>
             <Text theme={TextContextMenuTheme} size="l">
               <b>{i18n.t('Workspace')}:</b> Kommo
@@ -357,8 +367,6 @@ const StoryComponent = ({
             </Text>
           </ContextMenu.Item>
 
-          <ContextMenu.Separator />
-
           <ContextMenu.Sub mode={subMenuMode}>
             <ContextMenu.SubTrigger>
               <Text theme={TextContextMenuTheme} size="l">
@@ -371,7 +379,15 @@ const StoryComponent = ({
             </ContextMenu.SubTrigger>
 
             <ContextMenu.Portal>
-              <ContextMenu.SubContent>
+              <ContextMenu.SubContent alignOffset={-2}>
+                <ContextMenu.Label>
+                  <Text theme={TextSecondaryDarkTheme} size="l">
+                    {i18n.t('Label')}
+                  </Text>
+                </ContextMenu.Label>
+
+                <ContextMenu.Separator />
+
                 <ContextMenu.Item>
                   <Text theme={TextContextMenuTheme} size="l">
                     {i18n.t('Contact')} 1

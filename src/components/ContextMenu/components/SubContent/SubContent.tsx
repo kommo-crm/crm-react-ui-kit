@@ -11,6 +11,8 @@ import { useContextMenuSubContext } from '../Sub/Sub.context';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
 
+import { useContentPositioning } from '../../hooks/useContentPositioning/useContentPositioning';
+
 import type { SubContentProps } from './SubContent.props';
 
 import s from './SubContent.module.css';
@@ -26,6 +28,9 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       collisionPadding = 10,
       onMouseEnter,
       onMouseLeave,
+      alignOffset,
+      disableAutoPositioning = false,
+
       ...rest
     },
     ref
@@ -39,9 +44,19 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       onMouseLeave: onMouseLeaveContext,
       defaultOpen,
       open,
+      triggerRef,
       contentRef,
     } = useContextMenuSubContext(DISPLAY_NAME);
+
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
+
+    const { labelOffset } = useContentPositioning({
+      alignOffset,
+      disableAutoPositioning,
+      triggerRef,
+      contentRef,
+      children,
+    });
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
     const [isPositioned, setIsPositioned] = useState(false);
@@ -112,6 +127,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
               className={cx(s.sub_content, className)}
               sideOffset={sideOffset}
               collisionPadding={collisionPadding}
+              alignOffset={labelOffset}
               {...rest}
             >
               {children}
