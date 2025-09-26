@@ -11,7 +11,7 @@ export type CheckboxItemProps = RadixCheckboxItemProps & {
    * Callback that fires when the checked state changes.
    * Mimics the native input `onChange` event pattern.
    */
-  onChange?: (e: React.ChangeEvent<HTMLDivElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /**
    * Whether the CheckboxItem is disabled.
    */

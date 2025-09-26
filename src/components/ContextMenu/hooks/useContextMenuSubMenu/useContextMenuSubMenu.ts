@@ -46,6 +46,8 @@ export const useContextMenuSubMenu = ({
    */
   const mode = isTouchDevice ? ContextMenuMode.CLICK : rootMode;
 
+  const isOpen = subMenuOpen || open;
+
   /**
    * Clears the timers.
    */
@@ -117,8 +119,6 @@ export const useContextMenuSubMenu = ({
       if (defaultOpen !== undefined) {
         return;
       }
-
-      onChildClickOpen?.(value);
     }
 
     if (value) {
@@ -261,9 +261,21 @@ export const useContextMenuSubMenu = ({
    */
   const inheritedArrowColor = useInheritedArrowColor(open, contentRef);
 
+  /**
+   * This effect is used to call the onChildClickOpen callback function
+   * when the submenu is opened or closed by child click.
+   */
+  useEffect(() => {
+    if (mode === ContextMenuMode.CLICK && isOpen) {
+      onChildClickOpen?.(true);
+    } else if (mode === ContextMenuMode.CLICK && !isOpen) {
+      onChildClickOpen?.(false);
+    }
+  }, [isOpen, mode]);
+
   return {
-    open,
     mode,
+    isOpen,
     onOpenChange: handleOpenChange,
     onOpenByKeyboard,
     inheritedArrowColor,

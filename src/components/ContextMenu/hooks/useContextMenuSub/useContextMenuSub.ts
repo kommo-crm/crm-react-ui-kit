@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
-import { useIsTouchDevice } from '..';
+import { useClickOutside, useIsTouchDevice } from '..';
 import { ContextMenuMode } from '../../ContextMenu.enums';
 import {
   useContextMenuContext,
@@ -25,6 +25,8 @@ export function useContextMenuSub({
 
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
 
   const isTouchDevice = useIsTouchDevice();
 
@@ -241,6 +243,11 @@ export function useContextMenuSub({
     }
   }, [open, mode]);
 
+  useClickOutside({
+    refs: [contentRef, triggerRef],
+    handler: handleCloseImmediate,
+  });
+
   return {
     open,
     setOpen,
@@ -251,5 +258,7 @@ export function useContextMenuSub({
     handleOpenChange,
     onOpenByKeyboard,
     triggerId,
+    contentRef,
+    triggerRef,
   };
 }

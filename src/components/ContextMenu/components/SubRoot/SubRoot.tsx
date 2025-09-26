@@ -48,7 +48,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       : undefined;
     const {
       mode: rootMode,
-      open: openContext,
+      isOpen,
       onOpenChange,
       triggerRef,
       contentRef,
@@ -80,8 +80,6 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       onOpenByKeyboard,
     }));
 
-    const isOpen = subMenuOpenContext || openContext;
-
     return (
       <ContextMenuProvider
         mode={rootMode}
@@ -104,7 +102,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         isOpen={isOpen}
       >
         <RadixDropdownMenuRoot
-          open={openContext || subMenuOpenContext}
+          open={isOpen}
           onOpenChange={onOpenChange}
           modal={false}
           {...rest}

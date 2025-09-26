@@ -2,6 +2,8 @@ import React, { forwardRef } from 'react';
 import { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
+import { mergeRefs } from 'src/lib/utils';
+
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
@@ -46,6 +48,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       triggerId,
+      triggerRef,
       onOpenByKeyboard,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
@@ -65,7 +68,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
 
     return (
       <RadixDropdownMenuSubTrigger
-        ref={ref}
+        ref={mergeRefs(triggerRef, ref)}
         className={cx(s.sub_trigger, className)}
         disabled={isDisabled}
         data-item

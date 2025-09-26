@@ -5,3 +5,4 @@ export { useContentPositioning } from './useContentPositioning/useContentPositio
 export { useContextMenuSub } from './useContextMenuSub/useContextMenuSub';
 export { useContextMenuItemFocus } from './useContextMenuItemFocus/useContextMenuItemFocus';
 export { useIsTouchDevice } from './useIsTouchDevice/useIsTouchDevice';
+export { useClickOutside } from './useClickOutside/useClickOutside';

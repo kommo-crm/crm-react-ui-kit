@@ -23,6 +23,8 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
       handleOpenChange,
       triggerId,
       onOpenByKeyboard,
+      contentRef,
+      triggerRef,
     } = useContextMenuSub({
       displayName: DISPLAY_NAME,
       mode,
@@ -46,6 +48,8 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
         onMouseLeave={handleMouseLeave}
         onOpenByKeyboard={onOpenByKeyboard}
         triggerId={triggerId}
+        contentRef={contentRef}
+        triggerRef={triggerRef}
       >
         <RadixDropdownMenuSub
           open={open}

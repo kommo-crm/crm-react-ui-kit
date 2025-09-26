@@ -3,6 +3,8 @@ import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropd
 import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
 
+import { mergeRefs } from 'src/lib/utils';
+
 import { LevelProvider } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
@@ -37,6 +39,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       onMouseLeave: onMouseLeaveContext,
       defaultOpen,
       open,
+      contentRef,
     } = useContextMenuSubContext(DISPLAY_NAME);
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
 
@@ -105,7 +108,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
             data-content-wrapper
           >
             <RadixDropdownMenuSubContent
-              ref={ref}
+              ref={mergeRefs(contentRef, ref)}
               className={cx(s.sub_content, className)}
               sideOffset={sideOffset}
               collisionPadding={collisionPadding}
