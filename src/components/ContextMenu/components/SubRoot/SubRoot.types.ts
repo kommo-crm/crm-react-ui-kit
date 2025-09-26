@@ -14,6 +14,10 @@ export type ContextMenuSubRootComponentType = ForwardRefExoticComponent<
 export interface ContextMenuSubRootType
   extends ContextMenuSubRootComponentType {
   Root: ContextMenuSubRootComponentType;
-  Content: React.FC<ContentProps>;
-  Trigger: React.FC<TriggerProps>;
+  Content: ForwardRefExoticComponent<
+    ContentProps & RefAttributes<HTMLDivElement>
+  >;
+  Trigger: ForwardRefExoticComponent<
+    TriggerProps & RefAttributes<HTMLButtonElement>
+  >;
 }
