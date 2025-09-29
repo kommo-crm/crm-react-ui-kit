@@ -8,6 +8,8 @@ import {
 } from '../../ContextMenu.context';
 import { useLevelContext } from '../../providers/LevelProvider';
 
+import { ContextMenuModeType } from '../../ContextMenu.types';
+
 import { UseContextMenuSubOptions } from './useContextMenuSub.types';
 
 export function useContextMenuSub({
@@ -15,6 +17,7 @@ export function useContextMenuSub({
   mode: initialMode,
   defaultOpen,
   onOpen,
+  isCloseWithRootMenu,
 }: UseContextMenuSubOptions) {
   const triggerId = useId();
 
@@ -22,6 +25,9 @@ export function useContextMenuSub({
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
+  const [isChildOpen, setIsChildOpen] = useState(false);
+  const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
+  const [isSubRootOpen, setIsSubRootOpen] = useState(false);
 
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -33,9 +39,17 @@ export function useContextMenuSub({
   const { hoverCloseDelay, animationDuration } =
     useContextMenuContext(displayName);
 
-  const { onChildClickOpen } = useContextMenuRootContext(displayName);
+  const { closeRootMenuImmediately } = useContextMenuRootContext(displayName);
 
-  const { activeItemId } = useLevelContext(displayName);
+  const { activeItemId, onChildOpen, onSubRootOpen } =
+    useLevelContext(displayName);
+
+  const handleSubmenuOpen = (value: boolean) => {
+    /**
+     * Important for the case of Sub -> SubRoot nesting.
+     */
+    setTimeout(() => onSubRootOpen?.(value), 0);
+  };
 
   /**
    * The mode of the submenu.
@@ -65,8 +79,13 @@ export function useContextMenuSub({
     setAnimatedOpen(false);
     setOpen(false);
     onOpen?.(false);
+    handleSubmenuOpen(false);
     setIsInsideContent(false);
     setOpenedByKeyboard(false);
+
+    if (isCloseWithRootMenu) {
+      closeRootMenuImmediately?.();
+    }
   };
 
   /**
@@ -76,19 +95,21 @@ export function useContextMenuSub({
     clearTimers();
 
     if (mode === ContextMenuMode.HOVER) {
+      if (isChildOpen && childMode === ContextMenuMode.CLICK) {
+        return;
+      }
+
       setAnimatedOpen(false);
 
       closeTimerRef.current = setTimeout(() => {
         setOpen(false);
         onOpen?.(false);
+        handleSubmenuOpen(false);
         setIsInsideContent(false);
         setOpenedByKeyboard(false);
       }, animationDuration);
     } else {
-      setOpen(false);
-      onOpen?.(false);
-      setIsInsideContent(false);
-      setOpenedByKeyboard(false);
+      handleCloseImmediate();
     }
   };
 
@@ -99,6 +120,7 @@ export function useContextMenuSub({
     if (defaultOpen !== undefined) {
       setOpen(defaultOpen);
       onOpen?.(defaultOpen);
+      handleSubmenuOpen(defaultOpen);
       setAnimatedOpen(defaultOpen);
       setOpenedByKeyboard(false);
 
@@ -108,6 +130,7 @@ export function useContextMenuSub({
     if (mode === ContextMenuMode.CLICK) {
       setOpen(value);
       onOpen?.(value);
+      handleSubmenuOpen(value);
       setAnimatedOpen(value);
 
       return;
@@ -125,6 +148,7 @@ export function useContextMenuSub({
 
       setOpen(true);
       onOpen?.(true);
+      handleSubmenuOpen(true);
     } else {
       requestClose();
     }
@@ -164,6 +188,7 @@ export function useContextMenuSub({
 
       setAnimatedOpen(true);
       onOpen?.(true);
+      handleSubmenuOpen(true);
       setOpen(true);
       setIsInsideContent(true);
     }
@@ -188,6 +213,40 @@ export function useContextMenuSub({
   };
 
   /**
+   * The callback function to be called when the submenu is opened by child click.
+   */
+  const handleChildOpen = (
+    value: boolean,
+    childModeValue: ContextMenuModeType
+  ) => {
+    setIsChildOpen(value);
+    setChildMode(childModeValue);
+
+    /**
+     * Important for the case of Sub -> SubRoot nesting.
+     */
+    if (value && childModeValue === ContextMenuMode.CLICK) {
+      onChildOpen?.(value, childModeValue);
+    }
+  };
+
+  /**
+   * Handles the click outside event.
+   */
+  const handleClickOutside = () => {
+    if (!isSubRootOpen) {
+      handleCloseImmediate();
+    }
+  };
+
+  /**
+   * The callback function to be called when the subroot is opened.
+   */
+  const handleSubRootOpen = (value: boolean) => {
+    setIsSubRootOpen(value);
+  };
+
+  /**
    * Closes the submenu when the active item id changes.
    */
   useEffect(() => {
@@ -200,11 +259,7 @@ export function useContextMenuSub({
    * Handles the hover close delay.
    */
   useEffect(() => {
-    if (!open || mode !== ContextMenuMode.HOVER) {
-      return;
-    }
-
-    if (openedByKeyboard) {
+    if (!open || mode !== ContextMenuMode.HOVER || openedByKeyboard) {
       return;
     }
 
@@ -232,24 +287,23 @@ export function useContextMenuSub({
   }, [mode, open, isInsideContent, hoverCloseDelay, openedByKeyboard]);
 
   /**
-   * This effect is used to call the onChildClickOpen callback function
+   * This effect is used to call the onChildOpen callback function
    * when the submenu is opened or closed by child click.
    */
   useEffect(() => {
-    if (mode === ContextMenuMode.CLICK && open) {
-      onChildClickOpen?.(true);
-    } else if (mode === ContextMenuMode.CLICK && !open) {
-      onChildClickOpen?.(false);
-    }
+    onChildOpen?.(open, mode);
   }, [open, mode]);
 
+  /**
+   * Handles the click outside event.
+   */
   useClickOutside({
     refs: [contentRef, triggerRef],
-    handler: handleCloseImmediate,
+    handler: handleClickOutside,
   });
 
   return {
-    open,
+    isOpen: open,
     setOpen,
     animatedOpen,
     startAnimation: () => setAnimatedOpen(true),
@@ -260,5 +314,8 @@ export function useContextMenuSub({
     triggerId,
     contentRef,
     triggerRef,
+    onChildOpen: handleChildOpen,
+    onSubRootOpen: handleSubRootOpen,
+    closeMenuImmediately: handleCloseImmediate,
   };
 }

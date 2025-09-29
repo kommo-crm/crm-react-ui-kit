@@ -6,8 +6,6 @@ import { mergeRefs } from 'src/lib/utils';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
-import { useContextMenuContext } from '../../ContextMenu.context';
-
 import { hasItemIcon } from '../../utils';
 
 import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
@@ -27,6 +25,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
       children,
       isSelectable,
       hasIconCheckFn = hasItemIcon,
+
       ...rest
     } = props;
 
@@ -74,7 +73,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
   const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
   const { closeMenuImmediately, isCloseOnClick } =
-    useContextMenuContext(DISPLAY_NAME);
+    useLevelContext(DISPLAY_NAME);
 
   const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
     useSubMenu({ onKeyDown });
@@ -90,6 +89,10 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     id,
     isDisabled,
     hasSubmenu,
+    onFocus,
+    onBlur,
+    onMouseEnter,
+    onMouseLeave,
   });
 
   return withProvider(
@@ -105,7 +108,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         onSelect?.(e);
 
         if (isCloseOnClick && isCloseMenuOnClick) {
-          closeMenuImmediately(true);
+          closeMenuImmediately();
         }
       }}
       onClick={(e) => {
@@ -120,30 +123,14 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         onClick?.(e);
 
         if (isCloseOnClick && isCloseMenuOnClick) {
-          closeMenuImmediately(true);
+          closeMenuImmediately();
         }
       }}
       data-highlighted={subMenuOpen || dataHighlighted}
-      onFocus={(e) => {
-        handleItemFocus?.();
-
-        onFocus?.(e);
-      }}
-      onMouseEnter={(e) => {
-        handleItemMouseEnter?.(e);
-
-        onMouseEnter?.(e);
-      }}
-      onBlur={(e) => {
-        handleItemBlur?.();
-
-        onBlur?.(e);
-      }}
-      onMouseLeave={(e) => {
-        handleItemMouseLeave?.(e);
-
-        onMouseLeave?.(e);
-      }}
+      onFocus={handleItemFocus}
+      onMouseEnter={handleItemMouseEnter}
+      onBlur={handleItemBlur}
+      onMouseLeave={handleItemMouseLeave}
       onKeyDown={handleKeyDown}
       {...rest}
     >

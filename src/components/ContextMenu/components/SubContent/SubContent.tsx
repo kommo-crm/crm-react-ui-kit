@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
-import { LevelProvider } from '../../providers/LevelProvider';
+import { LevelProvider, useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
@@ -30,6 +30,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       onMouseLeave,
       alignOffset,
       disableAutoPositioning = false,
+      onEscapeKeyDown,
 
       ...rest
     },
@@ -43,12 +44,18 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       defaultOpen,
-      open,
+      isOpen,
       triggerRef,
       contentRef,
+      onChildOpen,
+      onSubRootOpen,
+      closeMenuImmediately,
+      isCloseOnClick,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
+
+    const { level } = useLevelContext(DISPLAY_NAME);
 
     const { labelOffset } = useContentPositioning({
       alignOffset,
@@ -102,8 +109,13 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
         setHasItemWithIcon={setHasItemWithIcon}
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
+        onChildOpen={onChildOpen}
+        onSubRootOpen={onSubRootOpen}
+        isCloseOnClick={isCloseOnClick}
+        closeMenuImmediately={closeMenuImmediately}
+        level={level + 1}
       >
-        {open && (
+        {isOpen && (
           <animated.div
             style={{
               position: 'fixed',
@@ -128,6 +140,11 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
               sideOffset={sideOffset}
               collisionPadding={collisionPadding}
               alignOffset={labelOffset}
+              onEscapeKeyDown={(e) => {
+                closeMenuImmediately();
+
+                onEscapeKeyDown?.(e);
+              }}
               {...rest}
             >
               {children}

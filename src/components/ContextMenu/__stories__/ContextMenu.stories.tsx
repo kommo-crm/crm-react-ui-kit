@@ -305,6 +305,7 @@ const StoryComponent = ({
                     padding: '10px 16px',
                     color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
                     cursor: 'pointer',
+                    zIndex: 6,
                   }}
                 >
                   <ContextMenuTriggerIcon />

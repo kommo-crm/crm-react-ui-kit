@@ -6,6 +6,8 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { contextMenuBus } from '../../utils';
 
+import { ContextMenuModeType } from '../../ContextMenu.types';
+
 import { UseContextMenuOptions } from './useContextMenu.types';
 
 export const useContextMenu = ({
@@ -23,7 +25,9 @@ export const useContextMenu = ({
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
-  const [isChildClickOpen, setIsChildClickOpen] = useState(false);
+  const [isChildOpen, setIsChildOpen] = useState(false);
+  const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
+  const [isRootContentBlocked, setIsRootContentBlocked] = useState(false);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -60,6 +64,7 @@ export const useContextMenu = ({
     onOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
+    setIsRootContentBlocked(false);
   };
 
   /**
@@ -69,7 +74,7 @@ export const useContextMenu = ({
     clearTimers();
 
     if (mode === ContextMenuMode.HOVER || temporaryHoverClose) {
-      if (isChildClickOpen) {
+      if (isChildOpen && childMode === ContextMenuMode.CLICK) {
         return;
       }
 
@@ -93,6 +98,13 @@ export const useContextMenu = ({
     onOpen?.(false);
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
+  };
+
+  /**
+   * Handles the submenu open state change.
+   */
+  const handleSubmenuOpen = (value: boolean) => {
+    setIsRootContentBlocked(value);
   };
 
   /**
@@ -192,8 +204,16 @@ export const useContextMenu = ({
   /**
    * The callback function to be called when the menu is opened by child click.
    */
-  const handleChildClickOpen = (value: boolean) => {
-    setIsChildClickOpen(value);
+  const handleChildOpen = (
+    value: boolean,
+    childModeValue: ContextMenuModeType
+  ) => {
+    if (!value) {
+      setIsRootContentBlocked(false);
+    }
+
+    setIsChildOpen(value);
+    setChildMode(childModeValue);
   };
 
   /**
@@ -268,6 +288,9 @@ export const useContextMenu = ({
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     enableTemporaryHoverClose,
-    onChildClickOpen: handleChildClickOpen,
+    onChildOpen: handleChildOpen,
+    onSubmenuOpen: handleSubmenuOpen,
+    isRootContentBlocked,
+    isChildOpen,
   };
 };

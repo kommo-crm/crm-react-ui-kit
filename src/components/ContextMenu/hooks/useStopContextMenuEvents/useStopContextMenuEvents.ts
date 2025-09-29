@@ -7,6 +7,7 @@ export const useStopContextMenuEvents = (
 ) => {
   const stop = useCallback((e: React.SyntheticEvent) => {
     e.stopPropagation();
+    e.preventDefault();
   }, []);
 
   const wrap =

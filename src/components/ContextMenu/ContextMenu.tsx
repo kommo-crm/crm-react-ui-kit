@@ -45,6 +45,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       defaultOpen,
       onAnimatedOpen,
       isCloseOnClick = true,
+
       ...rest
     },
     ref
@@ -65,7 +66,10 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       onMouseLeave,
       enableTemporaryHoverClose,
       onOpenByKeyboard,
-      onChildClickOpen,
+      onChildOpen,
+      onSubmenuOpen,
+      isRootContentBlocked,
+      isChildOpen,
     } = useContextMenu({
       mode: mode as ContextMenuMode,
       defaultOpen,
@@ -82,7 +86,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
     }));
 
     return (
-      <ContextMenuRootProvider onChildClickOpen={onChildClickOpen}>
+      <ContextMenuRootProvider closeRootMenuImmediately={closeMenuImmediately}>
         <ContextMenuProvider
           mode={rootMode}
           triggerRef={triggerRef}
@@ -98,7 +102,11 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
           enableTemporaryHoverClose={enableTemporaryHoverClose}
           onOpenByKeyboard={onOpenByKeyboard}
           isCloseOnClick={isCloseOnClick}
+          onChildOpen={onChildOpen}
           isOpen={open}
+          onSubmenuOpen={onSubmenuOpen}
+          isRootContentBlocked={isRootContentBlocked}
+          isChildOpen={isChildOpen}
         >
           <RadixDropdownMenuRoot
             open={open}

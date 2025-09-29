@@ -6,7 +6,10 @@ import { useSpring, animated, easings } from '@react-spring/web';
 
 import { mergeRefs } from 'src/lib/utils';
 
-import { LevelProvider } from '../../../../providers/LevelProvider';
+import {
+  LevelProvider,
+  useLevelContext,
+} from '../../../../providers/LevelProvider';
 
 import { useContextMenuContext } from '../../../../ContextMenu.context';
 
@@ -22,9 +25,9 @@ import { Direction } from '../../../Content';
 
 import { directionToSide } from '../../../Content';
 
-import s from '../../../Content/Content.module.css';
+import s from './Content.module.css';
 
-const DISPLAY_NAME = 'ContextMenu.Content';
+const DISPLAY_NAME = 'ContextMenu.SubRoot.Content';
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   (
@@ -58,8 +61,11 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onMouseLeave: onMouseLeaveContext,
       closeMenuImmediately,
       isOpen,
-      onContentMouseEnter,
+      onChildOpen,
+      isCloseOnClick,
     } = useContextMenuContext(DISPLAY_NAME);
+
+    const { level } = useLevelContext(DISPLAY_NAME);
 
     const { align, labelOffset, isPositioned } = useContentPositioning({
       direction,
@@ -87,6 +93,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'ArrowLeft') {
         closeMenuImmediately();
+
         focusParentItem(triggerRef.current);
       }
 
@@ -99,6 +106,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         setHasItemWithIcon={setHasItemWithIcon}
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
+        onChildOpen={onChildOpen}
+        isCloseOnClick={isCloseOnClick}
+        closeMenuImmediately={closeMenuImmediately}
+        level={level + 1}
       >
         {isOpen && (
           <animated.div
@@ -123,8 +134,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               arrowPadding={arrowPadding}
               alignOffset={labelOffset}
               onMouseEnter={(e) => {
-                onContentMouseEnter?.();
-
                 onMouseEnterContext?.(e);
 
                 onMouseEnter?.(e);

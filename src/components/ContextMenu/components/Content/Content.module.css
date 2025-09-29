@@ -17,3 +17,11 @@
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
+
+.blocker {
+  position: fixed;
+  cursor: default;
+  inset: 0;
+  background: transparent;
+  z-index: 7;
+}

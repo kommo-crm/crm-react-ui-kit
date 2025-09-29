@@ -35,14 +35,16 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onPointerLeave,
       onMouseEnter,
       onMouseLeave,
+
       ...rest
     },
     ref
   ) => {
     const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
+
     const {
       mode,
-      open,
+      isOpen,
       defaultOpen,
       setOpen,
       onMouseEnter: onMouseEnterContext,
@@ -65,9 +67,17 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       displayName: DISPLAY_NAME,
       id: triggerId,
       isDisabled,
-      onMouseEnter: onMouseEnterContext,
-      onMouseLeave: onMouseLeaveContext,
+      onMouseEnter: (e) => {
+        onMouseEnterContext(e);
+        onMouseEnter?.(e);
+      },
+      onMouseLeave: (e) => {
+        onMouseLeaveContext(e);
+        onMouseLeave?.(e);
+      },
       hasSubmenu,
+      onFocus,
+      onBlur,
     });
 
     return withProvider(
@@ -81,31 +91,19 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         }
         data-highlighted={
           subMenuOpen ||
-          open ||
+          isOpen ||
           dataHighlighted === '' ||
-          (mode === ContextMenuMode.CLICK && open)
+          (mode === ContextMenuMode.CLICK && isOpen)
             ? ''
             : undefined
         }
         data-submenu-trigger
-        onMouseEnter={(e) => {
-          handleItemMouseEnter?.(e);
-
-          onMouseEnter?.(e);
-        }}
-        onMouseLeave={(e) => {
-          handleItemMouseLeave?.(e);
-
-          onMouseLeave?.(e);
-        }}
         onKeyDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
             if (['Enter', ' ', 'ArrowRight'].includes(e.key)) {
               onOpenByKeyboard(true);
             } else if (e.key === 'ArrowLeft') {
               onOpenByKeyboard(false);
-
-              (e.currentTarget as HTMLElement).focus();
             }
           }
 
@@ -113,28 +111,22 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
 
           onKeyDown?.(e);
         }}
-        onFocus={(e) => {
-          handleItemFocus?.();
-
-          onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          handleItemBlur?.();
-
-          onBlur?.(e);
-        }}
         onClick={(e) => {
           if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();
             e.stopPropagation();
 
             if (defaultOpen === undefined) {
-              setOpen(!open);
+              setOpen(!isOpen);
             }
           }
 
           onClick?.(e);
         }}
+        onFocus={handleItemFocus}
+        onMouseEnter={handleItemMouseEnter}
+        onBlur={handleItemBlur}
+        onMouseLeave={handleItemMouseLeave}
         onPointerEnter={(e) => {
           if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
             e.preventDefault();

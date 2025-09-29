@@ -85,7 +85,7 @@ export interface ContextMenuContextProps {
   /**
    * Immediately closes the menu without waiting for any hover or animation delays.
    */
-  closeMenuImmediately: (closeRootMenu?: boolean) => void;
+  closeMenuImmediately: () => void;
   /**
    * Called when the mouse enters the ContextMenu element.
    */
@@ -116,13 +116,6 @@ export interface ContextMenuContextProps {
    */
   triggerId?: string;
   /**
-   * The callback function to be called when the content is hovered.
-   *
-   * @remarks
-   * This prop is only used for `SubRoot` (submenu) components.
-   */
-  onContentMouseEnter?: () => void;
-  /**
    * The callback function to be called when the menu is opened by keyboard.
    */
   onOpenByKeyboard: (value: boolean) => void;
@@ -134,11 +127,43 @@ export interface ContextMenuContextProps {
    * Whether the menu should close when clicked.
    */
   isCloseOnClick: boolean;
+  /**
+   * The callback function to be called when the child menu is opened.
+   */
+  onChildOpen: (value: boolean, mode: ContextMenuModeType) => void;
+  /**
+   * The callback function to be called when the submenu is opened.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  onSubmenuOpen?: (value: boolean) => void;
+  /**
+   * Whether the root menu content is blocked.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  isRootContentBlocked?: boolean;
+  /**
+   * Whether the child menu is open.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  isChildOpen?: boolean;
+  /**
+   * Whether the menu should close when the root menu is closed.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  isCloseWithRootMenu?: boolean;
 }
 
 export interface ContextMenuRootContextProps {
   /**
-   * The callback function to be called when the menu is opened by child click.
+   * Immediately closes the root menu without waiting for any hover or animation delays.
    */
-  onChildClickOpen: (value: boolean) => void;
+  closeRootMenuImmediately: (closeRootMenu?: boolean) => void;
 }

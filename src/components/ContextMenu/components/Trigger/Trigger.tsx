@@ -21,6 +21,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onMouseEnter,
       onMouseLeave,
       onPointerDown,
+
       ...rest
     },
     ref

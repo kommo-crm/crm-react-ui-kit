@@ -17,6 +17,14 @@ export type SubProps = Omit<
    * Called when submenu open state changes.
    */
   onOpen?: (open: boolean) => void;
+  /**
+   * Whether the submenu should close when the root menu is closed.
+   */
+  isCloseWithRootMenu?: boolean;
+  /**
+   * Whether the menu should close when clicked.
+   */
+  isCloseOnClick?: boolean;
 };
 
 export interface ContextMenuSubContextProps {
@@ -39,7 +47,7 @@ export interface ContextMenuSubContextProps {
   /**
    * Indicates whether the submenu is currently open.
    */
-  open: boolean;
+  isOpen: boolean;
   /**
    * Triggers the submenu's open animation after it has been mounted.
    */
@@ -68,4 +76,24 @@ export interface ContextMenuSubContextProps {
    * The ref to the trigger of the submenu.
    */
   triggerRef: React.RefObject<HTMLDivElement>;
+  /**
+   * The callback function to be called when the child menu is opened.
+   */
+  onChildOpen: (value: boolean, mode: ContextMenuModeType) => void;
+  /**
+   * The callback function to be called when the subroot is opened.
+   */
+  onSubRootOpen: (value: boolean) => void;
+  /**
+   * Whether the submenu should close when the root menu is closed.
+   */
+  isCloseWithRootMenu: boolean;
+  /**
+   * Whether the menu should close when clicked.
+   */
+  isCloseOnClick: boolean;
+  /**
+   * Immediately closes the menu without waiting for any hover or animation delays.
+   */
+  closeMenuImmediately: () => void;
 }

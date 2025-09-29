@@ -30,9 +30,11 @@ export function useContentPositioning({
    */
   useLayoutEffect(() => {
     const contentEl = contentRef?.current;
+    const triggerEl = triggerRef?.current;
 
     if (
       !contentEl ||
+      !triggerEl ||
       disableAutoPositioning ||
       [
         Direction.DOWN_LEFT,
@@ -44,68 +46,70 @@ export function useContentPositioning({
       return;
     }
 
-    const childrenCollection = contentEl.children;
+    const childrenCollection = Array.from(contentEl.children);
 
-    if (!childrenCollection || childrenCollection.length === 0) {
+    if (childrenCollection.length === 0) {
       return;
     }
 
     const label = contentEl.firstElementChild;
-    let item: Element | null = null;
 
-    if (align === 'start') {
-      const second = childrenCollection.item(1);
+    const getEl = (index: number): Element | null => {
+      const el = childrenCollection[index];
 
-      if (second instanceof Element && second.hasAttribute('data-separator')) {
-        const third = childrenCollection.item(2);
+      return el instanceof Element ? el : null;
+    };
 
-        if (third instanceof Element) {
-          item = third;
-        } else {
-          item = null;
+    const resolveItem = (): Element | null => {
+      if (align === 'start') {
+        const second = getEl(1);
+
+        if (second?.hasAttribute('data-separator')) {
+          return getEl(2);
         }
-      } else if (second instanceof Element) {
-        item = second;
+
+        return second;
       }
-    } else {
+
       const lastIndex = childrenCollection.length - 1;
-      const last = childrenCollection.item(lastIndex);
+      const last = getEl(lastIndex);
 
-      if (last instanceof Element && last.hasAttribute('data-arrow')) {
-        const prev = childrenCollection.item(lastIndex - 1);
-
-        if (prev instanceof Element) {
-          item = prev;
-        } else {
-          item = null;
-        }
-      } else if (last instanceof Element) {
-        item = last;
+      if (last?.hasAttribute('data-arrow')) {
+        return getEl(lastIndex - 1);
       }
-    }
 
-    const trigger = triggerRef?.current;
+      return last;
+    };
 
-    if (!trigger || !item) {
+    const item = resolveItem();
+
+    if (!item) {
       return;
     }
 
-    const itemRect = item.getBoundingClientRect();
-    const triggerRect = (trigger as Element).getBoundingClientRect();
+    const updateOffset = () => {
+      const { height: itemHeight } = item.getBoundingClientRect();
+      const { height: triggerHeight } = triggerEl.getBoundingClientRect();
+      const dynamicOffset = (triggerHeight - itemHeight) / 2;
 
-    const itemHeight = itemRect.height;
-    const triggerHeight = triggerRect.height;
-    const dynamicOffset = (triggerHeight - itemHeight) / 2;
+      if (align === 'start') {
+        if (label instanceof Element && label.hasAttribute('data-label')) {
+          const { height: labelHeight } = label.getBoundingClientRect();
 
-    if (align === 'start') {
-      if (label instanceof Element && label.hasAttribute('data-label')) {
-        const labelHeight = label.getBoundingClientRect().height;
-
-        setLabelOffset(alignOffset - labelHeight + dynamicOffset);
+          setLabelOffset(alignOffset - labelHeight + dynamicOffset);
+        }
+      } else {
+        setLabelOffset(alignOffset + dynamicOffset - 1);
       }
-    } else {
-      setLabelOffset(alignOffset + dynamicOffset - 1);
-    }
+    };
+
+    updateOffset();
+
+    const resizeObserver = new ResizeObserver(updateOffset);
+
+    resizeObserver.observe(item);
+
+    return () => resizeObserver.disconnect();
   }, [
     children,
     direction,

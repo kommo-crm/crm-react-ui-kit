@@ -4,6 +4,7 @@ import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 import {
   ContextMenuProvider,
   useContextMenuContext,
+  useContextMenuRootContext,
 } from '../../ContextMenu.context';
 import { ContextMenuMode } from '../../ContextMenu.enums';
 import { useContextMenuSubMenu } from '../../hooks';
@@ -36,11 +37,11 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
     },
     ref
   ) => {
-    const {
-      animationDuration,
-      hoverCloseDelay,
-      closeMenuImmediately: closeRootMenuImmediatelyContext,
-    } = useContextMenuContext(DISPLAY_NAME);
+    const { animationDuration, hoverCloseDelay } =
+      useContextMenuContext(DISPLAY_NAME);
+
+    const { closeRootMenuImmediately: closeRootMenuImmediatelyContext } =
+      useContextMenuRootContext(DISPLAY_NAME);
 
     const { subMenuOpen: subMenuOpenContext, setSubMenuOpen } =
       useSubMenuContext(DISPLAY_NAME);
@@ -48,6 +49,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
     const closeRootMenuImmediately = isCloseWithRootMenu
       ? closeRootMenuImmediatelyContext
       : undefined;
+
     const {
       mode: rootMode,
       isOpen,
@@ -63,8 +65,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       enableTemporaryHoverClose,
       triggerId,
       onOpenByKeyboard,
-      handleContentMouseEnter,
-      hasHoveredContent,
+      onChildOpen,
     } = useContextMenuSubMenu({
       displayName: DISPLAY_NAME,
       mode: mode,
@@ -103,7 +104,8 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         triggerId={triggerId}
         onOpenByKeyboard={onOpenByKeyboard}
         isCloseOnClick={isCloseOnClick}
-        onContentMouseEnter={handleContentMouseEnter}
+        isCloseWithRootMenu={isCloseWithRootMenu}
+        onChildOpen={onChildOpen}
         isOpen={isOpen}
       >
         <RadixDropdownMenuRoot
@@ -114,7 +116,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         >
           {children}
 
-          {isOpen && !hasHoveredContent && (
+          {isOpen && (
             <div
               className={s.blocker}
               tabIndex={0}

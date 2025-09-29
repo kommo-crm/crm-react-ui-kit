@@ -25,6 +25,7 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       onPointerEnter,
       onPointerLeave,
       onPointerMove,
+
       ...rest
     },
     ref

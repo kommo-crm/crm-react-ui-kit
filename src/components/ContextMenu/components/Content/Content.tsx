@@ -37,6 +37,9 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       disableAutoPositioning = false,
       onMouseEnter,
       onMouseLeave,
+      onInteractOutside,
+      onEscapeKeyDown,
+
       ...rest
     },
     ref
@@ -54,6 +57,11 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       temporaryHoverClose,
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
+      onChildOpen,
+      isRootContentBlocked,
+      isChildOpen,
+      closeMenuImmediately,
+      isCloseOnClick,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { align, labelOffset, isPositioned } = useContentPositioning({
@@ -85,6 +93,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         setHasItemWithIcon={setHasItemWithIcon}
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
+        onChildOpen={onChildOpen}
+        isCloseOnClick={isCloseOnClick}
+        closeMenuImmediately={closeMenuImmediately}
+        level={1}
       >
         {isOpen && (
           <animated.div
@@ -118,9 +130,31 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
                 onMouseLeave?.(e);
               }}
+              onInteractOutside={(e) => {
+                if (isChildOpen) {
+                  e.preventDefault();
+                }
+
+                onInteractOutside?.(e);
+              }}
+              onEscapeKeyDown={(e) => {
+                if (isChildOpen) {
+                  e.preventDefault();
+                }
+
+                onEscapeKeyDown?.(e);
+              }}
               {...rest}
             >
               {children}
+
+              {isRootContentBlocked && (
+                <div
+                  className={s.blocker}
+                  tabIndex={0}
+                  onFocus={(e) => e.preventDefault()}
+                />
+              )}
             </RadixDropdownMenuContent>
           </animated.div>
         )}

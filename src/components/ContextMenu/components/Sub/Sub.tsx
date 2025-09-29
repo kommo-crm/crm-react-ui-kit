@@ -10,11 +10,20 @@ import { ContextMenuSubHandle } from './Sub.types';
 
 export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
   (
-    { children, mode = ContextMenuMode.HOVER, onOpen, defaultOpen, ...rest },
+    {
+      children,
+      mode = ContextMenuMode.HOVER,
+      onOpen,
+      defaultOpen,
+      isCloseWithRootMenu = false,
+      isCloseOnClick = true,
+
+      ...rest
+    },
     ref
   ) => {
     const {
-      open,
+      isOpen,
       setOpen,
       animatedOpen,
       startAnimation,
@@ -25,11 +34,15 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
       onOpenByKeyboard,
       contentRef,
       triggerRef,
+      onChildOpen,
+      onSubRootOpen,
+      closeMenuImmediately,
     } = useContextMenuSub({
       displayName: DISPLAY_NAME,
       mode,
       defaultOpen,
       onOpen,
+      isCloseWithRootMenu,
     });
 
     useImperativeHandle(ref, () => ({
@@ -39,7 +52,7 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
     return (
       <ContextMenuSubProvider
         mode={mode}
-        open={open}
+        isOpen={isOpen}
         setOpen={setOpen}
         animatedOpen={animatedOpen}
         defaultOpen={defaultOpen}
@@ -50,9 +63,14 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
         triggerId={triggerId}
         contentRef={contentRef}
         triggerRef={triggerRef}
+        onChildOpen={onChildOpen}
+        onSubRootOpen={onSubRootOpen}
+        isCloseWithRootMenu={isCloseWithRootMenu}
+        isCloseOnClick={isCloseOnClick}
+        closeMenuImmediately={closeMenuImmediately}
       >
         <RadixDropdownMenuSub
-          open={open}
+          open={isOpen}
           onOpenChange={handleOpenChange}
           {...rest}
         >
