@@ -4,7 +4,6 @@ import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 import {
   ContextMenuProvider,
   useContextMenuContext,
-  useContextMenuRootContext,
 } from '../../ContextMenu.context';
 import { ContextMenuMode } from '../../ContextMenu.enums';
 import { useContextMenuSubMenu } from '../../hooks';
@@ -40,15 +39,8 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
     const { animationDuration, hoverCloseDelay } =
       useContextMenuContext(DISPLAY_NAME);
 
-    const { closeRootMenuImmediately: closeRootMenuImmediatelyContext } =
-      useContextMenuRootContext(DISPLAY_NAME);
-
     const { subMenuOpen: subMenuOpenContext, setSubMenuOpen } =
       useSubMenuContext(DISPLAY_NAME);
-
-    const closeRootMenuImmediately = isCloseWithRootMenu
-      ? closeRootMenuImmediatelyContext
-      : undefined;
 
     const {
       mode: rootMode,
@@ -76,7 +68,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       subMenuOpen: subMenuOpenContext,
       setSubMenuOpen,
       hoverCloseDelay,
-      closeRootMenuImmediately,
+      isCloseWithRootMenu,
     });
 
     useImperativeHandle(ref, () => ({
@@ -121,6 +113,10 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
               className={s.blocker}
               tabIndex={0}
               onFocus={(e) => e.preventDefault()}
+              onClick={() => {
+                closeMenuImmediately(false);
+              }}
+              data-blocker
             />
           )}
         </RadixDropdownMenuRoot>

@@ -61,6 +61,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onMouseLeave,
     onKeyDown,
     isCloseMenuOnClick = true,
+    isCloseWithRootMenu,
 
     ...rest
   } = props as SelectableItemProps;
@@ -108,7 +109,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         onSelect?.(e);
 
         if (isCloseOnClick && isCloseMenuOnClick) {
-          closeMenuImmediately();
+          closeMenuImmediately(isCloseWithRootMenu);
         }
       }}
       onClick={(e) => {
@@ -123,7 +124,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         onClick?.(e);
 
         if (isCloseOnClick && isCloseMenuOnClick) {
-          closeMenuImmediately();
+          closeMenuImmediately(isCloseWithRootMenu);
         }
       }}
       data-highlighted={subMenuOpen || dataHighlighted}

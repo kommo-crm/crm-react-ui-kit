@@ -32,6 +32,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
+      isCloseWithRootMenu,
       value,
       onKeyDown,
 
@@ -81,7 +82,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
           onSelect?.(e);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately();
+            closeMenuImmediately(isCloseWithRootMenu);
           }
         }}
         onClick={(e) => {
@@ -91,7 +92,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
           onClick?.(e);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately();
+            closeMenuImmediately(isCloseWithRootMenu);
           }
         }}
         onFocus={handleItemFocus}

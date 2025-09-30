@@ -35,7 +35,7 @@ export interface LevelProviderContextProps {
   /**
    * Immediately closes the menu without waiting for any hover or animation delays.
    */
-  closeMenuImmediately: () => void;
+  closeMenuImmediately: (isCloseWithRootMenu?: boolean) => void;
   /**
    * Whether the menu should close when clicked.
    */

@@ -26,6 +26,10 @@ export type SelectableItemProps = RadixItemProps & {
    * @default true
    */
   isCloseMenuOnClick?: boolean;
+  /**
+   * Whether the item should close the root menu when clicked.
+   */
+  isCloseWithRootMenu?: boolean;
 };
 
 export type NotSelectableItemProps = React.ComponentPropsWithRef<'div'> & {

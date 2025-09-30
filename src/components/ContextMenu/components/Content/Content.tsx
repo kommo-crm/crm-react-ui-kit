@@ -153,6 +153,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
                   className={s.blocker}
                   tabIndex={0}
                   onFocus={(e) => e.preventDefault()}
+                  data-blocker
                 />
               )}
             </RadixDropdownMenuContent>

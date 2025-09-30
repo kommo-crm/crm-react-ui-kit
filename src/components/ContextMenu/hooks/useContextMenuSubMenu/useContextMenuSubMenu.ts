@@ -6,7 +6,10 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { useLevelContext } from '../../providers';
 
-import { useContextMenuContext } from '../../ContextMenu.context';
+import {
+  useContextMenuContext,
+  useContextMenuRootContext,
+} from '../../ContextMenu.context';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
 
@@ -20,7 +23,6 @@ export const useContextMenuSubMenu = ({
   subMenuOpen,
   setSubMenuOpen,
   hoverCloseDelay,
-  closeRootMenuImmediately,
   onOpen,
   onAnimatedOpen,
   isCloseWithRootMenu,
@@ -39,6 +41,8 @@ export const useContextMenuSubMenu = ({
     useLevelContext(displayName);
 
   const { onSubmenuOpen } = useContextMenuContext(displayName);
+
+  const { closeRootMenuImmediately } = useContextMenuRootContext(displayName);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -125,7 +129,7 @@ export const useContextMenuSubMenu = ({
   /**
    * Closes the menu immediately.
    */
-  const closeMenuImmediately = () => {
+  const closeMenuImmediately = (forceCloseRootMenu?: boolean) => {
     clearTimers();
     setAnimatedOpen(false);
     setSubMenuOpen?.(false);
@@ -133,7 +137,12 @@ export const useContextMenuSubMenu = ({
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
 
-    if (isCloseWithRootMenu) {
+    const shouldCloseRootMenu =
+      forceCloseRootMenu === undefined
+        ? isCloseWithRootMenu
+        : forceCloseRootMenu;
+
+    if (shouldCloseRootMenu) {
       closeRootMenuImmediately?.();
     }
   };

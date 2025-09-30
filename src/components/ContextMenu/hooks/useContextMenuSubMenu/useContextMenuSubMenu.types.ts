@@ -33,7 +33,7 @@ export interface UseContextMenuSubMenuOptions {
   /**
    * The callback function to be called when the context submenu is closed.
    */
-  closeRootMenuImmediately?: (closeRootMenu?: boolean) => void;
+  closeRootMenuImmediately?: (forceCloseRootMenu?: boolean) => void;
   /**
    * The delay of the hover close.
    */

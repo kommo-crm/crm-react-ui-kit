@@ -32,6 +32,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
+      isCloseWithRootMenu,
       onCheckedChange,
       onKeyDown,
 
@@ -100,7 +101,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           onSelect?.(e);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately();
+            closeMenuImmediately(isCloseWithRootMenu);
           }
         }}
         onClick={(e) => {
@@ -111,7 +112,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           handleCheckedChange(!isChecked);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately();
+            closeMenuImmediately(isCloseWithRootMenu);
           }
         }}
         onFocus={handleItemFocus}

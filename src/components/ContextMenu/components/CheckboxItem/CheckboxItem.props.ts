@@ -30,4 +30,8 @@ export type CheckboxItemProps = RadixCheckboxItemProps & {
    * Whether the CheckboxItem should close the menu when clicked.
    */
   isCloseMenuOnClick?: boolean;
+  /**
+   * Whether the CheckboxItem should close the root menu when clicked.
+   */
+  isCloseWithRootMenu?: boolean;
 };
