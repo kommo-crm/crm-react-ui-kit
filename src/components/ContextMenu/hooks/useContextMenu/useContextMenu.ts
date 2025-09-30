@@ -17,6 +17,7 @@ export const useContextMenu = ({
   hoverCloseDelay,
   onOpen,
   onAnimatedOpen,
+  isDisabled,
 }: UseContextMenuOptions) => {
   const id = useId();
 
@@ -146,7 +147,10 @@ export const useContextMenu = ({
    * Handles the mouse enter event.
    */
   const handleMouseEnter = () => {
-    if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
+    if (
+      (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) ||
+      isDisabled
+    ) {
       return;
     }
 
@@ -179,7 +183,10 @@ export const useContextMenu = ({
    * Handles the mouse leave event.
    */
   const handleMouseLeave = () => {
-    if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
+    if (
+      (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) ||
+      isDisabled
+    ) {
       return;
     }
 

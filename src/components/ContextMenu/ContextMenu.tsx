@@ -78,6 +78,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       onAnimatedOpen,
       animationDuration: ANIMATION_DURATION,
       hoverCloseDelay: HOVER_CLOSE_DELAY,
+      isDisabled,
     });
 
     useImperativeHandle(ref, () => ({
