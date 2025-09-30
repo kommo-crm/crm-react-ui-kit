@@ -42,6 +42,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       children,
       mode,
       onOpen,
+      isDisabled = false,
       defaultOpen,
       onAnimatedOpen,
       isCloseOnClick = true,
@@ -109,7 +110,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
           isChildOpen={isChildOpen}
         >
           <RadixDropdownMenuRoot
-            open={open}
+            open={isDisabled ? false : open}
             onOpenChange={onOpenChange}
             /**
              * Necessary for hover mode to work correctly.

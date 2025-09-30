@@ -4,7 +4,7 @@ import { ContextMenuModeType } from './ContextMenu.types';
 
 export type ContextMenuRootProps = Omit<
   RadixDropdownMenuRootProps,
-  'onOpenChange' | 'modal'
+  'onOpenChange' | 'modal' | 'open'
 > & {
   /**
    * Called whenever the open state of the menu changes.
@@ -34,6 +34,10 @@ export type ContextMenuRootProps = Omit<
    * Whether the menu should close when clicked.
    */
   isCloseOnClick?: boolean;
+  /**
+   * Whether the menu is disabled.
+   */
+  isDisabled?: boolean;
 };
 
 export interface ContextMenuContextProps {
