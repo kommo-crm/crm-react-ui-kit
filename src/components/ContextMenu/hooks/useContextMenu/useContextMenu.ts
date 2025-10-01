@@ -279,6 +279,15 @@ export const useContextMenu = ({
    */
   const inheritedArrowColor = useInheritedArrowColor(open, contentRef);
 
+  /**
+   * Closes the menu when the menu is disabled.
+   */
+  useEffect(() => {
+    if (isDisabled) {
+      closeMenuImmediately();
+    }
+  }, [isDisabled, closeMenuImmediately]);
+
   return {
     open,
     mode,
