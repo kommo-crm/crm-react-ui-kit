@@ -23,6 +23,10 @@
   }
 }
 
-.sub_trigger > :not(:last-child) {
+.sub_trigger > :not(:last-child):not([data-blocker]) {
   margin-right: 8px;
+}
+
+.blocker {
+  position: absolute;
 }

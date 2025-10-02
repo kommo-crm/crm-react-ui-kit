@@ -14,6 +14,8 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { useContentPositioning } from '../../hooks';
 
+import { FocusBlocker } from '../FocusBlocker';
+
 import type { ContentProps } from './Content.props';
 
 import { Direction } from './Content.enums';
@@ -96,6 +98,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         onChildOpen={onChildOpen}
         isCloseOnClick={isCloseOnClick}
         closeMenuImmediately={closeMenuImmediately}
+        shouldCloseRootMenuOnClick={false}
         level={1}
       >
         {isOpen && (
@@ -148,14 +151,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
             >
               {children}
 
-              {isRootContentBlocked && (
-                <div
-                  className={s.blocker}
-                  tabIndex={0}
-                  onFocus={(e) => e.preventDefault()}
-                  data-blocker
-                />
-              )}
+              {isRootContentBlocked && <FocusBlocker />}
             </RadixDropdownMenuContent>
           </animated.div>
         )}

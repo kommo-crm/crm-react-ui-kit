@@ -11,6 +11,8 @@ import { useSubMenuContext } from '../../providers';
 
 import { ContextMenuHandle } from '../../ContextMenu.types';
 
+import { FocusBlocker } from '../FocusBlocker';
+
 import { Trigger } from './components/Trigger/Trigger';
 import { Content } from './components/Content/Content';
 
@@ -29,7 +31,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       onOpen,
       onAnimatedOpen,
       defaultOpen,
-      isCloseWithRootMenu = false,
+      shouldCloseRootMenuOnClick = false,
       isCloseOnClick = true,
 
       ...rest
@@ -68,7 +70,6 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
       subMenuOpen: subMenuOpenContext,
       setSubMenuOpen,
       hoverCloseDelay,
-      isCloseWithRootMenu,
     });
 
     useImperativeHandle(ref, () => ({
@@ -96,7 +97,7 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
         triggerId={triggerId}
         onOpenByKeyboard={onOpenByKeyboard}
         isCloseOnClick={isCloseOnClick}
-        isCloseWithRootMenu={isCloseWithRootMenu}
+        shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick}
         onChildOpen={onChildOpen}
         isOpen={isOpen}
       >
@@ -109,14 +110,9 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
           {children}
 
           {isOpen && (
-            <div
+            <FocusBlocker
               className={s.blocker}
-              tabIndex={0}
-              onFocus={(e) => e.preventDefault()}
-              onClick={() => {
-                closeMenuImmediately(false);
-              }}
-              data-blocker
+              onClick={() => closeMenuImmediately(false)}
             />
           )}
         </RadixDropdownMenuRoot>

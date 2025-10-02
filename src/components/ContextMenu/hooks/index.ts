@@ -8,3 +8,6 @@ export { useIsTouchDevice } from './useIsTouchDevice/useIsTouchDevice';
 export { useClickOutside } from './useClickOutside/useClickOutside';
 export { useStopContextMenuEvents } from './useStopContextMenuEvents/useStopContextMenuEvents';
 export { useSubMenu } from './useSubMenu/useSubMenu';
+export { useInnerInputsFocus } from './useInnerInputsFocus/useInnerInputsFocus';
+export { useItemInnerFocus } from './useItemInnerFocus/useItemInnerFocus';
+export { useChildrenWithBlocker } from './useChildrenWithBlocker/useChildrenWithBlocker';

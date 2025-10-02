@@ -2,10 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import { useClickOutside, useIsTouchDevice } from '..';
 import { ContextMenuMode } from '../../ContextMenu.enums';
-import {
-  useContextMenuContext,
-  useContextMenuRootContext,
-} from '../../ContextMenu.context';
+import { useContextMenuContext } from '../../ContextMenu.context';
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
@@ -17,7 +14,6 @@ export function useContextMenuSub({
   mode: initialMode,
   defaultOpen,
   onOpen,
-  isCloseWithRootMenu,
 }: UseContextMenuSubOptions) {
   const triggerId = useId();
 
@@ -38,8 +34,6 @@ export function useContextMenuSub({
 
   const { hoverCloseDelay, animationDuration } =
     useContextMenuContext(displayName);
-
-  const { closeRootMenuImmediately } = useContextMenuRootContext(displayName);
 
   const { activeItemId, onChildOpen, onSubRootOpen } =
     useLevelContext(displayName);
@@ -82,10 +76,6 @@ export function useContextMenuSub({
     handleSubmenuOpen(false);
     setIsInsideContent(false);
     setOpenedByKeyboard(false);
-
-    if (isCloseWithRootMenu) {
-      closeRootMenuImmediately?.();
-    }
   };
 
   /**

@@ -8,7 +8,11 @@ import { useLevelContext } from '../../providers/LevelProvider';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
+import {
+  useChildrenWithBlocker,
+  useContextMenuItemFocus,
+  useSubMenu,
+} from '../../hooks';
 
 import type { CheckboxItemProps } from './CheckboxItem.props';
 
@@ -32,7 +36,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
-      isCloseWithRootMenu,
+      shouldCloseRootMenuOnClick,
       onCheckedChange,
       onKeyDown,
 
@@ -79,6 +83,12 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       }
     };
 
+    const content = useChildrenWithBlocker({
+      children,
+      displayName: DISPLAY_NAME,
+      blockerClassName: s.blocker,
+    });
+
     return withProvider(
       <RadixDropdownMenuCheckboxItem
         ref={mergeRefs(ref, itemRef)}
@@ -101,7 +111,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           onSelect?.(e);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(isCloseWithRootMenu);
+            closeMenuImmediately(shouldCloseRootMenuOnClick);
           }
         }}
         onClick={(e) => {
@@ -112,7 +122,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           handleCheckedChange(!isChecked);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(isCloseWithRootMenu);
+            closeMenuImmediately(shouldCloseRootMenuOnClick);
           }
         }}
         onFocus={handleItemFocus}
@@ -122,7 +132,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         onKeyDown={handleKeyDown}
         {...rest}
       >
-        {children}
+        {content}
       </RadixDropdownMenuCheckboxItem>
     );
   }

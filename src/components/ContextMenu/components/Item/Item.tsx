@@ -8,9 +8,15 @@ import { useLevelContext } from '../../providers/LevelProvider';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
+import {
+  useContextMenuItemFocus,
+  useSubMenu,
+  useItemInnerFocus,
+} from '../../hooks';
 
-import type { ItemProps, SelectableItemProps } from './Item.props';
+import { useContextMenuRootContext } from '../../ContextMenu.context';
+
+import type { ItemProps } from './Item.props';
 
 import s from './Item.module.css';
 
@@ -18,34 +24,6 @@ const DISPLAY_NAME = 'ContextMenu.Item';
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
   const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-
-  if ('isSelectable' in props && props.isSelectable === false) {
-    const {
-      className,
-      children,
-      isSelectable,
-      hasIconCheckFn = hasItemIcon,
-
-      ...rest
-    } = props;
-
-    /**
-     * Set the hasIcon state based on the presence of an icon.
-     */
-    const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
-
-    return (
-      <div
-        ref={ref}
-        className={cx(s.item, className)}
-        data-not-selectable={!isSelectable}
-        data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        {...rest}
-      >
-        {children}
-      </div>
-    );
-  }
 
   const {
     className,
@@ -61,10 +39,12 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onMouseLeave,
     onKeyDown,
     isCloseMenuOnClick = true,
-    isCloseWithRootMenu,
+    shouldCloseRootMenuOnClick,
+    isSelectable: isSelectableProp,
+    asChild,
 
     ...rest
-  } = props as SelectableItemProps;
+  } = props;
 
   const id = useId();
 
@@ -73,8 +53,13 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
    */
   const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
-  const { closeMenuImmediately, isCloseOnClick } =
-    useLevelContext(DISPLAY_NAME);
+  const {
+    closeMenuImmediately,
+    isCloseOnClick,
+    shouldCloseRootMenuOnClick: shouldCloseRootMenuOnClickContext,
+  } = useLevelContext(DISPLAY_NAME);
+
+  const { closeRootMenuImmediately } = useContextMenuRootContext(DISPLAY_NAME);
 
   const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
     useSubMenu({ onKeyDown });
@@ -96,48 +81,85 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onMouseLeave,
   });
 
-  return withProvider(
-    <RadixDropdownMenuItem
-      ref={mergeRefs(ref, itemRef)}
-      className={cx(s.item, className)}
-      disabled={isDisabled}
-      data-item
-      data-danger={isDanger ? '' : undefined}
-      data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-      data-has-submenu={hasSubmenu ? '' : undefined}
-      onSelect={(e) => {
-        onSelect?.(e);
+  const { isSelectable, handleNodeRef, childrenWithBlocker } =
+    useItemInnerFocus({
+      id,
+      children,
+      isSelectableProp,
+      displayName: DISPLAY_NAME,
+      blockerClassName: s.blocker,
+    });
 
-        if (isCloseOnClick && isCloseMenuOnClick) {
-          closeMenuImmediately(isCloseWithRootMenu);
-        }
-      }}
-      onClick={(e) => {
-        const target = e.target as HTMLElement;
+  const handleCloseOnClick = () => {
+    if (isCloseOnClick && isCloseMenuOnClick) {
+      closeMenuImmediately(shouldCloseRootMenuOnClick);
 
-        const isLink = target.closest('a');
+      if (shouldCloseRootMenuOnClick ?? shouldCloseRootMenuOnClickContext) {
+        closeRootMenuImmediately?.();
+      }
+    }
+  };
 
-        if (!isLink) {
-          e.preventDefault();
-        }
+  return isSelectable
+    ? withProvider(
+        <RadixDropdownMenuItem
+          ref={mergeRefs(ref, itemRef, handleNodeRef)}
+          className={cx(s.item, className)}
+          disabled={isDisabled}
+          data-item
+          data-danger={isDanger ? '' : undefined}
+          data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
+          data-has-submenu={hasSubmenu ? '' : undefined}
+          onSelect={(e) => {
+            onSelect?.(e);
 
-        onClick?.(e);
+            handleCloseOnClick();
+          }}
+          onClick={(e) => {
+            const target = e.target as HTMLElement;
 
-        if (isCloseOnClick && isCloseMenuOnClick) {
-          closeMenuImmediately(isCloseWithRootMenu);
-        }
-      }}
-      data-highlighted={subMenuOpen || dataHighlighted}
-      onFocus={handleItemFocus}
-      onMouseEnter={handleItemMouseEnter}
-      onBlur={handleItemBlur}
-      onMouseLeave={handleItemMouseLeave}
-      onKeyDown={handleKeyDown}
-      {...rest}
-    >
-      {children}
-    </RadixDropdownMenuItem>
-  );
+            const isLink = target.closest('a');
+
+            if (!isLink) {
+              e.preventDefault();
+            }
+
+            onClick?.(e);
+
+            handleCloseOnClick();
+          }}
+          data-highlighted={subMenuOpen || dataHighlighted}
+          onFocus={handleItemFocus}
+          onMouseEnter={handleItemMouseEnter}
+          onBlur={handleItemBlur}
+          onMouseLeave={handleItemMouseLeave}
+          onKeyDown={handleKeyDown}
+          asChild={asChild}
+          {...rest}
+        >
+          {childrenWithBlocker}
+        </RadixDropdownMenuItem>
+      )
+    : withProvider(
+        <div
+          ref={mergeRefs(ref, itemRef, handleNodeRef)}
+          className={cx(s.item, className)}
+          data-not-selectable
+          data-item
+          data-danger={isDanger ? '' : undefined}
+          data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
+          data-has-submenu={hasSubmenu ? '' : undefined}
+          onFocus={onFocus}
+          onMouseEnter={onMouseEnter}
+          onBlur={onBlur}
+          onMouseLeave={onMouseLeave}
+          onKeyDown={onKeyDown}
+          onClick={onClick}
+          {...rest}
+        >
+          {children}
+        </div>
+      );
 });
 
 Item.displayName = DISPLAY_NAME;

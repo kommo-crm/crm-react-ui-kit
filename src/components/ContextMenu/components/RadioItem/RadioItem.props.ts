@@ -24,5 +24,5 @@ export type RadioItemProps = RadixRadioItemProps & {
   /**
    * Whether the RadioItem should close the root menu when clicked.
    */
-  isCloseWithRootMenu?: boolean;
+  shouldCloseRootMenuOnClick?: boolean;
 };

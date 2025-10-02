@@ -15,7 +15,7 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
       mode = ContextMenuMode.HOVER,
       onOpen,
       defaultOpen,
-      isCloseWithRootMenu = false,
+      shouldCloseRootMenuOnClick = false,
       isCloseOnClick = true,
 
       ...rest
@@ -42,7 +42,6 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
       mode,
       defaultOpen,
       onOpen,
-      isCloseWithRootMenu,
     });
 
     useImperativeHandle(ref, () => ({
@@ -65,7 +64,7 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
         triggerRef={triggerRef}
         onChildOpen={onChildOpen}
         onSubRootOpen={onSubRootOpen}
-        isCloseWithRootMenu={isCloseWithRootMenu}
+        shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick}
         isCloseOnClick={isCloseOnClick}
         closeMenuImmediately={closeMenuImmediately}
       >

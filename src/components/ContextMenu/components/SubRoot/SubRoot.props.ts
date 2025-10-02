@@ -35,7 +35,7 @@ export type ContextMenuSubRootProps = Omit<
   /**
    * Whether the submenu should close when the root menu is closed.
    */
-  isCloseWithRootMenu?: boolean;
+  shouldCloseRootMenuOnClick?: boolean;
   /**
    * Whether the menu should close when clicked.
    */

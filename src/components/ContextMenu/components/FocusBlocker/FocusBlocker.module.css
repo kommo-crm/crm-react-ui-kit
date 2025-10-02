@@ -1,0 +1,7 @@
+.blocker {
+  position: fixed;
+  cursor: default;
+  inset: 0;
+  background: transparent;
+  z-index: 7;
+}

@@ -50,8 +50,4 @@ export interface UseContextMenuSubMenuOptions {
    * Whether the context menu should close when another menu is opened.
    */
   autoCloseOnOtherOpen?: boolean;
-  /**
-   * Whether the context menu should close when the root menu is closed.
-   */
-  isCloseWithRootMenu?: boolean;
 }

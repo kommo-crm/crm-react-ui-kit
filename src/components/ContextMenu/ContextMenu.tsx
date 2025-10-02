@@ -24,6 +24,7 @@ import { RadioItem } from './components/RadioItem/RadioItem';
 import { Separator } from './components/Separator/Separator';
 import { ItemIcon } from './components/ItemIcon/ItemIcon';
 import { SubRoot } from './components/SubRoot/SubRoot';
+import { FocusBlocker } from './components/FocusBlocker/FocusBlocker';
 
 import {
   ContextMenuProvider,
@@ -42,10 +43,13 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       children,
       mode,
       onOpen,
-      isDisabled = false,
+      isOpen,
       defaultOpen,
       onAnimatedOpen,
       isCloseOnClick = true,
+      enableInnerInputFocus = false,
+      backgroundFocusBlockerContainers = [document.body],
+      backgroundFocusBlockerClassName,
 
       ...rest
     },
@@ -71,6 +75,8 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       onSubmenuOpen,
       isRootContentBlocked,
       isChildOpen,
+      itemWithFocusedInput,
+      setItemWithFocusedInput,
     } = useContextMenu({
       mode: mode as ContextMenuMode,
       defaultOpen,
@@ -78,7 +84,10 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       onAnimatedOpen,
       animationDuration: ANIMATION_DURATION,
       hoverCloseDelay: HOVER_CLOSE_DELAY,
-      isDisabled,
+      isOpen,
+      enableInnerInputFocus,
+      backgroundFocusBlockerContainers,
+      backgroundFocusBlockerClassName,
     });
 
     useImperativeHandle(ref, () => ({
@@ -88,7 +97,12 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
     }));
 
     return (
-      <ContextMenuRootProvider closeRootMenuImmediately={closeMenuImmediately}>
+      <ContextMenuRootProvider
+        closeRootMenuImmediately={closeMenuImmediately}
+        itemWithFocusedInput={itemWithFocusedInput}
+        setItemWithFocusedInput={setItemWithFocusedInput}
+        enableInnerInputFocus={enableInnerInputFocus}
+      >
         <ContextMenuProvider
           mode={rootMode}
           triggerRef={triggerRef}
@@ -111,7 +125,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
           isChildOpen={isChildOpen}
         >
           <RadixDropdownMenuRoot
-            open={isDisabled ? false : open}
+            open={isOpen ?? open}
             onOpenChange={onOpenChange}
             /**
              * Necessary for hover mode to work correctly.
@@ -148,3 +162,4 @@ ContextMenu.RadioItem = RadioItem;
 ContextMenu.ItemIndicator = ItemIndicator;
 ContextMenu.Separator = Separator;
 ContextMenu.ItemIcon = ItemIcon;
+ContextMenu.FocusBlocker = FocusBlocker;

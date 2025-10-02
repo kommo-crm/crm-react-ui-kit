@@ -1,4 +1,12 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+
+import { createRoot } from 'react-dom/client';
 
 import { useInheritedArrowColor, useIsTouchDevice } from '..';
 
@@ -7,6 +15,8 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 import { contextMenuBus } from '../../utils';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
+
+import { FocusBlocker } from '../../components/FocusBlocker';
 
 import { UseContextMenuOptions } from './useContextMenu.types';
 
@@ -17,11 +27,14 @@ export const useContextMenu = ({
   hoverCloseDelay,
   onOpen,
   onAnimatedOpen,
-  isDisabled,
+  isOpen,
+  enableInnerInputFocus,
+  backgroundFocusBlockerContainers,
+  backgroundFocusBlockerClassName,
 }: UseContextMenuOptions) => {
   const id = useId();
 
-  const [open, setOpen] = useState(defaultOpen || false);
+  const [open, setOpen] = useState(isOpen ?? defaultOpen ?? false);
   const [animatedOpen, setAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
@@ -29,6 +42,9 @@ export const useContextMenu = ({
   const [isChildOpen, setIsChildOpen] = useState(false);
   const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
   const [isRootContentBlocked, setIsRootContentBlocked] = useState(false);
+  const [itemWithFocusedInput, setItemWithFocusedInput] = useState<
+    string | null
+  >(null);
 
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -75,7 +91,10 @@ export const useContextMenu = ({
     clearTimers();
 
     if (mode === ContextMenuMode.HOVER || temporaryHoverClose) {
-      if (isChildOpen && childMode === ContextMenuMode.CLICK) {
+      if (
+        (isChildOpen && childMode === ContextMenuMode.CLICK) ||
+        itemWithFocusedInput !== null
+      ) {
         return;
       }
 
@@ -147,10 +166,7 @@ export const useContextMenu = ({
    * Handles the mouse enter event.
    */
   const handleMouseEnter = () => {
-    if (
-      (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) ||
-      isDisabled
-    ) {
+    if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
     }
 
@@ -183,10 +199,7 @@ export const useContextMenu = ({
    * Handles the mouse leave event.
    */
   const handleMouseLeave = () => {
-    if (
-      (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) ||
-      isDisabled
-    ) {
+    if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
       return;
     }
 
@@ -279,14 +292,58 @@ export const useContextMenu = ({
    */
   const inheritedArrowColor = useInheritedArrowColor(open, contentRef);
 
-  /**
-   * Closes the menu when the menu is disabled.
-   */
-  useEffect(() => {
-    if (isDisabled) {
-      closeMenuImmediately();
+  useLayoutEffect(() => {
+    if (
+      !enableInnerInputFocus ||
+      !backgroundFocusBlockerContainers ||
+      itemWithFocusedInput === null
+    ) {
+      return;
     }
-  }, [isDisabled, closeMenuImmediately]);
+
+    const containers = backgroundFocusBlockerContainers
+      .map((c) => (typeof c === 'function' ? c() : c))
+      .filter(Boolean) as HTMLElement[];
+
+    const mounted: {
+      root: ReturnType<typeof createRoot>;
+      mountNode: HTMLDivElement;
+    }[] = [];
+
+    containers.forEach((container) => {
+      const mountNode = document.createElement('div');
+
+      container.appendChild(mountNode);
+
+      const root = createRoot(mountNode);
+
+      root.render(
+        <FocusBlocker
+          className={backgroundFocusBlockerClassName}
+          onClick={() => {
+            setItemWithFocusedInput(null);
+            (document.activeElement as HTMLElement)?.blur();
+          }}
+        />
+      );
+
+      mounted.push({ root, mountNode });
+    });
+
+    return () => {
+      mounted.forEach(({ root, mountNode }) => {
+        queueMicrotask(() => {
+          root.unmount();
+          mountNode.remove();
+        });
+      });
+    };
+  }, [
+    backgroundFocusBlockerContainers,
+    enableInnerInputFocus,
+    itemWithFocusedInput,
+    setItemWithFocusedInput,
+  ]);
 
   return {
     open,
@@ -308,5 +365,7 @@ export const useContextMenu = ({
     onSubmenuOpen: handleSubmenuOpen,
     isRootContentBlocked,
     isChildOpen,
+    itemWithFocusedInput,
+    setItemWithFocusedInput,
   };
 };

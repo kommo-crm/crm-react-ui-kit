@@ -25,7 +25,6 @@ export const useContextMenuSubMenu = ({
   hoverCloseDelay,
   onOpen,
   onAnimatedOpen,
-  isCloseWithRootMenu,
 }: UseContextMenuSubMenuOptions) => {
   const triggerId = useId();
 
@@ -137,12 +136,7 @@ export const useContextMenuSubMenu = ({
     setIsInsideContent(false);
     setTemporaryHoverClose(false);
 
-    const shouldCloseRootMenu =
-      forceCloseRootMenu === undefined
-        ? isCloseWithRootMenu
-        : forceCloseRootMenu;
-
-    if (shouldCloseRootMenu) {
+    if (forceCloseRootMenu) {
       closeRootMenuImmediately?.();
     }
   };

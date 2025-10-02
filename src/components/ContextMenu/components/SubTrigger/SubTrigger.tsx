@@ -10,7 +10,11 @@ import { useContextMenuSubContext } from '../Sub/Sub.context';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
+import {
+  useChildrenWithBlocker,
+  useContextMenuItemFocus,
+  useSubMenu,
+} from '../../hooks';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -78,6 +82,12 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       hasSubmenu,
       onFocus,
       onBlur,
+    });
+
+    const content = useChildrenWithBlocker({
+      children,
+      displayName: DISPLAY_NAME,
+      blockerClassName: s.blocker,
     });
 
     return withProvider(
@@ -153,7 +163,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         }}
         {...rest}
       >
-        {children}
+        {content}
       </RadixDropdownMenuSubTrigger>
     );
   }

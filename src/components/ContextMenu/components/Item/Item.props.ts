@@ -5,7 +5,7 @@ type RadixItemProps = Omit<
   'disabled'
 >;
 
-export type SelectableItemProps = RadixItemProps & {
+export type ItemProps = RadixItemProps & {
   /**
    * Whether the item is disabled.
    */
@@ -29,20 +29,9 @@ export type SelectableItemProps = RadixItemProps & {
   /**
    * Whether the item should close the root menu when clicked.
    */
-  isCloseWithRootMenu?: boolean;
-};
-
-export type NotSelectableItemProps = React.ComponentPropsWithRef<'div'> & {
+  shouldCloseRootMenuOnClick?: boolean;
   /**
    * Whether the item is selectable.
    */
-  isSelectable?: false;
-  /**
-   * A function for checking the presence of an icon.
-   *
-   * By default, the `hasItemIcon` from utils is used.
-   */
-  hasIconCheckFn?: (children: React.ReactNode) => boolean;
+  isSelectable?: boolean;
 };
-
-export type ItemProps = SelectableItemProps | NotSelectableItemProps;

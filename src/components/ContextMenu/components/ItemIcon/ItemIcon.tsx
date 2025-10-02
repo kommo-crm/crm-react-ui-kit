@@ -5,8 +5,6 @@ import { mergeRefs } from 'src/lib/utils';
 
 import { useLevelContext } from '../../providers';
 
-import { isFirstElement } from '../../utils';
-
 import { ItemIconProps } from './ItemIcon.props';
 
 import s from './ItemIcon.module.css';
@@ -19,7 +17,23 @@ export const ItemIcon = forwardRef<HTMLSpanElement, ItemIconProps>(
     const localRef = useRef<HTMLSpanElement | null>(null);
 
     useEffect(() => {
-      if (isFirstElement(localRef)) {
+      const el = localRef.current;
+
+      if (!el) {
+        return;
+      }
+
+      const parent = el.parentElement;
+
+      if (!parent) {
+        return;
+      }
+
+      const firstRealChild = Array.from(parent.children).find(
+        (child) => !child.hasAttribute('data-blocker')
+      );
+
+      if (firstRealChild === el) {
         setHasItemWithIcon(true);
       } else {
         throw new Error(

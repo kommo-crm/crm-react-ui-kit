@@ -8,7 +8,11 @@ import { useLevelContext } from '../../providers/LevelProvider';
 
 import { hasItemIcon } from '../../utils';
 
-import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
+import {
+  useChildrenWithBlocker,
+  useContextMenuItemFocus,
+  useSubMenu,
+} from '../../hooks';
 
 import { useRadioGroupContext } from '../RadioGroup';
 
@@ -32,7 +36,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
-      isCloseWithRootMenu,
+      shouldCloseRootMenuOnClick,
       value,
       onKeyDown,
 
@@ -69,6 +73,12 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
 
     const { onChange } = useRadioGroupContext(DISPLAY_NAME);
 
+    const content = useChildrenWithBlocker({
+      children,
+      displayName: DISPLAY_NAME,
+      blockerClassName: s.blocker,
+    });
+
     return withProvider(
       <RadixDropdownMenuRadioItem
         ref={mergeRefs(ref, itemRef)}
@@ -82,7 +92,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
           onSelect?.(e);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(isCloseWithRootMenu);
+            closeMenuImmediately(shouldCloseRootMenuOnClick);
           }
         }}
         onClick={(e) => {
@@ -92,7 +102,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
           onClick?.(e);
 
           if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(isCloseWithRootMenu);
+            closeMenuImmediately(shouldCloseRootMenuOnClick);
           }
         }}
         onFocus={handleItemFocus}
@@ -102,7 +112,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         onKeyDown={handleKeyDown}
         {...rest}
       >
-        {children}
+        {content}
       </RadixDropdownMenuRadioItem>
     );
   }

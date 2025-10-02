@@ -63,6 +63,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       isOpen,
       onChildOpen,
       isCloseOnClick,
+      shouldCloseRootMenuOnClick,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { level } = useLevelContext(DISPLAY_NAME);
@@ -109,6 +110,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         onChildOpen={onChildOpen}
         isCloseOnClick={isCloseOnClick}
         closeMenuImmediately={closeMenuImmediately}
+        shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick ?? false}
         level={level + 1}
       >
         {isOpen && (

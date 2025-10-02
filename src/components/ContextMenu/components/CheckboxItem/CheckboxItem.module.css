@@ -27,6 +27,10 @@
   }
 }
 
-.checkbox_item > :not(:last-child) {
+.checkbox_item > :not(:last-child):not([data-blocker]) {
   margin-right: 8px;
+}
+
+.blocker {
+  position: absolute;
 }

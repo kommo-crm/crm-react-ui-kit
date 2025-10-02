@@ -3,6 +3,7 @@ import type { ForwardRefExoticComponent, RefAttributes } from 'react';
 import { Arrow } from './components/Arrow';
 import { CheckboxItem } from './components/CheckboxItem/CheckboxItem';
 import { Content } from './components/Content';
+import { FocusBlocker } from './components/FocusBlocker';
 import { Group } from './components/Group/Group';
 import { Item } from './components/Item';
 import { ItemIcon } from './components/ItemIcon/ItemIcon';
@@ -66,4 +67,5 @@ export interface ContextMenuType extends ContextMenuComponentType {
   SubRoot: typeof SubRoot;
   SubTrigger: typeof SubTrigger;
   Trigger: typeof Trigger;
+  FocusBlocker: typeof FocusBlocker;
 }

@@ -17,8 +17,4 @@ export interface UseContextMenuSubOptions {
    * Called when submenu open state changes.
    */
   onOpen?: (open: boolean) => void;
-  /**
-   * Whether the submenu should close when the root menu is closed.
-   */
-  isCloseWithRootMenu: boolean;
 }

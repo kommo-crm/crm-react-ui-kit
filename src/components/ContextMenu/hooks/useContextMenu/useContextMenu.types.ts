@@ -31,7 +31,23 @@ export interface UseContextMenuOptions {
    */
   autoCloseOnOtherOpen?: boolean;
   /**
-   * Whether the context menu is disabled.
+   * Whether the context menu is open forcefully.
    */
-  isDisabled?: boolean;
+  isOpen?: boolean;
+  /**
+   * Whether the item should enable inner input focus.
+   */
+  enableInnerInputFocus?: boolean;
+  /**
+   * The container to focus the blocker on.
+   */
+  backgroundFocusBlockerContainers?: (
+    | HTMLElement
+    | (() => HTMLElement)
+    | null
+  )[];
+  /**
+   * The class name of the background focus blocker.
+   */
+  backgroundFocusBlockerClassName?: string;
 }
