@@ -16,6 +16,8 @@ import {
 
 import { useRadioGroupContext } from '../RadioGroup';
 
+import { useContextMenuRootContext } from '../../ContextMenu.context';
+
 import type { RadioItemProps } from './RadioItem.props';
 
 import s from './RadioItem.module.css';
@@ -46,11 +48,18 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
   ) => {
     const id = useId();
 
-    const { hasItemWithIcon, closeMenuImmediately, isCloseOnClick } =
-      useLevelContext(DISPLAY_NAME);
+    const {
+      hasItemWithIcon,
+      closeMenuImmediately,
+      isCloseOnClick,
+      shouldCloseRootMenuOnClick: shouldCloseRootMenuOnClickContext,
+    } = useLevelContext(DISPLAY_NAME);
 
     const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
       useSubMenu({ onKeyDown });
+
+    const { closeRootMenuImmediately } =
+      useContextMenuRootContext(DISPLAY_NAME);
 
     const {
       dataHighlighted,
@@ -79,6 +88,16 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       blockerClassName: s.blocker,
     });
 
+    const handleCloseOnClick = () => {
+      if (isCloseOnClick && isCloseMenuOnClick) {
+        closeMenuImmediately(shouldCloseRootMenuOnClick);
+
+        if (shouldCloseRootMenuOnClick ?? shouldCloseRootMenuOnClickContext) {
+          closeRootMenuImmediately?.();
+        }
+      }
+    };
+
     return withProvider(
       <RadixDropdownMenuRadioItem
         ref={mergeRefs(ref, itemRef)}
@@ -91,9 +110,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         onSelect={(e) => {
           onSelect?.(e);
 
-          if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(shouldCloseRootMenuOnClick);
-          }
+          handleCloseOnClick();
         }}
         onClick={(e) => {
           e.preventDefault();
@@ -101,9 +118,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
           onChange(value);
           onClick?.(e);
 
-          if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(shouldCloseRootMenuOnClick);
-          }
+          handleCloseOnClick();
         }}
         onFocus={handleItemFocus}
         onMouseEnter={handleItemMouseEnter}

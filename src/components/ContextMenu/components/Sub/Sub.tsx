@@ -15,7 +15,7 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
       mode = ContextMenuMode.HOVER,
       onOpen,
       defaultOpen,
-      shouldCloseRootMenuOnClick = false,
+      shouldCloseRootMenuOnClick = true,
       isCloseOnClick = true,
 
       ...rest

@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 
-import { DivHandlers } from './useStopContextMenuEvents.types';
+import { Handlers } from './useStopContextMenuEvents.types';
 
-export const useStopContextMenuEvents = (
-  handlers: Partial<DivHandlers> = {}
+export const useStopContextMenuEvents = <T extends HTMLElement>(
+  handlers: Partial<Handlers<T>> = {}
 ) => {
   const stop = useCallback((e: React.SyntheticEvent) => {
     e.stopPropagation();

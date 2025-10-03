@@ -23,8 +23,6 @@ import s from './Item.module.css';
 const DISPLAY_NAME = 'ContextMenu.Item';
 
 export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
-  const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
-
   const {
     className,
     children,
@@ -48,16 +46,17 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
   const id = useId();
 
-  /**
-   * Set the hasIcon state based on the presence of an icon.
-   */
-  const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
-
   const {
+    hasItemWithIcon,
     closeMenuImmediately,
     isCloseOnClick,
     shouldCloseRootMenuOnClick: shouldCloseRootMenuOnClickContext,
   } = useLevelContext(DISPLAY_NAME);
+
+  /**
+   * Set the hasIcon state based on the presence of an icon.
+   */
+  const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
   const { closeRootMenuImmediately } = useContextMenuRootContext(DISPLAY_NAME);
 

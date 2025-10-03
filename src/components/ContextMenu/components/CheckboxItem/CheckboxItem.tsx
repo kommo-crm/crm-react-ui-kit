@@ -14,6 +14,8 @@ import {
   useSubMenu,
 } from '../../hooks';
 
+import { useContextMenuRootContext } from '../../ContextMenu.context';
+
 import type { CheckboxItemProps } from './CheckboxItem.props';
 
 import s from './CheckboxItem.module.css';
@@ -46,8 +48,12 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
   ) => {
     const id = useId();
 
-    const { hasItemWithIcon, closeMenuImmediately, isCloseOnClick } =
-      useLevelContext(DISPLAY_NAME);
+    const {
+      hasItemWithIcon,
+      closeMenuImmediately,
+      isCloseOnClick,
+      shouldCloseRootMenuOnClick: shouldCloseRootMenuOnClickContext,
+    } = useLevelContext(DISPLAY_NAME);
 
     const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
       useSubMenu({ onKeyDown });
@@ -71,6 +77,9 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
 
     const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
+    const { closeRootMenuImmediately } =
+      useContextMenuRootContext(DISPLAY_NAME);
+
     const handleCheckedChange = (checked: boolean) => {
       onCheckedChange?.(checked);
 
@@ -88,6 +97,16 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       displayName: DISPLAY_NAME,
       blockerClassName: s.blocker,
     });
+
+    const handleCloseOnClick = () => {
+      if (isCloseOnClick && isCloseMenuOnClick) {
+        closeMenuImmediately(shouldCloseRootMenuOnClick);
+
+        if (shouldCloseRootMenuOnClick ?? shouldCloseRootMenuOnClickContext) {
+          closeRootMenuImmediately?.();
+        }
+      }
+    };
 
     return withProvider(
       <RadixDropdownMenuCheckboxItem
@@ -110,9 +129,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         onSelect={(e) => {
           onSelect?.(e);
 
-          if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(shouldCloseRootMenuOnClick);
-          }
+          handleCloseOnClick();
         }}
         onClick={(e) => {
           e.preventDefault();
@@ -121,9 +138,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
 
           handleCheckedChange(!isChecked);
 
-          if (isCloseOnClick && isCloseMenuOnClick) {
-            closeMenuImmediately(shouldCloseRootMenuOnClick);
-          }
+          handleCloseOnClick();
         }}
         onFocus={handleItemFocus}
         onMouseEnter={handleItemMouseEnter}
