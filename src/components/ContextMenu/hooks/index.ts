@@ -11,3 +11,4 @@ export { useSubMenu } from './useSubMenu/useSubMenu';
 export { useInnerInputsFocus } from './useInnerInputsFocus/useInnerInputsFocus';
 export { useItemInnerFocus } from './useItemInnerFocus/useItemInnerFocus';
 export { useChildrenWithBlocker } from './useChildrenWithBlocker/useChildrenWithBlocker';
+export { useMouseMoveOutside } from './useMouseMoveOutside/useMouseMoveOutside';

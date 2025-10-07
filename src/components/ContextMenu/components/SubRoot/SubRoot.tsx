@@ -19,8 +19,6 @@ import { Content } from './components/Content/Content';
 import { ContextMenuSubRootProps } from './SubRoot.props';
 import { ContextMenuSubRootType } from './SubRoot.types';
 
-import s from './SubRoot.module.css';
-
 const DISPLAY_NAME = 'ContextMenu.SubRoot';
 
 export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
@@ -111,8 +109,9 @@ export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
 
           {isOpen && (
             <FocusBlocker
-              className={s.blocker}
-              onClick={() => closeMenuImmediately(false)}
+              onClick={() => {
+                closeMenuImmediately(false);
+              }}
             />
           )}
         </RadixDropdownMenuRoot>

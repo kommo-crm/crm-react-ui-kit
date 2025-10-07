@@ -49,22 +49,22 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onMouseLeave: handleItemMouseLeave,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
+      ref: triggerRef,
       id: triggerId || '',
       isDisabled: false,
       onMouseEnter: (e) => {
         onMouseEnterContext(e);
-        // TODO: fix this
-        onMouseEnter?.(e as unknown as React.MouseEvent<HTMLButtonElement>);
+        onMouseEnter?.(e);
       },
       onMouseLeave: (e) => {
         onMouseLeaveContext(e);
-        onMouseLeave?.(e as unknown as React.MouseEvent<HTMLButtonElement>);
+        onMouseLeave?.(e);
       },
       onFocus: (e) => {
-        onFocus?.(e as unknown as React.FocusEvent<HTMLButtonElement>);
+        onFocus?.(e);
       },
       onBlur: (e) => {
-        onBlur?.(e as unknown as React.FocusEvent<HTMLButtonElement>);
+        onBlur?.(e);
       },
     });
 
@@ -81,23 +81,13 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
     return (
       <RadixDropdownMenuTrigger
         ref={mergeRefs(triggerRef, ref)}
-        className={cx(s.trigger, className)}
+        className={cx(s.trigger, { [s.open]: isOpen }, className)}
         data-highlighted={dataHighlighted || isOpen ? '' : undefined}
-        onPointerDown={
-          handlePointerDown as unknown as React.PointerEventHandler<HTMLButtonElement>
-        }
-        onFocus={
-          handleItemFocus as unknown as React.FocusEventHandler<HTMLButtonElement>
-        }
-        onMouseEnter={
-          handleItemMouseEnter as unknown as React.MouseEventHandler<HTMLButtonElement>
-        }
-        onBlur={
-          handleItemBlur as unknown as React.FocusEventHandler<HTMLButtonElement>
-        }
-        onMouseLeave={
-          handleItemMouseLeave as unknown as React.MouseEventHandler<HTMLButtonElement>
-        }
+        onPointerDown={handlePointerDown}
+        onFocus={handleItemFocus}
+        onMouseEnter={handleItemMouseEnter}
+        onBlur={handleItemBlur}
+        onMouseLeave={handleItemMouseLeave}
         data-submenu-trigger
         {...rest}
       >

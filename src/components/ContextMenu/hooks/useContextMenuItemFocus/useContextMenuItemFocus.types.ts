@@ -1,4 +1,4 @@
-export interface UseContextMenuItemFocusOptions {
+export interface UseContextMenuItemFocusOptions<T extends HTMLElement> {
   /**
    * The name of the display.
    */
@@ -7,6 +7,10 @@ export interface UseContextMenuItemFocusOptions {
    * The id of the item.
    */
   id: string;
+  /**
+   * The ref of the item.
+   */
+  ref: React.RefObject<T>;
   /**
    * Whether the item is disabled.
    */
@@ -18,21 +22,21 @@ export interface UseContextMenuItemFocusOptions {
   /**
    * The callback function to be called when the mouse enters the item.
    */
-  onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseEnter?: (e: React.MouseEvent<T>) => void;
   /**
    * The callback function to be called when the mouse leaves the item.
    */
-  onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseLeave?: (e: React.MouseEvent<T>) => void;
   /**
    * The callback function to be called when the item is focused.
    */
-  onFocus?: (e: React.FocusEvent<HTMLDivElement>) => void;
+  onFocus?: (e: React.FocusEvent<T>) => void;
   /**
    * The callback function to be called when the item is blurred.
    */
-  onBlur?: (e: React.FocusEvent<HTMLDivElement>) => void;
+  onBlur?: (e: React.FocusEvent<T>) => void;
   /**
    * The callback function to be called when the item is keyed down.
    */
-  onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<T>) => void;
 }

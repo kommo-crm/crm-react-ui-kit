@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
+import { useMouseMoveOutside } from '../useMouseMoveOutside/useMouseMoveOutside';
+
 import { UseContextMenuItemFocusOptions } from './useContextMenuItemFocus.types';
 
-export const useContextMenuItemFocus = ({
+export const useContextMenuItemFocus = <T extends HTMLElement>({
   displayName,
   id,
+  ref,
   isDisabled,
   hasSubmenu,
   onMouseEnter,
@@ -14,9 +17,13 @@ export const useContextMenuItemFocus = ({
   onFocus,
   onBlur,
   onKeyDown,
-}: UseContextMenuItemFocusOptions) => {
+}: UseContextMenuItemFocusOptions<T>) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { setActiveItemId } = useLevelContext(displayName);
+  const { setActiveItemId, activeItemId } = useLevelContext(displayName);
+
+  useMouseMoveOutside(ref, () => {
+    setIsFocused(false);
+  });
 
   if (isDisabled) {
     return {
@@ -29,10 +36,16 @@ export const useContextMenuItemFocus = ({
     };
   }
 
+  useEffect(() => {
+    if (hasSubmenu && activeItemId === null) {
+      setIsFocused(false);
+    }
+  }, [activeItemId]);
+
   return {
     dataHighlighted: isFocused ? '' : undefined,
 
-    onFocus: (e: React.FocusEvent<HTMLDivElement>) => {
+    onFocus: (e: React.FocusEvent<T>) => {
       if (!hasSubmenu) {
         setActiveItemId(id);
       }
@@ -41,7 +54,7 @@ export const useContextMenuItemFocus = ({
       onFocus?.(e);
     },
 
-    onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => {
+    onMouseEnter: (e: React.MouseEvent<T>) => {
       if (!hasSubmenu) {
         setActiveItemId(id);
       }
@@ -50,17 +63,17 @@ export const useContextMenuItemFocus = ({
       onMouseEnter?.(e);
     },
 
-    onBlur: (e: React.FocusEvent<HTMLDivElement>) => {
+    onBlur: (e: React.FocusEvent<T>) => {
       setIsFocused(false);
       onBlur?.(e);
     },
 
-    onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => {
+    onMouseLeave: (e: React.MouseEvent<T>) => {
       setIsFocused(false);
       onMouseLeave?.(e);
     },
 
-    onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => {
+    onKeyDown: (e: React.KeyboardEvent<T>) => {
       if (hasSubmenu && e.key === 'ArrowLeft') {
         setIsFocused(false);
       }

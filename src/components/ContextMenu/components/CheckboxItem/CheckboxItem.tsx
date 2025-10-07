@@ -66,6 +66,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onMouseLeave: handleItemMouseLeave,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
+      ref: itemRef,
       id,
       isDisabled,
       hasSubmenu,

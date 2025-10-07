@@ -215,7 +215,7 @@ export function useContextMenuSub({
     /**
      * Important for the case of Sub -> SubRoot nesting.
      */
-    if (value && childModeValue === ContextMenuMode.CLICK) {
+    if (childModeValue === ContextMenuMode.CLICK) {
       onChildOpen?.(value, childModeValue);
     }
   };

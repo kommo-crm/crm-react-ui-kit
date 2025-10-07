@@ -1,4 +1,8 @@
 .trigger {
   z-index: 6;
   cursor: pointer;
+
+  &.open {
+    z-index: 8;
+  }
 }

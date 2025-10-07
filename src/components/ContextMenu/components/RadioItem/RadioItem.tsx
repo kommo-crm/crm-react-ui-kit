@@ -69,6 +69,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onMouseLeave: handleItemMouseLeave,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
+      ref: itemRef,
       id,
       isDisabled,
       hasSubmenu,

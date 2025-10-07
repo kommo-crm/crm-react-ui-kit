@@ -22,8 +22,14 @@ export function useContentPositioning({
       ? 'start'
       : 'end'
   );
-  const [labelOffset, setLabelOffset] = useState<number>(alignOffset);
+  const [offset, setOffset] = useState<number>(alignOffset);
   const [isPositioned, setIsPositioned] = useState(false);
+
+  const isRectEmpty = (rect: DOMRect) => {
+    return (
+      !rect.width || !rect.height || !isFinite(rect.top) || !isFinite(rect.left)
+    );
+  };
 
   /**
    * Calculates the label offset based on the direction and the trigger height.
@@ -46,68 +52,48 @@ export function useContentPositioning({
       return;
     }
 
-    const childrenCollection = Array.from(contentEl.children);
+    const items = Array.from(contentEl.querySelectorAll('[data-item]'));
 
-    if (childrenCollection.length === 0) {
+    if (items.length === 0) {
       return;
     }
 
-    const label = contentEl.firstElementChild;
-
-    const getEl = (index: number): Element | null => {
-      const el = childrenCollection[index];
-
-      return el instanceof Element ? el : null;
-    };
-
-    const resolveItem = (): Element | null => {
-      if (align === 'start') {
-        const second = getEl(1);
-
-        if (second?.hasAttribute('data-separator')) {
-          return getEl(2);
-        }
-
-        return second;
-      }
-
-      const lastIndex = childrenCollection.length - 1;
-      const last = getEl(lastIndex);
-
-      if (last?.hasAttribute('data-arrow')) {
-        return getEl(lastIndex - 1);
-      }
-
-      return last;
-    };
-
-    const item = resolveItem();
-
-    if (!item) {
-      return;
-    }
+    const item =
+      align === 'start'
+        ? (items[0] as Element)
+        : (items[items.length - 1] as Element);
 
     const updateOffset = () => {
-      const { height: itemHeight } = item.getBoundingClientRect();
-      const { height: triggerHeight } = triggerEl.getBoundingClientRect();
-      const dynamicOffset = (triggerHeight - itemHeight) / 2;
+      const triggerRect = triggerEl.getBoundingClientRect();
+      const contentRect = contentEl.getBoundingClientRect();
+      const itemRect = item.getBoundingClientRect();
+
+      if ([triggerRect, contentRect, itemRect].some(isRectEmpty)) {
+        requestAnimationFrame(updateOffset);
+
+        return;
+      }
+
+      const triggerCenter = triggerRect.height / 2;
+      const itemCenter = itemRect.height / 2;
+      const itemTop = itemRect.top - contentRect.top;
+      const itemBottom = itemRect.bottom - contentRect.bottom;
 
       if (align === 'start') {
-        if (label instanceof Element && label.hasAttribute('data-label')) {
-          const { height: labelHeight } = label.getBoundingClientRect();
-
-          setLabelOffset(alignOffset - labelHeight + dynamicOffset);
-        }
+        setOffset(alignOffset + triggerCenter - itemTop - itemCenter);
       } else {
-        setLabelOffset(alignOffset + dynamicOffset - 1);
+        setOffset(alignOffset + triggerCenter + itemBottom - itemCenter);
       }
     };
 
-    updateOffset();
+    requestAnimationFrame(updateOffset);
 
-    const resizeObserver = new ResizeObserver(updateOffset);
+    const resizeObserver = new ResizeObserver(() => {
+      requestAnimationFrame(updateOffset);
+    });
 
     resizeObserver.observe(item);
+    resizeObserver.observe(triggerEl);
 
     return () => resizeObserver.disconnect();
   }, [
@@ -246,5 +232,5 @@ export function useContentPositioning({
     collisionBoundary,
   ]);
 
-  return { align, labelOffset, isPositioned };
+  return { align, offset, isPositioned };
 }

@@ -71,6 +71,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onMouseLeave: handleItemMouseLeave,
   } = useContextMenuItemFocus({
     displayName: DISPLAY_NAME,
+    ref: itemRef,
     id,
     isDisabled,
     hasSubmenu,
@@ -115,6 +116,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
             handleCloseOnClick();
           }}
           onClick={(e) => {
+            e.stopPropagation();
+
             const target = e.target as HTMLElement;
 
             const isLink = target.closest('a');

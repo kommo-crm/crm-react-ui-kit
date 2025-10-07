@@ -69,6 +69,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onMouseLeave: handleItemMouseLeave,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
+      ref: itemRef,
       id: triggerId,
       isDisabled,
       onMouseEnter: (e) => {

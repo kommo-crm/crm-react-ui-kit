@@ -58,7 +58,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
 
     const { level } = useLevelContext(DISPLAY_NAME);
 
-    const { labelOffset } = useContentPositioning({
+    const { offset } = useContentPositioning({
       alignOffset,
       disableAutoPositioning,
       triggerRef,
@@ -141,7 +141,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
               className={cx(s.sub_content, className)}
               sideOffset={sideOffset}
               collisionPadding={collisionPadding}
-              alignOffset={labelOffset}
+              alignOffset={offset}
               onEscapeKeyDown={(e) => {
                 closeMenuImmediately();
 

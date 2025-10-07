@@ -44,15 +44,15 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
     }, [children]);
 
     const defaultHandlers = {
-      onClick: onClick,
-      onKeyDown: onKeyDown,
-      onKeyUp: onKeyUp,
-      onKeyPress: onKeyPress,
-      onPointerDown: onPointerDown,
-      onPointerUp: onPointerUp,
-      onPointerEnter: onPointerEnter,
-      onPointerLeave: onPointerLeave,
-      onPointerMove: onPointerMove,
+      onClick,
+      onKeyDown,
+      onKeyUp,
+      onKeyPress,
+      onPointerDown,
+      onPointerUp,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerMove,
     };
 
     const stopEventsHook = useStopContextMenuEvents(defaultHandlers);

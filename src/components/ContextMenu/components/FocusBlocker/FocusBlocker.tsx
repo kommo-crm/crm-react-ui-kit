@@ -27,15 +27,15 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
     } = props;
 
     const defaultHandlers = {
-      onClick: onClick,
-      onKeyDown: onKeyDown,
-      onKeyUp: onKeyUp,
-      onKeyPress: onKeyPress,
-      onPointerDown: onPointerDown,
-      onPointerUp: onPointerUp,
-      onPointerEnter: onPointerEnter,
-      onPointerLeave: onPointerLeave,
-      onPointerMove: onPointerMove,
+      onClick,
+      onKeyDown,
+      onKeyUp,
+      onKeyPress,
+      onPointerDown,
+      onPointerUp,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerMove,
     };
 
     const handlers = useStopContextMenuEvents(defaultHandlers);
