@@ -5,7 +5,7 @@ import { DirectionType } from './Content.types';
 
 type RadixContentProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuContent>,
-  'avoidCollisions'
+  'avoidCollisions' | 'align'
 >;
 
 export type ContentProps = RadixContentProps & {
@@ -28,6 +28,10 @@ export type ContentProps = RadixContentProps & {
    * such as server-side rendering or automated tests.
    */
   disableAutoPositioning?: boolean;
+  /**
+   * Whether to disable repositioning.
+   */
+  disableRepositioning?: boolean;
 };
 
 export interface ContextMenuContentContextProps {

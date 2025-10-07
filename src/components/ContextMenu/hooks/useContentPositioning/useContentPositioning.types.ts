@@ -29,4 +29,8 @@ export interface UseContentPositioningOptions {
    * The children of the content.
    */
   children: React.ReactNode;
+  /**
+   * Whether to disable repositioning.
+   */
+  disableRepositioning: boolean;
 }

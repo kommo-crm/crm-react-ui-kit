@@ -1,6 +1,8 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 import { Direction } from '../../components/Content';
+
+import { usePrevious } from '../usePrevious/usePrevious';
 
 import { UseContentPositioningOptions } from './useContentPositioning.types';
 
@@ -11,13 +13,14 @@ export function useContentPositioning({
   triggerRef,
   contentRef,
   collisionBoundary,
+  disableRepositioning,
   children,
 }: UseContentPositioningOptions) {
   const [align, setAlign] = useState<'start' | 'end'>(
     direction === Direction.UP_RIGHT ||
       direction === Direction.DOWN_RIGHT ||
-      direction === Direction.RIGHT_UP ||
       direction === Direction.RIGHT_DOWN ||
+      direction === Direction.LEFT_DOWN ||
       !direction
       ? 'start'
       : 'end'
@@ -25,86 +28,8 @@ export function useContentPositioning({
   const [offset, setOffset] = useState<number>(alignOffset);
   const [isPositioned, setIsPositioned] = useState(false);
 
-  const isRectEmpty = (rect: DOMRect) => {
-    return (
-      !rect.width || !rect.height || !isFinite(rect.top) || !isFinite(rect.left)
-    );
-  };
-
-  /**
-   * Calculates the label offset based on the direction and the trigger height.
-   */
-  useLayoutEffect(() => {
-    const contentEl = contentRef?.current;
-    const triggerEl = triggerRef?.current;
-
-    if (
-      !contentEl ||
-      !triggerEl ||
-      disableAutoPositioning ||
-      [
-        Direction.DOWN_LEFT,
-        Direction.DOWN_RIGHT,
-        Direction.UP_LEFT,
-        Direction.UP_RIGHT,
-      ].includes(direction as Direction)
-    ) {
-      return;
-    }
-
-    const items = Array.from(contentEl.querySelectorAll('[data-item]'));
-
-    if (items.length === 0) {
-      return;
-    }
-
-    const item =
-      align === 'start'
-        ? (items[0] as Element)
-        : (items[items.length - 1] as Element);
-
-    const updateOffset = () => {
-      const triggerRect = triggerEl.getBoundingClientRect();
-      const contentRect = contentEl.getBoundingClientRect();
-      const itemRect = item.getBoundingClientRect();
-
-      if ([triggerRect, contentRect, itemRect].some(isRectEmpty)) {
-        requestAnimationFrame(updateOffset);
-
-        return;
-      }
-
-      const triggerCenter = triggerRect.height / 2;
-      const itemCenter = itemRect.height / 2;
-      const itemTop = itemRect.top - contentRect.top;
-      const itemBottom = itemRect.bottom - contentRect.bottom;
-
-      if (align === 'start') {
-        setOffset(alignOffset + triggerCenter - itemTop - itemCenter);
-      } else {
-        setOffset(alignOffset + triggerCenter + itemBottom - itemCenter);
-      }
-    };
-
-    requestAnimationFrame(updateOffset);
-
-    const resizeObserver = new ResizeObserver(() => {
-      requestAnimationFrame(updateOffset);
-    });
-
-    resizeObserver.observe(item);
-    resizeObserver.observe(triggerEl);
-
-    return () => resizeObserver.disconnect();
-  }, [
-    children,
-    direction,
-    contentRef,
-    triggerRef,
-    align,
-    alignOffset,
-    disableAutoPositioning,
-  ]);
+  const hasPositionedRef = useRef(false);
+  const prevAlign = usePrevious(align);
 
   /**
    * Positions the content based on the direction and the trigger height.
@@ -215,7 +140,11 @@ export function useContentPositioning({
 
     requestAnimationFrame(measureAndAdjust);
 
-    if (contentRef.current && typeof ResizeObserver !== 'undefined') {
+    if (
+      !disableRepositioning &&
+      contentRef.current &&
+      typeof ResizeObserver !== 'undefined'
+    ) {
       ro = new ResizeObserver(measureAndAdjust);
       ro.observe(contentRef.current);
     }
@@ -227,9 +156,110 @@ export function useContentPositioning({
   }, [
     direction,
     disableAutoPositioning,
+    disableRepositioning,
     triggerRef,
     contentRef,
     collisionBoundary,
+  ]);
+
+  /**
+   * Calculates the label offset based on the direction and the trigger height.
+   */
+  useLayoutEffect(() => {
+    const contentEl = contentRef?.current;
+    const triggerEl = triggerRef?.current;
+
+    if (
+      disableRepositioning &&
+      hasPositionedRef.current &&
+      prevAlign === align
+    ) {
+      return;
+    }
+
+    if (
+      !contentEl ||
+      !triggerEl ||
+      disableAutoPositioning ||
+      [
+        Direction.DOWN_LEFT,
+        Direction.DOWN_RIGHT,
+        Direction.UP_LEFT,
+        Direction.UP_RIGHT,
+      ].includes(direction as Direction)
+    ) {
+      return;
+    }
+
+    const items = Array.from(contentEl.querySelectorAll('[data-item]'));
+
+    if (items.length === 0) {
+      return;
+    }
+
+    const item =
+      align === 'start'
+        ? (items[0] as Element)
+        : (items[items.length - 1] as Element);
+
+    const updateOffset = () => {
+      const triggerRect = triggerEl.getBoundingClientRect();
+      const contentRect = contentEl.getBoundingClientRect();
+      const itemRect = item.getBoundingClientRect();
+
+      const isRectEmpty = (rect: DOMRect) => {
+        return (
+          !rect.width ||
+          !rect.height ||
+          !isFinite(rect.top) ||
+          !isFinite(rect.left)
+        );
+      };
+
+      if ([triggerRect, contentRect, itemRect].some(isRectEmpty)) {
+        requestAnimationFrame(updateOffset);
+
+        return;
+      }
+
+      const triggerCenter = triggerRect.height / 2;
+      const itemCenter = itemRect.height / 2;
+      const itemTop = itemRect.top - contentRect.top;
+      const itemBottom = itemRect.bottom - contentRect.bottom;
+
+      if (align === 'start') {
+        setOffset(alignOffset + triggerCenter - itemTop - itemCenter);
+      } else {
+        setOffset(alignOffset + triggerCenter + itemBottom - itemCenter);
+      }
+
+      hasPositionedRef.current = true;
+    };
+
+    requestAnimationFrame(updateOffset);
+
+    if (disableRepositioning) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      requestAnimationFrame(updateOffset);
+    });
+
+    resizeObserver.observe(item);
+    resizeObserver.observe(triggerEl);
+
+    return () => resizeObserver.disconnect();
+  }, [
+    children,
+    direction,
+    disableRepositioning,
+    align,
+    contentRef,
+    triggerRef,
+    align,
+    alignOffset,
+    disableAutoPositioning,
   ]);
 
   return { align, offset, isPositioned };

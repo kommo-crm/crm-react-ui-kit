@@ -12,3 +12,4 @@ export { useInnerInputsFocus } from './useInnerInputsFocus/useInnerInputsFocus';
 export { useItemInnerFocus } from './useItemInnerFocus/useItemInnerFocus';
 export { useChildrenWithBlocker } from './useChildrenWithBlocker/useChildrenWithBlocker';
 export { useMouseMoveOutside } from './useMouseMoveOutside/useMouseMoveOutside';
+export { usePrevious } from './usePrevious/usePrevious';

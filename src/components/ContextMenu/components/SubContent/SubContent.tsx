@@ -30,6 +30,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       onMouseLeave,
       alignOffset,
       disableAutoPositioning = false,
+      disableRepositioning = false,
       onEscapeKeyDown,
 
       ...rest
@@ -64,6 +65,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       triggerRef,
       contentRef,
       children,
+      disableRepositioning,
     });
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);

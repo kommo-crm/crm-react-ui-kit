@@ -37,6 +37,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       collisionBoundary,
       direction = Direction.DOWN_RIGHT,
       disableAutoPositioning = false,
+      disableRepositioning = false,
       onMouseEnter,
       onMouseLeave,
       onInteractOutside,
@@ -74,6 +75,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       contentRef,
       collisionBoundary,
       children,
+      disableRepositioning,
     });
 
     const springStyles = useSpring({
