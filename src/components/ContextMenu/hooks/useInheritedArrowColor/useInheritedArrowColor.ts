@@ -139,10 +139,12 @@ export const useInheritedArrowColor = (
       const content = contentRef.current!;
       const sideAlignObserver = new MutationObserver(handleUpdate);
 
-      sideAlignObserver.observe(content, {
-        attributes: true,
-        attributeFilter: ['data-side', 'data-align'],
-      });
+      if (content) {
+        sideAlignObserver.observe(content, {
+          attributes: true,
+          attributeFilter: ['data-side', 'data-align'],
+        });
+      }
 
       return () => {
         itemObserver?.disconnect();
