@@ -11,6 +11,13 @@ export const useInnerInputsFocus = ({
 
   const handleNodeRef = (newNode: HTMLDivElement | null) => {
     setNode(newNode);
+
+    if (newNode && isEnabled) {
+      const inputs = Array.from(newNode.querySelectorAll('input'));
+
+      setHasInnerInput(inputs.length > 0);
+      setIsInnerInputFocused(inputs.some((i) => document.activeElement === i));
+    }
   };
 
   useLayoutEffect(() => {

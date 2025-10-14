@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 
 import { createRoot } from 'react-dom/client';
 
@@ -292,7 +286,7 @@ export const useContextMenu = ({
    */
   const inheritedArrowColor = useInheritedArrowColor(open, contentRef);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (
       !enableInnerInputFocus ||
       !backgroundFocusBlockerContainers ||
@@ -338,12 +332,7 @@ export const useContextMenu = ({
         });
       });
     };
-  }, [
-    backgroundFocusBlockerContainers,
-    enableInnerInputFocus,
-    itemWithFocusedInput,
-    setItemWithFocusedInput,
-  ]);
+  }, [enableInnerInputFocus, itemWithFocusedInput]);
 
   return {
     open,

@@ -17,6 +17,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>({
   onFocus,
   onBlur,
   onKeyDown,
+  isSelectable = true,
 }: UseContextMenuItemFocusOptions<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const { setActiveItemId, activeItemId } = useLevelContext(displayName);
@@ -43,9 +44,15 @@ export const useContextMenuItemFocus = <T extends HTMLElement>({
   }, [activeItemId]);
 
   return {
-    dataHighlighted: isFocused ? '' : undefined,
+    dataHighlighted: isFocused && isSelectable ? '' : undefined,
 
     onFocus: (e: React.FocusEvent<T>) => {
+      if (!isSelectable) {
+        onFocus?.(e);
+
+        return;
+      }
+
       if (!hasSubmenu) {
         setActiveItemId(id);
       }
@@ -55,6 +62,12 @@ export const useContextMenuItemFocus = <T extends HTMLElement>({
     },
 
     onMouseEnter: (e: React.MouseEvent<T>) => {
+      if (!isSelectable) {
+        onMouseEnter?.(e);
+
+        return;
+      }
+
       if (!hasSubmenu) {
         setActiveItemId(id);
       }
@@ -64,16 +77,34 @@ export const useContextMenuItemFocus = <T extends HTMLElement>({
     },
 
     onBlur: (e: React.FocusEvent<T>) => {
+      if (!isSelectable) {
+        onBlur?.(e);
+
+        return;
+      }
+
       setIsFocused(false);
       onBlur?.(e);
     },
 
     onMouseLeave: (e: React.MouseEvent<T>) => {
+      if (!isSelectable) {
+        onMouseLeave?.(e);
+
+        return;
+      }
+
       setIsFocused(false);
       onMouseLeave?.(e);
     },
 
     onKeyDown: (e: React.KeyboardEvent<T>) => {
+      if (!isSelectable) {
+        onKeyDown?.(e);
+
+        return;
+      }
+
       if (hasSubmenu && e.key === 'ArrowLeft') {
         setIsFocused(false);
       }

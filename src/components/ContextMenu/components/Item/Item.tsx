@@ -18,6 +18,8 @@ import { useContextMenuRootContext } from '../../ContextMenu.context';
 
 import type { ItemProps } from './Item.props';
 
+import { MaybeAsChild } from './components';
+
 import s from './Item.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.Item';
@@ -143,7 +145,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         </RadixDropdownMenuItem>
       )
     : withProvider(
-        <div
+        <MaybeAsChild
           ref={mergeRefs(ref, itemRef, handleNodeRef)}
           className={cx(s.item, className)}
           data-not-selectable
@@ -157,10 +159,11 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           onMouseLeave={onMouseLeave}
           onKeyDown={onKeyDown}
           onClick={onClick}
+          asChild={asChild}
           {...rest}
         >
           {children}
-        </div>
+        </MaybeAsChild>
       );
 });
 

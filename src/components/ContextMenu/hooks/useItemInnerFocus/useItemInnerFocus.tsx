@@ -38,23 +38,13 @@ export function useItemInnerFocus({
       return;
     }
 
-    let timeout: NodeJS.Timeout | null = null;
-
     if (isInnerInputFocused) {
       setItemWithFocusedInput(id);
     } else if (itemWithFocusedInput === id) {
-      // ждём чуть-чуть перед сбросом
-      timeout = setTimeout(() => {
-        setItemWithFocusedInput(null);
-      }, 150);
+      setItemWithFocusedInput(null);
     }
 
     return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-
-      // если размонтируемся — сбросить тоже
       if (itemWithFocusedInput === id) {
         setItemWithFocusedInput(null);
       }
