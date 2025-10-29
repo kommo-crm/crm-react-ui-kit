@@ -47,6 +47,7 @@ export const useContextMenuSubMenu = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isFirstRender = useRef(true);
 
   const isTouchDevice = useIsTouchDevice();
 
@@ -310,6 +311,29 @@ export const useContextMenuSubMenu = ({
     onChildOpen(isOpen, mode);
     handleSubmenuOpen(isOpen);
   }, [isOpen, mode]);
+
+  /**
+   * onChildOpen states propagation.
+   *
+   * Important for the cases like Root (hover) -> Sub (hover) -> SubRoot (click) nesting.
+   */
+  useEffect(() => {
+    if (childMode === null) {
+      return;
+    }
+
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+
+      return;
+    }
+
+    if (isChildOpen && childMode === ContextMenuMode.CLICK) {
+      onChildOpen?.(true, childMode);
+    } else {
+      onChildOpen?.(isOpen, mode);
+    }
+  }, [isChildOpen, childMode]);
 
   return {
     mode,

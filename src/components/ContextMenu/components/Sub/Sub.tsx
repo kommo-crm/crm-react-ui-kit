@@ -26,7 +26,7 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
       isOpen,
       setOpen,
       animatedOpen,
-      startAnimation,
+      handleAnimationStart,
       handleMouseEnter,
       handleMouseLeave,
       handleOpenChange,
@@ -55,7 +55,7 @@ export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
         setOpen={setOpen}
         animatedOpen={animatedOpen}
         defaultOpen={defaultOpen}
-        startAnimation={startAnimation}
+        onStartAnimation={handleAnimationStart}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onOpenByKeyboard={onOpenByKeyboard}

@@ -13,6 +13,8 @@ import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { useContentPositioning } from '../../hooks/useContentPositioning/useContentPositioning';
 
+import { ContextMenuMode } from '../../ContextMenu.enums';
+
 import type { SubContentProps } from './SubContent.props';
 
 import s from './SubContent.module.css';
@@ -28,6 +30,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       collisionPadding = 10,
       onMouseEnter,
       onMouseLeave,
+      onMouseMove,
       alignOffset,
       disableAutoPositioning = false,
       disableRepositioning = false,
@@ -41,7 +44,8 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
 
     const {
       animatedOpen,
-      startAnimation,
+      onStartAnimation,
+      mode,
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       defaultOpen,
@@ -59,20 +63,23 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
 
     const { level } = useLevelContext(DISPLAY_NAME);
 
-    const { offset } = useContentPositioning({
-      alignOffset,
-      disableAutoPositioning,
-      triggerRef,
-      contentRef,
-      children,
-      disableRepositioning,
-    });
+    const { offset, isPositioned: isContentPositioned } = useContentPositioning(
+      {
+        alignOffset,
+        disableAutoPositioning,
+        triggerRef,
+        contentRef,
+        children,
+        disableRepositioning,
+        isSubContent: true,
+      }
+    );
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
-    const [isPositioned, setIsPositioned] = useState(false);
+    const [isIconsPositioned, setIsIconsPositioned] = useState(false);
 
     useLayoutEffect(() => {
-      startAnimation();
+      onStartAnimation();
     }, []);
 
     /**
@@ -82,12 +89,13 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       let raf: number;
 
       if (animatedOpen) {
-        setIsPositioned(false);
+        setIsIconsPositioned(false);
+
         raf = requestAnimationFrame(() => {
-          setIsPositioned(true);
+          setIsIconsPositioned(true);
         });
       } else {
-        setIsPositioned(false);
+        setIsIconsPositioned(false);
       }
 
       return () => {
@@ -99,11 +107,14 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
 
     const springStyles = useSpring({
       opacity:
-        (isPositioned && animatedOpen) || defaultOpen !== undefined ? 1 : 0,
+        (isContentPositioned && isIconsPositioned && animatedOpen) ||
+        defaultOpen !== undefined
+          ? 1
+          : 0,
       config:
-        defaultOpen === undefined
-          ? { duration: animationDuration, easing: easings.easeInOutCubic }
-          : { duration: 0 },
+        mode === ContextMenuMode.CLICK || defaultOpen !== undefined
+          ? { duration: 0 }
+          : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
     return (
@@ -130,6 +141,11 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
               onMouseEnterContext?.(e);
 
               onMouseEnter?.(e);
+            }}
+            onMouseMove={(e) => {
+              onMouseEnterContext?.(e);
+
+              onMouseMove?.(e);
             }}
             onMouseLeave={(e) => {
               onMouseLeaveContext?.(e);

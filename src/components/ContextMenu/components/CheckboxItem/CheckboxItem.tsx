@@ -133,7 +133,15 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
           handleCloseOnClick();
         }}
         onClick={(e) => {
-          e.preventDefault();
+          e.stopPropagation();
+
+          const target = e.target as HTMLElement;
+
+          const isLink = target.closest('a');
+
+          if (!isLink) {
+            e.preventDefault();
+          }
 
           onClick?.(e);
 

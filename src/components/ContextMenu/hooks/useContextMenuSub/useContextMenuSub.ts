@@ -29,6 +29,7 @@ export function useContextMenuSub({
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
 
   const isTouchDevice = useIsTouchDevice();
 
@@ -132,12 +133,9 @@ export function useContextMenuSub({
         closeTimerRef.current = null;
       }
 
-      if (mode === ContextMenuMode.HOVER) {
-        setAnimatedOpen(true);
-      }
-
       setOpen(true);
       onOpen?.(true);
+      setAnimatedOpen(true);
       handleSubmenuOpen(true);
     } else {
       requestClose();
@@ -211,13 +209,6 @@ export function useContextMenuSub({
   ) => {
     setIsChildOpen(value);
     setChildMode(childModeValue);
-
-    /**
-     * Important for the case of Sub -> SubRoot nesting.
-     */
-    if (childModeValue === ContextMenuMode.CLICK) {
-      onChildOpen?.(value, childModeValue);
-    }
   };
 
   /**
@@ -234,6 +225,21 @@ export function useContextMenuSub({
    */
   const handleSubRootOpen = (value: boolean) => {
     setIsSubRootOpen(value);
+  };
+
+  /**
+   * Handles the animation start.
+   */
+  const handleAnimationStart = () => {
+    if (mode === ContextMenuMode.CLICK) {
+      /**
+       * We need to use setTimeout to ensure that the animation is started
+       * after the render is complete.
+       */
+      setTimeout(() => setAnimatedOpen(true), 0);
+    } else {
+      setAnimatedOpen(true);
+    }
   };
 
   /**
@@ -278,11 +284,41 @@ export function useContextMenuSub({
 
   /**
    * This effect is used to call the onChildOpen callback function
-   * when the submenu is opened or closed by child click.
+   * when the submenu is opened or closed by click.
    */
   useEffect(() => {
     onChildOpen?.(open, mode);
   }, [open, mode]);
+
+  /**
+   * onChildOpen states propagation.
+   *
+   * Important for the cases like Root (hover) -> Sub (hover) -> SubRoot (click) nesting.
+   */
+  useEffect(() => {
+    if (childMode === null) {
+      return;
+    }
+
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+
+      return;
+    }
+
+    if (isChildOpen && childMode === ContextMenuMode.CLICK) {
+      onChildOpen?.(true, childMode);
+    } else {
+      onChildOpen?.(open, mode);
+    }
+  }, [isChildOpen, childMode]);
+
+  /**
+   * Handles the open state change when the open state changes.
+   */
+  useEffect(() => {
+    handleOpenChange(open);
+  }, [open]);
 
   /**
    * Handles the click outside event.
@@ -296,7 +332,7 @@ export function useContextMenuSub({
     isOpen: open,
     setOpen,
     animatedOpen,
-    startAnimation: () => setAnimatedOpen(true),
+    handleAnimationStart,
     handleMouseEnter,
     handleMouseLeave,
     handleOpenChange,

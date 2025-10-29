@@ -164,6 +164,8 @@ export const useContextMenu = ({
       return;
     }
 
+    (document.activeElement as HTMLElement)?.blur();
+
     setOpenedByKeyboard(false);
 
     if (closeTimerRef.current) {
@@ -287,11 +289,7 @@ export const useContextMenu = ({
   const inheritedArrowColor = useInheritedArrowColor(open, contentRef);
 
   useEffect(() => {
-    if (
-      !enableInnerInputFocus ||
-      !backgroundFocusBlockerContainers ||
-      itemWithFocusedInput === null
-    ) {
+    if (!enableInnerInputFocus || !backgroundFocusBlockerContainers || !open) {
       return;
     }
 
@@ -315,9 +313,10 @@ export const useContextMenu = ({
         <FocusBlocker
           className={backgroundFocusBlockerClassName}
           onClick={() => {
-            setItemWithFocusedInput(null);
             (document.activeElement as HTMLElement)?.blur();
           }}
+          disabledHandlers={['onPointerDown']}
+          cutoutRef={triggerRef}
         />
       );
 
@@ -332,7 +331,7 @@ export const useContextMenu = ({
         });
       });
     };
-  }, [enableInnerInputFocus, itemWithFocusedInput]);
+  }, [enableInnerInputFocus, open]);
 
   return {
     open,

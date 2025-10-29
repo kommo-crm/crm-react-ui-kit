@@ -15,6 +15,7 @@ export function useContentPositioning({
   collisionBoundary,
   disableRepositioning,
   children,
+  isSubContent,
 }: UseContentPositioningOptions) {
   const [align, setAlign] = useState<'start' | 'end'>(
     direction === Direction.UP_RIGHT ||
@@ -26,6 +27,9 @@ export function useContentPositioning({
       : 'end'
   );
   const [offset, setOffset] = useState<number>(alignOffset);
+
+  const [positionedDirection, setPositionedDirection] = useState(false);
+  const [positionedOffset, setPositionedOffset] = useState(false);
   const [isPositioned, setIsPositioned] = useState(false);
 
   const hasPositionedRef = useRef(false);
@@ -35,7 +39,15 @@ export function useContentPositioning({
    * Positions the content based on the direction and the trigger height.
    */
   useLayoutEffect(() => {
+    if (isSubContent) {
+      setPositionedDirection(true);
+
+      return;
+    }
+
     if (disableAutoPositioning || !triggerRef?.current || !direction) {
+      setPositionedDirection(true);
+
       return;
     }
 
@@ -135,7 +147,7 @@ export function useContentPositioning({
       }
 
       setAlign(alignCandidate);
-      setIsPositioned(true);
+      setPositionedDirection(true);
     };
 
     requestAnimationFrame(measureAndAdjust);
@@ -174,6 +186,8 @@ export function useContentPositioning({
       hasPositionedRef.current &&
       prevAlign === align
     ) {
+      setPositionedOffset(true);
+
       return;
     }
 
@@ -188,6 +202,8 @@ export function useContentPositioning({
         Direction.UP_RIGHT,
       ].includes(direction as Direction)
     ) {
+      setPositionedOffset(true);
+
       return;
     }
 
@@ -234,6 +250,7 @@ export function useContentPositioning({
       }
 
       hasPositionedRef.current = true;
+      setPositionedOffset(true);
     };
 
     requestAnimationFrame(updateOffset);
@@ -243,7 +260,7 @@ export function useContentPositioning({
     }
 
     const resizeObserver = new ResizeObserver(() => {
-      requestAnimationFrame(updateOffset);
+      updateOffset();
     });
 
     resizeObserver.observe(item);
@@ -261,6 +278,12 @@ export function useContentPositioning({
     alignOffset,
     disableAutoPositioning,
   ]);
+
+  useLayoutEffect(() => {
+    if (positionedDirection && positionedOffset) {
+      setIsPositioned(true);
+    }
+  }, [positionedDirection, positionedOffset]);
 
   return { align, offset, isPositioned };
 }

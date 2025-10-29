@@ -1,33 +1,56 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
+
+import { noop } from 'src/utils';
 
 import { Handlers } from './useStopContextMenuEvents.types';
 
-export const useStopContextMenuEvents = <T extends HTMLElement>(
-  handlers: Partial<Handlers<T>> = {}
-) => {
+export const useStopContextMenuEvents = <T extends HTMLElement>({
+  handlers = {},
+  disabledHandlers = [],
+}: {
+  handlers?: Partial<Handlers<T>>;
+  disabledHandlers?: Array<keyof Handlers<T>>;
+}) => {
+  const disabledSet = useMemo(
+    () => new Set(disabledHandlers),
+    [disabledHandlers]
+  );
+
   const stop = useCallback((e: React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
   }, []);
 
-  const wrap =
+  const wrap = useCallback(
     <E extends React.SyntheticEvent>(
-      userHandler?: (e: E) => void
-    ): ((e: E) => void) =>
-    (e: E) => {
-      stop(e);
-      userHandler?.(e);
-    };
+      name: keyof Handlers<T>,
+      handler?: (e: E) => void
+    ): ((e: E) => void) => {
+      if (disabledSet.has(name)) {
+        return (e) => handler?.(e) ?? noop;
+      }
 
-  return {
-    onClick: wrap(handlers.onClick),
-    onKeyDown: wrap(handlers.onKeyDown),
-    onKeyUp: wrap(handlers.onKeyUp),
-    onKeyPress: wrap(handlers.onKeyPress),
-    onPointerDown: wrap(handlers.onPointerDown),
-    onPointerUp: wrap(handlers.onPointerUp),
-    onPointerEnter: wrap(handlers.onPointerEnter),
-    onPointerLeave: wrap(handlers.onPointerLeave),
-    onPointerMove: wrap(handlers.onPointerMove),
-  };
+      return (e: E) => {
+        stop(e);
+        handler?.(e);
+      };
+    },
+    [disabledSet, stop]
+  );
+
+  return useMemo(
+    () => ({
+      onClick: wrap('onClick', handlers.onClick),
+      onKeyDown: wrap('onKeyDown', handlers.onKeyDown),
+      onKeyUp: wrap('onKeyUp', handlers.onKeyUp),
+      onKeyPress: wrap('onKeyPress', handlers.onKeyPress),
+      onPointerDown: wrap('onPointerDown', handlers.onPointerDown),
+      onPointerUp: wrap('onPointerUp', handlers.onPointerUp),
+      onPointerEnter: wrap('onPointerEnter', handlers.onPointerEnter),
+      onPointerLeave: wrap('onPointerLeave', handlers.onPointerLeave),
+      onPointerMove: wrap('onPointerMove', handlers.onPointerMove),
+      onFocus: wrap('onFocus', handlers.onFocus),
+    }),
+    [handlers, wrap]
+  );
 };

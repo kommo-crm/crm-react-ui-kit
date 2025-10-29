@@ -114,10 +114,19 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
           handleCloseOnClick();
         }}
         onClick={(e) => {
-          e.preventDefault();
+          e.stopPropagation();
+
+          const target = e.target as HTMLElement;
+
+          const isLink = target.closest('a');
+
+          if (!isLink) {
+            e.preventDefault();
+          }
+
+          onClick?.(e);
 
           onChange(value);
-          onClick?.(e);
 
           handleCloseOnClick();
         }}

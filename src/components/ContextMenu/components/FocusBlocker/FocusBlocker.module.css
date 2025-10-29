@@ -1,7 +1,38 @@
 .blocker {
-  position: fixed;
-  cursor: default;
+  position: absolute;
   inset: 0;
   background: transparent;
   z-index: 7;
+
+  &.pure {
+    position: fixed;
+    cursor: default;
+    z-index: 7;
+  }
+}
+
+.top,
+.left,
+.right,
+.bottom {
+  position: absolute;
+}
+
+.top {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.bottom {
+  left: 0;
+  right: 0;
 }

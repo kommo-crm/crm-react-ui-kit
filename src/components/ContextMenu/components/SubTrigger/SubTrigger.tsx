@@ -38,6 +38,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onPointerMove,
       onPointerLeave,
       onMouseEnter,
+      onMouseMove,
       onMouseLeave,
 
       ...rest
@@ -72,10 +73,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       ref: itemRef,
       id: triggerId,
       isDisabled,
-      onMouseEnter: (e) => {
-        onMouseEnterContext(e);
-        onMouseEnter?.(e);
-      },
+      onMouseEnter: onMouseEnterContext,
       onMouseLeave: (e) => {
         onMouseLeaveContext(e);
         onMouseLeave?.(e);
@@ -135,7 +133,16 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
           onClick?.(e);
         }}
         onFocus={handleItemFocus}
-        onMouseEnter={handleItemMouseEnter}
+        onMouseEnter={(e) => {
+          handleItemMouseEnter?.(e);
+
+          onMouseEnter?.(e);
+        }}
+        onMouseMove={(e) => {
+          handleItemMouseEnter?.(e);
+
+          onMouseMove?.(e);
+        }}
         onBlur={handleItemBlur}
         onMouseLeave={handleItemMouseLeave}
         onPointerEnter={(e) => {

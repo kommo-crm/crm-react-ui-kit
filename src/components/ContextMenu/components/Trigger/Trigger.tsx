@@ -10,6 +10,8 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { TriggerProps } from './Trigger.props';
 
+import s from './Trigger.module.css';
+
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
@@ -20,6 +22,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onKeyDown,
       onMouseEnter,
       onMouseLeave,
+      onMouseMove,
       onPointerDown,
 
       ...rest
@@ -32,12 +35,13 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
       onOpenByKeyboard,
+      isOpen,
     } = useContextMenuContext(DISPLAY_NAME);
 
     return (
       <RadixDropdownMenuTrigger
         ref={mergeRefs(triggerRef, ref)}
-        className={cx(className)}
+        className={cx(className, s.trigger)}
         onPointerDown={(e) => {
           if (mode === ContextMenuMode.HOVER) {
             e.preventDefault();
@@ -68,6 +72,17 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           onMouseLeaveContext(e);
 
           onMouseLeave?.(e);
+        }}
+        onMouseMove={(e) => {
+          /**
+           * It is necessary to fix the case when the menu closes
+           * another menu with a SubRoot that works on a click
+           */
+          if (!isOpen) {
+            onMouseEnterContext(e);
+          }
+
+          onMouseMove?.(e);
         }}
         {...rest}
       >

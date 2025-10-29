@@ -51,7 +51,7 @@ export interface ContextMenuSubContextProps {
   /**
    * Triggers the submenu's open animation after it has been mounted.
    */
-  startAnimation: () => void;
+  onStartAnimation: () => void;
   /**
    * Called when the mouse enters the Sub element.
    */

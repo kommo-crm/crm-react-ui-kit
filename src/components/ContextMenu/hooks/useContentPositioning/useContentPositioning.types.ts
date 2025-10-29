@@ -33,4 +33,8 @@ export interface UseContentPositioningOptions {
    * Whether to disable repositioning.
    */
   disableRepositioning: boolean;
+  /**
+   * Whether the content is a SubContent.
+   */
+  isSubContent?: boolean;
 }

@@ -40,6 +40,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       disableRepositioning = false,
       onMouseEnter,
       onMouseLeave,
+      onPointerDownOutside,
       onInteractOutside,
       onEscapeKeyDown,
 
@@ -148,6 +149,13 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
                 }
 
                 onEscapeKeyDown?.(e);
+              }}
+              onPointerDownOutside={(e) => {
+                if (isChildOpen) {
+                  e.preventDefault();
+                }
+
+                onPointerDownOutside?.(e);
               }}
               {...rest}
             >

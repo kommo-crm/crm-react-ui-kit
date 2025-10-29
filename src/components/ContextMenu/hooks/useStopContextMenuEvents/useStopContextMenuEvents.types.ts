@@ -2,6 +2,7 @@ import React from 'react';
 
 export type Handlers<T extends HTMLElement> = {
   onClick?: React.MouseEventHandler<T>;
+  onFocus?: React.FocusEventHandler<T>;
   onKeyDown?: React.KeyboardEventHandler<T>;
   onKeyUp?: React.KeyboardEventHandler<T>;
   onKeyPress?: React.KeyboardEventHandler<T>;

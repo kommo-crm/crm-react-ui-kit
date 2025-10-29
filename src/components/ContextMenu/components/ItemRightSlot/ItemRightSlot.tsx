@@ -55,7 +55,10 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       onPointerMove,
     };
 
-    const stopEventsHook = useStopContextMenuEvents(defaultHandlers);
+    const stopEventsHook = useStopContextMenuEvents({
+      handlers: defaultHandlers,
+    });
+
     const handlers = hasSubmenu ? stopEventsHook : defaultHandlers;
 
     return (
