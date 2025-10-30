@@ -44,7 +44,6 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
 
     const {
       animatedOpen,
-      onStartAnimation,
       mode,
       onMouseEnter: onMouseEnterContext,
       onMouseLeave: onMouseLeaveContext,
@@ -77,10 +76,6 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
 
     const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
     const [isIconsPositioned, setIsIconsPositioned] = useState(false);
-
-    useLayoutEffect(() => {
-      onStartAnimation();
-    }, []);
 
     /**
      * Handles the prerender of the submenu (needed for the icons).

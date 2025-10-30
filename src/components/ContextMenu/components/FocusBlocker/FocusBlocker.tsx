@@ -14,6 +14,7 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
   (props, ref) => {
     const {
       className,
+      style,
       disabledHandlers = [],
       cutoutRef,
       onFocus,
@@ -76,15 +77,19 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
       };
     }, [updateCutout]);
 
+    const commonProps = {
+      'tabIndex': 0,
+      'data-blocker': true,
+      ...handlers,
+      ...rest,
+    };
+
     if (!cutout) {
       return (
         <div
           ref={ref}
           className={cx(s.blocker, { [s.pure]: !cutout }, className)}
-          tabIndex={0}
-          data-blocker
-          {...handlers}
-          {...rest}
+          {...commonProps}
         />
       );
     }
@@ -96,33 +101,43 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
      */
     return (
       <>
-        <div className={s.top} style={{ height: cutout.top }} />
+        <div
+          className={cx(s.top, className)}
+          style={{ height: cutout.top, ...style }}
+          {...commonProps}
+        />
 
         <div
-          className={s.left}
+          className={cx(s.left, className)}
           style={{
             top: cutout.top,
             width: cutout.left,
             height: cutout.height,
+            ...style,
           }}
+          {...commonProps}
         />
 
         <div
-          className={s.right}
+          className={cx(s.right, className)}
           style={{
             top: cutout.top,
             left: cutout.left + cutout.width,
             right: 0,
             height: cutout.height,
+            ...style,
           }}
+          {...commonProps}
         />
 
         <div
-          className={s.bottom}
+          className={cx(s.bottom, className)}
           style={{
             top: cutout.top + cutout.height,
             bottom: 0,
+            ...style,
           }}
+          {...commonProps}
         />
       </>
     );

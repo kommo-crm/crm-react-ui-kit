@@ -126,7 +126,11 @@ export function useContextMenuSub({
       setOpen(value);
       onOpen?.(value);
       handleSubmenuOpen(value);
-      setAnimatedOpen(value);
+      /**
+       * It is necessary for correct standard keyboard navigation.
+       * Removes the jump from the positioning hook.
+       */
+      setTimeout(() => setAnimatedOpen(value), 0);
 
       return;
     }
@@ -151,7 +155,6 @@ export function useContextMenuSub({
    */
   const onOpenByKeyboard = (value: boolean) => {
     setOpenedByKeyboard(value);
-    handleOpenChange(value);
   };
 
   /**
@@ -229,21 +232,6 @@ export function useContextMenuSub({
    */
   const handleSubRootOpen = (value: boolean) => {
     setIsSubRootOpen(value);
-  };
-
-  /**
-   * Handles the animation start.
-   */
-  const handleAnimationStart = () => {
-    if (mode === ContextMenuMode.CLICK) {
-      /**
-       * We need to use setTimeout to ensure that the animation is started
-       * after the render is complete.
-       */
-      setTimeout(() => setAnimatedOpen(true), 0);
-    } else {
-      setAnimatedOpen(true);
-    }
   };
 
   /**
@@ -348,7 +336,6 @@ export function useContextMenuSub({
     isOpen: open,
     setOpen,
     animatedOpen,
-    handleAnimationStart,
     handleMouseEnter,
     handleMouseLeave,
     handleOpenChange,

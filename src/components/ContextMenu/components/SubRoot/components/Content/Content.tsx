@@ -44,6 +44,9 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onMouseEnter,
       onMouseLeave,
       onKeyDown,
+      onCloseAutoFocus,
+      onEscapeKeyDown,
+
       ...rest
     },
     ref
@@ -93,11 +96,14 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
+    const onSubRootContentClose = () => {
+      closeMenuImmediately();
+      focusParentItem(triggerRef.current);
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === 'ArrowLeft') {
-        closeMenuImmediately();
-
-        focusParentItem(triggerRef.current);
+        onSubRootContentClose();
       }
 
       onKeyDown?.(e);
@@ -150,6 +156,16 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               }}
               onKeyDown={(e) => {
                 handleKeyDown(e);
+              }}
+              onCloseAutoFocus={(e) => {
+                e.preventDefault();
+
+                onCloseAutoFocus?.(e);
+              }}
+              onEscapeKeyDown={(e) => {
+                e.preventDefault();
+                onSubRootContentClose();
+                onEscapeKeyDown?.(e);
               }}
               {...rest}
             >

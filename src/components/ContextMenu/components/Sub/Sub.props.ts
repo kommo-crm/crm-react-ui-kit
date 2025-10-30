@@ -49,10 +49,6 @@ export interface ContextMenuSubContextProps {
    */
   isOpen: boolean;
   /**
-   * Triggers the submenu's open animation after it has been mounted.
-   */
-  onStartAnimation: () => void;
-  /**
    * Called when the mouse enters the Sub element.
    */
   onMouseEnter: (e: React.MouseEvent<HTMLElement>) => void;
