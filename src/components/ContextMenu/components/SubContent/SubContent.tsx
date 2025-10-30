@@ -128,6 +128,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
         isCloseOnClick={isCloseOnClick}
         closeMenuImmediately={closeMenuImmediately}
         shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick}
+        animatedOpen={animatedOpen}
         level={level + 1}
       >
         {isOpen && (

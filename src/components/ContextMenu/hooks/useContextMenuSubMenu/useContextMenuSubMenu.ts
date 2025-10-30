@@ -36,8 +36,13 @@ export const useContextMenuSubMenu = ({
   const [isChildOpen, setIsChildOpen] = useState(false);
   const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
 
-  const { activeItemId, onChildOpen, level, onSubRootOpen } =
-    useLevelContext(displayName);
+  const {
+    activeItemId,
+    onChildOpen,
+    level,
+    onSubRootOpen,
+    animatedOpen: parentAnimatedOpen,
+  } = useLevelContext(displayName);
 
   const { onSubmenuOpen } = useContextMenuContext(displayName);
 
@@ -334,6 +339,18 @@ export const useContextMenuSubMenu = ({
       onChildOpen?.(isOpen, mode);
     }
   }, [isChildOpen, childMode]);
+
+  /**
+   * Closes the submenu when the parent menu is closed.
+   *
+   * It is necessary for the case when the click disappeared from the child,
+   * after which we focused on the distant parent.
+   */
+  useEffect(() => {
+    if (!parentAnimatedOpen) {
+      requestClose();
+    }
+  }, [parentAnimatedOpen]);
 
   return {
     mode,

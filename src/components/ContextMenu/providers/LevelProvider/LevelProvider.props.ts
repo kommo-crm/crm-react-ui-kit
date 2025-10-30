@@ -44,4 +44,8 @@ export interface LevelProviderContextProps {
    * Whether the menu should close when the root menu is clicked.
    */
   shouldCloseRootMenuOnClick: boolean;
+  /**
+   * Whether the menu is animated open/close.
+   */
+  animatedOpen: boolean;
 }

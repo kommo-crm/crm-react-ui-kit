@@ -164,8 +164,6 @@ export const useContextMenu = ({
       return;
     }
 
-    (document.activeElement as HTMLElement)?.blur();
-
     setOpenedByKeyboard(false);
 
     if (closeTimerRef.current) {

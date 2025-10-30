@@ -36,8 +36,12 @@ export function useContextMenuSub({
   const { hoverCloseDelay, animationDuration } =
     useContextMenuContext(displayName);
 
-  const { activeItemId, onChildOpen, onSubRootOpen } =
-    useLevelContext(displayName);
+  const {
+    activeItemId,
+    onChildOpen,
+    onSubRootOpen,
+    animatedOpen: parentAnimatedOpen,
+  } = useLevelContext(displayName);
 
   const handleSubmenuOpen = (value: boolean) => {
     /**
@@ -327,6 +331,18 @@ export function useContextMenuSub({
     refs: [contentRef, triggerRef],
     handler: handleClickOutside,
   });
+
+  /**
+   * Closes the submenu when the parent menu is closed.
+   *
+   * It is necessary for the case when the click disappeared from the child,
+   * after which we focused on the distant parent.
+   */
+  useEffect(() => {
+    if (!parentAnimatedOpen) {
+      requestClose();
+    }
+  }, [parentAnimatedOpen]);
 
   return {
     isOpen: open,

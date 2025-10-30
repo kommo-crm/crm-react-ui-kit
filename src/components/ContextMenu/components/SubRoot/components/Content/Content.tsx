@@ -113,6 +113,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         isCloseOnClick={isCloseOnClick}
         closeMenuImmediately={closeMenuImmediately}
         shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick ?? false}
+        animatedOpen={animatedOpen}
         level={level + 1}
       >
         {isOpen && (
