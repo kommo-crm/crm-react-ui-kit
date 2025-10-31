@@ -6,10 +6,14 @@ export type SubContentProps = ComponentPropsWithoutRef<
 > & {
   /**
    * Whether to disable auto positioning.
+   *
+   * @default false
    */
   disableAutoPositioning?: boolean;
   /**
    * Whether to disable repositioning.
+   *
+   * @default false
    */
   disableRepositioning?: boolean;
 };

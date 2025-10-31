@@ -18,11 +18,15 @@ export type RadioItemProps = RadixRadioItemProps & {
    */
   hasIconCheckFn?: (children: React.ReactNode) => boolean;
   /**
-   * Whether the RadioItem should close the menu when clicked.
+   * Whether the CheckboxItem should close the menu when clicked.
+   *
+   * @default true
    */
   isCloseMenuOnClick?: boolean;
   /**
    * Whether the RadioItem should close the root menu when clicked.
+   *
+   * @default false
    */
   shouldCloseRootMenuOnClick?: boolean;
 };

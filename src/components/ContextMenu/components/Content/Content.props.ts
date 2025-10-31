@@ -26,10 +26,14 @@ export type ContentProps = RadixContentProps & {
    *
    * Useful for environments where DOM measurements are unreliable or unnecessary,
    * such as server-side rendering or automated tests.
+   *
+   * @default false
    */
   disableAutoPositioning?: boolean;
   /**
    * Whether to disable repositioning.
+   *
+   * @default false
    */
   disableRepositioning?: boolean;
 };

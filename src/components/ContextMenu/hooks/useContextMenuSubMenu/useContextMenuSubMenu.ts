@@ -153,6 +153,8 @@ export const useContextMenuSubMenu = ({
   const handleOpenChange = (value: boolean) => {
     if (mode === ContextMenuMode.CLICK) {
       if (defaultOpen !== undefined) {
+        setOpen(defaultOpen);
+
         return;
       }
     }

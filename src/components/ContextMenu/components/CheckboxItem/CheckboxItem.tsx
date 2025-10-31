@@ -38,7 +38,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
-      shouldCloseRootMenuOnClick,
+      shouldCloseRootMenuOnClick = false,
       onCheckedChange,
       onKeyDown,
 

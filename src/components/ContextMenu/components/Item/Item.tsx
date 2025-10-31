@@ -39,7 +39,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onMouseLeave,
     onKeyDown,
     isCloseMenuOnClick = true,
-    shouldCloseRootMenuOnClick,
+    shouldCloseRootMenuOnClick = false,
     isSelectable: isSelectableProp,
     asChild,
 

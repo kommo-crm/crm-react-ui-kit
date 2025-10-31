@@ -50,4 +50,8 @@ export interface UseContextMenuOptions {
    * The class name of the background focus blocker.
    */
   backgroundFocusBlockerClassName?: string;
+  /**
+   * The class name of the background focus blocker when inner input is focused.
+   */
+  backgroundInputFocusBlockerClassName?: string;
 }

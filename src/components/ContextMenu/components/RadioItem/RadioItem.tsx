@@ -38,7 +38,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onSelect,
       onClick,
       isCloseMenuOnClick = true,
-      shouldCloseRootMenuOnClick,
+      shouldCloseRootMenuOnClick = false,
       value,
       onKeyDown,
 

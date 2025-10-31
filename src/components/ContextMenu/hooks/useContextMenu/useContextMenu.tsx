@@ -25,6 +25,7 @@ export const useContextMenu = ({
   enableInnerInputFocus,
   backgroundFocusBlockerContainers,
   backgroundFocusBlockerClassName,
+  backgroundInputFocusBlockerClassName,
 }: UseContextMenuOptions) => {
   const id = useId();
 
@@ -287,26 +288,6 @@ export const useContextMenu = ({
   const inheritedArrowColor = useInheritedArrowColor(open, contentRef);
 
   useEffect(() => {
-    const handleFocus = (event: FocusEvent) => {
-      console.log('Focus:', event.target);
-    };
-
-    const handleBlur = (event: FocusEvent) => {
-      console.log('Blur:', event.target);
-    };
-
-    // Вешаем обработчики на документ
-    document.addEventListener('focus', handleFocus, true); // useCapture=true
-    document.addEventListener('blur', handleBlur, true);
-
-    // Очистка
-    return () => {
-      document.removeEventListener('focus', handleFocus, true);
-      document.removeEventListener('blur', handleBlur, true);
-    };
-  }, []);
-
-  useEffect(() => {
     if (!enableInnerInputFocus || !backgroundFocusBlockerContainers || !open) {
       return;
     }
@@ -329,12 +310,15 @@ export const useContextMenu = ({
 
       root.render(
         <FocusBlocker
-          className={backgroundFocusBlockerClassName}
+          className={
+            itemWithFocusedInput === null
+              ? backgroundInputFocusBlockerClassName
+              : backgroundFocusBlockerClassName
+          }
           onClick={() => {
             (document.activeElement as HTMLElement)?.blur();
           }}
           disabledHandlers={['onPointerDown']}
-          cutoutRef={triggerRef}
         />
       );
 

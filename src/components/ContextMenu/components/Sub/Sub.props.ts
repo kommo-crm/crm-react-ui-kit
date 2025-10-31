@@ -82,10 +82,14 @@ export interface ContextMenuSubContextProps {
   onSubRootOpen: (value: boolean) => void;
   /**
    * Whether the submenu should close when the root menu is closed.
+   *
+   * @default true
    */
   shouldCloseRootMenuOnClick: boolean;
   /**
    * Whether the menu should close when clicked.
+   *
+   * @default true
    */
   isCloseOnClick: boolean;
   /**

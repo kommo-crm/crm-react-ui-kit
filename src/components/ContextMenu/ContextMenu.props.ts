@@ -60,6 +60,10 @@ export type ContextMenuRootProps = Omit<
    * The class name of the background focus blocker.
    */
   backgroundFocusBlockerClassName?: string;
+  /**
+   * The class name of the background focus blocker for input focus.
+   */
+  backgroundInputFocusBlockerClassName?: string;
 };
 
 export interface ContextMenuContextProps {

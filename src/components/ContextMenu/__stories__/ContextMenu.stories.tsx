@@ -72,7 +72,6 @@ function App() {
     <ContextMenu.Root mode="click">
       <ContextMenu.Trigger
         style={{
-          all: 'unset',
           display: 'flex',
           padding: '4px',
           color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
@@ -110,13 +109,16 @@ function App() {
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.SubRoot mode="hover" isCloseWithRootMenu>
+              <ContextMenu.SubRoot mode="hover" shouldCloseRootMenuOnClick>
                 <ContextMenu.SubRoot.Trigger
                   style={{
-                    all: 'unset',
                     display: 'flex',
                     padding: '10px 16px',
+                    margin: 0,
                     color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+                    background: 'none',
+                    outline: 'none',
+                    border: 'none',
                     cursor: 'pointer',
                   }}
                 >
@@ -124,13 +126,11 @@ function App() {
                 </ContextMenu.SubRoot.Trigger>
 
                 <ContextMenu.Portal>
-                  <ContextMenu.SubRoot.Content
-                    sideOffset={-10}
-                    alignOffset={16}
-                  >
+                  <ContextMenu.SubRoot.Content sideOffset={-5} alignOffset={16}>
                     <ContextMenu.CheckboxItem
                       isChecked={autoupdateChecked}
                       onChange={handleAutoupdateChange}
+                      shouldCloseRootMenuOnClick
                     >
                       <ContextMenu.ItemIndicator>
                         <ContextMenuCheckIcon />
@@ -153,13 +153,19 @@ function App() {
                       value={theme}
                       onChange={handleThemeChange}
                     >
-                      <ContextMenu.RadioItem value="light">
+                      <ContextMenu.RadioItem 
+                        value="light"
+                        shouldCloseRootMenuOnClick
+                      >
                         <Text theme={TextContextMenuTheme} size="l">
                           ${i18n.t('Light')}
                         </Text>
                       </ContextMenu.RadioItem>
 
-                      <ContextMenu.RadioItem value="dark">
+                      <ContextMenu.RadioItem
+                        value="dark"
+                        shouldCloseRootMenuOnClick
+                      >
                         <Text theme={TextContextMenuTheme} size="l">
                           ${i18n.t('Dark')}
                         </Text>
@@ -233,6 +239,7 @@ function App() {
 
 const StoryComponent = ({
   mode,
+  subMode = mode,
   subMenuMode = mode,
   direction,
   onCheckboxChange,
@@ -240,6 +247,7 @@ const StoryComponent = ({
   button = <ContextMenuTriggerIcon />,
   isTriggerAsChild = false,
 }: ContextMenuRootProps & {
+  subMode?: ContextMenuModeType;
   subMenuMode?: ContextMenuModeType;
   direction?: ContentProps['direction'];
   onCheckboxChange?: (checked: boolean) => void;
@@ -251,16 +259,19 @@ const StoryComponent = ({
   const [theme, setTheme] = useState('light');
 
   return (
-    <ContextMenu.Root mode={mode}>
+    <ContextMenu.Root mode={mode} enableInnerInputFocus>
       <ContextMenu.Trigger
         style={
           isTriggerAsChild
             ? {}
             : {
-                all: 'unset',
                 display: 'flex',
-                padding: '4px',
+                padding: '10px 16px',
+                margin: 0,
                 color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+                background: 'none',
+                outline: 'none',
+                border: 'none',
                 cursor: 'pointer',
               }
         }
@@ -276,6 +287,7 @@ const StoryComponent = ({
           }
           direction={direction}
           sideOffset={5}
+          disableRepositioning
         >
           <ContextMenu.Label>
             <Text theme={TextSecondaryDarkTheme} size="l">
@@ -297,15 +309,17 @@ const StoryComponent = ({
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.SubRoot mode={subMenuMode} isCloseWithRootMenu>
+              <ContextMenu.SubRoot mode={subMenuMode}>
                 <ContextMenu.SubRoot.Trigger
                   style={{
-                    all: 'unset',
                     display: 'flex',
                     padding: '10px 16px',
+                    margin: 0,
                     color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+                    background: 'none',
+                    outline: 'none',
+                    border: 'none',
                     cursor: 'pointer',
-                    zIndex: 6,
                   }}
                 >
                   <ContextMenuTriggerIcon />
@@ -319,6 +333,7 @@ const StoryComponent = ({
                         setAutoupdateChecked(e.target.checked);
                         onCheckboxChange?.(e.target.checked);
                       }}
+                      shouldCloseRootMenuOnClick
                     >
                       <ContextMenu.ItemIndicator>
                         <ContextMenuCheckIcon />
@@ -344,13 +359,19 @@ const StoryComponent = ({
                         onRadioChange?.(e.target.value);
                       }}
                     >
-                      <ContextMenu.RadioItem value="light">
+                      <ContextMenu.RadioItem
+                        value="light"
+                        shouldCloseRootMenuOnClick
+                      >
                         <Text theme={TextContextMenuTheme} size="l">
                           {i18n.t('Light')}
                         </Text>
                       </ContextMenu.RadioItem>
 
-                      <ContextMenu.RadioItem value="dark">
+                      <ContextMenu.RadioItem
+                        value="dark"
+                        shouldCloseRootMenuOnClick
+                      >
                         <Text theme={TextContextMenuTheme} size="l">
                           {i18n.t('Dark')}
                         </Text>
@@ -368,7 +389,7 @@ const StoryComponent = ({
             </Text>
           </ContextMenu.Item>
 
-          <ContextMenu.Sub mode={subMenuMode}>
+          <ContextMenu.Sub mode={subMode}>
             <ContextMenu.SubTrigger>
               <Text theme={TextContextMenuTheme} size="l">
                 {i18n.t('Contacts')}
@@ -436,6 +457,7 @@ const meta: Meta<typeof StoryComponent> = {
   },
   args: {
     mode: ContextMenuMode.CLICK,
+    subMode: ContextMenuMode.HOVER,
     subMenuMode: ContextMenuMode.HOVER,
     direction: 'down-right',
     onCheckboxChange: action('onCheckboxChange'),
@@ -443,6 +465,10 @@ const meta: Meta<typeof StoryComponent> = {
   },
   argTypes: {
     mode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    subMode: {
       control: 'radio',
       options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
     },
@@ -501,6 +527,7 @@ export const Default: Story = {};
 export const Modes: Story = {
   argTypes: {
     mode: { control: false },
+    subMode: { control: false },
     subMenuMode: { control: false },
     direction: {
       control: 'select',
@@ -540,15 +567,18 @@ export const Modes: Story = {
         <StoryComponent
           {...args}
           mode={ContextMenuMode.CLICK}
+          subMode={ContextMenuMode.CLICK}
           subMenuMode={ContextMenuMode.CLICK}
           button={
             <Button theme={ButtonNeutralTheme}>{i18n.t('Click me')}</Button>
           }
           isTriggerAsChild
         />
+
         <StoryComponent
           {...args}
           mode={ContextMenuMode.HOVER}
+          subMode={ContextMenuMode.HOVER}
           subMenuMode={ContextMenuMode.HOVER}
           button={
             <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me')}</Button>
@@ -563,6 +593,10 @@ export const Modes: Story = {
 export const Directions: Story = {
   argTypes: {
     mode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    subMode: {
       control: 'radio',
       options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
     },

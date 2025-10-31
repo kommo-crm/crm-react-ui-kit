@@ -58,6 +58,7 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
                 setAutoupdateChecked(e.target.checked)
               }
               data-testid={DATA_ITEM_TEST_ID}
+              isCloseMenuOnClick={false}
             >
               <Text theme={TextContextMenuTheme} size="l">
                 Autoupdate
@@ -75,12 +76,12 @@ const renderContextMenu = async (props?: Partial<ContextMenuRootProps>) => {
               }
               data-testid={DATA_ITEM_TEST_ID}
             >
-              <ContextMenu.RadioItem value="light">
+              <ContextMenu.RadioItem value="light" isCloseMenuOnClick={false}>
                 <Text theme={TextContextMenuTheme} size="l">
                   Light
                 </Text>
               </ContextMenu.RadioItem>
-              <ContextMenu.RadioItem value="dark">
+              <ContextMenu.RadioItem value="dark" isCloseMenuOnClick={false}>
                 <Text theme={TextContextMenuTheme} size="l">
                   Dark
                 </Text>
@@ -103,7 +104,7 @@ describe('ContextMenu', () => {
   });
 
   it('renders the correct number of items', async () => {
-    await renderContextMenu({ open: true });
+    await renderContextMenu({ isOpen: true });
     expect(screen.getAllByTestId(DATA_ITEM_TEST_ID)).toHaveLength(3);
   });
 

@@ -65,10 +65,10 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
     const { offset, isPositioned: isContentPositioned } = useContentPositioning(
       {
         alignOffset,
-        disableAutoPositioning,
         triggerRef,
         contentRef,
         children,
+        disableAutoPositioning,
         disableRepositioning,
         isSubContent: true,
       }

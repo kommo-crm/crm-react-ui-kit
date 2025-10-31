@@ -11,8 +11,4 @@ export interface FocusBlockerProps extends ComponentPropsWithoutRef<'div'> {
    * The handlers to not block.
    */
   disabledHandlers?: Array<keyof Handlers<HTMLDivElement>>;
-  /**
-   * The ref to the cutout element.
-   */
-  cutoutRef?: React.RefObject<HTMLElement>;
 }

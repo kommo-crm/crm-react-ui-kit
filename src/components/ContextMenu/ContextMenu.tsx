@@ -50,6 +50,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       enableInnerInputFocus = false,
       backgroundFocusBlockerContainers = [document.body],
       backgroundFocusBlockerClassName,
+      backgroundInputFocusBlockerClassName,
 
       ...rest
     },
@@ -88,6 +89,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
       enableInnerInputFocus,
       backgroundFocusBlockerContainers,
       backgroundFocusBlockerClassName,
+      backgroundInputFocusBlockerClassName,
     });
 
     useImperativeHandle(ref, () => ({
