@@ -2,6 +2,8 @@ import React, { useEffect, useId, useRef, useState } from 'react';
 
 import { createRoot } from 'react-dom/client';
 
+import cx from 'classnames';
+
 import { useInheritedArrowColor, useIsTouchDevice } from '..';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
@@ -310,11 +312,11 @@ export const useContextMenu = ({
 
       root.render(
         <FocusBlocker
-          className={
-            itemWithFocusedInput === null
-              ? backgroundInputFocusBlockerClassName
-              : backgroundFocusBlockerClassName
-          }
+          className={cx(
+            backgroundFocusBlockerClassName,
+            itemWithFocusedInput !== null &&
+              backgroundInputFocusBlockerClassName
+          )}
           onClick={() => {
             (document.activeElement as HTMLElement)?.blur();
           }}
@@ -333,7 +335,7 @@ export const useContextMenu = ({
         });
       });
     };
-  }, [enableInnerInputFocus, open]);
+  }, [enableInnerInputFocus, open, itemWithFocusedInput]);
 
   return {
     open,
