@@ -146,7 +146,7 @@ export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
 ContextMenu.displayName = DISPLAY_NAME;
 
 ContextMenu.Root = ContextMenu;
-ContextMenu.SubRoot = SubRoot;
+ContextMenu.experimental_SubRoot = SubRoot;
 ContextMenu.Trigger = Trigger;
 ContextMenu.Content = Content;
 ContextMenu.Portal = Portal;

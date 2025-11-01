@@ -64,7 +64,7 @@ export interface ContextMenuType extends ContextMenuComponentType {
   Separator: typeof Separator;
   Sub: typeof Sub;
   SubContent: typeof SubContent;
-  SubRoot: typeof SubRoot;
+  experimental_SubRoot: typeof SubRoot;
   SubTrigger: typeof SubTrigger;
   Trigger: typeof Trigger;
   FocusBlocker: typeof FocusBlocker;

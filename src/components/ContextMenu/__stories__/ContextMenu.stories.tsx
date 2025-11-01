@@ -118,8 +118,8 @@ function App() {
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.SubRoot mode="hover" shouldCloseRootMenuOnClick>
-                <ContextMenu.SubRoot.Trigger
+              <ContextMenu.experimental_SubRoot mode="hover" shouldCloseRootMenuOnClick>
+                <ContextMenu.experimental_SubRoot.Trigger
                   style={{
                     display: 'flex',
                     padding: '10px 16px',
@@ -132,10 +132,13 @@ function App() {
                   }}
                 >
                   <ContextMenuTriggerIcon />
-                </ContextMenu.SubRoot.Trigger>
+                </ContextMenu.experimental_SubRoot.Trigger>
 
                 <ContextMenu.Portal>
-                  <ContextMenu.SubRoot.Content sideOffset={-5} alignOffset={16}>
+                  <ContextMenu.experimental_SubRoot.Content
+                    sideOffset={-5}
+                    alignOffset={16}
+                  >
                     <ContextMenu.CheckboxItem
                       isChecked={autoupdateChecked}
                       onChange={handleAutoupdateChange}
@@ -180,9 +183,9 @@ function App() {
                         </Text>
                       </ContextMenu.RadioItem>
                     </ContextMenu.RadioGroup>
-                  </ContextMenu.SubRoot.Content>
+                  </ContextMenu.experimental_SubRoot.Content>
                 </ContextMenu.Portal>
-              </ContextMenu.SubRoot>
+              </ContextMenu.experimental_SubRoot>
             </ContextMenu.ItemRightSlot>
           </ContextMenu.Item>
 
@@ -318,8 +321,8 @@ const StoryComponent = ({
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.SubRoot mode={subMenuMode}>
-                <ContextMenu.SubRoot.Trigger
+              <ContextMenu.experimental_SubRoot mode={subMenuMode}>
+                <ContextMenu.experimental_SubRoot.Trigger
                   style={{
                     display: 'flex',
                     padding: '10px 16px',
@@ -332,10 +335,13 @@ const StoryComponent = ({
                   }}
                 >
                   <ContextMenuTriggerIcon />
-                </ContextMenu.SubRoot.Trigger>
+                </ContextMenu.experimental_SubRoot.Trigger>
 
                 <ContextMenu.Portal>
-                  <ContextMenu.SubRoot.Content sideOffset={-5} alignOffset={16}>
+                  <ContextMenu.experimental_SubRoot.Content
+                    sideOffset={-5}
+                    alignOffset={16}
+                  >
                     <ContextMenu.CheckboxItem
                       isChecked={autoupdateChecked}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -386,9 +392,9 @@ const StoryComponent = ({
                         </Text>
                       </ContextMenu.RadioItem>
                     </ContextMenu.RadioGroup>
-                  </ContextMenu.SubRoot.Content>
+                  </ContextMenu.experimental_SubRoot.Content>
                 </ContextMenu.Portal>
-              </ContextMenu.SubRoot>
+              </ContextMenu.experimental_SubRoot>
             </ContextMenu.ItemRightSlot>
           </ContextMenu.Item>
 

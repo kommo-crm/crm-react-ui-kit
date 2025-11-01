@@ -482,7 +482,9 @@ Menu opens on mouse hover and closes when mouse leaves. Includes configurable de
   <span>Menu Item</span>
   <ContextMenu.ItemRightSlot>
     {/* ✅ Recommended: SubRoot inside ItemRightSlot */}
-    <ContextMenu.SubRoot>{/* ... */}</ContextMenu.SubRoot>
+    <ContextMenu.experimental_SubRoot>
+      {/* ... */}
+    </ContextMenu.experimental_SubRoot>
   </ContextMenu.ItemRightSlot>
 </ContextMenu.Item>
 ```
@@ -493,19 +495,19 @@ Menu opens on mouse hover and closes when mouse leaves. Includes configurable de
 <ContextMenu.Item>
   <span>Menu Item</span>
   {/* ✅ Valid: SubRoot can also be directly inside Item */}
-  <ContextMenu.SubRoot>{/* ... */}</ContextMenu.SubRoot>
+  <ContextMenu.experimental_SubRoot>{/* ... */}</ContextMenu.experimental_SubRoot>
 </ContextMenu.Item>
 
 <ContextMenu.CheckboxItem isChecked={checked} onChange={handleChange}>
   <span>Checkbox Item</span>
   {/* ✅ Valid: SubRoot inside CheckboxItem */}
-  <ContextMenu.SubRoot>{/* ... */}</ContextMenu.SubRoot>
+  <ContextMenu.experimental_SubRoot>{/* ... */}</ContextMenu.experimental_SubRoot>
 </ContextMenu.CheckboxItem>
 
 <ContextMenu.RadioItem value="value">
   <span>Radio Item</span>
   {/* ✅ Valid: SubRoot inside RadioItem */}
-  <ContextMenu.SubRoot>{/* ... */}</ContextMenu.SubRoot>
+  <ContextMenu.experimental_SubRoot>{/* ... */}</ContextMenu.experimental_SubRoot>
 </ContextMenu.RadioItem>
 ```
 
@@ -623,8 +625,11 @@ The content container for SubRoot menu.
         <span>Workspace Settings</span>
 
         <ContextMenu.ItemRightSlot>
-          <ContextMenu.SubRoot mode="hover" shouldCloseRootMenuOnClick>
-            <ContextMenu.SubRoot.Trigger
+          <ContextMenu.experimental_SubRoot
+            mode="hover"
+            shouldCloseRootMenuOnClick
+          >
+            <ContextMenu.experimental_SubRoot.Trigger
               style={{
                 display: 'flex',
                 padding: '10px 16px',
@@ -635,10 +640,13 @@ The content container for SubRoot menu.
               }}
             >
               <TriggerIcon />
-            </ContextMenu.SubRoot.Trigger>
+            </ContextMenu.experimental_SubRoot.Trigger>
 
             <ContextMenu.Portal>
-              <ContextMenu.SubRoot.Content sideOffset={-5} alignOffset={16}>
+              <ContextMenu.experimental_SubRoot.Content
+                sideOffset={-5}
+                alignOffset={16}
+              >
                 <ContextMenu.CheckboxItem
                   isChecked={autoupdateChecked}
                   onChange={handleAutoupdateChange}
@@ -670,9 +678,9 @@ The content container for SubRoot menu.
                     <span>Dark</span>
                   </ContextMenu.RadioItem>
                 </ContextMenu.RadioGroup>
-              </ContextMenu.SubRoot.Content>
+              </ContextMenu.experimental_SubRoot.Content>
             </ContextMenu.Portal>
-          </ContextMenu.SubRoot>
+          </ContextMenu.experimental_SubRoot>
         </ContextMenu.ItemRightSlot>
       </ContextMenu.Item>
     </ContextMenu.Content>
@@ -724,9 +732,9 @@ This is why `SubRoot` **must** be used inside `ContextMenu.Item`, `ContextMenu.C
 If you need to migrate from `Sub` to `SubRoot`:
 
 1. Ensure `SubRoot` is placed inside `Item`, `CheckboxItem`, or `RadioItem` (recommended: use `ItemRightSlot` within these)
-2. Replace `<ContextMenu.Sub>` with `<ContextMenu.SubRoot>`
-3. Replace `<ContextMenu.SubTrigger>` with `<ContextMenu.SubRoot.Trigger>`
-4. Replace `<ContextMenu.SubContent>` with `<ContextMenu.SubRoot.Content>`
+2. Replace `<ContextMenu.Sub>` with `<ContextMenu.experimental_SubRoot>`
+3. Replace `<ContextMenu.SubTrigger>` with `<ContextMenu.experimental_SubRoot.Trigger>`
+4. Replace `<ContextMenu.SubContent>` with `<ContextMenu.experimental_SubRoot.Content>`
 5. Review `shouldCloseRootMenuOnClick` prop (different default: `false` vs `true`)
 6. Test hover/click behavior thoroughly
 7. Verify keyboard navigation works as expected
@@ -979,8 +987,11 @@ const [settings, setSettings] = useState({
         <span>Workspace Settings</span>
 
         <ContextMenu.ItemRightSlot>
-          <ContextMenu.SubRoot mode="hover" shouldCloseRootMenuOnClick>
-            <ContextMenu.SubRoot.Trigger
+          <ContextMenu.experimental_SubRoot
+            mode="hover"
+            shouldCloseRootMenuOnClick
+          >
+            <ContextMenu.experimental_SubRoot.Trigger
               style={{
                 display: 'flex',
                 padding: '10px 16px',
@@ -991,10 +1002,13 @@ const [settings, setSettings] = useState({
               }}
             >
               <SettingsIcon />
-            </ContextMenu.SubRoot.Trigger>
+            </ContextMenu.experimental_SubRoot.Trigger>
 
             <ContextMenu.Portal>
-              <ContextMenu.SubRoot.Content sideOffset={-5} alignOffset={16}>
+              <ContextMenu.experimental_SubRoot.Content
+                sideOffset={-5}
+                alignOffset={16}
+              >
                 <ContextMenu.CheckboxItem
                   isChecked={settings.autoupdate}
                   onChange={(e) =>
@@ -1040,9 +1054,9 @@ const [settings, setSettings] = useState({
                     <span>Dark</span>
                   </ContextMenu.RadioItem>
                 </ContextMenu.RadioGroup>
-              </ContextMenu.SubRoot.Content>
+              </ContextMenu.experimental_SubRoot.Content>
             </ContextMenu.Portal>
-          </ContextMenu.SubRoot>
+          </ContextMenu.experimental_SubRoot>
         </ContextMenu.ItemRightSlot>
       </ContextMenu.Item>
 
