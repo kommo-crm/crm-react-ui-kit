@@ -41,11 +41,15 @@
   background: var(--crm-ui-kit-input-background-color);
 }
 
-.after {
-  min-width: var(--crm-ui-kit-input-after-min-width);
+.before,.after {
+  min-width: var(--crm-ui-kit-input-icon-min-width);
   display: flex;
   align-self: center;
   justify-content: center;
+}
+
+.has_before {
+  padding-left: 0;
 }
 
 .has_after {

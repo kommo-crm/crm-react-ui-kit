@@ -13,6 +13,10 @@ export interface InputProps extends BaseInputProps {
    */
   isInvalid?: boolean;
   /**
+   * Adds an icon on the left.
+   */
+  before?: React.ReactNode;
+  /**
    * Adds an icon on the right.
    */
   after?: React.ReactNode;

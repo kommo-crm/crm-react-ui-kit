@@ -19,6 +19,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     isDisabled,
     invalidDescription,
     invalidDescriptionPlacement = 'bottom',
+    before,
     after,
     theme,
     ...rest
@@ -40,9 +41,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             [s.disabled]: isDisabled,
           })}
         >
+          {isValidRenderValue(before) && (
+            <div className={cx(s.before)}>{before}</div>
+          )}
           <BaseInput
             className={cx({
               [s.has_after]: Boolean(after),
+              [s.has_before]: Boolean(before),
             })}
             isDisabled={isDisabled}
             ref={ref}

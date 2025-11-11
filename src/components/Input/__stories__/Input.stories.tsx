@@ -64,6 +64,11 @@ const meta = {
     theme: InputLightTheme,
   },
   argTypes: {
+    before: {
+      control: 'select',
+      mapping: IconsMap,
+      options: Object.keys(IconsMap),
+    },
     after: {
       control: 'select',
       mapping: IconsMap,
@@ -147,6 +152,7 @@ export const InvalidPlacement: Story = {
 
 export const Icons: Story = {
   args: {
+    before: IconsMap.CopyIcon,
     after: IconsMap.CopyIcon,
   },
 };
