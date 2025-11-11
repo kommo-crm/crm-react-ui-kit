@@ -35,7 +35,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             invalidDescriptionPlacement === 'right',
         })}
       >
-        <div
+        <label
           className={cx(s.input_container, {
             [s.invalid]: isInvalid,
             [s.disabled]: isDisabled,
@@ -56,7 +56,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           {isValidRenderValue(after) && (
             <div className={cx(s.after)}>{after}</div>
           )}
-        </div>
+        </label>
         {isInvalid && Boolean(invalidDescription) && (
           <Text
             size="m"
