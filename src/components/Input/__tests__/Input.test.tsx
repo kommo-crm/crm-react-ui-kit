@@ -70,4 +70,21 @@ describe('Input', () => {
 
     expect(inputElement).toHaveAttribute('type', 'email');
   });
+
+  it('"before" and "after" should focus input on click', async () => {
+    renderInput({
+      before: <div data-testid="before" />,
+      after: <div data-testid="after" />,
+    });
+
+    const beforeElement = screen.getByTestId('before');
+    const afterElement = screen.getByTestId('after');
+
+    await userEvent.click(beforeElement);
+    await userEvent.click(afterElement);
+
+    const element = screen.getByPlaceholderText(basePlaceholderText);
+
+    expect(element).toHaveFocus();
+  });
 });
