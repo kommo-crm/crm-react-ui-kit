@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useCallback } from 'react';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
@@ -27,6 +27,29 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   const themeClassName = useThemeClassName<InputTheme>(theme);
 
+  const [inputElement, setInputElement] = useState<HTMLInputElement | null>(
+    null
+  );
+
+  const setRefs = useCallback(
+    (node: HTMLInputElement | null) => {
+      setInputElement(node);
+
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref) {
+        ref.current = node;
+      }
+    },
+    [ref]
+  );
+
+  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target !== inputElement && !isDisabled) {
+      inputElement?.focus();
+    }
+  };
+
   return (
     <div className={cx(s.wrapper, themeClassName, className)}>
       <div
@@ -35,11 +58,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             invalidDescriptionPlacement === 'right',
         })}
       >
-        <label
+        <div
           className={cx(s.input_container, {
             [s.invalid]: isInvalid,
             [s.disabled]: isDisabled,
           })}
+          onClick={handleContainerClick}
         >
           {isValidRenderValue(before) && (
             <div className={cx(s.before)}>{before}</div>
@@ -50,13 +74,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               [s.has_before]: Boolean(before),
             })}
             isDisabled={isDisabled}
-            ref={ref}
+            ref={setRefs}
             {...rest}
           />
           {isValidRenderValue(after) && (
             <div className={cx(s.after)}>{after}</div>
           )}
-        </label>
+        </div>
         {isInvalid && Boolean(invalidDescription) && (
           <Text
             size="m"
