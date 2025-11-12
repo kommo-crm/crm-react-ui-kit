@@ -18,7 +18,8 @@ type InputThemeKey =
   | '--crm-ui-kit-input-padding-left'
   | '--crm-ui-kit-input-height'
   | '--crm-ui-kit-input-width'
-  | '--crm-ui-kit-input-icon-min-width'
+  | '--crm-ui-kit-input-before-min-width'
+  | '--crm-ui-kit-input-after-min-width'
   | '--crm-ui-kit-input-error-color'
   | '--crm-ui-kit-input-error-description-color'
   | '--crm-ui-kit-input-error-description-offset-placement-right'
@@ -70,7 +71,8 @@ const InputBaseValues: Omit<
   '--crm-ui-kit-input-disabled-opacity': '0.6',
   '--crm-ui-kit-input-disabled-background-color': 'transparent',
   '--crm-ui-kit-input-error-placement-right-width': '250px',
-  '--crm-ui-kit-input-icon-min-width': '36px',
+  '--crm-ui-kit-input-before-min-width': '36px',
+  '--crm-ui-kit-input-after-min-width': '36px',
   '--crm-ui-kit-input-error-description-offset-placement-bottom': '5px',
   '--crm-ui-kit-input-error-description-offset-placement-right': '10px',
   '--crm-ui-kit-input-border-radius': '3px',

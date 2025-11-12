@@ -42,10 +42,17 @@
 }
 
 .before,.after {
-  min-width: var(--crm-ui-kit-input-icon-min-width);
   display: flex;
   align-self: center;
   justify-content: center;
+}
+
+.before {
+  min-width: var(--crm-ui-kit-input-before-min-width);
+}
+
+.after {
+  min-width: var(--crm-ui-kit-input-after-min-width);
 }
 
 .has_before {
