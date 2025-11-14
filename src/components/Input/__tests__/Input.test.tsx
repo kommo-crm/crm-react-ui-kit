@@ -71,20 +71,41 @@ describe('Input', () => {
     expect(inputElement).toHaveAttribute('type', 'email');
   });
 
-  it('"before" and "after" should focus input on click', async () => {
-    renderInput({
-      before: <div data-testid="before" />,
-      after: <div data-testid="after" />,
+  describe('not interactive "before" and "after" should focus input on click', () => {
+    it('not interactive', async () => {
+      renderInput({
+        before: <div data-testid="before" />,
+        after: <div data-testid="after" />,
+      });
+
+      const beforeElement = screen.getByTestId('before');
+      const afterElement = screen.getByTestId('after');
+      const element = screen.getByPlaceholderText(basePlaceholderText);
+
+      await userEvent.click(beforeElement);
+      expect(element).toHaveFocus();
+
+      await userEvent.click(afterElement);
+      expect(element).toHaveFocus();
     });
 
-    const beforeElement = screen.getByTestId('before');
-    const afterElement = screen.getByTestId('after');
+    it('interactive', async () => {
+      renderInput({
+        before: <button data-testid="before" />,
+        after: <button data-testid="after" />,
+      });
 
-    await userEvent.click(beforeElement);
-    await userEvent.click(afterElement);
+      const beforeElement = screen.getByTestId('before');
+      const afterElement = screen.getByTestId('after');
+      const element = screen.getByPlaceholderText(basePlaceholderText);
 
-    const element = screen.getByPlaceholderText(basePlaceholderText);
+      await userEvent.click(beforeElement);
+      expect(beforeElement).toHaveFocus();
+      expect(element).not.toHaveFocus();
 
-    expect(element).toHaveFocus();
+      await userEvent.click(afterElement);
+      expect(afterElement).toHaveFocus();
+      expect(element).not.toHaveFocus();
+    });
   });
 });
