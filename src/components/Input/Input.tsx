@@ -1,8 +1,8 @@
-import React, { forwardRef, useState, useCallback } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
-import { isValidRenderValue } from 'src/lib/utils';
+import { isValidRenderValue, mergeRefs } from 'src/lib/utils';
 
 import { Text } from 'src/components/Text';
 import { BaseInput } from 'src/components/BaseInput/BaseInput';
@@ -27,27 +27,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   const themeClassName = useThemeClassName<InputTheme>(theme);
 
-  const [inputElement, setInputElement] = useState<HTMLInputElement | null>(
-    null
-  );
-
-  const setRefs = useCallback(
-    (node: HTMLInputElement | null) => {
-      setInputElement(node);
-
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
-      }
-    },
-    [ref]
-  );
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target !== inputElement && !isDisabled) {
-      inputElement?.focus();
+    const closestInteractiveElement = (e.target as HTMLElement).closest(
+      'button, a, input, select, textarea'
+    );
+
+    if (
+      closestInteractiveElement &&
+      e.currentTarget.contains(closestInteractiveElement)
+    ) {
+      return;
     }
+
+    inputRef.current?.focus();
   };
 
   return (
@@ -74,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               [s.has_before]: Boolean(before),
             })}
             isDisabled={isDisabled}
-            ref={setRefs}
+            ref={mergeRefs(inputRef, ref)}
             {...rest}
           />
           {isValidRenderValue(after) && (
