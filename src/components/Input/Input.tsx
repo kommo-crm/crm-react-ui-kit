@@ -32,16 +32,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const afterRef = useRef<HTMLDivElement>(null);
 
   const handleContainerClick = () => {
-    const activeElement = document.activeElement;
+    requestAnimationFrame(() => {
+      const activeElement = document.activeElement;
 
-    if (
-      beforeRef.current?.contains(activeElement) ||
-      afterRef.current?.contains(activeElement)
-    ) {
-      return;
-    }
+      if (
+        beforeRef.current?.contains(activeElement) ||
+        afterRef.current?.contains(activeElement)
+      ) {
+        return;
+      }
 
-    inputRef.current?.focus();
+      inputRef.current?.focus();
+    });
   };
 
   return (
@@ -57,7 +59,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             [s.invalid]: isInvalid,
             [s.disabled]: isDisabled,
           })}
-          onClick={handleContainerClick}
+          onMouseDown={handleContainerClick}
         >
           {isValidRenderValue(before) && (
             <div className={cx(s.before)} ref={beforeRef}>

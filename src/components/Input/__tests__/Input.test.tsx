@@ -2,6 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { waitForNextFrame } from 'src/lib/utils';
+
 import { Input } from '../Input';
 import { InputLightTheme } from '../Input.themes';
 import { InputProps } from '../Input.props';
@@ -83,9 +85,11 @@ describe('Input', () => {
       const element = screen.getByPlaceholderText(basePlaceholderText);
 
       await userEvent.click(beforeElement);
+      await waitForNextFrame();
       expect(element).toHaveFocus();
 
       await userEvent.click(afterElement);
+      await waitForNextFrame();
       expect(element).toHaveFocus();
     });
 
@@ -100,10 +104,12 @@ describe('Input', () => {
       const element = screen.getByPlaceholderText(basePlaceholderText);
 
       await userEvent.click(beforeElement);
+      await waitForNextFrame();
       expect(beforeElement).toHaveFocus();
       expect(element).not.toHaveFocus();
 
       await userEvent.click(afterElement);
+      await waitForNextFrame();
       expect(afterElement).toHaveFocus();
       expect(element).not.toHaveFocus();
     });
