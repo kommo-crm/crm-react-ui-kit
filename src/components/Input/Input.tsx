@@ -28,15 +28,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const themeClassName = useThemeClassName<InputTheme>(theme);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const beforeRef = useRef<HTMLDivElement>(null);
+  const afterRef = useRef<HTMLDivElement>(null);
 
-  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const closestInteractiveElement = (e.target as HTMLElement).closest(
-      'button, a, input, select, textarea'
-    );
+  const handleContainerClick = () => {
+    const activeElement = document.activeElement;
 
     if (
-      closestInteractiveElement &&
-      e.currentTarget.contains(closestInteractiveElement)
+      beforeRef.current?.contains(activeElement) ||
+      afterRef.current?.contains(activeElement)
     ) {
       return;
     }
@@ -60,7 +60,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           onClick={handleContainerClick}
         >
           {isValidRenderValue(before) && (
-            <div className={cx(s.before)}>{before}</div>
+            <div className={cx(s.before)} ref={beforeRef}>
+              {before}
+            </div>
           )}
           <BaseInput
             className={cx({
@@ -72,7 +74,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             {...rest}
           />
           {isValidRenderValue(after) && (
-            <div className={cx(s.after)}>{after}</div>
+            <div className={cx(s.after)} ref={afterRef}>
+              {after}
+            </div>
           )}
         </div>
         {isInvalid && Boolean(invalidDescription) && (
