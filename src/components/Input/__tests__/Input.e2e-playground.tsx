@@ -42,7 +42,7 @@ const propsSets: ComponentPlaygroundProps<InputProps>['propSets'] = [
     value: ['Jhon', undefined],
   },
   {
-    value: ['Jhon', undefined],
+    value: ['Jhon'],
     before: [AddonsMap.NeutralButton, AddonsMap.SpinnerIcon],
     after: [AddonsMap.SettingsIcon, AddonsMap.PrimaryButton],
   },
