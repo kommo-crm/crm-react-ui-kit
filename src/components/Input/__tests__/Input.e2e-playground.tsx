@@ -5,7 +5,7 @@ import {
   ComponentPlaygroundProps,
 } from 'src/tests/e2e/ComponentPlayground';
 
-import { IconsMap } from '@storybook-utils/constants';
+import { AddonsMap } from '@storybook-utils/constants';
 
 import { Input } from '../Input';
 import {
@@ -43,8 +43,8 @@ const propsSets: ComponentPlaygroundProps<InputProps>['propSets'] = [
   },
   {
     value: ['Jhon', undefined],
-    before: [IconsMap.CopyIcon],
-    after: [IconsMap.SettingsIcon],
+    before: [AddonsMap.NeutralButton, AddonsMap.SpinnerIcon],
+    after: [AddonsMap.SettingsIcon, AddonsMap.PrimaryButton],
   },
 ];
 
