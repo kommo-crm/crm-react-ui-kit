@@ -31,3 +31,6 @@ export const isValidRenderValue = (value: any) => {
     typeof value === 'number'
   );
 };
+
+export const waitForNextFrame = () =>
+  new Promise((resolve) => requestAnimationFrame(resolve));
