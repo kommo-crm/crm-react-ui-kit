@@ -5,6 +5,8 @@ import {
   ComponentPlaygroundProps,
 } from 'src/tests/e2e/ComponentPlayground';
 
+import { AddonsMap } from '@storybook-utils/constants';
+
 import { Input } from '../Input';
 import {
   InputLightTheme,
@@ -23,30 +25,34 @@ const InputDarkFixedWidthTheme: InputTheme = {
   '--crm-ui-kit-input-width': '200px',
 };
 
+const propsSets: ComponentPlaygroundProps<InputProps>['propSets'] = [
+  {
+    value: ['Jhon', undefined],
+    isDisabled: [true, false],
+  },
+  {
+    value: ['Jhon', undefined],
+    isDisabled: [true, false],
+    placeholder: ['Placeholder'],
+  },
+  {
+    isInvalid: [true],
+    invalidDescription: ['Required field'],
+    invalidDescriptionPlacement: ['bottom', 'right'],
+    value: ['Jhon', undefined],
+  },
+  {
+    value: ['Jhon'],
+    before: [AddonsMap.NeutralButton, AddonsMap.SpinnerIcon],
+    after: [AddonsMap.SettingsIcon, AddonsMap.PrimaryButton],
+  },
+];
+
 export const InputPlayground = (
   props: ComponentPlaygroundProps<InputProps>
 ) => {
   return (
-    <ComponentPlayground<InputProps>
-      {...props}
-      propSets={[
-        {
-          value: ['Jhon', undefined],
-          isDisabled: [true, false],
-        },
-        {
-          value: ['Jhon', undefined],
-          isDisabled: [true, false],
-          placeholder: ['Placeholder'],
-        },
-        {
-          isInvalid: [true],
-          invalidDescription: ['Required field'],
-          invalidDescriptionPlacement: ['bottom', 'right'],
-          value: ['Jhon', undefined],
-        },
-      ]}
-    >
+    <ComponentPlayground<InputProps> {...props} propSets={propsSets}>
       {(itemProps: InputProps) => (
         <Input {...itemProps} theme={InputLightFixedWidthTheme} />
       )}
@@ -58,26 +64,7 @@ export const InputDarkPlayground = (
   props: ComponentPlaygroundProps<InputProps>
 ) => {
   return (
-    <ComponentPlayground<InputProps>
-      {...props}
-      propSets={[
-        {
-          value: ['Jhon', undefined],
-          isDisabled: [true, false],
-        },
-        {
-          value: ['Jhon', undefined],
-          isDisabled: [true, false],
-          placeholder: ['Placeholder'],
-        },
-        {
-          isInvalid: [true],
-          invalidDescription: ['Required field'],
-          invalidDescriptionPlacement: ['bottom', 'right'],
-          value: ['Jhon', undefined],
-        },
-      ]}
-    >
+    <ComponentPlayground<InputProps> {...props} propSets={propsSets}>
       {(itemProps: InputProps) => (
         <Input {...itemProps} theme={InputDarkFixedWidthTheme} />
       )}

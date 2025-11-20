@@ -2,7 +2,7 @@ import React, { CSSProperties, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { CanvasCentered, IconsMap } from '@storybook-utils/constants';
+import { AddonsMap, CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
@@ -64,10 +64,15 @@ const meta = {
     theme: InputLightTheme,
   },
   argTypes: {
+    before: {
+      control: 'select',
+      mapping: AddonsMap,
+      options: Object.keys(AddonsMap),
+    },
     after: {
       control: 'select',
-      mapping: IconsMap,
-      options: Object.keys(IconsMap),
+      mapping: AddonsMap,
+      options: Object.keys(AddonsMap),
     },
     theme: {
       control: 'select',
@@ -145,9 +150,10 @@ export const InvalidPlacement: Story = {
   },
 };
 
-export const Icons: Story = {
+export const Addons: Story = {
   args: {
-    after: IconsMap.CopyIcon,
+    before: AddonsMap.CopyIcon,
+    after: AddonsMap.NeutralButton,
   },
 };
 
