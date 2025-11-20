@@ -2,13 +2,4 @@
   display: flex;
   align-items: center;
   margin-left: auto;
-  padding-left: 16px;
-}
-
-.rightSlot > :not(:first-child):not([data-blocker]) {
-  margin-left: 8px;
-}
-
-.rightSlot[data-submenu-right-slot] {
-  padding-left: 0;
 }

@@ -95,11 +95,15 @@ function App() {
           collisionBoundary={
             document.querySelector('.docs-story') as HTMLElement
           }
-          direction="down-right"
+          direction={direction}
           sideOffset={5}
+          disableRepositioning
+          style={{
+            maxWidth: '300px',
+          }}
         >
           <ContextMenu.Label>
-            <Text theme={TextSecondaryDarkTheme} size="l">
+            <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
               ${i18n.t('Label')}
             </Text>
           </ContextMenu.Label>
@@ -107,18 +111,18 @@ function App() {
           <ContextMenu.Separator />
 
           <ContextMenu.Item isSelectable={false}>
-            <Text theme={TextContextMenuTheme} size="l">
+            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
               <b>${i18n.t('Workspace')}:</b> Kommo
             </Text>
           </ContextMenu.Item>
 
-          <ContextMenu.Item>
-            <Text theme={TextContextMenuTheme} size="l">
-              ${i18n.t('Workspace Settings')}
+          <ContextMenu.Item style={{ maxHeight: '20px' }}>
+            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+              {i18n.t('Workspace Settings')}
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.experimental_SubRoot mode="hover" shouldCloseRootMenuOnClick>
+              <ContextMenu.experimental_SubRoot mode={subMenuMode}>
                 <ContextMenu.experimental_SubRoot.Trigger
                   style={{
                     display: 'flex',
@@ -129,6 +133,7 @@ function App() {
                     outline: 'none',
                     border: 'none',
                     cursor: 'pointer',
+                    marginRight: '-16px',
                   }}
                 >
                   <ContextMenuTriggerIcon />
@@ -148,7 +153,7 @@ function App() {
                         <ContextMenuCheckIcon />
                       </ContextMenu.ItemIndicator>
 
-                      <Text theme={TextContextMenuTheme} size="l">
+                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                         ${i18n.t('Autoupdate')}
                       </Text>
                     </ContextMenu.CheckboxItem>
@@ -156,7 +161,7 @@ function App() {
                     <ContextMenu.Separator />
 
                     <ContextMenu.Label>
-                      <Text theme={TextSecondaryDarkTheme} size="l">
+                      <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
                         ${i18n.t('Theme')}
                       </Text>
                     </ContextMenu.Label>
@@ -169,7 +174,7 @@ function App() {
                         value="light"
                         shouldCloseRootMenuOnClick
                       >
-                        <Text theme={TextContextMenuTheme} size="l">
+                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                           ${i18n.t('Light')}
                         </Text>
                       </ContextMenu.RadioItem>
@@ -178,7 +183,7 @@ function App() {
                         value="dark"
                         shouldCloseRootMenuOnClick
                       >
-                        <Text theme={TextContextMenuTheme} size="l">
+                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                           ${i18n.t('Dark')}
                         </Text>
                       </ContextMenu.RadioItem>
@@ -190,14 +195,14 @@ function App() {
           </ContextMenu.Item>
 
           <ContextMenu.Item>
-            <Text theme={TextContextMenuTheme} size="l">
+            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
               ${i18n.t('Switch Workspace')}
             </Text>
           </ContextMenu.Item>
 
           <ContextMenu.Sub>
             <ContextMenu.SubTrigger>
-              <Text theme={TextContextMenuTheme} size="l">
+              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                 ${i18n.t('Contacts')}
               </Text>
 
@@ -209,7 +214,7 @@ function App() {
             <ContextMenu.Portal>
               <ContextMenu.SubContent alignOffset={-2}>
                 <ContextMenu.Label>
-                  <Text theme={TextSecondaryDarkTheme} size="l">
+                  <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
                     {i18n.t('Label')}
                   </Text>
                 </ContextMenu.Label>
@@ -217,13 +222,13 @@ function App() {
                 <ContextMenu.Separator />
 
                 <ContextMenu.Item>
-                  <Text theme={TextContextMenuTheme} size="l">
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     ${i18n.t('Contact')} 1
                   </Text>
                 </ContextMenu.Item>
 
                 <ContextMenu.Item isDisabled>
-                  <Text theme={TextContextMenuTheme} size="l">
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     ${i18n.t('Contact')} 2
                   </Text>
                 </ContextMenu.Item>
@@ -233,7 +238,7 @@ function App() {
                     <ContextMenuTrashcanIcon />
                   </ContextMenu.ItemIcon>
 
-                  <Text theme={TextContextMenuTheme} size="l">
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     ${i18n.t('Delete All')}
                   </Text>
                 </ContextMenu.Item>
@@ -300,9 +305,12 @@ const StoryComponent = ({
           direction={direction}
           sideOffset={5}
           disableRepositioning
+          style={{
+            maxWidth: '300px',
+          }}
         >
           <ContextMenu.Label>
-            <Text theme={TextSecondaryDarkTheme} size="l">
+            <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
               {i18n.t('Label')}
             </Text>
           </ContextMenu.Label>
@@ -310,13 +318,13 @@ const StoryComponent = ({
           <ContextMenu.Separator />
 
           <ContextMenu.Item isSelectable={false}>
-            <Text theme={TextContextMenuTheme} size="l">
+            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
               <b>{i18n.t('Workspace')}:</b> Kommo
             </Text>
           </ContextMenu.Item>
 
-          <ContextMenu.Item>
-            <Text theme={TextContextMenuTheme} size="l">
+          <ContextMenu.Item style={{ maxHeight: '20px' }}>
+            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
               {i18n.t('Workspace Settings')}
             </Text>
 
@@ -332,6 +340,7 @@ const StoryComponent = ({
                     outline: 'none',
                     border: 'none',
                     cursor: 'pointer',
+                    marginRight: '-16px',
                   }}
                 >
                   <ContextMenuTriggerIcon />
@@ -399,14 +408,14 @@ const StoryComponent = ({
           </ContextMenu.Item>
 
           <ContextMenu.Item>
-            <Text theme={TextContextMenuTheme} size="l">
+            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
               {i18n.t('Switch Workspace')}
             </Text>
           </ContextMenu.Item>
 
           <ContextMenu.Sub mode={subMode}>
             <ContextMenu.SubTrigger>
-              <Text theme={TextContextMenuTheme} size="l">
+              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                 {i18n.t('Contacts')}
               </Text>
 
@@ -418,7 +427,7 @@ const StoryComponent = ({
             <ContextMenu.Portal>
               <ContextMenu.SubContent alignOffset={-2}>
                 <ContextMenu.Label>
-                  <Text theme={TextSecondaryDarkTheme} size="l">
+                  <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
                     {i18n.t('Label')}
                   </Text>
                 </ContextMenu.Label>
@@ -426,13 +435,13 @@ const StoryComponent = ({
                 <ContextMenu.Separator />
 
                 <ContextMenu.Item>
-                  <Text theme={TextContextMenuTheme} size="l">
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     {i18n.t('Contact')} 1
                   </Text>
                 </ContextMenu.Item>
 
                 <ContextMenu.Item isDisabled>
-                  <Text theme={TextContextMenuTheme} size="l">
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     {i18n.t('Contact')} 2
                   </Text>
                 </ContextMenu.Item>
@@ -442,7 +451,7 @@ const StoryComponent = ({
                     <ContextMenuTrashcanIcon />
                   </ContextMenu.ItemIcon>
 
-                  <Text theme={TextContextMenuTheme} size="l">
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     {i18n.t('Delete All')}
                   </Text>
                 </ContextMenu.Item>

@@ -65,7 +65,6 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       <div
         ref={mergeRefs(slotRef, ref)}
         className={cx(s.rightSlot, className)}
-        data-submenu-right-slot={hasSubmenu ? '' : undefined}
         {...handlers}
         {...rest}
       >

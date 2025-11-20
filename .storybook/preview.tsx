@@ -23,7 +23,9 @@ const preview: Preview = {
       },
       source: {
         /**
-         * Completely hide auto-generated source code.
+         * It is necessary that during development it is clear that this section
+         * must be explicitly specified, otherwise the automatically generated
+         * source code appears.
          *
          * More info provided in this comment:
          * https://github.com/kommo-crm/crm-react-ui-kit/pull/11#discussion_r2315256940

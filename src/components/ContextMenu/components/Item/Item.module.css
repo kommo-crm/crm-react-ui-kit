@@ -15,10 +15,6 @@
     padding: 10px 16px;
   }
 
-  &[data-has-submenu] {
-    padding: 0 0 0 40px;
-  }
-
   &[data-disabled] {
     color: var(--crm-ui-kit-palette-text-secondary-light);
     cursor: auto;
