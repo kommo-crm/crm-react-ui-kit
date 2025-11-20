@@ -73,30 +73,34 @@ const ContextMenuComponent = ({
             </Text>
           </ContextMenu.Item>
 
-          <ContextMenu.Item>
+          <ContextMenu.Item style={{ maxHeight: '20px' }}>
             <Text theme={TextContextMenuTheme} size="l">
               Workspace Settings
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.SubRoot
+              <ContextMenu.experimental_SubRoot
                 mode={ContextMenuMode.CLICK}
                 defaultOpen={isDefaultOpenSubMenu}
               >
-                <ContextMenu.SubRoot.Trigger
+                <ContextMenu.experimental_SubRoot.Trigger
                   style={{
                     all: 'unset',
                     display: 'flex',
                     padding: '10px 16px',
                     color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
                     cursor: 'pointer',
+                    marginRight: '-16px',
                   }}
                 >
                   <ContextMenuTriggerIcon />
-                </ContextMenu.SubRoot.Trigger>
+                </ContextMenu.experimental_SubRoot.Trigger>
 
                 <ContextMenu.Portal>
-                  <ContextMenu.SubRoot.Content sideOffset={-5} alignOffset={16}>
+                  <ContextMenu.experimental_SubRoot.Content
+                    sideOffset={-5}
+                    alignOffset={16}
+                  >
                     <ContextMenu.CheckboxItem
                       isChecked={autoupdateChecked}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,9 +143,9 @@ const ContextMenuComponent = ({
                         </Text>
                       </ContextMenu.RadioItem>
                     </ContextMenu.RadioGroup>
-                  </ContextMenu.SubRoot.Content>
+                  </ContextMenu.experimental_SubRoot.Content>
                 </ContextMenu.Portal>
-              </ContextMenu.SubRoot>
+              </ContextMenu.experimental_SubRoot>
             </ContextMenu.ItemRightSlot>
           </ContextMenu.Item>
 
