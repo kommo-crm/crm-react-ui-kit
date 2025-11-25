@@ -1,0 +1,1 @@
+export { BaseContent } from './BaseContent';

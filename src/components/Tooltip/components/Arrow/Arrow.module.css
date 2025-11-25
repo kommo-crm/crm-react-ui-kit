@@ -1,0 +1,128 @@
+.popup {
+  position: relative;
+
+  padding: var(--crm-ui-kit-popup-padding);
+  max-width: var(--crm-ui-kit-popup-max-width);
+  box-sizing: border-box;
+
+  color: var(--crm-ui-kit-popup-color);
+  line-height: var(--crm-ui-kit-popup-line-height);
+  font-size: var(--crm-ui-kit-popup-font-size);
+
+  background: var(--crm-ui-kit-popup-background);
+  border: var(--crm-ui-kit-popup-border);
+  border-radius: var(--crm-ui-kit-popup-border-radius);
+  box-shadow: var(--crm-ui-kit-popup-box-shadow);
+
+  &--tablet {
+    max-width: 232px;
+  }
+
+  /* &--top {
+    top: 7px;
+  }
+
+  &--bottom {
+    top: -7px;
+  }
+
+  &--right {
+    right: 7px;
+  }
+
+  &--left {
+    left: 7px;
+  } */
+}
+
+.arrow {
+  z-index: 1;
+  transform: translate(-50%, -2px);
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+
+    width: 7.2px;
+    height: 0;
+  }
+
+  &--top {
+    &::before,
+    &::after {
+      top: -2px;
+
+      border-bottom: 1px solid var(--crm-ui-kit-palette-border-default);
+    }
+
+    &::before {
+      left: -6px;
+      transform: rotate(-138deg);
+    }
+
+    &::after {
+      left: -1px;
+      transform: rotate(-42deg);
+    }
+  }
+
+  &--bottom {
+    &::before,
+    &::after {
+      bottom: -2px;
+
+      border-top: 1px solid var(--crm-ui-kit-palette-border-default);
+    }
+
+    &::before {
+      left: -6px;
+      transform: rotate(-42deg);
+    }
+
+    &::after {
+      left: -1px;
+      transform: rotate(222deg);
+    }
+  }
+
+  &--left {
+    transform: translate(-2px, -50%);
+
+    &::before,
+    &::after {
+      left: -5px;
+      border-bottom: 1px solid var(--crm-ui-kit-palette-border-default);
+    }
+
+    &::before {
+      top: -3px;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      top: 2px;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &--right {
+    transform: translate(2px, -50%);
+
+    &::before,
+    &::after {
+      right: -5px;
+      border-bottom: 1px solid var(--crm-ui-kit-palette-border-default);
+    }
+
+    &::before {
+      top: -3px;
+      transform: rotate(-45deg);
+    }
+
+    &::after {
+      top: 2px;
+      transform: rotate(45deg);
+    }
+  }
+}
