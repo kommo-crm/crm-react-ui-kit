@@ -1,4 +1,4 @@
-import React, { forwardRef, useLayoutEffect, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropdown-menu';
 import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
@@ -22,40 +22,39 @@ import s from './SubContent.module.css';
 const DISPLAY_NAME = 'ContextMenu.SubContent';
 
 export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       className,
       children,
       sideOffset = 4,
       collisionPadding = 10,
-      onMouseEnter,
-      onMouseLeave,
-      onMouseMove,
       alignOffset,
       disableAutoPositioning = false,
       disableRepositioning = false,
+      onMouseEnter,
+      onMouseLeave,
+      onMouseMove,
       onEscapeKeyDown,
 
       ...rest
-    },
-    ref
-  ) => {
+    } = props;
+
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
     const {
-      animatedOpen,
+      isAnimatedOpen,
       mode,
-      onMouseEnter: onMouseEnterContext,
-      onMouseLeave: onMouseLeaveContext,
       defaultOpen,
       isOpen,
       triggerRef,
       contentRef,
+      shouldCloseCurrentMenuOnSelect,
+      shouldCloseRootMenuOnSelect,
+      onContentEnter,
+      onContentLeave,
       onChildOpen,
       onSubRootOpen,
       closeMenuImmediately,
-      isCloseOnClick,
-      shouldCloseRootMenuOnClick,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
@@ -74,36 +73,9 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       }
     );
 
-    const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
-    const [isIconsPositioned, setIsIconsPositioned] = useState(false);
-
-    /**
-     * Handles the prerender of the submenu (needed for the icons).
-     */
-    useLayoutEffect(() => {
-      let raf: number;
-
-      if (animatedOpen) {
-        setIsIconsPositioned(false);
-
-        raf = requestAnimationFrame(() => {
-          setIsIconsPositioned(true);
-        });
-      } else {
-        setIsIconsPositioned(false);
-      }
-
-      return () => {
-        if (raf) {
-          cancelAnimationFrame(raf);
-        }
-      };
-    }, [animatedOpen]);
-
     const springStyles = useSpring({
       opacity:
-        (isContentPositioned && isIconsPositioned && animatedOpen) ||
-        defaultOpen !== undefined
+        (isContentPositioned && isAnimatedOpen) || defaultOpen !== undefined
           ? 1
           : 0,
       config:
@@ -112,18 +84,45 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
           : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
+    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+      onContentEnter?.(e);
+
+      onMouseEnter?.(e);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      onContentEnter?.(e);
+
+      onMouseMove?.(e);
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+      onContentLeave?.(e);
+
+      onMouseLeave?.(e);
+    };
+
+    const handleEscapeKeyDown = (e: KeyboardEvent) => {
+      /**
+       * Otherwise, it will also close Root.
+       */
+      e.preventDefault();
+
+      closeMenuImmediately();
+
+      onEscapeKeyDown?.(e);
+    };
+
     return (
       <LevelProvider
-        hasItemWithIcon={hasItemWithIcon}
-        setHasItemWithIcon={setHasItemWithIcon}
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
         onChildOpen={onChildOpen}
         onSubRootOpen={onSubRootOpen}
-        isCloseOnClick={isCloseOnClick}
+        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
         closeMenuImmediately={closeMenuImmediately}
-        shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick}
-        animatedOpen={animatedOpen}
+        shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
+        isAnimatedOpen={isAnimatedOpen}
         level={level + 1}
       >
         {isOpen && (
@@ -133,22 +132,9 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
               zIndex: Number.MAX_SAFE_INTEGER - 10,
               ...springStyles,
             }}
-            onMouseEnter={(e) => {
-              onMouseEnterContext?.(e);
-
-              onMouseEnter?.(e);
-            }}
-            onMouseMove={(e) => {
-              onMouseEnterContext?.(e);
-
-              onMouseMove?.(e);
-            }}
-            onMouseLeave={(e) => {
-              onMouseLeaveContext?.(e);
-
-              onMouseLeave?.(e);
-            }}
-            data-content-wrapper
+            onMouseEnter={handleMouseEnter}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
             <RadixDropdownMenuSubContent
               ref={mergeRefs(contentRef, ref)}
@@ -156,11 +142,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
               sideOffset={sideOffset}
               collisionPadding={collisionPadding}
               alignOffset={offset}
-              onEscapeKeyDown={(e) => {
-                closeMenuImmediately();
-
-                onEscapeKeyDown?.(e);
-              }}
+              onEscapeKeyDown={handleEscapeKeyDown}
               {...rest}
             >
               {children}

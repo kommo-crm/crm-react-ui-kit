@@ -6,6 +6,8 @@ import { useSpring, animated, easings } from '@react-spring/web';
 
 import { mergeRefs } from 'src/lib/utils';
 
+import { KeyboardKey } from 'src/lib/keyboard';
+
 import {
   LevelProvider,
   useLevelContext,
@@ -17,21 +19,21 @@ import { ContextMenuMode } from '../../../../ContextMenu.enums';
 
 import { useContentPositioning } from '../../../../hooks';
 
-import { focusParentItem } from '../../../../utils';
-
 import type { ContentProps } from '../../../Content';
 
 import { Direction } from '../../../Content';
 
 import { directionToSide } from '../../../Content';
 
+import { focusParentItem } from './utils';
+
 import s from './Content.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.SubRoot.Content';
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       style,
       className,
       children,
@@ -48,26 +50,23 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onEscapeKeyDown,
 
       ...rest
-    },
-    ref
-  ) => {
-    const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
+    } = props;
+
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
     const {
       triggerRef,
       contentRef,
-      animatedOpen,
+      isAnimatedOpen,
       animationDuration,
       mode,
-      temporaryHoverClose,
-      onMouseEnter: onMouseEnterContext,
-      onMouseLeave: onMouseLeaveContext,
-      closeMenuImmediately,
       isOpen,
+      shouldCloseCurrentMenuOnSelect,
+      shouldCloseRootMenuOnSelect,
+      closeMenuImmediately,
+      onContentEnter,
+      onContentLeave,
       onChildOpen,
-      isCloseOnClick,
-      shouldCloseRootMenuOnClick,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { level } = useLevelContext(DISPLAY_NAME);
@@ -85,41 +84,71 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const springStyles = useSpring({
       opacity:
-        isPositioned &&
-        ((mode === ContextMenuMode.CLICK && !temporaryHoverClose) ||
-          animatedOpen)
+        isPositioned && (mode === ContextMenuMode.CLICK || isAnimatedOpen)
           ? 1
           : 0,
       config:
-        mode === ContextMenuMode.CLICK && !temporaryHoverClose
+        mode === ContextMenuMode.CLICK
           ? { duration: 0 }
           : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
     const onSubRootContentClose = () => {
       closeMenuImmediately();
+
       focusParentItem(triggerRef.current);
     };
 
+    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+      onContentEnter?.(e);
+
+      onMouseEnter?.(e);
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+      onContentLeave?.(e);
+
+      onMouseLeave?.(e);
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'ArrowLeft') {
+      if (e.key === KeyboardKey.ARROW_LEFT) {
         onSubRootContentClose();
       }
 
       onKeyDown?.(e);
     };
 
+    /**
+     * Prevent Radix from automatically focusing the trigger after submenu closes.
+     * We handle focus management manually to support custom close behavior.
+     */
+    const handleCloseAutoFocus = (e: Event) => {
+      e.preventDefault();
+
+      onCloseAutoFocus?.(e);
+    };
+
+    /**
+     * Prevent Radix from closing the entire menu tree.
+     * We handle Escape manually to close only this submenu level.
+     */
+    const handleEscapeKeyDown = (e: KeyboardEvent) => {
+      e.preventDefault();
+
+      onSubRootContentClose();
+      onEscapeKeyDown?.(e);
+    };
+
     return (
       <LevelProvider
-        hasItemWithIcon={hasItemWithIcon}
-        setHasItemWithIcon={setHasItemWithIcon}
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
         onChildOpen={onChildOpen}
-        isCloseOnClick={isCloseOnClick}
+        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
         closeMenuImmediately={closeMenuImmediately}
-        shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick ?? false}
-        animatedOpen={animatedOpen}
+        shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect ?? false}
+        isAnimatedOpen={isAnimatedOpen}
         level={level + 1}
       >
         {isOpen && (
@@ -129,7 +158,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               position: 'fixed',
               ...springStyles,
             }}
-            data-content-wrapper
           >
             <RadixDropdownMenuContent
               ref={mergeRefs(contentRef, ref)}
@@ -144,29 +172,11 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               align={align}
               arrowPadding={arrowPadding}
               alignOffset={offset}
-              onMouseEnter={(e) => {
-                onMouseEnterContext?.(e);
-
-                onMouseEnter?.(e);
-              }}
-              onMouseLeave={(e) => {
-                onMouseLeaveContext?.(e);
-
-                onMouseLeave?.(e);
-              }}
-              onKeyDown={(e) => {
-                handleKeyDown(e);
-              }}
-              onCloseAutoFocus={(e) => {
-                e.preventDefault();
-
-                onCloseAutoFocus?.(e);
-              }}
-              onEscapeKeyDown={(e) => {
-                e.preventDefault();
-                onSubRootContentClose();
-                onEscapeKeyDown?.(e);
-              }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onKeyDown={handleKeyDown}
+              onCloseAutoFocus={handleCloseAutoFocus}
+              onEscapeKeyDown={handleEscapeKeyDown}
               {...rest}
             >
               {children}

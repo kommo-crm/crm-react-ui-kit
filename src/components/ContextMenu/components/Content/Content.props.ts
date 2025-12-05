@@ -37,11 +37,3 @@ export type ContentProps = RadixContentProps & {
    */
   disableRepositioning?: boolean;
 };
-
-export interface ContextMenuContentContextProps {
-  /**
-   * CSS color value inherited from the background of the
-   * first/last menu item depending on the menu side.
-   */
-  inheritedArrowColor: string;
-}

@@ -2,12 +2,16 @@ import { useEffect } from 'react';
 
 import { UseClickOutsideOptions } from './useClickOutside.types';
 
-export function useClickOutside<T extends HTMLElement>({
-  refs,
-  handler,
-}: UseClickOutsideOptions<T>) {
+/**
+ * A click tracking hook outside of the specified references.
+ */
+export const useClickOutside = <T extends HTMLElement>(
+  options: UseClickOutsideOptions<T>
+) => {
+  const { refs, handler } = options;
+
   useEffect(() => {
-    function listener(event: MouseEvent | TouchEvent) {
+    const listener = (event: MouseEvent | TouchEvent) => {
       const isInside = refs.some((ref) => {
         const el = ref?.current;
 
@@ -19,7 +23,7 @@ export function useClickOutside<T extends HTMLElement>({
       }
 
       handler(event);
-    }
+    };
 
     document.addEventListener('mousedown', listener);
     document.addEventListener('touchstart', listener);
@@ -29,4 +33,4 @@ export function useClickOutside<T extends HTMLElement>({
       document.removeEventListener('touchstart', listener);
     };
   }, [refs, handler]);
-}
+};

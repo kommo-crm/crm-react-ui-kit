@@ -18,13 +18,13 @@ export type SubProps = Omit<
    */
   onOpen?: (open: boolean) => void;
   /**
-   * Whether the submenu should close when the root menu is closed.
+   * Whether the root menu should close when item selected.
    */
-  shouldCloseRootMenuOnClick?: boolean;
+  shouldCloseRootMenuOnSelect?: boolean;
   /**
-   * Whether the menu should close when clicked.
+   * Whether the submenu should close when item selected.
    */
-  isCloseOnClick?: boolean;
+  shouldCloseCurrentMenuOnSelect?: boolean;
 };
 
 export interface ContextMenuSubContextProps {
@@ -39,7 +39,7 @@ export interface ContextMenuSubContextProps {
   /**
    * Indicates whether the submenu's open animation is currently active.
    */
-  animatedOpen: boolean;
+  isAnimatedOpen: boolean;
   /**
    * Sets the open state of the submenu.
    */
@@ -49,13 +49,15 @@ export interface ContextMenuSubContextProps {
    */
   isOpen: boolean;
   /**
-   * Called when the mouse enters the Sub element.
+   * Called when mouse enters the submenu content area.
+   * Keeps the menu open in hover mode by canceling close timers.
    */
-  onMouseEnter: (e: React.MouseEvent<HTMLElement>) => void;
+  onContentEnter: (e: React.MouseEvent<HTMLElement>) => void;
   /**
-   * Called when the mouse leaves the Sub element.
+   * Called when mouse leaves the submenu content area.
+   * Allows the menu to close in hover mode.
    */
-  onMouseLeave: (e: React.MouseEvent<HTMLElement>) => void;
+  onContentLeave: (e: React.MouseEvent<HTMLElement>) => void;
   /**
    * The id of the trigger of the submenu.
    */
@@ -81,17 +83,17 @@ export interface ContextMenuSubContextProps {
    */
   onSubRootOpen: (value: boolean) => void;
   /**
-   * Whether the submenu should close when the root menu is closed.
+   * Whether the root menu should close when item selected.
    *
    * @default true
    */
-  shouldCloseRootMenuOnClick: boolean;
+  shouldCloseRootMenuOnSelect: boolean;
   /**
-   * Whether the menu should close when clicked.
+   * Whether the submenu should close when item selected.
    *
    * @default true
    */
-  isCloseOnClick: boolean;
+  shouldCloseCurrentMenuOnSelect: boolean;
   /**
    * Immediately closes the menu without waiting for any hover or animation delays.
    */

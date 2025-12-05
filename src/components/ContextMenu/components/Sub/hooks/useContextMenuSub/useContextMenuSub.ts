@@ -1,24 +1,21 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
-import { useClickOutside, useIsTouchDevice } from '..';
-import { ContextMenuMode } from '../../ContextMenu.enums';
-import { useContextMenuContext } from '../../ContextMenu.context';
-import { useLevelContext } from '../../providers/LevelProvider';
+import { useClickOutside, useIsTouchDevice } from '../../../../hooks';
+import { ContextMenuMode } from '../../../../ContextMenu.enums';
+import { useContextMenuContext } from '../../../../ContextMenu.context';
+import { useLevelContext } from '../../../../providers/LevelProvider';
 
-import { ContextMenuModeType } from '../../ContextMenu.types';
+import { ContextMenuModeType } from '../../../../ContextMenu.types';
 
 import { UseContextMenuSubOptions } from './useContextMenuSub.types';
 
-export function useContextMenuSub({
-  displayName,
-  mode: initialMode,
-  defaultOpen,
-  onOpen,
-}: UseContextMenuSubOptions) {
+export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
+  const { displayName, mode: initialMode, defaultOpen, onOpen } = options;
+
   const triggerId = useId();
 
   const [open, setOpen] = useState(defaultOpen || false);
-  const [animatedOpen, setAnimatedOpen] = useState(false);
+  const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
@@ -40,7 +37,7 @@ export function useContextMenuSub({
     activeItemId,
     onChildOpen,
     onSubRootOpen,
-    animatedOpen: parentAnimatedOpen,
+    isAnimatedOpen: parentIsAnimatedOpen,
   } = useLevelContext(displayName);
 
   const handleSubmenuOpen = (value: boolean) => {
@@ -75,7 +72,7 @@ export function useContextMenuSub({
    */
   const handleCloseImmediate = () => {
     clearTimers();
-    setAnimatedOpen(false);
+    setIsAnimatedOpen(false);
     setOpen(false);
     onOpen?.(false);
     handleSubmenuOpen(false);
@@ -94,7 +91,7 @@ export function useContextMenuSub({
         return;
       }
 
-      setAnimatedOpen(false);
+      setIsAnimatedOpen(false);
 
       closeTimerRef.current = setTimeout(() => {
         setOpen(false);
@@ -116,7 +113,7 @@ export function useContextMenuSub({
       setOpen(defaultOpen);
       onOpen?.(defaultOpen);
       handleSubmenuOpen(defaultOpen);
-      setAnimatedOpen(defaultOpen);
+      setIsAnimatedOpen(defaultOpen);
       setOpenedByKeyboard(false);
 
       return;
@@ -130,7 +127,7 @@ export function useContextMenuSub({
        * It is necessary for correct standard keyboard navigation.
        * Removes the jump from the positioning hook.
        */
-      setTimeout(() => setAnimatedOpen(value), 0);
+      setTimeout(() => setIsAnimatedOpen(value), 0);
 
       return;
     }
@@ -143,7 +140,7 @@ export function useContextMenuSub({
 
       setOpen(true);
       onOpen?.(true);
-      setAnimatedOpen(true);
+      setIsAnimatedOpen(true);
       handleSubmenuOpen(true);
     } else {
       requestClose();
@@ -158,9 +155,10 @@ export function useContextMenuSub({
   };
 
   /**
-   * Handles the mouse enter event.
+   * Handles entering the submenu content area.
+   * Keeps the submenu open in hover mode by canceling close timers.
    */
-  const handleMouseEnter = () => {
+  const handleContentEnter = () => {
     if (mode !== ContextMenuMode.HOVER) {
       return;
     }
@@ -170,7 +168,7 @@ export function useContextMenuSub({
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
-      setAnimatedOpen(true);
+      setIsAnimatedOpen(true);
     }
 
     if (open) {
@@ -181,7 +179,7 @@ export function useContextMenuSub({
         hoverTimeoutRef.current = null;
       }
 
-      setAnimatedOpen(true);
+      setIsAnimatedOpen(true);
       onOpen?.(true);
       handleSubmenuOpen(true);
       setOpen(true);
@@ -190,9 +188,10 @@ export function useContextMenuSub({
   };
 
   /**
-   * Handles the mouse leave event.
+   * Handles leaving the submenu content area.
+   * Allows the submenu to close in hover mode.
    */
-  const handleMouseLeave = () => {
+  const handleContentLeave = () => {
     if (mode !== ContextMenuMode.HOVER) {
       return;
     }
@@ -327,17 +326,17 @@ export function useContextMenuSub({
    * after which we focused on the distant parent.
    */
   useEffect(() => {
-    if (!parentAnimatedOpen) {
+    if (!parentIsAnimatedOpen) {
       requestClose();
     }
-  }, [parentAnimatedOpen]);
+  }, [parentIsAnimatedOpen]);
 
   return {
     isOpen: open,
     setOpen,
-    animatedOpen,
-    handleMouseEnter,
-    handleMouseLeave,
+    isAnimatedOpen,
+    handleContentEnter,
+    handleContentLeave,
     handleOpenChange,
     onOpenByKeyboard,
     triggerId,
@@ -347,4 +346,4 @@ export function useContextMenuSub({
     onSubRootOpen: handleSubRootOpen,
     closeMenuImmediately: handleCloseImmediate,
   };
-}
+};

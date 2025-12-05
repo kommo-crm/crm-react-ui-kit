@@ -1,15 +1,10 @@
 export { useContextMenu } from './useContextMenu/useContextMenu';
-export { useContextMenuSubMenu } from './useContextMenuSubMenu/useContextMenuSubMenu';
-export { useInheritedArrowColor } from './useInheritedArrowColor/useInheritedArrowColor';
 export { useContentPositioning } from './useContentPositioning/useContentPositioning';
-export { useContextMenuSub } from './useContextMenuSub/useContextMenuSub';
 export { useContextMenuItemFocus } from './useContextMenuItemFocus/useContextMenuItemFocus';
 export { useIsTouchDevice } from './useIsTouchDevice/useIsTouchDevice';
 export { useClickOutside } from './useClickOutside/useClickOutside';
-export { useStopContextMenuEvents } from './useStopContextMenuEvents/useStopContextMenuEvents';
+export { useStopEvents } from './useStopEvents/useStopEvents';
 export { useSubMenu } from './useSubMenu/useSubMenu';
-export { useInnerInputsFocus } from './useInnerInputsFocus/useInnerInputsFocus';
 export { useItemInnerFocus } from './useItemInnerFocus/useItemInnerFocus';
 export { useChildrenWithBlocker } from './useChildrenWithBlocker/useChildrenWithBlocker';
-export { useMouseMoveOutside } from './useMouseMoveOutside/useMouseMoveOutside';
 export { usePrevious } from './usePrevious/usePrevious';

@@ -78,7 +78,11 @@ function App() {
   };
 
   return (
-    <ContextMenu.Root mode="click">
+    <ContextMenu.Root
+      mode={mode}
+      enableInnerInputFocus
+      backgroundFocusBlockerContainers={[document.body]]}
+    >
       <ContextMenu.Trigger
         style={{
           display: 'flex',
@@ -122,7 +126,10 @@ function App() {
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.experimental_SubRoot mode={subMenuMode}>
+              <ContextMenu.experimental_SubRoot
+                mode={subMenuMode}
+                shouldCloseRootMenuOnSelect
+              >
                 <ContextMenu.experimental_SubRoot.Trigger
                   style={{
                     display: 'flex',
@@ -147,7 +154,7 @@ function App() {
                     <ContextMenu.CheckboxItem
                       isChecked={autoupdateChecked}
                       onChange={handleAutoupdateChange}
-                      shouldCloseRootMenuOnClick
+                      shouldCloseRootMenuOnSelect
                     >
                       <ContextMenu.ItemIndicator>
                         <ContextMenuCheckIcon />
@@ -161,6 +168,8 @@ function App() {
                     <ContextMenu.Separator />
 
                     <ContextMenu.Label>
+                      {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                       <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
                         ${i18n.t('Theme')}
                       </Text>
@@ -172,8 +181,10 @@ function App() {
                     >
                       <ContextMenu.RadioItem 
                         value="light"
-                        shouldCloseRootMenuOnClick
+                        shouldCloseRootMenuOnSelect
                       >
+                        {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                         <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                           ${i18n.t('Light')}
                         </Text>
@@ -181,8 +192,10 @@ function App() {
 
                       <ContextMenu.RadioItem
                         value="dark"
-                        shouldCloseRootMenuOnClick
+                        shouldCloseRootMenuOnSelect
                       >
+                        {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                         <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                           ${i18n.t('Dark')}
                         </Text>
@@ -214,6 +227,8 @@ function App() {
             <ContextMenu.Portal>
               <ContextMenu.SubContent alignOffset={-2}>
                 <ContextMenu.Label>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
                     {i18n.t('Label')}
                   </Text>
@@ -222,12 +237,16 @@ function App() {
                 <ContextMenu.Separator />
 
                 <ContextMenu.Item>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     ${i18n.t('Contact')} 1
                   </Text>
                 </ContextMenu.Item>
 
                 <ContextMenu.Item isDisabled>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     ${i18n.t('Contact')} 2
                   </Text>
@@ -275,8 +294,26 @@ const StoryComponent = ({
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState('light');
 
+  /**
+   * Required for the correct broker mount.
+   */
+  const backgroundFocusBlockerContainer: HTMLElement | null =
+    document.querySelector('.sb-story') ||
+    document.querySelector('#storybook-root');
+
+  /**
+   * Required for the correct position calculation.
+   */
+  const collisionBoundary = document.querySelector(
+    '.docs-story'
+  ) as HTMLElement;
+
   return (
-    <ContextMenu.Root mode={mode} enableInnerInputFocus>
+    <ContextMenu.Root
+      mode={mode}
+      enableInnerInputFocus
+      backgroundFocusBlockerContainers={[backgroundFocusBlockerContainer]}
+    >
       <ContextMenu.Trigger
         style={
           isTriggerAsChild
@@ -299,9 +336,7 @@ const StoryComponent = ({
 
       <ContextMenu.Portal>
         <ContextMenu.Content
-          collisionBoundary={
-            document.querySelector('.docs-story') as HTMLElement
-          }
+          collisionBoundary={collisionBoundary}
           direction={direction}
           sideOffset={5}
           disableRepositioning
@@ -329,7 +364,10 @@ const StoryComponent = ({
             </Text>
 
             <ContextMenu.ItemRightSlot>
-              <ContextMenu.experimental_SubRoot mode={subMenuMode}>
+              <ContextMenu.experimental_SubRoot
+                mode={subMenuMode}
+                shouldCloseRootMenuOnSelect
+              >
                 <ContextMenu.experimental_SubRoot.Trigger
                   style={{
                     display: 'flex',
@@ -357,7 +395,7 @@ const StoryComponent = ({
                         setAutoupdateChecked(e.target.checked);
                         onCheckboxChange?.(e.target.checked);
                       }}
-                      shouldCloseRootMenuOnClick
+                      shouldCloseRootMenuOnSelect
                     >
                       <ContextMenu.ItemIndicator>
                         <ContextMenuCheckIcon />
@@ -371,6 +409,8 @@ const StoryComponent = ({
                     <ContextMenu.Separator />
 
                     <ContextMenu.Label>
+                      {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                       <Text theme={TextSecondaryDarkTheme} size="l">
                         {i18n.t('Theme')}
                       </Text>
@@ -385,8 +425,10 @@ const StoryComponent = ({
                     >
                       <ContextMenu.RadioItem
                         value="light"
-                        shouldCloseRootMenuOnClick
+                        shouldCloseRootMenuOnSelect
                       >
+                        {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                         <Text theme={TextContextMenuTheme} size="l">
                           {i18n.t('Light')}
                         </Text>
@@ -394,8 +436,10 @@ const StoryComponent = ({
 
                       <ContextMenu.RadioItem
                         value="dark"
-                        shouldCloseRootMenuOnClick
+                        shouldCloseRootMenuOnSelect
                       >
+                        {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                         <Text theme={TextContextMenuTheme} size="l">
                           {i18n.t('Dark')}
                         </Text>
@@ -427,6 +471,8 @@ const StoryComponent = ({
             <ContextMenu.Portal>
               <ContextMenu.SubContent alignOffset={-2}>
                 <ContextMenu.Label>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
                     {i18n.t('Label')}
                   </Text>
@@ -435,12 +481,16 @@ const StoryComponent = ({
                 <ContextMenu.Separator />
 
                 <ContextMenu.Item>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     {i18n.t('Contact')} 1
                   </Text>
                 </ContextMenu.Item>
 
                 <ContextMenu.Item isDisabled>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     {i18n.t('Contact')} 2
                   </Text>
@@ -535,6 +585,7 @@ const meta: Meta<typeof StoryComponent> = {
           padding: '20px',
           marginTop: direction?.endsWith('down') ? '60px' : undefined,
         }}
+        id="context-menu-story"
       >
         <StoryComponent {...args} />
       </div>
@@ -587,6 +638,7 @@ export const Modes: Story = {
           padding: '20px',
           gap: '40px',
         }}
+        id="context-menu-story"
       >
         <StoryComponent
           {...args}
@@ -658,6 +710,7 @@ export const Directions: Story = {
           padding: '20px',
           boxSizing: 'border-box',
         }}
+        id="context-menu-story"
       >
         {cornerDirections.map((dir) => (
           <div

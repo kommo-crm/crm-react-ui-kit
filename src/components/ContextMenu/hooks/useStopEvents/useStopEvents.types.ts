@@ -12,3 +12,14 @@ export type Handlers<T extends HTMLElement> = {
   onPointerLeave?: React.PointerEventHandler<T>;
   onPointerMove?: React.PointerEventHandler<T>;
 };
+
+export interface useStopEventsOptions<T extends HTMLElement> {
+  /**
+   * The handlers to stop.
+   */
+  handlers?: Partial<Handlers<T>>;
+  /**
+   * The handlers to not stop.
+   */
+  disabledHandlers?: Array<keyof Handlers<T>>;
+}

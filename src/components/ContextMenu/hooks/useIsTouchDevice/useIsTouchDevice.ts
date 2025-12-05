@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * A hook that checks if the device is a touch device.
+ */
 export const useIsTouchDevice = () => {
   const [isTouch, setIsTouch] = useState(() => {
     if (typeof window === 'undefined') {

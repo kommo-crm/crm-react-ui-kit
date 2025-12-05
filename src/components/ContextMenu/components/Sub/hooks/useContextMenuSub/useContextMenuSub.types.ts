@@ -1,4 +1,4 @@
-import { ContextMenuModeType } from '../../ContextMenu.types';
+import { ContextMenuModeType } from '../../../../ContextMenu.types';
 
 export interface UseContextMenuSubOptions {
   /**

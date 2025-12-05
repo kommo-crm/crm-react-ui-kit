@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
 import {
@@ -6,119 +6,103 @@ import {
   useContextMenuContext,
 } from '../../ContextMenu.context';
 import { ContextMenuMode } from '../../ContextMenu.enums';
-import { useContextMenuSubMenu } from '../../hooks';
+
 import { useSubMenuContext } from '../../providers';
 
-import { ContextMenuHandle } from '../../ContextMenu.types';
-
 import { FocusBlocker } from '../FocusBlocker';
+
+import { useContextMenuSubMenu } from './hooks';
 
 import { Trigger } from './components/Trigger/Trigger';
 import { Content } from './components/Content/Content';
 
 import { ContextMenuSubRootProps } from './SubRoot.props';
-import { ContextMenuSubRootType } from './SubRoot.types';
 
 const DISPLAY_NAME = 'ContextMenu.SubRoot';
 
-export const SubRoot = forwardRef<ContextMenuHandle, ContextMenuSubRootProps>(
-  (
-    {
-      children,
-      mode = ContextMenuMode.HOVER,
-      onOpen,
-      onAnimatedOpen,
-      defaultOpen,
-      shouldCloseRootMenuOnClick = false,
-      isCloseOnClick = true,
+export const SubRoot = (props: ContextMenuSubRootProps) => {
+  const {
+    children,
+    defaultOpen,
+    mode = ContextMenuMode.HOVER,
+    shouldCloseCurrentMenuOnSelect = true,
+    shouldCloseRootMenuOnSelect = false,
+    onOpen,
+    onAnimatedOpen,
 
-      ...rest
-    },
-    ref
-  ) => {
-    const { animationDuration, hoverCloseDelay } =
-      useContextMenuContext(DISPLAY_NAME);
+    ...rest
+  } = props;
 
-    const { subMenuOpen: subMenuOpenContext, setSubMenuOpen } =
-      useSubMenuContext(DISPLAY_NAME);
+  const { animationDuration, hoverCloseDelay } =
+    useContextMenuContext(DISPLAY_NAME);
 
-    const {
-      mode: rootMode,
-      isOpen,
-      onOpenChange,
-      triggerRef,
-      contentRef,
-      inheritedArrowColor,
-      animatedOpen,
-      temporaryHoverClose,
-      closeMenuImmediately,
-      onMouseEnter,
-      onMouseLeave,
-      enableTemporaryHoverClose,
-      triggerId,
-      onOpenByKeyboard,
-      onChildOpen,
-    } = useContextMenuSubMenu({
-      displayName: DISPLAY_NAME,
-      mode: mode,
-      defaultOpen,
-      onOpen,
-      onAnimatedOpen,
-      animationDuration,
-      subMenuOpen: subMenuOpenContext,
-      setSubMenuOpen,
-      hoverCloseDelay,
-    });
+  const { subMenuOpen: subMenuOpenContext, setSubMenuOpen } =
+    useSubMenuContext(DISPLAY_NAME);
 
-    useImperativeHandle(ref, () => ({
-      closeMenuImmediately,
-      enableTemporaryHoverClose,
-      onOpenByKeyboard,
-    }));
+  const {
+    mode: rootMode,
+    isOpen,
+    onOpenChange,
+    triggerRef,
+    contentRef,
+    isAnimatedOpen,
+    closeMenuImmediately,
+    onContentEnter,
+    onContentLeave,
+    triggerId,
+    onOpenByKeyboard,
+    onChildOpen,
+  } = useContextMenuSubMenu({
+    displayName: DISPLAY_NAME,
+    mode: mode,
+    defaultOpen,
+    onOpen,
+    onAnimatedOpen,
+    animationDuration,
+    subMenuOpen: subMenuOpenContext,
+    setSubMenuOpen,
+    hoverCloseDelay,
+  });
 
-    return (
-      <ContextMenuProvider
-        mode={rootMode}
-        triggerRef={triggerRef}
-        contentRef={contentRef}
-        inheritedArrowColor={inheritedArrowColor}
-        animatedOpen={animatedOpen}
-        animationDuration={animationDuration}
-        hoverCloseDelay={hoverCloseDelay}
-        temporaryHoverClose={temporaryHoverClose}
-        closeMenuImmediately={closeMenuImmediately}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        enableTemporaryHoverClose={enableTemporaryHoverClose}
-        subMenuOpen={isOpen}
-        setSubMenuOpen={setSubMenuOpen}
-        triggerId={triggerId}
-        onOpenByKeyboard={onOpenByKeyboard}
-        isCloseOnClick={isCloseOnClick}
-        shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick}
-        onChildOpen={onChildOpen}
-        isOpen={isOpen}
+  return (
+    <ContextMenuProvider
+      mode={rootMode}
+      triggerRef={triggerRef}
+      contentRef={contentRef}
+      isAnimatedOpen={isAnimatedOpen}
+      animationDuration={animationDuration}
+      hoverCloseDelay={hoverCloseDelay}
+      closeMenuImmediately={closeMenuImmediately}
+      onContentEnter={onContentEnter}
+      onContentLeave={onContentLeave}
+      subMenuOpen={isOpen}
+      setSubMenuOpen={setSubMenuOpen}
+      triggerId={triggerId}
+      onOpenByKeyboard={onOpenByKeyboard}
+      shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
+      shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
+      onChildOpen={onChildOpen}
+      isOpen={isOpen}
+    >
+      <RadixDropdownMenuRoot
+        open={isOpen}
+        onOpenChange={onOpenChange}
+        modal={false}
+        {...rest}
       >
-        <RadixDropdownMenuRoot
-          open={isOpen}
-          onOpenChange={onOpenChange}
-          modal={false}
-          {...rest}
-        >
-          {children}
+        {children}
 
-          {isOpen && (
-            <FocusBlocker
-              onClick={() => {
-                closeMenuImmediately(false);
-              }}
-            />
-          )}
-        </RadixDropdownMenuRoot>
-      </ContextMenuProvider>
-    );
-  }
-) as ContextMenuSubRootType;
+        {isOpen && (
+          <FocusBlocker
+            onClick={() => {
+              closeMenuImmediately();
+            }}
+          />
+        )}
+      </RadixDropdownMenuRoot>
+    </ContextMenuProvider>
+  );
+};
 
 SubRoot.displayName = DISPLAY_NAME;
 

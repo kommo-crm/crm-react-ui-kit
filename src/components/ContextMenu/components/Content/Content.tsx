@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { ComponentPropsWithoutRef, forwardRef, useState } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -24,11 +24,27 @@ import { directionToSide } from './Content.utils';
 
 import s from './Content.module.css';
 
+type RadixContentProps = ComponentPropsWithoutRef<
+  typeof RadixDropdownMenuContent
+>;
+
+type InteractOutsideEvent = Parameters<
+  NonNullable<RadixContentProps['onInteractOutside']>
+>[0];
+
+type PointerDownOutsideEvent = Parameters<
+  NonNullable<RadixContentProps['onPointerDownOutside']>
+>[0];
+
+type EscapeKeyDownEvent = Parameters<
+  NonNullable<RadixContentProps['onEscapeKeyDown']>
+>[0];
+
 const DISPLAY_NAME = 'ContextMenu.Content';
 
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       style,
       className,
       children,
@@ -45,27 +61,24 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onEscapeKeyDown,
 
       ...rest
-    },
-    ref
-  ) => {
-    const [hasItemWithIcon, setHasItemWithIcon] = useState(false);
+    } = props;
+
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
     const {
       triggerRef,
       contentRef,
       isOpen,
-      animatedOpen,
+      isAnimatedOpen,
       animationDuration,
       mode,
-      temporaryHoverClose,
-      onMouseEnter: onMouseEnterContext,
-      onMouseLeave: onMouseLeaveContext,
-      onChildOpen,
       isRootContentBlocked,
       isChildOpen,
+      shouldCloseCurrentMenuOnSelect,
       closeMenuImmediately,
-      isCloseOnClick,
+      onContentEnter,
+      onContentLeave,
+      onChildOpen,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { align, offset, isPositioned } = useContentPositioning({
@@ -81,28 +94,72 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const springStyles = useSpring({
       opacity:
-        isPositioned &&
-        ((mode === ContextMenuMode.CLICK && !temporaryHoverClose) ||
-          animatedOpen)
+        isPositioned && (mode === ContextMenuMode.CLICK || isAnimatedOpen)
           ? 1
           : 0,
       config:
-        mode === ContextMenuMode.CLICK && !temporaryHoverClose
+        mode === ContextMenuMode.CLICK
           ? { duration: 0 }
           : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
+    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+      onContentEnter?.(e);
+
+      onMouseEnter?.(e);
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+      onContentLeave?.(e);
+
+      onMouseLeave?.(e);
+    };
+
+    /**
+     * Prevent closing parent menu when a child submenu is open.
+     * The child submenu should handle closing itself first.
+     */
+    const handleInteractOutside = (e: InteractOutsideEvent) => {
+      if (isChildOpen) {
+        e.preventDefault();
+      }
+
+      onInteractOutside?.(e);
+    };
+
+    /**
+     * Prevent closing parent menu on Escape when a child submenu is open.
+     * The child submenu should close first.
+     */
+    const handleEscapeKeyDown = (e: EscapeKeyDownEvent) => {
+      if (isChildOpen) {
+        e.preventDefault();
+      }
+
+      onEscapeKeyDown?.(e);
+    };
+
+    /**
+     * Prevent closing parent menu on outside click when a child submenu is open.
+     * The child submenu should handle the outside click first.
+     */
+    const handlePointerDownOutside = (e: PointerDownOutsideEvent) => {
+      if (isChildOpen) {
+        e.preventDefault();
+      }
+
+      onPointerDownOutside?.(e);
+    };
+
     return (
       <LevelProvider
-        hasItemWithIcon={hasItemWithIcon}
-        setHasItemWithIcon={setHasItemWithIcon}
         activeItemId={activeItemId}
         setActiveItemId={setActiveItemId}
         onChildOpen={onChildOpen}
-        isCloseOnClick={isCloseOnClick}
+        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
         closeMenuImmediately={closeMenuImmediately}
-        shouldCloseRootMenuOnClick={false}
-        animatedOpen={animatedOpen}
+        shouldCloseRootMenuOnSelect={false}
+        isAnimatedOpen={isAnimatedOpen}
         level={1}
       >
         {isOpen && (
@@ -112,7 +169,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               position: 'fixed',
               ...springStyles,
             }}
-            data-content-wrapper
           >
             <RadixDropdownMenuContent
               ref={mergeRefs(contentRef, ref)}
@@ -127,37 +183,11 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               align={align}
               arrowPadding={arrowPadding}
               alignOffset={offset}
-              onMouseEnter={(e) => {
-                onMouseEnterContext?.(e);
-
-                onMouseEnter?.(e);
-              }}
-              onMouseLeave={(e) => {
-                onMouseLeaveContext?.(e);
-
-                onMouseLeave?.(e);
-              }}
-              onInteractOutside={(e) => {
-                if (isChildOpen) {
-                  e.preventDefault();
-                }
-
-                onInteractOutside?.(e);
-              }}
-              onEscapeKeyDown={(e) => {
-                if (isChildOpen) {
-                  e.preventDefault();
-                }
-
-                onEscapeKeyDown?.(e);
-              }}
-              onPointerDownOutside={(e) => {
-                if (isChildOpen) {
-                  e.preventDefault();
-                }
-
-                onPointerDownOutside?.(e);
-              }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onInteractOutside={handleInteractOutside}
+              onEscapeKeyDown={handleEscapeKeyDown}
+              onPointerDownOutside={handlePointerDownOutside}
               {...rest}
             >
               {children}

@@ -2,12 +2,17 @@ import React, { forwardRef } from 'react';
 
 import cx from 'classnames';
 
-import { useStopContextMenuEvents } from '../../hooks';
+import { useStopEvents } from '../../hooks';
 
 import { FocusBlockerProps } from './FocusBlocker.props';
 
 import s from './FocusBlocker.module.css';
 
+/**
+ * The component that blocks focus and pointer events.
+ *
+ * It is necessary to solve the problems of implementing a Radix based on focus.
+ */
 export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
   (props, ref) => {
     const {
@@ -40,7 +45,7 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
       onPointerMove,
     };
 
-    const handlers = useStopContextMenuEvents({
+    const handlers = useStopEvents({
       handlers: defaultHandlers,
       disabledHandlers,
     });

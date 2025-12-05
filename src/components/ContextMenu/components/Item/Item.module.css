@@ -2,34 +2,29 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 16px 10px 40px;
+  padding: 10px 16px;
   color: var(--crm-ui-kit-palette-text-primary);
   background-color: var(--crm-ui-kit-palette-background-primary);
   cursor: pointer;
   user-select: none;
   outline: none;
 
-  &[data-not-selectable] {
-    cursor: auto;
-    user-select: text;
-    padding: 10px 16px;
-  }
-
-  &[data-disabled] {
-    color: var(--crm-ui-kit-palette-text-secondary-light);
-    cursor: auto;
-  }
-
-  &[data-danger] {
-    color: var(--crm-ui-kit-color-error);
-  }
-
   &[data-highlighted] {
     background-color: var(--crm-ui-kit-palette-background-default);
   }
 
-  &[data-no-icon-align] {
-    padding-left: 16px;
+  &.danger {
+    color: var(--crm-ui-kit-color-error);
+  }
+
+  &.nonSelectable {
+    cursor: auto;
+    user-select: text;
+  }
+
+  &.disabled {
+    color: var(--crm-ui-kit-palette-text-secondary-light);
+    cursor: auto;
   }
 }
 

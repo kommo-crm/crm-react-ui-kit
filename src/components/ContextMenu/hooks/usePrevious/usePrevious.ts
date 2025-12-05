@@ -1,6 +1,12 @@
 import { useLayoutEffect, useRef } from 'react';
 
-export function usePrevious<T>(value: T): T | undefined {
+/**
+ * This hook is used to get the previous value of a prop.
+ *
+ * Useful for disable of repositioning and other cases when you need to
+ * know the previous value of a prop.
+ */
+export const usePrevious = <T>(value: T): T | undefined => {
   const ref = useRef<T>();
 
   useLayoutEffect(() => {
@@ -8,4 +14,4 @@ export function usePrevious<T>(value: T): T | undefined {
   }, [value]);
 
   return ref.current;
-}
+};

@@ -1,41 +1,46 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 
-import { createRoot } from 'react-dom/client';
+import { createPortal } from 'react-dom';
 
 import cx from 'classnames';
 
-import { useInheritedArrowColor, useIsTouchDevice } from '..';
+import { useIsTouchDevice } from '..';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
-
-import { contextMenuBus } from '../../utils';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
 
 import { FocusBlocker } from '../../components/FocusBlocker';
 
+import { contextMenuBus } from './utils';
+
 import { UseContextMenuOptions } from './useContextMenu.types';
 
-export const useContextMenu = ({
-  mode: rootMode,
-  defaultOpen,
-  animationDuration,
-  hoverCloseDelay,
-  onOpen,
-  onAnimatedOpen,
-  isOpen,
-  enableInnerInputFocus,
-  backgroundFocusBlockerContainers,
-  backgroundFocusBlockerClassName,
-  backgroundInputFocusBlockerClassName,
-}: UseContextMenuOptions) => {
+/**
+ * The hook is necessary to manage the open state of the context menu and
+ * the related events.
+ */
+export const useContextMenu = (options: UseContextMenuOptions) => {
+  const {
+    mode: rootMode,
+    defaultOpen,
+    animationDuration,
+    hoverCloseDelay,
+    onOpen,
+    onAnimatedOpen,
+    isOpen,
+    enableInnerInputFocus,
+    backgroundFocusBlockerContainers,
+    backgroundFocusBlockerClassName,
+    backgroundInputFocusBlockerClassName,
+  } = options;
+
   const id = useId();
 
   const [open, setOpen] = useState(isOpen ?? defaultOpen ?? false);
-  const [animatedOpen, setAnimatedOpen] = useState(false);
+  const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
-  const [temporaryHoverClose, setTemporaryHoverClose] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
   const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
   const [isRootContentBlocked, setIsRootContentBlocked] = useState(false);
@@ -77,7 +82,6 @@ export const useContextMenu = ({
     setOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
-    setTemporaryHoverClose(false);
     setIsRootContentBlocked(false);
   };
 
@@ -87,7 +91,7 @@ export const useContextMenu = ({
   const requestClose = () => {
     clearTimers();
 
-    if (mode === ContextMenuMode.HOVER || temporaryHoverClose) {
+    if (mode === ContextMenuMode.HOVER) {
       if (
         (isChildOpen && childMode === ContextMenuMode.CLICK) ||
         itemWithFocusedInput !== null
@@ -95,7 +99,7 @@ export const useContextMenu = ({
         return;
       }
 
-      setAnimatedOpen(false);
+      setIsAnimatedOpen(false);
 
       closeTimerRef.current = setTimeout(() => {
         handleClose();
@@ -110,11 +114,10 @@ export const useContextMenu = ({
    */
   const closeMenuImmediately = () => {
     clearTimers();
-    setAnimatedOpen(false);
+    setIsAnimatedOpen(false);
     setOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
-    setTemporaryHoverClose(false);
   };
 
   /**
@@ -138,8 +141,8 @@ export const useContextMenu = ({
         closeTimerRef.current = null;
       }
 
-      if (mode === ContextMenuMode.HOVER || temporaryHoverClose) {
-        setAnimatedOpen(true);
+      if (mode === ContextMenuMode.HOVER) {
+        setIsAnimatedOpen(true);
       }
 
       setOpen(true);
@@ -160,10 +163,11 @@ export const useContextMenu = ({
   };
 
   /**
-   * Handles the mouse enter event.
+   * Handles entering the menu content area.
+   * Keeps the menu open in hover mode by canceling close timers.
    */
-  const handleMouseEnter = () => {
-    if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
+  const handleContentEnter = () => {
+    if (mode !== ContextMenuMode.HOVER) {
       return;
     }
 
@@ -172,7 +176,7 @@ export const useContextMenu = ({
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
-      setAnimatedOpen(true);
+      setIsAnimatedOpen(true);
     }
 
     if (open) {
@@ -183,7 +187,7 @@ export const useContextMenu = ({
         hoverTimeoutRef.current = null;
       }
 
-      setAnimatedOpen(true);
+      setIsAnimatedOpen(true);
       setOpen(true);
       onOpen?.(true);
       setIsInsideContent(true);
@@ -193,10 +197,11 @@ export const useContextMenu = ({
   };
 
   /**
-   * Handles the mouse leave event.
+   * Handles leaving the menu content area.
+   * Allows the menu to close in hover mode.
    */
-  const handleMouseLeave = () => {
-    if (mode !== ContextMenuMode.HOVER && !temporaryHoverClose) {
+  const handleContentLeave = () => {
+    if (mode !== ContextMenuMode.HOVER) {
       return;
     }
 
@@ -207,15 +212,6 @@ export const useContextMenu = ({
       clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
     }
-  };
-
-  /**
-   * Enables the temporary hover close.
-   */
-  const enableTemporaryHoverClose = () => {
-    setAnimatedOpen(true);
-    setIsInsideContent(true);
-    setTemporaryHoverClose(true);
   };
 
   /**
@@ -250,7 +246,7 @@ export const useContextMenu = ({
    * Handles the hover close delay.
    */
   useEffect(() => {
-    if (!open || (mode !== ContextMenuMode.HOVER && !temporaryHoverClose)) {
+    if (!open || mode !== ContextMenuMode.HOVER) {
       return;
     }
 
@@ -268,50 +264,34 @@ export const useContextMenu = ({
         requestClose();
       }, hoverCloseDelay);
     }
-  }, [
-    mode,
-    open,
-    isInsideContent,
-    temporaryHoverClose,
-    hoverCloseDelay,
-    openedByKeyboard,
-  ]);
+  }, [mode, open, isInsideContent, hoverCloseDelay, openedByKeyboard]);
 
   /**
    * Handles the animated open state change.
    */
   useEffect(() => {
-    onAnimatedOpen?.(animatedOpen);
-  }, [animatedOpen]);
+    onAnimatedOpen?.(isAnimatedOpen);
+  }, [isAnimatedOpen]);
 
   /**
-   * Updates the inherited arrow color when the menu is open.
+   * The portals of the focus blockers.
+   *
+   * It is necessary to mount global background blockers to isolate
+   * the possibility of other elements intercepting focus.
    */
-  const inheritedArrowColor = useInheritedArrowColor(open, contentRef);
-
-  useEffect(() => {
+  const focusBlockerPortals = useMemo(() => {
     if (!enableInnerInputFocus || !backgroundFocusBlockerContainers || !open) {
-      return;
+      return null;
     }
 
     const containers = backgroundFocusBlockerContainers
       .map((c) => (typeof c === 'function' ? c() : c))
       .filter(Boolean) as HTMLElement[];
 
-    const mounted: {
-      root: ReturnType<typeof createRoot>;
-      mountNode: HTMLDivElement;
-    }[] = [];
-
-    containers.forEach((container) => {
-      const mountNode = document.createElement('div');
-
-      container.appendChild(mountNode);
-
-      const root = createRoot(mountNode);
-
-      root.render(
+    return containers.map((container, index) =>
+      createPortal(
         <FocusBlocker
+          key={index}
           className={cx(
             backgroundFocusBlockerClassName,
             itemWithFocusedInput !== null &&
@@ -321,43 +301,38 @@ export const useContextMenu = ({
             (document.activeElement as HTMLElement)?.blur();
           }}
           disabledHandlers={['onPointerDown']}
-        />
-      );
-
-      mounted.push({ root, mountNode });
-    });
-
-    return () => {
-      mounted.forEach(({ root, mountNode }) => {
-        queueMicrotask(() => {
-          root.unmount();
-          mountNode.remove();
-        });
-      });
-    };
-  }, [enableInnerInputFocus, open, itemWithFocusedInput]);
+        />,
+        container
+      )
+    );
+  }, [
+    enableInnerInputFocus,
+    backgroundFocusBlockerContainers,
+    backgroundFocusBlockerClassName,
+    backgroundInputFocusBlockerClassName,
+    open,
+    itemWithFocusedInput,
+  ]);
 
   return {
     open,
     mode,
     onOpenChange: handleOpenChange,
     onOpenByKeyboard,
-    inheritedArrowColor,
     triggerRef,
     contentRef,
-    animatedOpen,
+    isAnimatedOpen,
     animationDuration,
     hoverCloseDelay,
-    temporaryHoverClose,
     closeMenuImmediately,
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-    enableTemporaryHoverClose,
+    onContentEnter: handleContentEnter,
+    onContentLeave: handleContentLeave,
     onChildOpen: handleChildOpen,
     onSubmenuOpen: handleSubmenuOpen,
     isRootContentBlocked,
     isChildOpen,
     itemWithFocusedInput,
     setItemWithFocusedInput,
+    focusBlockerPortals,
   };
 };

@@ -9,12 +9,13 @@ import s from './Separator.module.css';
 const DISPLAY_NAME = 'ContextMenu.Separator';
 
 export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
-  ({ className, ...rest }, ref) => {
+  (props, ref) => {
+    const { className, ...rest } = props;
+
     return (
       <RadixDropdownMenuSeparator
         ref={ref}
         className={cx(s.separator, className)}
-        data-separator
         {...rest}
       />
     );

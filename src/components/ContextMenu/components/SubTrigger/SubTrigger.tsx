@@ -3,12 +3,9 @@ import { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-dropd
 import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
-
-import { useLevelContext } from '../../providers/LevelProvider';
+import { KeyboardKey } from 'src/lib/keyboard';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
-
-import { hasItemIcon } from '../../utils';
 
 import {
   useChildrenWithBlocker,
@@ -25,8 +22,8 @@ import s from './SubTrigger.module.css';
 const DISPLAY_NAME = 'ContextMenu.SubTrigger';
 
 export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       className,
       children,
       isDisabled,
@@ -42,20 +39,17 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onMouseLeave,
 
       ...rest
-    },
-    ref
-  ) => {
-    const { hasItemWithIcon } = useLevelContext(DISPLAY_NAME);
+    } = props;
 
     const {
       mode,
       isOpen,
       defaultOpen,
-      setOpen,
-      onMouseEnter: onMouseEnterContext,
-      onMouseLeave: onMouseLeaveContext,
       triggerId,
       triggerRef,
+      setOpen,
+      onContentEnter,
+      onContentLeave,
       onOpenByKeyboard,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
@@ -73,12 +67,12 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       ref: itemRef,
       id: triggerId,
       isDisabled,
-      onMouseEnter: onMouseEnterContext,
+      hasSubmenu,
+      onMouseEnter: onContentEnter,
       onMouseLeave: (e) => {
-        onMouseLeaveContext(e);
+        onContentLeave(e);
         onMouseLeave?.(e);
       },
-      hasSubmenu,
       onFocus,
       onBlur,
     });
@@ -89,15 +83,100 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       blockerClassName: s.blocker,
     });
 
+    const handleKeyDownSubTrigger = (
+      e: React.KeyboardEvent<HTMLDivElement>
+    ) => {
+      if (mode === ContextMenuMode.HOVER) {
+        if (
+          [
+            KeyboardKey.ENTER,
+            KeyboardKey.SPACE,
+            KeyboardKey.ARROW_RIGHT,
+          ].includes(e.key as KeyboardKey)
+        ) {
+          onOpenByKeyboard(true);
+        } else if (e.key === KeyboardKey.ARROW_LEFT) {
+          onOpenByKeyboard(false);
+        }
+      }
+
+      handleKeyDown?.(e);
+
+      onKeyDown?.(e);
+    };
+
+    /**
+     * In click/controlled mode, prevent Radix's default hover-based submenu
+     * behavior. We manage submenu open state manually.
+     */
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (defaultOpen === undefined) {
+          setOpen(!isOpen);
+        }
+      }
+
+      onClick?.(e);
+    };
+
+    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+      handleItemMouseEnter?.(e);
+
+      onMouseEnter?.(e);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      handleItemMouseEnter?.(e);
+
+      onMouseMove?.(e);
+    };
+
+    /**
+     * Disable Radix's hover-based submenu opening in click/controlled mode.
+     * Submenu should only open on explicit click.
+     */
+    const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      onPointerEnter?.(e);
+    };
+
+    /**
+     * Disable Radix's hover-based submenu behavior in click/controlled mode.
+     */
+    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      onPointerMove?.(e);
+    };
+
+    /**
+     * Disable Radix's hover-based submenu closing in click/controlled mode.
+     * Submenu should remain open until explicitly closed.
+     */
+    const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      onPointerLeave?.(e);
+    };
+
     return withProvider(
       <RadixDropdownMenuSubTrigger
         ref={mergeRefs(ref, triggerRef, itemRef)}
         className={cx(s.sub_trigger, className)}
         disabled={isDisabled}
-        data-item
-        data-no-icon-align={
-          hasItemIcon(children) || !hasItemWithIcon ? '' : undefined
-        }
         data-highlighted={
           subMenuOpen ||
           isOpen ||
@@ -106,69 +185,18 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
             ? ''
             : undefined
         }
+        data-item
         data-submenu-trigger
-        onKeyDown={(e) => {
-          if (mode === ContextMenuMode.HOVER) {
-            if (['Enter', ' ', 'ArrowRight'].includes(e.key)) {
-              onOpenByKeyboard(true);
-            } else if (e.key === 'ArrowLeft') {
-              onOpenByKeyboard(false);
-            }
-          }
-
-          handleKeyDown?.(e);
-
-          onKeyDown?.(e);
-        }}
-        onClick={(e) => {
-          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (defaultOpen === undefined) {
-              setOpen(!isOpen);
-            }
-          }
-
-          onClick?.(e);
-        }}
+        onKeyDown={handleKeyDownSubTrigger}
+        onClick={handleClick}
         onFocus={handleItemFocus}
-        onMouseEnter={(e) => {
-          handleItemMouseEnter?.(e);
-
-          onMouseEnter?.(e);
-        }}
-        onMouseMove={(e) => {
-          handleItemMouseEnter?.(e);
-
-          onMouseMove?.(e);
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseMove={handleMouseMove}
         onBlur={handleItemBlur}
         onMouseLeave={handleItemMouseLeave}
-        onPointerEnter={(e) => {
-          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-
-          onPointerEnter?.(e);
-        }}
-        onPointerMove={(e) => {
-          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-
-          onPointerMove?.(e);
-        }}
-        onPointerLeave={(e) => {
-          if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-
-          onPointerLeave?.(e);
-        }}
+        onPointerEnter={handlePointerEnter}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
         {...rest}
       >
         {content}

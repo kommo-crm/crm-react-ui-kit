@@ -6,14 +6,6 @@ export interface LevelProviderContextProps {
    */
   level: number;
   /**
-   * Whether any item in this level has an icon.
-   */
-  hasItemWithIcon: boolean;
-  /**
-   * Sets whether any item in this level has an icon.
-   */
-  setHasItemWithIcon: (hasItemWithIcon: boolean) => void;
-  /**
    * The id of the active item.
    */
   activeItemId: string | null;
@@ -35,17 +27,17 @@ export interface LevelProviderContextProps {
   /**
    * Immediately closes the menu without waiting for any hover or animation delays.
    */
-  closeMenuImmediately: (shouldCloseRootMenuOnClick?: boolean) => void;
+  closeMenuImmediately: () => void;
   /**
-   * Whether the menu should close when clicked.
+   * Whether the menu should close when item selected.
    */
-  isCloseOnClick: boolean;
+  shouldCloseCurrentMenuOnSelect: boolean;
   /**
-   * Whether the menu should close when the root menu is clicked.
+   * Whether the root menu should close when item selected.
    */
-  shouldCloseRootMenuOnClick: boolean;
+  shouldCloseRootMenuOnSelect: boolean;
   /**
    * Whether the menu is animated open/close.
    */
-  animatedOpen: boolean;
+  isAnimatedOpen: boolean;
 }

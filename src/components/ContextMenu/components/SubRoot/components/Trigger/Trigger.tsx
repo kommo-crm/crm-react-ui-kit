@@ -18,8 +18,8 @@ import s from './Trigger.module.css';
 const DISPLAY_NAME = 'ContextMenu.SubRoot.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       className,
       children,
       onFocus,
@@ -29,16 +29,15 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onPointerDown,
 
       ...rest
-    },
-    ref
-  ) => {
+    } = props;
+
     const {
       isOpen,
       triggerRef,
       mode,
-      onMouseEnter: onMouseEnterContext,
-      onMouseLeave: onMouseLeaveContext,
       triggerId,
+      onContentEnter,
+      onContentLeave,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const {
@@ -53,11 +52,11 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       id: triggerId || '',
       isDisabled: false,
       onMouseEnter: (e) => {
-        onMouseEnterContext(e);
+        onContentEnter(e);
         onMouseEnter?.(e);
       },
       onMouseLeave: (e) => {
-        onMouseLeaveContext(e);
+        onContentLeave(e);
         onMouseLeave?.(e);
       },
       onFocus: (e) => {
@@ -68,6 +67,13 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       },
     });
 
+    /**
+     * Handles pointer down on SubRoot trigger.
+     *
+     * - preventDefault (hover mode): menu is already open via hover, no toggle needed
+     * - stopPropagation (always): prevent bubbling to parent menu items,
+     *   since SubRoot trigger is nested inside a parent menu item
+     */
     const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
       if (mode === ContextMenuMode.HOVER) {
         e.preventDefault();

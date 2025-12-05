@@ -1,81 +1,74 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React from 'react';
 import { Sub as RadixDropdownMenuSub } from '@radix-ui/react-dropdown-menu';
 
-import { useContextMenuSub } from '../../hooks';
 import { ContextMenuMode } from '../../ContextMenu.enums';
+
+import { useContextMenuSub } from './hooks';
 
 import { SubProps } from './Sub.props';
 import { ContextMenuSubProvider, DISPLAY_NAME } from './Sub.context';
-import { ContextMenuSubHandle } from './Sub.types';
 
-export const Sub = forwardRef<ContextMenuSubHandle, SubProps>(
-  (
-    {
-      children,
-      mode = ContextMenuMode.HOVER,
-      onOpen,
-      defaultOpen,
-      shouldCloseRootMenuOnClick = true,
-      isCloseOnClick = true,
+export const Sub = (props: SubProps) => {
+  const {
+    children,
+    mode = ContextMenuMode.HOVER,
+    onOpen,
+    defaultOpen,
+    shouldCloseRootMenuOnSelect = true,
+    shouldCloseCurrentMenuOnSelect = true,
 
-      ...rest
-    },
-    ref
-  ) => {
-    const {
-      isOpen,
-      setOpen,
-      animatedOpen,
-      handleMouseEnter,
-      handleMouseLeave,
-      handleOpenChange,
-      triggerId,
-      onOpenByKeyboard,
-      contentRef,
-      triggerRef,
-      onChildOpen,
-      onSubRootOpen,
-      closeMenuImmediately,
-    } = useContextMenuSub({
-      displayName: DISPLAY_NAME,
-      mode,
-      defaultOpen,
-      onOpen,
-    });
+    ...rest
+  } = props;
 
-    useImperativeHandle(ref, () => ({
-      setOpen,
-    }));
+  const {
+    isOpen,
+    setOpen,
+    isAnimatedOpen,
+    handleContentEnter,
+    handleContentLeave,
+    handleOpenChange,
+    triggerId,
+    onOpenByKeyboard,
+    contentRef,
+    triggerRef,
+    onChildOpen,
+    onSubRootOpen,
+    closeMenuImmediately,
+  } = useContextMenuSub({
+    displayName: DISPLAY_NAME,
+    mode,
+    defaultOpen,
+    onOpen,
+  });
 
-    return (
-      <ContextMenuSubProvider
-        mode={mode}
-        isOpen={isOpen}
-        setOpen={setOpen}
-        animatedOpen={animatedOpen}
-        defaultOpen={defaultOpen}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onOpenByKeyboard={onOpenByKeyboard}
-        triggerId={triggerId}
-        contentRef={contentRef}
-        triggerRef={triggerRef}
-        onChildOpen={onChildOpen}
-        onSubRootOpen={onSubRootOpen}
-        shouldCloseRootMenuOnClick={shouldCloseRootMenuOnClick}
-        isCloseOnClick={isCloseOnClick}
-        closeMenuImmediately={closeMenuImmediately}
+  return (
+    <ContextMenuSubProvider
+      mode={mode}
+      isOpen={isOpen}
+      setOpen={setOpen}
+      isAnimatedOpen={isAnimatedOpen}
+      defaultOpen={defaultOpen}
+      onContentEnter={handleContentEnter}
+      onContentLeave={handleContentLeave}
+      onOpenByKeyboard={onOpenByKeyboard}
+      triggerId={triggerId}
+      contentRef={contentRef}
+      triggerRef={triggerRef}
+      onChildOpen={onChildOpen}
+      onSubRootOpen={onSubRootOpen}
+      shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
+      shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
+      closeMenuImmediately={closeMenuImmediately}
+    >
+      <RadixDropdownMenuSub
+        open={isOpen}
+        onOpenChange={handleOpenChange}
+        {...rest}
       >
-        <RadixDropdownMenuSub
-          open={isOpen}
-          onOpenChange={handleOpenChange}
-          {...rest}
-        >
-          {children}
-        </RadixDropdownMenuSub>
-      </ContextMenuSubProvider>
-    );
-  }
-);
+        {children}
+      </RadixDropdownMenuSub>
+    </ContextMenuSubProvider>
+  );
+};
 
 Sub.displayName = DISPLAY_NAME;

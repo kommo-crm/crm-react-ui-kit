@@ -2,20 +2,32 @@ import { useCallback, useMemo } from 'react';
 
 import { noop } from 'src/utils';
 
-import { Handlers } from './useStopContextMenuEvents.types';
+import { Handlers, useStopEventsOptions } from './useStopEvents.types';
 
-export const useStopContextMenuEvents = <T extends HTMLElement>({
-  handlers = {},
-  disabledHandlers = [],
-}: {
-  handlers?: Partial<Handlers<T>>;
-  disabledHandlers?: Array<keyof Handlers<T>>;
-}) => {
+/**
+ * A hook that stops events from propagating.
+ *
+ * Used for:
+ * 1) preventing a click on the SubRoot trigger from propagating to the parent item.
+ * 2) preventing other elements from intercepting the focus, which may
+ * break the functionality of the radix context menu working on focus
+ */
+export const useStopEvents = <T extends HTMLElement>(
+  options: useStopEventsOptions<T>
+) => {
+  const { handlers = {}, disabledHandlers = [] } = options;
+
   const disabledSet = useMemo(
     () => new Set(disabledHandlers),
     [disabledHandlers]
   );
 
+  /**
+   * Stops event propagation and prevents default behavior.
+   *
+   * - stopPropagation: prevent event from bubbling to parent menu items
+   * - preventDefault: prevent Radix default behavior (e.g., focus changes)
+   */
   const stop = useCallback((e: React.SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();

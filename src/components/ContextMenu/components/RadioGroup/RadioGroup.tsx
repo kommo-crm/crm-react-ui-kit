@@ -4,10 +4,9 @@ import { RadioGroup as RadixDropdownMenuRadioGroup } from '@radix-ui/react-dropd
 import { RadioGroupProps } from './RadioGroup.props';
 import { RadioGroupProvider, DISPLAY_NAME } from './RadioGroup.context';
 
-export const RadioGroup = ({
-  onChange,
-  ...rest
-}: RadioGroupProps): JSX.Element => {
+export const RadioGroup = (props: RadioGroupProps): JSX.Element => {
+  const { onChange, ...rest } = props;
+
   const handleValueChange = (value: string) => {
     if (onChange) {
       const syntheticEvent = {

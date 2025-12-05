@@ -1,4 +1,4 @@
-import { ContextMenuModeType } from '../../ContextMenu.types';
+import { ContextMenuModeType } from '../../../../ContextMenu.types';
 
 export interface UseContextMenuSubMenuOptions {
   /**
@@ -18,10 +18,6 @@ export interface UseContextMenuSubMenuOptions {
    * The duration of the animation.
    */
   animationDuration: number;
-  /**
-   * Whether the context menu is a submenu.
-   */
-  isSubmenu?: boolean;
   /**
    * Whether the submenu is open.
    */

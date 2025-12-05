@@ -106,7 +106,6 @@ const ContextMenuComponent = ({
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setAutoupdateChecked(e.target.checked);
                       }}
-                      hasIconCheckFn={() => true}
                     >
                       <ContextMenu.ItemIndicator>
                         <ContextMenuCheckIcon />
@@ -120,6 +119,8 @@ const ContextMenuComponent = ({
                     <ContextMenu.Separator />
 
                     <ContextMenu.Label>
+                      {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                       <Text theme={TextSecondaryDarkTheme} size="l">
                         Theme
                       </Text>
@@ -132,12 +133,16 @@ const ContextMenuComponent = ({
                       }}
                     >
                       <ContextMenu.RadioItem value="light">
+                        {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                         <Text theme={TextContextMenuTheme} size="l">
                           Light
                         </Text>
                       </ContextMenu.RadioItem>
 
                       <ContextMenu.RadioItem value="dark">
+                        {autoupdateChecked && <ContextMenu.ItemIcon />}
+
                         <Text theme={TextContextMenuTheme} size="l">
                           Dark
                         </Text>
@@ -174,18 +179,22 @@ const ContextMenuComponent = ({
             <ContextMenu.Portal>
               <ContextMenu.SubContent>
                 <ContextMenu.Item>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextContextMenuTheme} size="l">
                     Contact 1
                   </Text>
                 </ContextMenu.Item>
 
                 <ContextMenu.Item isDisabled>
+                  <ContextMenu.ItemIcon />
+
                   <Text theme={TextContextMenuTheme} size="l">
                     Contact 2
                   </Text>
                 </ContextMenu.Item>
 
-                <ContextMenu.Item isDanger hasIconCheckFn={() => true}>
+                <ContextMenu.Item isDanger>
                   <ContextMenu.ItemIcon data-icon>
                     <ContextMenuTrashcanIcon />
                   </ContextMenu.ItemIcon>

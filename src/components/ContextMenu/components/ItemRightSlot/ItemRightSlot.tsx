@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
-import { useStopContextMenuEvents } from '../../hooks';
+import { useStopEvents } from '../../hooks';
 
 import type { ItemRightSlotProps } from './ItemRightSlot.props';
 
@@ -12,8 +12,8 @@ import s from './ItemRightSlot.module.css';
 const DISPLAY_NAME = 'ContextMenu.ItemRightSlot';
 
 export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       className,
       children,
       onClick,
@@ -27,9 +27,8 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       onPointerMove,
 
       ...rest
-    },
-    ref
-  ) => {
+    } = props;
+
     const slotRef = useRef<HTMLDivElement>(null);
     const [hasSubmenu, setHasSubmenu] = useState(false);
 
@@ -55,11 +54,11 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       onPointerMove,
     };
 
-    const stopEventsHook = useStopContextMenuEvents({
+    const stoppedHandlers = useStopEvents({
       handlers: defaultHandlers,
     });
 
-    const handlers = hasSubmenu ? stopEventsHook : defaultHandlers;
+    const handlers = hasSubmenu ? stoppedHandlers : defaultHandlers;
 
     return (
       <div

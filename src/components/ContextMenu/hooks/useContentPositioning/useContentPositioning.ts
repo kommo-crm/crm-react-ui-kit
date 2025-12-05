@@ -6,17 +6,25 @@ import { usePrevious } from '../usePrevious/usePrevious';
 
 import { UseContentPositioningOptions } from './useContentPositioning.types';
 
-export function useContentPositioning({
-  direction,
-  alignOffset = 0,
-  disableAutoPositioning,
-  triggerRef,
-  contentRef,
-  collisionBoundary,
-  disableRepositioning,
-  children,
-  isSubContent,
-}: UseContentPositioningOptions) {
+/**
+ * A hook for smart positioning relative to the trigger and the first
+ * item of the context menu on any of the levels of the context menu.
+ */
+export const useContentPositioning = (
+  options: UseContentPositioningOptions
+) => {
+  const {
+    direction,
+    alignOffset = 0,
+    disableAutoPositioning,
+    triggerRef,
+    contentRef,
+    collisionBoundary,
+    disableRepositioning,
+    children,
+    isSubContent,
+  } = options;
+
   const [align, setAlign] = useState<'start' | 'end'>(
     direction === Direction.UP_RIGHT ||
       direction === Direction.DOWN_RIGHT ||
@@ -286,4 +294,4 @@ export function useContentPositioning({
   }, [positionedDirection, positionedOffset]);
 
   return { align, offset, isPositioned };
-}
+};

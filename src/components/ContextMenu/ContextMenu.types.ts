@@ -1,5 +1,3 @@
-import type { ForwardRefExoticComponent, RefAttributes } from 'react';
-
 import { Arrow } from './components/Arrow';
 import { CheckboxItem } from './components/CheckboxItem/CheckboxItem';
 import { Content } from './components/Content';
@@ -28,27 +26,8 @@ import { ContextMenuRootProps } from './ContextMenu.props';
  */
 export type ContextMenuModeType = `${ContextMenuMode}`;
 
-export interface ContextMenuHandle {
-  /**
-   * Closes the menu immediately.
-   */
-  closeMenuImmediately: () => void;
-  /**
-   * Enables the temporary hover close.
-   */
-  enableTemporaryHoverClose: () => void;
-  /**
-   * The callback function to be called when the menu is opened by keyboard.
-   */
-  onOpenByKeyboard: (value: boolean) => void;
-}
-
-export type ContextMenuComponentType = ForwardRefExoticComponent<
-  ContextMenuRootProps & RefAttributes<ContextMenuHandle>
->;
-
-export interface ContextMenuType extends ContextMenuComponentType {
-  Root: ContextMenuComponentType;
+export interface ContextMenuType extends ContextMenuRootProps {
+  Root: ContextMenuRootProps;
   Arrow: typeof Arrow;
   CheckboxItem: typeof CheckboxItem;
   Content: typeof Content;

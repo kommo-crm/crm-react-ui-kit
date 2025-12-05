@@ -27,15 +27,11 @@ export type ContextMenuRootProps = Omit<
    */
   autoCloseOnOtherOpen?: boolean;
   /**
-   * Whether the menu is a submenu.
-   */
-  isSubmenu?: boolean;
-  /**
-   * Whether the menu should close when clicked.
+   * Whether the menu should close when item selected.
    *
    * @default true
    */
-  isCloseOnClick?: boolean;
+  shouldCloseCurrentMenuOnSelect?: boolean;
   /**
    * Whether the context menu is open forcefully.
    */
@@ -88,26 +84,10 @@ export interface ContextMenuContextProps {
    */
   hoverCloseDelay: number;
   /**
-   * Indicates whether the menu is in a temporary hover-close state.
-   */
-  temporaryHoverClose: boolean;
-  /**
-   * Temporarily enables hover-based closing behavior for the menu.
-   * When called, the menu will close on hover outside until it hides.
-   *
-   * It only makes sense when mode is `click`
-   */
-  enableTemporaryHoverClose: () => void;
-  /**
-   * CSS color value inherited from the background of the
-   * first/last menu item depending on the menu side.
-   */
-  inheritedArrowColor: string | null;
-  /**
    * Indicates whether the menu is fully open and ready to display
    * its content (used to coordinate animations).
    */
-  animatedOpen: boolean;
+  isAnimatedOpen: boolean;
   /**
    * The duration of the menu and submenus opening/closing animation in milliseconds.
    */
@@ -117,13 +97,15 @@ export interface ContextMenuContextProps {
    */
   closeMenuImmediately: () => void;
   /**
-   * Called when the mouse enters the ContextMenu element.
+   * Called when mouse enters the menu content area.
+   * Keeps the menu open in hover mode by canceling close timers.
    */
-  onMouseEnter: (e: React.MouseEvent<HTMLElement>) => void;
+  onContentEnter: (e: React.MouseEvent<HTMLElement>) => void;
   /**
-   * Called when the mouse leaves the ContextMenu element.
+   * Called when mouse leaves the menu content area.
+   * Allows the menu to close in hover mode.
    */
-  onMouseLeave: (e: React.MouseEvent<HTMLElement>) => void;
+  onContentLeave: (e: React.MouseEvent<HTMLElement>) => void;
   /**
    * Whether the submenu is open.
    *
@@ -154,9 +136,9 @@ export interface ContextMenuContextProps {
    */
   isOpen: boolean;
   /**
-   * Whether the menu should close when clicked.
+   * Whether the menu should close when item selected.
    */
-  isCloseOnClick: boolean;
+  shouldCloseCurrentMenuOnSelect: boolean;
   /**
    * The callback function to be called when the child menu is opened.
    */
@@ -183,12 +165,12 @@ export interface ContextMenuContextProps {
    */
   isChildOpen?: boolean;
   /**
-   * Whether the menu should close when the root menu is closed.
+   * Whether the root menu should close when item selected.
    *
    * @remarks
    * This prop is only used for `ContextMenu` (root) components.
    */
-  shouldCloseRootMenuOnClick?: boolean;
+  shouldCloseRootMenuOnSelect?: boolean;
 }
 
 export interface ContextMenuRootContextProps {

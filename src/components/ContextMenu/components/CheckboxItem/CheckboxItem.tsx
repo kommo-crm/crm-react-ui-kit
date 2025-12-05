@@ -1,12 +1,10 @@
-import React, { forwardRef, useId, useMemo } from 'react';
+import React, { forwardRef, useId } from 'react';
 import { CheckboxItem as RadixDropdownMenuCheckboxItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
 import { useLevelContext } from '../../providers/LevelProvider';
-
-import { hasItemIcon } from '../../utils';
 
 import {
   useChildrenWithBlocker,
@@ -23,36 +21,33 @@ import s from './CheckboxItem.module.css';
 const DISPLAY_NAME = 'ContextMenu.CheckboxItem';
 
 export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       className,
       children,
-      onChange,
       isDisabled,
       isChecked,
-      hasIconCheckFn = hasItemIcon,
+      shouldCloseCurrentMenuOnSelect = true,
+      shouldCloseRootMenuOnSelect = false,
+      onChange,
       onFocus,
       onMouseEnter,
       onBlur,
       onMouseLeave,
       onSelect,
       onClick,
-      isCloseMenuOnClick = true,
-      shouldCloseRootMenuOnClick = false,
       onCheckedChange,
       onKeyDown,
 
       ...rest
-    },
-    ref
-  ) => {
+    } = props;
+
     const id = useId();
 
     const {
-      hasItemWithIcon,
       closeMenuImmediately,
-      isCloseOnClick,
-      shouldCloseRootMenuOnClick: shouldCloseRootMenuOnClickContext,
+      shouldCloseCurrentMenuOnSelect: shouldCloseCurrentMenuOnSelectContext,
+      shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
     } = useLevelContext(DISPLAY_NAME);
 
     const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
@@ -76,10 +71,14 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onMouseLeave,
     });
 
-    const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
-
     const { closeRootMenuImmediately } =
       useContextMenuRootContext(DISPLAY_NAME);
+
+    const content = useChildrenWithBlocker({
+      children,
+      displayName: DISPLAY_NAME,
+      blockerClassName: s.blocker,
+    });
 
     const handleCheckedChange = (checked: boolean) => {
       onCheckedChange?.(checked);
@@ -93,20 +92,46 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       }
     };
 
-    const content = useChildrenWithBlocker({
-      children,
-      displayName: DISPLAY_NAME,
-      blockerClassName: s.blocker,
-    });
-
     const handleCloseOnClick = () => {
-      if (isCloseOnClick && isCloseMenuOnClick) {
-        closeMenuImmediately(shouldCloseRootMenuOnClick);
+      if (
+        shouldCloseCurrentMenuOnSelect &&
+        shouldCloseCurrentMenuOnSelectContext
+      ) {
+        closeMenuImmediately();
 
-        if (shouldCloseRootMenuOnClick ?? shouldCloseRootMenuOnClickContext) {
+        if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
           closeRootMenuImmediately?.();
         }
       }
+    };
+
+    const handleSelect = (e: Event) => {
+      onSelect?.(e);
+
+      handleCloseOnClick();
+    };
+
+    /**
+     * Handles click on checkbox item.
+     *
+     * - stopPropagation: prevent click from bubbling to parent menu items
+     * - preventDefault: only for non-link items to allow links to navigate normally
+     */
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+
+      const target = e.target as HTMLElement;
+      const isLink = target.closest('a');
+
+      if (!isLink) {
+        e.preventDefault();
+      }
+
+      onClick?.(e);
+
+      handleCheckedChange(!isChecked);
+
+      handleCloseOnClick();
     };
 
     return withProvider(
@@ -115,40 +140,11 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         className={cx(s.checkbox_item, className)}
         disabled={isDisabled}
         checked={isChecked}
-        data-item
-        data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
-        onCheckedChange={(checked) => {
-          if (onChange) {
-            const event = {
-              target: { checked },
-            } as React.ChangeEvent<HTMLInputElement>;
-
-            onChange(event);
-          }
-        }}
         data-highlighted={subMenuOpen || dataHighlighted}
-        onSelect={(e) => {
-          onSelect?.(e);
-
-          handleCloseOnClick();
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-
-          const target = e.target as HTMLElement;
-
-          const isLink = target.closest('a');
-
-          if (!isLink) {
-            e.preventDefault();
-          }
-
-          onClick?.(e);
-
-          handleCheckedChange(!isChecked);
-
-          handleCloseOnClick();
-        }}
+        data-item
+        onCheckedChange={handleCheckedChange}
+        onSelect={handleSelect}
+        onClick={handleClick}
         onFocus={handleItemFocus}
         onMouseEnter={handleItemMouseEnter}
         onBlur={handleItemBlur}

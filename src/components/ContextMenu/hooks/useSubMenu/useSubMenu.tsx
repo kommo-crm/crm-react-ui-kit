@@ -1,11 +1,21 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 
+import { KeyboardKey } from 'src/lib/keyboard';
+
 import { SubMenuProvider } from '../../providers';
 
 import { UseSubMenuOptions } from './useSubMenu.types';
 
-export const useSubMenu = ({ onKeyDown }: UseSubMenuOptions) => {
+/**
+ * This hook is necessary for correct keyboard navigation
+ * and SubRoot operation inside some context menu items.
+ *
+ * Provides the necessary context for the SubRoot.
+ */
+export const useSubMenu = (options: UseSubMenuOptions) => {
+  const { onKeyDown } = options;
+
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [hasSubmenu, setHasSubmenu] = useState(false);
 
@@ -22,7 +32,7 @@ export const useSubMenu = ({ onKeyDown }: UseSubMenuOptions) => {
   }, [itemRef]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (hasSubmenu && e.key === 'ArrowRight') {
+    if (hasSubmenu && e.key === KeyboardKey.ARROW_RIGHT) {
       setSubMenuOpen(true);
     }
 

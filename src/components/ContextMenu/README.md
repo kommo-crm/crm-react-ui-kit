@@ -80,17 +80,12 @@ The root component that wraps the entire menu structure. All other components mu
 - `onAnimatedOpen?`: `(open: boolean) => void` - Callback when animation state changes
 - `isOpen?`: `boolean` - Controlled open state
 - `defaultOpen?`: `boolean` - Uncontrolled initial open state
-- `isCloseOnClick?`: `boolean` - Whether menu closes on item click (default: `true`)
+- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether menu closes on item click (default: `true`)
+- `autoCloseOnOtherOpen?`: `boolean` - Whether menu closes when another menu opens (default: `false`)
 - `enableInnerInputFocus?`: `boolean` - Enable focus management for inputs inside items (default: `false`)
 - `backgroundFocusBlockerContainers?`: `(HTMLElement | (() => HTMLElement) | null)[]` - Containers for focus blockers (default: `[document.body]`)
 - `backgroundFocusBlockerClassName?`: `string` - CSS class for background focus blocker
 - `backgroundInputFocusBlockerClassName?`: `string` - CSS class for input focus blocker
-
-**Ref methods:**
-
-- `closeMenuImmediately()`: Closes the menu immediately
-- `enableTemporaryHoverClose()`: Temporarily enables hover-close behavior
-- `onOpenByKeyboard(value: boolean)`: Programmatically trigger keyboard open
 
 ### [ContextMenu.Trigger](./components/Trigger/Trigger.tsx)
 
@@ -128,8 +123,8 @@ A clickable menu item.
 - `isDisabled?`: `boolean` - Disable the item
 - `isDanger?`: `boolean` - Apply danger styling
 - `isSelectable?`: `boolean` - Whether item is selectable (affects click behavior)
-- `isCloseMenuOnClick?`: `boolean` - Whether clicking closes menu (default: `true`)
-- `shouldCloseRootMenuOnClick?`: `boolean` - Close root menu on click
+- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether selecting closes current menu (default: `true`)
+- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on select
 - `onSelect?`: `(event: Event) => void` - Selection handler
 - Standard Radix UI Item props
 
@@ -142,8 +137,8 @@ Standard submenu component for nested menus.
 - `mode?`: `'click'` | `'hover'` - Submenu trigger mode (default: `'hover'`)
 - `onOpen?`: `(open: boolean) => void` - Open state callback
 - `defaultOpen?`: `boolean` - Initial open state
-- `shouldCloseRootMenuOnClick?`: `boolean` - Close root on click (default: `true`)
-- `isCloseOnClick?`: `boolean` - Close on click (default: `true`)
+- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on item select (default: `true`)
+- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Close current submenu on item select (default: `true`)
 
 **Usage:**
 
@@ -221,8 +216,8 @@ Menu item with checkbox functionality. Allows toggling a boolean state.
 - `onChange?`: `(e: React.ChangeEvent<HTMLInputElement>) => void` - Change handler (mimics native input onChange)
 - `isDisabled?`: `boolean` - Disable the checkbox item
 - `hasIconCheckFn?`: `(children: React.ReactNode) => boolean` - Function to check for icon presence
-- `isCloseMenuOnClick?`: `boolean` - Whether clicking closes menu (default: `true`)
-- `shouldCloseRootMenuOnClick?`: `boolean` - Close root menu on click (default: `false`)
+- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether selecting closes current menu (default: `true`)
+- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on select (default: `false`)
 - Standard Radix UI CheckboxItem props
 
 **Usage:**
@@ -267,8 +262,8 @@ Individual radio button item within a RadioGroup.
 - `value`: `string` (required) - Unique value for this radio option
 - `isDisabled?`: `boolean` - Disable the radio item
 - `hasIconCheckFn?`: `(children: React.ReactNode) => boolean` - Function to check for icon presence
-- `isCloseMenuOnClick?`: `boolean` - Whether clicking closes menu (default: `true`)
-- `shouldCloseRootMenuOnClick?`: `boolean` - Close root menu on click (default: `false`)
+- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether selecting closes current menu (default: `true`)
+- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on select (default: `false`)
 - Standard Radix UI RadioItem props (excluding `disabled`)
 
 **Usage:**
@@ -538,15 +533,15 @@ Menu opens on mouse hover and closes when mouse leaves. Includes configurable de
 
 ### Key Differences from Sub
 
-| Feature                        | Sub                            | SubRoot (Experimental)                                                                        |
-| ------------------------------ | ------------------------------ | --------------------------------------------------------------------------------------------- |
-| **Implementation**             | Uses Radix UI `Sub` primitive  | Uses Radix UI `Root` primitive                                                                |
-| **Trigger Location**           | Must be `SubTrigger` component | Can use `SubRoot.Trigger` inside Item/CheckboxItem/RadioItem (recommended in `ItemRightSlot`) |
-| **Content Component**          | `SubContent`                   | `SubRoot.Content`                                                                             |
-| **Control**                    | Managed by parent context      | More independent with its own context                                                         |
-| **Use Case**                   | Standard nested menus          | Custom trigger placement, especially in item right slots                                      |
-| **Default Mode**               | `hover`                        | `hover`                                                                                       |
-| **shouldCloseRootMenuOnClick** | `true` (default)               | `false` (default)                                                                             |
+| Feature                         | Sub                            | SubRoot (Experimental)                                                                        |
+| ------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------- |
+| **Implementation**              | Uses Radix UI `Sub` primitive  | Uses Radix UI `Root` primitive                                                                |
+| **Trigger Location**            | Must be `SubTrigger` component | Can use `SubRoot.Trigger` inside Item/CheckboxItem/RadioItem (recommended in `ItemRightSlot`) |
+| **Content Component**           | `SubContent`                   | `SubRoot.Content`                                                                             |
+| **Control**                     | Managed by parent context      | More independent with its own context                                                         |
+| **Use Case**                    | Standard nested menus          | Custom trigger placement, especially in item right slots                                      |
+| **Default Mode**                | `hover`                        | `hover`                                                                                       |
+| **shouldCloseRootMenuOnSelect** | `true` (default)               | `false` (default)                                                                             |
 
 ### When to Use SubRoot
 
@@ -578,14 +573,8 @@ The root component for experimental submenus.
 - `onOpen?`: `(open: boolean) => void` - Open state callback
 - `onAnimatedOpen?`: `(open: boolean) => void` - Animation state callback
 - `defaultOpen?`: `boolean` - Initial open state
-- `shouldCloseRootMenuOnClick?`: `boolean` - Close root menu on click (default: `false`)
-- `isCloseOnClick?`: `boolean` - Close on click (default: `true`)
-
-**Ref methods:**
-
-- `closeMenuImmediately()`: Close menu immediately
-- `enableTemporaryHoverClose()`: Enable temporary hover close
-- `onOpenByKeyboard(value: boolean)`: Trigger keyboard open
+- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on item select (default: `false`)
+- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Close current submenu on item select (default: `true`)
 
 #### [ContextMenu.SubRoot.Trigger](./components/SubRoot/components/Trigger/Trigger.tsx)
 
@@ -627,7 +616,7 @@ The content container for SubRoot menu.
         <ContextMenu.ItemRightSlot>
           <ContextMenu.experimental_SubRoot
             mode="hover"
-            shouldCloseRootMenuOnClick
+            shouldCloseRootMenuOnSelect
           >
             <ContextMenu.experimental_SubRoot.Trigger
               style={{
@@ -650,7 +639,7 @@ The content container for SubRoot menu.
                 <ContextMenu.CheckboxItem
                   isChecked={autoupdateChecked}
                   onChange={handleAutoupdateChange}
-                  shouldCloseRootMenuOnClick
+                  shouldCloseRootMenuOnSelect
                 >
                   <ContextMenu.ItemIndicator>
                     <CheckIcon />
@@ -666,14 +655,14 @@ The content container for SubRoot menu.
                 >
                   <ContextMenu.RadioItem
                     value="light"
-                    shouldCloseRootMenuOnClick
+                    shouldCloseRootMenuOnSelect
                   >
                     <span>Light</span>
                   </ContextMenu.RadioItem>
 
                   <ContextMenu.RadioItem
                     value="dark"
-                    shouldCloseRootMenuOnClick
+                    shouldCloseRootMenuOnSelect
                   >
                     <span>Dark</span>
                   </ContextMenu.RadioItem>
@@ -735,7 +724,7 @@ If you need to migrate from `Sub` to `SubRoot`:
 2. Replace `<ContextMenu.Sub>` with `<ContextMenu.experimental_SubRoot>`
 3. Replace `<ContextMenu.SubTrigger>` with `<ContextMenu.experimental_SubRoot.Trigger>`
 4. Replace `<ContextMenu.SubContent>` with `<ContextMenu.experimental_SubRoot.Content>`
-5. Review `shouldCloseRootMenuOnClick` prop (different default: `false` vs `true`)
+5. Review `shouldCloseRootMenuOnSelect` prop (different default: `false` vs `true`)
 6. Test hover/click behavior thoroughly
 7. Verify keyboard navigation works as expected
 
@@ -762,17 +751,6 @@ Enable focus management for inputs (text fields, etc.) inside menu items:
     <input type="text" placeholder="Search..." />
   </ContextMenu.Item>
 </ContextMenu.Root>
-```
-
-### Temporary Hover Close
-
-Enable temporary hover-close behavior programmatically:
-
-```tsx
-const menuRef = useRef<ContextMenuHandle>(null);
-
-// Later...
-menuRef.current?.enableTemporaryHoverClose();
 ```
 
 ### Animation Control
@@ -989,7 +967,7 @@ const [settings, setSettings] = useState({
         <ContextMenu.ItemRightSlot>
           <ContextMenu.experimental_SubRoot
             mode="hover"
-            shouldCloseRootMenuOnClick
+            shouldCloseRootMenuOnSelect
           >
             <ContextMenu.experimental_SubRoot.Trigger
               style={{
@@ -1017,7 +995,7 @@ const [settings, setSettings] = useState({
                       autoupdate: e.target.checked,
                     }))
                   }
-                  shouldCloseRootMenuOnClick
+                  shouldCloseRootMenuOnSelect
                 >
                   <ContextMenu.ItemIndicator>
                     <CheckIcon />
@@ -1042,14 +1020,14 @@ const [settings, setSettings] = useState({
                 >
                   <ContextMenu.RadioItem
                     value="light"
-                    shouldCloseRootMenuOnClick
+                    shouldCloseRootMenuOnSelect
                   >
                     <span>Light</span>
                   </ContextMenu.RadioItem>
 
                   <ContextMenu.RadioItem
                     value="dark"
-                    shouldCloseRootMenuOnClick
+                    shouldCloseRootMenuOnSelect
                   >
                     <span>Dark</span>
                   </ContextMenu.RadioItem>

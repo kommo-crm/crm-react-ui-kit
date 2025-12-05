@@ -11,29 +11,23 @@ export type ItemProps = RadixItemProps & {
    */
   isDisabled?: boolean;
   /**
-   * Whether the item is dangerous (adds `data-danger`).
+   * Whether the item is dangerous.
    */
   isDanger?: boolean;
-  /**
-   * A function for checking the presence of an icon.
-   *
-   * By default, the `hasItemIcon` from utils is used.
-   */
-  hasIconCheckFn?: (children: React.ReactNode) => boolean;
-  /**
-   * Whether the item should close the menu when clicked.
-   *
-   * @default true
-   */
-  isCloseMenuOnClick?: boolean;
-  /**
-   * Whether the item should close the root menu when clicked.
-   *
-   * @default false
-   */
-  shouldCloseRootMenuOnClick?: boolean;
   /**
    * Whether the item is selectable.
    */
   isSelectable?: boolean;
+  /**
+   * Whether the item should close the current menu when selected.
+   *
+   * @default true
+   */
+  shouldCloseCurrentMenuOnSelect?: boolean;
+  /**
+   * Whether the item should close the root menu when selected.
+   *
+   * @default false
+   */
+  shouldCloseRootMenuOnSelect?: boolean;
 };

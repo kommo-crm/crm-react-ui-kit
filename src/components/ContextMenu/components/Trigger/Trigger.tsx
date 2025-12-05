@@ -4,6 +4,8 @@ import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
+import { KeyboardKey } from 'src/lib/keyboard';
+
 import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
@@ -15,8 +17,8 @@ import s from './Trigger.module.css';
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
-  (
-    {
+  (props, ref) => {
+    const {
       className,
       children,
       onKeyDown,
@@ -26,64 +28,87 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onPointerDown,
 
       ...rest
-    },
-    ref
-  ) => {
+    } = props;
+
     const {
       triggerRef,
       mode,
-      onMouseEnter: onMouseEnterContext,
-      onMouseLeave: onMouseLeaveContext,
-      onOpenByKeyboard,
       isOpen,
+      onContentEnter,
+      onContentLeave,
+      onOpenByKeyboard,
     } = useContextMenuContext(DISPLAY_NAME);
+
+    /**
+     * In hover mode, prevent Radix from handling pointer events.
+     * We manage open/close state via mouse enter/leave instead.
+     */
+    const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      onPointerDown?.(e);
+    };
+
+    /**
+     * In hover mode, prevent keydown from bubbling to parent elements.
+     * We handle keyboard navigation manually for hover menus.
+     */
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.stopPropagation();
+
+        if (
+          [
+            KeyboardKey.ENTER,
+            KeyboardKey.SPACE,
+            KeyboardKey.ARROW_DOWN,
+          ].includes(e.key as KeyboardKey)
+        ) {
+          onOpenByKeyboard(true);
+        } else if (e.key === KeyboardKey.ESCAPE) {
+          onOpenByKeyboard(false);
+        }
+      }
+
+      onKeyDown?.(e);
+    };
+
+    const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+      onContentEnter(e);
+
+      onMouseEnter?.(e);
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+      onContentLeave(e);
+
+      onMouseLeave?.(e);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+      /**
+       * It is necessary to fix the case when the menu closes
+       * another menu with a SubRoot that works on a click
+       */
+      if (!isOpen) {
+        onContentEnter(e);
+      }
+
+      onMouseMove?.(e);
+    };
 
     return (
       <RadixDropdownMenuTrigger
         ref={mergeRefs(triggerRef, ref)}
         className={cx(className, s.trigger)}
-        onPointerDown={(e) => {
-          if (mode === ContextMenuMode.HOVER) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-
-          onPointerDown?.(e);
-        }}
-        onKeyDown={(e) => {
-          if (mode === ContextMenuMode.HOVER) {
-            e.stopPropagation();
-
-            if (['Enter', ' ', 'ArrowDown'].includes(e.key)) {
-              onOpenByKeyboard(true);
-            } else if (e.key === 'Escape') {
-              onOpenByKeyboard(false);
-            }
-          }
-
-          onKeyDown?.(e);
-        }}
-        onMouseEnter={(e) => {
-          onMouseEnterContext(e);
-
-          onMouseEnter?.(e);
-        }}
-        onMouseLeave={(e) => {
-          onMouseLeaveContext(e);
-
-          onMouseLeave?.(e);
-        }}
-        onMouseMove={(e) => {
-          /**
-           * It is necessary to fix the case when the menu closes
-           * another menu with a SubRoot that works on a click
-           */
-          if (!isOpen) {
-            onMouseEnterContext(e);
-          }
-
-          onMouseMove?.(e);
-        }}
+        onPointerDown={handlePointerDown}
+        onKeyDown={handleKeyDown}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
         {...rest}
       >
         {children}

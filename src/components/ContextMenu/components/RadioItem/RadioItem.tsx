@@ -1,12 +1,10 @@
-import React, { forwardRef, useId, useMemo } from 'react';
+import React, { forwardRef, useId } from 'react';
 import { RadioItem as RadixDropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
 import { useLevelContext } from '../../providers/LevelProvider';
-
-import { hasItemIcon } from '../../utils';
 
 import {
   useChildrenWithBlocker,
@@ -30,16 +28,15 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       className,
       children,
       isDisabled,
-      hasIconCheckFn = hasItemIcon,
-      onFocus,
+      shouldCloseCurrentMenuOnSelect = true,
+      shouldCloseRootMenuOnSelect = false,
+      value,
       onMouseEnter,
       onBlur,
       onMouseLeave,
       onSelect,
+      onFocus,
       onClick,
-      isCloseMenuOnClick = true,
-      shouldCloseRootMenuOnClick = false,
-      value,
       onKeyDown,
 
       ...rest
@@ -49,10 +46,9 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
     const id = useId();
 
     const {
-      hasItemWithIcon,
       closeMenuImmediately,
-      isCloseOnClick,
-      shouldCloseRootMenuOnClick: shouldCloseRootMenuOnClickContext,
+      shouldCloseCurrentMenuOnSelect: shouldCloseCurrentMenuOnSelectContext,
+      shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
     } = useLevelContext(DISPLAY_NAME);
 
     const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
@@ -79,8 +75,6 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       onMouseLeave,
     });
 
-    const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
-
     const { onChange } = useRadioGroupContext(DISPLAY_NAME);
 
     const content = useChildrenWithBlocker({
@@ -90,13 +84,46 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
     });
 
     const handleCloseOnClick = () => {
-      if (isCloseOnClick && isCloseMenuOnClick) {
-        closeMenuImmediately(shouldCloseRootMenuOnClick);
+      if (
+        shouldCloseCurrentMenuOnSelect &&
+        shouldCloseCurrentMenuOnSelectContext
+      ) {
+        closeMenuImmediately();
 
-        if (shouldCloseRootMenuOnClick ?? shouldCloseRootMenuOnClickContext) {
+        if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
           closeRootMenuImmediately?.();
         }
       }
+    };
+
+    const handleSelect = (e: Event) => {
+      onSelect?.(e);
+
+      handleCloseOnClick();
+    };
+
+    /**
+     * Handles click on radio item.
+     *
+     * - stopPropagation: prevent click from bubbling to parent menu items
+     * - preventDefault: only for non-link items to allow links to navigate normally
+     */
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+
+      const target = e.target as HTMLElement;
+
+      const isLink = target.closest('a');
+
+      if (!isLink) {
+        e.preventDefault();
+      }
+
+      onClick?.(e);
+
+      onChange(value);
+
+      handleCloseOnClick();
     };
 
     return withProvider(
@@ -104,32 +131,11 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         ref={mergeRefs(ref, itemRef)}
         className={cx(s.radio_item, className)}
         disabled={isDisabled}
-        data-item
-        data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
         data-highlighted={subMenuOpen || dataHighlighted}
+        data-item
         value={value}
-        onSelect={(e) => {
-          onSelect?.(e);
-
-          handleCloseOnClick();
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-
-          const target = e.target as HTMLElement;
-
-          const isLink = target.closest('a');
-
-          if (!isLink) {
-            e.preventDefault();
-          }
-
-          onClick?.(e);
-
-          onChange(value);
-
-          handleCloseOnClick();
-        }}
+        onSelect={handleSelect}
+        onClick={handleClick}
         onFocus={handleItemFocus}
         onMouseEnter={handleItemMouseEnter}
         onBlur={handleItemBlur}

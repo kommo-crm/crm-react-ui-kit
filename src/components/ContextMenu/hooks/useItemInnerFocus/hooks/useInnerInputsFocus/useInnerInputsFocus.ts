@@ -2,9 +2,19 @@ import { useLayoutEffect, useState } from 'react';
 
 import { UseInnerInputsFocusOptions } from './useInnerInputsFocus.types';
 
-export const useInnerInputsFocus = ({
-  isEnabled,
-}: UseInnerInputsFocusOptions) => {
+/**
+ * Hook that monitors a DOM node for inner input elements and tracks their
+ * focus state.
+ *
+ * It detects whether the node contains any input elements and whether any of
+ * them is currently focused. Uses MutationObserver to handle dynamically
+ * added/removed inputs and focusin/focusout events to track focus changes.
+ *
+ * Also supports contentEditable elements as focusable inputs.
+ */
+export const useInnerInputsFocus = (options: UseInnerInputsFocusOptions) => {
+  const { isEnabled } = options;
+
   const [hasInnerInput, setHasInnerInput] = useState(false);
   const [isInnerInputFocused, setIsInnerInputFocused] = useState(false);
   const [node, setNode] = useState<HTMLDivElement | null>(null);

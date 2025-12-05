@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
 import { useContextMenu } from './hooks';
@@ -32,116 +32,102 @@ import {
   DISPLAY_NAME,
 } from './ContextMenu.context';
 
-import { ContextMenuHandle, ContextMenuType } from './ContextMenu.types';
-
 const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
-export const ContextMenu = forwardRef<ContextMenuHandle, ContextMenuRootProps>(
-  (
-    {
-      children,
-      mode,
-      onOpen,
-      isOpen,
-      defaultOpen,
-      onAnimatedOpen,
-      isCloseOnClick = true,
-      enableInnerInputFocus = false,
-      backgroundFocusBlockerContainers = [document.body],
-      backgroundFocusBlockerClassName,
-      backgroundInputFocusBlockerClassName,
+export const ContextMenu = (props: ContextMenuRootProps) => {
+  const {
+    children,
+    mode,
+    isOpen,
+    defaultOpen,
+    shouldCloseCurrentMenuOnSelect = true,
+    enableInnerInputFocus = false,
+    backgroundFocusBlockerContainers = [document.body],
+    backgroundFocusBlockerClassName,
+    backgroundInputFocusBlockerClassName,
+    onOpen,
+    onAnimatedOpen,
 
-      ...rest
-    },
-    ref
-  ) => {
-    const {
-      mode: rootMode,
-      open,
-      onOpenChange,
-      triggerRef,
-      contentRef,
-      inheritedArrowColor,
-      animatedOpen,
-      animationDuration,
-      hoverCloseDelay,
-      temporaryHoverClose,
-      closeMenuImmediately,
-      onMouseEnter,
-      onMouseLeave,
-      enableTemporaryHoverClose,
-      onOpenByKeyboard,
-      onChildOpen,
-      onSubmenuOpen,
-      isRootContentBlocked,
-      isChildOpen,
-      itemWithFocusedInput,
-      setItemWithFocusedInput,
-    } = useContextMenu({
-      mode: mode as ContextMenuMode,
-      defaultOpen,
-      onOpen,
-      onAnimatedOpen,
-      animationDuration: ANIMATION_DURATION,
-      hoverCloseDelay: HOVER_CLOSE_DELAY,
-      isOpen,
-      enableInnerInputFocus,
-      backgroundFocusBlockerContainers,
-      backgroundFocusBlockerClassName,
-      backgroundInputFocusBlockerClassName,
-    });
+    ...rest
+  } = props;
 
-    useImperativeHandle(ref, () => ({
-      closeMenuImmediately,
-      enableTemporaryHoverClose,
-      onOpenByKeyboard,
-    }));
+  const {
+    mode: rootMode,
+    open,
+    triggerRef,
+    contentRef,
+    isAnimatedOpen,
+    animationDuration,
+    hoverCloseDelay,
+    isRootContentBlocked,
+    isChildOpen,
+    itemWithFocusedInput,
+    focusBlockerPortals,
+    closeMenuImmediately,
+    onOpenChange,
+    onContentEnter,
+    onContentLeave,
+    onOpenByKeyboard,
+    onChildOpen,
+    onSubmenuOpen,
+    setItemWithFocusedInput,
+  } = useContextMenu({
+    mode: mode as ContextMenuMode,
+    defaultOpen,
+    animationDuration: ANIMATION_DURATION,
+    hoverCloseDelay: HOVER_CLOSE_DELAY,
+    isOpen,
+    enableInnerInputFocus,
+    backgroundFocusBlockerContainers,
+    backgroundFocusBlockerClassName,
+    backgroundInputFocusBlockerClassName,
+    onOpen,
+    onAnimatedOpen,
+  });
 
-    return (
-      <ContextMenuRootProvider
-        closeRootMenuImmediately={closeMenuImmediately}
-        itemWithFocusedInput={itemWithFocusedInput}
-        setItemWithFocusedInput={setItemWithFocusedInput}
-        enableInnerInputFocus={enableInnerInputFocus}
+  return (
+    <ContextMenuRootProvider
+      closeRootMenuImmediately={closeMenuImmediately}
+      itemWithFocusedInput={itemWithFocusedInput}
+      setItemWithFocusedInput={setItemWithFocusedInput}
+      enableInnerInputFocus={enableInnerInputFocus}
+    >
+      <ContextMenuProvider
+        mode={rootMode}
+        triggerRef={triggerRef}
+        contentRef={contentRef}
+        isAnimatedOpen={isAnimatedOpen}
+        animationDuration={animationDuration}
+        hoverCloseDelay={hoverCloseDelay}
+        closeMenuImmediately={closeMenuImmediately}
+        onContentEnter={onContentEnter}
+        onContentLeave={onContentLeave}
+        onOpenByKeyboard={onOpenByKeyboard}
+        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
+        onChildOpen={onChildOpen}
+        isOpen={open}
+        onSubmenuOpen={onSubmenuOpen}
+        isRootContentBlocked={isRootContentBlocked}
+        isChildOpen={isChildOpen}
       >
-        <ContextMenuProvider
-          mode={rootMode}
-          triggerRef={triggerRef}
-          contentRef={contentRef}
-          inheritedArrowColor={inheritedArrowColor}
-          animatedOpen={animatedOpen}
-          animationDuration={animationDuration}
-          hoverCloseDelay={hoverCloseDelay}
-          temporaryHoverClose={temporaryHoverClose}
-          closeMenuImmediately={closeMenuImmediately}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-          enableTemporaryHoverClose={enableTemporaryHoverClose}
-          onOpenByKeyboard={onOpenByKeyboard}
-          isCloseOnClick={isCloseOnClick}
-          onChildOpen={onChildOpen}
-          isOpen={open}
-          onSubmenuOpen={onSubmenuOpen}
-          isRootContentBlocked={isRootContentBlocked}
-          isChildOpen={isChildOpen}
+        <RadixDropdownMenuRoot
+          open={isOpen ?? open}
+          onOpenChange={onOpenChange}
+          /**
+           * Necessary for hover mode to work correctly.
+           */
+          modal={false}
+          {...rest}
         >
-          <RadixDropdownMenuRoot
-            open={isOpen ?? open}
-            onOpenChange={onOpenChange}
-            /**
-             * Necessary for hover mode to work correctly.
-             */
-            modal={false}
-            {...rest}
-          >
-            {children}
-          </RadixDropdownMenuRoot>
-        </ContextMenuProvider>
-      </ContextMenuRootProvider>
-    );
-  }
-) as ContextMenuType;
+          {children}
+        </RadixDropdownMenuRoot>
+
+        {focusBlockerPortals}
+      </ContextMenuProvider>
+    </ContextMenuRootProvider>
+  );
+};
 
 ContextMenu.displayName = DISPLAY_NAME;
 

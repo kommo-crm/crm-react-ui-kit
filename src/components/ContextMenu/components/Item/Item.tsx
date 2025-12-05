@@ -1,12 +1,10 @@
-import React, { forwardRef, useId, useMemo } from 'react';
+import React, { forwardRef, useId } from 'react';
 import { Item as RadixDropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
 import { useLevelContext } from '../../providers/LevelProvider';
-
-import { hasItemIcon } from '../../utils';
 
 import {
   useContextMenuItemFocus,
@@ -18,7 +16,7 @@ import { useContextMenuRootContext } from '../../ContextMenu.context';
 
 import type { ItemProps } from './Item.props';
 
-import { MaybeAsChild } from './components';
+import { NonSelectableItem } from './components';
 
 import s from './Item.module.css';
 
@@ -30,7 +28,10 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     children,
     isDisabled,
     isDanger,
-    hasIconCheckFn = hasItemIcon,
+    shouldCloseCurrentMenuOnSelect = true,
+    shouldCloseRootMenuOnSelect = false,
+    isSelectable: isSelectableProp,
+    asChild,
     onSelect,
     onClick,
     onFocus,
@@ -38,10 +39,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onBlur,
     onMouseLeave,
     onKeyDown,
-    isCloseMenuOnClick = true,
-    shouldCloseRootMenuOnClick = false,
-    isSelectable: isSelectableProp,
-    asChild,
 
     ...rest
   } = props;
@@ -49,16 +46,10 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
   const id = useId();
 
   const {
-    hasItemWithIcon,
     closeMenuImmediately,
-    isCloseOnClick,
-    shouldCloseRootMenuOnClick: shouldCloseRootMenuOnClickContext,
+    shouldCloseCurrentMenuOnSelect: shouldCloseCurrentMenuOnSelectContext,
+    shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
   } = useLevelContext(DISPLAY_NAME);
-
-  /**
-   * Set the hasIcon state based on the presence of an icon.
-   */
-  const hasIcon = useMemo(() => hasIconCheckFn(children), [children]);
 
   const { closeRootMenuImmediately } = useContextMenuRootContext(DISPLAY_NAME);
 
@@ -93,46 +84,59 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     });
 
   const handleCloseOnClick = () => {
-    if (isCloseOnClick && isCloseMenuOnClick) {
-      closeMenuImmediately(shouldCloseRootMenuOnClick);
+    if (
+      shouldCloseCurrentMenuOnSelect &&
+      shouldCloseCurrentMenuOnSelectContext
+    ) {
+      closeMenuImmediately();
 
-      if (shouldCloseRootMenuOnClick ?? shouldCloseRootMenuOnClickContext) {
+      if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
         closeRootMenuImmediately?.();
       }
     }
   };
 
-  return isSelectable
+  const handleItemSelect = (e: Event) => {
+    onSelect?.(e);
+
+    handleCloseOnClick();
+  };
+
+  /**
+   * Handles click on selectable item.
+   *
+   * - stopPropagation: prevent click from bubbling to parent menu items
+   * - preventDefault: only for non-link items to allow links to navigate normally
+   */
+  const handleItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    const target = e.target as HTMLElement;
+
+    const isLink = target.closest('a');
+
+    if (!isLink) {
+      e.preventDefault();
+    }
+
+    onClick?.(e);
+
+    handleCloseOnClick();
+  };
+
+  return isSelectable && !isDisabled
     ? withProvider(
         <RadixDropdownMenuItem
           ref={mergeRefs(ref, itemRef, handleNodeRef)}
-          className={cx(s.item, className)}
-          disabled={isDisabled}
-          data-item
-          data-danger={isDanger ? '' : undefined}
-          data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
+          className={cx(s.item, className, { [s.danger]: isDanger })}
           data-has-submenu={hasSubmenu ? '' : undefined}
-          onSelect={(e) => {
-            onSelect?.(e);
-
-            handleCloseOnClick();
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-
-            const target = e.target as HTMLElement;
-
-            const isLink = target.closest('a');
-
-            if (!isLink) {
-              e.preventDefault();
-            }
-
-            onClick?.(e);
-
-            handleCloseOnClick();
-          }}
+          /**
+           * Standart Radix attribute for highlighting the focused item.
+           */
           data-highlighted={subMenuOpen || dataHighlighted}
+          data-item
+          onSelect={handleItemSelect}
+          onClick={handleItemClick}
           onFocus={handleItemFocus}
           onMouseEnter={handleItemMouseEnter}
           onBlur={handleItemBlur}
@@ -145,14 +149,15 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
         </RadixDropdownMenuItem>
       )
     : withProvider(
-        <MaybeAsChild
+        <NonSelectableItem
           ref={mergeRefs(ref, itemRef, handleNodeRef)}
-          className={cx(s.item, className)}
-          data-not-selectable
-          data-item
-          data-danger={isDanger ? '' : undefined}
-          data-no-icon-align={hasIcon || !hasItemWithIcon ? '' : undefined}
+          className={cx(s.item, className, {
+            [s.danger]: isDanger,
+            [s.nonSelectable]: !isSelectable,
+            [s.disabled]: isDisabled,
+          })}
           data-has-submenu={hasSubmenu ? '' : undefined}
+          data-item
           onFocus={onFocus}
           onMouseEnter={onMouseEnter}
           onBlur={onBlur}
@@ -163,7 +168,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           {...rest}
         >
           {children}
-        </MaybeAsChild>
+        </NonSelectableItem>
       );
 });
 
