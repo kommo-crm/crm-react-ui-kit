@@ -19,7 +19,6 @@ import { FocusBlocker } from '../FocusBlocker';
 import type { ContentProps } from './Content.props';
 
 import { Direction } from './Content.enums';
-
 import { directionToSide } from './Content.utils';
 
 import s from './Content.module.css';
@@ -59,6 +58,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onPointerDownOutside,
       onInteractOutside,
       onEscapeKeyDown,
+      onCloseAutoFocus,
+      onOpenAutoFocus,
 
       ...rest
     } = props;
@@ -79,6 +80,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onContentEnter,
       onContentLeave,
       onChildOpen,
+      itemWithFocusedInput,
+      setItemWithFocusedInput,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { align, offset, isPositioned } = useContentPositioning({
@@ -151,6 +154,22 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onPointerDownOutside?.(e);
     };
 
+    const handleCloseAutoFocus = (e: Event) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.preventDefault();
+      }
+
+      onCloseAutoFocus?.(e);
+    };
+
+    const handleOpenAutoFocus = (e: Event) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.preventDefault();
+      }
+
+      onOpenAutoFocus?.(e);
+    };
+
     return (
       <LevelProvider
         activeItemId={activeItemId}
@@ -160,6 +179,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         closeMenuImmediately={closeMenuImmediately}
         shouldCloseRootMenuOnSelect={false}
         isAnimatedOpen={isAnimatedOpen}
+        itemWithFocusedInput={itemWithFocusedInput}
+        setItemWithFocusedInput={setItemWithFocusedInput}
         level={1}
       >
         {isOpen && (
@@ -188,6 +209,15 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               onInteractOutside={handleInteractOutside}
               onEscapeKeyDown={handleEscapeKeyDown}
               onPointerDownOutside={handlePointerDownOutside}
+              onCloseAutoFocus={handleCloseAutoFocus}
+              /**
+               * Radix ContextMenu supports `onOpenAutoFocus`, but the prop is missing
+               * in its TypeScript defs. The event works at runtime (passed through
+               * FocusScope), but TS doesn't recognize it. Using @ts-expect-error is
+               * intentional until Radix exposes proper types.
+               */
+              // @ts-expect-error - Property 'onOpenAutoFocus' does not exist on type
+              onOpenAutoFocus={handleOpenAutoFocus}
               {...rest}
             >
               {children}

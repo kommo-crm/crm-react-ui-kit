@@ -1,16 +1,10 @@
-import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
-
-import { createPortal } from 'react-dom';
-
-import cx from 'classnames';
+import { useEffect, useId, useRef, useState } from 'react';
 
 import { useIsTouchDevice } from '..';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
-
-import { FocusBlocker } from '../../components/FocusBlocker';
 
 import { contextMenuBus } from './utils';
 
@@ -29,10 +23,6 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     onOpen,
     onAnimatedOpen,
     isOpen,
-    enableInnerInputFocus,
-    backgroundFocusBlockerContainers,
-    backgroundFocusBlockerClassName,
-    backgroundInputFocusBlockerClassName,
   } = options;
 
   const id = useId();
@@ -273,47 +263,6 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     onAnimatedOpen?.(isAnimatedOpen);
   }, [isAnimatedOpen]);
 
-  /**
-   * The portals of the focus blockers.
-   *
-   * It is necessary to mount global background blockers to isolate
-   * the possibility of other elements intercepting focus.
-   */
-  const focusBlockerPortals = useMemo(() => {
-    if (!enableInnerInputFocus || !backgroundFocusBlockerContainers || !open) {
-      return null;
-    }
-
-    const containers = backgroundFocusBlockerContainers
-      .map((c) => (typeof c === 'function' ? c() : c))
-      .filter(Boolean) as HTMLElement[];
-
-    return containers.map((container, index) =>
-      createPortal(
-        <FocusBlocker
-          key={index}
-          className={cx(
-            backgroundFocusBlockerClassName,
-            itemWithFocusedInput !== null &&
-              backgroundInputFocusBlockerClassName
-          )}
-          onClick={() => {
-            (document.activeElement as HTMLElement)?.blur();
-          }}
-          disabledHandlers={['onPointerDown']}
-        />,
-        container
-      )
-    );
-  }, [
-    enableInnerInputFocus,
-    backgroundFocusBlockerContainers,
-    backgroundFocusBlockerClassName,
-    backgroundInputFocusBlockerClassName,
-    open,
-    itemWithFocusedInput,
-  ]);
-
   return {
     open,
     mode,
@@ -333,6 +282,5 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     isChildOpen,
     itemWithFocusedInput,
     setItemWithFocusedInput,
-    focusBlockerPortals,
   };
 };

@@ -40,4 +40,12 @@ export interface LevelProviderContextProps {
    * Whether the menu is animated open/close.
    */
   isAnimatedOpen: boolean;
+  /**
+   * Sets whether the item with the focused input is open.
+   */
+  setItemWithFocusedInput: (itemWithFocusedInput: string | null) => void;
+  /**
+   * Whether the item with the focused input is open.
+   */
+  itemWithFocusedInput: string | null;
 }

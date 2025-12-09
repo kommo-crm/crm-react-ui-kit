@@ -7,9 +7,9 @@ import { mergeRefs } from 'src/lib/utils';
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import {
-  useContextMenuItemFocus,
-  useSubMenu,
   useItemInnerFocus,
+  useSubMenu,
+  useContextMenuItemFocus,
 } from '../../hooks';
 
 import { useContextMenuRootContext } from '../../ContextMenu.context';
@@ -39,6 +39,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onBlur,
     onMouseLeave,
     onKeyDown,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
 
     ...rest
   } = props;
@@ -56,12 +59,22 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
   const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
     useSubMenu({ onKeyDown });
 
+  const { isSelectableConsideringInputFocus, handleNodeRef } =
+    useItemInnerFocus({
+      id,
+      isSelectableProp,
+      displayName: DISPLAY_NAME,
+    });
+
   const {
     dataHighlighted,
     onFocus: handleItemFocus,
     onMouseEnter: handleItemMouseEnter,
     onBlur: handleItemBlur,
     onMouseLeave: handleItemMouseLeave,
+    onPointerEnter: handleItemPointerEnter,
+    onPointerLeave: handleItemPointerLeave,
+    onPointerMove: handleItemPointerMove,
   } = useContextMenuItemFocus({
     displayName: DISPLAY_NAME,
     ref: itemRef,
@@ -72,16 +85,11 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onBlur,
     onMouseEnter,
     onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
+    isSelectable: isSelectableConsideringInputFocus,
   });
-
-  const { isSelectable, handleNodeRef, childrenWithBlocker } =
-    useItemInnerFocus({
-      id,
-      children,
-      isSelectableProp,
-      displayName: DISPLAY_NAME,
-      blockerClassName: s.blocker,
-    });
 
   const handleCloseOnClick = () => {
     if (
@@ -97,43 +105,45 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
   };
 
   const handleItemSelect = (e: Event) => {
-    onSelect?.(e);
+    /**
+     * Otherwise, when clicking from the second nesting level,
+     * the parent menu will always close.
+     */
+    e.preventDefault();
 
-    handleCloseOnClick();
+    if (isSelectableConsideringInputFocus && !isDisabled) {
+      handleCloseOnClick();
+    }
+
+    onSelect?.(e);
   };
 
-  /**
-   * Handles click on selectable item.
-   *
-   * - stopPropagation: prevent click from bubbling to parent menu items
-   * - preventDefault: only for non-link items to allow links to navigate normally
-   */
   const handleItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-
-    const target = e.target as HTMLElement;
-
-    const isLink = target.closest('a');
-
-    if (!isLink) {
-      e.preventDefault();
+    if (isSelectableConsideringInputFocus && !isDisabled) {
+      handleCloseOnClick();
     }
 
     onClick?.(e);
-
-    handleCloseOnClick();
   };
 
-  return isSelectable && !isDisabled
+  return isSelectableConsideringInputFocus
     ? withProvider(
         <RadixDropdownMenuItem
           ref={mergeRefs(ref, itemRef, handleNodeRef)}
-          className={cx(s.item, className, { [s.danger]: isDanger })}
+          className={cx(
+            s.item,
+            {
+              [s.danger]: isDanger,
+              [s.disabled]: isDisabled,
+            },
+            className
+          )}
           data-has-submenu={hasSubmenu ? '' : undefined}
           /**
            * Standart Radix attribute for highlighting the focused item.
            */
           data-highlighted={subMenuOpen || dataHighlighted}
+          disabled={isDisabled}
           data-item
           onSelect={handleItemSelect}
           onClick={handleItemClick}
@@ -142,20 +152,26 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           onBlur={handleItemBlur}
           onMouseLeave={handleItemMouseLeave}
           onKeyDown={handleKeyDown}
+          onPointerEnter={handleItemPointerEnter}
+          onPointerLeave={handleItemPointerLeave}
+          onPointerMove={handleItemPointerMove}
           asChild={asChild}
           {...rest}
         >
-          {childrenWithBlocker}
+          {children}
         </RadixDropdownMenuItem>
       )
     : withProvider(
         <NonSelectableItem
           ref={mergeRefs(ref, itemRef, handleNodeRef)}
-          className={cx(s.item, className, {
-            [s.danger]: isDanger,
-            [s.nonSelectable]: !isSelectable,
-            [s.disabled]: isDisabled,
-          })}
+          className={cx(
+            s.item,
+            s.nonSelectable,
+            {
+              [s.danger]: isDanger,
+            },
+            className
+          )}
           data-has-submenu={hasSubmenu ? '' : undefined}
           data-item
           onFocus={onFocus}
@@ -164,6 +180,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           onMouseLeave={onMouseLeave}
           onKeyDown={onKeyDown}
           onClick={onClick}
+          onPointerEnter={handleItemPointerEnter}
+          onPointerLeave={handleItemPointerLeave}
+          onPointerMove={handleItemPointerMove}
           asChild={asChild}
           {...rest}
         >

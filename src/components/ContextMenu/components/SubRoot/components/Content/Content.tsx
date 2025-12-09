@@ -47,6 +47,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onMouseLeave,
       onKeyDown,
       onCloseAutoFocus,
+      onOpenAutoFocus,
       onEscapeKeyDown,
 
       ...rest
@@ -67,6 +68,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onContentEnter,
       onContentLeave,
       onChildOpen,
+      itemWithFocusedInput,
+      setItemWithFocusedInput,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { level } = useLevelContext(DISPLAY_NAME);
@@ -120,16 +123,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     };
 
     /**
-     * Prevent Radix from automatically focusing the trigger after submenu closes.
-     * We handle focus management manually to support custom close behavior.
-     */
-    const handleCloseAutoFocus = (e: Event) => {
-      e.preventDefault();
-
-      onCloseAutoFocus?.(e);
-    };
-
-    /**
      * Prevent Radix from closing the entire menu tree.
      * We handle Escape manually to close only this submenu level.
      */
@@ -138,6 +131,26 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
       onSubRootContentClose();
       onEscapeKeyDown?.(e);
+    };
+
+    /**
+     * Prevent Radix from automatically focusing the trigger after submenu closes.
+     * We handle focus management manually to support custom close behavior.
+     */
+    const handleCloseAutoFocus = (e: Event) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.preventDefault();
+      }
+
+      onCloseAutoFocus?.(e);
+    };
+
+    const handleOpenAutoFocus = (e: Event) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.preventDefault();
+      }
+
+      onOpenAutoFocus?.(e);
     };
 
     return (
@@ -149,6 +162,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         closeMenuImmediately={closeMenuImmediately}
         shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect ?? false}
         isAnimatedOpen={isAnimatedOpen}
+        itemWithFocusedInput={itemWithFocusedInput}
+        setItemWithFocusedInput={setItemWithFocusedInput}
         level={level + 1}
       >
         {isOpen && (
@@ -177,6 +192,14 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               onKeyDown={handleKeyDown}
               onCloseAutoFocus={handleCloseAutoFocus}
               onEscapeKeyDown={handleEscapeKeyDown}
+              /**
+               * Radix ContextMenu supports `onOpenAutoFocus`, but the prop is missing
+               * in its TypeScript defs. The event works at runtime (passed through
+               * FocusScope), but TS doesn't recognize it. Using @ts-expect-error is
+               * intentional until Radix exposes proper types.
+               */
+              // @ts-expect-error - Property 'onOpenAutoFocus' does not exist on type
+              onOpenAutoFocus={handleOpenAutoFocus}
               {...rest}
             >
               {children}

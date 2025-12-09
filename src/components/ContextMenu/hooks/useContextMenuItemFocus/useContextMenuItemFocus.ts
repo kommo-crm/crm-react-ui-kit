@@ -4,7 +4,7 @@ import { KeyboardKey } from 'src/lib/keyboard';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
-import { useMouseMoveOutside } from './hooks';
+import { useMouseMoveOutside } from '../useMouseMoveOutside/useMouseMoveOutside';
 
 import { UseContextMenuItemFocusOptions } from './useContextMenuItemFocus.types';
 
@@ -39,26 +39,19 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     onFocus,
     onBlur,
     onKeyDown,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
     isSelectable = true,
   } = options;
 
   const [isFocused, setIsFocused] = useState(false);
+
   const { setActiveItemId, activeItemId } = useLevelContext(displayName);
 
   useMouseMoveOutside(ref, () => {
     setIsFocused(false);
   });
-
-  if (isDisabled) {
-    return {
-      dataHighlighted: undefined,
-      onFocus: undefined,
-      onMouseEnter: undefined,
-      onBlur: undefined,
-      onMouseLeave: undefined,
-      onKeyDown: undefined,
-    };
-  }
 
   useEffect(() => {
     if (hasSubmenu && activeItemId === null) {
@@ -67,10 +60,10 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
   }, [activeItemId]);
 
   return {
-    dataHighlighted: isFocused && isSelectable ? '' : undefined,
+    dataHighlighted: isFocused && isSelectable && !isDisabled ? '' : undefined,
 
     onFocus: (e: React.FocusEvent<T>) => {
-      if (!isSelectable) {
+      if (!isSelectable || isDisabled) {
         onFocus?.(e);
 
         return;
@@ -85,7 +78,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseEnter: (e: React.MouseEvent<T>) => {
-      if (!isSelectable) {
+      if (!isSelectable || isDisabled) {
         onMouseEnter?.(e);
 
         return;
@@ -100,7 +93,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onBlur: (e: React.FocusEvent<T>) => {
-      if (!isSelectable) {
+      if (!isSelectable || isDisabled) {
         onBlur?.(e);
 
         return;
@@ -111,7 +104,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseLeave: (e: React.MouseEvent<T>) => {
-      if (!isSelectable) {
+      if (!isSelectable || isDisabled) {
         onMouseLeave?.(e);
 
         return;
@@ -122,7 +115,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onKeyDown: (e: React.KeyboardEvent<T>) => {
-      if (!isSelectable) {
+      if (!isSelectable || isDisabled) {
         onKeyDown?.(e);
 
         return;
@@ -133,6 +126,47 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
       }
 
       onKeyDown?.(e);
+    },
+
+    /**
+     * This is necessary to disable the standard focus behavior
+     * when hovering over an item and similar elements in Radix.
+     */
+    onPointerEnter: (e: React.PointerEvent<T>) => {
+      e.preventDefault();
+
+      onPointerEnter?.(e);
+    },
+
+    /**
+     * This is necessary to disable the standard focus behavior
+     * when hovering over an item and similar elements in Radix.
+     */
+    onPointerLeave: (e: React.PointerEvent<T>) => {
+      e.preventDefault();
+
+      onPointerLeave?.(e);
+    },
+
+    /**
+     * This is necessary to disable the standard focus behavior
+     * when hovering over an item and similar elements in Radix.
+     */
+    onPointerMove: (e: React.PointerEvent<T>) => {
+      e.preventDefault();
+
+      if (!isSelectable || isDisabled) {
+        onPointerMove?.(e);
+
+        return;
+      }
+
+      if (!hasSubmenu) {
+        setActiveItemId(id);
+      }
+
+      setIsFocused(!isDisabled);
+      onPointerMove?.(e);
     },
   };
 };

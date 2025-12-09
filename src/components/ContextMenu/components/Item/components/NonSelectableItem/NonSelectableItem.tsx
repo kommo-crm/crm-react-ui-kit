@@ -5,8 +5,8 @@ import { NonSelectableItemProps } from './NonSelectableItem.props';
 const DISPLAY_NAME = 'ContextMenu.NonSelectableItem';
 
 /**
- * It is necessary because otherwise Radix retains focus control,
- * which we absolutely do not need for non-selectable items.
+ * This is necessary because radix completely removes the ability to select text
+ * for copying from the item, and we do not need this behavior.
  */
 export const NonSelectableItem = forwardRef<
   HTMLDivElement,

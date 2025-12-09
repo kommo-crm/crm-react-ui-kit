@@ -7,11 +7,7 @@ import { KeyboardKey } from 'src/lib/keyboard';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
-import {
-  useChildrenWithBlocker,
-  useContextMenuItemFocus,
-  useSubMenu,
-} from '../../hooks';
+import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -62,6 +58,9 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onMouseEnter: handleItemMouseEnter,
       onBlur: handleItemBlur,
       onMouseLeave: handleItemMouseLeave,
+      onPointerEnter: handleItemPointerEnter,
+      onPointerLeave: handleItemPointerLeave,
+      onPointerMove: handleItemPointerMove,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
       ref: itemRef,
@@ -75,12 +74,9 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       },
       onFocus,
       onBlur,
-    });
-
-    const content = useChildrenWithBlocker({
-      children,
-      displayName: DISPLAY_NAME,
-      blockerClassName: s.blocker,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerMove,
     });
 
     const handleKeyDownSubTrigger = (
@@ -110,6 +106,8 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
      * behavior. We manage submenu open state manually.
      */
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+
       if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
         e.preventDefault();
         e.stopPropagation();
@@ -134,44 +132,6 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onMouseMove?.(e);
     };
 
-    /**
-     * Disable Radix's hover-based submenu opening in click/controlled mode.
-     * Submenu should only open on explicit click.
-     */
-    const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
-      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      onPointerEnter?.(e);
-    };
-
-    /**
-     * Disable Radix's hover-based submenu behavior in click/controlled mode.
-     */
-    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      onPointerMove?.(e);
-    };
-
-    /**
-     * Disable Radix's hover-based submenu closing in click/controlled mode.
-     * Submenu should remain open until explicitly closed.
-     */
-    const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
-      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      onPointerLeave?.(e);
-    };
-
     return withProvider(
       <RadixDropdownMenuSubTrigger
         ref={mergeRefs(ref, triggerRef, itemRef)}
@@ -194,12 +154,12 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         onMouseMove={handleMouseMove}
         onBlur={handleItemBlur}
         onMouseLeave={handleItemMouseLeave}
-        onPointerEnter={handlePointerEnter}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
+        onPointerEnter={handleItemPointerEnter}
+        onPointerMove={handleItemPointerMove}
+        onPointerLeave={handleItemPointerLeave}
         {...rest}
       >
-        {content}
+        {children}
       </RadixDropdownMenuSubTrigger>
     );
   }

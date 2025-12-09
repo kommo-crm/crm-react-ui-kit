@@ -26,11 +26,9 @@ export const useStopEvents = <T extends HTMLElement>(
    * Stops event propagation and prevents default behavior.
    *
    * - stopPropagation: prevent event from bubbling to parent menu items
-   * - preventDefault: prevent Radix default behavior (e.g., focus changes)
    */
   const stop = useCallback((e: React.SyntheticEvent) => {
     e.stopPropagation();
-    e.preventDefault();
   }, []);
 
   const wrap = useCallback(

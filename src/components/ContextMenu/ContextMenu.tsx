@@ -24,7 +24,6 @@ import { RadioItem } from './components/RadioItem/RadioItem';
 import { Separator } from './components/Separator/Separator';
 import { ItemIcon } from './components/ItemIcon/ItemIcon';
 import { SubRoot } from './components/SubRoot/SubRoot';
-import { FocusBlocker } from './components/FocusBlocker/FocusBlocker';
 
 import {
   ContextMenuProvider,
@@ -43,9 +42,6 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     defaultOpen,
     shouldCloseCurrentMenuOnSelect = true,
     enableInnerInputFocus = false,
-    backgroundFocusBlockerContainers = [document.body],
-    backgroundFocusBlockerClassName,
-    backgroundInputFocusBlockerClassName,
     onOpen,
     onAnimatedOpen,
 
@@ -63,7 +59,6 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     isRootContentBlocked,
     isChildOpen,
     itemWithFocusedInput,
-    focusBlockerPortals,
     closeMenuImmediately,
     onOpenChange,
     onContentEnter,
@@ -79,9 +74,6 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     hoverCloseDelay: HOVER_CLOSE_DELAY,
     isOpen,
     enableInnerInputFocus,
-    backgroundFocusBlockerContainers,
-    backgroundFocusBlockerClassName,
-    backgroundInputFocusBlockerClassName,
     onOpen,
     onAnimatedOpen,
   });
@@ -89,8 +81,6 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
   return (
     <ContextMenuRootProvider
       closeRootMenuImmediately={closeMenuImmediately}
-      itemWithFocusedInput={itemWithFocusedInput}
-      setItemWithFocusedInput={setItemWithFocusedInput}
       enableInnerInputFocus={enableInnerInputFocus}
     >
       <ContextMenuProvider
@@ -110,6 +100,8 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
         onSubmenuOpen={onSubmenuOpen}
         isRootContentBlocked={isRootContentBlocked}
         isChildOpen={isChildOpen}
+        itemWithFocusedInput={itemWithFocusedInput}
+        setItemWithFocusedInput={setItemWithFocusedInput}
       >
         <RadixDropdownMenuRoot
           open={isOpen ?? open}
@@ -122,8 +114,6 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
         >
           {children}
         </RadixDropdownMenuRoot>
-
-        {focusBlockerPortals}
       </ContextMenuProvider>
     </ContextMenuRootProvider>
   );
@@ -150,4 +140,3 @@ ContextMenu.RadioItem = RadioItem;
 ContextMenu.ItemIndicator = ItemIndicator;
 ContextMenu.Separator = Separator;
 ContextMenu.ItemIcon = ItemIcon;
-ContextMenu.FocusBlocker = FocusBlocker;

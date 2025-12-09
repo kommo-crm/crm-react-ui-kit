@@ -1,4 +1,4 @@
-export interface UseInnerInputsFocusOptions {
+export interface UseInnerFocusTrackerOptions {
   /**
    * Whether the inner inputs focus is enabled.
    */

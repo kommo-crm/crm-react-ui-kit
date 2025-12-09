@@ -23,10 +23,6 @@
   }
 }
 
-.radio_item > :not(:last-child):not([data-blocker]) {
+.radio_item > :not(:last-child){
   margin-right: 8px;
-}
-
-.blocker {
-  position: absolute;
 }

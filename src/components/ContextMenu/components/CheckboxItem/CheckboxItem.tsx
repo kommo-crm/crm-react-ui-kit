@@ -6,11 +6,7 @@ import { mergeRefs } from 'src/lib/utils';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
-import {
-  useChildrenWithBlocker,
-  useContextMenuItemFocus,
-  useSubMenu,
-} from '../../hooks';
+import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import { useContextMenuRootContext } from '../../ContextMenu.context';
 
@@ -38,6 +34,9 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onClick,
       onCheckedChange,
       onKeyDown,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerMove,
 
       ...rest
     } = props;
@@ -59,6 +58,9 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onMouseEnter: handleItemMouseEnter,
       onBlur: handleItemBlur,
       onMouseLeave: handleItemMouseLeave,
+      onPointerEnter: handleItemPointerEnter,
+      onPointerLeave: handleItemPointerLeave,
+      onPointerMove: handleItemPointerMove,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
       ref: itemRef,
@@ -69,16 +71,13 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       onBlur,
       onMouseEnter,
       onMouseLeave,
+      onPointerEnter,
+      onPointerLeave,
+      onPointerMove,
     });
 
     const { closeRootMenuImmediately } =
       useContextMenuRootContext(DISPLAY_NAME);
-
-    const content = useChildrenWithBlocker({
-      children,
-      displayName: DISPLAY_NAME,
-      blockerClassName: s.blocker,
-    });
 
     const handleCheckedChange = (checked: boolean) => {
       onCheckedChange?.(checked);
@@ -106,32 +105,21 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
     };
 
     const handleSelect = (e: Event) => {
-      onSelect?.(e);
+      /**
+       * Otherwise, when clicking from the second nesting level,
+       * the parent menu will always close.
+       */
+      e.preventDefault();
 
       handleCloseOnClick();
+
+      onSelect?.(e);
     };
 
-    /**
-     * Handles click on checkbox item.
-     *
-     * - stopPropagation: prevent click from bubbling to parent menu items
-     * - preventDefault: only for non-link items to allow links to navigate normally
-     */
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-      e.stopPropagation();
-
-      const target = e.target as HTMLElement;
-      const isLink = target.closest('a');
-
-      if (!isLink) {
-        e.preventDefault();
-      }
+      handleCloseOnClick();
 
       onClick?.(e);
-
-      handleCheckedChange(!isChecked);
-
-      handleCloseOnClick();
     };
 
     return withProvider(
@@ -149,10 +137,13 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         onMouseEnter={handleItemMouseEnter}
         onBlur={handleItemBlur}
         onMouseLeave={handleItemMouseLeave}
+        onPointerEnter={handleItemPointerEnter}
+        onPointerLeave={handleItemPointerLeave}
+        onPointerMove={handleItemPointerMove}
         onKeyDown={handleKeyDown}
         {...rest}
       >
-        {content}
+        {children}
       </RadixDropdownMenuCheckboxItem>
     );
   }

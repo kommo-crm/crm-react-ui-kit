@@ -98,4 +98,12 @@ export interface ContextMenuSubContextProps {
    * Immediately closes the menu without waiting for any hover or animation delays.
    */
   closeMenuImmediately: () => void;
+  /**
+   * Sets whether the item with the focused input is open.
+   */
+  setItemWithFocusedInput: (itemWithFocusedInput: string | null) => void;
+  /**
+   * Whether the item with the focused input is open.
+   */
+  itemWithFocusedInput: string | null;
 }

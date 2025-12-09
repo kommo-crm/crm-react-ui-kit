@@ -42,24 +42,6 @@ export type ContextMenuRootProps = Omit<
    * @default false
    */
   enableInnerInputFocus?: boolean;
-  /**
-   * The container to focus the blocker on.
-   *
-   * @default [document.body]
-   */
-  backgroundFocusBlockerContainers?: (
-    | HTMLElement
-    | (() => HTMLElement)
-    | null
-  )[];
-  /**
-   * The class name of the background focus blocker.
-   */
-  backgroundFocusBlockerClassName?: string;
-  /**
-   * The class name of the background focus blocker for input focus.
-   */
-  backgroundInputFocusBlockerClassName?: string;
 };
 
 export interface ContextMenuContextProps {
@@ -171,13 +153,6 @@ export interface ContextMenuContextProps {
    * This prop is only used for `ContextMenu` (root) components.
    */
   shouldCloseRootMenuOnSelect?: boolean;
-}
-
-export interface ContextMenuRootContextProps {
-  /**
-   * Immediately closes the root menu without waiting for any hover or animation delays.
-   */
-  closeRootMenuImmediately: (closeRootMenu?: boolean) => void;
   /**
    * Sets whether the item with the focused input is open.
    */
@@ -186,6 +161,13 @@ export interface ContextMenuRootContextProps {
    * Whether the item with the focused input is open.
    */
   itemWithFocusedInput: string | null;
+}
+
+export interface ContextMenuRootContextProps {
+  /**
+   * Immediately closes the root menu without waiting for any hover or animation delays.
+   */
+  closeRootMenuImmediately: (closeRootMenu?: boolean) => void;
   /**
    * Whether the item should enable inner input focus.
    */

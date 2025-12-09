@@ -295,13 +295,6 @@ const StoryComponent = ({
   const [theme, setTheme] = useState('light');
 
   /**
-   * Required for the correct broker mount.
-   */
-  const backgroundFocusBlockerContainer: HTMLElement | null =
-    document.querySelector('.sb-story') ||
-    document.querySelector('#storybook-root');
-
-  /**
    * Required for the correct position calculation.
    */
   const collisionBoundary = document.querySelector(
@@ -309,11 +302,7 @@ const StoryComponent = ({
   ) as HTMLElement;
 
   return (
-    <ContextMenu.Root
-      mode={mode}
-      enableInnerInputFocus
-      backgroundFocusBlockerContainers={[backgroundFocusBlockerContainer]}
-    >
+    <ContextMenu.Root mode={mode} enableInnerInputFocus>
       <ContextMenu.Trigger
         style={
           isTriggerAsChild
@@ -356,6 +345,8 @@ const StoryComponent = ({
             <Text theme={TextContextMenuTheme} size="l" isEllipsis>
               <b>{i18n.t('Workspace')}:</b> Kommo
             </Text>
+
+            <input />
           </ContextMenu.Item>
 
           <ContextMenu.Item style={{ maxHeight: '20px' }}>
@@ -434,6 +425,14 @@ const StoryComponent = ({
                         </Text>
                       </ContextMenu.RadioItem>
 
+                      <ContextMenu.Item isSelectable={false}>
+                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                          <b>{i18n.t('Workspace')}:</b> Kommo
+                        </Text>
+
+                        <input />
+                      </ContextMenu.Item>
+
                       <ContextMenu.RadioItem
                         value="dark"
                         shouldCloseRootMenuOnSelect
@@ -494,6 +493,14 @@ const StoryComponent = ({
                   <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     {i18n.t('Contact')} 2
                   </Text>
+                </ContextMenu.Item>
+
+                <ContextMenu.Item isSelectable={false}>
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <b>{i18n.t('Workspace')}:</b> Kommo
+                  </Text>
+
+                  <input />
                 </ContextMenu.Item>
 
                 <ContextMenu.Item isDanger>
@@ -588,6 +595,8 @@ const meta: Meta<typeof StoryComponent> = {
         id="context-menu-story"
       >
         <StoryComponent {...args} />
+
+        <input />
       </div>
     );
   },

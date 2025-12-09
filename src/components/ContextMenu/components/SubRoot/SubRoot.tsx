@@ -52,6 +52,8 @@ export const SubRoot = (props: ContextMenuSubRootProps) => {
     triggerId,
     onOpenByKeyboard,
     onChildOpen,
+    itemWithFocusedInput,
+    setItemWithFocusedInput,
   } = useContextMenuSubMenu({
     displayName: DISPLAY_NAME,
     mode: mode,
@@ -83,6 +85,8 @@ export const SubRoot = (props: ContextMenuSubRootProps) => {
       shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
       onChildOpen={onChildOpen}
       isOpen={isOpen}
+      itemWithFocusedInput={itemWithFocusedInput}
+      setItemWithFocusedInput={setItemWithFocusedInput}
     >
       <RadixDropdownMenuRoot
         open={isOpen}

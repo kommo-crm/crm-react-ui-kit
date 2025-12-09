@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 
-import { UseInnerInputsFocusOptions } from './useInnerInputsFocus.types';
+import { UseInnerFocusTrackerOptions } from './useInnerFocusTracker.types';
 
 /**
  * Hook that monitors a DOM node for inner input elements and tracks their
@@ -12,7 +12,7 @@ import { UseInnerInputsFocusOptions } from './useInnerInputsFocus.types';
  *
  * Also supports contentEditable elements as focusable inputs.
  */
-export const useInnerInputsFocus = (options: UseInnerInputsFocusOptions) => {
+export const useInnerFocusTracker = (options: UseInnerFocusTrackerOptions) => {
   const { isEnabled } = options;
 
   const [hasInnerInput, setHasInnerInput] = useState(false);

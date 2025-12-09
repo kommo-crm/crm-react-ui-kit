@@ -2,9 +2,9 @@ import { useLayoutEffect, useState } from 'react';
 
 import { useContextMenuRootContext } from '../../ContextMenu.context';
 
-import { useChildrenWithBlocker } from '..';
+import { useInnerFocusTracker } from '../useInnerFocusTracker/useInnerFocusTracker';
 
-import { useInnerInputsFocus } from './hooks';
+import { useLevelContext } from '../../providers';
 
 import { UseItemInnerFocusOptions } from './useItemInnerFocus.types';
 
@@ -24,17 +24,15 @@ import { UseItemInnerFocusOptions } from './useItemInnerFocus.types';
  * - Renders a focus blocker over other items when one item has a focused input
  */
 export const useItemInnerFocus = (options: UseItemInnerFocusOptions) => {
-  const { id, children, isSelectableProp, displayName, blockerClassName } =
-    options;
+  const { id, isSelectableProp, displayName } = options;
 
-  const {
-    itemWithFocusedInput,
-    setItemWithFocusedInput,
-    enableInnerInputFocus,
-  } = useContextMenuRootContext(displayName);
+  const { enableInnerInputFocus } = useContextMenuRootContext(displayName);
+
+  const { itemWithFocusedInput, setItemWithFocusedInput } =
+    useLevelContext(displayName);
 
   const { hasInnerInput, isInnerInputFocused, handleNodeRef } =
-    useInnerInputsFocus({ isEnabled: enableInnerInputFocus });
+    useInnerFocusTracker({ isEnabled: enableInnerInputFocus });
 
   const [isSelectable, setIsSelectable] = useState(isSelectableProp ?? true);
 
@@ -72,18 +70,9 @@ export const useItemInnerFocus = (options: UseItemInnerFocusOptions) => {
     enableInnerInputFocus,
   ]);
 
-  const childrenWithBlocker = useChildrenWithBlocker({
-    displayName,
-    children,
-    shouldShowBlocker:
-      itemWithFocusedInput !== null && itemWithFocusedInput !== id,
-    blockerClassName,
-  });
-
   return {
-    isSelectable,
+    isSelectableConsideringInputFocus: isSelectable,
     setIsSelectable,
     handleNodeRef,
-    childrenWithBlocker,
   };
 };

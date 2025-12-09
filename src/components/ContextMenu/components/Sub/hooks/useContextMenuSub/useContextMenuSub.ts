@@ -21,6 +21,9 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   const [isChildOpen, setIsChildOpen] = useState(false);
   const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
   const [isSubRootOpen, setIsSubRootOpen] = useState(false);
+  const [itemWithFocusedInput, setItemWithFocusedInput] = useState<
+    string | null
+  >(null);
 
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -87,7 +90,10 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     clearTimers();
 
     if (mode === ContextMenuMode.HOVER) {
-      if (isChildOpen && childMode === ContextMenuMode.CLICK) {
+      if (
+        (isChildOpen && childMode === ContextMenuMode.CLICK) ||
+        itemWithFocusedInput !== null
+      ) {
         return;
       }
 
@@ -282,6 +288,16 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   }, [open, mode]);
 
   /**
+   * This effect is used to call the onChildOpen callback function
+   * when the item with the focused input is opened.
+   */
+  useEffect(() => {
+    if (itemWithFocusedInput !== null) {
+      onChildOpen?.(true, ContextMenuMode.CLICK);
+    }
+  }, [itemWithFocusedInput]);
+
+  /**
    * onChildOpen states propagation.
    *
    * Important for the cases like Root (hover) -> Sub (hover) -> SubRoot (click) nesting.
@@ -345,5 +361,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     onChildOpen: handleChildOpen,
     onSubRootOpen: handleSubRootOpen,
     closeMenuImmediately: handleCloseImmediate,
+    itemWithFocusedInput,
+    setItemWithFocusedInput,
   };
 };

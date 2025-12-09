@@ -36,4 +36,12 @@ export type ContentProps = RadixContentProps & {
    * @default false
    */
   disableRepositioning?: boolean;
+  /**
+   * The callback function to be called when the context menu is closed.
+   */
+  onCloseAutoFocus?: (e: Event) => void;
+  /**
+   * The callback function to be called when the context menu is opened.
+   */
+  onOpenAutoFocus?: (e: Event) => void;
 };
