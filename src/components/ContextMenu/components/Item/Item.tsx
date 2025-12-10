@@ -174,6 +174,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           )}
           data-has-submenu={hasSubmenu ? '' : undefined}
           data-item
+          data-non-selectable
           onFocus={onFocus}
           onMouseEnter={onMouseEnter}
           onBlur={onBlur}

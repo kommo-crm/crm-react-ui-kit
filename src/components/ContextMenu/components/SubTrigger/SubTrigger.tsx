@@ -7,7 +7,7 @@ import { KeyboardKey } from 'src/lib/keyboard';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
-import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
+import { useContextMenuItemFocus } from '../../hooks';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -49,9 +49,6 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onOpenByKeyboard,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
-    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-      useSubMenu({ onKeyDown });
-
     const {
       dataHighlighted,
       onFocus: handleItemFocus,
@@ -63,11 +60,13 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onPointerMove: handleItemPointerMove,
     } = useContextMenuItemFocus({
       displayName: DISPLAY_NAME,
-      ref: itemRef,
+      ref: triggerRef,
       id: triggerId,
       isDisabled,
-      hasSubmenu,
-      onMouseEnter: onContentEnter,
+      onMouseEnter: (e) => {
+        onContentEnter(e);
+        onMouseEnter?.(e);
+      },
       onMouseLeave: (e) => {
         onContentLeave(e);
         onMouseLeave?.(e);
@@ -96,8 +95,6 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         }
       }
 
-      handleKeyDown?.(e);
-
       onKeyDown?.(e);
     };
 
@@ -120,25 +117,18 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       onClick?.(e);
     };
 
-    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
-      handleItemMouseEnter?.(e);
-
-      onMouseEnter?.(e);
-    };
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleItemMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
       handleItemMouseEnter?.(e);
 
       onMouseMove?.(e);
     };
 
-    return withProvider(
+    return (
       <RadixDropdownMenuSubTrigger
-        ref={mergeRefs(ref, triggerRef, itemRef)}
+        ref={mergeRefs(ref, triggerRef)}
         className={cx(s.sub_trigger, className)}
         disabled={isDisabled}
         data-highlighted={
-          subMenuOpen ||
           isOpen ||
           dataHighlighted === '' ||
           (mode === ContextMenuMode.CLICK && isOpen)
@@ -150,8 +140,8 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         onKeyDown={handleKeyDownSubTrigger}
         onClick={handleClick}
         onFocus={handleItemFocus}
-        onMouseEnter={handleMouseEnter}
-        onMouseMove={handleMouseMove}
+        onMouseEnter={handleItemMouseEnter}
+        onMouseMove={handleItemMouseMove}
         onBlur={handleItemBlur}
         onMouseLeave={handleItemMouseLeave}
         onPointerEnter={handleItemPointerEnter}

@@ -18,6 +18,7 @@ export const useSubMenu = (options: UseSubMenuOptions) => {
 
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [hasSubmenu, setHasSubmenu] = useState(false);
+  const [isOpenedByKeyboard, setIsOpenedByKeyboard] = useState(false);
 
   const itemRef = useRef<HTMLDivElement>(null);
 
@@ -34,6 +35,7 @@ export const useSubMenu = (options: UseSubMenuOptions) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (hasSubmenu && e.key === KeyboardKey.ARROW_RIGHT) {
       setSubMenuOpen(true);
+      setIsOpenedByKeyboard(true);
     }
 
     onKeyDown?.(e);
@@ -44,6 +46,8 @@ export const useSubMenu = (options: UseSubMenuOptions) => {
       hasSubmenu={hasSubmenu}
       subMenuOpen={subMenuOpen}
       setSubMenuOpen={setSubMenuOpen}
+      isOpenedByKeyboard={isOpenedByKeyboard}
+      setIsOpenedByKeyboard={setIsOpenedByKeyboard}
     >
       {children}
     </SubMenuProvider>

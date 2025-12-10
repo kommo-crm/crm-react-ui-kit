@@ -173,6 +173,12 @@ const renderContextMenu = async ({
                             Disabled item in SubRoot
                           </Text>
                         </ContextMenu.Item>
+
+                        <ContextMenu.Item>
+                          <input
+                            data-testid={`${DATA_INPUT_TEST_ID}-subroot`}
+                          />
+                        </ContextMenu.Item>
                       </ContextMenu.experimental_SubRoot.Content>
                     </ContextMenu.Portal>
                   </ContextMenu.experimental_SubRoot>
@@ -215,6 +221,10 @@ const renderContextMenu = async ({
                     <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                       Disabled item in Sub
                     </Text>
+                  </ContextMenu.Item>
+
+                  <ContextMenu.Item>
+                    <input data-testid={`${DATA_INPUT_TEST_ID}-sub`} />
                   </ContextMenu.Item>
                 </ContextMenu.SubContent>
               </ContextMenu.Portal>
@@ -931,102 +941,8 @@ describe('ContextMenu', () => {
   });
 
   describe('Focus blockers', () => {
-    it('Should show global blocker when menu is open', async () => {
-      await renderContextMenu({
-        rootProps: {
-          backgroundFocusBlockerContainers: [document.body],
-        },
-      });
-
-      // Menu is closed, blocker should not be present
-      expect(document.querySelector('[data-blocker]')).not.toBeInTheDocument();
-
-      // Open menu
-      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-
-      // Blocker should be present when menu is open
-      const blocker = document.querySelector('[data-blocker]');
-
-      expect(blocker).toBeInTheDocument();
-
-      // Close menu
-      await userEvent.keyboard('{Escape}');
-      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
-
-      // Blocker should be removed when menu is closed
-      expect(document.querySelector('[data-blocker]')).not.toBeInTheDocument();
-    });
-
-    it('Should show blockers in other items when input is focused', async () => {
-      await renderContextMenu({
-        rootProps: {
-          backgroundFocusBlockerContainers: [document.body],
-        },
-      });
-
-      // Menu is closed, blocker should not be present
-      expect(document.querySelector('[data-blocker]')).not.toBeInTheDocument();
-
-      // Open menu
-      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-
-      // Global blocker should be present when menu is open
-      expect(document.querySelector('[data-blocker]')).toBeInTheDocument();
-
-      // Get the input and find its parent item element
-      const input = screen.getByTestId(DATA_INPUT_TEST_ID);
-      const itemWithInput = input.closest('[data-item]') as HTMLElement;
-
-      // Get other items (those with DATA_ITEM_TEST_ID)
-      const otherItems = screen.getAllByTestId(DATA_ITEM_TEST_ID);
-      const otherItem = otherItems[0]; // First item (Item 1)
-
-      // Before focusing input, no blockers should be present in items
-      expect(
-        itemWithInput.querySelector('[data-blocker]')
-      ).not.toBeInTheDocument();
-      expect(otherItem.querySelector('[data-blocker]')).not.toBeInTheDocument();
-
-      // Focus input
-      await act(async () => {
-        input.focus();
-      });
-
-      // Wait for blockers to appear
-      await waitFor(() => {
-        // The item with focused input should not have a blocker
-        expect(
-          itemWithInput.querySelector('[data-blocker]')
-        ).not.toBeInTheDocument();
-
-        // Other items should have blockers
-        expect(otherItem.querySelector('[data-blocker]')).toBeInTheDocument();
-      });
-
-      // Global blocker should still be present when input is focused
-      expect(document.querySelector('[data-blocker]')).toBeInTheDocument();
-
-      // Blur input
-      await act(async () => {
-        input.blur();
-      });
-
-      // Wait for blockers to disappear from items
-      await waitFor(() => {
-        expect(
-          otherItem.querySelector('[data-blocker]')
-        ).not.toBeInTheDocument();
-      });
-    });
-
     it('Should show blocker in root content when SubRoot is open', async () => {
-      await renderContextMenu({
-        rootProps: {
-          backgroundFocusBlockerContainers: [document.body],
-        },
-      });
+      await renderContextMenu();
 
       // Menu is closed, blocker should not be present
       expect(document.querySelector('[data-blocker]')).not.toBeInTheDocument();
@@ -1034,9 +950,6 @@ describe('ContextMenu', () => {
       // Open root menu
       await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-
-      // Global blocker should be present when menu is open
-      expect(document.querySelector('[data-blocker]')).toBeInTheDocument();
 
       // Get root content element
       const rootContent = screen.getByTestId(DATA_CONTENT_TEST_ID);
@@ -1063,9 +976,6 @@ describe('ContextMenu', () => {
         expect(rootContent.querySelector('[data-blocker]')).toBeInTheDocument();
       });
 
-      // Global blocker should still be present
-      expect(document.querySelector('[data-blocker]')).toBeInTheDocument();
-
       // Close SubRoot
       await userEvent.keyboard('{Escape}');
 
@@ -1080,9 +990,6 @@ describe('ContextMenu', () => {
           rootContent.querySelector('[data-blocker]')
         ).not.toBeInTheDocument();
       });
-
-      // Global blocker should still be present (root menu is still open)
-      expect(document.querySelector('[data-blocker]')).toBeInTheDocument();
 
       // Close root menu
       await userEvent.keyboard('{Escape}');
@@ -1104,7 +1011,6 @@ describe('ContextMenu', () => {
       await renderContextMenu({
         rootProps: {
           mode: ContextMenuMode.HOVER,
-          backgroundFocusBlockerContainers: [document.body],
         },
       });
 
@@ -1162,7 +1068,6 @@ describe('ContextMenu', () => {
       await renderContextMenu({
         rootProps: {
           mode: ContextMenuMode.HOVER,
-          backgroundFocusBlockerContainers: [document.body],
         },
         subRootProps: {
           mode: ContextMenuMode.HOVER,
@@ -1256,7 +1161,6 @@ describe('ContextMenu', () => {
       await renderContextMenu({
         rootProps: {
           mode: ContextMenuMode.HOVER,
-          backgroundFocusBlockerContainers: [document.body],
         },
         subProps: {
           mode: ContextMenuMode.HOVER,
@@ -1365,7 +1269,6 @@ describe('ContextMenu', () => {
       await renderContextMenu({
         rootProps: {
           mode: ContextMenuMode.HOVER,
-          backgroundFocusBlockerContainers: [document.body],
         },
         subRootProps: {
           mode: ContextMenuMode.HOVER,
@@ -1495,7 +1398,6 @@ describe('ContextMenu', () => {
       await renderContextMenu({
         rootProps: {
           mode: ContextMenuMode.HOVER,
-          backgroundFocusBlockerContainers: [document.body],
         },
         subProps: {
           mode: ContextMenuMode.HOVER,
@@ -1598,6 +1500,146 @@ describe('ContextMenu', () => {
       await act(async () => {
         document.body.removeChild(outsideElement);
       });
+    });
+
+    it('Should not close Root when input is focused', async () => {
+      const user = userEvent.setup();
+
+      await renderContextMenu({
+        rootProps: {
+          mode: ContextMenuMode.HOVER,
+        },
+      });
+
+      // 1) Hover on trigger - menu opens
+      await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      });
+
+      // 2) Focus input in root menu
+      const input = screen.getByTestId(DATA_INPUT_TEST_ID);
+
+      await act(async () => {
+        input.focus();
+      });
+
+      // 3) Move cursor away from content and trigger - menu should NOT close
+      await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      // Wait to ensure menu doesn't close
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      });
+
+      // Menu should still be open when input is focused
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+    });
+
+    it('Should not close SubRoot and Root when input in SubRoot is focused', async () => {
+      const user = userEvent.setup();
+
+      await renderContextMenu({
+        rootProps: {
+          mode: ContextMenuMode.HOVER,
+        },
+        subRootProps: {
+          mode: ContextMenuMode.HOVER,
+        },
+      });
+
+      // 1) Hover on trigger - root menu opens
+      await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      });
+
+      // 2) Hover on SubRoot trigger - SubRoot menu opens
+      await user.hover(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+        ).toBeInTheDocument();
+      });
+
+      // 3) Focus input in SubRoot menu
+      const input = screen.getByTestId(`${DATA_INPUT_TEST_ID}-subroot`);
+
+      await act(async () => {
+        input.focus();
+      });
+
+      // 4) Move cursor away from all menus - menus should NOT close
+      await user.unhover(screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      // Wait to ensure menus don't close
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      });
+
+      // Both menus should still be open when input is focused
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+    });
+
+    it('Should not close Sub and Root when input in Sub is focused', async () => {
+      const user = userEvent.setup();
+
+      await renderContextMenu({
+        rootProps: {
+          mode: ContextMenuMode.HOVER,
+        },
+        subProps: {
+          mode: ContextMenuMode.HOVER,
+        },
+      });
+
+      // 1) Hover on trigger - root menu opens
+      await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      });
+
+      // 2) Hover on Sub trigger - Sub menu opens
+      await user.hover(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).toBeInTheDocument();
+      });
+
+      // 3) Focus input in Sub menu
+      const input = screen.getByTestId(`${DATA_INPUT_TEST_ID}-sub`);
+
+      await act(async () => {
+        input.focus();
+      });
+
+      // 4) Move cursor away from all menus - menus should NOT close
+      await user.unhover(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      // Wait to ensure menus don't close
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      });
+
+      // Both menus should still be open when input is focused
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeInTheDocument();
     });
   });
 });

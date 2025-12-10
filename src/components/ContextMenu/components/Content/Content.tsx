@@ -185,6 +185,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       >
         {isOpen && (
           <animated.div
+            data-menu-level={1}
             style={{
               zIndex: Number.MAX_SAFE_INTEGER - 10,
               position: 'fixed',

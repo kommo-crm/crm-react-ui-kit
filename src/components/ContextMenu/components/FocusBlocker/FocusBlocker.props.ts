@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 
-import { Handlers } from '../../hooks/useStopEvents/useStopEvents.types';
+import { Handlers } from './hooks';
 
 export interface FocusBlockerProps extends ComponentPropsWithoutRef<'div'> {
   /**

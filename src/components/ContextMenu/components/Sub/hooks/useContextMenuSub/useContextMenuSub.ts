@@ -17,7 +17,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   const [open, setOpen] = useState(defaultOpen || false);
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
-  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
+  const [isOpenedByKeyboard, setIsOpenedByKeyboard] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
   const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
   const [isSubRootOpen, setIsSubRootOpen] = useState(false);
@@ -80,7 +80,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     onOpen?.(false);
     handleSubmenuOpen(false);
     setIsInsideContent(false);
-    setOpenedByKeyboard(false);
+    setIsOpenedByKeyboard(false);
   };
 
   /**
@@ -104,7 +104,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         onOpen?.(false);
         handleSubmenuOpen(false);
         setIsInsideContent(false);
-        setOpenedByKeyboard(false);
+        setIsOpenedByKeyboard(false);
       }, animationDuration);
     } else {
       handleCloseImmediate();
@@ -120,12 +120,12 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       onOpen?.(defaultOpen);
       handleSubmenuOpen(defaultOpen);
       setIsAnimatedOpen(defaultOpen);
-      setOpenedByKeyboard(false);
+      setIsOpenedByKeyboard(false);
 
       return;
     }
 
-    if (mode === ContextMenuMode.CLICK) {
+    if (mode === ContextMenuMode.CLICK || isOpenedByKeyboard) {
       setOpen(value);
       onOpen?.(value);
       handleSubmenuOpen(value);
@@ -157,7 +157,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * The callback function to be called when the submenu is opened by keyboard.
    */
   const onOpenByKeyboard = (value: boolean) => {
-    setOpenedByKeyboard(value);
+    setIsOpenedByKeyboard(value);
   };
 
   /**
@@ -169,7 +169,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       return;
     }
 
-    setOpenedByKeyboard(false);
+    setIsOpenedByKeyboard(false);
 
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
@@ -202,7 +202,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       return;
     }
 
-    setOpenedByKeyboard(false);
+    setIsOpenedByKeyboard(false);
 
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -252,7 +252,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * Handles the hover close delay.
    */
   useEffect(() => {
-    if (!open || mode !== ContextMenuMode.HOVER || openedByKeyboard) {
+    if (!open || mode !== ContextMenuMode.HOVER || isOpenedByKeyboard) {
       return;
     }
 
@@ -277,7 +277,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         hoverTimeoutRef.current = null;
       }
     };
-  }, [mode, open, isInsideContent, hoverCloseDelay, openedByKeyboard]);
+  }, [mode, open, isInsideContent, hoverCloseDelay, isOpenedByKeyboard]);
 
   /**
    * This effect is used to call the onChildOpen callback function

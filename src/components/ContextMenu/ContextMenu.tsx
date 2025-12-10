@@ -1,7 +1,7 @@
 import React from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
-import { useContextMenu } from './hooks';
+import { useContextMenu, useContextMenuKeyboardNavigation } from './hooks';
 
 import { ContextMenuRootProps } from './ContextMenu.props';
 import { ContextMenuMode } from './ContextMenu.enums';
@@ -76,6 +76,13 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     enableInnerInputFocus,
     onOpen,
     onAnimatedOpen,
+  });
+
+  useContextMenuKeyboardNavigation({
+    isOpen: isOpen ?? open,
+    isAnimatedOpen,
+    contentRef,
+    mode: rootMode,
   });
 
   return (

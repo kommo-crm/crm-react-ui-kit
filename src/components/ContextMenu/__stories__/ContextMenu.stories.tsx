@@ -78,11 +78,7 @@ function App() {
   };
 
   return (
-    <ContextMenu.Root
-      mode={mode}
-      enableInnerInputFocus
-      backgroundFocusBlockerContainers={[document.body]]}
-    >
+    <ContextMenu.Root mode={mode} enableInnerInputFocus>
       <ContextMenu.Trigger
         style={{
           display: 'flex',
@@ -345,8 +341,6 @@ const StoryComponent = ({
             <Text theme={TextContextMenuTheme} size="l" isEllipsis>
               <b>{i18n.t('Workspace')}:</b> Kommo
             </Text>
-
-            <input />
           </ContextMenu.Item>
 
           <ContextMenu.Item style={{ maxHeight: '20px' }}>
@@ -392,7 +386,7 @@ const StoryComponent = ({
                         <ContextMenuCheckIcon />
                       </ContextMenu.ItemIndicator>
 
-                      <Text theme={TextContextMenuTheme} size="l">
+                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                         {i18n.t('Autoupdate')}
                       </Text>
                     </ContextMenu.CheckboxItem>
@@ -402,7 +396,7 @@ const StoryComponent = ({
                     <ContextMenu.Label>
                       {autoupdateChecked && <ContextMenu.ItemIcon />}
 
-                      <Text theme={TextSecondaryDarkTheme} size="l">
+                      <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
                         {i18n.t('Theme')}
                       </Text>
                     </ContextMenu.Label>
@@ -420,18 +414,10 @@ const StoryComponent = ({
                       >
                         {autoupdateChecked && <ContextMenu.ItemIcon />}
 
-                        <Text theme={TextContextMenuTheme} size="l">
+                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                           {i18n.t('Light')}
                         </Text>
                       </ContextMenu.RadioItem>
-
-                      <ContextMenu.Item isSelectable={false}>
-                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
-                          <b>{i18n.t('Workspace')}:</b> Kommo
-                        </Text>
-
-                        <input />
-                      </ContextMenu.Item>
 
                       <ContextMenu.RadioItem
                         value="dark"
@@ -439,7 +425,7 @@ const StoryComponent = ({
                       >
                         {autoupdateChecked && <ContextMenu.ItemIcon />}
 
-                        <Text theme={TextContextMenuTheme} size="l">
+                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                           {i18n.t('Dark')}
                         </Text>
                       </ContextMenu.RadioItem>
@@ -493,14 +479,6 @@ const StoryComponent = ({
                   <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                     {i18n.t('Contact')} 2
                   </Text>
-                </ContextMenu.Item>
-
-                <ContextMenu.Item isSelectable={false}>
-                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
-                    <b>{i18n.t('Workspace')}:</b> Kommo
-                  </Text>
-
-                  <input />
                 </ContextMenu.Item>
 
                 <ContextMenu.Item isDanger>
@@ -595,8 +573,6 @@ const meta: Meta<typeof StoryComponent> = {
         id="context-menu-story"
       >
         <StoryComponent {...args} />
-
-        <input />
       </div>
     );
   },

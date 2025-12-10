@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import cx from 'classnames';
 
-import { useStopEvents } from '../../hooks';
+import { useStopEvents } from './hooks';
 
 import { FocusBlockerProps } from './FocusBlocker.props';
 

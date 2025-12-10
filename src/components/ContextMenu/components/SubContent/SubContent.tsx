@@ -131,6 +131,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       >
         {isOpen && (
           <animated.div
+            data-menu-level={level + 1}
             style={{
               position: 'fixed',
               zIndex: Number.MAX_SAFE_INTEGER - 10,

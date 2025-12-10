@@ -1,13 +1,8 @@
 import React from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
-import {
-  ContextMenuProvider,
-  useContextMenuContext,
-} from '../../ContextMenu.context';
+import { ContextMenuProvider } from '../../ContextMenu.context';
 import { ContextMenuMode } from '../../ContextMenu.enums';
-
-import { useSubMenuContext } from '../../providers';
 
 import { FocusBlocker } from '../FocusBlocker';
 
@@ -33,37 +28,30 @@ export const SubRoot = (props: ContextMenuSubRootProps) => {
     ...rest
   } = props;
 
-  const { animationDuration, hoverCloseDelay } =
-    useContextMenuContext(DISPLAY_NAME);
-
-  const { subMenuOpen: subMenuOpenContext, setSubMenuOpen } =
-    useSubMenuContext(DISPLAY_NAME);
-
   const {
     mode: rootMode,
     isOpen,
-    onOpenChange,
     triggerRef,
     contentRef,
     isAnimatedOpen,
+    triggerId,
+    itemWithFocusedInput,
+    animationDuration,
+    hoverCloseDelay,
     closeMenuImmediately,
+    setItemWithFocusedInput,
+    setSubMenuOpen,
+    onOpenChange,
     onContentEnter,
     onContentLeave,
-    triggerId,
     onOpenByKeyboard,
     onChildOpen,
-    itemWithFocusedInput,
-    setItemWithFocusedInput,
   } = useContextMenuSubMenu({
     displayName: DISPLAY_NAME,
     mode: mode,
     defaultOpen,
     onOpen,
     onAnimatedOpen,
-    animationDuration,
-    subMenuOpen: subMenuOpenContext,
-    setSubMenuOpen,
-    hoverCloseDelay,
   });
 
   return (

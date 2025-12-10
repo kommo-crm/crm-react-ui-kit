@@ -6,7 +6,7 @@ export const enum KeyboardKey {
   /**
    * Represents the Space key.
    */
-  SPACE = 'Space',
+  SPACE = ' ',
   /**
    * Represents the Escape key.
    */

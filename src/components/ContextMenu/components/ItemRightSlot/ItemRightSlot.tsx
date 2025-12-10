@@ -3,8 +3,6 @@ import cx from 'classnames';
 
 import { mergeRefs } from 'src/lib/utils';
 
-import { useStopEvents } from '../../hooks';
-
 import type { ItemRightSlotProps } from './ItemRightSlot.props';
 
 import s from './ItemRightSlot.module.css';
@@ -17,14 +15,8 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       className,
       children,
       onClick,
-      onKeyDown,
-      onKeyUp,
-      onKeyPress,
       onPointerDown,
       onPointerUp,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
 
       ...rest
     } = props;
@@ -42,29 +34,46 @@ export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
       setHasSubmenu(!!trigger);
     }, [children]);
 
-    const defaultHandlers = {
-      onClick,
-      onKeyDown,
-      onKeyUp,
-      onKeyPress,
-      onPointerDown,
-      onPointerUp,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (hasSubmenu) {
+        // Necessary if the Item is a link.
+        e.preventDefault();
+        // Necessary to stop propogation before Item
+        e.stopPropagation();
+      }
+
+      onClick?.(e);
     };
 
-    const stoppedHandlers = useStopEvents({
-      handlers: defaultHandlers,
-    });
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+      if (hasSubmenu) {
+        // Necessary if the Item is a link.
+        e.preventDefault();
+        // Necessary to stop propogation before Item
+        e.stopPropagation();
+      }
 
-    const handlers = hasSubmenu ? stoppedHandlers : defaultHandlers;
+      onPointerDown?.(e);
+    };
+
+    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+      if (hasSubmenu) {
+        // Necessary if the Item is a link.
+        e.preventDefault();
+        // Necessary to stop propogation before Item
+        e.stopPropagation();
+      }
+
+      onPointerUp?.(e);
+    };
 
     return (
       <div
         ref={mergeRefs(slotRef, ref)}
         className={cx(s.rightSlot, className)}
-        {...handlers}
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
         {...rest}
       >
         {children}

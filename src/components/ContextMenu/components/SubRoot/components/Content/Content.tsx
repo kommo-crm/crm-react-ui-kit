@@ -49,6 +49,9 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onCloseAutoFocus,
       onOpenAutoFocus,
       onEscapeKeyDown,
+      onClick,
+      onPointerDown,
+      onPointerUp,
 
       ...rest
     } = props;
@@ -145,12 +148,52 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onCloseAutoFocus?.(e);
     };
 
+    /**
+     * Prevent Radix from automatically focusing content after submenu opens.
+     * We handle focus management manually to support custom open behavior.
+     */
     const handleOpenAutoFocus = (e: Event) => {
       if (mode === ContextMenuMode.HOVER) {
         e.preventDefault();
       }
 
       onOpenAutoFocus?.(e);
+    };
+
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+      /**
+       * It is necessary that the click does not pop up to
+       * the ItemRightSlot where the preventDefault occurs.
+       * For example, otherwise the input to the SubRoot will
+       * snot be able to focus and exist correctly.
+       */
+      e.stopPropagation();
+
+      onClick?.(e);
+    };
+
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+      /**
+       * It is necessary that the click does not pop up to
+       * the ItemRightSlot where the preventDefault occurs.
+       * For example, otherwise the input to the SubRoot will
+       * snot be able to focus and exist correctly.
+       */
+      e.stopPropagation();
+
+      onPointerDown?.(e);
+    };
+
+    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+      /**
+       * It is necessary that the click does not pop up to
+       * the ItemRightSlot where the preventDefault occurs.
+       * For example, otherwise the input to the SubRoot will
+       * snot be able to focus and exist correctly.
+       */
+      e.stopPropagation();
+
+      onPointerUp?.(e);
     };
 
     return (
@@ -168,6 +211,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       >
         {isOpen && (
           <animated.div
+            data-menu-level={level + 1}
             style={{
               zIndex: Number.MAX_SAFE_INTEGER - 10,
               position: 'fixed',
@@ -200,6 +244,9 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
                */
               // @ts-expect-error - Property 'onOpenAutoFocus' does not exist on type
               onOpenAutoFocus={handleOpenAutoFocus}
+              onClick={handleClick}
+              onPointerDown={handlePointerDown}
+              onPointerUp={handlePointerUp}
               {...rest}
             >
               {children}

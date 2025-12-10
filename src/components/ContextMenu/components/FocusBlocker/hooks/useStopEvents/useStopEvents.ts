@@ -28,6 +28,7 @@ export const useStopEvents = <T extends HTMLElement>(
    * - stopPropagation: prevent event from bubbling to parent menu items
    */
   const stop = useCallback((e: React.SyntheticEvent) => {
+    e.preventDefault();
     e.stopPropagation();
   }, []);
 

@@ -1,10 +1,12 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 
+import { focusFirstFocusableItem } from 'src/components/ContextMenu/utils';
+
 import { useIsTouchDevice } from '../../../../hooks';
 
 import { ContextMenuMode } from '../../../../ContextMenu.enums';
 
-import { useLevelContext } from '../../../../providers';
+import { useLevelContext, useSubMenuContext } from '../../../../providers';
 
 import {
   useContextMenuContext,
@@ -22,20 +24,22 @@ export const useContextMenuSubMenu = (
     displayName,
     mode: rootMode,
     defaultOpen,
-    animationDuration,
-    subMenuOpen,
-    hoverCloseDelay,
     onOpen,
-    setSubMenuOpen,
     onAnimatedOpen,
   } = options;
 
   const triggerId = useId();
 
+  const {
+    subMenuOpen,
+    isOpenedByKeyboard,
+    setSubMenuOpen,
+    setIsOpenedByKeyboard,
+  } = useSubMenuContext(displayName);
+
   const [open, setOpen] = useState(subMenuOpen || defaultOpen || false);
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
-  const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
   const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
   const [itemWithFocusedInput, setItemWithFocusedInput] = useState<
@@ -50,7 +54,8 @@ export const useContextMenuSubMenu = (
     onSubRootOpen,
   } = useLevelContext(displayName);
 
-  const { onSubmenuOpen } = useContextMenuContext(displayName);
+  const { onSubmenuOpen, animationDuration, hoverCloseDelay } =
+    useContextMenuContext(displayName);
 
   const { closeRootMenuImmediately } = useContextMenuRootContext(displayName);
 
@@ -148,18 +153,17 @@ export const useContextMenuSubMenu = (
     setSubMenuOpen?.(false);
     onOpen?.(false);
     setIsInsideContent(false);
+    setIsOpenedByKeyboard(false);
   };
 
   /**
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (mode === ContextMenuMode.CLICK) {
-      if (defaultOpen !== undefined) {
-        setOpen(defaultOpen);
+    if (mode === ContextMenuMode.CLICK && defaultOpen !== undefined) {
+      setOpen(defaultOpen);
 
-        return;
-      }
+      return;
     }
 
     if (value) {
@@ -183,7 +187,6 @@ export const useContextMenuSubMenu = (
    * The callback function to be called when the menu is opened by keyboard.
    */
   const onOpenByKeyboard = (value: boolean) => {
-    setOpenedByKeyboard(value);
     handleOpenChange?.(value);
   };
 
@@ -192,7 +195,7 @@ export const useContextMenuSubMenu = (
    * Keeps the submenu open in hover mode by canceling close timers.
    */
   const handleContentEnter = () => {
-    setOpenedByKeyboard(false);
+    setIsOpenedByKeyboard(false);
 
     if (mode !== ContextMenuMode.HOVER) {
       return;
@@ -224,7 +227,7 @@ export const useContextMenuSubMenu = (
    * Allows the submenu to close in hover mode.
    */
   const handleContentLeave = () => {
-    setOpenedByKeyboard(false);
+    setIsOpenedByKeyboard(false);
 
     if (mode !== ContextMenuMode.HOVER) {
       return;
@@ -271,11 +274,11 @@ export const useContextMenuSubMenu = (
    * Handles the hover close delay.
    */
   useEffect(() => {
-    if ((!open && !isAnimatedOpen) || mode !== ContextMenuMode.HOVER) {
-      return;
-    }
-
-    if (openedByKeyboard) {
+    if (
+      (!open && !isAnimatedOpen) ||
+      mode === ContextMenuMode.CLICK ||
+      isOpenedByKeyboard
+    ) {
       return;
     }
 
@@ -352,6 +355,19 @@ export const useContextMenuSubMenu = (
     }
   }, [parentIsAnimatedOpen]);
 
+  /**
+   * In the case of keyboard navigation, manually focus the first element.
+   */
+  useEffect(() => {
+    if (isOpenedByKeyboard) {
+      onOpenByKeyboard(true);
+
+      if (contentRef.current) {
+        focusFirstFocusableItem(contentRef.current);
+      }
+    }
+  }, [isOpenedByKeyboard, contentRef.current]);
+
   return {
     mode,
     isOpen,
@@ -369,5 +385,6 @@ export const useContextMenuSubMenu = (
     onChildOpen: handleChildOpen,
     itemWithFocusedInput,
     setItemWithFocusedInput,
+    setSubMenuOpen,
   };
 };
