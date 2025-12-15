@@ -90,10 +90,25 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
           const { x, y } = mousePositionRef.current;
 
           requestAnimationFrame(() => {
-            const elementBelow = document.elementFromPoint(x, y);
-            const menuItem = elementBelow?.closest(
-              '[data-item]'
-            ) as HTMLElement;
+            let menuItem: HTMLElement | null = null;
+
+            const menuItems =
+              document.querySelectorAll<HTMLElement>('[data-item]');
+
+            for (const item of menuItems) {
+              const rect = item.getBoundingClientRect();
+
+              if (
+                x >= rect.left &&
+                x <= rect.right &&
+                y >= rect.top &&
+                y <= rect.bottom
+              ) {
+                menuItem = item;
+
+                break;
+              }
+            }
 
             if (menuItem) {
               const event = new MouseEvent('mouseover', {

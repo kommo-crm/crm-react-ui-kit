@@ -22,9 +22,10 @@ The ContextMenu component is a flexible and powerful dropdown menu system that s
 - **Multiple interaction modes**: Click-based and hover-based menu activation
 - **Nested submenus**: Support for deeply nested menu structures using both standard `Sub` and experimental `SubRoot` components
 - **Smooth animations**: Configurable animation durations with opacity transitions
-- **Keyboard navigation**: Full keyboard support with arrow keys, Enter, Escape, and more
+- **Keyboard navigation**: Full keyboard support with automatic focus management and arrow key navigation
+- **Focus tracking**: Automatic menu closure when focus moves outside the menu and its submenus
 - **Focus management**: Advanced focus handling for inputs within menu items
-- **Auto-positioning**: Intelligent positioning with collision detection
+- **Auto-positioning**: Intelligent positioning with collision detection (excludes non-selectable items)
 - **Rich component library**: Items, groups, labels, separators, checkboxes, radio buttons, and more
 
 ## Installation
@@ -81,11 +82,7 @@ The root component that wraps the entire menu structure. All other components mu
 - `isOpen?`: `boolean` - Controlled open state
 - `defaultOpen?`: `boolean` - Uncontrolled initial open state
 - `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether menu closes on item click (default: `true`)
-- `autoCloseOnOtherOpen?`: `boolean` - Whether menu closes when another menu opens (default: `false`)
 - `enableInnerInputFocus?`: `boolean` - Enable focus management for inputs inside items (default: `false`)
-- `backgroundFocusBlockerContainers?`: `(HTMLElement | (() => HTMLElement) | null)[]` - Containers for focus blockers (default: `[document.body]`)
-- `backgroundFocusBlockerClassName?`: `string` - CSS class for background focus blocker
-- `backgroundInputFocusBlockerClassName?`: `string` - CSS class for input focus blocker
 
 ### [ContextMenu.Trigger](./components/Trigger/Trigger.tsx)
 
@@ -405,26 +402,12 @@ Decorative arrow pointer that points toward the menu trigger. Automatically posi
 
 #### [ContextMenu.FocusBlocker](./components/FocusBlocker/FocusBlocker.tsx)
 
-Utility component that blocks pointer events to prevent accidental clicks. Used internally by `SubRoot` and can be used for custom focus management.
+Utility component that blocks pointer and focus events to prevent accidental interactions. Used internally by `SubRoot` when a submenu is open. Automatically simulates mouseenter events on menu items when the blocker is removed if the cursor was over it.
 
 **Props:**
 
 - `className?`: `string` - Custom CSS class for the blocker
-- `disabledHandlers?`: `Array<keyof Handlers<HTMLDivElement>>` - Event handlers to not block
-- Standard HTML div props
-
-**Usage:**
-
-```tsx
-{
-  isOpen && (
-    <ContextMenu.FocusBlocker
-      className="custom-blocker"
-      disabledHandlers={['onPointerDown']}
-    />
-  );
-}
-```
+- Standard HTML div props (onFocus, onPointerEnter, onPointerLeave, onPointerMove)
 
 **Note:** This component is primarily used internally. Most users won't need to use it directly.
 
@@ -736,16 +719,10 @@ For most use cases, prefer the standard `Sub` component. Only use `SubRoot` when
 
 ### Inner Input Focus
 
-Enable focus management for inputs (text fields, etc.) inside menu items:
+Enable focus management for inputs (text fields, etc.) inside menu items. When enabled, items with focused inputs will automatically set `isSelectable={false}` and the menu will remain open while the input is focused.
 
 ```tsx
-<ContextMenu.Root
-  mode="click"
-  enableInnerInputFocus
-  backgroundFocusBlockerContainers={[document.body]}
-  backgroundFocusBlockerClassName="my-blocker-class"
-  backgroundInputFocusBlockerClassName="my-input-blocker-class"
->
+<ContextMenu.Root mode="click" enableInnerInputFocus>
   {/* Menu with input fields */}
   <ContextMenu.Item isSelectable={false}>
     <input type="text" placeholder="Search..." />
@@ -782,13 +759,15 @@ const [isOpen, setIsOpen] = useState(false);
 
 The ContextMenu component provides comprehensive keyboard navigation:
 
-- **Arrow Down/Up**: Navigate between menu items
+- **Arrow Down/Up**: Navigate between menu items. When menu is first opened, Arrow Down focuses the first available item
 - **Arrow Right**: Open submenu (if present)
 - **Arrow Left**: Close submenu and return to parent (also closes `SubRoot`)
-- **Enter/Space**: Activate/select item
-- **Escape**: Close menu and return focus to trigger
+- **Enter/Space**: Activate/select item (only works when focus is inside the menu)
+- **Escape**: Close menu. Focus restoration to trigger is prevented when menu closes due to focus loss
 - **Home/End**: Jump to first/last item
 - **Type to search**: First-letter navigation (Radix UI feature)
+
+The component automatically tracks focus changes and closes the menu when focus moves outside the menu and its submenus.
 
 ### Keyboard Navigation with SubRoot
 
@@ -1063,3 +1042,6 @@ const [settings, setSettings] = useState({
 - On touch devices, hover mode automatically converts to `click` mode
 - Multiple menus can coordinate closure via context menu bus
 - SubRoot creates independent menu instances but coordinates with parent context
+- Menu automatically closes when focus moves outside the menu and its submenus
+- FocusBlocker automatically simulates mouseenter events when removed if cursor was over it
+- Non-selectable items are excluded from keyboard navigation and positioning calculations
