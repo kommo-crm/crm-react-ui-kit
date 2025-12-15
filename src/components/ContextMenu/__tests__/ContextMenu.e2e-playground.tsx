@@ -285,7 +285,7 @@ export const ContextMenuPlayground = (
               height,
               width: '320px',
               padding: '20px',
-              marginTop: direction?.endsWith('down') ? '60px' : undefined,
+              marginTop: direction?.endsWith('down') ? '100px' : undefined,
             }}
           >
             <ContextMenuComponent {...itemProps} />

@@ -54,7 +54,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
   });
 
   useEffect(() => {
-    if (hasSubmenu && activeItemId === null) {
+    if ((hasSubmenu && activeItemId === null) || id !== activeItemId) {
       setIsFocused(false);
     }
   }, [activeItemId]);

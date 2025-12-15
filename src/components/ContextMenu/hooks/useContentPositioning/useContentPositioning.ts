@@ -215,7 +215,9 @@ export const useContentPositioning = (
       return;
     }
 
-    const items = Array.from(contentEl.querySelectorAll('[data-item]'));
+    const items = Array.from(contentEl.querySelectorAll('[data-item]')).filter(
+      (item) => !item.hasAttribute('data-non-selectable')
+    );
 
     if (items.length === 0) {
       return;

@@ -82,6 +82,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onChildOpen,
       itemWithFocusedInput,
       setItemWithFocusedInput,
+      shouldPreventFocusRestore,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { align, offset, isPositioned } = useContentPositioning({
@@ -155,7 +156,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     };
 
     const handleCloseAutoFocus = (e: Event) => {
-      if (mode === ContextMenuMode.HOVER) {
+      if (mode === ContextMenuMode.HOVER || shouldPreventFocusRestore?.()) {
         e.preventDefault();
       }
 

@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { useFocusChange } from 'src/hooks';
+
 import { useIsTouchDevice } from '..';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
@@ -22,12 +24,12 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     hoverCloseDelay,
     onOpen,
     onAnimatedOpen,
-    isOpen,
+    isOpen: isOpenForcefully,
   } = options;
 
   const id = useId();
 
-  const [open, setOpen] = useState(isOpen ?? defaultOpen ?? false);
+  const [open, setOpen] = useState(isOpenForcefully ?? defaultOpen ?? false);
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
@@ -42,6 +44,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const shouldPreventFocusRestoreRef = useRef(false);
 
   const isTouchDevice = useIsTouchDevice();
 
@@ -101,14 +104,32 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
 
   /**
    * Closes the menu immediately.
+   * @param preventFocusRestore - If true, prevents Radix from restoring focus to trigger.
    */
-  const closeMenuImmediately = () => {
+  const closeMenuImmediately = (preventFocusRestore = false) => {
+    shouldPreventFocusRestoreRef.current = preventFocusRestore;
     clearTimers();
     setIsAnimatedOpen(false);
     setOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
   };
+
+  /**
+   * Resets the focus restore prevention flag when menu closes.
+   */
+  useEffect(() => {
+    if (!open) {
+      // Reset flag after menu closes to allow normal behavior on next open
+      const timeoutId = setTimeout(() => {
+        shouldPreventFocusRestoreRef.current = false;
+      }, 0);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [open]);
 
   /**
    * Handles the submenu open state change.
@@ -138,7 +159,11 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
       setOpen(true);
       onOpen?.(true);
 
-      setTimeout(() => contextMenuBus.emit(id), 0);
+      setTimeout(() => {
+        if (isOpenForcefully !== false) {
+          contextMenuBus.emit(id);
+        }
+      }, 0);
     } else {
       requestClose();
     }
@@ -182,7 +207,11 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
       onOpen?.(true);
       setIsInsideContent(true);
 
-      setTimeout(() => contextMenuBus.emit(id), 0);
+      setTimeout(() => {
+        if (isOpenForcefully !== false) {
+          contextMenuBus.emit(id);
+        }
+      }, 0);
     }
   };
 
@@ -223,6 +252,10 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
    * Closes the menu when the context menu bus emits an event.
    */
   useEffect(() => {
+    if (isOpenForcefully === false) {
+      return;
+    }
+
     const unsubscribe = contextMenuBus.subscribe((openedId) => {
       if (openedId !== id) {
         closeMenuImmediately();
@@ -230,7 +263,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     });
 
     return unsubscribe;
-  }, [id]);
+  }, [id, isOpenForcefully]);
 
   /**
    * Handles the hover close delay.
@@ -263,6 +296,68 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     onAnimatedOpen?.(isAnimatedOpen);
   }, [isAnimatedOpen]);
 
+  /**
+   * Collects all menu elements dynamically when needed.
+   * This ensures we always have the latest menu elements including newly opened submenus.
+   */
+  const getMenuElements = (): HTMLElement[] => {
+    const elements: HTMLElement[] = [];
+
+    // Add root menu content
+    if (contentRef.current) {
+      elements.push(contentRef.current);
+    }
+
+    // Add all submenu containers
+    const submenuContainers = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-menu-level]')
+    );
+
+    elements.push(...submenuContainers);
+
+    return elements;
+  };
+
+  /**
+   * Tracks focus changes and closes menu when focus moves outside.
+   */
+  useFocusChange({
+    elements: open ? [contentRef] : [],
+    enabled: open,
+    onFocusOutside: (focusedElement) => {
+      if (!open) {
+        return;
+      }
+
+      // Get current menu elements dynamically to include newly opened submenus
+      const currentMenuElements = getMenuElements();
+
+      // Check if focus is actually outside all menu elements
+      const isInsideAnyMenu = currentMenuElements.some((menuElement) => {
+        if (!focusedElement) {
+          return false;
+        }
+
+        return (
+          menuElement === focusedElement || menuElement.contains(focusedElement)
+        );
+      });
+
+      // Only close if focus is truly outside all menus
+      if (!isInsideAnyMenu) {
+        // Prevent focus restoration when closing due to focus loss
+        closeMenuImmediately(true);
+      }
+    },
+  });
+
+  /**
+   * Checks if focus restoration should be prevented.
+   */
+  const shouldPreventFocusRestore = () => {
+    return shouldPreventFocusRestoreRef.current;
+  };
+
   return {
     open,
     mode,
@@ -282,5 +377,6 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     isChildOpen,
     itemWithFocusedInput,
     setItemWithFocusedInput,
+    shouldPreventFocusRestore,
   };
 };

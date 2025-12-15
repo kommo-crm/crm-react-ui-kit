@@ -25,8 +25,6 @@ import {
   type ButtonThemeType,
 } from 'src/components/Button';
 
-import { ContextMenuRootProps } from '../ContextMenu.props';
-
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContentProps } from '../components/Content/Content.props';
 
@@ -269,16 +267,8 @@ function App() {
 }
 `;
 
-const StoryComponent = ({
-  mode,
-  subMode = mode,
-  subMenuMode = mode,
-  direction,
-  onCheckboxChange,
-  onRadioChange,
-  button = <ContextMenuTriggerIcon />,
-  isTriggerAsChild = false,
-}: ContextMenuRootProps & {
+interface StoryComponentProps {
+  mode: ContextMenuModeType;
   subMode?: ContextMenuModeType;
   subMenuMode?: ContextMenuModeType;
   direction?: ContentProps['direction'];
@@ -286,7 +276,22 @@ const StoryComponent = ({
   onRadioChange?: (value: string) => void;
   button?: React.ReactNode;
   isTriggerAsChild?: boolean;
-}) => {
+  isOpen?: boolean;
+}
+
+const StoryComponent = (props: StoryComponentProps) => {
+  const {
+    mode,
+    subMode = mode,
+    subMenuMode = mode,
+    direction,
+    onCheckboxChange,
+    onRadioChange,
+    button = <ContextMenuTriggerIcon />,
+    isTriggerAsChild = false,
+    isOpen,
+  } = props;
+
   const [autoupdateChecked, setAutoupdateChecked] = useState(true);
   const [theme, setTheme] = useState('light');
 
@@ -298,7 +303,7 @@ const StoryComponent = ({
   ) as HTMLElement;
 
   return (
-    <ContextMenu.Root mode={mode} enableInnerInputFocus>
+    <ContextMenu.Root mode={mode} enableInnerInputFocus isOpen={isOpen}>
       <ContextMenu.Trigger
         style={
           isTriggerAsChild

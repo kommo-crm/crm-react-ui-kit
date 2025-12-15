@@ -161,6 +161,13 @@ export interface ContextMenuContextProps {
    * Whether the item with the focused input is open.
    */
   itemWithFocusedInput: string | null;
+  /**
+   * Checks if focus restoration should be prevented when menu closes.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  shouldPreventFocusRestore?: () => boolean;
 }
 
 export interface ContextMenuRootContextProps {
