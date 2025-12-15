@@ -50,7 +50,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
     } = useLevelContext(DISPLAY_NAME);
 
     const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-      useSubMenu({ onKeyDown });
+      useSubMenu({ onKeyDown, children });
 
     const {
       dataHighlighted,

@@ -14,7 +14,7 @@ import { UseSubMenuOptions } from './useSubMenu.types';
  * Provides the necessary context for the SubRoot.
  */
 export const useSubMenu = (options: UseSubMenuOptions) => {
-  const { onKeyDown } = options;
+  const { onKeyDown, children: itemChildren } = options;
 
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [hasSubmenu, setHasSubmenu] = useState(false);
@@ -30,7 +30,7 @@ export const useSubMenu = (options: UseSubMenuOptions) => {
     const trigger = itemRef.current.querySelector('[data-submenu-trigger]');
 
     setHasSubmenu(Boolean(trigger));
-  }, [itemRef]);
+  }, [itemRef, itemChildren]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (hasSubmenu && e.key === KeyboardKey.ARROW_RIGHT) {

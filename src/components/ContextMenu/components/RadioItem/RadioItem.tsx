@@ -49,7 +49,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
     } = useLevelContext(DISPLAY_NAME);
 
     const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-      useSubMenu({ onKeyDown });
+      useSubMenu({ onKeyDown, children });
 
     const { closeRootMenuImmediately } =
       useContextMenuRootContext(DISPLAY_NAME);

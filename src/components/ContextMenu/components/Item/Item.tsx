@@ -57,7 +57,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
   const { closeRootMenuImmediately } = useContextMenuRootContext(DISPLAY_NAME);
 
   const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-    useSubMenu({ onKeyDown });
+    useSubMenu({ onKeyDown, children });
 
   const { isSelectableConsideringInputFocus, handleNodeRef } =
     useItemInnerFocus({

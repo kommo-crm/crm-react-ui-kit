@@ -21,6 +21,9 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
       onPointerEnter,
       onPointerLeave,
       onPointerMove,
+      onClick,
+      onPointerDown,
+      onPointerUp,
 
       ...rest
     } = props;
@@ -51,6 +54,27 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
       e.stopPropagation();
 
       onPointerMove?.(e);
+    };
+
+    const handleClick = (e: React.PointerEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      onClick?.(e);
+    };
+
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      onPointerDown?.(e);
+    };
+
+    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      onPointerUp?.(e);
     };
 
     // Track mouse position to simulate mouseenter after blocker unmounts
@@ -136,6 +160,9 @@ export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onPointerMove={handlePointerMove}
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
         {...rest}
       />
     );
