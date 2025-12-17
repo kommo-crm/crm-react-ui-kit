@@ -178,6 +178,8 @@ export const useContextMenuKeyboardNavigation = (
       const activeElement = document.activeElement;
 
       if (!isFocusInsideMenu(contentElement, activeElement)) {
+        e.preventDefault();
+
         focusDeepestMenuNecessaryItem(contentElement, e.key);
       }
     };

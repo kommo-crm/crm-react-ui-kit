@@ -42,6 +42,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     defaultOpen,
     shouldCloseCurrentMenuOnSelect = true,
     enableInnerInputFocus = false,
+    enableCloseOnFocusLoss = false,
     onOpen,
     onAnimatedOpen,
 
@@ -75,6 +76,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     hoverCloseDelay: HOVER_CLOSE_DELAY,
     isOpen,
     enableInnerInputFocus,
+    enableCloseOnFocusLoss,
     onOpen,
     onAnimatedOpen,
   });

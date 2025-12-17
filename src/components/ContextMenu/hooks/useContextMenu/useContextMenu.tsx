@@ -25,6 +25,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     onOpen,
     onAnimatedOpen,
     isOpen: isOpenForcefully,
+    enableCloseOnFocusLoss,
   } = options;
 
   const id = useId();
@@ -325,7 +326,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     elements: open ? [contentRef] : [],
     enabled: open,
     onFocusOutside: (focusedElement) => {
-      if (!open) {
+      if (!open || !enableCloseOnFocusLoss) {
         return;
       }
 

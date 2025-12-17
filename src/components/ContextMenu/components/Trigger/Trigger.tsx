@@ -10,6 +10,8 @@ import { useContextMenuContext } from '../../ContextMenu.context';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
+import { focusFirstFocusableItem } from '../../utils';
+
 import type { TriggerProps } from './Trigger.props';
 
 import s from './Trigger.module.css';
@@ -32,6 +34,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
 
     const {
       triggerRef,
+      contentRef,
       mode,
       isOpen,
       onContentEnter,
@@ -68,8 +71,16 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
           ].includes(e.key as KeyboardKey)
         ) {
           onOpenByKeyboard(true);
-        } else if (e.key === KeyboardKey.ESCAPE) {
-          onOpenByKeyboard(false);
+
+          /**
+           * It is necessary to focus the first focusable item after the menu is opened,
+           * otherwise the first item will not be focused in hover mode.
+           *
+           * In order for the content to be rendered and linked to, a timeout is required.
+           */
+          setTimeout(() => {
+            focusFirstFocusableItem(contentRef.current);
+          }, 0);
         }
       }
 

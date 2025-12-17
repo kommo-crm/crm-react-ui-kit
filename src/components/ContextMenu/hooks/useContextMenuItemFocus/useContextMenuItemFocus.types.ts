@@ -40,10 +40,6 @@ export interface UseContextMenuItemFocusOptions<T extends HTMLElement> {
    */
   onBlur?: (e: React.FocusEvent<T>) => void;
   /**
-   * The callback function to be called when the item is keyed down.
-   */
-  onKeyDown?: (e: React.KeyboardEvent<T>) => void;
-  /**
    * The callback function to be called when the item is pointer entered.
    */
   onPointerEnter?: (e: React.PointerEvent<T>) => void;

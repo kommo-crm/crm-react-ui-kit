@@ -23,7 +23,7 @@ The ContextMenu component is a flexible and powerful dropdown menu system that s
 - **Nested submenus**: Support for deeply nested menu structures using both standard `Sub` and experimental `SubRoot` components
 - **Smooth animations**: Configurable animation durations with opacity transitions
 - **Keyboard navigation**: Full keyboard support with automatic focus management and arrow key navigation
-- **Focus tracking**: Automatic menu closure when focus moves outside the menu and its submenus
+- **Focus tracking**: Optional automatic menu closure when focus moves outside the menu and its submenus (via `enableCloseOnFocusLoss` prop)
 - **Focus management**: Advanced focus handling for inputs within menu items
 - **Auto-positioning**: Intelligent positioning with collision detection (excludes non-selectable items)
 - **Rich component library**: Items, groups, labels, separators, checkboxes, radio buttons, and more
@@ -83,6 +83,7 @@ The root component that wraps the entire menu structure. All other components mu
 - `defaultOpen?`: `boolean` - Uncontrolled initial open state
 - `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether menu closes on item click (default: `true`)
 - `enableInnerInputFocus?`: `boolean` - Enable focus management for inputs inside items (default: `false`)
+- `enableCloseOnFocusLoss?`: `boolean` - Whether menu should close when focus moves outside the menu and its submenus (default: `false`)
 
 ### [ContextMenu.Trigger](./components/Trigger/Trigger.tsx)
 
@@ -730,6 +731,27 @@ Enable focus management for inputs (text fields, etc.) inside menu items. When e
 </ContextMenu.Root>
 ```
 
+### Focus Loss Detection
+
+Enable automatic menu closure when focus moves outside the menu and its submenus. This is useful for ensuring menus close when users interact with other parts of the application. When enabled, the menu will close immediately when focus leaves all menu elements, and focus restoration to the trigger will be prevented.
+
+```tsx
+<ContextMenu.Root mode="click" enableCloseOnFocusLoss>
+  <ContextMenu.Trigger>
+    <button>Open Menu</button>
+  </ContextMenu.Trigger>
+
+  <ContextMenu.Portal>
+    <ContextMenu.Content>
+      <ContextMenu.Item>Item 1</ContextMenu.Item>
+      <ContextMenu.Item>Item 2</ContextMenu.Item>
+    </ContextMenu.Content>
+  </ContextMenu.Portal>
+</ContextMenu.Root>
+```
+
+**Note:** When `enableCloseOnFocusLoss` is enabled, the menu tracks focus changes and closes if focus moves to any element outside the menu and all its submenus. This includes focus changes to other controls, inputs, or any focusable elements in the application.
+
 ### Animation Control
 
 Monitor animation state:
@@ -767,7 +789,7 @@ The ContextMenu component provides comprehensive keyboard navigation:
 - **Home/End**: Jump to first/last item
 - **Type to search**: First-letter navigation (Radix UI feature)
 
-The component automatically tracks focus changes and closes the menu when focus moves outside the menu and its submenus.
+When `enableCloseOnFocusLoss` is enabled, the component automatically tracks focus changes and closes the menu when focus moves outside the menu and its submenus. When the menu closes due to focus loss, focus restoration to the trigger is prevented.
 
 ### Keyboard Navigation with SubRoot
 
@@ -1042,6 +1064,6 @@ const [settings, setSettings] = useState({
 - On touch devices, hover mode automatically converts to `click` mode
 - Multiple menus can coordinate closure via context menu bus
 - SubRoot creates independent menu instances but coordinates with parent context
-- Menu automatically closes when focus moves outside the menu and its submenus
+- Menu can automatically close when focus moves outside the menu and its submenus (when `enableCloseOnFocusLoss` is enabled)
 - FocusBlocker automatically simulates mouseenter events when removed if cursor was over it
 - Non-selectable items are excluded from keyboard navigation and positioning calculations

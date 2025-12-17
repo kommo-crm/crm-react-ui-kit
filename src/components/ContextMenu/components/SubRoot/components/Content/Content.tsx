@@ -31,6 +31,10 @@ import s from './Content.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.SubRoot.Content';
 
+type InteractOutsideEvent = Parameters<
+  NonNullable<ContentProps['onInteractOutside']>
+>[0];
+
 export const Content = forwardRef<HTMLDivElement, ContentProps>(
   (props, ref) => {
     const {
@@ -52,6 +56,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onClick,
       onPointerDown,
       onPointerUp,
+      onInteractOutside,
 
       ...rest
     } = props;
@@ -141,9 +146,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
      * We handle focus management manually to support custom close behavior.
      */
     const handleCloseAutoFocus = (e: Event) => {
-      if (mode === ContextMenuMode.HOVER) {
-        e.preventDefault();
-      }
+      e.preventDefault();
 
       onCloseAutoFocus?.(e);
     };
@@ -153,9 +156,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
      * We handle focus management manually to support custom open behavior.
      */
     const handleOpenAutoFocus = (e: Event) => {
-      if (mode === ContextMenuMode.HOVER) {
-        e.preventDefault();
-      }
+      e.preventDefault();
 
       onOpenAutoFocus?.(e);
     };
@@ -194,6 +195,16 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       e.stopPropagation();
 
       onPointerUp?.(e);
+    };
+
+    const handleInteractOutside = (e: InteractOutsideEvent) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.preventDefault();
+      }
+
+      onInteractOutside?.(e);
+
+      onSubRootContentClose();
     };
 
     return (
@@ -244,6 +255,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
                */
               // @ts-expect-error - Property 'onOpenAutoFocus' does not exist on type
               onOpenAutoFocus={handleOpenAutoFocus}
+              onInteractOutside={handleInteractOutside}
               onClick={handleClick}
               onPointerDown={handlePointerDown}
               onPointerUp={handlePointerUp}

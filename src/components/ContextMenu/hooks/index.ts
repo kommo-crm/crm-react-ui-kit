@@ -8,3 +8,4 @@ export { usePrevious } from './usePrevious/usePrevious';
 export { useContextMenuItemFocus } from './useContextMenuItemFocus/useContextMenuItemFocus';
 export { useInnerFocusTracker } from './useInnerFocusTracker/useInnerFocusTracker';
 export { useContextMenuKeyboardNavigation } from './useContextMenuKeyboardNavigation/useContextMenuKeyboardNavigation';
+export { useMouseMoveOutside } from './useMouseMoveOutside/useMouseMoveOutside';

@@ -39,19 +39,7 @@ export interface UseContextMenuOptions {
    */
   enableInnerInputFocus?: boolean;
   /**
-   * The container to focus the blocker on.
+   * Whether the context menu should close when focus is lost.
    */
-  backgroundFocusBlockerContainers?: (
-    | HTMLElement
-    | (() => HTMLElement)
-    | null
-  )[];
-  /**
-   * The class name of the background focus blocker.
-   */
-  backgroundFocusBlockerClassName?: string;
-  /**
-   * The class name of the background focus blocker when inner input is focused.
-   */
-  backgroundInputFocusBlockerClassName?: string;
+  enableCloseOnFocusLoss?: boolean;
 }

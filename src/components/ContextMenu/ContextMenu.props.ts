@@ -42,6 +42,12 @@ export type ContextMenuRootProps = Omit<
    * @default false
    */
   enableInnerInputFocus?: boolean;
+  /**
+   * Whether the context menu should close when focus is lost.
+   *
+   * @default false
+   */
+  enableCloseOnFocusLoss?: boolean;
 };
 
 export interface ContextMenuContextProps {

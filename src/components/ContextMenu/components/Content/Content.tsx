@@ -6,6 +6,8 @@ import { useSpring, animated, easings } from '@react-spring/web';
 
 import { mergeRefs } from 'src/lib/utils';
 
+import { KeyboardKey } from 'src/lib/keyboard';
+
 import { LevelProvider } from '../../providers/LevelProvider';
 
 import { useContextMenuContext } from '../../ContextMenu.context';
@@ -55,6 +57,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       disableRepositioning = false,
       onMouseEnter,
       onMouseLeave,
+      onKeyDown,
       onPointerDownOutside,
       onInteractOutside,
       onEscapeKeyDown,
@@ -155,6 +158,21 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       onPointerDownOutside?.(e);
     };
 
+    /**
+     * It is necessary to prevent standard behavior such as scrolling a document.
+     */
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      if (mode === ContextMenuMode.HOVER) {
+        e.preventDefault();
+
+        if (e.key === KeyboardKey.ESCAPE) {
+          triggerRef.current?.focus();
+        }
+      }
+
+      onKeyDown?.(e);
+    };
+
     const handleCloseAutoFocus = (e: Event) => {
       if (mode === ContextMenuMode.HOVER || shouldPreventFocusRestore?.()) {
         e.preventDefault();
@@ -211,6 +229,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
               onInteractOutside={handleInteractOutside}
               onEscapeKeyDown={handleEscapeKeyDown}
               onPointerDownOutside={handlePointerDownOutside}
+              onKeyDown={handleKeyDown}
               onCloseAutoFocus={handleCloseAutoFocus}
               /**
                * Radix ContextMenu supports `onOpenAutoFocus`, but the prop is missing

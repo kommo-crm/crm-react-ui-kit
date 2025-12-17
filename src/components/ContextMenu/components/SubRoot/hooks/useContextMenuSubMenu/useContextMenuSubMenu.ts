@@ -47,7 +47,6 @@ export const useContextMenuSubMenu = (
   >(null);
 
   const {
-    activeItemId,
     level,
     isAnimatedOpen: parentIsAnimatedOpen,
     onChildOpen,
@@ -260,15 +259,6 @@ export const useContextMenuSubMenu = (
       setIsAnimatedOpen(subMenuOpen);
     }
   }, [subMenuOpen]);
-
-  /**
-   * Closes the submenu when the active item id changes.
-   */
-  useEffect(() => {
-    if (activeItemId !== triggerId && (open || subMenuOpen)) {
-      closeMenuImmediately();
-    }
-  }, [activeItemId, open, triggerId]);
 
   /**
    * Handles the hover close delay.
