@@ -57,6 +57,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
       closeMenuImmediately,
       itemWithFocusedInput,
       setItemWithFocusedInput,
+      isMovingTowardMenuRef,
     } = useContextMenuSubContext(DISPLAY_NAME);
 
     const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
@@ -127,6 +128,7 @@ export const SubContent = forwardRef<HTMLDivElement, SubContentProps>(
         isAnimatedOpen={isAnimatedOpen}
         itemWithFocusedInput={itemWithFocusedInput}
         setItemWithFocusedInput={setItemWithFocusedInput}
+        isMovingTowardMenuRef={isMovingTowardMenuRef}
         level={level + 1}
       >
         {isOpen && (

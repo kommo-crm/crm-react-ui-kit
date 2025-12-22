@@ -9,9 +9,21 @@ import { Callback } from './contextMenuBus.types';
  */
 class ContextMenuBus {
   private listeners: Callback[] = [];
+  public isMovingTowardActiveMenuRef: React.MutableRefObject<boolean> | null =
+    null;
+  public activeMenuId: string | null = null;
 
-  emit(openedId: string) {
-    this.listeners.forEach((cb) => cb(openedId));
+  emit({
+    id,
+    isMovingTowardMenuRef,
+  }: {
+    id: string;
+    isMovingTowardMenuRef: React.MutableRefObject<boolean>;
+  }) {
+    this.listeners.forEach((cb) => cb({ id, isMovingTowardMenuRef }));
+
+    this.isMovingTowardActiveMenuRef = isMovingTowardMenuRef;
+    this.activeMenuId = id;
   }
 
   subscribe(cb: Callback) {

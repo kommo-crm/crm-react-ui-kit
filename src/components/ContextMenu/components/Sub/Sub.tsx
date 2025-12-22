@@ -22,7 +22,7 @@ export const Sub = (props: SubProps) => {
 
   const {
     isOpen,
-    setOpen,
+    setIsOpen,
     isAnimatedOpen,
     handleContentEnter,
     handleContentLeave,
@@ -36,6 +36,7 @@ export const Sub = (props: SubProps) => {
     closeMenuImmediately,
     itemWithFocusedInput,
     setItemWithFocusedInput,
+    isMovingTowardMenuRef,
   } = useContextMenuSub({
     displayName: DISPLAY_NAME,
     mode,
@@ -47,7 +48,7 @@ export const Sub = (props: SubProps) => {
     <ContextMenuSubProvider
       mode={mode}
       isOpen={isOpen}
-      setOpen={setOpen}
+      setIsOpen={setIsOpen}
       isAnimatedOpen={isAnimatedOpen}
       defaultOpen={defaultOpen}
       onContentEnter={handleContentEnter}
@@ -63,6 +64,7 @@ export const Sub = (props: SubProps) => {
       closeMenuImmediately={closeMenuImmediately}
       itemWithFocusedInput={itemWithFocusedInput}
       setItemWithFocusedInput={setItemWithFocusedInput}
+      isMovingTowardMenuRef={isMovingTowardMenuRef}
     >
       <RadixDropdownMenuSub
         open={isOpen}

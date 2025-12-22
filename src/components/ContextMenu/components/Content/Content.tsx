@@ -1,4 +1,9 @@
-import React, { ComponentPropsWithoutRef, forwardRef, useState } from 'react';
+import React, {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  useRef,
+  useState,
+} from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -68,6 +73,8 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     } = props;
 
     const [activeItemId, setActiveItemId] = useState<string | null>(null);
+
+    const isMovingTowardMenuRef = useRef<boolean>(false);
 
     const {
       triggerRef,
@@ -200,6 +207,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
         isAnimatedOpen={isAnimatedOpen}
         itemWithFocusedInput={itemWithFocusedInput}
         setItemWithFocusedInput={setItemWithFocusedInput}
+        isMovingTowardMenuRef={isMovingTowardMenuRef}
         level={1}
       >
         {isOpen && (

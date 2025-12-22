@@ -38,7 +38,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
   const {
     children,
     mode,
-    isOpen,
+    isOpen: isOpenForcefully,
     defaultOpen,
     shouldCloseCurrentMenuOnSelect = true,
     enableInnerInputFocus = false,
@@ -51,7 +51,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
 
   const {
     mode: rootMode,
-    open,
+    isOpen,
     triggerRef,
     contentRef,
     isAnimatedOpen,
@@ -74,7 +74,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     defaultOpen,
     animationDuration: ANIMATION_DURATION,
     hoverCloseDelay: HOVER_CLOSE_DELAY,
-    isOpen,
+    isOpen: isOpenForcefully,
     enableInnerInputFocus,
     enableCloseOnFocusLoss,
     onOpen,
@@ -82,7 +82,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
   });
 
   useContextMenuKeyboardNavigation({
-    isOpen: isOpen ?? open,
+    isOpen: isOpenForcefully ?? isOpen,
     isAnimatedOpen,
     contentRef,
     mode: rootMode,
@@ -106,7 +106,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
         onOpenByKeyboard={onOpenByKeyboard}
         shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
         onChildOpen={onChildOpen}
-        isOpen={open}
+        isOpen={isOpen}
         onSubmenuOpen={onSubmenuOpen}
         isRootContentBlocked={isRootContentBlocked}
         isChildOpen={isChildOpen}
@@ -115,7 +115,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
         shouldPreventFocusRestore={shouldPreventFocusRestore}
       >
         <RadixDropdownMenuRoot
-          open={isOpen ?? open}
+          open={isOpenForcefully ?? isOpen}
           onOpenChange={onOpenChange}
           /**
            * Necessary for hover mode to work correctly.

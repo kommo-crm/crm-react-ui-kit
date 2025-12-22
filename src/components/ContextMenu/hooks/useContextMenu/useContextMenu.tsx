@@ -2,7 +2,9 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import { useFocusChange } from 'src/hooks';
 
-import { useIsTouchDevice } from '..';
+import { useIsTouchDevice, useMenuAim } from '..';
+
+import { MenuAimDirection } from '../useMenuAim/useMenuAim.types';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -30,7 +32,9 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
 
   const id = useId();
 
-  const [open, setOpen] = useState(isOpenForcefully ?? defaultOpen ?? false);
+  const [isOpen, setIsOpen] = useState(
+    isOpenForcefully ?? defaultOpen ?? false
+  );
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
@@ -41,11 +45,18 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     string | null
   >(null);
 
+  // Use ref to track isInsideContent for use in intervals
+  const isInsideContentRef = useRef(false);
+
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shouldPreventFocusRestoreRef = useRef(false);
+  const movementCheckIntervalRef = useRef<ReturnType<
+    typeof setInterval
+  > | null>(null);
+  const pendingCloseRef = useRef(false);
 
   const isTouchDevice = useIsTouchDevice();
 
@@ -53,6 +64,64 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
    * The mode of the ContextMenu.Root.
    */
   const mode = isTouchDevice ? ContextMenuMode.CLICK : rootMode;
+
+  /**
+   * Direction for menu aim, determined from Radix's data-side attribute.
+   */
+  const [menuAimDirection, setMenuAimDirection] =
+    useState<MenuAimDirection>('right');
+
+  /**
+   * Read direction from Radix's data-side attribute on content element.
+   * Uses MutationObserver to detect when Radix sets the attribute after positioning.
+   */
+  useEffect(() => {
+    if (!isOpen || !contentRef.current) {
+      return;
+    }
+
+    const element = contentRef.current;
+
+    const updateDirection = () => {
+      const dataSide = element.getAttribute(
+        'data-side'
+      ) as MenuAimDirection | null;
+
+      if (dataSide && ['top', 'right', 'bottom', 'left'].includes(dataSide)) {
+        setMenuAimDirection(dataSide);
+      }
+    };
+
+    // Check immediately
+    updateDirection();
+
+    // Observe changes to data-side attribute
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'data-side'
+        ) {
+          updateDirection();
+        }
+      }
+    });
+
+    observer.observe(element, {
+      attributes: true,
+      attributeFilter: ['data-side'],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isOpen]);
+
+  const { isMovingTowardMenuRef } = useMenuAim({
+    contentRef,
+    direction: menuAimDirection,
+    enabled: isOpen && mode === ContextMenuMode.HOVER,
+  });
 
   /**
    * Clears the timers.
@@ -67,15 +136,23 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
       clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
     }
+
+    if (movementCheckIntervalRef.current) {
+      clearInterval(movementCheckIntervalRef.current);
+      movementCheckIntervalRef.current = null;
+    }
   };
 
   /**
    * Closes the menu.
    */
   const handleClose = () => {
-    setOpen(false);
+    clearTimers();
+    pendingCloseRef.current = false;
+    setIsOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
+    isInsideContentRef.current = false;
     setIsRootContentBlocked(false);
   };
 
@@ -93,11 +170,47 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
         return;
       }
 
-      setIsAnimatedOpen(false);
+      // If cursor is inside content, close immediately
+      if (isInsideContent) {
+        setIsAnimatedOpen(false);
+        closeTimerRef.current = setTimeout(() => {
+          handleClose();
+        }, animationDuration);
 
-      closeTimerRef.current = setTimeout(() => {
-        handleClose();
-      }, animationDuration);
+        return;
+      }
+
+      // Mark that we have a pending close request
+      pendingCloseRef.current = true;
+
+      // Start checking movement periodically
+      if (!movementCheckIntervalRef.current) {
+        movementCheckIntervalRef.current = setInterval(() => {
+          // If cursor entered content, stop checking and cancel close
+          if (isInsideContentRef.current) {
+            clearTimers();
+            pendingCloseRef.current = false;
+            setIsAnimatedOpen(true);
+
+            return;
+          }
+
+          // Check if still moving toward menu
+          if (isMovingTowardMenuRef.current) {
+            // Still moving toward menu, keep delaying close
+            return;
+          }
+
+          // Not moving toward menu anymore, proceed with close
+          clearTimers();
+          pendingCloseRef.current = false;
+          setIsAnimatedOpen(false);
+
+          closeTimerRef.current = setTimeout(() => {
+            handleClose();
+          }, animationDuration);
+        }, 50);
+      }
     } else {
       handleClose();
     }
@@ -111,7 +224,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     shouldPreventFocusRestoreRef.current = preventFocusRestore;
     clearTimers();
     setIsAnimatedOpen(false);
-    setOpen(false);
+    setIsOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
   };
@@ -120,7 +233,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
    * Resets the focus restore prevention flag when menu closes.
    */
   useEffect(() => {
-    if (!open) {
+    if (!isOpen) {
       // Reset flag after menu closes to allow normal behavior on next open
       const timeoutId = setTimeout(() => {
         shouldPreventFocusRestoreRef.current = false;
@@ -130,7 +243,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
         clearTimeout(timeoutId);
       };
     }
-  }, [open]);
+  }, [isOpen]);
 
   /**
    * Handles the submenu open state change.
@@ -157,12 +270,15 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
         setIsAnimatedOpen(true);
       }
 
-      setOpen(true);
+      setIsOpen(true);
       onOpen?.(true);
 
       setTimeout(() => {
         if (isOpenForcefully !== false) {
-          contextMenuBus.emit(id);
+          contextMenuBus.emit({
+            id,
+            isMovingTowardMenuRef: isMovingTowardMenuRef,
+          });
         }
       }, 0);
     } else {
@@ -183,20 +299,24 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
    * Keeps the menu open in hover mode by canceling close timers.
    */
   const handleContentEnter = () => {
-    if (mode !== ContextMenuMode.HOVER) {
+    if (
+      mode !== ContextMenuMode.HOVER ||
+      (contextMenuBus.isMovingTowardActiveMenuRef?.current &&
+        contextMenuBus.activeMenuId !== id)
+    ) {
       return;
     }
 
     setOpenedByKeyboard(false);
 
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
-      setIsAnimatedOpen(true);
-    }
+    // Clear all timers and stop movement checking when entering content
+    clearTimers();
+    pendingCloseRef.current = false;
 
-    if (open) {
+    if (isOpen) {
       setIsInsideContent(true);
+      isInsideContentRef.current = true;
+      setIsAnimatedOpen(true);
     } else {
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
@@ -204,13 +324,17 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
       }
 
       setIsAnimatedOpen(true);
-      setOpen(true);
+      setIsOpen(true);
       onOpen?.(true);
       setIsInsideContent(true);
+      isInsideContentRef.current = true;
 
       setTimeout(() => {
         if (isOpenForcefully !== false) {
-          contextMenuBus.emit(id);
+          contextMenuBus.emit({
+            id,
+            isMovingTowardMenuRef: isMovingTowardMenuRef,
+          });
         }
       }, 0);
     }
@@ -227,10 +351,40 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
 
     setOpenedByKeyboard(false);
     setIsInsideContent(false);
+    isInsideContentRef.current = false;
 
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
+    }
+
+    // When leaving content, if there's a pending close, restart the check
+    if (pendingCloseRef.current && !movementCheckIntervalRef.current) {
+      movementCheckIntervalRef.current = setInterval(() => {
+        // If cursor re-entered content, stop checking and cancel close
+        if (isInsideContentRef.current) {
+          clearTimers();
+          pendingCloseRef.current = false;
+          setIsAnimatedOpen(true);
+
+          return;
+        }
+
+        // Check if still moving toward menu
+        if (isMovingTowardMenuRef.current) {
+          // Still moving toward menu, keep delaying close
+          return;
+        }
+
+        // Not moving toward menu anymore, proceed with close
+        clearTimers();
+        pendingCloseRef.current = false;
+        setIsAnimatedOpen(false);
+
+        closeTimerRef.current = setTimeout(() => {
+          handleClose();
+        }, animationDuration);
+      }, 50);
     }
   };
 
@@ -257,7 +411,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
       return;
     }
 
-    const unsubscribe = contextMenuBus.subscribe((openedId) => {
+    const unsubscribe = contextMenuBus.subscribe(({ id: openedId }) => {
       if (openedId !== id) {
         closeMenuImmediately();
       }
@@ -270,7 +424,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
    * Handles the hover close delay.
    */
   useEffect(() => {
-    if (!open || mode !== ContextMenuMode.HOVER) {
+    if (!isOpen || mode !== ContextMenuMode.HOVER) {
       return;
     }
 
@@ -288,7 +442,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
         requestClose();
       }, hoverCloseDelay);
     }
-  }, [mode, open, isInsideContent, hoverCloseDelay, openedByKeyboard]);
+  }, [mode, isOpen, isInsideContent, hoverCloseDelay, openedByKeyboard]);
 
   /**
    * Handles the animated open state change.
@@ -323,10 +477,10 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
    * Tracks focus changes and closes menu when focus moves outside.
    */
   useFocusChange({
-    elements: open ? [contentRef] : [],
-    enabled: open,
+    elements: isOpen ? [contentRef] : [],
+    enabled: isOpen,
     onFocusOutside: (focusedElement) => {
-      if (!open || !enableCloseOnFocusLoss) {
+      if (!isOpen || !enableCloseOnFocusLoss) {
         return;
       }
 
@@ -360,7 +514,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
   };
 
   return {
-    open,
+    isOpen,
     mode,
     onOpenChange: handleOpenChange,
     onOpenByKeyboard,

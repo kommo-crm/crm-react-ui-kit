@@ -1,9 +1,15 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
-import { useClickOutside, useIsTouchDevice } from '../../../../hooks';
+import {
+  useClickOutside,
+  useIsTouchDevice,
+  useMenuAim,
+} from '../../../../hooks';
 import { ContextMenuMode } from '../../../../ContextMenu.enums';
 import { useContextMenuContext } from '../../../../ContextMenu.context';
 import { useLevelContext } from '../../../../providers/LevelProvider';
+
+import { MenuAimDirection } from '../../../../hooks/useMenuAim/useMenuAim.types';
 
 import { ContextMenuModeType } from '../../../../ContextMenu.types';
 
@@ -12,9 +18,17 @@ import { UseContextMenuSubOptions } from './useContextMenuSub.types';
 export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   const { displayName, mode: initialMode, defaultOpen, onOpen } = options;
 
+  const {
+    activeItemId,
+    onChildOpen,
+    onSubRootOpen,
+    isAnimatedOpen: parentIsAnimatedOpen,
+    isMovingTowardMenuRef: isMovingTowardMenuContextRef,
+  } = useLevelContext(displayName);
+
   const triggerId = useId();
 
-  const [open, setOpen] = useState(defaultOpen || false);
+  const [isOpen, setIsOpen] = useState(defaultOpen || false);
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [isOpenedByKeyboard, setIsOpenedByKeyboard] = useState(false);
@@ -27,21 +41,84 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
 
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const movementCheckIntervalRef = useRef<ReturnType<
+    typeof setInterval
+  > | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
+  const pendingCloseRef = useRef(false);
+  // Use ref to track isInsideContent for use in intervals
+  const isInsideContentRef = useRef(false);
 
   const isTouchDevice = useIsTouchDevice();
 
   const { hoverCloseDelay, animationDuration } =
     useContextMenuContext(displayName);
 
-  const {
-    activeItemId,
-    onChildOpen,
-    onSubRootOpen,
-    isAnimatedOpen: parentIsAnimatedOpen,
-  } = useLevelContext(displayName);
+  /**
+   * The mode of the submenu.
+   */
+  const mode = isTouchDevice ? ContextMenuMode.CLICK : initialMode;
+
+  /**
+   * Direction for menu aim, determined from Radix's data-side attribute.
+   */
+  const [menuAimDirection, setMenuAimDirection] =
+    useState<MenuAimDirection>('right');
+
+  /**
+   * Read direction from Radix's data-side attribute on content element.
+   * Uses MutationObserver to detect when Radix sets the attribute after positioning.
+   */
+  useEffect(() => {
+    if (!isOpen || !contentRef.current) {
+      return;
+    }
+
+    const element = contentRef.current;
+
+    const updateDirection = () => {
+      const dataSide = element.getAttribute(
+        'data-side'
+      ) as MenuAimDirection | null;
+
+      if (dataSide && ['top', 'right', 'bottom', 'left'].includes(dataSide)) {
+        setMenuAimDirection(dataSide);
+      }
+    };
+
+    // Check immediately
+    updateDirection();
+
+    // Observe changes to data-side attribute
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'data-side'
+        ) {
+          updateDirection();
+        }
+      }
+    });
+
+    observer.observe(element, {
+      attributes: true,
+      attributeFilter: ['data-side'],
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isOpen]);
+
+  const { isMovingTowardMenuRef } = useMenuAim({
+    contentRef,
+    direction: menuAimDirection,
+    enabled: isOpen && mode === ContextMenuMode.HOVER,
+    externalRef: isMovingTowardMenuContextRef || undefined,
+  });
 
   const handleSubmenuOpen = (value: boolean) => {
     /**
@@ -49,11 +126,6 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
      */
     setTimeout(() => onSubRootOpen?.(value), 0);
   };
-
-  /**
-   * The mode of the submenu.
-   */
-  const mode = isTouchDevice ? ContextMenuMode.CLICK : initialMode;
 
   /**
    * Clears the timers.
@@ -68,6 +140,11 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
     }
+
+    if (movementCheckIntervalRef.current) {
+      clearInterval(movementCheckIntervalRef.current);
+      movementCheckIntervalRef.current = null;
+    }
   };
 
   /**
@@ -76,10 +153,11 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   const handleCloseImmediate = () => {
     clearTimers();
     setIsAnimatedOpen(false);
-    setOpen(false);
+    setIsOpen(false);
     onOpen?.(false);
     handleSubmenuOpen(false);
     setIsInsideContent(false);
+    isInsideContentRef.current = false;
     setIsOpenedByKeyboard(false);
   };
 
@@ -97,15 +175,57 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         return;
       }
 
-      setIsAnimatedOpen(false);
+      // If cursor is inside content, close immediately
+      if (isInsideContent) {
+        setIsAnimatedOpen(false);
+        closeTimerRef.current = setTimeout(() => {
+          setIsOpen(false);
+          onOpen?.(false);
+          handleSubmenuOpen(false);
+          setIsInsideContent(false);
+          isInsideContentRef.current = false;
+          setIsOpenedByKeyboard(false);
+        }, animationDuration);
 
-      closeTimerRef.current = setTimeout(() => {
-        setOpen(false);
-        onOpen?.(false);
-        handleSubmenuOpen(false);
-        setIsInsideContent(false);
-        setIsOpenedByKeyboard(false);
-      }, animationDuration);
+        return;
+      }
+
+      // Mark that we have a pending close request
+      pendingCloseRef.current = true;
+
+      // Start checking movement periodically
+      if (!movementCheckIntervalRef.current) {
+        movementCheckIntervalRef.current = setInterval(() => {
+          // If cursor entered content, stop checking and cancel close
+          if (isInsideContentRef.current) {
+            clearTimers();
+            pendingCloseRef.current = false;
+            setIsAnimatedOpen(true);
+
+            return;
+          }
+
+          // Check if still moving toward menu
+          if (isMovingTowardMenuRef.current) {
+            // Still moving toward menu, keep delaying close
+            return;
+          }
+
+          // Not moving toward menu anymore, proceed with close
+          clearTimers();
+          pendingCloseRef.current = false;
+          setIsAnimatedOpen(false);
+
+          closeTimerRef.current = setTimeout(() => {
+            setIsOpen(false);
+            onOpen?.(false);
+            handleSubmenuOpen(false);
+            setIsInsideContent(false);
+            isInsideContentRef.current = false;
+            setIsOpenedByKeyboard(false);
+          }, animationDuration);
+        }, 50);
+      }
     } else {
       handleCloseImmediate();
     }
@@ -116,7 +236,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    */
   const handleOpenChange = (value: boolean) => {
     if (defaultOpen !== undefined) {
-      setOpen(defaultOpen);
+      setIsOpen(defaultOpen);
       onOpen?.(defaultOpen);
       handleSubmenuOpen(defaultOpen);
       setIsAnimatedOpen(defaultOpen);
@@ -126,7 +246,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     }
 
     if (mode === ContextMenuMode.CLICK || isOpenedByKeyboard) {
-      setOpen(value);
+      setIsOpen(value);
       onOpen?.(value);
       handleSubmenuOpen(value);
       /**
@@ -144,7 +264,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         closeTimerRef.current = null;
       }
 
-      setOpen(true);
+      setIsOpen(true);
       onOpen?.(true);
       setIsAnimatedOpen(true);
       handleSubmenuOpen(true);
@@ -165,20 +285,23 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * Keeps the submenu open in hover mode by canceling close timers.
    */
   const handleContentEnter = () => {
-    if (mode !== ContextMenuMode.HOVER) {
+    if (
+      mode !== ContextMenuMode.HOVER ||
+      (isMovingTowardMenuRef.current && activeItemId !== triggerId)
+    ) {
       return;
     }
 
     setIsOpenedByKeyboard(false);
 
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
-      setIsAnimatedOpen(true);
-    }
+    // Clear all timers and stop movement checking when entering content
+    clearTimers();
+    pendingCloseRef.current = false;
 
-    if (open) {
+    if (isOpen) {
       setIsInsideContent(true);
+      isInsideContentRef.current = true;
+      setIsAnimatedOpen(true);
     } else {
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
@@ -188,8 +311,9 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       setIsAnimatedOpen(true);
       onOpen?.(true);
       handleSubmenuOpen(true);
-      setOpen(true);
+      setIsOpen(true);
       setIsInsideContent(true);
+      isInsideContentRef.current = true;
     }
   };
 
@@ -203,13 +327,47 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     }
 
     setIsOpenedByKeyboard(false);
+    setIsInsideContent(false);
+    isInsideContentRef.current = false;
 
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
     }
 
-    setIsInsideContent(false);
+    // When leaving content, if there's a pending close, restart the check
+    if (pendingCloseRef.current && !movementCheckIntervalRef.current) {
+      movementCheckIntervalRef.current = setInterval(() => {
+        // If cursor re-entered content, stop checking and cancel close
+        if (isInsideContentRef.current) {
+          clearTimers();
+          pendingCloseRef.current = false;
+          setIsAnimatedOpen(true);
+
+          return;
+        }
+
+        // Check if still moving toward menu
+        if (isMovingTowardMenuRef.current) {
+          // Still moving toward menu, keep delaying close
+          return;
+        }
+
+        // Not moving toward menu anymore, proceed with close
+        clearTimers();
+        pendingCloseRef.current = false;
+        setIsAnimatedOpen(false);
+
+        closeTimerRef.current = setTimeout(() => {
+          setIsOpen(false);
+          onOpen?.(false);
+          handleSubmenuOpen(false);
+          setIsInsideContent(false);
+          isInsideContentRef.current = false;
+          setIsOpenedByKeyboard(false);
+        }, animationDuration);
+      }, 50);
+    }
   };
 
   /**
@@ -243,16 +401,16 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * Closes the submenu when the active item id changes.
    */
   useEffect(() => {
-    if (activeItemId !== triggerId && open && defaultOpen === undefined) {
+    if (activeItemId !== triggerId && isOpen && defaultOpen === undefined) {
       handleCloseImmediate();
     }
-  }, [activeItemId, open, defaultOpen]);
+  }, [activeItemId, isOpen, defaultOpen]);
 
   /**
    * Handles the hover close delay.
    */
   useEffect(() => {
-    if (!open || mode !== ContextMenuMode.HOVER || isOpenedByKeyboard) {
+    if (!isOpen || mode !== ContextMenuMode.HOVER || isOpenedByKeyboard) {
       return;
     }
 
@@ -277,15 +435,15 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         hoverTimeoutRef.current = null;
       }
     };
-  }, [mode, open, isInsideContent, hoverCloseDelay, isOpenedByKeyboard]);
+  }, [mode, isOpen, isInsideContent, hoverCloseDelay, isOpenedByKeyboard]);
 
   /**
    * This effect is used to call the onChildOpen callback function
    * when the submenu is opened or closed by click.
    */
   useEffect(() => {
-    onChildOpen?.(open, mode);
-  }, [open, mode]);
+    onChildOpen?.(isOpen, mode);
+  }, [isOpen, mode]);
 
   /**
    * This effect is used to call the onChildOpen callback function
@@ -316,7 +474,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     if (isChildOpen && childMode === ContextMenuMode.CLICK) {
       onChildOpen?.(true, childMode);
     } else {
-      onChildOpen?.(open, mode);
+      onChildOpen?.(isOpen, mode);
     }
   }, [isChildOpen, childMode]);
 
@@ -324,8 +482,8 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * Handles the open state change when the open state changes.
    */
   useEffect(() => {
-    handleOpenChange(open);
-  }, [open]);
+    handleOpenChange(isOpen);
+  }, [isOpen]);
 
   /**
    * Handles the click outside event.
@@ -348,8 +506,8 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   }, [parentIsAnimatedOpen]);
 
   return {
-    isOpen: open,
-    setOpen,
+    isOpen,
+    setIsOpen,
     isAnimatedOpen,
     handleContentEnter,
     handleContentLeave,
@@ -363,5 +521,6 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     closeMenuImmediately: handleCloseImmediate,
     itemWithFocusedInput,
     setItemWithFocusedInput,
+    isMovingTowardMenuRef,
   };
 };

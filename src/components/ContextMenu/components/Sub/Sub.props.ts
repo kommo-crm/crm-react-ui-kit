@@ -43,7 +43,7 @@ export interface ContextMenuSubContextProps {
   /**
    * Sets the open state of the submenu.
    */
-  setOpen: (open: boolean) => void;
+  setIsOpen: (open: boolean) => void;
   /**
    * Indicates whether the submenu is currently open.
    */
@@ -106,4 +106,8 @@ export interface ContextMenuSubContextProps {
    * Whether the item with the focused input is open.
    */
   itemWithFocusedInput: string | null;
+  /**
+   * Ref containing whether the mouse is currently moving toward the submenu.
+   */
+  isMovingTowardMenuRef: React.MutableRefObject<boolean>;
 }

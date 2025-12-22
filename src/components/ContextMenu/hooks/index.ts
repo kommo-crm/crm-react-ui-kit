@@ -9,3 +9,4 @@ export { useContextMenuItemFocus } from './useContextMenuItemFocus/useContextMen
 export { useInnerFocusTracker } from './useInnerFocusTracker/useInnerFocusTracker';
 export { useContextMenuKeyboardNavigation } from './useContextMenuKeyboardNavigation/useContextMenuKeyboardNavigation';
 export { useMouseMoveOutside } from './useMouseMoveOutside/useMouseMoveOutside';
+export { useMenuAim } from './useMenuAim';

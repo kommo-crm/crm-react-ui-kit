@@ -44,7 +44,8 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const { setActiveItemId, activeItemId } = useLevelContext(displayName);
+  const { setActiveItemId, activeItemId, isMovingTowardMenuRef } =
+    useLevelContext(displayName);
 
   useMouseMoveOutside(ref, () => {
     setIsFocused(false);
@@ -60,7 +61,12 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     dataHighlighted: isFocused && isSelectable && !isDisabled ? '' : undefined,
 
     onFocus: (e: React.FocusEvent<T>) => {
-      if (isSelectable && !isDisabled) {
+      if (
+        isSelectable &&
+        !isDisabled &&
+        !isMovingTowardMenuRef.current &&
+        activeItemId !== id
+      ) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
@@ -69,7 +75,12 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseEnter: (e: React.MouseEvent<T>) => {
-      if (isSelectable && !isDisabled) {
+      if (
+        isSelectable &&
+        !isDisabled &&
+        !isMovingTowardMenuRef.current &&
+        activeItemId !== id
+      ) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
@@ -78,7 +89,12 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onBlur: (e: React.FocusEvent<T>) => {
-      if (isSelectable && !isDisabled) {
+      if (
+        isSelectable &&
+        !isDisabled &&
+        !isMovingTowardMenuRef.current &&
+        activeItemId !== id
+      ) {
         setIsFocused(false);
       }
 
@@ -86,7 +102,12 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseLeave: (e: React.MouseEvent<T>) => {
-      if (isSelectable && !isDisabled) {
+      if (
+        isSelectable &&
+        !isDisabled &&
+        !isMovingTowardMenuRef.current &&
+        activeItemId !== id
+      ) {
         setIsFocused(false);
       }
 
@@ -120,7 +141,12 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     onPointerMove: (e: React.PointerEvent<T>) => {
       e.preventDefault();
 
-      if (isSelectable && !isDisabled) {
+      if (
+        isSelectable &&
+        !isDisabled &&
+        !isMovingTowardMenuRef.current &&
+        activeItemId !== id
+      ) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }

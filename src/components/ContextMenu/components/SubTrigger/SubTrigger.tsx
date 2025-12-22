@@ -43,7 +43,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
       defaultOpen,
       triggerId,
       triggerRef,
-      setOpen,
+      setIsOpen,
       onContentEnter,
       onContentLeave,
       onOpenByKeyboard,
@@ -110,7 +110,7 @@ export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
         e.stopPropagation();
 
         if (defaultOpen === undefined) {
-          setOpen(!isOpen);
+          setIsOpen(!isOpen);
         }
       }
 

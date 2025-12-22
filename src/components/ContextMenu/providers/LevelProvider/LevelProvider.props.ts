@@ -48,4 +48,8 @@ export interface LevelProviderContextProps {
    * Whether the item with the focused input is open.
    */
   itemWithFocusedInput: string | null;
+  /**
+   * Whether the menu is moving toward the menu.
+   */
+  isMovingTowardMenuRef: React.MutableRefObject<boolean>;
 }
