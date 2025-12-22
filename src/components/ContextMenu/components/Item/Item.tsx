@@ -56,8 +56,14 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
 
   const { closeRootMenuImmediately } = useContextMenuRootContext(DISPLAY_NAME);
 
-  const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-    useSubMenu({ onKeyDown, children });
+  const {
+    itemRef,
+    hasSubmenu,
+    isSubMenuOpen,
+    handleKeyDown,
+    withProvider,
+    subMenuTriggerId,
+  } = useSubMenu({ onKeyDown, children });
 
   const { isSelectableConsideringInputFocus, handleNodeRef } =
     useItemInnerFocus({
@@ -81,6 +87,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     id,
     isDisabled,
     hasSubmenu,
+    subMenuTriggerId,
     onFocus,
     onBlur,
     onMouseEnter,
@@ -142,7 +149,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           /**
            * Standart Radix attribute for highlighting the focused item.
            */
-          data-highlighted={subMenuOpen || dataHighlighted}
+          data-highlighted={isSubMenuOpen || dataHighlighted}
           disabled={isDisabled}
           data-item
           onSelect={handleItemSelect}

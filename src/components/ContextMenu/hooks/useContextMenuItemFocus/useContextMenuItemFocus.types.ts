@@ -20,6 +20,10 @@ export interface UseContextMenuItemFocusOptions<T extends HTMLElement> {
    */
   hasSubmenu?: boolean;
   /**
+   * The id of the submenu trigger.
+   */
+  subMenuTriggerId?: string;
+  /**
    * Whether the item is selectable.
    */
   isSelectable?: boolean;

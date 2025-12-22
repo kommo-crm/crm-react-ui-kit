@@ -25,8 +25,6 @@ import { Direction } from '../../../Content';
 
 import { directionToSide } from '../../../Content';
 
-import { focusParentItem } from './utils';
-
 import s from './Content.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.SubRoot.Content';
@@ -106,12 +104,6 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
           : { duration: animationDuration, easing: easings.easeInOutCubic },
     });
 
-    const onSubRootContentClose = () => {
-      closeMenuImmediately();
-
-      focusParentItem(triggerRef.current);
-    };
-
     const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
       onContentEnter?.(e);
 
@@ -126,7 +118,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (e.key === KeyboardKey.ARROW_LEFT) {
-        onSubRootContentClose();
+        closeMenuImmediately();
       }
 
       onKeyDown?.(e);
@@ -139,7 +131,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
     const handleEscapeKeyDown = (e: KeyboardEvent) => {
       e.preventDefault();
 
-      onSubRootContentClose();
+      closeMenuImmediately();
       onEscapeKeyDown?.(e);
     };
 
@@ -206,7 +198,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
 
       onInteractOutside?.(e);
 
-      onSubRootContentClose();
+      closeMenuImmediately();
     };
 
     return (

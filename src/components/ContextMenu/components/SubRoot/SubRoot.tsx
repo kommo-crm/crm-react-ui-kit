@@ -40,7 +40,7 @@ export const SubRoot = (props: ContextMenuSubRootProps) => {
     hoverCloseDelay,
     closeMenuImmediately,
     setItemWithFocusedInput,
-    setSubMenuOpen,
+    setIsSubMenuOpen,
     onOpenChange,
     onContentEnter,
     onContentLeave,
@@ -65,8 +65,8 @@ export const SubRoot = (props: ContextMenuSubRootProps) => {
       closeMenuImmediately={closeMenuImmediately}
       onContentEnter={onContentEnter}
       onContentLeave={onContentLeave}
-      subMenuOpen={isOpen}
-      setSubMenuOpen={setSubMenuOpen}
+      isSubMenuOpen={isOpen}
+      setIsSubMenuOpen={setIsSubMenuOpen}
       triggerId={triggerId}
       onOpenByKeyboard={onOpenByKeyboard}
       shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}

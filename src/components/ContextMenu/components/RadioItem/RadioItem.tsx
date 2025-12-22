@@ -48,8 +48,14 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
     } = useLevelContext(DISPLAY_NAME);
 
-    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-      useSubMenu({ onKeyDown, children });
+    const {
+      itemRef,
+      hasSubmenu,
+      isSubMenuOpen,
+      handleKeyDown,
+      withProvider,
+      subMenuTriggerId,
+    } = useSubMenu({ onKeyDown, children });
 
     const { closeRootMenuImmediately } =
       useContextMenuRootContext(DISPLAY_NAME);
@@ -69,6 +75,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
       id,
       isDisabled,
       hasSubmenu,
+      subMenuTriggerId,
       onFocus,
       onBlur,
       onMouseEnter,
@@ -116,7 +123,7 @@ export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
         ref={mergeRefs(ref, itemRef)}
         className={cx(s.radio_item, className)}
         disabled={isDisabled}
-        data-highlighted={subMenuOpen || dataHighlighted}
+        data-highlighted={isSubMenuOpen || dataHighlighted}
         data-item
         value={value}
         onSelect={handleItemSelect}

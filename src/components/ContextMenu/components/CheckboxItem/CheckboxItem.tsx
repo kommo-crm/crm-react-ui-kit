@@ -49,8 +49,14 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
     } = useLevelContext(DISPLAY_NAME);
 
-    const { itemRef, hasSubmenu, subMenuOpen, handleKeyDown, withProvider } =
-      useSubMenu({ onKeyDown, children });
+    const {
+      itemRef,
+      hasSubmenu,
+      isSubMenuOpen,
+      handleKeyDown,
+      withProvider,
+      subMenuTriggerId,
+    } = useSubMenu({ onKeyDown, children });
 
     const {
       dataHighlighted,
@@ -67,6 +73,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
       id,
       isDisabled,
       hasSubmenu,
+      subMenuTriggerId,
       onFocus,
       onBlur,
       onMouseEnter,
@@ -128,7 +135,7 @@ export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         className={cx(s.checkbox_item, className)}
         disabled={isDisabled}
         checked={isChecked}
-        data-highlighted={subMenuOpen || dataHighlighted}
+        data-highlighted={isSubMenuOpen || dataHighlighted}
         data-item
         onCheckedChange={handleCheckedChange}
         onSelect={handleSelect}

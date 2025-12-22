@@ -102,14 +102,14 @@ export interface ContextMenuContextProps {
    * @remarks
    * This prop is only used for `SubRoot` (submenu) components.
    */
-  subMenuOpen?: boolean;
+  isSubMenuOpen?: boolean;
   /**
    * The callback function to be called when the submenu is opened.
    *
    * @remarks
    * This prop is only used for `SubRoot` (submenu) components.
    */
-  setSubMenuOpen?: (open: boolean) => void;
+  setIsSubMenuOpen?: (open: boolean) => void;
   /**
    * The id of the trigger.
    *

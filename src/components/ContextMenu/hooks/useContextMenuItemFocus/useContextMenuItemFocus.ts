@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
@@ -40,6 +40,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     onPointerLeave,
     onPointerMove,
     isSelectable = true,
+    subMenuTriggerId,
   } = options;
 
   const [isFocused, setIsFocused] = useState(false);
@@ -51,11 +52,18 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     setIsFocused(false);
   });
 
-  useEffect(() => {
-    if ((hasSubmenu && activeItemId === null) || id !== activeItemId) {
+  useLayoutEffect(() => {
+    if (hasSubmenu) {
+      if (
+        activeItemId === null ||
+        (activeItemId !== subMenuTriggerId && id !== activeItemId)
+      ) {
+        setIsFocused(false);
+      }
+    } else if (id !== activeItemId) {
       setIsFocused(false);
     }
-  }, [activeItemId]);
+  }, [activeItemId, subMenuTriggerId, hasSubmenu, id]);
 
   return {
     dataHighlighted: isFocused && isSelectable && !isDisabled ? '' : undefined,

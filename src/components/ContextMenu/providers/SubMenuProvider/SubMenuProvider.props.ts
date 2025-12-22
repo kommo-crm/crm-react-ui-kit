@@ -6,11 +6,11 @@ export interface SubMenuContextProps {
   /**
    * Whether the submenu is open.
    */
-  subMenuOpen: boolean;
+  isSubMenuOpen: boolean;
   /**
    * The callback function to be called when the submenu is opened.
    */
-  setSubMenuOpen: (open: boolean) => void;
+  setIsSubMenuOpen: (open: boolean) => void;
   /**
    * Whether the submenu is opened by keyboard.
    */
@@ -19,4 +19,8 @@ export interface SubMenuContextProps {
    * The callback function to be called when the submenu is opened by keyboard.
    */
   setIsOpenedByKeyboard: (openedByKeyboard: boolean) => void;
+  /**
+   * The callback function to be called when the submenu trigger id is set.
+   */
+  setSubMenuTriggerId: (subMenuTriggerId: string | undefined) => void;
 }

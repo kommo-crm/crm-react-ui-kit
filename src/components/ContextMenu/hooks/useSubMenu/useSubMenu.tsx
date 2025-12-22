@@ -16,9 +16,12 @@ import { UseSubMenuOptions } from './useSubMenu.types';
 export const useSubMenu = (options: UseSubMenuOptions) => {
   const { onKeyDown, children: itemChildren } = options;
 
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [hasSubmenu, setHasSubmenu] = useState(false);
   const [isOpenedByKeyboard, setIsOpenedByKeyboard] = useState(false);
+  const [subMenuTriggerId, setSubMenuTriggerId] = useState<string | undefined>(
+    undefined
+  );
 
   const itemRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +37,7 @@ export const useSubMenu = (options: UseSubMenuOptions) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (hasSubmenu && e.key === KeyboardKey.ARROW_RIGHT) {
-      setSubMenuOpen(true);
+      setIsSubMenuOpen(true);
       setIsOpenedByKeyboard(true);
     }
 
@@ -44,10 +47,11 @@ export const useSubMenu = (options: UseSubMenuOptions) => {
   const withProvider = (children: React.ReactNode) => (
     <SubMenuProvider
       hasSubmenu={hasSubmenu}
-      subMenuOpen={subMenuOpen}
-      setSubMenuOpen={setSubMenuOpen}
+      isSubMenuOpen={isSubMenuOpen}
+      setIsSubMenuOpen={setIsSubMenuOpen}
       isOpenedByKeyboard={isOpenedByKeyboard}
       setIsOpenedByKeyboard={setIsOpenedByKeyboard}
+      setSubMenuTriggerId={setSubMenuTriggerId}
     >
       {children}
     </SubMenuProvider>
@@ -56,9 +60,10 @@ export const useSubMenu = (options: UseSubMenuOptions) => {
   return {
     itemRef,
     hasSubmenu,
-    subMenuOpen,
-    setSubMenuOpen,
+    isSubMenuOpen,
+    setIsSubMenuOpen,
     handleKeyDown,
     withProvider,
+    subMenuTriggerId,
   };
 };

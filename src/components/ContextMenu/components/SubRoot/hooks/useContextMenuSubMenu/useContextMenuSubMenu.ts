@@ -15,6 +15,8 @@ import {
 
 import { ContextMenuModeType } from '../../../../ContextMenu.types';
 
+import { focusParentItem } from '../../components/Content/utils';
+
 import { UseContextMenuSubMenuOptions } from './useContextMenuSubMenu.types';
 
 export const useContextMenuSubMenu = (
@@ -31,13 +33,14 @@ export const useContextMenuSubMenu = (
   const triggerId = useId();
 
   const {
-    subMenuOpen,
+    isSubMenuOpen,
     isOpenedByKeyboard,
-    setSubMenuOpen,
+    setIsSubMenuOpen,
     setIsOpenedByKeyboard,
+    setSubMenuTriggerId,
   } = useSubMenuContext(displayName);
 
-  const [open, setOpen] = useState(subMenuOpen || defaultOpen || false);
+  const [open, setOpen] = useState(isSubMenuOpen || defaultOpen || false);
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
@@ -74,7 +77,7 @@ export const useContextMenuSubMenu = (
   /**
    * The open state of the submenu.
    */
-  const isOpen = subMenuOpen || open;
+  const isOpen = isSubMenuOpen || open;
 
   const handleSubmenuOpen = (value: boolean) => {
     /**
@@ -109,7 +112,7 @@ export const useContextMenuSubMenu = (
    * Closes the menu.
    */
   const handleClose = (closeRootMenu: boolean = false) => {
-    setSubMenuOpen?.(false);
+    setIsSubMenuOpen?.(false);
     setOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
@@ -147,9 +150,11 @@ export const useContextMenuSubMenu = (
    * Closes the menu immediately.
    */
   const closeMenuImmediately = () => {
+    focusParentItem(triggerRef.current);
+
     clearTimers();
     setIsAnimatedOpen(false);
-    setSubMenuOpen?.(false);
+    setIsSubMenuOpen?.(false);
     onOpen?.(false);
     setIsInsideContent(false);
     setIsOpenedByKeyboard(false);
@@ -159,10 +164,14 @@ export const useContextMenuSubMenu = (
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (mode === ContextMenuMode.CLICK && defaultOpen !== undefined) {
-      setOpen(defaultOpen);
+    if (mode === ContextMenuMode.CLICK) {
+      if (defaultOpen !== undefined) {
+        setOpen(defaultOpen);
 
-      return;
+        return;
+      } else if (!value) {
+        focusParentItem(triggerRef.current);
+      }
     }
 
     if (value) {
@@ -175,7 +184,7 @@ export const useContextMenuSubMenu = (
         setIsAnimatedOpen(true);
       }
 
-      setSubMenuOpen?.(true);
+      setIsSubMenuOpen?.(true);
       onOpen?.(true);
     } else {
       requestClose();
@@ -215,7 +224,7 @@ export const useContextMenuSubMenu = (
       }
 
       setIsAnimatedOpen(true);
-      setSubMenuOpen?.(true);
+      setIsSubMenuOpen?.(true);
       onOpen?.(true);
       setIsInsideContent(true);
     }
@@ -255,10 +264,10 @@ export const useContextMenuSubMenu = (
    * Synchronizes the local open state with the submenu open state.
    */
   useLayoutEffect(() => {
-    if (subMenuOpen !== undefined) {
-      setIsAnimatedOpen(subMenuOpen);
+    if (isSubMenuOpen !== undefined) {
+      setIsAnimatedOpen(isSubMenuOpen);
     }
-  }, [subMenuOpen]);
+  }, [isSubMenuOpen]);
 
   /**
    * Handles the hover close delay.
@@ -358,6 +367,13 @@ export const useContextMenuSubMenu = (
     }
   }, [isOpenedByKeyboard, contentRef.current]);
 
+  /**
+   * Sets the submenu trigger id.
+   */
+  useEffect(() => {
+    setSubMenuTriggerId(triggerId);
+  }, [triggerId]);
+
   return {
     mode,
     isOpen,
@@ -375,6 +391,6 @@ export const useContextMenuSubMenu = (
     onChildOpen: handleChildOpen,
     itemWithFocusedInput,
     setItemWithFocusedInput,
-    setSubMenuOpen,
+    setIsSubMenuOpen,
   };
 };

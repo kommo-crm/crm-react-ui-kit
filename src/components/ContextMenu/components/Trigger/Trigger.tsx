@@ -12,6 +12,8 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { focusFirstFocusableItem } from '../../utils';
 
+import { focusParentItem } from '../SubRoot/components/Content/utils';
+
 import type { TriggerProps } from './Trigger.props';
 
 import s from './Trigger.module.css';
@@ -28,6 +30,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onMouseLeave,
       onMouseMove,
       onPointerDown,
+      onFocus,
 
       ...rest
     } = props;
@@ -111,6 +114,14 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onMouseMove?.(e);
     };
 
+    const handleFocus = (e: React.FocusEvent<HTMLButtonElement>) => {
+      if (mode === ContextMenuMode.HOVER) {
+        focusParentItem(triggerRef.current);
+      }
+
+      onFocus?.(e);
+    };
+
     return (
       <RadixDropdownMenuTrigger
         ref={mergeRefs(triggerRef, ref)}
@@ -120,6 +131,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
+        onFocus={handleFocus}
         {...rest}
       >
         {children}
