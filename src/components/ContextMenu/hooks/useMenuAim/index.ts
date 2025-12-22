@@ -1,2 +1,6 @@
 export { useMenuAim } from './useMenuAim';
-export type { UseMenuAimOptions, UseMenuAimResult } from './useMenuAim.types';
+export type {
+  UseMenuAimOptions,
+  UseMenuAimResult,
+  MenuAimDirection,
+} from './useMenuAim.types';

@@ -68,54 +68,9 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
   /**
    * Direction for menu aim, determined from Radix's data-side attribute.
    */
-  const [menuAimDirection, setMenuAimDirection] =
-    useState<MenuAimDirection>('right');
-
-  /**
-   * Read direction from Radix's data-side attribute on content element.
-   * Uses MutationObserver to detect when Radix sets the attribute after positioning.
-   */
-  useEffect(() => {
-    if (!isOpen || !contentRef.current) {
-      return;
-    }
-
-    const element = contentRef.current;
-
-    const updateDirection = () => {
-      const dataSide = element.getAttribute(
-        'data-side'
-      ) as MenuAimDirection | null;
-
-      if (dataSide && ['top', 'right', 'bottom', 'left'].includes(dataSide)) {
-        setMenuAimDirection(dataSide);
-      }
-    };
-
-    // Check immediately
-    updateDirection();
-
-    // Observe changes to data-side attribute
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'data-side'
-        ) {
-          updateDirection();
-        }
-      }
-    });
-
-    observer.observe(element, {
-      attributes: true,
-      attributeFilter: ['data-side'],
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [isOpen]);
+  const [menuAimDirection, setMenuAimDirection] = useState<MenuAimDirection>(
+    MenuAimDirection.RIGHT
+  );
 
   const { isMovingTowardMenuRef } = useMenuAim({
     contentRef,
@@ -516,6 +471,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
   return {
     isOpen,
     mode,
+    setMenuAimDirection,
     onOpenChange: handleOpenChange,
     onOpenByKeyboard,
     triggerRef,

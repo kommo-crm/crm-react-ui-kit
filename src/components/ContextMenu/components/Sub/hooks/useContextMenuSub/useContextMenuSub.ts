@@ -64,8 +64,9 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   /**
    * Direction for menu aim, determined from Radix's data-side attribute.
    */
-  const [menuAimDirection, setMenuAimDirection] =
-    useState<MenuAimDirection>('right');
+  const [menuAimDirection, setMenuAimDirection] = useState<MenuAimDirection>(
+    MenuAimDirection.RIGHT
+  );
 
   /**
    * Read direction from Radix's data-side attribute on content element.
@@ -83,7 +84,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         'data-side'
       ) as MenuAimDirection | null;
 
-      if (dataSide && ['top', 'right', 'bottom', 'left'].includes(dataSide)) {
+      if (dataSide) {
         setMenuAimDirection(dataSide);
       }
     };
@@ -111,7 +112,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     return () => {
       observer.disconnect();
     };
-  }, [isOpen]);
+  }, [isOpen, contentRef.current]);
 
   const { isMovingTowardMenuRef } = useMenuAim({
     contentRef,

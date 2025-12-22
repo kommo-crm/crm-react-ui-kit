@@ -1,5 +1,7 @@
 import { type DropdownMenuProps as RadixDropdownMenuRootProps } from '@radix-ui/react-dropdown-menu';
 
+import { MenuAimDirection } from './hooks/useMenuAim';
+
 import { ContextMenuModeType } from './ContextMenu.types';
 
 export type ContextMenuRootProps = Omit<
@@ -174,6 +176,13 @@ export interface ContextMenuContextProps {
    * This prop is only used for `ContextMenu` (root) components.
    */
   shouldPreventFocusRestore?: () => boolean;
+  /**
+   * Sets the menu aim direction.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  setMenuAimDirection?: (direction: MenuAimDirection) => void;
 }
 
 export interface ContextMenuRootContextProps {

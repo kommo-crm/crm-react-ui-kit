@@ -1,6 +1,11 @@
 import { useEffect, useRef, useCallback } from 'react';
 
-import { Point, UseMenuAimOptions, UseMenuAimResult } from './useMenuAim.types';
+import {
+  MenuAimDirection,
+  Point,
+  UseMenuAimOptions,
+  UseMenuAimResult,
+} from './useMenuAim.types';
 
 const DEFAULT_SWITCH_DELAY = 200;
 const DEFAULT_TOLERANCE = 40;
@@ -32,13 +37,13 @@ const getMenuDirectionVector = (
   direction: UseMenuAimOptions['direction']
 ): Point => {
   switch (direction) {
-    case 'left':
+    case MenuAimDirection.LEFT:
       return { x: -1, y: 0 };
-    case 'right':
+    case MenuAimDirection.RIGHT:
       return { x: 1, y: 0 };
-    case 'top':
+    case MenuAimDirection.TOP:
       return { x: 0, y: -1 };
-    case 'bottom':
+    case MenuAimDirection.BOTTOM:
       return { x: 0, y: 1 };
   }
 };
@@ -68,22 +73,22 @@ const getContentEdge = (
   const scrollY = window.pageYOffset;
 
   switch (direction) {
-    case 'right':
+    case MenuAimDirection.RIGHT:
       return [
         { x: r.left + scrollX, y: r.top - tolerance + scrollY },
         { x: r.left + scrollX, y: r.bottom + tolerance + scrollY },
       ];
-    case 'left':
+    case MenuAimDirection.LEFT:
       return [
         { x: r.right + scrollX, y: r.top - tolerance + scrollY },
         { x: r.right + scrollX, y: r.bottom + tolerance + scrollY },
       ];
-    case 'bottom':
+    case MenuAimDirection.BOTTOM:
       return [
         { x: r.left - tolerance + scrollX, y: r.top + scrollY },
         { x: r.right + tolerance + scrollX, y: r.top + scrollY },
       ];
-    case 'top':
+    case MenuAimDirection.TOP:
       return [
         { x: r.left - tolerance + scrollX, y: r.bottom + scrollY },
         { x: r.right + tolerance + scrollX, y: r.bottom + scrollY },

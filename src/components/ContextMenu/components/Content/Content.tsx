@@ -1,6 +1,7 @@
 import React, {
   ComponentPropsWithoutRef,
   forwardRef,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -93,6 +94,7 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       itemWithFocusedInput,
       setItemWithFocusedInput,
       shouldPreventFocusRestore,
+      setMenuAimDirection,
     } = useContextMenuContext(DISPLAY_NAME);
 
     const { align, offset, isPositioned } = useContentPositioning({
@@ -105,6 +107,10 @@ export const Content = forwardRef<HTMLDivElement, ContentProps>(
       children,
       disableRepositioning,
     });
+
+    useEffect(() => {
+      setMenuAimDirection?.(directionToSide[direction]);
+    }, [direction, setMenuAimDirection]);
 
     const springStyles = useSpring({
       opacity:

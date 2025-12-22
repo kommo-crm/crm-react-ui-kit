@@ -13,10 +13,26 @@ export type Point = {
 };
 
 /**
- * Direction in which the submenu is expected to appear
- * relative to the current menu.
+ * Valid menu aim directions.
  */
-export type MenuAimDirection = 'right' | 'left' | 'top' | 'bottom';
+export const enum MenuAimDirection {
+  /**
+   * Menu aims up.
+   */
+  TOP = 'top',
+  /**
+   * Menu aims right.
+   */
+  RIGHT = 'right',
+  /**
+   * Menu aims down.
+   */
+  BOTTOM = 'bottom',
+  /**
+   * Menu aims left.
+   */
+  LEFT = 'left',
+}
 
 /**
  * Options for the useMenuAim hook.
