@@ -69,12 +69,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     dataHighlighted: isFocused && isSelectable && !isDisabled ? '' : undefined,
 
     onFocus: (e: React.FocusEvent<T>) => {
-      if (
-        isSelectable &&
-        !isDisabled &&
-        !isMovingTowardMenuRef.current &&
-        activeItemId !== id
-      ) {
+      if (isSelectable && !isDisabled && !isMovingTowardMenuRef.current) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
@@ -83,12 +78,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseEnter: (e: React.MouseEvent<T>) => {
-      if (
-        isSelectable &&
-        !isDisabled &&
-        !isMovingTowardMenuRef.current &&
-        activeItemId !== id
-      ) {
+      if (isSelectable && !isDisabled && !isMovingTowardMenuRef.current) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
@@ -97,12 +87,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onBlur: (e: React.FocusEvent<T>) => {
-      if (
-        isSelectable &&
-        !isDisabled &&
-        !isMovingTowardMenuRef.current &&
-        activeItemId !== id
-      ) {
+      if (isSelectable && !isDisabled && !isMovingTowardMenuRef.current) {
         setIsFocused(false);
       }
 
@@ -110,12 +95,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseLeave: (e: React.MouseEvent<T>) => {
-      if (
-        isSelectable &&
-        !isDisabled &&
-        !isMovingTowardMenuRef.current &&
-        activeItemId !== id
-      ) {
+      if (isSelectable && !isDisabled && !isMovingTowardMenuRef.current) {
         setIsFocused(false);
       }
 
@@ -149,12 +129,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     onPointerMove: (e: React.PointerEvent<T>) => {
       e.preventDefault();
 
-      if (
-        isSelectable &&
-        !isDisabled &&
-        !isMovingTowardMenuRef.current &&
-        activeItemId !== id
-      ) {
+      if (isSelectable && !isDisabled && !isMovingTowardMenuRef.current) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
