@@ -374,6 +374,15 @@ export const useContextMenuSubMenu = (
     setSubMenuTriggerId(triggerId);
   }, [triggerId]);
 
+  /**
+   * Calls the onOpen callback function when the submenu is opened or closed.
+   */
+  useEffect(() => {
+    if (mode === ContextMenuMode.CLICK) {
+      onOpen?.(isOpen);
+    }
+  }, [isOpen, mode]);
+
   return {
     mode,
     isOpen,
