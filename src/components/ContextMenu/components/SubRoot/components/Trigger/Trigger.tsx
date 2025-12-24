@@ -27,6 +27,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       onMouseEnter,
       onMouseLeave,
       onPointerDown,
+      onPointerUp,
 
       ...rest
     } = props;
@@ -35,6 +36,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
       isOpen,
       triggerRef,
       mode,
+      isSubMenuOpen,
+      setIsSubMenuOpen,
       triggerId,
       onContentEnter,
       onContentLeave,
@@ -69,19 +72,28 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
 
     /**
      * Handles pointer down on SubRoot trigger.
-     *
-     * - preventDefault (hover mode): menu is already open via hover, no toggle needed
-     * - stopPropagation (always): prevent bubbling to parent menu items,
-     *   since SubRoot trigger is nested inside a parent menu item
+     * Prevents default behavior to emulate onClick behavior where state changes
+     * on pointer up rather than pointer down.
+     * stopPropagation prevents bubbling to parent menu items,
+     * since SubRoot trigger is nested inside a parent menu item.
      */
     const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
-      if (mode === ContextMenuMode.HOVER) {
-        e.preventDefault();
-      }
-
+      e.preventDefault();
       e.stopPropagation();
 
       onPointerDown?.(e);
+    };
+
+    /**
+     * Handles pointer up on SubRoot trigger.
+     * Changes state on pointer up to emulate onClick behavior.
+     */
+    const handlePointerUp = (e: React.PointerEvent<HTMLButtonElement>) => {
+      if (mode === ContextMenuMode.CLICK) {
+        setIsSubMenuOpen?.(!isSubMenuOpen);
+      }
+
+      onPointerUp?.(e);
     };
 
     return (
@@ -90,6 +102,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TriggerProps>(
         className={cx(s.trigger, { [s.open]: isOpen }, className)}
         data-highlighted={dataHighlighted || isOpen ? '' : undefined}
         onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
         onFocus={handleItemFocus}
         onMouseEnter={handleItemMouseEnter}
         onBlur={handleItemBlur}
