@@ -16,6 +16,7 @@ export const Sub = (props: SubProps) => {
     defaultOpen,
     shouldCloseRootMenuOnSelect = true,
     shouldCloseCurrentMenuOnSelect = true,
+    onAiming,
 
     ...rest
   } = props;
@@ -42,6 +43,7 @@ export const Sub = (props: SubProps) => {
     mode,
     defaultOpen,
     onOpen,
+    onAiming,
   });
 
   return (

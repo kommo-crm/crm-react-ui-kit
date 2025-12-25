@@ -45,6 +45,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     enableCloseOnFocusLoss = false,
     onOpen,
     onAnimatedOpen,
+    onAiming,
 
     ...rest
   } = props;
@@ -80,6 +81,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     enableCloseOnFocusLoss,
     onOpen,
     onAnimatedOpen,
+    onAiming,
   });
 
   useContextMenuKeyboardNavigation({

@@ -42,4 +42,13 @@ export interface UseContextMenuOptions {
    * Whether the context menu should close when focus is lost.
    */
   enableCloseOnFocusLoss?: boolean;
+  /**
+   * Called whenever the value of `isMovingTowardActiveMenuRef` changes
+   * in the context menu bus.
+   *
+   * This ref tracks whether the cursor is currently moving toward the active menu,
+   * which is used to prevent menu closure when navigating between menus in hover mode.
+   * The callback is triggered whenever this tracking state changes.
+   */
+  onAiming?: (isAiming: boolean) => void;
 }

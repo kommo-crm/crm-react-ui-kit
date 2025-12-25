@@ -24,10 +24,11 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
     defaultOpen,
     animationDuration,
     hoverCloseDelay,
-    onOpen,
-    onAnimatedOpen,
     isOpen: isOpenForcefully,
     enableCloseOnFocusLoss,
+    onOpen,
+    onAnimatedOpen,
+    onAiming,
   } = options;
 
   const id = useId();
@@ -460,6 +461,13 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
       }
     },
   });
+
+  /**
+   * Handles the aiming state change.
+   */
+  useEffect(() => {
+    onAiming?.(isMovingTowardMenuRef.current);
+  }, [isMovingTowardMenuRef.current, onAiming]);
 
   /**
    * Checks if focus restoration should be prevented.

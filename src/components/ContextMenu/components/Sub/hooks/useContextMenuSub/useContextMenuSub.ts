@@ -16,7 +16,13 @@ import { ContextMenuModeType } from '../../../../ContextMenu.types';
 import { UseContextMenuSubOptions } from './useContextMenuSub.types';
 
 export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
-  const { displayName, mode: initialMode, defaultOpen, onOpen } = options;
+  const {
+    displayName,
+    mode: initialMode,
+    defaultOpen,
+    onOpen,
+    onAiming,
+  } = options;
 
   const {
     activeItemId,
@@ -505,6 +511,13 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       requestClose();
     }
   }, [parentIsAnimatedOpen]);
+
+  /**
+   * Handles the aiming state change.
+   */
+  useEffect(() => {
+    onAiming?.(isMovingTowardMenuRef.current);
+  }, [isMovingTowardMenuRef.current, onAiming]);
 
   return {
     isOpen,
