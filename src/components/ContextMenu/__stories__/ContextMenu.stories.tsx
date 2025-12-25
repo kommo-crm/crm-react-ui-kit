@@ -357,6 +357,9 @@ const StoryComponent = (props: StoryComponentProps) => {
               <ContextMenu.experimental_SubRoot
                 mode={subMenuMode}
                 shouldCloseRootMenuOnSelect
+                onOpen={(value) => {
+                  console.log('open', value);
+                }}
               >
                 <ContextMenu.experimental_SubRoot.Trigger
                   style={{
@@ -498,6 +501,64 @@ const StoryComponent = (props: StoryComponentProps) => {
               </ContextMenu.SubContent>
             </ContextMenu.Portal>
           </ContextMenu.Sub>
+
+          <ContextMenu.Sub mode={subMode}>
+            <ContextMenu.SubTrigger>
+              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                {i18n.t('Contacts')}
+              </Text>
+
+              <ContextMenu.ItemRightSlot>
+                <ContextMenuChevronRightIcon />
+              </ContextMenu.ItemRightSlot>
+            </ContextMenu.SubTrigger>
+
+            <ContextMenu.Portal>
+              <ContextMenu.SubContent alignOffset={-2}>
+                <ContextMenu.Label>
+                  <ContextMenu.ItemIcon />
+
+                  <Text theme={TextSecondaryDarkTheme} size="l" isEllipsis>
+                    {i18n.t('Label')}
+                  </Text>
+                </ContextMenu.Label>
+
+                <ContextMenu.Separator />
+
+                <ContextMenu.Item>
+                  <ContextMenu.ItemIcon />
+
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    {i18n.t('Contact')} 1
+                  </Text>
+                </ContextMenu.Item>
+
+                <ContextMenu.Item isDisabled>
+                  <ContextMenu.ItemIcon />
+
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    {i18n.t('Contact')} 2
+                  </Text>
+                </ContextMenu.Item>
+
+                <ContextMenu.Item isDanger>
+                  <ContextMenu.ItemIcon>
+                    <ContextMenuTrashcanIcon />
+                  </ContextMenu.ItemIcon>
+
+                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    {i18n.t('Delete All')}
+                  </Text>
+                </ContextMenu.Item>
+              </ContextMenu.SubContent>
+            </ContextMenu.Portal>
+          </ContextMenu.Sub>
+
+          <ContextMenu.Item>
+            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+              {i18n.t('Switch Workspace')}
+            </Text>
+          </ContextMenu.Item>
 
           <ContextMenu.Arrow />
         </ContextMenu.Content>
@@ -765,6 +826,70 @@ export const Directions: Story = {
             </div>
           ))}
         </div>
+      </div>
+    );
+  },
+};
+
+export const LeftMenu: Story = {
+  argTypes: {
+    mode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    subMode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    subMenuMode: {
+      control: 'radio',
+      options: [ContextMenuMode.CLICK, ContextMenuMode.HOVER],
+    },
+    direction: {
+      control: 'select',
+      options: [
+        'down-right',
+        'down-left',
+        'up-right',
+        'up-left',
+        'right-up',
+        'right-down',
+        'left-up',
+        'left-down',
+      ] satisfies ContentProps['direction'][],
+    },
+  },
+  render: (args) => {
+    const { direction } = args;
+
+    return (
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          padding: '20px',
+          boxSizing: 'border-box',
+          alignItems: 'center',
+        }}
+        id="context-menu-story"
+      >
+        {Array.from({ length: 10 }).map((_, index) => (
+          <StoryComponent
+            key={index}
+            {...args}
+            direction={direction}
+            button={
+              <Button theme={ButtonContextMenuTheme} style={{ width: '100px' }}>
+                {index + 1}
+              </Button>
+            }
+            isTriggerAsChild
+          />
+        ))}
       </div>
     );
   },

@@ -6,3 +6,5 @@ export {
   type ContextMenuType,
   type ContextMenuModeType,
 } from './ContextMenu.types';
+
+export { contextMenuBus } from './hooks/useContextMenu/utils';
