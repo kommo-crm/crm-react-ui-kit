@@ -1,7 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
 
-import { UseInnerFocusTrackerOptions } from './useInnerFocusTracker.types';
-
 /**
  * Hook that monitors a DOM node for inner input elements and tracks their
  * focus state.
@@ -12,9 +10,7 @@ import { UseInnerFocusTrackerOptions } from './useInnerFocusTracker.types';
  *
  * Also supports contentEditable elements as focusable inputs.
  */
-export const useInnerFocusTracker = (options: UseInnerFocusTrackerOptions) => {
-  const { isEnabled } = options;
-
+export const useInnerFocusTracker = () => {
   const [hasInnerInput, setHasInnerInput] = useState(false);
   const [isInnerInputFocused, setIsInnerInputFocused] = useState(false);
   const [node, setNode] = useState<HTMLDivElement | null>(null);
@@ -22,7 +18,7 @@ export const useInnerFocusTracker = (options: UseInnerFocusTrackerOptions) => {
   const handleNodeRef = (newNode: HTMLDivElement | null) => {
     setNode(newNode);
 
-    if (newNode && isEnabled) {
+    if (newNode) {
       const inputs = Array.from(newNode.querySelectorAll('input'));
 
       setHasInnerInput(inputs.length > 0);
@@ -31,7 +27,7 @@ export const useInnerFocusTracker = (options: UseInnerFocusTrackerOptions) => {
   };
 
   useLayoutEffect(() => {
-    if (!isEnabled || !node) {
+    if (!node) {
       return;
     }
 
@@ -70,7 +66,7 @@ export const useInnerFocusTracker = (options: UseInnerFocusTrackerOptions) => {
       node.removeEventListener('focusin', handleFocusIn);
       node.removeEventListener('focusout', handleFocusOut);
     };
-  }, [node, isEnabled]);
+  }, [node]);
 
   return { hasInnerInput, isInnerInputFocused, handleNodeRef };
 };

@@ -17,142 +17,140 @@ import s from './SubTrigger.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.SubTrigger';
 
-export const SubTrigger = forwardRef<HTMLDivElement, SubTriggerProps>(
-  (props, ref) => {
-    const {
-      className,
-      children,
-      isDisabled,
-      onKeyDown,
-      onFocus,
-      onBlur,
-      onClick,
-      onPointerEnter,
-      onPointerMove,
-      onPointerLeave,
-      onMouseEnter,
-      onMouseMove,
-      onMouseLeave,
+type El = HTMLDivElement;
 
-      ...rest
-    } = props;
+export const SubTrigger = forwardRef<El, SubTriggerProps>((props, ref) => {
+  const {
+    className,
+    children,
+    isDisabled,
+    onKeyDown,
+    onFocus,
+    onBlur,
+    onClick,
+    onPointerEnter,
+    onPointerMove,
+    onPointerLeave,
+    onMouseEnter,
+    onMouseMove,
+    onMouseLeave,
 
-    const {
-      mode,
-      isOpen,
-      defaultOpen,
-      triggerId,
-      triggerRef,
-      setIsOpen,
-      onContentEnter,
-      onContentLeave,
-      onOpenByKeyboard,
-    } = useContextMenuSubContext(DISPLAY_NAME);
+    ...rest
+  } = props;
 
-    const {
-      dataHighlighted,
-      onFocus: handleItemFocus,
-      onMouseEnter: handleItemMouseEnter,
-      onBlur: handleItemBlur,
-      onMouseLeave: handleItemMouseLeave,
-      onPointerEnter: handleItemPointerEnter,
-      onPointerLeave: handleItemPointerLeave,
-      onPointerMove: handleItemPointerMove,
-    } = useContextMenuItemFocus({
-      displayName: DISPLAY_NAME,
-      ref: triggerRef,
-      id: triggerId,
-      isDisabled,
-      onMouseEnter: (e) => {
-        onContentEnter(e);
-        onMouseEnter?.(e);
-      },
-      onMouseLeave: (e) => {
-        onContentLeave(e);
-        onMouseLeave?.(e);
-      },
-      onFocus,
-      onBlur,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
-    });
+  const {
+    mode,
+    isOpen,
+    defaultOpen,
+    triggerId,
+    triggerRef,
+    setIsOpen,
+    onContentEnter,
+    onContentLeave,
+    onOpenByKeyboard,
+  } = useContextMenuSubContext(DISPLAY_NAME);
 
-    const handleKeyDownSubTrigger = (
-      e: React.KeyboardEvent<HTMLDivElement>
-    ) => {
-      if (mode === ContextMenuMode.HOVER) {
-        if (
-          [
-            KeyboardKey.ENTER,
-            KeyboardKey.SPACE,
-            KeyboardKey.ARROW_RIGHT,
-          ].includes(e.key as KeyboardKey)
-        ) {
-          onOpenByKeyboard(true);
-        } else if (e.key === KeyboardKey.ARROW_LEFT) {
-          onOpenByKeyboard(false);
-        }
+  const {
+    dataHighlighted,
+    onFocus: handleItemFocus,
+    onMouseEnter: handleItemMouseEnter,
+    onBlur: handleItemBlur,
+    onMouseLeave: handleItemMouseLeave,
+    onPointerEnter: handleItemPointerEnter,
+    onPointerLeave: handleItemPointerLeave,
+    onPointerMove: handleItemPointerMove,
+  } = useContextMenuItemFocus({
+    displayName: DISPLAY_NAME,
+    ref: triggerRef,
+    id: triggerId,
+    isDisabled,
+    onMouseEnter: (e) => {
+      onContentEnter(e);
+      onMouseEnter?.(e);
+    },
+    onMouseLeave: (e) => {
+      onContentLeave(e);
+      onMouseLeave?.(e);
+    },
+    onFocus,
+    onBlur,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
+  });
+
+  const handleKeyDownSubTrigger = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (mode === ContextMenuMode.HOVER) {
+      if (
+        [
+          KeyboardKey.ENTER,
+          KeyboardKey.SPACE,
+          KeyboardKey.ARROW_RIGHT,
+        ].includes(e.key as KeyboardKey)
+      ) {
+        onOpenByKeyboard(true);
+      } else if (e.key === KeyboardKey.ARROW_LEFT) {
+        onOpenByKeyboard(false);
       }
+    }
 
-      onKeyDown?.(e);
-    };
+    onKeyDown?.(e);
+  };
 
-    /**
-     * In click/controlled mode, prevent Radix's default hover-based submenu
-     * behavior. We manage submenu open state manually.
-     */
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  /**
+   * In click/controlled mode, prevent Radix's default hover-based submenu
+   * behavior. We manage submenu open state manually.
+   */
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
       e.preventDefault();
+      e.stopPropagation();
 
-      if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (defaultOpen === undefined) {
-          setIsOpen(!isOpen);
-        }
+      if (defaultOpen === undefined) {
+        setIsOpen(!isOpen);
       }
+    }
 
-      onClick?.(e);
-    };
+    onClick?.(e);
+  };
 
-    const handleItemMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-      handleItemMouseEnter?.(e);
+  const handleItemMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    handleItemMouseEnter?.(e);
 
-      onMouseMove?.(e);
-    };
+    onMouseMove?.(e);
+  };
 
-    return (
-      <RadixDropdownMenuSubTrigger
-        ref={mergeRefs(ref, triggerRef)}
-        className={cx(s.sub_trigger, className)}
-        disabled={isDisabled}
-        data-highlighted={
-          isOpen ||
-          dataHighlighted === '' ||
-          (mode === ContextMenuMode.CLICK && isOpen)
-            ? ''
-            : undefined
-        }
-        data-item
-        data-submenu-trigger
-        onKeyDown={handleKeyDownSubTrigger}
-        onClick={handleClick}
-        onFocus={handleItemFocus}
-        onMouseEnter={handleItemMouseEnter}
-        onMouseMove={handleItemMouseMove}
-        onBlur={handleItemBlur}
-        onMouseLeave={handleItemMouseLeave}
-        onPointerEnter={handleItemPointerEnter}
-        onPointerMove={handleItemPointerMove}
-        onPointerLeave={handleItemPointerLeave}
-        {...rest}
-      >
-        {children}
-      </RadixDropdownMenuSubTrigger>
-    );
-  }
-);
+  return (
+    <RadixDropdownMenuSubTrigger
+      ref={mergeRefs(ref, triggerRef)}
+      className={cx(s.sub_trigger, className)}
+      disabled={isDisabled}
+      data-highlighted={
+        isOpen ||
+        dataHighlighted === '' ||
+        (mode === ContextMenuMode.CLICK && isOpen)
+          ? ''
+          : undefined
+      }
+      data-item
+      data-submenu-trigger
+      onKeyDown={handleKeyDownSubTrigger}
+      onClick={handleClick}
+      onFocus={handleItemFocus}
+      onMouseEnter={handleItemMouseEnter}
+      onMouseMove={handleItemMouseMove}
+      onBlur={handleItemBlur}
+      onMouseLeave={handleItemMouseLeave}
+      onPointerEnter={handleItemPointerEnter}
+      onPointerMove={handleItemPointerMove}
+      onPointerLeave={handleItemPointerLeave}
+      {...rest}
+    >
+      {children}
+    </RadixDropdownMenuSubTrigger>
+  );
+});
 
 SubTrigger.displayName = DISPLAY_NAME;

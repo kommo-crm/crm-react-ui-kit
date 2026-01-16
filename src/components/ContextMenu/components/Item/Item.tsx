@@ -29,8 +29,8 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     isDisabled,
     isDanger,
     shouldCloseCurrentMenuOnSelect = true,
-    shouldCloseRootMenuOnSelect = false,
-    isSelectable: isSelectableProp,
+    shouldCloseRootMenuOnSelect = true,
+    isSelectable: isInitialSelectable,
     asChild,
     onSelect,
     onClick,
@@ -60,27 +60,27 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     itemRef,
     hasSubmenu,
     isSubMenuOpen,
-    handleKeyDown,
+    handleSubMenuOpenByKeyDown,
     withProvider,
     subMenuTriggerId,
-  } = useSubMenu({ onKeyDown, children });
+  } = useSubMenu({ children });
 
   const { isSelectableConsideringInputFocus, handleNodeRef } =
     useItemInnerFocus({
       id,
-      isSelectableProp,
+      isSelectable: isInitialSelectable,
       displayName: DISPLAY_NAME,
     });
 
   const {
     dataHighlighted,
-    onFocus: handleItemFocus,
-    onMouseEnter: handleItemMouseEnter,
-    onBlur: handleItemBlur,
-    onMouseLeave: handleItemMouseLeave,
-    onPointerEnter: handleItemPointerEnter,
-    onPointerLeave: handleItemPointerLeave,
-    onPointerMove: handleItemPointerMove,
+    onFocus: handleFocus,
+    onMouseEnter: handleMouseEnter,
+    onBlur: handleBlur,
+    onMouseLeave: handleMouseLeave,
+    onPointerEnter: handlePointerEnter,
+    onPointerLeave: handlePointerLeave,
+    onPointerMove: handlePointerMove,
   } = useContextMenuItemFocus({
     displayName: DISPLAY_NAME,
     ref: itemRef,
@@ -111,7 +111,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     }
   };
 
-  const handleItemSelect = (e: Event) => {
+  const handleSelect = (e: Event) => {
     /**
      * Otherwise, when clicking from the second nesting level,
      * the parent menu will always close.
@@ -125,12 +125,18 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onSelect?.(e);
   };
 
-  const handleItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isSelectableConsideringInputFocus && !isDisabled) {
       handleCloseOnClick();
     }
 
     onClick?.(e);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    handleSubMenuOpenByKeyDown(e);
+
+    onKeyDown?.(e);
   };
 
   return isSelectableConsideringInputFocus
@@ -145,23 +151,22 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
             },
             className
           )}
-          data-has-submenu={hasSubmenu ? '' : undefined}
           /**
            * Standart Radix attribute for highlighting the focused item.
            */
           data-highlighted={isSubMenuOpen || dataHighlighted}
           disabled={isDisabled}
           data-item
-          onSelect={handleItemSelect}
-          onClick={handleItemClick}
-          onFocus={handleItemFocus}
-          onMouseEnter={handleItemMouseEnter}
-          onBlur={handleItemBlur}
-          onMouseLeave={handleItemMouseLeave}
+          onSelect={handleSelect}
+          onClick={handleClick}
+          onFocus={handleFocus}
+          onMouseEnter={handleMouseEnter}
+          onBlur={handleBlur}
+          onMouseLeave={handleMouseLeave}
           onKeyDown={handleKeyDown}
-          onPointerEnter={handleItemPointerEnter}
-          onPointerLeave={handleItemPointerLeave}
-          onPointerMove={handleItemPointerMove}
+          onPointerEnter={handlePointerEnter}
+          onPointerLeave={handlePointerLeave}
+          onPointerMove={handlePointerMove}
           asChild={asChild}
           {...rest}
         >
@@ -179,7 +184,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
             },
             className
           )}
-          data-has-submenu={hasSubmenu ? '' : undefined}
           data-item
           data-non-selectable
           onFocus={onFocus}
@@ -188,9 +192,9 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           onMouseLeave={onMouseLeave}
           onKeyDown={onKeyDown}
           onClick={onClick}
-          onPointerEnter={handleItemPointerEnter}
-          onPointerLeave={handleItemPointerLeave}
-          onPointerMove={handleItemPointerMove}
+          onPointerEnter={handlePointerEnter}
+          onPointerLeave={handlePointerLeave}
+          onPointerMove={handlePointerMove}
           asChild={asChild}
           {...rest}
         >

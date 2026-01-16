@@ -37,7 +37,7 @@ export const Sub = (props: SubProps) => {
     closeMenuImmediately,
     itemWithFocusedInput,
     setItemWithFocusedInput,
-    isMovingTowardMenuRef,
+    isAimingContentRef,
   } = useContextMenuSub({
     displayName: DISPLAY_NAME,
     mode,
@@ -66,7 +66,7 @@ export const Sub = (props: SubProps) => {
       closeMenuImmediately={closeMenuImmediately}
       itemWithFocusedInput={itemWithFocusedInput}
       setItemWithFocusedInput={setItemWithFocusedInput}
-      isMovingTowardMenuRef={isMovingTowardMenuRef}
+      isAimingContentRef={isAimingContentRef}
     >
       <RadixDropdownMenuSub
         open={isOpen}

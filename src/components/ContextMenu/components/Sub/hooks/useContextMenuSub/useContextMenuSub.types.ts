@@ -16,9 +16,9 @@ export interface UseContextMenuSubOptions {
   /**
    * Called when submenu open state changes.
    */
-  onOpen?: (open: boolean) => void;
+  onOpen?: (isOpen: boolean) => void;
   /**
-   * Called whenever the value of `isMovingTowardActiveMenuRef` changes
+   * Called whenever the value of `isAimingRef` changes
    * in the context menu bus.
    *
    * This ref tracks whether the cursor is currently moving toward the active menu,

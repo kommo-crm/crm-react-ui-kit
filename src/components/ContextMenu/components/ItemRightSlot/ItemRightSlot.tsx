@@ -9,77 +9,90 @@ import s from './ItemRightSlot.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.ItemRightSlot';
 
-export const ItemRightSlot = forwardRef<HTMLDivElement, ItemRightSlotProps>(
-  (props, ref) => {
-    const {
-      className,
-      children,
-      onClick,
-      onPointerDown,
-      onPointerUp,
+type El = HTMLDivElement;
+type P = ItemRightSlotProps;
 
-      ...rest
-    } = props;
+export const ItemRightSlot = forwardRef<El, P>((props, ref) => {
+  const {
+    className,
+    children,
+    onClick,
+    onPointerDown,
+    onPointerUp,
 
-    const slotRef = useRef<HTMLDivElement>(null);
-    const [hasSubmenu, setHasSubmenu] = useState(false);
+    ...rest
+  } = props;
 
-    useEffect(() => {
-      if (!slotRef.current) {
-        return;
-      }
+  const slotRef = useRef<HTMLDivElement>(null);
+  const [hasSubmenu, setHasSubmenu] = useState(false);
 
-      const trigger = slotRef.current.querySelector('[data-submenu-trigger]');
+  useEffect(() => {
+    if (!slotRef.current) {
+      return;
+    }
 
-      setHasSubmenu(!!trigger);
-    }, [children]);
+    const trigger = slotRef.current.querySelector('[data-submenu-trigger]');
 
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (hasSubmenu) {
-        // Necessary if the Item is a link.
-        e.preventDefault();
-        // Necessary to stop propogation before Item
-        e.stopPropagation();
-      }
+    setHasSubmenu(!!trigger);
+  }, [children]);
 
-      onClick?.(e);
-    };
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (hasSubmenu) {
+      /**
+       * Necessary if the Item is a link.
+       */
+      e.preventDefault();
+      /**
+       * Necessary to stop propogation before Item
+       */
+      e.stopPropagation();
+    }
 
-    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-      if (hasSubmenu) {
-        // Necessary if the Item is a link.
-        e.preventDefault();
-        // Necessary to stop propogation before Item
-        e.stopPropagation();
-      }
+    onClick?.(e);
+  };
 
-      onPointerDown?.(e);
-    };
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (hasSubmenu) {
+      /**
+       * Necessary if the Item is a link.
+       */
+      e.preventDefault();
+      /**
+       * Necessary to stop propogation before Item
+       */
+      e.stopPropagation();
+    }
 
-    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-      if (hasSubmenu) {
-        // Necessary if the Item is a link.
-        e.preventDefault();
-        // Necessary to stop propogation before Item
-        e.stopPropagation();
-      }
+    onPointerDown?.(e);
+  };
 
-      onPointerUp?.(e);
-    };
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (hasSubmenu) {
+      /**
+       * Necessary if the Item is a link.
+       */
+      e.preventDefault();
+      /**
+       * Necessary to stop propogation before Item
+       */
+      e.stopPropagation();
+    }
 
-    return (
-      <div
-        ref={mergeRefs(slotRef, ref)}
-        className={cx(s.rightSlot, className)}
-        onClick={handleClick}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        {...rest}
-      >
-        {children}
-      </div>
-    );
-  }
-);
+    onPointerUp?.(e);
+  };
+
+  return (
+    <div
+      ref={mergeRefs(slotRef, ref)}
+      className={cx(s.rightSlot, className)}
+      onClick={handleClick}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+});
 
 ItemRightSlot.displayName = DISPLAY_NAME;

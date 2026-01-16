@@ -1,11 +1,13 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 
+import type { FocusChangeEvent } from 'src/hooks';
+
 import { DirectionType } from './Content.types';
 
 type RadixContentProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuContent>,
-  'avoidCollisions' | 'align'
+  'avoidCollisions' | 'align' | 'onInteractOutside'
 >;
 
 export type ContentProps = RadixContentProps & {
@@ -44,4 +46,9 @@ export type ContentProps = RadixContentProps & {
    * The callback function to be called when the context menu is opened.
    */
   onOpenAutoFocus?: (e: Event) => void;
+  /**
+   * Callback when focus moves outside the menu content.
+   * Call `event.preventDefault()` to prevent the menu from closing.
+   */
+  onFocusOutside?: (event: FocusChangeEvent) => void;
 };

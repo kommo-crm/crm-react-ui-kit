@@ -1,3 +1,5 @@
+import type { FocusChangeEvent } from 'src/hooks';
+
 import { ContextMenuMode } from '../..';
 
 export interface UseContextMenuOptions {
@@ -27,23 +29,11 @@ export interface UseContextMenuOptions {
    */
   onAnimatedOpen?: (open: boolean) => void;
   /**
-   * Whether the context menu should close when another menu is opened.
-   */
-  autoCloseOnOtherOpen?: boolean;
-  /**
    * Whether the context menu is open forcefully.
    */
   isOpen?: boolean;
   /**
-   * Whether the item should enable inner input focus.
-   */
-  enableInnerInputFocus?: boolean;
-  /**
-   * Whether the context menu should close when focus is lost.
-   */
-  enableCloseOnFocusLoss?: boolean;
-  /**
-   * Called whenever the value of `isMovingTowardActiveMenuRef` changes
+   * Called whenever the value of `isAimingRef` changes
    * in the context menu bus.
    *
    * This ref tracks whether the cursor is currently moving toward the active menu,
@@ -51,4 +41,9 @@ export interface UseContextMenuOptions {
    * The callback is triggered whenever this tracking state changes.
    */
   onAiming?: (isAiming: boolean) => void;
+  /**
+   * Called when focus moves outside the menu.
+   * Call preventDefault() to prevent menu closure.
+   */
+  onFocusOutside?: (event: FocusChangeEvent) => void;
 }

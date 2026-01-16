@@ -20,6 +20,7 @@ import { SubProps } from '../components/Sub';
 
 const DATA_ROOT_TEST_ID = 'ContextMenuRoot';
 const DATA_ITEM_TEST_ID = 'ContextMenuItem';
+const DATA_NON_SELECTABLE_ITEM_TEST_ID = 'NonSelectableItem';
 const DATA_TRIGGER_TEST_ID = 'ContextMenuTrigger';
 const DATA_CONTENT_TEST_ID = 'ContextMenuContent';
 const DATA_SUB_TRIGGER_TEST_ID = 'ContextMenuSubTrigger';
@@ -52,11 +53,18 @@ const renderContextMenu = async ({
     const [autoupdateChecked, setAutoupdateChecked] = useState(true);
     const [theme, setTheme] = useState('light');
 
+    const handleAutoupdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setAutoupdateChecked(e.target.checked);
+    };
+
+    const handleThemeChange = (value: string) => {
+      setTheme(value);
+    };
+
     return (
       <ContextMenu.Root
         mode={ContextMenuMode.CLICK}
         data-testid={DATA_ROOT_TEST_ID}
-        enableInnerInputFocus
         {...rootProps}
       >
         <ContextMenu.Trigger data-testid={DATA_TRIGGER_TEST_ID}>
@@ -68,19 +76,30 @@ const renderContextMenu = async ({
             disableAutoPositioning
             data-testid={DATA_CONTENT_TEST_ID}
           >
-            <ContextMenu.Item data-testid={DATA_ITEM_TEST_ID}>
+            <ContextMenu.Item
+              data-testid={DATA_ITEM_TEST_ID}
+              shouldCloseRootMenuOnSelect={false}
+            >
               <Text theme={TextContextMenuTheme} size="l">
                 Item 1
               </Text>
             </ContextMenu.Item>
 
+            <ContextMenu.Item
+              data-testid={DATA_NON_SELECTABLE_ITEM_TEST_ID}
+              isSelectable={false}
+            >
+              <Text theme={TextContextMenuTheme} size="l">
+                Non-selectable Item
+              </Text>
+            </ContextMenu.Item>
+
             <ContextMenu.CheckboxItem
               isChecked={autoupdateChecked}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAutoupdateChecked(e.target.checked)
-              }
+              onChange={handleAutoupdateChange}
               data-testid={DATA_ITEM_TEST_ID}
               shouldCloseCurrentMenuOnSelect={false}
+              shouldCloseRootMenuOnSelect={false}
             >
               <Text theme={TextContextMenuTheme} size="l">
                 Autoupdate
@@ -93,16 +112,15 @@ const renderContextMenu = async ({
 
             <ContextMenu.RadioGroup
               value={theme}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setTheme(e.target.value)
-              }
+              onChange={handleThemeChange}
               data-testid={DATA_ITEM_TEST_ID}
             >
               <ContextMenu.RadioItem
                 value="light"
                 shouldCloseCurrentMenuOnSelect={false}
+                shouldCloseRootMenuOnSelect={false}
               >
-                <Text theme={TextContextMenuTheme} size="l">
+                <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                   Light
                 </Text>
               </ContextMenu.RadioItem>
@@ -110,8 +128,9 @@ const renderContextMenu = async ({
               <ContextMenu.RadioItem
                 value="dark"
                 shouldCloseCurrentMenuOnSelect={false}
+                shouldCloseRootMenuOnSelect={false}
               >
-                <Text theme={TextContextMenuTheme} size="l">
+                <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                   Dark
                 </Text>
 
@@ -144,6 +163,7 @@ const renderContextMenu = async ({
 
                         <ContextMenu.Item
                           shouldCloseCurrentMenuOnSelect={false}
+                          shouldCloseRootMenuOnSelect={false}
                         >
                           <Text
                             theme={TextContextMenuTheme}
@@ -154,13 +174,9 @@ const renderContextMenu = async ({
                           </Text>
                         </ContextMenu.Item>
 
-                        <ContextMenu.Item shouldCloseRootMenuOnSelect>
-                          <Text
-                            theme={TextContextMenuTheme}
-                            size="l"
-                            isEllipsis
-                          >
-                            ShouldCloseRootMenuOnSelect item in SubRoot
+                        <ContextMenu.Item shouldCloseRootMenuOnSelect={false}>
+                          <Text theme={TextContextMenuTheme} size="l">
+                            ShouldNotCloseRootMenuOnSelect item in SubRoot
                           </Text>
                         </ContextMenu.Item>
 
@@ -205,15 +221,18 @@ const renderContextMenu = async ({
                     </Text>
                   </ContextMenu.Item>
 
-                  <ContextMenu.Item shouldCloseCurrentMenuOnSelect={false}>
+                  <ContextMenu.Item
+                    shouldCloseCurrentMenuOnSelect={false}
+                    shouldCloseRootMenuOnSelect={false}
+                  >
                     <Text theme={TextContextMenuTheme} size="l" isEllipsis>
                       ShouldNotCloseCurrentMenuOnSelect item in Sub
                     </Text>
                   </ContextMenu.Item>
 
-                  <ContextMenu.Item shouldCloseRootMenuOnSelect>
+                  <ContextMenu.Item shouldCloseRootMenuOnSelect={false}>
                     <Text theme={TextContextMenuTheme} size="l" isEllipsis>
-                      ShouldCloseRootMenuOnSelect item in Sub
+                      ShouldNotCloseRootMenuOnSelect item in Sub
                     </Text>
                   </ContextMenu.Item>
 
@@ -317,6 +336,35 @@ describe('ContextMenu', () => {
     });
   });
 
+  describe('Item data attributes', () => {
+    it('Item should have data-item attribute', async () => {
+      await renderContextMenu({ rootProps: { isOpen: true } });
+
+      const item = screen.getByText('Item 1').closest('[data-item]');
+
+      expect(item).toHaveAttribute('data-item');
+    });
+
+    it('Item should have data-highlighted when focused', async () => {
+      await renderContextMenu();
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      await userEvent.hover(screen.getByText('Item 1'));
+
+      const item = screen.getByText('Item 1').closest('[data-item]');
+
+      expect(item).toHaveAttribute('data-highlighted', '');
+    });
+
+    it('Non-selectable item should have data-non-selectable attribute', async () => {
+      await renderContextMenu({ rootProps: { isOpen: true } });
+
+      const item = screen.getByTestId(DATA_NON_SELECTABLE_ITEM_TEST_ID);
+
+      expect(item).toHaveAttribute('data-non-selectable');
+    });
+  });
+
   describe('Menu closing', () => {
     it('Menus closes when Escape key is pressed', async () => {
       await renderContextMenu();
@@ -417,11 +465,6 @@ describe('ContextMenu', () => {
     it('Menus navigation works correctly', async () => {
       await renderContextMenu();
 
-      // Open root menu
-      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-
-      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-
       const trigger = screen.getByTestId(DATA_TRIGGER_TEST_ID);
 
       const focusTrigger = () => {
@@ -432,6 +475,8 @@ describe('ContextMenu', () => {
 
       // Navigate to first item (Item 1)
       await userEvent.keyboard('{ArrowDown}');
+
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
 
       const item1 = screen.getByText('Item 1');
 
@@ -615,7 +660,6 @@ describe('ContextMenu', () => {
        */
       await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
       await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
-      // Should close current menu on select and not close root menu.
 
       // Wait for the subroot content to become interactive (positioned)
       const checkSubRootContent = () => {
@@ -632,10 +676,28 @@ describe('ContextMenu', () => {
         await new Promise((resolve) => setTimeout(resolve, 50));
       });
 
-      // Use fireEvent instead of userEvent for more reliable clicking in test environment
-      const itemElement = screen.getByText('Item in SubRoot');
+      // Should not close current and root menus on select.
+      fireEvent.click(
+        screen.getByText('ShouldNotCloseCurrentMenuOnSelect item in SubRoot')
+      );
 
-      fireEvent.click(itemElement);
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(
+        screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+
+      // Should not close current and root menus on select (disabled).
+      fireEvent.click(screen.getByText('Disabled item in SubRoot'));
+
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(
+        screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+
+      // Should close current menu on select but not close root menu.
+      fireEvent.click(
+        screen.getByText('ShouldNotCloseRootMenuOnSelect item in SubRoot')
+      );
 
       expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
 
@@ -659,28 +721,8 @@ describe('ContextMenu', () => {
         await new Promise((resolve) => setTimeout(resolve, 50));
       });
 
-      // Should not close current and root menus on select.
-      fireEvent.click(
-        screen.getByText('ShouldNotCloseCurrentMenuOnSelect item in SubRoot')
-      );
-
-      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-      expect(
-        screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
-      ).toBeInTheDocument();
-
-      // Should not close current and root menus on select.
-      fireEvent.click(screen.getByText('Disabled item in SubRoot'));
-
-      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-      expect(
-        screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
-      ).toBeInTheDocument();
-
       // Should close current and root menus on select.
-      fireEvent.click(
-        screen.getByText('ShouldCloseRootMenuOnSelect item in SubRoot')
-      );
+      fireEvent.click(screen.getByText('Item in SubRoot'));
 
       // Wait for both menus to close
       await waitFor(() => {
@@ -695,13 +737,7 @@ describe('ContextMenu', () => {
        */
       await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
       await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
-      // Should close current menu on select and not close root menu.
-      await userEvent.click(screen.getByText('Item in Sub'));
 
-      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-      expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
-
-      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
       // Should not close current and root menus on select.
       await userEvent.click(
         screen.getByText('ShouldNotCloseCurrentMenuOnSelect item in Sub')
@@ -712,7 +748,7 @@ describe('ContextMenu', () => {
         screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
       ).toBeInTheDocument();
 
-      // Should not close current and root menus on select.
+      // Should not close current and root menus on select (disabled).
       await userEvent.click(screen.getByText('Disabled item in Sub'));
 
       expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
@@ -720,10 +756,18 @@ describe('ContextMenu', () => {
         screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
       ).toBeInTheDocument();
 
-      // Should close current and root menus on select.
+      // Should close current menu on select but not close root menu.
       await userEvent.click(
-        screen.getByText('ShouldCloseRootMenuOnSelect item in Sub')
+        screen.getByText('ShouldNotCloseRootMenuOnSelect item in Sub')
       );
+
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      // Should close current and root menus on select.
+      await userEvent.click(screen.getByText('Item in Sub'));
 
       expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
       expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
@@ -777,36 +821,6 @@ describe('ContextMenu', () => {
         expect(subRootContent).toHaveStyle({ pointerEvents: 'auto' });
       });
 
-      // Focus and select Item in SubRoot
-      const subRootItem = screen.getByRole('menuitem', {
-        name: 'Item in SubRoot',
-      });
-
-      await act(async () => {
-        subRootItem.focus();
-      });
-
-      // Should close current menu on select and not close root menu.
-      await userEvent.keyboard('{Enter}');
-
-      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-
-      // Wait for the subroot content to close
-      await waitFor(() => {
-        expect(screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)).toBeNull();
-      });
-
-      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
-
-      // Wait for the subroot content to become interactive (positioned)
-      await waitFor(() => {
-        const subRootContent = screen.getByTestId(
-          DATA_SUB_ROOT_CONTENT_TEST_ID
-        );
-
-        expect(subRootContent).toHaveStyle({ pointerEvents: 'auto' });
-      });
-
       // Focus and select ShouldNotCloseCurrentMenuOnSelect item
       const notCloseItem = screen.getByRole('menuitem', {
         name: 'ShouldNotCloseCurrentMenuOnSelect item in SubRoot',
@@ -841,13 +855,43 @@ describe('ContextMenu', () => {
         screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
       ).toBeInTheDocument();
 
-      // Focus and select ShouldCloseRootMenuOnSelect item
-      const closeRootItem = screen.getByRole('menuitem', {
-        name: 'ShouldCloseRootMenuOnSelect item in SubRoot',
+      // Focus and select ShouldNotCloseRootMenuOnSelect item
+      const notCloseRootItem = screen.getByRole('menuitem', {
+        name: 'ShouldNotCloseRootMenuOnSelect item in SubRoot',
       });
 
       await act(async () => {
-        closeRootItem.focus();
+        notCloseRootItem.focus();
+      });
+
+      // Should close current menu on select but not close root menu.
+      await userEvent.keyboard('{Enter}');
+
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+
+      // Wait for the subroot content to close
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)).toBeNull();
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      // Wait for the subroot content to become interactive (positioned)
+      await waitFor(() => {
+        const subRootContent = screen.getByTestId(
+          DATA_SUB_ROOT_CONTENT_TEST_ID
+        );
+
+        expect(subRootContent).toHaveStyle({ pointerEvents: 'auto' });
+      });
+
+      // Focus and select Item in SubRoot
+      const subRootItem = screen.getByRole('menuitem', {
+        name: 'Item in SubRoot',
+      });
+
+      await act(async () => {
+        subRootItem.focus();
       });
 
       // Should close current and root menus on select.
@@ -865,23 +909,6 @@ describe('ContextMenu', () => {
        * Submenu cases.
        */
       await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
-
-      // Focus and select Item in Sub
-      const subItem = screen.getByRole('menuitem', { name: 'Item in Sub' });
-
-      await act(async () => {
-        subItem.focus();
-      });
-
-      // Should close current menu on select and not close root menu.
-      await userEvent.keyboard('{Enter}');
-
-      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-      await waitFor(() => {
-        expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
-      });
-
       await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
 
       // Focus and select ShouldNotCloseCurrentMenuOnSelect item
@@ -918,13 +945,30 @@ describe('ContextMenu', () => {
         screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
       ).toBeInTheDocument();
 
-      // Focus and select ShouldCloseRootMenuOnSelect item
-      const subCloseRootItem = screen.getByRole('menuitem', {
-        name: 'ShouldCloseRootMenuOnSelect item in Sub',
+      // Focus and select ShouldNotCloseRootMenuOnSelect item
+      const subNotCloseRootItem = screen.getByRole('menuitem', {
+        name: 'ShouldNotCloseRootMenuOnSelect item in Sub',
       });
 
       await act(async () => {
-        subCloseRootItem.focus();
+        subNotCloseRootItem.focus();
+      });
+
+      // Should close current menu on select but not close root menu.
+      await userEvent.keyboard('{Enter}');
+
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      // Focus and select Item in Sub
+      const subItem = screen.getByRole('menuitem', { name: 'Item in Sub' });
+
+      await act(async () => {
+        subItem.focus();
       });
 
       // Should close current and root menus on select.
@@ -1031,7 +1075,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       // 3) Hover on trigger - menu opens
@@ -1058,7 +1102,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
     });
 
@@ -1112,7 +1156,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       await waitFor(
@@ -1121,7 +1165,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       // 5) Hover on trigger - menu opens
@@ -1149,7 +1193,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
@@ -1205,7 +1249,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       await waitFor(
@@ -1214,7 +1258,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       // 5) Hover on trigger - menu opens
@@ -1242,7 +1286,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
@@ -1329,7 +1373,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       // Root menu might have closed, so we need to reopen it by hovering on trigger
@@ -1368,7 +1412,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       // Cleanup
@@ -1451,7 +1495,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       // Root menu might have closed, so we need to reopen it by hovering on trigger
@@ -1493,7 +1537,7 @@ describe('ContextMenu', () => {
             screen.queryByTestId(DATA_CONTENT_TEST_ID)
           ).not.toBeInTheDocument();
         },
-        { timeout: 3000 }
+        { timeout: 500 }
       );
 
       // Cleanup

@@ -16,132 +16,136 @@ import s from './RadioItem.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.RadioItem';
 
-export const RadioItem = forwardRef<HTMLDivElement, RadioItemProps>(
-  (
-    {
-      className,
-      children,
-      isDisabled,
-      shouldCloseCurrentMenuOnSelect = true,
-      shouldCloseRootMenuOnSelect = false,
-      value,
-      onMouseEnter,
-      onBlur,
-      onMouseLeave,
-      onSelect,
-      onFocus,
-      onClick,
-      onKeyDown,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
+type El = HTMLDivElement;
 
-      ...rest
-    },
-    ref
-  ) => {
-    const id = useId();
+export const RadioItem = forwardRef<El, RadioItemProps>((props, ref) => {
+  const {
+    className,
+    children,
+    isDisabled,
+    shouldCloseCurrentMenuOnSelect = true,
+    shouldCloseRootMenuOnSelect = true,
+    value,
+    onMouseEnter,
+    onBlur,
+    onMouseLeave,
+    onSelect,
+    onFocus,
+    onClick,
+    onKeyDown,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
 
-    const {
-      closeMenuImmediately,
-      shouldCloseCurrentMenuOnSelect: shouldCloseCurrentMenuOnSelectContext,
-      shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
-    } = useLevelContext(DISPLAY_NAME);
+    ...rest
+  } = props;
 
-    const {
-      itemRef,
-      hasSubmenu,
-      isSubMenuOpen,
-      handleKeyDown,
-      withProvider,
-      subMenuTriggerId,
-    } = useSubMenu({ onKeyDown, children });
+  const id = useId();
 
-    const { closeRootMenuImmediately } =
-      useContextMenuRootContext(DISPLAY_NAME);
+  const {
+    closeMenuImmediately,
+    shouldCloseCurrentMenuOnSelect: shouldCloseCurrentMenuOnSelectContext,
+    shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
+  } = useLevelContext(DISPLAY_NAME);
 
-    const {
-      dataHighlighted,
-      onFocus: handleItemFocus,
-      onMouseEnter: handleItemMouseEnter,
-      onBlur: handleItemBlur,
-      onMouseLeave: handleItemMouseLeave,
-      onPointerEnter: handleItemPointerEnter,
-      onPointerLeave: handleItemPointerLeave,
-      onPointerMove: handleItemPointerMove,
-    } = useContextMenuItemFocus({
-      displayName: DISPLAY_NAME,
-      ref: itemRef,
-      id,
-      isDisabled,
-      hasSubmenu,
-      subMenuTriggerId,
-      onFocus,
-      onBlur,
-      onMouseEnter,
-      onMouseLeave,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
-    });
+  const {
+    itemRef,
+    hasSubmenu,
+    isSubMenuOpen,
+    handleSubMenuOpenByKeyDown,
+    withProvider,
+    subMenuTriggerId,
+  } = useSubMenu({ children });
 
-    const handleCloseOnClick = () => {
-      if (
-        shouldCloseCurrentMenuOnSelect &&
-        shouldCloseCurrentMenuOnSelectContext
-      ) {
-        closeMenuImmediately();
+  const { closeRootMenuImmediately } = useContextMenuRootContext(DISPLAY_NAME);
 
-        if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
-          closeRootMenuImmediately?.();
-        }
+  const {
+    dataHighlighted,
+    onFocus: handleFocus,
+    onMouseEnter: handleMouseEnter,
+    onBlur: handleBlur,
+    onMouseLeave: handleMouseLeave,
+    onPointerEnter: handlePointerEnter,
+    onPointerLeave: handlePointerLeave,
+    onPointerMove: handlePointerMove,
+  } = useContextMenuItemFocus({
+    displayName: DISPLAY_NAME,
+    ref: itemRef,
+    id,
+    isDisabled,
+    hasSubmenu,
+    subMenuTriggerId,
+    onFocus,
+    onBlur,
+    onMouseEnter,
+    onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
+  });
+
+  const handleCloseOnClick = () => {
+    if (
+      shouldCloseCurrentMenuOnSelect &&
+      shouldCloseCurrentMenuOnSelectContext
+    ) {
+      closeMenuImmediately();
+
+      if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
+        closeRootMenuImmediately?.();
       }
-    };
+    }
+  };
 
-    const handleItemSelect = (e: Event) => {
-      /**
-       * Otherwise, when clicking from the second nesting level,
-       * the parent menu will always close.
-       */
-      e.preventDefault();
+  const handleSelect = (e: Event) => {
+    /**
+     * Otherwise, when clicking from the second nesting level,
+     * the parent menu will always close.
+     */
+    e.preventDefault();
 
-      handleCloseOnClick();
+    handleCloseOnClick();
 
-      onSelect?.(e);
-    };
+    onSelect?.(e);
+  };
 
-    const handleItemClick = (e: React.MouseEvent<HTMLDivElement>) => {
-      e.stopPropagation();
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
 
-      handleCloseOnClick();
+    handleCloseOnClick();
 
-      onClick?.(e);
-    };
+    onClick?.(e);
+  };
 
-    return withProvider(
-      <RadixDropdownMenuRadioItem
-        ref={mergeRefs(ref, itemRef)}
-        className={cx(s.radio_item, className)}
-        disabled={isDisabled}
-        data-highlighted={isSubMenuOpen || dataHighlighted}
-        data-item
-        value={value}
-        onSelect={handleItemSelect}
-        onClick={handleItemClick}
-        onFocus={handleItemFocus}
-        onMouseEnter={handleItemMouseEnter}
-        onBlur={handleItemBlur}
-        onMouseLeave={handleItemMouseLeave}
-        onPointerEnter={handleItemPointerEnter}
-        onPointerLeave={handleItemPointerLeave}
-        onPointerMove={handleItemPointerMove}
-        onKeyDown={handleKeyDown}
-        {...rest}
-      >
-        {children}
-      </RadixDropdownMenuRadioItem>
-    );
-  }
-);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    handleSubMenuOpenByKeyDown(e);
+
+    onKeyDown?.(e);
+  };
+
+  return withProvider(
+    <RadixDropdownMenuRadioItem
+      ref={mergeRefs(ref, itemRef)}
+      className={cx(s.radio_item, className)}
+      disabled={isDisabled}
+      data-highlighted={isSubMenuOpen || dataHighlighted}
+      data-item
+      value={value}
+      onSelect={handleSelect}
+      onClick={handleClick}
+      onFocus={handleFocus}
+      onMouseEnter={handleMouseEnter}
+      onBlur={handleBlur}
+      onMouseLeave={handleMouseLeave}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onPointerMove={handlePointerMove}
+      onKeyDown={handleKeyDown}
+      {...rest}
+    >
+      {children}
+    </RadixDropdownMenuRadioItem>
+  );
+});
 
 RadioItem.displayName = DISPLAY_NAME;

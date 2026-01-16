@@ -23,7 +23,7 @@ import { RadioGroup } from './components/RadioGroup/RadioGroup';
 import { RadioItem } from './components/RadioItem/RadioItem';
 import { Separator } from './components/Separator/Separator';
 import { ItemIcon } from './components/ItemIcon/ItemIcon';
-import { SubRoot } from './components/SubRoot/SubRoot';
+import { __experimental_SubRoot } from './components/SubRoot/SubRoot';
 
 import {
   ContextMenuProvider,
@@ -34,15 +34,13 @@ import {
 const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
-export const ContextMenu = (props: ContextMenuRootProps) => {
+const ContextMenu = (props: ContextMenuRootProps) => {
   const {
     children,
     mode,
     isOpen: isOpenForcefully,
     defaultOpen,
     shouldCloseCurrentMenuOnSelect = true,
-    enableInnerInputFocus = false,
-    enableCloseOnFocusLoss = false,
     onOpen,
     onAnimatedOpen,
     onAiming,
@@ -71,30 +69,27 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
     setItemWithFocusedInput,
     shouldPreventFocusRestore,
     setMenuAimDirection,
+    setOnFocusOutside,
   } = useContextMenu({
     mode: mode as ContextMenuMode,
     defaultOpen,
     animationDuration: ANIMATION_DURATION,
     hoverCloseDelay: HOVER_CLOSE_DELAY,
     isOpen: isOpenForcefully,
-    enableInnerInputFocus,
-    enableCloseOnFocusLoss,
     onOpen,
     onAnimatedOpen,
     onAiming,
   });
 
-  useContextMenuKeyboardNavigation({
+  const { navigationContentRef } = useContextMenuKeyboardNavigation({
     isOpen: isOpenForcefully ?? isOpen,
     isAnimatedOpen,
-    contentRef,
-    mode: rootMode,
   });
 
   return (
     <ContextMenuRootProvider
       closeRootMenuImmediately={closeMenuImmediately}
-      enableInnerInputFocus={enableInnerInputFocus}
+      navigationContentRef={navigationContentRef}
     >
       <ContextMenuProvider
         mode={rootMode}
@@ -117,6 +112,7 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
         setItemWithFocusedInput={setItemWithFocusedInput}
         shouldPreventFocusRestore={shouldPreventFocusRestore}
         setMenuAimDirection={setMenuAimDirection}
+        setOnFocusOutside={setOnFocusOutside}
       >
         <RadixDropdownMenuRoot
           open={isOpenForcefully ?? isOpen}
@@ -134,24 +130,27 @@ export const ContextMenu = (props: ContextMenuRootProps) => {
   );
 };
 
-ContextMenu.displayName = DISPLAY_NAME;
+const ContextMenuRoot = Object.assign(ContextMenu, {
+  displayName: DISPLAY_NAME,
+  Root: ContextMenu,
+  experimental_SubRoot: __experimental_SubRoot,
+  Trigger,
+  Content,
+  Portal,
+  Sub,
+  SubTrigger,
+  SubContent,
+  Arrow,
+  Item,
+  ItemRightSlot,
+  Group,
+  Label,
+  CheckboxItem,
+  RadioGroup,
+  RadioItem,
+  ItemIndicator,
+  Separator,
+  ItemIcon,
+});
 
-ContextMenu.Root = ContextMenu;
-ContextMenu.experimental_SubRoot = SubRoot;
-ContextMenu.Trigger = Trigger;
-ContextMenu.Content = Content;
-ContextMenu.Portal = Portal;
-ContextMenu.Sub = Sub;
-ContextMenu.SubTrigger = SubTrigger;
-ContextMenu.SubContent = SubContent;
-ContextMenu.Arrow = Arrow;
-ContextMenu.Item = Item;
-ContextMenu.ItemRightSlot = ItemRightSlot;
-ContextMenu.Group = Group;
-ContextMenu.Label = Label;
-ContextMenu.CheckboxItem = CheckboxItem;
-ContextMenu.RadioGroup = RadioGroup;
-ContextMenu.RadioItem = RadioItem;
-ContextMenu.ItemIndicator = ItemIndicator;
-ContextMenu.Separator = Separator;
-ContextMenu.ItemIcon = ItemIcon;
+export { ContextMenuRoot as ContextMenu };

@@ -1,28 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { KeyboardKey } from 'src/lib/keyboard';
 
 import { focusFirstFocusableItem } from '../../utils';
 
-import { ContextMenuMode } from '../../ContextMenu.enums';
-
 import { UseContextMenuKeyboardNavigationOptions } from './useContextMenuKeyboardNavigation.types';
-
-/**
- * Finds the menu content element inside a menu container.
- * The content is RadixDropdownMenuContent or RadixDropdownMenuSubContent.
- */
-const findMenuContent = (container: HTMLElement): HTMLElement | null => {
-  // Find Radix content element inside the container
-  const content =
-    container.querySelector<HTMLElement>(
-      '[data-radix-dropdown-menu-content], [data-radix-dropdown-menu-sub-content]'
-    ) ||
-    container.querySelector<HTMLElement>('[role="menu"]') ||
-    (container.firstElementChild as HTMLElement | null);
-
-  return content;
-};
 
 /**
  * Finds the deepest open menu container and focuses its first item.
@@ -33,7 +15,9 @@ const focusDeepestMenuNecessaryItem = (
   rootContentElement: HTMLElement,
   key: string
 ): void => {
-  // Find all menu containers with data-menu-level attribute
+  /**
+   * Find all menu containers with data-menu-level attribute
+   */
   const menuContainers = Array.from(
     document.querySelectorAll<HTMLElement>('[data-menu-level]')
   );
@@ -41,11 +25,14 @@ const focusDeepestMenuNecessaryItem = (
   let targetMenuContent: HTMLElement | null = null;
 
   if (menuContainers.length === 0) {
-    // No submenus, use root menu
-    targetMenuContent =
-      findMenuContent(rootContentElement) || rootContentElement;
+    /**
+     * No submenus, use root menu
+     */
+    targetMenuContent = rootContentElement;
   } else {
-    // Find the menu with maximum level
+    /**
+     * Find the menu with maximum level
+     */
     let maxLevel = -1;
     let deepestMenuContainer: HTMLElement | null = null;
 
@@ -59,12 +46,12 @@ const focusDeepestMenuNecessaryItem = (
     }
 
     if (deepestMenuContainer) {
-      targetMenuContent =
-        findMenuContent(deepestMenuContainer) || deepestMenuContainer;
+      targetMenuContent = deepestMenuContainer;
     } else {
-      // Fallback to root menu
-      targetMenuContent =
-        findMenuContent(rootContentElement) || rootContentElement;
+      /**
+       * Fallback to root menu
+       */
+      targetMenuContent = rootContentElement;
     }
   }
 
@@ -72,16 +59,22 @@ const focusDeepestMenuNecessaryItem = (
     return;
   }
 
-  // Check if there's a highlighted item in the target menu
+  /**
+   * Check if there's a highlighted item in the target menu
+   */
   const highlightedItem = targetMenuContent.querySelector<HTMLElement>(
     '[data-item][data-highlighted]'
   );
 
   if (highlightedItem) {
-    // Focus the highlighted item
+    /**
+     * Focus the highlighted item
+     */
     highlightedItem.focus();
 
-    // Simulate key press after focus
+    /**
+     * Simulate key press after focus
+     */
     requestAnimationFrame(() => {
       const syntheticEvent = new KeyboardEvent('keydown', {
         key,
@@ -93,7 +86,9 @@ const focusDeepestMenuNecessaryItem = (
       highlightedItem.dispatchEvent(syntheticEvent);
     });
   } else {
-    // No highlighted item, focus first item
+    /**
+     * No highlighted item, focus first item
+     */
     focusFirstFocusableItem(targetMenuContent);
   }
 };
@@ -110,23 +105,29 @@ const isFocusInsideMenu = (
     return false;
   }
 
-  // Check if active element is inside root menu content
+  /**
+   * Check if active element is inside root menu content
+   */
   if (
-    contentElement === activeElement ||
+    activeElement !== contentElement &&
     contentElement.contains(activeElement)
   ) {
     return true;
   }
 
-  // Check if active element is inside any child menu (submenu)
-  // Find all menu containers (including submenus)
+  /**
+   * Check if active element is inside any child menu (submenu)
+   * Find all menu containers (including submenus)
+   */
   const allMenuContainers = Array.from(
     document.querySelectorAll<HTMLElement>('[data-menu-level]')
   );
 
-  // Check if active element is inside any menu container
+  /**
+   * Check if active element is inside any menu container
+   */
   for (const container of allMenuContainers) {
-    if (container === activeElement || container.contains(activeElement)) {
+    if (container !== activeElement && container.contains(activeElement)) {
       return true;
     }
   }
@@ -143,18 +144,22 @@ const isFocusInsideMenu = (
 export const useContextMenuKeyboardNavigation = (
   options: UseContextMenuKeyboardNavigationOptions
 ) => {
-  const { isOpen, isAnimatedOpen, contentRef, mode } = options;
+  const navigationContentRef = useRef<HTMLDivElement>(null);
+
+  const { isOpen, isAnimatedOpen } = options;
 
   /**
    * Handles global keyboard events.
    */
   useEffect(() => {
-    if ((!isOpen && !isAnimatedOpen) || mode === ContextMenuMode.CLICK) {
+    if (!isOpen && !isAnimatedOpen) {
       return;
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Handle navigation keys: arrows, space, enter
+      /**
+       * Handle navigation keys: arrows, space, enter
+       */
       const navigationKeys = [
         KeyboardKey.ARROW_DOWN,
         KeyboardKey.ARROW_UP,
@@ -168,13 +173,18 @@ export const useContextMenuKeyboardNavigation = (
         return;
       }
 
-      const contentElement = contentRef.current;
+      /**
+       * Access contentRef.current inside the callback to get the latest value
+       */
+      const contentElement = navigationContentRef.current;
 
       if (!contentElement) {
         return;
       }
 
-      // Check if menu or its child elements are focused
+      /**
+       * Check if menu or its child elements are focused
+       */
       const activeElement = document.activeElement;
 
       if (!isFocusInsideMenu(contentElement, activeElement)) {
@@ -184,12 +194,12 @@ export const useContextMenuKeyboardNavigation = (
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown, true);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown, true);
     };
-  }, [isOpen, isAnimatedOpen, contentRef]);
+  }, [isOpen, isAnimatedOpen, navigationContentRef]);
 
-  return {};
+  return { navigationContentRef };
 };

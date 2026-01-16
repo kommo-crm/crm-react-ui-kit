@@ -1,38 +1,47 @@
-import { Callback } from './contextMenuBus.types';
+import {
+  ContextMenuBusCallback,
+  ContextMenuBusPayload,
+} from './contextMenuBus.types';
 
 /**
- * The bus for the context menu.
+ * Pub/Sub bus for context menu communication.
  *
- * It is necessary to communicate between the context menus.
- * It is necessary for the case when the browser is not focused.
- * Since in this case, the implementation of the Radix on the focuses stops working.
+ * Enables communication between multiple context menu instances.
+ * Required when the browser loses focus, as Radix's focus-based
+ * implementation stops working in this scenario.
  */
-class ContextMenuBus {
-  private listeners: Callback[] = [];
-  public isMovingTowardActiveMenuRef: React.MutableRefObject<boolean> | null =
-    null;
-  public activeMenuId: string | null = null;
+let listeners: ContextMenuBusCallback[] = [];
+let isAimingRef: React.MutableRefObject<boolean> | null = null;
+let activeMenuId: string | null = null;
 
-  emit({
-    id,
-    isMovingTowardMenuRef,
-  }: {
-    id: string;
-    isMovingTowardMenuRef: React.MutableRefObject<boolean>;
-  }) {
-    this.listeners.forEach((cb) => cb({ id, isMovingTowardMenuRef }));
+/**
+ * Emits a payload to the context menu bus.
+ */
+const emit = (payload: ContextMenuBusPayload) => {
+  listeners.forEach((cb) => cb(payload));
 
-    this.isMovingTowardActiveMenuRef = isMovingTowardMenuRef;
-    this.activeMenuId = id;
-  }
+  isAimingRef = payload.isAimingRef;
+  activeMenuId = payload.id;
+};
 
-  subscribe(cb: Callback) {
-    this.listeners.push(cb);
+/**
+ * Subscribes to the context menu bus.
+ */
+const subscribe = (cb: ContextMenuBusCallback) => {
+  listeners.push(cb);
 
-    return () => {
-      this.listeners = this.listeners.filter((fn) => fn !== cb);
-    };
-  }
-}
+  return () => {
+    listeners = listeners.filter((fn) => fn !== cb);
+  };
+};
 
-export const contextMenuBus = new ContextMenuBus();
+export const contextMenuBus = {
+  emit,
+  subscribe,
+  get isAimingRef() {
+    return isAimingRef;
+  },
+  get activeMenuId() {
+    return activeMenuId;
+  },
+};

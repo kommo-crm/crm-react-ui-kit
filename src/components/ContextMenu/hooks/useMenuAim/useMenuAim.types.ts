@@ -39,16 +39,6 @@ export const enum MenuAimDirection {
  */
 export interface UseMenuAimOptions {
   /**
-   * Ref to the trigger DOM element.
-   * Used to calculate the center of the trigger.
-   */
-  triggerRef: React.RefObject<HTMLElement>;
-  /**
-   * Ref to the menu DOM element (menu content container).
-   * Used to calculate the edges of the menu.
-   */
-  contentRef: React.RefObject<HTMLElement>;
-  /**
    * Direction in which the submenu opens.
    * This affects which menu corners are used to build
    * the "aim triangle".
@@ -84,13 +74,15 @@ export interface UseMenuAimOptions {
    * Optional external ref to use instead of creating a new one.
    * If provided, this ref will be updated directly.
    */
-  externalRef?: React.MutableRefObject<boolean> | React.RefObject<boolean>;
+  externalAimingRef?:
+    | React.MutableRefObject<boolean>
+    | React.RefObject<boolean>;
 }
 
 /**
  * Result returned by the useMenuAim hook.
  */
-export interface UseMenuAimResult {
+export interface UseMenuAimResult<T extends HTMLElement = HTMLElement> {
   /**
    * Ref containing whether the mouse is currently moving
    * toward the menu/submenu.
@@ -99,7 +91,7 @@ export interface UseMenuAimResult {
    *  - closing of the current menu should be delayed
    *  - opening of sibling menus should be blocked
    */
-  isMovingTowardMenuRef: React.MutableRefObject<boolean>;
+  isAimingRef: React.MutableRefObject<boolean>;
   /**
    * Resets all internal tracking state.
    * Should be called when the menu is fully closed.
@@ -110,4 +102,9 @@ export interface UseMenuAimResult {
    * toward the menu is detected.
    */
   switchDelay: number;
+  /**
+   * Ref to the menu DOM element (menu content container).
+   * Used to calculate the edges of the menu.
+   */
+  contentRef: React.RefObject<T>;
 }

@@ -25,6 +25,7 @@ export default {
   'Autosize': 'Autosize',
   'Directions': 'Directions',
   'Modes': 'Modes',
+  'Vertical Menu': 'Vertical Menu',
 
   /* Used in docs */
   'Design tokens': 'Design tokens',
@@ -90,16 +91,16 @@ export default {
   'Required field': 'Required field',
 
   /* ContextMenu */
-  'Label': 'Label',
-  'Workspace': 'Workspace',
-  'Workspace Settings': 'Workspace Settings',
-  'Switch Workspace': 'Switch Workspace',
-  'Contacts': 'Contacts',
-  'Autoupdate': 'Autoupdate',
+  'Profile': 'Profile',
+  'User ID': 'User ID',
+  'Settings': 'Settings',
   'Theme': 'Theme',
   'Light': 'Light',
   'Dark': 'Dark',
-  'Contact': 'Contact',
-  'Delete All': 'Delete All',
+  'Lead': 'Lead',
+  'Edit': 'Edit',
+  'Delete': 'Delete',
+  'Export to PDF': 'Export to PDF',
+  'Enable notifications': 'Enable notifications',
   'Hover me': 'Hover me',
 };

@@ -7,16 +7,16 @@ import s from './ItemIcon.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.ItemIcon';
 
-export const ItemIcon = forwardRef<HTMLSpanElement, ItemIconProps>(
-  (props, ref) => {
-    const { children, className, ...rest } = props;
+type El = HTMLSpanElement;
 
-    return (
-      <span ref={ref} className={cx(s.icon, className)} {...rest}>
-        {children}
-      </span>
-    );
-  }
-);
+export const ItemIcon = forwardRef<El, ItemIconProps>((props, ref) => {
+  const { children, className, ...rest } = props;
+
+  return (
+    <span ref={ref} className={cx(s.icon, className)} {...rest}>
+      {children}
+    </span>
+  );
+});
 
 ItemIcon.displayName = DISPLAY_NAME;

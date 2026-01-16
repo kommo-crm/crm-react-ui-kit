@@ -16,14 +16,14 @@ export interface LevelProviderContextProps {
   /**
    * The callback function to be called when the child menu is opened.
    */
-  onChildOpen: (value: boolean, mode: ContextMenuModeType) => void;
+  onChildOpen: (isChildOpen: boolean, mode: ContextMenuModeType) => void;
   /**
    * The callback function to be called when the subroot is opened.
    *
    * @remarks
    * This prop is only used for `Sub` (submenu) components.
    */
-  onSubRootOpen?: (value: boolean) => void;
+  onSubRootOpen?: (isSubRootOpen: boolean) => void;
   /**
    * Immediately closes the menu without waiting for any hover or animation delays.
    */
@@ -49,7 +49,7 @@ export interface LevelProviderContextProps {
    */
   itemWithFocusedInput: string | null;
   /**
-   * Whether the menu is moving toward the menu.
+   * Whether the menu is aiming at the menu.
    */
-  isMovingTowardMenuRef: React.MutableRefObject<boolean>;
+  isAimingRef: React.MutableRefObject<boolean>;
 }

@@ -6,7 +6,7 @@ export interface UseItemInnerFocusOptions {
   /**
    * Whether the item is selectable.
    */
-  isSelectableProp?: boolean;
+  isSelectable: boolean | undefined;
   /**
    * The name of the display.
    */

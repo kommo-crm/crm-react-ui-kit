@@ -13,15 +13,15 @@ import { Content } from './components/Content/Content';
 
 import { ContextMenuSubRootProps } from './SubRoot.props';
 
-const DISPLAY_NAME = 'ContextMenu.SubRoot';
+const DISPLAY_NAME = 'ContextMenu.__experimental_SubRoot';
 
-export const SubRoot = (props: ContextMenuSubRootProps) => {
+export const __experimental_SubRoot = (props: ContextMenuSubRootProps) => {
   const {
     children,
     defaultOpen,
     mode = ContextMenuMode.HOVER,
     shouldCloseCurrentMenuOnSelect = true,
-    shouldCloseRootMenuOnSelect = false,
+    shouldCloseRootMenuOnSelect = true,
     onOpen,
     onAnimatedOpen,
 
@@ -96,7 +96,7 @@ export const SubRoot = (props: ContextMenuSubRootProps) => {
   );
 };
 
-SubRoot.displayName = DISPLAY_NAME;
+__experimental_SubRoot.displayName = DISPLAY_NAME;
 
-SubRoot.Trigger = Trigger;
-SubRoot.Content = Content;
+__experimental_SubRoot.Trigger = Trigger;
+__experimental_SubRoot.Content = Content;

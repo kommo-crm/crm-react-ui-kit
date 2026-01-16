@@ -1,2 +1,5 @@
 export { useFocusChange } from './useFocusChange';
-export type { UseFocusChangeOptions } from './useFocusChange.types';
+export type {
+  FocusChangeEvent,
+  UseFocusChangeOptions,
+} from './useFocusChange.types';

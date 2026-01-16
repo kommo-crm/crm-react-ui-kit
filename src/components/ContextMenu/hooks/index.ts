@@ -1,7 +1,6 @@
 export { useContextMenu } from './useContextMenu/useContextMenu';
 export { useContentPositioning } from './useContentPositioning/useContentPositioning';
 export { useIsTouchDevice } from './useIsTouchDevice/useIsTouchDevice';
-export { useClickOutside } from './useClickOutside/useClickOutside';
 export { useSubMenu } from './useSubMenu/useSubMenu';
 export { useItemInnerFocus } from './useItemInnerFocus/useItemInnerFocus';
 export { usePrevious } from './usePrevious/usePrevious';

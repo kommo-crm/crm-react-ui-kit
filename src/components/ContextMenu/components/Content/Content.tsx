@@ -16,7 +16,10 @@ import { KeyboardKey } from 'src/lib/keyboard';
 
 import { LevelProvider } from '../../providers/LevelProvider';
 
-import { useContextMenuContext } from '../../ContextMenu.context';
+import {
+  useContextMenuContext,
+  useContextMenuRootContext,
+} from '../../ContextMenu.context';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -49,221 +52,237 @@ type EscapeKeyDownEvent = Parameters<
 
 const DISPLAY_NAME = 'ContextMenu.Content';
 
-export const Content = forwardRef<HTMLDivElement, ContentProps>(
-  (props, ref) => {
-    const {
-      style,
-      className,
-      children,
-      alignOffset,
-      arrowPadding = 5,
-      collisionBoundary,
-      direction = Direction.DOWN_RIGHT,
-      disableAutoPositioning = false,
-      disableRepositioning = false,
-      onMouseEnter,
-      onMouseLeave,
-      onKeyDown,
-      onPointerDownOutside,
-      onInteractOutside,
-      onEscapeKeyDown,
-      onCloseAutoFocus,
-      onOpenAutoFocus,
+type El = HTMLDivElement;
 
-      ...rest
-    } = props;
+export const Content = forwardRef<El, ContentProps>((props, ref) => {
+  const {
+    style,
+    className,
+    children,
+    alignOffset,
+    arrowPadding = 5,
+    collisionBoundary,
+    direction = Direction.DOWN_RIGHT,
+    disableAutoPositioning = false,
+    disableRepositioning = false,
+    onMouseEnter,
+    onMouseLeave,
+    onKeyDown,
+    onPointerDownOutside,
+    onEscapeKeyDown,
+    onCloseAutoFocus,
+    onOpenAutoFocus,
+    onFocusOutside,
 
-    const [activeItemId, setActiveItemId] = useState<string | null>(null);
+    ...rest
+  } = props;
 
-    const isMovingTowardMenuRef = useRef<boolean>(false);
+  const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
-    const {
-      triggerRef,
-      contentRef,
-      isOpen,
-      isAnimatedOpen,
-      animationDuration,
-      mode,
-      isRootContentBlocked,
-      isChildOpen,
-      shouldCloseCurrentMenuOnSelect,
-      closeMenuImmediately,
-      onContentEnter,
-      onContentLeave,
-      onChildOpen,
-      itemWithFocusedInput,
-      setItemWithFocusedInput,
-      shouldPreventFocusRestore,
-      setMenuAimDirection,
-    } = useContextMenuContext(DISPLAY_NAME);
+  const isAimingRef = useRef<boolean>(false);
 
-    const { align, offset, isPositioned } = useContentPositioning({
-      direction,
-      alignOffset,
-      disableAutoPositioning,
-      triggerRef,
-      contentRef,
-      collisionBoundary,
-      children,
-      disableRepositioning,
-    });
+  const {
+    triggerRef,
+    contentRef,
+    isOpen,
+    isAnimatedOpen,
+    animationDuration,
+    mode,
+    isRootContentBlocked,
+    isChildOpen,
+    shouldCloseCurrentMenuOnSelect,
+    closeMenuImmediately,
+    onContentEnter,
+    onContentLeave,
+    onChildOpen,
+    itemWithFocusedInput,
+    setItemWithFocusedInput,
+    shouldPreventFocusRestore,
+    setMenuAimDirection,
+    setOnFocusOutside,
+  } = useContextMenuContext(DISPLAY_NAME);
 
-    useEffect(() => {
-      setMenuAimDirection?.(directionToSide[direction]);
-    }, [direction, setMenuAimDirection]);
+  const { align, offset, isPositioned } = useContentPositioning({
+    direction,
+    alignOffset,
+    disableAutoPositioning,
+    triggerRef,
+    contentRef,
+    collisionBoundary,
+    children,
+    disableRepositioning,
+  });
 
-    const springStyles = useSpring({
-      opacity:
-        isPositioned && (mode === ContextMenuMode.CLICK || isAnimatedOpen)
-          ? 1
-          : 0,
-      config:
-        mode === ContextMenuMode.CLICK
-          ? { duration: 0 }
-          : { duration: animationDuration, easing: easings.easeInOutCubic },
-    });
+  const { navigationContentRef } = useContextMenuRootContext(DISPLAY_NAME);
 
-    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
-      onContentEnter?.(e);
+  useEffect(() => {
+    setMenuAimDirection?.(directionToSide[direction]);
+  }, [direction, setMenuAimDirection]);
 
-      onMouseEnter?.(e);
+  /**
+   * Register focus outside handler to allow preventing menu closure.
+   */
+  useEffect(() => {
+    if (!onFocusOutside) {
+      return;
+    }
+
+    setOnFocusOutside?.(onFocusOutside);
+
+    return () => {
+      setOnFocusOutside?.(undefined);
     };
+  }, [onFocusOutside, setOnFocusOutside]);
 
-    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-      onContentLeave?.(e);
+  const springStyles = useSpring({
+    opacity:
+      isPositioned && (mode === ContextMenuMode.CLICK || isAnimatedOpen)
+        ? 1
+        : 0,
+    config:
+      mode === ContextMenuMode.CLICK
+        ? { duration: 0 }
+        : { duration: animationDuration, easing: easings.easeInOutCubic },
+  });
 
-      onMouseLeave?.(e);
-    };
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    onContentEnter?.(e);
 
-    /**
-     * Prevent closing parent menu when a child submenu is open.
-     * The child submenu should handle closing itself first.
-     */
-    const handleInteractOutside = (e: InteractOutsideEvent) => {
-      if (isChildOpen) {
-        e.preventDefault();
+    onMouseEnter?.(e);
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    onContentLeave?.(e);
+
+    onMouseLeave?.(e);
+  };
+
+  /**
+   * We completely cancel the behavior since we are
+   * only interested in the focus in this case.
+   */
+  const handleInteractOutside = (e: InteractOutsideEvent) => {
+    e.preventDefault();
+  };
+
+  /**
+   * Prevent closing parent menu on Escape when a child submenu is open.
+   * The child submenu should close first.
+   */
+  const handleEscapeKeyDown = (e: EscapeKeyDownEvent) => {
+    if (isChildOpen) {
+      e.preventDefault();
+    }
+
+    onEscapeKeyDown?.(e);
+  };
+
+  /**
+   * Prevent closing parent menu on outside click when a child submenu is open.
+   * The child submenu should handle the outside click first.
+   */
+  const handlePointerDownOutside = (e: PointerDownOutsideEvent) => {
+    if (isChildOpen) {
+      e.preventDefault();
+    } else if (isOpen) {
+      closeMenuImmediately();
+    }
+
+    onPointerDownOutside?.(e);
+  };
+
+  /**
+   * It is necessary to prevent standard behavior such as scrolling a document.
+   */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (mode === ContextMenuMode.HOVER) {
+      e.preventDefault();
+
+      if (e.key === KeyboardKey.ESCAPE) {
+        triggerRef.current?.focus();
       }
+    }
 
-      onInteractOutside?.(e);
-    };
+    onKeyDown?.(e);
+  };
 
-    /**
-     * Prevent closing parent menu on Escape when a child submenu is open.
-     * The child submenu should close first.
-     */
-    const handleEscapeKeyDown = (e: EscapeKeyDownEvent) => {
-      if (isChildOpen) {
-        e.preventDefault();
-      }
+  const handleCloseAutoFocus = (e: Event) => {
+    if (mode === ContextMenuMode.HOVER || shouldPreventFocusRestore?.()) {
+      e.preventDefault();
+    }
 
-      onEscapeKeyDown?.(e);
-    };
+    onCloseAutoFocus?.(e);
+  };
 
-    /**
-     * Prevent closing parent menu on outside click when a child submenu is open.
-     * The child submenu should handle the outside click first.
-     */
-    const handlePointerDownOutside = (e: PointerDownOutsideEvent) => {
-      if (isChildOpen) {
-        e.preventDefault();
-      }
+  const handleOpenAutoFocus = (e: Event) => {
+    if (mode === ContextMenuMode.HOVER) {
+      e.preventDefault();
+    }
 
-      onPointerDownOutside?.(e);
-    };
+    onOpenAutoFocus?.(e);
+  };
 
-    /**
-     * It is necessary to prevent standard behavior such as scrolling a document.
-     */
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (mode === ContextMenuMode.HOVER) {
-        e.preventDefault();
-
-        if (e.key === KeyboardKey.ESCAPE) {
-          triggerRef.current?.focus();
-        }
-      }
-
-      onKeyDown?.(e);
-    };
-
-    const handleCloseAutoFocus = (e: Event) => {
-      if (mode === ContextMenuMode.HOVER || shouldPreventFocusRestore?.()) {
-        e.preventDefault();
-      }
-
-      onCloseAutoFocus?.(e);
-    };
-
-    const handleOpenAutoFocus = (e: Event) => {
-      if (mode === ContextMenuMode.HOVER) {
-        e.preventDefault();
-      }
-
-      onOpenAutoFocus?.(e);
-    };
-
-    return (
-      <LevelProvider
-        activeItemId={activeItemId}
-        setActiveItemId={setActiveItemId}
-        onChildOpen={onChildOpen}
-        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
-        closeMenuImmediately={closeMenuImmediately}
-        shouldCloseRootMenuOnSelect={false}
-        isAnimatedOpen={isAnimatedOpen}
-        itemWithFocusedInput={itemWithFocusedInput}
-        setItemWithFocusedInput={setItemWithFocusedInput}
-        isMovingTowardMenuRef={isMovingTowardMenuRef}
-        level={1}
-      >
-        {isOpen && (
-          <animated.div
-            data-menu-level={1}
+  return (
+    <LevelProvider
+      activeItemId={activeItemId}
+      setActiveItemId={setActiveItemId}
+      onChildOpen={onChildOpen}
+      shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
+      closeMenuImmediately={closeMenuImmediately}
+      shouldCloseRootMenuOnSelect={false}
+      isAnimatedOpen={isAnimatedOpen}
+      itemWithFocusedInput={itemWithFocusedInput}
+      setItemWithFocusedInput={setItemWithFocusedInput}
+      isAimingRef={isAimingRef}
+      level={1}
+    >
+      {isOpen && (
+        <animated.div
+          style={{
+            zIndex: Number.MAX_SAFE_INTEGER - 10,
+            position: 'fixed',
+            ...springStyles,
+          }}
+        >
+          <RadixDropdownMenuContent
+            ref={mergeRefs(contentRef, navigationContentRef, ref)}
+            className={cx(s.content, className)}
             style={{
-              zIndex: Number.MAX_SAFE_INTEGER - 10,
-              position: 'fixed',
-              ...springStyles,
+              ...(style || {}),
+              pointerEvents:
+                disableAutoPositioning || isPositioned ? 'auto' : 'none',
             }}
+            collisionBoundary={collisionBoundary}
+            side={directionToSide[direction]}
+            align={align}
+            arrowPadding={arrowPadding}
+            alignOffset={offset}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onInteractOutside={handleInteractOutside}
+            onEscapeKeyDown={handleEscapeKeyDown}
+            onPointerDownOutside={handlePointerDownOutside}
+            onKeyDown={handleKeyDown}
+            onCloseAutoFocus={handleCloseAutoFocus}
+            /**
+             * Radix ContextMenu supports `onOpenAutoFocus`, but the prop is missing
+             * in its TypeScript defs. The event works at runtime (passed through
+             * FocusScope), but TS doesn't recognize it. Using @ts-expect-error is
+             * intentional until Radix exposes proper types.
+             */
+            // @ts-expect-error - Property 'onOpenAutoFocus' does not exist on type
+            onOpenAutoFocus={handleOpenAutoFocus}
+            data-menu-level={1}
+            {...rest}
           >
-            <RadixDropdownMenuContent
-              ref={mergeRefs(contentRef, ref)}
-              className={cx(s.content, className)}
-              style={{
-                ...(style || {}),
-                pointerEvents:
-                  disableAutoPositioning || isPositioned ? 'auto' : 'none',
-              }}
-              collisionBoundary={collisionBoundary}
-              side={directionToSide[direction]}
-              align={align}
-              arrowPadding={arrowPadding}
-              alignOffset={offset}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onInteractOutside={handleInteractOutside}
-              onEscapeKeyDown={handleEscapeKeyDown}
-              onPointerDownOutside={handlePointerDownOutside}
-              onKeyDown={handleKeyDown}
-              onCloseAutoFocus={handleCloseAutoFocus}
-              /**
-               * Radix ContextMenu supports `onOpenAutoFocus`, but the prop is missing
-               * in its TypeScript defs. The event works at runtime (passed through
-               * FocusScope), but TS doesn't recognize it. Using @ts-expect-error is
-               * intentional until Radix exposes proper types.
-               */
-              // @ts-expect-error - Property 'onOpenAutoFocus' does not exist on type
-              onOpenAutoFocus={handleOpenAutoFocus}
-              {...rest}
-            >
-              {children}
+            {children}
 
-              {isRootContentBlocked && <FocusBlocker />}
-            </RadixDropdownMenuContent>
-          </animated.div>
-        )}
-      </LevelProvider>
-    );
-  }
-);
+            {isRootContentBlocked && <FocusBlocker />}
+          </RadixDropdownMenuContent>
+        </animated.div>
+      )}
+    </LevelProvider>
+  );
+});
 
 Content.displayName = DISPLAY_NAME;

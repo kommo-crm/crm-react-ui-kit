@@ -52,7 +52,7 @@ const getMenuDirectionVector = (
  * Determines whether the cursor is moving toward the menu
  * by projecting the cursor movement onto the menu direction vector.
  */
-const isMovingTowardMenu = (prev: Point, current: Point, dir: Point) => {
+const isAiming = (prev: Point, current: Point, dir: Point) => {
   const dx = current.x - prev.x;
   const dy = current.y - prev.y;
 
@@ -96,28 +96,52 @@ const getContentEdge = (
   }
 };
 
-export const useMenuAim = ({
-  contentRef,
+/**
+ * Hook that tracks whether the cursor is moving toward a menu/submenu
+ * using geometric calculations based on the "menu aim" algorithm.
+ *
+ * This implementation prevents menus from closing prematurely when the user
+ * is navigating toward a submenu by tracking cursor movement within an
+ * "intent triangle" formed between the previous cursor position and the
+ * menu's active edge.
+ *
+ * The algorithm works by:
+ * 1. Tracking cursor positions as the mouse moves
+ * 2. Creating an intent triangle from the previous cursor position to the menu edge
+ * 3. Checking if the current cursor position is within this triangle
+ * 4. Verifying that the cursor is moving in the direction of the menu
+ * 5. Updating a ref with the result to avoid unnecessary re-renders
+ *
+ * This improves UX by allowing smooth navigation between parent menus and
+ * submenus without accidental closures, similar to Amazon's mega dropdown
+ * implementation.
+ *
+ * @link https://bjk5.com/post/44698559168/breaking-down-amazons-mega-dropdown
+ */
+export const useMenuAim = <T extends HTMLElement = HTMLElement>({
   direction,
   tolerance = DEFAULT_TOLERANCE,
   switchDelay = DEFAULT_SWITCH_DELAY,
   enabled = true,
-  externalRef,
-}: Omit<UseMenuAimOptions, 'triggerRef'>): UseMenuAimResult => {
+  externalAimingRef,
+}: UseMenuAimOptions): UseMenuAimResult<T> => {
+  const contentRef = useRef<T>(null);
+
   /**
    * Stores whether the cursor is currently moving toward the submenu.
    * Exposed as a ref to avoid unnecessary re-renders.
    * Use external ref if provided, otherwise create a new one.
    */
-  const internalRef = useRef(false);
-  const isMovingTowardMenuRef =
-    (externalRef as React.MutableRefObject<boolean>) || internalRef;
+  const internalAimingRef = useRef(false);
+  const isAimingRef =
+    (externalAimingRef as React.MutableRefObject<boolean>) || internalAimingRef;
 
-  // Last and previous cursor positions
   const lastCursorRef = useRef<Point | null>(null);
   const prevCursorRef = useRef<Point | null>(null);
 
-  // Timeout used to re-run calculations after mouse movement
+  /**
+   * Timeout used to re-run calculations after mouse movement
+   */
   const timeoutRef = useRef<number | null>(null);
 
   /**
@@ -129,31 +153,33 @@ export const useMenuAim = ({
     const el = contentRef.current;
 
     if (!cursor || !prev || !el) {
-      isMovingTowardMenuRef.current = false;
+      isAimingRef.current = false;
 
       return;
     }
 
     const [edgeA, edgeB] = getContentEdge(el, direction, tolerance);
 
-    // Check if the cursor is inside the intent triangle
+    /**
+     * Check if the cursor is inside the intent triangle
+     */
     const inTriangle = pointInTriangle(cursor, prev, edgeA, edgeB);
 
     if (!inTriangle) {
-      isMovingTowardMenuRef.current = false;
+      isAimingRef.current = false;
 
       return;
     }
 
     const dirVector = getMenuDirectionVector(direction);
-    const movingToward = isMovingTowardMenu(prev, cursor, dirVector);
+    const movingToward = isAiming(prev, cursor, dirVector);
 
-    isMovingTowardMenuRef.current = movingToward;
+    isAimingRef.current = movingToward;
   }, [contentRef, direction, tolerance]);
 
   useEffect(() => {
     if (!enabled) {
-      isMovingTowardMenuRef.current = false;
+      isAimingRef.current = false;
 
       return;
     }
@@ -162,7 +188,9 @@ export const useMenuAim = ({
       prevCursorRef.current = lastCursorRef.current;
       lastCursorRef.current = { x: e.pageX, y: e.pageY };
 
-      // Immediate recalculation on mouse move
+      /**
+       * Immediate recalculation on mouse move
+       */
       recalc();
 
       /**
@@ -195,14 +223,15 @@ export const useMenuAim = ({
    * Resets internal state (useful when menu is closed).
    */
   const reset = useCallback(() => {
-    isMovingTowardMenuRef.current = false;
+    isAimingRef.current = false;
     lastCursorRef.current = null;
     prevCursorRef.current = null;
   }, []);
 
   return {
-    isMovingTowardMenuRef,
+    isAimingRef,
     reset,
     switchDelay,
+    contentRef,
   };
 };

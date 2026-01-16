@@ -2,7 +2,7 @@
  * Finds the first focusable menu item in the given container.
  * Excludes disabled and non-selectable items.
  */
-export const findFirstFocusableItem = (
+const findFirstFocusableItem = (
   container?: HTMLElement | null
 ): HTMLElement | null => {
   const searchContainer = container || document;

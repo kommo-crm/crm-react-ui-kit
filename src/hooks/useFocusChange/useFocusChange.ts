@@ -1,29 +1,47 @@
-import { useEffect, useRef, type RefObject } from 'react';
+import { useEffect, useRef } from 'react';
 
-import type { UseFocusChangeOptions } from './useFocusChange.types';
+import type {
+  FocusChangeEvent,
+  UseFocusChangeOptions,
+} from './useFocusChange.types';
+
+/**
+ * Creates a FocusEvent object with preventDefault support.
+ */
+const createFocusEvent = (target: Element | null): FocusChangeEvent => {
+  let defaultPrevented = false;
+
+  return {
+    target,
+    preventDefault: () => {
+      defaultPrevented = true;
+    },
+    get defaultPrevented() {
+      return defaultPrevented;
+    },
+  };
+};
 
 /**
  * Checks if the currently focused element is inside any of the provided elements.
  */
 const isFocusInsideElements = (
-  elements: Array<RefObject<HTMLElement> | HTMLElement | null>,
+  elements: Array<React.RefObject<HTMLElement>>,
   activeElement: Element | null
 ): boolean => {
   if (!activeElement) {
     return false;
   }
 
-  for (const elementOrRef of elements) {
-    const element =
-      elementOrRef && 'current' in elementOrRef
-        ? elementOrRef.current
-        : elementOrRef;
-
-    if (!element) {
+  for (const element of elements) {
+    if (!element.current) {
       continue;
     }
 
-    if (element === activeElement || element.contains(activeElement)) {
+    if (
+      element.current === activeElement ||
+      element.current.contains(activeElement)
+    ) {
       return true;
     }
   }
@@ -60,26 +78,28 @@ export const useFocusChange = (options: UseFocusChangeOptions) => {
         return;
       }
 
+      previousFocusRef.current = activeElement;
+
       // If focus is on body or document, it's outside the tracked elements
       if (
         activeElement === document.body ||
         activeElement === document.documentElement
       ) {
-        onFocusOutside?.(activeElement);
-        previousFocusRef.current = activeElement;
+        const event = createFocusEvent(activeElement);
+
+        onFocusOutside?.(event);
 
         return;
       }
 
       const isInside = isFocusInsideElements(elements, activeElement);
+      const event = createFocusEvent(activeElement);
 
       if (isInside) {
-        onFocusInside?.(activeElement);
+        onFocusInside?.(event);
       } else {
-        onFocusOutside?.(activeElement);
+        onFocusOutside?.(event);
       }
-
-      previousFocusRef.current = activeElement;
     };
 
     document.addEventListener('focusin', handleFocusChange);

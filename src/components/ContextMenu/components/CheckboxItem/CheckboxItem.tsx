@@ -16,144 +16,149 @@ import s from './CheckboxItem.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.CheckboxItem';
 
-export const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
-  (props, ref) => {
-    const {
-      className,
-      children,
-      isDisabled,
-      isChecked,
-      shouldCloseCurrentMenuOnSelect = true,
-      shouldCloseRootMenuOnSelect = false,
-      onChange,
-      onFocus,
-      onMouseEnter,
-      onBlur,
-      onMouseLeave,
-      onSelect,
-      onClick,
-      onCheckedChange,
-      onKeyDown,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
+type El = HTMLDivElement;
 
-      ...rest
-    } = props;
+export const CheckboxItem = forwardRef<El, CheckboxItemProps>((props, ref) => {
+  const {
+    className,
+    children,
+    isDisabled,
+    isChecked,
+    shouldCloseCurrentMenuOnSelect = true,
+    shouldCloseRootMenuOnSelect = true,
+    onChange,
+    onFocus,
+    onMouseEnter,
+    onBlur,
+    onMouseLeave,
+    onSelect,
+    onClick,
+    onCheckedChange,
+    onKeyDown,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
 
-    const id = useId();
+    ...rest
+  } = props;
 
-    const {
-      closeMenuImmediately,
-      shouldCloseCurrentMenuOnSelect: shouldCloseCurrentMenuOnSelectContext,
-      shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
-    } = useLevelContext(DISPLAY_NAME);
+  const id = useId();
 
-    const {
-      itemRef,
-      hasSubmenu,
-      isSubMenuOpen,
-      handleKeyDown,
-      withProvider,
-      subMenuTriggerId,
-    } = useSubMenu({ onKeyDown, children });
+  const {
+    closeMenuImmediately,
+    shouldCloseCurrentMenuOnSelect: shouldCloseCurrentMenuOnSelectContext,
+    shouldCloseRootMenuOnSelect: shouldCloseRootMenuOnSelectContext,
+  } = useLevelContext(DISPLAY_NAME);
 
-    const {
-      dataHighlighted,
-      onFocus: handleItemFocus,
-      onMouseEnter: handleItemMouseEnter,
-      onBlur: handleItemBlur,
-      onMouseLeave: handleItemMouseLeave,
-      onPointerEnter: handleItemPointerEnter,
-      onPointerLeave: handleItemPointerLeave,
-      onPointerMove: handleItemPointerMove,
-    } = useContextMenuItemFocus({
-      displayName: DISPLAY_NAME,
-      ref: itemRef,
-      id,
-      isDisabled,
-      hasSubmenu,
-      subMenuTriggerId,
-      onFocus,
-      onBlur,
-      onMouseEnter,
-      onMouseLeave,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
-    });
+  const {
+    itemRef,
+    hasSubmenu,
+    isSubMenuOpen,
+    handleSubMenuOpenByKeyDown,
+    withProvider,
+    subMenuTriggerId,
+  } = useSubMenu({ children });
 
-    const { closeRootMenuImmediately } =
-      useContextMenuRootContext(DISPLAY_NAME);
+  const {
+    dataHighlighted,
+    onFocus: handleFocus,
+    onMouseEnter: handleMouseEnter,
+    onBlur: handleBlur,
+    onMouseLeave: handleMouseLeave,
+    onPointerEnter: handlePointerEnter,
+    onPointerLeave: handlePointerLeave,
+    onPointerMove: handlePointerMove,
+  } = useContextMenuItemFocus({
+    displayName: DISPLAY_NAME,
+    ref: itemRef,
+    id,
+    isDisabled,
+    hasSubmenu,
+    subMenuTriggerId,
+    onFocus,
+    onBlur,
+    onMouseEnter,
+    onMouseLeave,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
+  });
 
-    const handleCheckedChange = (checked: boolean) => {
-      onCheckedChange?.(checked);
+  const { closeRootMenuImmediately } = useContextMenuRootContext(DISPLAY_NAME);
 
-      if (onChange) {
-        const event = {
-          target: { checked },
-        } as React.ChangeEvent<HTMLInputElement>;
+  const handleCheckedChange = (checked: boolean) => {
+    onCheckedChange?.(checked);
 
-        onChange(event);
+    if (onChange) {
+      const event = {
+        target: { checked },
+      } as React.ChangeEvent<HTMLInputElement>;
+
+      onChange(event);
+    }
+  };
+
+  const handleCloseOnClick = () => {
+    if (
+      shouldCloseCurrentMenuOnSelect &&
+      shouldCloseCurrentMenuOnSelectContext
+    ) {
+      closeMenuImmediately();
+
+      if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
+        closeRootMenuImmediately?.();
       }
-    };
+    }
+  };
 
-    const handleCloseOnClick = () => {
-      if (
-        shouldCloseCurrentMenuOnSelect &&
-        shouldCloseCurrentMenuOnSelectContext
-      ) {
-        closeMenuImmediately();
+  const handleSelect = (e: Event) => {
+    /**
+     * Otherwise, when clicking from the second nesting level,
+     * the parent menu will always close.
+     */
+    e.preventDefault();
 
-        if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
-          closeRootMenuImmediately?.();
-        }
-      }
-    };
+    handleCloseOnClick();
 
-    const handleSelect = (e: Event) => {
-      /**
-       * Otherwise, when clicking from the second nesting level,
-       * the parent menu will always close.
-       */
-      e.preventDefault();
+    onSelect?.(e);
+  };
 
-      handleCloseOnClick();
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    handleCloseOnClick();
 
-      onSelect?.(e);
-    };
+    onClick?.(e);
+  };
 
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-      handleCloseOnClick();
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    handleSubMenuOpenByKeyDown(e);
 
-      onClick?.(e);
-    };
+    onKeyDown?.(e);
+  };
 
-    return withProvider(
-      <RadixDropdownMenuCheckboxItem
-        ref={mergeRefs(ref, itemRef)}
-        className={cx(s.checkbox_item, className)}
-        disabled={isDisabled}
-        checked={isChecked}
-        data-highlighted={isSubMenuOpen || dataHighlighted}
-        data-item
-        onCheckedChange={handleCheckedChange}
-        onSelect={handleSelect}
-        onClick={handleClick}
-        onFocus={handleItemFocus}
-        onMouseEnter={handleItemMouseEnter}
-        onBlur={handleItemBlur}
-        onMouseLeave={handleItemMouseLeave}
-        onPointerEnter={handleItemPointerEnter}
-        onPointerLeave={handleItemPointerLeave}
-        onPointerMove={handleItemPointerMove}
-        onKeyDown={handleKeyDown}
-        {...rest}
-      >
-        {children}
-      </RadixDropdownMenuCheckboxItem>
-    );
-  }
-);
+  return withProvider(
+    <RadixDropdownMenuCheckboxItem
+      ref={mergeRefs(ref, itemRef)}
+      className={cx(s.checkbox_item, className)}
+      disabled={isDisabled}
+      checked={isChecked}
+      data-highlighted={isSubMenuOpen || dataHighlighted}
+      data-item
+      onCheckedChange={handleCheckedChange}
+      onSelect={handleSelect}
+      onClick={handleClick}
+      onFocus={handleFocus}
+      onMouseEnter={handleMouseEnter}
+      onBlur={handleBlur}
+      onMouseLeave={handleMouseLeave}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onPointerMove={handlePointerMove}
+      onKeyDown={handleKeyDown}
+      {...rest}
+    >
+      {children}
+    </RadixDropdownMenuCheckboxItem>
+  );
+});
 
 CheckboxItem.displayName = DISPLAY_NAME;

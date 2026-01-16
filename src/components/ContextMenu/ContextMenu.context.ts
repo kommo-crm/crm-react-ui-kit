@@ -30,8 +30,7 @@ const ROOT_DISPLAY_NAME = 'ContextMenu.Root';
  * Separated from ContextMenuContext because submenus create their own
  * ContextMenuContext, but certain state must remain global across all levels:
  * - `closeRootMenuImmediately` - to close the entire menu tree at once
- * - `itemWithFocusedInput` - to track which item has a focused input globally
- * - `enableInnerInputFocus` - feature flag for inner input support
+ * - `navigationContentRef` - to access the root content ref for keyboard navigation
  *
  * This separation allows submenus to have their own local state while still
  * being able to affect the root menu behavior.

@@ -23,10 +23,11 @@ The ContextMenu component is a flexible and powerful dropdown menu system that s
 - **Nested submenus**: Support for deeply nested menu structures using both standard `Sub` and experimental `SubRoot` components
 - **Smooth animations**: Configurable animation durations with opacity transitions
 - **Keyboard navigation**: Full keyboard support with automatic focus management and arrow key navigation
-- **Focus tracking**: Optional automatic menu closure when focus moves outside the menu and its submenus (via `enableCloseOnFocusLoss` prop)
+- **Focus tracking**: Optional automatic menu closure when focus moves outside the menu and its submenus
 - **Focus management**: Advanced focus handling for inputs within menu items
 - **Auto-positioning**: Intelligent positioning with collision detection (excludes non-selectable items)
 - **Rich component library**: Items, groups, labels, separators, checkboxes, radio buttons, and more
+- **Menu aim algorithm**: Smart cursor tracking to prevent accidental menu closures when navigating to submenus
 
 ## Installation
 
@@ -74,25 +75,9 @@ function MyComponent() {
 
 The root component that wraps the entire menu structure. All other components must be children of `Root`.
 
-**Props:**
-
-- `mode` (required): `'click'` | `'hover'` - Defines how the menu is triggered
-- `onOpen?`: `(open: boolean) => void` - Callback when open state changes
-- `onAnimatedOpen?`: `(open: boolean) => void` - Callback when animation state changes
-- `isOpen?`: `boolean` - Controlled open state
-- `defaultOpen?`: `boolean` - Uncontrolled initial open state
-- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether menu closes on item click (default: `true`)
-- `enableInnerInputFocus?`: `boolean` - Enable focus management for inputs inside items (default: `false`)
-- `enableCloseOnFocusLoss?`: `boolean` - Whether menu should close when focus moves outside the menu and its submenus (default: `false`)
-
 ### [ContextMenu.Trigger](./components/Trigger/Trigger.tsx)
 
 The element that triggers the menu to open.
-
-**Props:**
-
-- Standard HTML button props
-- `asChild?`: `boolean` - Merge props with child element (Radix UI pattern)
 
 ### [ContextMenu.Portal](./components/Portal/Portal.tsx)
 
@@ -102,41 +87,21 @@ Portals the menu content to a different part of the DOM. Recommended for z-index
 
 The container for menu items.
 
-**Props:**
-
-- `direction?`: `'down-right'` | `'down-left'` | `'up-right'` | `'up-left'` | `'right-up'` | `'right-down'` | `'left-up'` | `'left-down'` - Positioning direction (default: `'down-right'`)
-- `sideOffset?`: `number` - Distance from trigger (default: `5`)
-- `alignOffset?`: `number` - Alignment offset
-- `collisionBoundary?`: `HTMLElement` - Element to check collisions against
-- `disableAutoPositioning?`: `boolean` - Disable automatic position adjustment
-- `disableRepositioning?`: `boolean` - Disable repositioning on collision
-- Standard Radix UI Content props
-
 ### [ContextMenu.Item](./components/Item/Item.tsx)
 
 A clickable menu item.
 
-**Props:**
+**Data attributes:**
 
-- `isDisabled?`: `boolean` - Disable the item
-- `isDanger?`: `boolean` - Apply danger styling
-- `isSelectable?`: `boolean` - Whether item is selectable (affects click behavior)
-- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether selecting closes current menu (default: `true`)
-- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on select
-- `onSelect?`: `(event: Event) => void` - Selection handler
-- Standard Radix UI Item props
+| Attribute             | Description                                                              |
+| --------------------- | ------------------------------------------------------------------------ |
+| `data-item`           | Always present. Marker for Item component.                               |
+| `data-highlighted`    | Present when item is highlighted (hover/focus).                          |
+| `data-non-selectable` | Present for non-selectable items (items that don't close menu on click). |
 
 ### [ContextMenu.Sub](./components/Sub/Sub.tsx)
 
 Standard submenu component for nested menus.
-
-**Props:**
-
-- `mode?`: `'click'` | `'hover'` - Submenu trigger mode (default: `'hover'`)
-- `onOpen?`: `(open: boolean) => void` - Open state callback
-- `defaultOpen?`: `boolean` - Initial open state
-- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on item select (default: `true`)
-- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Close current submenu on item select (default: `true`)
 
 **Usage:**
 
@@ -162,11 +127,6 @@ Standard submenu component for nested menus.
 
 Trigger element for opening a `Sub` submenu. Must be used inside `ContextMenu.Sub`.
 
-**Props:**
-
-- `isDisabled?`: `boolean` - Disable the submenu trigger
-- Standard Radix UI SubTrigger props (excluding `disabled`, `textValue`)
-
 **Usage:**
 
 ```tsx
@@ -185,12 +145,6 @@ Trigger element for opening a `Sub` submenu. Must be used inside `ContextMenu.Su
 
 Content container for `Sub` submenu items. Must be used inside `ContextMenu.Sub` and wrapped in `ContextMenu.Portal`.
 
-**Props:**
-
-- `disableAutoPositioning?`: `boolean` - Disable automatic positioning (default: `false`)
-- `disableRepositioning?`: `boolean` - Disable repositioning on collision (default: `false`)
-- Standard Radix UI SubContent props
-
 **Usage:**
 
 ```tsx
@@ -207,16 +161,6 @@ Content container for `Sub` submenu items. Must be used inside `ContextMenu.Sub`
 ### [ContextMenu.CheckboxItem](./components/CheckboxItem/CheckboxItem.tsx)
 
 Menu item with checkbox functionality. Allows toggling a boolean state.
-
-**Props:**
-
-- `isChecked?`: `boolean` - Whether checkbox is checked
-- `onChange?`: `(e: React.ChangeEvent<HTMLInputElement>) => void` - Change handler (mimics native input onChange)
-- `isDisabled?`: `boolean` - Disable the checkbox item
-- `hasIconCheckFn?`: `(children: React.ReactNode) => boolean` - Function to check for icon presence
-- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether selecting closes current menu (default: `true`)
-- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on select (default: `false`)
-- Standard Radix UI CheckboxItem props
 
 **Usage:**
 
@@ -236,12 +180,6 @@ Menu item with checkbox functionality. Allows toggling a boolean state.
 
 Container for radio button items. Manages exclusive selection state.
 
-**Props:**
-
-- `value`: `string` - Currently selected radio value
-- `onChange?`: `(e: React.ChangeEvent<HTMLInputElement>) => void` - Change handler (replaces Radix `onValueChange`)
-- Standard Radix UI RadioGroup props (excluding `onValueChange`)
-
 **Usage:**
 
 ```tsx
@@ -251,18 +189,11 @@ Container for radio button items. Manages exclusive selection state.
 </ContextMenu.RadioGroup>
 ```
 
+**Note:** The `onChange` callback receives the selected value directly as a string, not an event object.
+
 ### [ContextMenu.RadioItem](./components/RadioItem/RadioItem.tsx)
 
 Individual radio button item within a RadioGroup.
-
-**Props:**
-
-- `value`: `string` (required) - Unique value for this radio option
-- `isDisabled?`: `boolean` - Disable the radio item
-- `hasIconCheckFn?`: `(children: React.ReactNode) => boolean` - Function to check for icon presence
-- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Whether selecting closes current menu (default: `true`)
-- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on select (default: `false`)
-- Standard Radix UI RadioItem props (excluding `disabled`)
 
 **Usage:**
 
@@ -278,10 +209,6 @@ Individual radio button item within a RadioGroup.
 
 Visual separator line between menu items. Used to group related items visually.
 
-**Props:**
-
-- Standard Radix UI Separator props (no additional props)
-
 **Usage:**
 
 ```tsx
@@ -293,10 +220,6 @@ Visual separator line between menu items. Used to group related items visually.
 #### [ContextMenu.Label](./components/Label/Label.tsx)
 
 Section header/label for grouping menu items. Used for accessibility and visual organization.
-
-**Props:**
-
-- Standard Radix UI Label props (no additional props)
 
 **Usage:**
 
@@ -311,10 +234,6 @@ Section header/label for grouping menu items. Used for accessibility and visual 
 
 Logical grouping component for menu items. Provides semantic structure for screen readers.
 
-**Props:**
-
-- Standard Radix UI Group props (no additional props)
-
 **Usage:**
 
 ```tsx
@@ -327,11 +246,6 @@ Logical grouping component for menu items. Provides semantic structure for scree
 #### [ContextMenu.ItemIcon](./components/ItemIcon/ItemIcon.tsx)
 
 Container for icon elements within menu items. Ensures proper alignment and spacing.
-
-**Props:**
-
-- `children`: `React.ReactNode` (required) - Icon element
-- `className?`: `string` - Custom CSS class
 
 **Usage:**
 
@@ -348,10 +262,6 @@ Container for icon elements within menu items. Ensures proper alignment and spac
 
 Container for indicators (checkmarks, radio dots, etc.) in menu items. Used with `CheckboxItem` and `RadioItem`.
 
-**Props:**
-
-- Standard Radix UI ItemIndicator props (no additional props)
-
 **Usage:**
 
 ```tsx
@@ -366,12 +276,6 @@ Container for indicators (checkmarks, radio dots, etc.) in menu items. Used with
 #### [ContextMenu.ItemRightSlot](./components/ItemRightSlot/ItemRightSlot.tsx)
 
 Right-aligned content slot for menu items. Commonly used for icons, badges, or submenu triggers.
-
-**Props:**
-
-- `children`: `React.ReactNode` (required) - Content to display in right slot
-- `className?`: `string` - Custom CSS class
-- Standard HTML div props
 
 **Usage:**
 
@@ -388,10 +292,6 @@ Right-aligned content slot for menu items. Commonly used for icons, badges, or s
 
 Decorative arrow pointer that points toward the menu trigger. Automatically positions based on menu placement.
 
-**Props:**
-
-- Standard Radix UI Arrow props (no additional props)
-
 **Usage:**
 
 ```tsx
@@ -404,11 +304,6 @@ Decorative arrow pointer that points toward the menu trigger. Automatically posi
 #### [ContextMenu.FocusBlocker](./components/FocusBlocker/FocusBlocker.tsx)
 
 Utility component that blocks pointer and focus events to prevent accidental interactions. Used internally by `SubRoot` when a submenu is open. Automatically simulates mouseenter events on menu items when the blocker is removed if the cursor was over it.
-
-**Props:**
-
-- `className?`: `string` - Custom CSS class for the blocker
-- Standard HTML div props (onFocus, onPointerEnter, onPointerLeave, onPointerMove)
 
 **Note:** This component is primarily used internally. Most users won't need to use it directly.
 
@@ -551,38 +446,13 @@ Consider using `SubRoot` (experimentally) when:
 
 The root component for experimental submenus.
 
-**Props:**
-
-- `mode?`: `'click'` | `'hover'` - Trigger mode (default: `'hover'`)
-- `onOpen?`: `(open: boolean) => void` - Open state callback
-- `onAnimatedOpen?`: `(open: boolean) => void` - Animation state callback
-- `defaultOpen?`: `boolean` - Initial open state
-- `shouldCloseRootMenuOnSelect?`: `boolean` - Close root menu on item select (default: `false`)
-- `shouldCloseCurrentMenuOnSelect?`: `boolean` - Close current submenu on item select (default: `true`)
-
 #### [ContextMenu.SubRoot.Trigger](./components/SubRoot/components/Trigger/Trigger.tsx)
 
 The trigger element for SubRoot.
 
-**Props:**
-
-- Standard HTML button props
-- Automatically handles hover/click behavior based on `mode`
-- Includes focus management and highlighting
-
 #### [ContextMenu.SubRoot.Content](./components/SubRoot/components/Trigger/Trigger.tsx)
 
 The content container for SubRoot menu.
-
-**Props:**
-
-- Same as `ContextMenu.Content` props
-- `direction?`: Positioning direction
-- `alignOffset?`: Alignment offset
-- `sideOffset?`: Distance from trigger
-- `collisionBoundary?`: Collision detection boundary
-- `disableAutoPositioning?`: Disable auto-positioning
-- `disableRepositioning?`: Disable repositioning
 
 ### SubRoot Usage Example
 
@@ -718,12 +588,45 @@ For most use cases, prefer the standard `Sub` component. Only use `SubRoot` when
 
 ## Advanced Features
 
+### Menu Aim Algorithm
+
+The ContextMenu implements a "menu aim" algorithm that prevents accidental menu closures when navigating to submenus. This is similar to Amazon's mega dropdown implementation.
+
+**How it works:**
+
+1. The algorithm tracks cursor positions as the mouse moves
+2. It creates an "intent triangle" from the previous cursor position to the submenu's edge
+3. If the cursor is within this triangle and moving toward the submenu, the parent menu stays open
+4. This allows users to move diagonally toward submenus without accidentally triggering other menu items
+
+**Benefits:**
+
+- Smooth navigation between parent menus and submenus
+- No accidental menu closures when moving diagonally
+- Natural, intuitive UX for nested menu structures
+
+The algorithm is automatically enabled in hover mode and requires no additional configuration.
+
+**Callback for aiming state:**
+
+```tsx
+<ContextMenu.Root
+  mode="hover"
+  onAiming={(isAiming) => {
+    // Called when cursor movement toward submenu is detected
+    console.log('Is aiming toward submenu:', isAiming);
+  }}
+>
+  {/* ... */}
+</ContextMenu.Root>
+```
+
 ### Inner Input Focus
 
 Enable focus management for inputs (text fields, etc.) inside menu items. When enabled, items with focused inputs will automatically set `isSelectable={false}` and the menu will remain open while the input is focused.
 
 ```tsx
-<ContextMenu.Root mode="click" enableInnerInputFocus>
+<ContextMenu.Root mode="click">
   {/* Menu with input fields */}
   <ContextMenu.Item isSelectable={false}>
     <input type="text" placeholder="Search..." />
@@ -734,23 +637,6 @@ Enable focus management for inputs (text fields, etc.) inside menu items. When e
 ### Focus Loss Detection
 
 Enable automatic menu closure when focus moves outside the menu and its submenus. This is useful for ensuring menus close when users interact with other parts of the application. When enabled, the menu will close immediately when focus leaves all menu elements, and focus restoration to the trigger will be prevented.
-
-```tsx
-<ContextMenu.Root mode="click" enableCloseOnFocusLoss>
-  <ContextMenu.Trigger>
-    <button>Open Menu</button>
-  </ContextMenu.Trigger>
-
-  <ContextMenu.Portal>
-    <ContextMenu.Content>
-      <ContextMenu.Item>Item 1</ContextMenu.Item>
-      <ContextMenu.Item>Item 2</ContextMenu.Item>
-    </ContextMenu.Content>
-  </ContextMenu.Portal>
-</ContextMenu.Root>
-```
-
-**Note:** When `enableCloseOnFocusLoss` is enabled, the menu tracks focus changes and closes if focus moves to any element outside the menu and all its submenus. This includes focus changes to other controls, inputs, or any focusable elements in the application.
 
 ### Animation Control
 
@@ -786,10 +672,6 @@ The ContextMenu component provides comprehensive keyboard navigation:
 - **Arrow Left**: Close submenu and return to parent (also closes `SubRoot`)
 - **Enter/Space**: Activate/select item (only works when focus is inside the menu)
 - **Escape**: Close menu. Focus restoration to trigger is prevented when menu closes due to focus loss
-- **Home/End**: Jump to first/last item
-- **Type to search**: First-letter navigation (Radix UI feature)
-
-When `enableCloseOnFocusLoss` is enabled, the component automatically tracks focus changes and closes the menu when focus moves outside the menu and its submenus. When the menu closes due to focus loss, focus restoration to the trigger is prevented.
 
 ### Keyboard Navigation with SubRoot
 
@@ -921,7 +803,7 @@ The ContextMenu component follows ARIA best practices:
 
       <ContextMenu.RadioGroup
         value={theme}
-        onChange={(e) => setTheme(e.target.value)}
+        onChange={(value) => setTheme(value)}
       >
         <ContextMenu.RadioItem value="light">
           <span>Light</span>
@@ -943,7 +825,7 @@ const [settings, setSettings] = useState({
   theme: 'light',
 });
 
-<ContextMenu.Root mode="click" enableInnerInputFocus>
+<ContextMenu.Root mode="click">
   <ContextMenu.Trigger>
     <button>Advanced Menu</button>
   </ContextMenu.Trigger>
@@ -1012,10 +894,10 @@ const [settings, setSettings] = useState({
 
                 <ContextMenu.RadioGroup
                   value={settings.theme}
-                  onChange={(e) =>
+                  onChange={(value) =>
                     setSettings((prev) => ({
                       ...prev,
-                      theme: e.target.value,
+                      theme: value,
                     }))
                   }
                 >
@@ -1045,18 +927,6 @@ const [settings, setSettings] = useState({
 </ContextMenu.Root>;
 ```
 
-## Best Practices
-
-1. **Always use Portal**: Wrap `Content` in `Portal` for proper z-index and overflow handling
-2. **Provide Labels**: Use `Label` components for better accessibility
-3. **Use Separators**: Organize related items with `Separator`
-4. **Handle Async Actions**: For async actions, consider keeping menu open until action completes
-5. **Test Keyboard Navigation**: Always test keyboard navigation paths
-6. **Use Appropriate Modes**: Choose click or hover mode based on use case
-7. **SubRoot Experimental**: Only use `SubRoot` when you need its specific capabilities; prefer `Sub` for standard submenus
-8. **Animation Awareness**: Consider animation duration when implementing interactions
-9. **Focus Management**: Be mindful of focus when using `enableInnerInputFocus`
-
 ## Notes
 
 - Animation duration is fixed at `150ms` (internal constant)
@@ -1064,6 +934,8 @@ const [settings, setSettings] = useState({
 - On touch devices, hover mode automatically converts to `click` mode
 - Multiple menus can coordinate closure via context menu bus
 - SubRoot creates independent menu instances but coordinates with parent context
-- Menu can automatically close when focus moves outside the menu and its submenus (when `enableCloseOnFocusLoss` is enabled)
-- FocusBlocker automatically simulates mouseenter events when removed if cursor was over it
+- Menu can automatically close when focus moves outside the menu and its submenus
+- FocusBlocker is used for SubRoot to prevent parent menu items from intercepting hover and focus events when a submenu is open
 - Non-selectable items are excluded from keyboard navigation and positioning calculations
+- Menu aim algorithm is active in hover mode to prevent accidental closures when navigating to submenus
+- `RadioGroup.onChange` receives the value directly as a string, not an event object

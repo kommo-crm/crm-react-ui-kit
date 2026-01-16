@@ -1,4 +1,20 @@
-import type { RefObject } from 'react';
+/**
+ * Event object passed to focus callbacks, similar to Radix's InteractOutside event.
+ */
+export interface FocusChangeEvent {
+  /**
+   * The element that received focus.
+   */
+  target: Element | null;
+  /**
+   * Prevents the default behavior (e.g., closing the menu).
+   */
+  preventDefault: () => void;
+  /**
+   * Whether preventDefault was called.
+   */
+  defaultPrevented: boolean;
+}
 
 /**
  * Options for the `useFocusChange` hook.
@@ -6,14 +22,13 @@ import type { RefObject } from 'react';
 export interface UseFocusChangeOptions {
   /**
    * Callback that is called when focus moves outside the tracked elements.
-   * @param focusedElement - The element that received focus.
+   * Call `event.preventDefault()` to prevent the default behavior.
    */
-  onFocusOutside?: (focusedElement: Element | null) => void;
+  onFocusOutside?: (event: FocusChangeEvent) => void;
   /**
    * Callback that is called when focus moves inside the tracked elements.
-   * @param focusedElement - The element that received focus.
    */
-  onFocusInside?: (focusedElement: Element | null) => void;
+  onFocusInside?: (event: FocusChangeEvent) => void;
   /**
    * Whether the hook is enabled.
    * @default true
@@ -23,5 +38,5 @@ export interface UseFocusChangeOptions {
    * Array of refs or elements to track focus within.
    * Focus is considered "inside" if it's within any of these elements.
    */
-  elements?: Array<RefObject<HTMLElement> | HTMLElement | null>;
+  elements?: Array<React.RefObject<HTMLElement>>;
 }

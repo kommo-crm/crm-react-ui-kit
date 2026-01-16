@@ -15,10 +15,15 @@ const DISPLAY_NAME = 'ContextMenu.Label';
 export const Label = forwardRef<HTMLDivElement, LabelProps>((props, ref) => {
   const { className, children, onKeyDown, ...rest } = props;
 
-  const { itemRef, handleKeyDown, withProvider } = useSubMenu({
-    onKeyDown,
+  const { itemRef, handleSubMenuOpenByKeyDown, withProvider } = useSubMenu({
     children,
   });
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    handleSubMenuOpenByKeyDown(e);
+
+    onKeyDown?.(e);
+  };
 
   return withProvider(
     <RadixDropdownMenuLabel

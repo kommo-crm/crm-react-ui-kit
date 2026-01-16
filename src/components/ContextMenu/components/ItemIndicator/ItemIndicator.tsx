@@ -8,20 +8,21 @@ import s from './ItemIndicator.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.ItemIndicator';
 
-export const ItemIndicator = forwardRef<HTMLDivElement, ItemIndicatorProps>(
-  (props, ref) => {
-    const { className, children, ...rest } = props;
+type El = HTMLDivElement;
+type P = ItemIndicatorProps;
 
-    return (
-      <RadixDropdownMenuItemIndicator
-        ref={ref}
-        className={cx(s.item_indicator, className)}
-        {...rest}
-      >
-        {children}
-      </RadixDropdownMenuItemIndicator>
-    );
-  }
-);
+export const ItemIndicator = forwardRef<El, P>((props, ref) => {
+  const { className, children, ...rest } = props;
+
+  return (
+    <RadixDropdownMenuItemIndicator
+      ref={ref}
+      className={cx(s.item_indicator, className)}
+      {...rest}
+    >
+      {children}
+    </RadixDropdownMenuItemIndicator>
+  );
+});
 
 ItemIndicator.displayName = DISPLAY_NAME;

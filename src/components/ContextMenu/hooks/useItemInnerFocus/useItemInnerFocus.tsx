@@ -1,7 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
 
-import { useContextMenuRootContext } from '../../ContextMenu.context';
-
 import { useInnerFocusTracker } from '../useInnerFocusTracker/useInnerFocusTracker';
 
 import { useLevelContext } from '../../providers';
@@ -24,33 +22,27 @@ import { UseItemInnerFocusOptions } from './useItemInnerFocus.types';
  * - Renders a focus blocker over other items when one item has a focused input
  */
 export const useItemInnerFocus = (options: UseItemInnerFocusOptions) => {
-  const { id, isSelectableProp, displayName } = options;
-
-  const { enableInnerInputFocus } = useContextMenuRootContext(displayName);
+  const { id, isSelectable: isItemSelectable, displayName } = options;
 
   const { itemWithFocusedInput, setItemWithFocusedInput } =
     useLevelContext(displayName);
 
   const { hasInnerInput, isInnerInputFocused, handleNodeRef } =
-    useInnerFocusTracker({ isEnabled: enableInnerInputFocus });
+    useInnerFocusTracker();
 
-  const [isSelectable, setIsSelectable] = useState(isSelectableProp ?? true);
+  const [isSelectable, setIsSelectable] = useState(isItemSelectable ?? true);
 
   useLayoutEffect(() => {
-    if (isSelectableProp !== undefined || !enableInnerInputFocus) {
-      setIsSelectable(isSelectableProp ?? true);
+    if (isItemSelectable !== undefined) {
+      setIsSelectable(isItemSelectable ?? true);
 
       return;
     }
 
     setIsSelectable(!hasInnerInput);
-  }, [hasInnerInput, isSelectableProp, enableInnerInputFocus]);
+  }, [hasInnerInput, isItemSelectable]);
 
   useLayoutEffect(() => {
-    if (!enableInnerInputFocus) {
-      return;
-    }
-
     if (isInnerInputFocused) {
       setItemWithFocusedInput(id);
     } else if (itemWithFocusedInput === id) {
@@ -62,13 +54,7 @@ export const useItemInnerFocus = (options: UseItemInnerFocusOptions) => {
         setItemWithFocusedInput(null);
       }
     };
-  }, [
-    isInnerInputFocused,
-    itemWithFocusedInput,
-    setItemWithFocusedInput,
-    id,
-    enableInnerInputFocus,
-  ]);
+  }, [isInnerInputFocused, itemWithFocusedInput, setItemWithFocusedInput, id]);
 
   return {
     isSelectableConsideringInputFocus: isSelectable,

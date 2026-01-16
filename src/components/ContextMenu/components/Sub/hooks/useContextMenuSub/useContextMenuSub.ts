@@ -1,10 +1,8 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
-import {
-  useClickOutside,
-  useIsTouchDevice,
-  useMenuAim,
-} from '../../../../hooks';
+import { useClickOutside } from '../useClickOutside/useClickOutside';
+
+import { useIsTouchDevice, useMenuAim } from '../../../../hooks';
 import { ContextMenuMode } from '../../../../ContextMenu.enums';
 import { useContextMenuContext } from '../../../../ContextMenu.context';
 import { useLevelContext } from '../../../../providers/LevelProvider';
@@ -29,7 +27,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     onChildOpen,
     onSubRootOpen,
     isAnimatedOpen: parentIsAnimatedOpen,
-    isMovingTowardMenuRef: isMovingTowardMenuContextRef,
+    isAimingRef: isAimingContextRef,
   } = useLevelContext(displayName);
 
   const triggerId = useId();
@@ -50,11 +48,12 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   const movementCheckIntervalRef = useRef<ReturnType<
     typeof setInterval
   > | null>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
   const pendingCloseRef = useRef(false);
-  // Use ref to track isInsideContent for use in intervals
+  /**
+   * Use ref to track isInsideContent for use in intervals
+   */
   const isInsideContentRef = useRef(false);
 
   const isTouchDevice = useIsTouchDevice();
@@ -73,6 +72,12 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   const [menuAimDirection, setMenuAimDirection] = useState<MenuAimDirection>(
     MenuAimDirection.RIGHT
   );
+
+  const { isAimingRef, contentRef } = useMenuAim<HTMLDivElement>({
+    direction: menuAimDirection,
+    enabled: isOpen && mode === ContextMenuMode.HOVER,
+    externalAimingRef: isAimingContextRef || undefined,
+  });
 
   /**
    * Read direction from Radix's data-side attribute on content element.
@@ -95,10 +100,14 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       }
     };
 
-    // Check immediately
+    /**
+     * Check immediately
+     */
     updateDirection();
 
-    // Observe changes to data-side attribute
+    /**
+     * Observe changes to data-side attribute
+     */
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
         if (
@@ -120,18 +129,11 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     };
   }, [isOpen, contentRef.current]);
 
-  const { isMovingTowardMenuRef } = useMenuAim({
-    contentRef,
-    direction: menuAimDirection,
-    enabled: isOpen && mode === ContextMenuMode.HOVER,
-    externalRef: isMovingTowardMenuContextRef || undefined,
-  });
-
-  const handleSubmenuOpen = (value: boolean) => {
+  const handleSubmenuOpen = (isSubmenuOpen: boolean) => {
     /**
      * Important for the case of Sub -> SubRoot nesting.
      */
-    setTimeout(() => onSubRootOpen?.(value), 0);
+    setTimeout(() => onSubRootOpen?.(isSubmenuOpen), 0);
   };
 
   /**
@@ -182,7 +184,9 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         return;
       }
 
-      // If cursor is inside content, close immediately
+      /**
+       * If cursor is inside content, close immediately
+       */
       if (isInsideContent) {
         setIsAnimatedOpen(false);
         closeTimerRef.current = setTimeout(() => {
@@ -197,13 +201,19 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
         return;
       }
 
-      // Mark that we have a pending close request
+      /**
+       * Mark that we have a pending close request
+       */
       pendingCloseRef.current = true;
 
-      // Start checking movement periodically
+      /**
+       * Start checking movement periodically
+       */
       if (!movementCheckIntervalRef.current) {
         movementCheckIntervalRef.current = setInterval(() => {
-          // If cursor entered content, stop checking and cancel close
+          /**
+           * If cursor entered content, stop checking and cancel close
+           */
           if (isInsideContentRef.current) {
             clearTimers();
             pendingCloseRef.current = false;
@@ -212,13 +222,19 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
             return;
           }
 
-          // Check if still moving toward menu
-          if (isMovingTowardMenuRef.current) {
-            // Still moving toward menu, keep delaying close
+          /**
+           * Check if still moving toward menu
+           */
+          if (isAimingRef.current) {
+            /**
+             * Still moving toward menu, keep delaying close
+             */
             return;
           }
 
-          // Not moving toward menu anymore, proceed with close
+          /**
+           * Not moving toward menu anymore, proceed with close
+           */
           clearTimers();
           pendingCloseRef.current = false;
           setIsAnimatedOpen(false);
@@ -283,8 +299,8 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   /**
    * The callback function to be called when the submenu is opened by keyboard.
    */
-  const onOpenByKeyboard = (value: boolean) => {
-    setIsOpenedByKeyboard(value);
+  const onOpenByKeyboard = (isOpenByKeyboard: boolean) => {
+    setIsOpenedByKeyboard(isOpenByKeyboard);
   };
 
   /**
@@ -294,14 +310,16 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   const handleContentEnter = () => {
     if (
       mode !== ContextMenuMode.HOVER ||
-      (isMovingTowardMenuRef.current && activeItemId !== triggerId)
+      (isAimingRef.current && activeItemId !== triggerId)
     ) {
       return;
     }
 
     setIsOpenedByKeyboard(false);
 
-    // Clear all timers and stop movement checking when entering content
+    /**
+     * Clear all timers and stop movement checking when entering content
+     */
     clearTimers();
     pendingCloseRef.current = false;
 
@@ -342,10 +360,14 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
       hoverTimeoutRef.current = null;
     }
 
-    // When leaving content, if there's a pending close, restart the check
+    /**
+     * When leaving content, if there's a pending close, restart the check
+     */
     if (pendingCloseRef.current && !movementCheckIntervalRef.current) {
       movementCheckIntervalRef.current = setInterval(() => {
-        // If cursor re-entered content, stop checking and cancel close
+        /**
+         * If cursor re-entered content, stop checking and cancel close
+         */
         if (isInsideContentRef.current) {
           clearTimers();
           pendingCloseRef.current = false;
@@ -354,13 +376,19 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
           return;
         }
 
-        // Check if still moving toward menu
-        if (isMovingTowardMenuRef.current) {
-          // Still moving toward menu, keep delaying close
+        /**
+         * Check if still moving toward menu
+         */
+        if (isAimingRef.current) {
+          /**
+           * Still moving toward menu, keep delaying close
+           */
           return;
         }
 
-        // Not moving toward menu anymore, proceed with close
+        /**
+         * Not moving toward menu anymore, proceed with close
+         */
         clearTimers();
         pendingCloseRef.current = false;
         setIsAnimatedOpen(false);
@@ -408,7 +436,11 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * Closes the submenu when the active item id changes.
    */
   useEffect(() => {
-    if (activeItemId !== triggerId && isOpen && defaultOpen === undefined) {
+    if (
+      (activeItemId !== triggerId || isSubRootOpen) &&
+      isOpen &&
+      defaultOpen === undefined
+    ) {
       handleCloseImmediate();
     }
   }, [activeItemId, isOpen, defaultOpen]);
@@ -516,8 +548,8 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * Handles the aiming state change.
    */
   useEffect(() => {
-    onAiming?.(isMovingTowardMenuRef.current);
-  }, [isMovingTowardMenuRef.current, onAiming]);
+    onAiming?.(isAimingRef.current);
+  }, [isAimingRef.current, onAiming]);
 
   return {
     isOpen,
@@ -535,6 +567,6 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     closeMenuImmediately: handleCloseImmediate,
     itemWithFocusedInput,
     setItemWithFocusedInput,
-    isMovingTowardMenuRef,
+    isAimingContentRef: isAimingRef,
   };
 };

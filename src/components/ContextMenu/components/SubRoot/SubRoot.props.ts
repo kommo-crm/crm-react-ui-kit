@@ -9,11 +9,11 @@ export type ContextMenuSubRootProps = Omit<
   /**
    * Called whenever the open state of the menu changes.
    */
-  onOpen?: (open: boolean) => void;
+  onOpen?: (isOpen: boolean) => void;
   /**
    * Called whenever the animated open state of the menu changes.
    */
-  onAnimatedOpen?: (open: boolean) => void;
+  onAnimatedOpen?: (isAnimatedOpen: boolean) => void;
   /**
    * Defines how the menu is triggered.
    *
@@ -24,14 +24,9 @@ export type ContextMenuSubRootProps = Omit<
    */
   mode?: ContextMenuModeType;
   /**
-   * Whether the menu should close when another menu is opened.
-   * It only works in conjunction with other similar menus.
-   */
-  autoCloseOnOtherOpen?: boolean;
-  /**
    * Whether the root menu should close when item selected.
    *
-   * @default false
+   * @default true
    */
   shouldCloseRootMenuOnSelect?: boolean;
   /**

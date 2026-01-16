@@ -1,4 +1,1 @@
-export {
-  focusFirstFocusableItem,
-  findFirstFocusableItem,
-} from './focusFirstFocusableItem/focusFirstFocusableItem';
+export { focusFirstFocusableItem } from './focusFirstFocusableItem/focusFirstFocusableItem';

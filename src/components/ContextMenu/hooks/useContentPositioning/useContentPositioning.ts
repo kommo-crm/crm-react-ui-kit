@@ -2,8 +2,6 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 import { Direction } from '../../components/Content';
 
-import { usePrevious } from '../usePrevious/usePrevious';
-
 import { UseContentPositioningOptions } from './useContentPositioning.types';
 
 /**
@@ -41,19 +39,17 @@ export const useContentPositioning = (
   const [isPositioned, setIsPositioned] = useState(false);
 
   const hasPositionedRef = useRef(false);
-  const prevAlign = usePrevious(align);
 
   /**
    * Positions the content based on the direction and the trigger height.
    */
   useLayoutEffect(() => {
-    if (isSubContent) {
-      setPositionedDirection(true);
-
-      return;
-    }
-
-    if (disableAutoPositioning || !triggerRef?.current || !direction) {
+    if (
+      isSubContent ||
+      disableAutoPositioning ||
+      !triggerRef?.current ||
+      !direction
+    ) {
       setPositionedDirection(true);
 
       return;
@@ -156,7 +152,17 @@ export const useContentPositioning = (
 
       setAlign(alignCandidate);
       setPositionedDirection(true);
+      hasPositionedRef.current = true;
     };
+
+    /**
+     * Skip repositioning if already positioned and repositioning is disabled
+     */
+    if (disableRepositioning && hasPositionedRef.current) {
+      setPositionedDirection(true);
+
+      return;
+    }
 
     requestAnimationFrame(measureAndAdjust);
 
@@ -186,18 +192,17 @@ export const useContentPositioning = (
    * Calculates the label offset based on the direction and the trigger height.
    */
   useLayoutEffect(() => {
-    const contentEl = contentRef?.current;
-    const triggerEl = triggerRef?.current;
-
-    if (
-      disableRepositioning &&
-      hasPositionedRef.current &&
-      prevAlign === align
-    ) {
+    /**
+     * Skip repositioning if already positioned and repositioning is disabled
+     */
+    if (disableRepositioning && hasPositionedRef.current) {
       setPositionedOffset(true);
 
       return;
     }
+
+    const contentEl = contentRef?.current;
+    const triggerEl = triggerRef?.current;
 
     if (
       !contentEl ||
@@ -284,7 +289,6 @@ export const useContentPositioning = (
     align,
     contentRef,
     triggerRef,
-    align,
     alignOffset,
     disableAutoPositioning,
   ]);

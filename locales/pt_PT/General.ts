@@ -25,6 +25,7 @@ export default {
   'Autosize': 'Dimensionamento automático',
   'Directions': 'Direções',
   'Modes': 'Modos',
+  'Vertical Menu': 'Menu vertical',
 
   /* Used in docs */
   'Design tokens': 'Tokens de design',
@@ -90,16 +91,16 @@ export default {
   'Required field': 'Campo obrigatório',
 
   /* ContextMenu */
-  'Label': 'Título',
-  'Workspace': 'Área de Trabalho',
-  'Workspace Settings': 'Configurações de trabalho',
-  'Switch Workspace': 'Alternar Área de Trabalho',
-  'Contacts': 'Contactos',
-  'Autoupdate': 'Atualização automática',
+  'Profile': 'Perfil',
+  'User ID': 'ID do usuário',
+  'Settings': 'Configurações',
   'Theme': 'Tema',
   'Light': 'Claro',
   'Dark': 'Escuro',
-  'Contact': 'Contacto',
-  'Delete All': 'Excluir Tudo',
-  'Hover me': 'Passar o mouse',
+  'Lead': 'Lead',
+  'Edit': 'Editar',
+  'Delete': 'Excluir',
+  'Export to PDF': 'Exportar para PDF',
+  'Enable notifications': 'Ativar notificações',
+  'Hover me': 'Passe o cursor',
 };

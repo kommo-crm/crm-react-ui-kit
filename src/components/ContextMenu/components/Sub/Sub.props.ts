@@ -16,17 +16,21 @@ export type SubProps = Omit<
   /**
    * Called when submenu open state changes.
    */
-  onOpen?: (open: boolean) => void;
+  onOpen?: (isOpen: boolean) => void;
   /**
    * Whether the root menu should close when item selected.
+   *
+   * @default true
    */
   shouldCloseRootMenuOnSelect?: boolean;
   /**
    * Whether the submenu should close when item selected.
+   *
+   * @default true
    */
   shouldCloseCurrentMenuOnSelect?: boolean;
   /**
-   * Called whenever the value of `isMovingTowardActiveMenuRef` changes
+   * Called whenever the value of `isAimingRef` changes
    * in the context menu bus.
    *
    * This ref tracks whether the cursor is currently moving toward the active menu,
@@ -52,7 +56,7 @@ export interface ContextMenuSubContextProps {
   /**
    * Sets the open state of the submenu.
    */
-  setIsOpen: (open: boolean) => void;
+  setIsOpen: (isOpen: boolean) => void;
   /**
    * Indicates whether the submenu is currently open.
    */
@@ -74,7 +78,7 @@ export interface ContextMenuSubContextProps {
   /**
    * The callback function to be called when the submenu is opened by keyboard.
    */
-  onOpenByKeyboard: (value: boolean) => void;
+  onOpenByKeyboard: (isOpen: boolean) => void;
   /**
    * The ref to the content of the submenu.
    */
@@ -86,11 +90,11 @@ export interface ContextMenuSubContextProps {
   /**
    * The callback function to be called when the child menu is opened.
    */
-  onChildOpen: (value: boolean, mode: ContextMenuModeType) => void;
+  onChildOpen: (isChildOpen: boolean, mode: ContextMenuModeType) => void;
   /**
    * The callback function to be called when the subroot is opened.
    */
-  onSubRootOpen: (value: boolean) => void;
+  onSubRootOpen: (isSubRootOpen: boolean) => void;
   /**
    * Whether the root menu should close when item selected.
    *
@@ -116,7 +120,7 @@ export interface ContextMenuSubContextProps {
    */
   itemWithFocusedInput: string | null;
   /**
-   * Ref containing whether the mouse is currently moving toward the submenu.
+   * Ref containing whether the cursor is currently moving toward the submenu.
    */
-  isMovingTowardMenuRef: React.MutableRefObject<boolean>;
+  isAimingContentRef: React.MutableRefObject<boolean>;
 }

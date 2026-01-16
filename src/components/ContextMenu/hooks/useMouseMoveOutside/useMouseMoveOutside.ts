@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 /**
  * A hook for tracking mouse moves outside of the specified reference.
  *
- * It is necessary for cases when we do not lose focus on
- * some element due to the internal blocker.
+ * It is necessary for cases when we do not lose item pseudo-focus on
+ * some element due to the focus blocker.
  */
 export const useMouseMoveOutside = (
   ref: React.RefObject<HTMLElement>,

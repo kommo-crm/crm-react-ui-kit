@@ -6,92 +6,92 @@ import { FocusBlockerProps } from './FocusBlocker.props';
 
 import s from './FocusBlocker.module.css';
 
+type El = HTMLDivElement;
+
 /**
  * The component that blocks focus and pointer events.
  *
  * It is necessary to solve the problems of implementing a Radix based on focus.
  */
-export const FocusBlocker = forwardRef<HTMLDivElement, FocusBlockerProps>(
-  (props, ref) => {
-    const {
-      className,
-      onFocus,
-      onPointerEnter,
-      onPointerLeave,
-      onPointerMove,
-      onClick,
-      onPointerDown,
-      onPointerUp,
+export const FocusBlocker = forwardRef<El, FocusBlockerProps>((props, ref) => {
+  const {
+    className,
+    onFocus,
+    onPointerEnter,
+    onPointerLeave,
+    onPointerMove,
+    onClick,
+    onPointerDown,
+    onPointerUp,
 
-      ...rest
-    } = props;
+    ...rest
+  } = props;
 
-    const handleFocus = (e: React.FocusEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const handleFocus = (e: React.FocusEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      onFocus?.(e);
-    };
+    onFocus?.(e);
+  };
 
-    const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      onPointerEnter?.(e);
-    };
+    onPointerEnter?.(e);
+  };
 
-    const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      onPointerLeave?.(e);
-    };
+    onPointerLeave?.(e);
+  };
 
-    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      onPointerMove?.(e);
-    };
+    onPointerMove?.(e);
+  };
 
-    const handleClick = (e: React.PointerEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const handleClick = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      onClick?.(e);
-    };
+    onClick?.(e);
+  };
 
-    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      onPointerDown?.(e);
-    };
+    onPointerDown?.(e);
+  };
 
-    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      onPointerUp?.(e);
-    };
+    onPointerUp?.(e);
+  };
 
-    return (
-      <div
-        ref={ref}
-        className={cx(s.blocker, className)}
-        tabIndex={0}
-        data-blocker
-        onFocus={handleFocus}
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
-        onPointerMove={handlePointerMove}
-        onClick={handleClick}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        {...rest}
-      />
-    );
-  }
-);
+  return (
+    <div
+      ref={ref}
+      className={cx(s.blocker, className)}
+      tabIndex={0}
+      data-blocker
+      onFocus={handleFocus}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      onPointerMove={handlePointerMove}
+      onClick={handleClick}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      {...rest}
+    />
+  );
+});
 
 FocusBlocker.displayName = 'FocusBlocker';

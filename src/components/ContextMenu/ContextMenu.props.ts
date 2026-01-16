@@ -1,5 +1,7 @@
 import { type DropdownMenuProps as RadixDropdownMenuRootProps } from '@radix-ui/react-dropdown-menu';
 
+import type { FocusChangeEvent } from 'src/hooks';
+
 import { MenuAimDirection } from './hooks/useMenuAim';
 
 import { ContextMenuModeType } from './ContextMenu.types';
@@ -11,11 +13,11 @@ export type ContextMenuRootProps = Omit<
   /**
    * Called whenever the open state of the menu changes.
    */
-  onOpen?: (open: boolean) => void;
+  onOpen?: (isOpen: boolean) => void;
   /**
    * Called whenever the animated open state of the menu changes.
    */
-  onAnimatedOpen?: (open: boolean) => void;
+  onAnimatedOpen?: (isAnimatedOpen: boolean) => void;
   /**
    * Defines how the menu is triggered.
    *
@@ -23,11 +25,6 @@ export type ContextMenuRootProps = Omit<
    * - `hover`: menu opens and closes on mouse hover.
    */
   mode: ContextMenuModeType;
-  /**
-   * Whether the menu should close when another menu is opened.
-   * It only works in conjunction with other similar menus.
-   */
-  autoCloseOnOtherOpen?: boolean;
   /**
    * Whether the menu should close when item selected.
    *
@@ -38,18 +35,6 @@ export type ContextMenuRootProps = Omit<
    * Whether the context menu is open forcefully.
    */
   isOpen?: boolean;
-  /**
-   * Whether the item should enable inner input focus.
-   *
-   * @default false
-   */
-  enableInnerInputFocus?: boolean;
-  /**
-   * Whether the context menu should close when focus is lost.
-   *
-   * @default false
-   */
-  enableCloseOnFocusLoss?: boolean;
   /**
    * Called whenever the value of `isMovingTowardActiveMenuRef` changes
    * in the context menu bus.
@@ -118,7 +103,7 @@ export interface ContextMenuContextProps {
    * @remarks
    * This prop is only used for `SubRoot` (submenu) components.
    */
-  setIsSubMenuOpen?: (open: boolean) => void;
+  setIsSubMenuOpen?: (isOpen: boolean) => void;
   /**
    * The id of the trigger.
    *
@@ -129,7 +114,7 @@ export interface ContextMenuContextProps {
   /**
    * The callback function to be called when the menu is opened by keyboard.
    */
-  onOpenByKeyboard: (value: boolean) => void;
+  onOpenByKeyboard: (isOpen: boolean) => void;
   /**
    * Whether the menu is open.
    */
@@ -141,14 +126,14 @@ export interface ContextMenuContextProps {
   /**
    * The callback function to be called when the child menu is opened.
    */
-  onChildOpen: (value: boolean, mode: ContextMenuModeType) => void;
+  onChildOpen: (isOpen: boolean, mode: ContextMenuModeType) => void;
   /**
    * The callback function to be called when the submenu is opened.
    *
    * @remarks
    * This prop is only used for `ContextMenu` (root) components.
    */
-  onSubmenuOpen?: (value: boolean) => void;
+  onSubmenuOpen?: (isOpen: boolean) => void;
   /**
    * Whether the root menu content is blocked.
    *
@@ -192,6 +177,16 @@ export interface ContextMenuContextProps {
    * This prop is only used for `ContextMenu` (root) components.
    */
   setMenuAimDirection?: (direction: MenuAimDirection) => void;
+  /**
+   * Sets the callback for when focus moves outside the menu.
+   * The callback can call preventDefault() to prevent menu closure.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  setOnFocusOutside?: (
+    callback: ((event: FocusChangeEvent) => void) | undefined
+  ) => void;
 }
 
 export interface ContextMenuRootContextProps {
@@ -200,7 +195,7 @@ export interface ContextMenuRootContextProps {
    */
   closeRootMenuImmediately: (closeRootMenu?: boolean) => void;
   /**
-   * Whether the item should enable inner input focus.
+   * Reference to the DOM element containing the menu content.
    */
-  enableInnerInputFocus: boolean;
+  navigationContentRef: React.RefObject<HTMLDivElement>;
 }

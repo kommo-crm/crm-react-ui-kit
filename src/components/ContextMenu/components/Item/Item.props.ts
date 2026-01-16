@@ -27,7 +27,7 @@ export type ItemProps = RadixItemProps & {
   /**
    * Whether the item should close the root menu when selected.
    *
-   * @default false
+   * @default true
    */
   shouldCloseRootMenuOnSelect?: boolean;
 };

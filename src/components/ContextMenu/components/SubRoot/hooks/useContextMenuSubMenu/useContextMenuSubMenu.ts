@@ -54,6 +54,8 @@ export const useContextMenuSubMenu = (
     isAnimatedOpen: parentIsAnimatedOpen,
     onChildOpen,
     onSubRootOpen,
+    isAimingRef: parentIsAimingRef,
+    setActiveItemId,
   } = useLevelContext(displayName);
 
   const { onSubmenuOpen, animationDuration, hoverCloseDelay } =
@@ -201,11 +203,20 @@ export const useContextMenuSubMenu = (
   /**
    * Handles entering the submenu content area.
    * Keeps the submenu open in hover mode by canceling close timers.
+   * Does not open if parent menu is in aiming state (cursor moving toward Sub).
    */
   const handleContentEnter = () => {
     setIsOpenedByKeyboard(false);
 
     if (mode !== ContextMenuMode.HOVER) {
+      return;
+    }
+
+    /**
+     * Don't open SubRoot if parent menu is in aiming state.
+     * This prevents SubRoot from opening when cursor is moving toward Sub.
+     */
+    if (parentIsAimingRef?.current && !open) {
       return;
     }
 
@@ -380,6 +391,14 @@ export const useContextMenuSubMenu = (
   useEffect(() => {
     if (mode === ContextMenuMode.CLICK) {
       onOpen?.(isOpen);
+
+      /**
+       * It is necessary for instant closure of menus located
+       * at the same level as the SubRoot
+       */
+      if (isOpen) {
+        setActiveItemId(triggerId);
+      }
     }
   }, [isOpen, mode]);
 
