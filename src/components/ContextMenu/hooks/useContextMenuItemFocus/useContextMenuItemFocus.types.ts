@@ -56,3 +56,38 @@ export interface UseContextMenuItemFocusOptions<T extends HTMLElement> {
    */
   onPointerMove?: (e: React.PointerEvent<T>) => void;
 }
+
+export interface UseContextMenuItemFocusResult<T extends HTMLElement> {
+  /**
+   * The data-highlighted attribute of the item.
+   */
+  dataHighlighted: string | undefined;
+  /**
+   * The callback function to be called when the item is focused.
+   */
+  onFocus: (e: React.FocusEvent<T>) => void;
+  /**
+   * The callback function to be called when the mouse enters the item.
+   */
+  onMouseEnter: (e: React.MouseEvent<T>) => void;
+  /**
+   * The callback function to be called when the item is blurred.
+   */
+  onBlur: (e: React.FocusEvent<T>) => void;
+  /**
+   * The callback function to be called when the mouse leaves the item.
+   */
+  onMouseLeave: (e: React.MouseEvent<T>) => void;
+  /**
+   * The callback function to be called when the item is pointer entered.
+   */
+  onPointerEnter: (e: React.PointerEvent<T>) => void;
+  /**
+   * The callback function to be called when the item is pointer left.
+   */
+  onPointerLeave: (e: React.PointerEvent<T>) => void;
+  /**
+   * The callback function to be called when the item is pointer moved.
+   */
+  onPointerMove: (e: React.PointerEvent<T>) => void;
+}

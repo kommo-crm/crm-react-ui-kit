@@ -1,8 +1,4 @@
-.trigger {
-  z-index: 6;
-  cursor: pointer;
-
-  &.open {
-    z-index: 8;
-  }
+/* It is necessary that in hover mode the trigger is above the focus blocker after opening */
+.trigger.open {
+  z-index: 2;
 }

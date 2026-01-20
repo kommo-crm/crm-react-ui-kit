@@ -1,14 +1,14 @@
-import { MenuAimDirection } from '../../hooks/useMenuAim/useMenuAim.types';
+import { MenuAimDirection } from '@kommo-crm/react-hooks';
 
 import { Direction } from './Content.enums';
 
 export const directionToSide: Record<Direction, MenuAimDirection> = {
-  [Direction.UP_LEFT]: MenuAimDirection.TOP,
-  [Direction.UP_RIGHT]: MenuAimDirection.TOP,
-  [Direction.DOWN_LEFT]: MenuAimDirection.BOTTOM,
-  [Direction.DOWN_RIGHT]: MenuAimDirection.BOTTOM,
-  [Direction.LEFT_UP]: MenuAimDirection.LEFT,
-  [Direction.LEFT_DOWN]: MenuAimDirection.LEFT,
-  [Direction.RIGHT_UP]: MenuAimDirection.RIGHT,
-  [Direction.RIGHT_DOWN]: MenuAimDirection.RIGHT,
+  [Direction.UP_LEFT]: 'top' as MenuAimDirection,
+  [Direction.UP_RIGHT]: 'top' as MenuAimDirection,
+  [Direction.DOWN_LEFT]: 'bottom' as MenuAimDirection,
+  [Direction.DOWN_RIGHT]: 'bottom' as MenuAimDirection,
+  [Direction.LEFT_UP]: 'left' as MenuAimDirection,
+  [Direction.LEFT_DOWN]: 'left' as MenuAimDirection,
+  [Direction.RIGHT_UP]: 'right' as MenuAimDirection,
+  [Direction.RIGHT_DOWN]: 'right' as MenuAimDirection,
 };

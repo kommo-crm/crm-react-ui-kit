@@ -4,7 +4,10 @@ import { KeyboardKey } from 'src/lib/keyboard';
 
 import { focusFirstFocusableItem } from '../../utils';
 
-import { UseContextMenuKeyboardNavigationOptions } from './useContextMenuKeyboardNavigation.types';
+import {
+  UseContextMenuKeyboardNavigationOptions,
+  UseContextMenuKeyboardNavigationResult,
+} from './useContextMenuKeyboardNavigation.types';
 
 /**
  * Finds the deepest open menu container and focuses its first item.
@@ -143,7 +146,7 @@ const isFocusInsideMenu = (
  */
 export const useContextMenuKeyboardNavigation = (
   options: UseContextMenuKeyboardNavigationOptions
-) => {
+): UseContextMenuKeyboardNavigationResult => {
   const navigationContentRef = useRef<HTMLDivElement>(null);
 
   const { isOpen, isAnimatedOpen } = options;

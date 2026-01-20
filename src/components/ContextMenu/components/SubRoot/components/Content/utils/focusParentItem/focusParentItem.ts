@@ -1,4 +1,4 @@
-export const focusParentItem = (el: HTMLElement | null) => {
+export const focusParentItem = (el: HTMLElement | null): void => {
   let current = el?.parentElement;
 
   while (current) {

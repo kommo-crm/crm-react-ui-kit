@@ -11,13 +11,13 @@ import {
  * implementation stops working in this scenario.
  */
 let listeners: ContextMenuBusCallback[] = [];
-let isAimingRef: React.MutableRefObject<boolean> | null = null;
+let isAimingRef: React.RefObject<boolean> | null = null;
 let activeMenuId: string | null = null;
 
 /**
  * Emits a payload to the context menu bus.
  */
-const emit = (payload: ContextMenuBusPayload) => {
+const emit = (payload: ContextMenuBusPayload): void => {
   listeners.forEach((cb) => cb(payload));
 
   isAimingRef = payload.isAimingRef;
@@ -27,7 +27,7 @@ const emit = (payload: ContextMenuBusPayload) => {
 /**
  * Subscribes to the context menu bus.
  */
-const subscribe = (cb: ContextMenuBusCallback) => {
+const subscribe = (cb: ContextMenuBusCallback): (() => void) => {
   listeners.push(cb);
 
   return () => {

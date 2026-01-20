@@ -1,3 +1,5 @@
+import { RefObject } from 'react';
+
 export interface UseContextMenuKeyboardNavigationOptions {
   /**
    * Whether the menu is open.
@@ -7,4 +9,11 @@ export interface UseContextMenuKeyboardNavigationOptions {
    * Whether the menu is animated open (for hover mode).
    */
   isAnimatedOpen: boolean;
+}
+
+export interface UseContextMenuKeyboardNavigationResult {
+  /**
+   * The ref to the content of the context menu.
+   */
+  navigationContentRef: RefObject<HTMLDivElement>;
 }

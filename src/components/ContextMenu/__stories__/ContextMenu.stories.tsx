@@ -19,11 +19,7 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
-import {
-  Button,
-  ButtonNeutralTheme,
-  type ButtonThemeType,
-} from 'src/components/Button';
+import { Button, ButtonNeutralTheme } from 'src/components/Button';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContentProps } from '../components/Content/Content.props';
@@ -33,11 +29,6 @@ import { ContextMenuModeType } from '../ContextMenu.types';
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
   '--crm-ui-kit-text-color': 'inherit',
-};
-
-const ButtonContextMenuTheme: ButtonThemeType = {
-  ...ButtonNeutralTheme,
-  '--crm-ui-kit-button-z-index': '100',
 };
 
 const USAGE = `
@@ -591,7 +582,7 @@ export const Modes: Story = {
           subMode={ContextMenuMode.CLICK}
           subMenuMode={ContextMenuMode.CLICK}
           button={
-            <Button theme={ButtonContextMenuTheme}>{i18n.t('Click me')}</Button>
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Click me')}</Button>
           }
           isTriggerAsChild
         />
@@ -602,7 +593,7 @@ export const Modes: Story = {
           subMode={ContextMenuMode.HOVER}
           subMenuMode={ContextMenuMode.HOVER}
           button={
-            <Button theme={ButtonContextMenuTheme}>{i18n.t('Hover me')}</Button>
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me')}</Button>
           }
           isTriggerAsChild
         />
@@ -670,10 +661,7 @@ export const Directions: Story = {
               {...args}
               direction={dir}
               button={
-                <Button
-                  theme={ButtonContextMenuTheme}
-                  style={{ width: '100px' }}
-                >
+                <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
                   {dir}
                 </Button>
               }
@@ -708,10 +696,7 @@ export const Directions: Story = {
                 {...args}
                 direction={dir}
                 button={
-                  <Button
-                    theme={ButtonContextMenuTheme}
-                    style={{ width: '100px' }}
-                  >
+                  <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
                     {dir}
                   </Button>
                 }
@@ -778,7 +763,7 @@ export const VerticalMenu: Story = {
             direction={direction}
             button={
               <Button
-                theme={ButtonContextMenuTheme}
+                theme={ButtonNeutralTheme}
                 style={{ width: '100px', marginLeft: '0px' }}
               >
                 {index + 1}

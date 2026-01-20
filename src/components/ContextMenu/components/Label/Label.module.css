@@ -7,7 +7,3 @@
   color: var(--crm-ui-kit-palette-text-primary);
   background-color: var(--crm-ui-kit-palette-background-primary);
 }
-
-.label > :not(:last-child) {
-  margin-right: 8px;
-}

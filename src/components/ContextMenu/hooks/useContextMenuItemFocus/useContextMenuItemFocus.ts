@@ -1,10 +1,13 @@
 import { useLayoutEffect, useState } from 'react';
 
+import { useOnOutsideMouseMove } from '@kommo-crm/react-hooks';
+
 import { useLevelContext } from '../../providers/LevelProvider';
 
-import { useMouseMoveOutside } from '..';
-
-import { UseContextMenuItemFocusOptions } from './useContextMenuItemFocus.types';
+import {
+  UseContextMenuItemFocusOptions,
+  UseContextMenuItemFocusResult,
+} from './useContextMenuItemFocus.types';
 
 /**
  * Hook for managing focus and highlight state of context menu items.
@@ -25,7 +28,7 @@ import { UseContextMenuItemFocusOptions } from './useContextMenuItemFocus.types'
  */
 export const useContextMenuItemFocus = <T extends HTMLElement>(
   options: UseContextMenuItemFocusOptions<T>
-) => {
+): UseContextMenuItemFocusResult<T> => {
   const {
     displayName,
     id,
@@ -48,7 +51,7 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
   const { setActiveItemId, activeItemId, isAimingRef } =
     useLevelContext(displayName);
 
-  useMouseMoveOutside(ref, () => {
+  useOnOutsideMouseMove(ref, () => {
     setIsFocused(false);
   });
 

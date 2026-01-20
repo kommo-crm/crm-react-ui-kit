@@ -17,6 +17,8 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { SubContentProps } from './SubContent.props';
 
+import { PointerDownOutsideEvent } from './SubContent.types';
+
 import s from './SubContent.module.css';
 
 const DISPLAY_NAME = 'ContextMenu.SubContent';
@@ -36,6 +38,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
     onMouseLeave,
     onMouseMove,
     onEscapeKeyDown,
+    onPointerDownOutside,
 
     ...rest
   } = props;
@@ -59,6 +62,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
     itemWithFocusedInput,
     setItemWithFocusedInput,
     isAimingContentRef,
+    onPointerDownOutside: onSubPointerDownOutside,
   } = useContextMenuSubContext(DISPLAY_NAME);
 
   const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
@@ -117,6 +121,14 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
     onEscapeKeyDown?.(e);
   };
 
+  const handlePointerDownOutside = (e: PointerDownOutsideEvent) => {
+    e.preventDefault();
+
+    onSubPointerDownOutside?.(e);
+
+    onPointerDownOutside?.(e);
+  };
+
   return (
     <LevelProvider
       activeItemId={activeItemId}
@@ -150,6 +162,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
             collisionPadding={collisionPadding}
             alignOffset={offset}
             onEscapeKeyDown={handleEscapeKeyDown}
+            onPointerDownOutside={handlePointerDownOutside}
             data-menu-level={level + 1}
             {...rest}
           >

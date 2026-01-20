@@ -2,7 +2,10 @@ import { useLayoutEffect, useRef, useState } from 'react';
 
 import { Direction } from '../../components/Content';
 
-import { UseContentPositioningOptions } from './useContentPositioning.types';
+import {
+  UseContentPositioningOptions,
+  UseContentPositioningResult,
+} from './useContentPositioning.types';
 
 /**
  * A hook for smart positioning relative to the trigger and the first
@@ -10,7 +13,7 @@ import { UseContentPositioningOptions } from './useContentPositioning.types';
  */
 export const useContentPositioning = (
   options: UseContentPositioningOptions
-) => {
+): UseContentPositioningResult => {
   const {
     direction,
     alignOffset = 0,

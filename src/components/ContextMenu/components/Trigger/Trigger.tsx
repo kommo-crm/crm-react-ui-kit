@@ -14,8 +14,6 @@ import { focusFirstFocusableItem } from '../../utils';
 
 import type { TriggerProps } from './Trigger.props';
 
-import s from './Trigger.module.css';
-
 const DISPLAY_NAME = 'ContextMenu.Trigger';
 
 type El = HTMLButtonElement;
@@ -127,7 +125,7 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
   return (
     <RadixDropdownMenuTrigger
       ref={mergeRefs(triggerRef, ref)}
-      className={cx(className, s.trigger)}
+      className={cx(className)}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onKeyDown={handleKeyDown}

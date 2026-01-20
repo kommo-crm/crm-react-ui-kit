@@ -8,6 +8,7 @@
   cursor: pointer;
   user-select: none;
   outline: none;
+  text-decoration: none;
 
   &[data-highlighted] {
     background-color: var(--crm-ui-kit-palette-background-default);
@@ -26,8 +27,4 @@
     color: var(--crm-ui-kit-palette-text-secondary-light);
     cursor: auto;
   }
-}
-
-.item > :not(:last-child) {
-  margin-right: 8px;
 }

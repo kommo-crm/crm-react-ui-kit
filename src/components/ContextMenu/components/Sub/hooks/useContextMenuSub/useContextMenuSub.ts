@@ -1,19 +1,27 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
-import { useClickOutside } from '../useClickOutside/useClickOutside';
+import {
+  MenuAimDirection,
+  useIsTouchDevice,
+  useMenuAim,
+} from '@kommo-crm/react-hooks';
 
-import { useIsTouchDevice, useMenuAim } from '../../../../hooks';
 import { ContextMenuMode } from '../../../../ContextMenu.enums';
 import { useContextMenuContext } from '../../../../ContextMenu.context';
 import { useLevelContext } from '../../../../providers/LevelProvider';
 
-import { MenuAimDirection } from '../../../../hooks/useMenuAim/useMenuAim.types';
-
 import { ContextMenuModeType } from '../../../../ContextMenu.types';
 
-import { UseContextMenuSubOptions } from './useContextMenuSub.types';
+import { PointerDownOutsideEvent } from '../../../SubContent/SubContent.types';
 
-export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
+import {
+  UseContextMenuSubOptions,
+  UseContextMenuSubResult,
+} from './useContextMenuSub.types';
+
+export const useContextMenuSub = (
+  options: UseContextMenuSubOptions
+): UseContextMenuSubResult => {
   const {
     displayName,
     mode: initialMode,
@@ -70,7 +78,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
    * Direction for menu aim, determined from Radix's data-side attribute.
    */
   const [menuAimDirection, setMenuAimDirection] = useState<MenuAimDirection>(
-    MenuAimDirection.RIGHT
+    'right' as MenuAimDirection
   );
 
   const { isAimingRef, contentRef } = useMenuAim<HTMLDivElement>({
@@ -419,8 +427,13 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   /**
    * Handles the click outside event.
    */
-  const handleClickOutside = () => {
-    if (!isSubRootOpen) {
+  const handlePointerDownOutside = (e: PointerDownOutsideEvent) => {
+    const isClickOnTrigger =
+      triggerRef.current &&
+      e.target instanceof Node &&
+      triggerRef.current.contains(e.target);
+
+    if (!isSubRootOpen && !isClickOnTrigger) {
       handleCloseImmediate();
     }
   };
@@ -525,14 +538,6 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
   }, [isOpen]);
 
   /**
-   * Handles the click outside event.
-   */
-  useClickOutside({
-    refs: [contentRef, triggerRef],
-    handler: handleClickOutside,
-  });
-
-  /**
    * Closes the submenu when the parent menu is closed.
    *
    * It is necessary for the case when the click disappeared from the child,
@@ -558,6 +563,7 @@ export const useContextMenuSub = (options: UseContextMenuSubOptions) => {
     handleContentEnter,
     handleContentLeave,
     handleOpenChange,
+    handlePointerDownOutside,
     onOpenByKeyboard,
     triggerId,
     contentRef,

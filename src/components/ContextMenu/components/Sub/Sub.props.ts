@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { Sub as RadixDropdownMenuSub } from '@radix-ui/react-dropdown-menu';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
+import { PointerDownOutsideEvent } from '../SubContent/SubContent.types';
 
 export type SubProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuSub>,
@@ -122,5 +123,9 @@ export interface ContextMenuSubContextProps {
   /**
    * Ref containing whether the cursor is currently moving toward the submenu.
    */
-  isAimingContentRef: React.MutableRefObject<boolean>;
+  isAimingContentRef: React.RefObject<boolean | null>;
+  /**
+   * The callback function to be called when the pointer down outside event occurs.
+   */
+  onPointerDownOutside: (e: PointerDownOutsideEvent) => void;
 }

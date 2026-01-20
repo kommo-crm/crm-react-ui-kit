@@ -51,5 +51,5 @@ export interface LevelProviderContextProps {
   /**
    * Whether the menu is aiming at the menu.
    */
-  isAimingRef: React.MutableRefObject<boolean>;
+  isAimingRef: React.RefObject<boolean | null>;
 }

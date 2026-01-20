@@ -1,10 +1,12 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
+import {
+  useIsTouchDevice,
+  useMenuAim,
+  MenuAimDirection,
+} from '@kommo-crm/react-hooks';
+
 import { useFocusChange, FocusChangeEvent } from 'src/hooks';
-
-import { useIsTouchDevice, useMenuAim } from '..';
-
-import { MenuAimDirection } from '../useMenuAim/useMenuAim.types';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
@@ -12,13 +14,18 @@ import { ContextMenuModeType } from '../../ContextMenu.types';
 
 import { contextMenuBus } from './utils';
 
-import { UseContextMenuOptions } from './useContextMenu.types';
+import {
+  UseContextMenuOptions,
+  UseContextMenuResult,
+} from './useContextMenu.types';
 
 /**
  * The hook is necessary to manage the open state of the context menu and
  * the related events.
  */
-export const useContextMenu = (options: UseContextMenuOptions) => {
+export const useContextMenu = (
+  options: UseContextMenuOptions
+): UseContextMenuResult => {
   const {
     mode: rootMode,
     defaultOpen,
@@ -72,7 +79,7 @@ export const useContextMenu = (options: UseContextMenuOptions) => {
    * Direction for menu aim, determined from Radix's data-side attribute.
    */
   const [menuAimDirection, setMenuAimDirection] = useState<MenuAimDirection>(
-    MenuAimDirection.RIGHT
+    'right' as MenuAimDirection
   );
 
   const { isAimingRef, contentRef } = useMenuAim<HTMLDivElement>({

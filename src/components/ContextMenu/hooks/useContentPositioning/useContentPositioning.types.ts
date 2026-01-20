@@ -38,3 +38,18 @@ export interface UseContentPositioningOptions {
    */
   isSubContent?: boolean;
 }
+
+export interface UseContentPositioningResult {
+  /**
+   * The alignment of the content.
+   */
+  align: 'start' | 'end';
+  /**
+   * The offset of the content.
+   */
+  offset: number;
+  /**
+   * Whether the content is positioned.
+   */
+  isPositioned: boolean;
+}

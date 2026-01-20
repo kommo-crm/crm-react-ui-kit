@@ -4,7 +4,10 @@ import { useInnerFocusTracker } from '../useInnerFocusTracker/useInnerFocusTrack
 
 import { useLevelContext } from '../../providers';
 
-import { UseItemInnerFocusOptions } from './useItemInnerFocus.types';
+import {
+  UseItemInnerFocusOptions,
+  UseItemInnerFocusResult,
+} from './useItemInnerFocus.types';
 
 /**
  * Hook for managing focus behavior when context menu items contain
@@ -21,7 +24,9 @@ import { UseItemInnerFocusOptions } from './useItemInnerFocus.types';
  * - Registers the focused item globally so other items can show a blocker
  * - Renders a focus blocker over other items when one item has a focused input
  */
-export const useItemInnerFocus = (options: UseItemInnerFocusOptions) => {
+export const useItemInnerFocus = (
+  options: UseItemInnerFocusOptions
+): UseItemInnerFocusResult => {
   const { id, isSelectable: isItemSelectable, displayName } = options;
 
   const { itemWithFocusedInput, setItemWithFocusedInput } =

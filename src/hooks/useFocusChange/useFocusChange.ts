@@ -55,7 +55,7 @@ const isFocusInsideElements = (
  * This hook monitors focus events globally and determines whether
  * the focused element is inside or outside the provided elements.
  */
-export const useFocusChange = (options: UseFocusChangeOptions) => {
+export const useFocusChange = (options: UseFocusChangeOptions): void => {
   const {
     onFocusOutside,
     onFocusInside,

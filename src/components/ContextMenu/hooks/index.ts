@@ -1,11 +1,7 @@
 export { useContextMenu } from './useContextMenu/useContextMenu';
 export { useContentPositioning } from './useContentPositioning/useContentPositioning';
-export { useIsTouchDevice } from './useIsTouchDevice/useIsTouchDevice';
 export { useSubMenu } from './useSubMenu/useSubMenu';
 export { useItemInnerFocus } from './useItemInnerFocus/useItemInnerFocus';
-export { usePrevious } from './usePrevious/usePrevious';
 export { useContextMenuItemFocus } from './useContextMenuItemFocus/useContextMenuItemFocus';
 export { useInnerFocusTracker } from './useInnerFocusTracker/useInnerFocusTracker';
 export { useContextMenuKeyboardNavigation } from './useContextMenuKeyboardNavigation/useContextMenuKeyboardNavigation';
-export { useMouseMoveOutside } from './useMouseMoveOutside/useMouseMoveOutside';
-export { useMenuAim } from './useMenuAim';

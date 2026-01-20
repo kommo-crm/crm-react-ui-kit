@@ -1,8 +1,8 @@
 import { type DropdownMenuProps as RadixDropdownMenuRootProps } from '@radix-ui/react-dropdown-menu';
 
-import type { FocusChangeEvent } from 'src/hooks';
+import { MenuAimDirection } from '@kommo-crm/react-hooks';
 
-import { MenuAimDirection } from './hooks/useMenuAim';
+import type { FocusChangeEvent } from 'src/hooks';
 
 import { ContextMenuModeType } from './ContextMenu.types';
 

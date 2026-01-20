@@ -5,7 +5,7 @@ import { KeyboardKey } from 'src/lib/keyboard';
 
 import { SubMenuProvider } from '../../providers';
 
-import { UseSubMenuOptions } from './useSubMenu.types';
+import { UseSubMenuOptions, UseSubMenuResult } from './useSubMenu.types';
 
 /**
  * This hook is necessary for correct keyboard navigation
@@ -13,38 +13,7 @@ import { UseSubMenuOptions } from './useSubMenu.types';
  *
  * Provides the necessary context for the SubRoot.
  */
-export const useSubMenu = (
-  options: UseSubMenuOptions
-): {
-  /**
-   * Reference to the item that has a submenu.
-   */
-  itemRef: React.RefObject<HTMLDivElement>;
-  /**
-   * Whether the item has a submenu.
-   */
-  hasSubmenu: boolean;
-  /**
-   * Whether the submenu is open.
-   */
-  isSubMenuOpen: boolean;
-  /**
-   * The callback function to be called when the submenu is opened.
-   */
-  setIsSubMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  /**
-   * Handles the opening of the submenu by keyboard.
-   */
-  handleSubMenuOpenByKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
-  /**
-   * The callback function to be called when the children are rendered.
-   */
-  withProvider: (children: React.ReactNode) => React.JSX.Element;
-  /**
-   * The id of the submenu trigger.
-   */
-  subMenuTriggerId: string | undefined;
-} => {
+export const useSubMenu = (options: UseSubMenuOptions): UseSubMenuResult => {
   const { children: itemChildren } = options;
 
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);

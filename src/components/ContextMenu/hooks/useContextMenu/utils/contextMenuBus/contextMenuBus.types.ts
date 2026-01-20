@@ -10,7 +10,7 @@ export type ContextMenuBusPayload = {
   /**
    * Ref tracking whether the cursor is moving toward the active menu.
    */
-  isAimingRef: React.MutableRefObject<boolean>;
+  isAimingRef: React.RefObject<boolean>;
 };
 
 /**
