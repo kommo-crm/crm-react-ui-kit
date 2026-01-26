@@ -82,9 +82,10 @@ export const useContextMenu = (
     'right' as MenuAimDirection
   );
 
-  const { isAimingRef, contentRef } = useMenuAim<HTMLDivElement>({
+  const { isAiming, contentRef } = useMenuAim<HTMLDivElement>({
     direction: menuAimDirection,
-    enabled: isOpen && mode === ContextMenuMode.HOVER,
+    isEnabled: isOpen && mode === ContextMenuMode.HOVER,
+    handler: onAiming,
   });
 
   /**
@@ -170,7 +171,7 @@ export const useContextMenu = (
           /**
            * Check if still moving toward menu
            */
-          if (isAimingRef.current) {
+          if (isAiming()) {
             /**
              * Still moving toward menu, keep delaying close
              */
@@ -257,7 +258,7 @@ export const useContextMenu = (
         if (isOpenForcefully !== false) {
           contextMenuBus.emit({
             id,
-            isAimingRef: isAimingRef,
+            isAiming,
           });
         }
       }, 0);
@@ -281,8 +282,7 @@ export const useContextMenu = (
   const handleContentEnter = () => {
     if (
       mode !== ContextMenuMode.HOVER ||
-      (contextMenuBus.isAimingRef?.current &&
-        contextMenuBus.activeMenuId !== id)
+      (contextMenuBus.isAiming?.() && contextMenuBus.activeMenuId !== id)
     ) {
       return;
     }
@@ -315,7 +315,7 @@ export const useContextMenu = (
         if (isOpenForcefully !== false) {
           contextMenuBus.emit({
             id,
-            isAimingRef: isAimingRef,
+            isAiming,
           });
         }
       }, 0);
@@ -359,7 +359,7 @@ export const useContextMenu = (
         /**
          * Check if still moving toward menu
          */
-        if (isAimingRef.current) {
+        if (isAiming()) {
           /**
            * Still moving toward menu, keep delaying close
            */
@@ -534,13 +534,6 @@ export const useContextMenu = (
       }
     },
   });
-
-  /**
-   * Handles the aiming state change.
-   */
-  useEffect(() => {
-    onAiming?.(isAimingRef.current);
-  }, [isAimingRef.current, onAiming]);
 
   /**
    * Checks if focus restoration should be prevented.

@@ -54,7 +54,8 @@ export const useContextMenuSubMenu = (
     isAnimatedOpen: parentIsAnimatedOpen,
     onChildOpen,
     onSubRootOpen,
-    isAimingRef: parentIsAimingRef,
+    isAiming: parentIsAiming,
+    isChildAiming: parentIsChildAiming,
     setActiveItemId,
   } = useLevelContext(displayName);
 
@@ -215,8 +216,9 @@ export const useContextMenuSubMenu = (
     /**
      * Don't open SubRoot if parent menu is in aiming state.
      * This prevents SubRoot from opening when cursor is moving toward Sub.
+     * Also check isChildAiming to prevent opening when aiming at another child.
      */
-    if (parentIsAimingRef?.current && !open) {
+    if ((parentIsAiming?.() || parentIsChildAiming?.()) && !open) {
       return;
     }
 

@@ -8,9 +8,9 @@ export type ContextMenuBusPayload = {
    */
   id: string;
   /**
-   * Ref tracking whether the cursor is moving toward the active menu.
+   * Function that returns whether the cursor is moving toward the active menu.
    */
-  isAimingRef: React.RefObject<boolean>;
+  isAiming: () => boolean;
 };
 
 /**

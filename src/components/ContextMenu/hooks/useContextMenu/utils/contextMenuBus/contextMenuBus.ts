@@ -11,7 +11,7 @@ import {
  * implementation stops working in this scenario.
  */
 let listeners: ContextMenuBusCallback[] = [];
-let isAimingRef: React.RefObject<boolean> | null = null;
+let isAiming: (() => boolean) | null = null;
 let activeMenuId: string | null = null;
 
 /**
@@ -20,7 +20,7 @@ let activeMenuId: string | null = null;
 const emit = (payload: ContextMenuBusPayload): void => {
   listeners.forEach((cb) => cb(payload));
 
-  isAimingRef = payload.isAimingRef;
+  isAiming = payload.isAiming;
   activeMenuId = payload.id;
 };
 
@@ -38,8 +38,8 @@ const subscribe = (cb: ContextMenuBusCallback): (() => void) => {
 export const contextMenuBus = {
   emit,
   subscribe,
-  get isAimingRef() {
-    return isAimingRef;
+  get isAiming() {
+    return isAiming;
   },
   get activeMenuId() {
     return activeMenuId;

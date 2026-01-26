@@ -35,7 +35,8 @@ export const useContextMenuSub = (
     onChildOpen,
     onSubRootOpen,
     isAnimatedOpen: parentIsAnimatedOpen,
-    isAimingRef: isAimingContextRef,
+    onChildAiming: parentOnChildAiming,
+    isChildAiming: parentIsChildAiming,
   } = useLevelContext(displayName);
 
   const triggerId = useId();
@@ -81,10 +82,19 @@ export const useContextMenuSub = (
     'right' as MenuAimDirection
   );
 
-  const { isAimingRef, contentRef } = useMenuAim<HTMLDivElement>({
+  /**
+   * Handler that notifies both the consumer (onAiming) and the parent level
+   * (parentOnChildAiming) when aiming state changes.
+   */
+  const handleAimingChange = (aiming: boolean) => {
+    onAiming?.(aiming);
+    parentOnChildAiming?.(aiming);
+  };
+
+  const { isAiming, contentRef } = useMenuAim<HTMLDivElement>({
     direction: menuAimDirection,
-    enabled: isOpen && mode === ContextMenuMode.HOVER,
-    externalAimingRef: isAimingContextRef || undefined,
+    isEnabled: isOpen && mode === ContextMenuMode.HOVER,
+    handler: handleAimingChange,
   });
 
   /**
@@ -233,7 +243,7 @@ export const useContextMenuSub = (
           /**
            * Check if still moving toward menu
            */
-          if (isAimingRef.current) {
+          if (isAiming()) {
             /**
              * Still moving toward menu, keep delaying close
              */
@@ -314,11 +324,19 @@ export const useContextMenuSub = (
   /**
    * Handles entering the submenu content area.
    * Keeps the submenu open in hover mode by canceling close timers.
+   * Does not open if parent is aiming at another child submenu.
    */
   const handleContentEnter = () => {
+    /**
+     * Don't open if:
+     * - Not in hover mode
+     * - Current submenu is being aimed at (and it's not this trigger)
+     * - Parent is aiming at another child (prevents opening new submenu while aiming)
+     */
     if (
       mode !== ContextMenuMode.HOVER ||
-      (isAimingRef.current && activeItemId !== triggerId)
+      (isAiming() && activeItemId !== triggerId) ||
+      (parentIsChildAiming?.() && !isOpen)
     ) {
       return;
     }
@@ -387,7 +405,7 @@ export const useContextMenuSub = (
         /**
          * Check if still moving toward menu
          */
-        if (isAimingRef.current) {
+        if (isAiming()) {
           /**
            * Still moving toward menu, keep delaying close
            */
@@ -549,13 +567,6 @@ export const useContextMenuSub = (
     }
   }, [parentIsAnimatedOpen]);
 
-  /**
-   * Handles the aiming state change.
-   */
-  useEffect(() => {
-    onAiming?.(isAimingRef.current);
-  }, [isAimingRef.current, onAiming]);
-
   return {
     isOpen,
     setIsOpen,
@@ -573,6 +584,6 @@ export const useContextMenuSub = (
     closeMenuImmediately: handleCloseImmediate,
     itemWithFocusedInput,
     setItemWithFocusedInput,
-    isAimingContentRef: isAimingRef,
+    isAiming,
   };
 };

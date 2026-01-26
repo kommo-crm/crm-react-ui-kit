@@ -98,7 +98,7 @@ export interface UseContextMenuSubResult {
    */
   setItemWithFocusedInput: (itemWithFocusedInput: string | null) => void;
   /**
-   * Ref containing whether the cursor is currently moving toward the submenu.
+   * Returns whether the cursor is currently moving toward the submenu.
    */
-  isAimingContentRef: RefObject<boolean | null>;
+  isAiming: () => boolean;
 }

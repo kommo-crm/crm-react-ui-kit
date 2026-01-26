@@ -121,9 +121,9 @@ export interface ContextMenuSubContextProps {
    */
   itemWithFocusedInput: string | null;
   /**
-   * Ref containing whether the cursor is currently moving toward the submenu.
+   * Returns whether the cursor is currently moving toward the submenu.
    */
-  isAimingContentRef: React.RefObject<boolean | null>;
+  isAiming: () => boolean;
   /**
    * The callback function to be called when the pointer down outside event occurs.
    */

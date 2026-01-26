@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropdown-menu';
 import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
@@ -45,6 +45,16 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
 
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
+  /**
+   * Tracks if any child submenu is being aimed at.
+   */
+  const isChildAimingRef = useRef(false);
+  const isChildAiming = () => isChildAimingRef.current;
+
+  const onChildAiming = (aiming: boolean) => {
+    isChildAimingRef.current = aiming;
+  };
+
   const {
     isAnimatedOpen,
     mode,
@@ -61,7 +71,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
     closeMenuImmediately,
     itemWithFocusedInput,
     setItemWithFocusedInput,
-    isAimingContentRef,
+    isAiming,
     onPointerDownOutside: onSubPointerDownOutside,
   } = useContextMenuSubContext(DISPLAY_NAME);
 
@@ -141,7 +151,9 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
       isAnimatedOpen={isAnimatedOpen}
       itemWithFocusedInput={itemWithFocusedInput}
       setItemWithFocusedInput={setItemWithFocusedInput}
-      isAimingRef={isAimingContentRef}
+      isAiming={isAiming}
+      isChildAiming={isChildAiming}
+      onChildAiming={onChildAiming}
       level={level + 1}
     >
       {isOpen && (

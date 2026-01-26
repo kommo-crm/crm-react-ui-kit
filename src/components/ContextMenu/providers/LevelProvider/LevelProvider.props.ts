@@ -49,7 +49,15 @@ export interface LevelProviderContextProps {
    */
   itemWithFocusedInput: string | null;
   /**
-   * Whether the menu is aiming at the menu.
+   * Returns whether the cursor is moving toward the menu.
    */
-  isAimingRef: React.RefObject<boolean | null>;
+  isAiming: () => boolean;
+  /**
+   * Called when a child submenu's aiming state changes.
+   */
+  onChildAiming?: (isAiming: boolean) => void;
+  /**
+   * Returns whether any child submenu is being aimed at.
+   */
+  isChildAiming?: () => boolean;
 }

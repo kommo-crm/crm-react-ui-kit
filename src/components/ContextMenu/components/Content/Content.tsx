@@ -79,7 +79,20 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
 
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
 
-  const isAimingRef = useRef<boolean>(false);
+  /**
+   * Root level doesn't have menu aim tracking, always returns false.
+   */
+  const isAiming = () => false;
+
+  /**
+   * Tracks if any child submenu is being aimed at.
+   */
+  const isChildAimingRef = useRef(false);
+  const isChildAiming = () => isChildAimingRef.current;
+
+  const onChildAiming = (aiming: boolean) => {
+    isChildAimingRef.current = aiming;
+  };
 
   const {
     triggerRef,
@@ -233,7 +246,9 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
       isAnimatedOpen={isAnimatedOpen}
       itemWithFocusedInput={itemWithFocusedInput}
       setItemWithFocusedInput={setItemWithFocusedInput}
-      isAimingRef={isAimingRef}
+      isAiming={isAiming}
+      isChildAiming={isChildAiming}
+      onChildAiming={onChildAiming}
       level={1}
     >
       {isOpen && (

@@ -48,11 +48,14 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const { setActiveItemId, activeItemId, isAimingRef } =
+  const { setActiveItemId, activeItemId, isAiming, isChildAiming } =
     useLevelContext(displayName);
 
-  useOnOutsideMouseMove(ref, () => {
-    setIsFocused(false);
+  useOnOutsideMouseMove({
+    ref,
+    handler: () => {
+      setIsFocused(false);
+    },
   });
 
   useLayoutEffect(() => {
@@ -72,7 +75,9 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     dataHighlighted: isFocused && isSelectable && !isDisabled ? '' : undefined,
 
     onFocus: (e: React.FocusEvent<T>) => {
-      if (isSelectable && !isDisabled && !isAimingRef.current) {
+      const isAimingActive = isAiming?.() || isChildAiming?.();
+
+      if (isSelectable && !isDisabled && !isAimingActive) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
@@ -81,16 +86,22 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseEnter: (e: React.MouseEvent<T>) => {
-      if (isSelectable && !isDisabled && !isAimingRef.current) {
+      const isAimingActive = isAiming?.() || isChildAiming?.();
+
+      if (isSelectable && !isDisabled && !isAimingActive) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
 
-      onMouseEnter?.(e);
+      if (!isAimingActive) {
+        onMouseEnter?.(e);
+      }
     },
 
     onBlur: (e: React.FocusEvent<T>) => {
-      if (isSelectable && !isDisabled && !isAimingRef.current) {
+      const isAimingActive = isAiming?.() || isChildAiming?.();
+
+      if (isSelectable && !isDisabled && !isAimingActive) {
         setIsFocused(false);
       }
 
@@ -98,11 +109,15 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseLeave: (e: React.MouseEvent<T>) => {
-      if (isSelectable && !isDisabled && !isAimingRef.current) {
+      const isAimingActive = isAiming?.() || isChildAiming?.();
+
+      if (isSelectable && !isDisabled && !isAimingActive) {
         setIsFocused(false);
       }
 
-      onMouseLeave?.(e);
+      if (!isAimingActive) {
+        onMouseLeave?.(e);
+      }
     },
 
     /**
@@ -132,12 +147,16 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     onPointerMove: (e: React.PointerEvent<T>) => {
       e.preventDefault();
 
-      if (isSelectable && !isDisabled && !isAimingRef.current) {
+      const isAimingActive = isAiming?.() || isChildAiming?.();
+
+      if (isSelectable && !isDisabled && !isAimingActive) {
         setActiveItemId(id);
         setIsFocused(!isDisabled);
       }
 
-      onPointerMove?.(e);
+      if (!isAimingActive) {
+        onPointerMove?.(e);
+      }
     },
   };
 };
