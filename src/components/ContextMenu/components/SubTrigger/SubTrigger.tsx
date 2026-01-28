@@ -61,7 +61,6 @@ export const SubTrigger = forwardRef<El, SubTriggerProps>((props, ref) => {
     onPointerMove: handleItemPointerMove,
   } = useContextMenuItemFocus({
     displayName: DISPLAY_NAME,
-    ref: triggerRef,
     id: triggerId,
     isDisabled,
     onMouseEnter: (e) => {

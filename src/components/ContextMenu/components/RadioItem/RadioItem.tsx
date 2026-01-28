@@ -70,7 +70,6 @@ export const RadioItem = forwardRef<El, RadioItemProps>((props, ref) => {
     onPointerMove: handlePointerMove,
   } = useContextMenuItemFocus({
     displayName: DISPLAY_NAME,
-    ref: itemRef,
     id,
     isDisabled,
     hasSubmenu,

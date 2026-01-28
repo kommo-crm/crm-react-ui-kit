@@ -70,7 +70,6 @@ export const CheckboxItem = forwardRef<El, CheckboxItemProps>((props, ref) => {
     onPointerMove: handlePointerMove,
   } = useContextMenuItemFocus({
     displayName: DISPLAY_NAME,
-    ref: itemRef,
     id,
     isDisabled,
     hasSubmenu,

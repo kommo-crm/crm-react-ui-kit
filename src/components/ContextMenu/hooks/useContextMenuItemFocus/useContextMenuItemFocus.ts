@@ -1,7 +1,5 @@
 import { useLayoutEffect, useState } from 'react';
 
-import { useOnOutsideMouseMove } from '@kommo-crm/react-hooks';
-
 import { useLevelContext } from '../../providers/LevelProvider';
 
 import {
@@ -32,7 +30,6 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
   const {
     displayName,
     id,
-    ref,
     isDisabled,
     hasSubmenu,
     onMouseEnter,
@@ -50,13 +47,6 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
 
   const { setActiveItemId, activeItemId, isAiming, isChildAiming } =
     useLevelContext(displayName);
-
-  useOnOutsideMouseMove({
-    ref,
-    handler: () => {
-      setIsFocused(false);
-    },
-  });
 
   useLayoutEffect(() => {
     if (hasSubmenu) {

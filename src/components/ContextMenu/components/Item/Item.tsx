@@ -83,7 +83,6 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     onPointerMove: handlePointerMove,
   } = useContextMenuItemFocus({
     displayName: DISPLAY_NAME,
-    ref: itemRef,
     id,
     isDisabled,
     hasSubmenu,

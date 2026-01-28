@@ -68,7 +68,6 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     onSubmenuOpen,
     setItemWithFocusedInput,
     shouldPreventFocusRestore,
-    setMenuAimDirection,
     setOnFocusOutside,
   } = useContextMenu({
     mode: mode as ContextMenuMode,
@@ -111,7 +110,6 @@ const ContextMenu = (props: ContextMenuRootProps) => {
         itemWithFocusedInput={itemWithFocusedInput}
         setItemWithFocusedInput={setItemWithFocusedInput}
         shouldPreventFocusRestore={shouldPreventFocusRestore}
-        setMenuAimDirection={setMenuAimDirection}
         setOnFocusOutside={setOnFocusOutside}
       >
         <RadixDropdownMenuRoot

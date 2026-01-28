@@ -1,7 +1,5 @@
 import { type DropdownMenuProps as RadixDropdownMenuRootProps } from '@radix-ui/react-dropdown-menu';
 
-import { MenuAimDirection } from '@kommo-crm/react-hooks';
-
 import type { FocusChangeEvent } from 'src/hooks';
 
 import { ContextMenuModeType } from './ContextMenu.types';
@@ -170,13 +168,6 @@ export interface ContextMenuContextProps {
    * This prop is only used for `ContextMenu` (root) components.
    */
   shouldPreventFocusRestore?: () => boolean;
-  /**
-   * Sets the menu aim direction.
-   *
-   * @remarks
-   * This prop is only used for `ContextMenu` (root) components.
-   */
-  setMenuAimDirection?: (direction: MenuAimDirection) => void;
   /**
    * Sets the callback for when focus moves outside the menu.
    * The callback can call preventDefault() to prevent menu closure.

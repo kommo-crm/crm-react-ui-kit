@@ -1,7 +1,5 @@
 import { Dispatch, RefObject, SetStateAction } from 'react';
 
-import { MenuAimDirection } from '@kommo-crm/react-hooks';
-
 import type { FocusChangeEvent } from 'src/hooks';
 
 import { ContextMenuMode, ContextMenuModeType } from '../..';
@@ -61,10 +59,6 @@ export interface UseContextMenuResult {
    * The mode of the context menu.
    */
   mode: ContextMenuMode;
-  /**
-   * Sets the menu aim direction.
-   */
-  setMenuAimDirection: Dispatch<SetStateAction<MenuAimDirection>>;
   /**
    * The callback function to be called when the context menu is opened.
    */

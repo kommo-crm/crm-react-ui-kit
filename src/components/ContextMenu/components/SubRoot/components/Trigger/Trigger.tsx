@@ -52,9 +52,8 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
     onBlur: handleItemBlur,
     onMouseLeave: handleItemMouseLeave,
     onPointerMove: handleItemPointerMove,
-  } = useContextMenuItemFocus({
+  } = useContextMenuItemFocus<HTMLButtonElement>({
     displayName: DISPLAY_NAME,
-    ref: triggerRef,
     id: triggerId || '',
     isDisabled: false,
     onMouseEnter: (e) => {

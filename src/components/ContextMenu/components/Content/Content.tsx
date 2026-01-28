@@ -111,7 +111,6 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
     itemWithFocusedInput,
     setItemWithFocusedInput,
     shouldPreventFocusRestore,
-    setMenuAimDirection,
     setOnFocusOutside,
   } = useContextMenuContext(DISPLAY_NAME);
 
@@ -127,10 +126,6 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
   });
 
   const { navigationContentRef } = useContextMenuRootContext(DISPLAY_NAME);
-
-  useEffect(() => {
-    setMenuAimDirection?.(directionToSide[direction]);
-  }, [direction, setMenuAimDirection]);
 
   /**
    * Register focus outside handler to allow preventing menu closure.

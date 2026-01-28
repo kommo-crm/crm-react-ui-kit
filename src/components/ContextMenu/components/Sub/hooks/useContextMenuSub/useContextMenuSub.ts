@@ -1,10 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
-import {
-  MenuAimDirection,
-  useIsTouchDevice,
-  useMenuAim,
-} from '@kommo-crm/react-hooks';
+import { useIsTouchDevice, useIsAiming } from '@kommo-crm/react-hooks';
 
 import { ContextMenuMode } from '../../../../ContextMenu.enums';
 import { useContextMenuContext } from '../../../../ContextMenu.context';
@@ -76,13 +72,6 @@ export const useContextMenuSub = (
   const mode = isTouchDevice ? ContextMenuMode.CLICK : initialMode;
 
   /**
-   * Direction for menu aim, determined from Radix's data-side attribute.
-   */
-  const [menuAimDirection, setMenuAimDirection] = useState<MenuAimDirection>(
-    'right' as MenuAimDirection
-  );
-
-  /**
    * Handler that notifies both the consumer (onAiming) and the parent level
    * (parentOnChildAiming) when aiming state changes.
    */
@@ -91,61 +80,10 @@ export const useContextMenuSub = (
     parentOnChildAiming?.(aiming);
   };
 
-  const { isAiming, contentRef } = useMenuAim<HTMLDivElement>({
-    direction: menuAimDirection,
+  const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
     isEnabled: isOpen && mode === ContextMenuMode.HOVER,
     handler: handleAimingChange,
   });
-
-  /**
-   * Read direction from Radix's data-side attribute on content element.
-   * Uses MutationObserver to detect when Radix sets the attribute after positioning.
-   */
-  useEffect(() => {
-    if (!isOpen || !contentRef.current) {
-      return;
-    }
-
-    const element = contentRef.current;
-
-    const updateDirection = () => {
-      const dataSide = element.getAttribute(
-        'data-side'
-      ) as MenuAimDirection | null;
-
-      if (dataSide) {
-        setMenuAimDirection(dataSide);
-      }
-    };
-
-    /**
-     * Check immediately
-     */
-    updateDirection();
-
-    /**
-     * Observe changes to data-side attribute
-     */
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'data-side'
-        ) {
-          updateDirection();
-        }
-      }
-    });
-
-    observer.observe(element, {
-      attributes: true,
-      attributeFilter: ['data-side'],
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [isOpen, contentRef.current]);
 
   const handleSubmenuOpen = (isSubmenuOpen: boolean) => {
     /**

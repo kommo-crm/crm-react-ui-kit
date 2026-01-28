@@ -8,10 +8,6 @@ export interface UseContextMenuItemFocusOptions<T extends HTMLElement> {
    */
   id: string;
   /**
-   * The ref of the item.
-   */
-  ref: React.RefObject<T>;
-  /**
    * Whether the item is disabled.
    */
   isDisabled?: boolean;

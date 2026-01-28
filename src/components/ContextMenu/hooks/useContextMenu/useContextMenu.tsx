@@ -1,10 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
-import {
-  useIsTouchDevice,
-  useMenuAim,
-  MenuAimDirection,
-} from '@kommo-crm/react-hooks';
+import { useIsTouchDevice, useIsAiming } from '@kommo-crm/react-hooks';
 
 import { useFocusChange, FocusChangeEvent } from 'src/hooks';
 
@@ -75,15 +71,7 @@ export const useContextMenu = (
    */
   const mode = isTouchDevice ? ContextMenuMode.CLICK : rootMode;
 
-  /**
-   * Direction for menu aim, determined from Radix's data-side attribute.
-   */
-  const [menuAimDirection, setMenuAimDirection] = useState<MenuAimDirection>(
-    'right' as MenuAimDirection
-  );
-
-  const { isAiming, contentRef } = useMenuAim<HTMLDivElement>({
-    direction: menuAimDirection,
+  const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
     isEnabled: isOpen && mode === ContextMenuMode.HOVER,
     handler: onAiming,
   });
@@ -554,7 +542,6 @@ export const useContextMenu = (
   return {
     isOpen,
     mode,
-    setMenuAimDirection,
     onOpenChange: handleOpenChange,
     onOpenByKeyboard,
     triggerRef,
