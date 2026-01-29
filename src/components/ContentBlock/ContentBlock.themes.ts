@@ -12,7 +12,8 @@ export type ContentBlockThemeType = {
 export const ContentBlockTheme: ContentBlockThemeType = {
   '--crm-ui-kit-content-block-box-sizing': 'border-box',
   '--crm-ui-kit-content-block-padding': '18px 18px 29px',
-  '--crm-ui-kit-content-block-border-radius': '3px',
+  '--crm-ui-kit-content-block-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-content-block-box-shadow':
     'var(--crm-ui-kit-palette-content-block-box-shadow)',
   '--crm-ui-kit-content-block-background':

@@ -153,7 +153,8 @@ const themeL: SwitcherTheme = {
   ...themeS,
   '--crm-ui-kit-switcher-circle-size': '60px',
   '--crm-ui-kit-switcher-line-width': '45px',
-  '--crm-ui-kit-switcher-border-width': '3px',
+  '--crm-ui-kit-switcher-border-width':
+    'var(--crm-ui-kit-palette-border-width)',
 };
 
 export const CustomTheme: Story = {

@@ -38,5 +38,5 @@ export const SwitcherPrimaryTheme: SwitcherTheme = {
   '--crm-ui-kit-switcher-focus-visible-outline-offset':
     'var(--crm-ui-kit-palette-focus-visible-outline-offset)',
   '--crm-ui-kit-switcher-focus-visible-border-radius':
-    'var(--crm-ui-kit-palette-focus-visible-border-radius)',
+    'var(--crm-ui-kit-border-radius-default)',
 };

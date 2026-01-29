@@ -107,7 +107,9 @@
   );
 
   --crm-ui-kit-palette-focus-visible-outline-width: 2px;
-  --crm-ui-kit-palette-focus-visible-border-radius: 3px;
+  --crm-ui-kit-palette-focus-visible-border-radius: var(
+    --crm-ui-kit-border-radius-default
+  );
   --crm-ui-kit-palette-focus-visible-outline-offset: 1px;
   --crm-ui-kit-palette-focus-visible-outline-style: solid;
 
@@ -117,7 +119,9 @@
   --crm-ui-kit-palette-scrollbar-thumb-background: var(
     --crm-ui-kit-color-very-light-gray
   );
-  --crm-ui-kit-palette-scrollbar-track-border-radius: 3px;
+  --crm-ui-kit-palette-scrollbar-track-border-radius: var(
+    --crm-ui-kit-border-radius-default
+  );
   --crm-ui-kit-palette-scrollbar-thumb-border-radius: 30px;
 
   --crm-ui-kit-disabled-opacity: 0.6;
@@ -140,6 +144,8 @@
 
   --crm-ui-kit-palette-accordion-item-box-shadow: 0px 1px 6px 2px
     rgba(0, 19, 45, 0.06);
+
+  --crm-ui-kit-border-radius-default: 4px;
 }
 
 :root[data-crm-ui-kit-theme='alternative'] {
