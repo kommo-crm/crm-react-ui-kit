@@ -1305,10 +1305,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kommo-crm/react-hooks@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@kommo-crm/react-hooks/-/react-hooks-1.0.3.tgz#f1e567612167bc3fbcfdfccc4b7914440a530ac4"
-  integrity sha512-NJ/+Y+N7qE0zY8Nk5oV/Kw3hiFflsIE6nW6GHX90jPca7xv03Gj6szoVvy6cUAvy78Px3QokFNDaY6CC+jdiyQ==
+"@kommo-crm/react-hooks@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@kommo-crm/react-hooks/-/react-hooks-1.1.0.tgz#0e067888fbcfa56ff342301a8ba80b1cf62871c1"
+  integrity sha512-VZtgLWc9vJ03Ft86M4MCcwGFSGJ6ZV9oNCWyJrI2HxfBlW7i05g80HEeoUfvYxg9dUnNF0JAJWq8FJOGgKmk5Q==
 
 "@mdx-js/react@^3.0.0":
   version "3.1.0"

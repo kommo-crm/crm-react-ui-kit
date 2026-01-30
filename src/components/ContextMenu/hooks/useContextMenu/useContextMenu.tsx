@@ -73,7 +73,7 @@ export const useContextMenu = (
 
   const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
     isEnabled: isOpen && mode === ContextMenuMode.HOVER,
-    handler: onAiming,
+    onChange: onAiming,
   });
 
   /**
