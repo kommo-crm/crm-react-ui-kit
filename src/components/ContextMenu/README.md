@@ -546,9 +546,9 @@ The content container for SubRoot menu.
 
 The `useContextMenuSubMenu` hook used by `SubRoot` requires two contexts:
 
-1. **ContextMenuProvider context**: Provided by `ContextMenu.Root` or `ContextMenu.Content` - provides `animationDuration`, `hoverCloseDelay`, and other menu settings. `SubRoot` calls `useContextMenuContext(DISPLAY_NAME)` at line 39-40 in SubRoot.tsx.
+1. **ContextMenuProvider context**: Provided by `ContextMenu.Root` or `ContextMenu.Content` - provides `animationDuration`, `hoverCloseDelay`, and other menu settings. `SubRoot` calls `useContextMenuContext(DISPLAY_NAME)` in SubRoot.tsx.
 
-2. **SubMenuProvider context**: Provided by `Item`, `CheckboxItem`, or `RadioItem` components through the `useSubMenu` hook. These components wrap their children in `SubMenuProvider` which provides `subMenuOpen` and `setSubMenuOpen`. `SubRoot` calls `useSubMenuContext(DISPLAY_NAME)` at line 42-43 in SubRoot.tsx.
+2. **SubMenuProvider context**: Provided by `Item`, `CheckboxItem`, or `RadioItem` components through the `useSubMenu` hook. These components wrap their children in `SubMenuProvider` which provides `subMenuOpen` and `setSubMenuOpen`. `SubRoot` calls `useSubMenuContext(DISPLAY_NAME)` in SubRoot.tsx.
 
 This is why `SubRoot` **must** be used inside `ContextMenu.Item`, `ContextMenu.CheckboxItem`, or `ContextMenu.RadioItem` (which provide `SubMenuProvider`), and these items must be within a `ContextMenu.Root` hierarchy (which provides `ContextMenuProvider`). While `ItemRightSlot` is recommended for placement, any location within these item components is valid.
 

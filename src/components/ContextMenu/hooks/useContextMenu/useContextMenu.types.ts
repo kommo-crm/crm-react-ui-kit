@@ -2,7 +2,8 @@ import { Dispatch, RefObject, SetStateAction } from 'react';
 
 import type { FocusChangeEvent } from 'src/hooks';
 
-import { ContextMenuMode, ContextMenuModeType } from '../..';
+import { ContextMenuMode } from '../../ContextMenu.enums';
+import { ContextMenuModeType } from '../../ContextMenu.types';
 
 export interface UseContextMenuOptions {
   /**
