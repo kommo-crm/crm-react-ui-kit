@@ -14,7 +14,8 @@ import { Text, TextTheme, TextPrimaryTheme } from 'src/components/Text';
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
 
-import { ContextMenu, ContextMenuRootProps, ContextMenuMode } from '..';
+import { ContextMenuMode } from '../ContextMenu.enums';
+import { ContextMenu, ContextMenuRootProps } from '..';
 import { ContextMenuSubRootProps } from '../components/SubRoot/SubRoot.props';
 import { SubProps } from '../components/Sub';
 

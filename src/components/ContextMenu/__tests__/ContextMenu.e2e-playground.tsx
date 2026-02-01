@@ -17,7 +17,8 @@ import {
   TextTheme,
 } from 'src/components/Text';
 
-import { ContextMenu, ContextMenuMode } from '..';
+import { ContextMenuMode } from '../ContextMenu.enums';
+import { ContextMenu } from '..';
 import { ContentProps, Direction } from '../components/Content';
 
 const TextContextMenuTheme: TextTheme = {
