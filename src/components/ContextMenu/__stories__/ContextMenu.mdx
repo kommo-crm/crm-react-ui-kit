@@ -1,0 +1,19 @@
+import { Title, Meta, Canvas, Controls } from '@storybook/blocks';
+import { CodeBlock } from '@storybook-utils/components';
+import * as ContextMenuStories from './ContextMenu.stories';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta of={ContextMenuStories} />
+
+<Title>ContextMenu</Title>
+
+<Canvas of={ContextMenuStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Usage')}</ReactMarkdown>
+
+<CodeBlock of={ContextMenuStories.Default} />
+
+<ReactMarkdown>{'## ' + i18n.t('Props')}</ReactMarkdown>
+
+<Controls />

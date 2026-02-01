@@ -1,0 +1,63 @@
+import { ContextMenuModeType } from '../../ContextMenu.types';
+
+export interface LevelProviderContextProps {
+  /**
+   * Nesting level of the menu.
+   */
+  level: number;
+  /**
+   * The id of the active item.
+   */
+  activeItemId: string | null;
+  /**
+   * Sets the id of the active item.
+   */
+  setActiveItemId: (id: string | null) => void;
+  /**
+   * The callback function to be called when the child menu is opened.
+   */
+  onChildOpen: (isChildOpen: boolean, mode: ContextMenuModeType) => void;
+  /**
+   * The callback function to be called when the subroot is opened.
+   *
+   * @remarks
+   * This prop is only used for `Sub` (submenu) components.
+   */
+  onSubRootOpen?: (isSubRootOpen: boolean) => void;
+  /**
+   * Immediately closes the menu without waiting for any hover or animation delays.
+   */
+  closeMenuImmediately: () => void;
+  /**
+   * Whether the menu should close when item selected.
+   */
+  shouldCloseCurrentMenuOnSelect: boolean;
+  /**
+   * Whether the root menu should close when item selected.
+   */
+  shouldCloseRootMenuOnSelect: boolean;
+  /**
+   * Whether the menu is animated open/close.
+   */
+  isAnimatedOpen: boolean;
+  /**
+   * Sets whether the item with the focused input is open.
+   */
+  setItemWithFocusedInput: (itemWithFocusedInput: string | null) => void;
+  /**
+   * Whether the item with the focused input is open.
+   */
+  itemWithFocusedInput: string | null;
+  /**
+   * Returns whether the cursor is moving toward the menu.
+   */
+  isAiming: () => boolean;
+  /**
+   * Called when a child submenu's aiming state changes.
+   */
+  onChildAiming?: (isAiming: boolean) => void;
+  /**
+   * Returns whether any child submenu is being aimed at.
+   */
+  isChildAiming?: () => boolean;
+}

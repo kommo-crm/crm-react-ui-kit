@@ -1,0 +1,8 @@
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  color: inherit;
+  min-width: 16px;
+  margin-right: 8px;
+}

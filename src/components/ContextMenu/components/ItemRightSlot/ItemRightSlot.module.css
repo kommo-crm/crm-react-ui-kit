@@ -1,0 +1,6 @@
+.rightSlot {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding-left: 8px;
+}

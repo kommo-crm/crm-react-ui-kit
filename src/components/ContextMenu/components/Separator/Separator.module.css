@@ -1,0 +1,5 @@
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: var(--crm-ui-kit-palette-border-default);
+}

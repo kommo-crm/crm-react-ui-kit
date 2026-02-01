@@ -1,0 +1,5 @@
+.item_indicator {
+  display: flex;
+  color: inherit;
+  margin-right: 8px;
+}

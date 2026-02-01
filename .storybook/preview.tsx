@@ -21,12 +21,23 @@ const preview: Preview = {
         // This will remove the "Show code" button from Canvas
         sourceState: 'none',
       },
+      source: {
+        /**
+         * It is necessary that during development it is clear that this section
+         * must be explicitly specified, otherwise the automatically generated
+         * source code appears.
+         *
+         * More info provided in this comment:
+         * https://github.com/kommo-crm/crm-react-ui-kit/pull/11#discussion_r2315256940
+         */
+        code: '@todo',
+      },
     },
     options: {
       storySort: {
         order: [
           'Getting Started',
-          ['Getting Started', 'How to use', 'Component theming'],
+          ['Getting Started', 'Component theming'],
           'Typography',
           'Components',
         ],
