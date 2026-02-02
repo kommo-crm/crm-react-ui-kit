@@ -1,0 +1,25 @@
+.checkbox_item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  color: var(--crm-ui-kit-palette-text-primary);
+  background-color: var(--crm-ui-kit-palette-background-primary);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  text-decoration: none;
+
+  &[data-disabled] {
+    color: var(--crm-ui-kit-palette-text-secondary-light);
+    cursor: auto;
+  }
+
+  &[data-highlighted] {
+    background-color: var(--crm-ui-kit-palette-background-default);
+  }
+
+  &[data-state='checked'] {
+    color: var(--crm-ui-kit-palette-active-element-900);
+  }
+}

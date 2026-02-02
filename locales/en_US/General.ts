@@ -23,6 +23,9 @@ export default {
   'Centered': 'Centered',
   'Custom Themes': 'Custom Themes',
   'Autosize': 'Autosize',
+  'Directions': 'Directions',
+  'Modes': 'Modes',
+  'Vertical Menu': 'Vertical Menu',
 
   /* Used in docs */
   'Design tokens': 'Design tokens',
@@ -86,4 +89,18 @@ export default {
 
   /* TextArea */
   'Required field': 'Required field',
+
+  /* ContextMenu */
+  'Profile': 'Profile',
+  'User ID': 'User ID',
+  'Settings': 'Settings',
+  'Theme': 'Theme',
+  'Light': 'Light',
+  'Dark': 'Dark',
+  'Lead': 'Lead',
+  'Edit': 'Edit',
+  'Delete': 'Delete',
+  'Export to PDF': 'Export to PDF',
+  'Enable notifications': 'Enable notifications',
+  'Hover me': 'Hover me',
 };

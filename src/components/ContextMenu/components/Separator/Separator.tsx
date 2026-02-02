@@ -1,0 +1,25 @@
+import React, { forwardRef } from 'react';
+import { Separator as RadixDropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
+import cx from 'classnames';
+
+import type { SeparatorProps } from './Separator.props';
+
+import s from './Separator.module.css';
+
+const DISPLAY_NAME = 'ContextMenu.Separator';
+
+type El = HTMLDivElement;
+
+export const Separator = forwardRef<El, SeparatorProps>((props, ref) => {
+  const { className, ...rest } = props;
+
+  return (
+    <RadixDropdownMenuSeparator
+      ref={ref}
+      className={cx(s.separator, className)}
+      {...rest}
+    />
+  );
+});
+
+Separator.displayName = DISPLAY_NAME;

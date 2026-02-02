@@ -146,6 +146,10 @@
     rgba(0, 19, 45, 0.06);
 
   --crm-ui-kit-border-radius-default: 4px;
+
+  --crm-ui-kit-palette-context-menu-box-shadow: 0px 4px 6px -2px
+      rgba(16, 24, 40, 0.03),
+    0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 }
 
 :root[data-crm-ui-kit-theme='alternative'] {
