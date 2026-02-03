@@ -83,6 +83,8 @@ export const useContextMenuSub = (
   const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
     isEnabled: isOpen && mode === ContextMenuMode.HOVER,
     onChange: handleAimingChange,
+    tolerance: 0,
+    idleTimeout: 200,
   });
 
   const handleSubmenuOpen = (isSubmenuOpen: boolean) => {
