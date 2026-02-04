@@ -26,5 +26,5 @@ export const LinkPrimaryTheme: LinkTheme = {
   '--crm-ui-kit-link-focus-visible-outline-offset':
     'var(--crm-ui-kit-palette-focus-visible-outline-offset)',
   '--crm-ui-kit-link-focus-visible-border-radius':
-    'var(--crm-ui-kit-palette-focus-visible-border-radius)',
+    'var(--crm-ui-kit-border-radius-default)',
 };

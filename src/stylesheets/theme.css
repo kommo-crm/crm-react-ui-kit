@@ -107,6 +107,11 @@
   );
 
   --crm-ui-kit-palette-focus-visible-outline-width: 2px;
+  /*
+   * @deprecated
+   * Use --crm-ui-kit-border-radius-default.
+   * Kept for backward compatibility.
+  */
   --crm-ui-kit-palette-focus-visible-border-radius: var(
     --crm-ui-kit-border-radius-default
   );
@@ -119,6 +124,11 @@
   --crm-ui-kit-palette-scrollbar-thumb-background: var(
     --crm-ui-kit-color-very-light-gray
   );
+  /*
+   * @deprecated
+   * Use --crm-ui-kit-border-radius-default.
+   * Kept for backward compatibility.
+  */
   --crm-ui-kit-palette-scrollbar-track-border-radius: var(
     --crm-ui-kit-border-radius-default
   );
