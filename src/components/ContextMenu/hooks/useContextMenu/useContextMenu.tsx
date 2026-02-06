@@ -32,6 +32,8 @@ export const useContextMenu = (
     onAnimatedOpen,
     onAiming,
     onFocusOutside,
+    isAimingTolerance,
+    isAimingIdleTimeout,
   } = options;
 
   const id = useId();
@@ -74,8 +76,8 @@ export const useContextMenu = (
   const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
     isEnabled: isOpen && mode === ContextMenuMode.HOVER,
     onChange: onAiming,
-    tolerance: 0,
-    idleTimeout: 200,
+    tolerance: isAimingTolerance,
+    idleTimeout: isAimingIdleTimeout,
   });
 
   /**

@@ -3,6 +3,11 @@ import { Sub as RadixDropdownMenuSub } from '@radix-ui/react-dropdown-menu';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
+import {
+  DEFAULT_IS_AIMING_IDLE_TIMEOUT,
+  DEFAULT_IS_AIMING_TOLERANCE,
+} from '../../ContextMenu';
+
 import { useContextMenuSub } from './hooks';
 
 import { SubProps } from './Sub.props';
@@ -17,6 +22,8 @@ export const Sub = (props: SubProps) => {
     shouldCloseRootMenuOnSelect = true,
     shouldCloseCurrentMenuOnSelect = true,
     onAiming,
+    isAimingTolerance = DEFAULT_IS_AIMING_TOLERANCE,
+    isAimingIdleTimeout = DEFAULT_IS_AIMING_IDLE_TIMEOUT,
 
     ...rest
   } = props;
@@ -45,6 +52,8 @@ export const Sub = (props: SubProps) => {
     defaultOpen,
     onOpen,
     onAiming,
+    isAimingTolerance,
+    isAimingIdleTimeout,
   });
 
   return (

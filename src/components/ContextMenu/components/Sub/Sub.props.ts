@@ -39,6 +39,20 @@ export type SubProps = Omit<
    * The callback is triggered whenever this tracking state changes.
    */
   onAiming?: (isAiming: boolean) => void;
+  /**
+   * Tolerance in pixels for detecting cursor movement toward the submenu.
+   * Higher values make the detection more lenient.
+   *
+   * @default 0
+   */
+  isAimingTolerance?: number;
+  /**
+   * Timeout in milliseconds before considering cursor movement as idle.
+   * Used to reset aiming state when cursor stops moving.
+   *
+   * @default 200
+   */
+  isAimingIdleTimeout?: number;
 };
 
 export interface ContextMenuSubContextProps {
