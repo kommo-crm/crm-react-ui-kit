@@ -59,7 +59,8 @@ const InlineInputBaseValues: Omit<
   '--crm-ui-kit-inline-input-invalid-description-offset': '5px',
   '--crm-ui-kit-inline-input-invalid-description-padding-x': '5px',
   '--crm-ui-kit-inline-input-invalid-description-padding-y': '9px',
-  '--crm-ui-kit-inline-input-invalid-description-border-radius': '3px',
+  '--crm-ui-kit-inline-input-invalid-description-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-inline-input-invalid-description-arrow-width': '4px',
   '--crm-ui-kit-inline-input-invalid-description-arrow-top': '13px',
   '--crm-ui-kit-inline-input-invalid-description-arrow-left': '-5px',
