@@ -55,7 +55,7 @@ export const CheckboxBaseValues: Omit<
   '--crm-ui-kit-checkbox-focus-visible-outline-offset':
     'var(--crm-ui-kit-palette-focus-visible-outline-offset)',
   '--crm-ui-kit-checkbox-focus-visible-border-radius':
-    'var(--crm-ui-kit-border-radius-default)',
+    'var(--crm-ui-kit-palette-focus-visible-border-radius)',
 };
 
 export const CheckboxLightTheme: CheckboxThemeType = {

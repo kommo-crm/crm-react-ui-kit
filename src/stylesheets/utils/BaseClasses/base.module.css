@@ -8,7 +8,7 @@
 
   &::-webkit-scrollbar-track {
     background: var(--crm-ui-kit-palette-scrollbar-track-background);
-    border-radius: var(--crm-ui-kit-border-radius-default);
+    border-radius: var(--crm-ui-kit-palette-scrollbar-track-border-radius);
   }
 
   &::-webkit-scrollbar-thumb {
