@@ -24,6 +24,8 @@ export const useContextMenuSub = (
     defaultOpen,
     onOpen,
     onAiming,
+    isAimingTolerance,
+    isAimingIdleTimeout,
   } = options;
 
   const {
@@ -83,6 +85,8 @@ export const useContextMenuSub = (
   const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
     isEnabled: isOpen && mode === ContextMenuMode.HOVER,
     onChange: handleAimingChange,
+    tolerance: isAimingTolerance,
+    idleTimeout: isAimingIdleTimeout,
   });
 
   const handleSubmenuOpen = (isSubmenuOpen: boolean) => {
