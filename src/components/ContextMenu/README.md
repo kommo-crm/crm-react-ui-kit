@@ -621,6 +621,37 @@ The algorithm is automatically enabled in hover mode and requires no additional 
 </ContextMenu.Root>
 ```
 
+**Configuration options:**
+
+The menu aim algorithm can be customized using the following props on `ContextMenu.Root` and `ContextMenu.Sub`:
+
+- **`aimingTolerance`** (optional, default: `0`): Tolerance in pixels for detecting cursor movement toward the menu. Higher values make the detection more lenient, allowing for less precise cursor movements to be considered as "aiming" toward the submenu. This can be useful if users have difficulty navigating to submenus with the default strict detection.
+
+- **`aimingIdleTimeout`** (optional, default: `200`): Timeout in milliseconds before considering cursor movement as idle. Used to reset aiming state when cursor stops moving. Lower values make the algorithm more responsive to cursor stops, while higher values allow for brief pauses in cursor movement without resetting the aiming state.
+
+**Example with custom configuration:**
+
+```tsx
+<ContextMenu.Root
+  mode="hover"
+  aimingTolerance={10}
+  aimingIdleTimeout={300}
+  onAiming={(isAiming) => {
+    console.log('Is aiming:', isAiming);
+  }}
+>
+  {/* ... */}
+</ContextMenu.Root>
+```
+
+**For submenus:**
+
+```tsx
+<ContextMenu.Sub mode="hover" aimingTolerance={15} aimingIdleTimeout={250}>
+  {/* ... */}
+</ContextMenu.Sub>
+```
+
 ### Inner Input Focus
 
 Enable focus management for inputs (text fields, etc.) inside menu items. When enabled, items with focused inputs will automatically set `isSelectable={false}` and the menu will remain open while the input is focused.

@@ -48,14 +48,14 @@ export type ContextMenuRootProps = Omit<
    *
    * @default 0
    */
-  isAimingTolerance?: number;
+  aimingTolerance?: number;
   /**
    * Timeout in milliseconds before considering cursor movement as idle.
    * Used to reset aiming state when cursor stops moving.
    *
    * @default 200
    */
-  isAimingIdleTimeout?: number;
+  aimingIdleTimeout?: number;
 };
 
 export interface ContextMenuContextProps {

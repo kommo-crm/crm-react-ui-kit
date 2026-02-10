@@ -53,12 +53,12 @@ export interface UseContextMenuOptions {
    * Tolerance in pixels for detecting cursor movement toward the menu.
    * Higher values make the detection more lenient.
    */
-  isAimingTolerance: number;
+  aimingTolerance: number;
   /**
    * Timeout in milliseconds before considering cursor movement as idle.
    * Used to reset aiming state when cursor stops moving.
    */
-  isAimingIdleTimeout: number;
+  aimingIdleTimeout: number;
 }
 
 export interface UseContextMenuResult {

@@ -34,8 +34,8 @@ import {
 const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
-export const DEFAULT_IS_AIMING_TOLERANCE = 0;
-export const DEFAULT_IS_AIMING_IDLE_TIMEOUT = 200;
+export const DEFAULT_AIMING_TOLERANCE = 0;
+export const DEFAULT_AIMING_IDLE_TIMEOUT = 200;
 
 const ContextMenu = (props: ContextMenuRootProps) => {
   const {
@@ -47,8 +47,8 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     onOpen,
     onAnimatedOpen,
     onAiming,
-    isAimingTolerance = DEFAULT_IS_AIMING_TOLERANCE,
-    isAimingIdleTimeout = DEFAULT_IS_AIMING_IDLE_TIMEOUT,
+    aimingTolerance = DEFAULT_AIMING_TOLERANCE,
+    aimingIdleTimeout = DEFAULT_AIMING_IDLE_TIMEOUT,
 
     ...rest
   } = props;
@@ -83,8 +83,8 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     onOpen,
     onAnimatedOpen,
     onAiming,
-    isAimingTolerance,
-    isAimingIdleTimeout,
+    aimingTolerance,
+    aimingIdleTimeout,
   });
 
   const { navigationContentRef } = useContextMenuKeyboardNavigation({
