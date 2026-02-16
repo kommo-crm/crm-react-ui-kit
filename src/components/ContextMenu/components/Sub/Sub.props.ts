@@ -43,7 +43,7 @@ export type SubProps = Omit<
    * Tolerance in pixels for detecting cursor movement toward the submenu.
    * Higher values make the detection more lenient.
    *
-   * @default 0
+   * @default 20
    */
   aimingTolerance?: number;
   /**

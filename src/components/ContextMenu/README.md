@@ -625,7 +625,7 @@ The algorithm is automatically enabled in hover mode and requires no additional 
 
 The menu aim algorithm can be customized using the following props on `ContextMenu.Root` and `ContextMenu.Sub`:
 
-- **`aimingTolerance`** (optional, default: `0`): Tolerance in pixels for detecting cursor movement toward the menu. Higher values make the detection more lenient, allowing for less precise cursor movements to be considered as "aiming" toward the submenu. This can be useful if users have difficulty navigating to submenus with the default strict detection.
+- **`aimingTolerance`** (optional, default: `20`): Tolerance in pixels for detecting cursor movement toward the menu. Higher values make the detection more lenient, allowing for less precise cursor movements to be considered as "aiming" toward the submenu. This can be useful if users have difficulty navigating to submenus with the default strict detection.
 
 - **`aimingIdleTimeout`** (optional, default: `200`): Timeout in milliseconds before considering cursor movement as idle. Used to reset aiming state when cursor stops moving. Lower values make the algorithm more responsive to cursor stops, while higher values allow for brief pauses in cursor movement without resetting the aiming state.
 

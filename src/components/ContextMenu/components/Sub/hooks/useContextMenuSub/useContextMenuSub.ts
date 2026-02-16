@@ -207,7 +207,7 @@ export const useContextMenuSub = (
             isInsideContentRef.current = false;
             setIsOpenedByKeyboard(false);
           }, animationDuration);
-        }, 50);
+        }, 10);
       }
     } else {
       handleCloseImmediate();

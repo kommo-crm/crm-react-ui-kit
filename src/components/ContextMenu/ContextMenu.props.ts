@@ -46,7 +46,7 @@ export type ContextMenuRootProps = Omit<
    * Tolerance in pixels for detecting cursor movement toward the menu.
    * Higher values make the detection more lenient.
    *
-   * @default 0
+   * @default 20
    */
   aimingTolerance?: number;
   /**
@@ -84,6 +84,14 @@ export interface ContextMenuContextProps {
    * its content (used to coordinate animations).
    */
   isAnimatedOpen: boolean;
+  /**
+   * Whether to skip animation when closing.
+   * Used when closing via contextMenuBus for instant closure.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  skipAnimation?: boolean;
   /**
    * The duration of the menu and submenus opening/closing animation in milliseconds.
    */

@@ -91,6 +91,10 @@ export interface UseContextMenuResult {
    */
   isAnimatedOpen: boolean;
   /**
+   * Whether to skip animation when closing.
+   */
+  skipAnimation: boolean;
+  /**
    * The duration of the animation.
    */
   animationDuration: number;

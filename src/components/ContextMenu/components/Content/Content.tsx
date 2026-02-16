@@ -99,6 +99,7 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
     contentRef,
     isOpen,
     isAnimatedOpen,
+    skipAnimation,
     animationDuration,
     mode,
     isRootContentBlocked,
@@ -148,7 +149,7 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
         ? 1
         : 0,
     config:
-      mode === ContextMenuMode.CLICK
+      mode === ContextMenuMode.CLICK || skipAnimation
         ? { duration: 0 }
         : { duration: animationDuration, easing: easings.easeInOutCubic },
   });

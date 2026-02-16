@@ -34,7 +34,7 @@ import {
 const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
-export const DEFAULT_AIMING_TOLERANCE = 0;
+export const DEFAULT_AIMING_TOLERANCE = 20;
 export const DEFAULT_AIMING_IDLE_TIMEOUT = 200;
 
 const ContextMenu = (props: ContextMenuRootProps) => {
@@ -59,6 +59,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     triggerRef,
     contentRef,
     isAnimatedOpen,
+    skipAnimation,
     animationDuration,
     hoverCloseDelay,
     isRootContentBlocked,
@@ -102,6 +103,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
         triggerRef={triggerRef}
         contentRef={contentRef}
         isAnimatedOpen={isAnimatedOpen}
+        skipAnimation={skipAnimation}
         animationDuration={animationDuration}
         hoverCloseDelay={hoverCloseDelay}
         closeMenuImmediately={closeMenuImmediately}
