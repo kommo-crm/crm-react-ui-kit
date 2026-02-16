@@ -85,8 +85,8 @@ export interface ContextMenuContextProps {
    */
   isAnimatedOpen: boolean;
   /**
-   * Whether to skip animation when closing.
-   * Used when closing via contextMenuBus for instant closure.
+   * Whether to skip the animation when closing or opening the menu.
+   * Used to instantly close the first and open the second ContextMenu via contextMenuBus.
    *
    * @remarks
    * This prop is only used for `ContextMenu` (root) components.
