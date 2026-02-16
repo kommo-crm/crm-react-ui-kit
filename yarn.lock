@@ -1305,10 +1305,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@kommo-crm/react-hooks@1.2.1-beta.1":
-  version "1.2.1-beta.1"
-  resolved "https://registry.yarnpkg.com/@kommo-crm/react-hooks/-/react-hooks-1.2.1-beta.1.tgz#566d9687148e8eb93247b193b47715d45d992b1f"
-  integrity sha512-cRGp3wGlXqbs59PqSdP+y15/S3vj06TbWMpOoyBzO8G6T3gh6OB2By7uC76lsqJZ004bFMEBtA4q6k727WFSzg==
+"@kommo-crm/react-hooks@1.2.1-beta.2":
+  version "1.2.1-beta.2"
+  resolved "https://registry.yarnpkg.com/@kommo-crm/react-hooks/-/react-hooks-1.2.1-beta.2.tgz#dc156776522371100eb798789e3fe9a89bb06bc8"
+  integrity sha512-eQy2wbhyuWZ+0c7MuYSh2q7MGjBuqMSI6ofxzxVJW9Ze+gO69ADNV6iM/OXpN5JCKKzBjEBMoUFPEO1anIcrHQ==
   dependencies:
     throttle-debounce "5.0.2"
 
