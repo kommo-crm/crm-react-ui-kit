@@ -453,6 +453,10 @@ export const useContextMenuSub = (
    */
   useEffect(() => {
     handleOpenChange(isOpen);
+
+    if (!isOpen) {
+      parentOnChildAiming?.(false);
+    }
   }, [isOpen]);
 
   /**

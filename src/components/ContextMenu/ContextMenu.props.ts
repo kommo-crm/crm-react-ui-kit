@@ -200,6 +200,14 @@ export interface ContextMenuContextProps {
   setOnFocusOutside?: (
     callback: ((event: FocusChangeEvent) => void) | undefined
   ) => void;
+  /**
+   * Returns whether any child submenu is being aimed at.
+   */
+  isChildAiming?: () => boolean;
+  /**
+   * Called when a child submenu's aiming state changes.
+   */
+  onChildAiming?: (aiming: boolean) => void;
 }
 
 export interface ContextMenuRootContextProps {

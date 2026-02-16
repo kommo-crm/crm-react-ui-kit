@@ -62,6 +62,7 @@ export const useContextMenu = (
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shouldPreventFocusRestoreRef = useRef(false);
   const pendingCloseRef = useRef(false);
+  const isChildAimingRef = useRef(false);
   const onFocusOutsideCallbackRef = useRef(onFocusOutside);
 
   const isTouchDevice = useIsTouchDevice();
@@ -104,9 +105,15 @@ export const useContextMenu = (
 
     /**
      * When aiming stops and there's a pending close request,
-     * proceed with closing the menu (if cursor is not inside content).
+     * proceed with closing the menu (if cursor is not inside content
+     * and no child submenu is being aimed at).
      */
-    if (!aiming && pendingCloseRef.current && !isInsideContentRef.current) {
+    if (
+      !aiming &&
+      pendingCloseRef.current &&
+      !isInsideContentRef.current &&
+      !isChildAimingRef.current
+    ) {
       pendingCloseRef.current = false;
       setIsAnimatedOpen(false);
 
@@ -122,6 +129,33 @@ export const useContextMenu = (
     tolerance: aimingTolerance,
     idleTimeout: aimingIdleTimeout,
   });
+
+  /**
+   * Returns whether any child submenu is being aimed at.
+   */
+  const isChildAiming = () => isChildAimingRef.current;
+
+  /**
+   * Called by child submenus (via LevelProvider) when their aiming state changes.
+   * Also triggers pending close when child aiming stops.
+   */
+  const handleChildAimingChange = (aiming: boolean) => {
+    isChildAimingRef.current = aiming;
+
+    if (
+      !aiming &&
+      pendingCloseRef.current &&
+      !isInsideContentRef.current &&
+      !isAiming()
+    ) {
+      pendingCloseRef.current = false;
+      setIsAnimatedOpen(false);
+
+      closeTimerRef.current = setTimeout(() => {
+        handleClose();
+      }, animationDuration);
+    }
+  };
 
   /**
    * Requests the close of the menu.
@@ -162,9 +196,10 @@ export const useContextMenu = (
       pendingCloseRef.current = true;
 
       /**
-       * If not currently aiming, proceed with close immediately.
+       * If not currently aiming (own or child), proceed with close immediately.
+       * Otherwise, handleAimingChange or handleChildAimingChange will handle it.
        */
-      if (!isAiming()) {
+      if (!isAiming() && !isChildAimingRef.current) {
         pendingCloseRef.current = false;
         setIsAnimatedOpen(false);
 
@@ -345,7 +380,7 @@ export const useContextMenu = (
      * When leaving content, if there's a pending close and not aiming,
      * proceed with close. If aiming, handleAimingChange will handle it.
      */
-    if (pendingCloseRef.current && !isAiming()) {
+    if (pendingCloseRef.current && !isAiming() && !isChildAimingRef.current) {
       pendingCloseRef.current = false;
       setIsAnimatedOpen(false);
 
@@ -555,5 +590,7 @@ export const useContextMenu = (
     setItemWithFocusedInput,
     shouldPreventFocusRestore,
     setOnFocusOutside,
+    isChildAiming,
+    onChildAiming: handleChildAimingChange,
   };
 };
