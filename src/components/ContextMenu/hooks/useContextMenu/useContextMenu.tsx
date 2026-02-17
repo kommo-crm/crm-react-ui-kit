@@ -62,6 +62,7 @@ export const useContextMenu = (
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shouldPreventFocusRestoreRef = useRef(false);
   const pendingCloseRef = useRef(false);
+  const deferredEmitRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isChildAimingRef = useRef(false);
   const onFocusOutsideCallbackRef = useRef(onFocusOutside);
 
@@ -84,6 +85,11 @@ export const useContextMenu = (
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
+    }
+
+    if (deferredEmitRef.current) {
+      clearTimeout(deferredEmitRef.current);
+      deferredEmitRef.current = null;
     }
   };
 
@@ -216,7 +222,7 @@ export const useContextMenu = (
    * Closes the menu immediately.
    * Used when closing via contextMenuBus or other immediate close scenarios.
    * @param preventFocusRestore - If true, prevents Radix from restoring focus to trigger.
-   * @param skipAnimationFlag - If true, skips animation when closing.
+   * @param skipAnimationFlag - If true, skips animation when closing or opening.
    */
   const closeMenuImmediately = ({
     preventFocusRestore = false,
@@ -347,7 +353,9 @@ export const useContextMenu = (
       setIsInsideContent(true);
       isInsideContentRef.current = true;
 
-      setTimeout(() => {
+      deferredEmitRef.current = setTimeout(() => {
+        deferredEmitRef.current = null;
+
         if (isOpenForcefully !== false) {
           contextMenuBus.emit({
             id,

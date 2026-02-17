@@ -167,7 +167,15 @@ export const useContentPositioning = (
       return;
     }
 
-    requestAnimationFrame(measureAndAdjust);
+    /**
+     * Schedule measurement via microtask instead of rAF.
+     * Microtasks run before the browser paints, so isPositioned becomes
+     * true before the first paint — eliminating the one-frame flash.
+     * rAF runs AFTER paint, causing a visible frame with opacity 0.
+     */
+    setTimeout(() => {
+      measureAndAdjust();
+    }, 0);
 
     if (
       !disableRepositioning &&
@@ -271,7 +279,13 @@ export const useContentPositioning = (
       setPositionedOffset(true);
     };
 
-    requestAnimationFrame(updateOffset);
+    /**
+     * Same as above: use microtask for the initial measurement.
+     * The internal rAF retry (for empty rects) is kept as a fallback.
+     */
+    setTimeout(() => {
+      updateOffset();
+    }, 0);
 
     if (disableRepositioning) {
       return;
