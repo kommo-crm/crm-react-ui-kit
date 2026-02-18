@@ -169,9 +169,13 @@ export const useContentPositioning = (
 
     /**
      * Schedule measurement via macrotask instead of rAF.
-     * Macrotasks run before the browser paints, so isPositioned becomes
-     * true before the first paint — eliminating the one-frame flash.
-     * rAF runs AFTER paint, causing a visible frame with opacity 0.
+     *
+     * requestAnimationFrame callbacks run right before the next repaint.
+     * In some cases, the browser may already have painted the initial state
+     * (e.g., opacity: 0) before rAF executes, causing a one-frame flash.
+     *
+     * Using setTimeout queues a separate macrotask, which may allow layout
+     * adjustments to complete before the browser commits the first paint.
      */
     setTimeout(() => {
       measureAndAdjust();
