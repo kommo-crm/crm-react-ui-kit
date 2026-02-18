@@ -168,8 +168,8 @@ export const useContentPositioning = (
     }
 
     /**
-     * Schedule measurement via microtask instead of rAF.
-     * Microtasks run before the browser paints, so isPositioned becomes
+     * Schedule measurement via macrotask instead of rAF.
+     * Macrotasks run before the browser paints, so isPositioned becomes
      * true before the first paint — eliminating the one-frame flash.
      * rAF runs AFTER paint, causing a visible frame with opacity 0.
      */
@@ -280,7 +280,7 @@ export const useContentPositioning = (
     };
 
     /**
-     * Same as above: use microtask for the initial measurement.
+     * Same as above: use macrotask for the initial measurement.
      * The internal rAF retry (for empty rects) is kept as a fallback.
      */
     setTimeout(() => {
