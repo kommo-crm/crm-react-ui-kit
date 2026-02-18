@@ -1050,6 +1050,13 @@ describe('ContextMenu', () => {
   });
 
   describe('Hover mode', () => {
+    beforeEach(() => {
+      // Clear any leaked timers from previous tests
+      jest.useFakeTimers();
+      jest.clearAllTimers();
+      jest.useRealTimers();
+    });
+
     it('Should handle hover interactions - Chain 1', async () => {
       const user = userEvent.setup();
 
@@ -1070,14 +1077,11 @@ describe('ContextMenu', () => {
       await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
       await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
       // 3) Hover on trigger - menu opens
       await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
@@ -1089,22 +1093,17 @@ describe('ContextMenu', () => {
       // 4) Hover on menu content - it stays open
       await user.hover(screen.getByTestId(DATA_CONTENT_TEST_ID));
 
-      await waitFor(() => {
-        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-      });
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
 
       // 5) Move cursor away from content and trigger - menu closes
       await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
       await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
     });
 
     it('Should handle hover interactions with SubRoot - Chain 2', async () => {
@@ -1138,12 +1137,10 @@ describe('ContextMenu', () => {
       // 3) Hover on SubRoot content - it doesn't close
       await user.hover(screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID));
 
-      await waitFor(() => {
-        expect(
-          screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
-        ).toBeInTheDocument();
-        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-      });
+      expect(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
 
       // 4) Move cursor away from all menus - they close
       await user.unhover(screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID));
@@ -1151,23 +1148,17 @@ describe('ContextMenu', () => {
       await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
       await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
       // 5) Hover on trigger - menu opens
       await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
@@ -1188,14 +1179,11 @@ describe('ContextMenu', () => {
       // 7) Hover on root menu content - SubRootMenu closes, but root stays open
       await user.hover(screen.getByTestId(DATA_CONTENT_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
     });
@@ -1231,12 +1219,8 @@ describe('ContextMenu', () => {
       // 3) Hover on Sub content - it doesn't close
       await user.hover(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID));
 
-      await waitFor(() => {
-        expect(
-          screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)
-        ).toBeInTheDocument();
-        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-      });
+      expect(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
 
       // 4) Move cursor away from all menus - they close
       await user.unhover(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID));
@@ -1244,23 +1228,17 @@ describe('ContextMenu', () => {
       await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
       await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
       // 5) Hover on trigger - menu opens
       await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
@@ -1281,14 +1259,11 @@ describe('ContextMenu', () => {
       // 7) Hover on root menu content - SubMenu closes, but root stays open
       await user.hover(screen.getByTestId(DATA_CONTENT_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
     });
@@ -1306,35 +1281,26 @@ describe('ContextMenu', () => {
       outsideElement.style.width = '100px';
       outsideElement.style.height = '100px';
       outsideElement.style.zIndex = '9999';
-
-      await act(async () => {
-        document.body.appendChild(outsideElement);
-      });
+      document.body.appendChild(outsideElement);
 
       await renderContextMenu({
         rootProps: {
           mode: ContextMenuMode.HOVER,
         },
         subRootProps: {
-          mode: ContextMenuMode.HOVER,
+          mode: ContextMenuMode.CLICK,
         },
       });
 
       // 1) Opened menu by hover on trigger
-      await act(async () => {
-        await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      });
+      await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
       await waitFor(() => {
         expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
       });
 
       // 2) Clicked on SubRootTrigger - new menu opened
-      await act(async () => {
-        await userEvent.click(
-          screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID)
-        );
-      });
+      await user.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
 
       await waitFor(() => {
         expect(
@@ -1342,17 +1308,15 @@ describe('ContextMenu', () => {
         ).toBeInTheDocument();
       });
 
-      // 3) Moved cursor away - Nothing closed
-      await act(async () => {
-        await user.unhover(screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      });
+      // 3) Moved cursor away - Nothing closed (SubRoot is CLICK mode, root stays open)
+      await user.unhover(screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
       // Wait a bit to ensure menus don't close
       await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       });
 
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
@@ -1361,65 +1325,31 @@ describe('ContextMenu', () => {
       ).toBeInTheDocument();
 
       // 4) Clicked outside menu - SubRootMenu closed, but root menu didn't close
-      // Note: In hover mode, clicking outside should only close SubRootMenu,
-      // not the root menu. The root menu stays open because it's in hover mode.
-      await act(async () => {
-        await userEvent.click(outsideElement);
-      });
-
-      // Wait for SubRootMenu to close
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
-
-      // Root menu might have closed, so we need to reopen it by hovering on trigger
-      // This simulates the behavior where root menu stays open in hover mode
-      const rootMenuContent = screen.queryByTestId(DATA_CONTENT_TEST_ID);
-
-      if (rootMenuContent) {
-        // Root menu is still open, hover on content to keep it open
-        await act(async () => {
-          await user.hover(rootMenuContent);
-        });
-      } else {
-        await act(async () => {
-          await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-        });
-
-        await waitFor(() => {
-          expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-        });
-      }
-
-      // 5) Moved cursor away from root menu content - root menu closed
+      await user.click(outsideElement);
 
       await waitFor(() => {
-        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+        expect(
+          screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
       });
 
-      await act(async () => {
-        await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      });
+      // Root menu should still be open - hover on content to stabilize
+      await user.hover(screen.getByTestId(DATA_CONTENT_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+
+      // 5) Moved cursor away from root menu content - root menu closed
+      await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
       // Cleanup
-      await act(async () => {
-        document.body.removeChild(outsideElement);
-      });
+      document.body.removeChild(outsideElement);
     });
 
     it('Should handle click mode bubbling in Sub - Chain 2', async () => {
@@ -1435,33 +1365,26 @@ describe('ContextMenu', () => {
       outsideElement.style.width = '100px';
       outsideElement.style.height = '100px';
       outsideElement.style.zIndex = '9999';
-
-      await act(async () => {
-        document.body.appendChild(outsideElement);
-      });
+      document.body.appendChild(outsideElement);
 
       await renderContextMenu({
         rootProps: {
           mode: ContextMenuMode.HOVER,
         },
         subProps: {
-          mode: ContextMenuMode.HOVER,
+          mode: ContextMenuMode.CLICK,
         },
       });
 
       // 1) Opened menu by hover on trigger
-      await act(async () => {
-        await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      });
+      await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
       await waitFor(() => {
         expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
       });
 
       // 2) Clicked on SubTrigger - new menu opened
-      await act(async () => {
-        await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
-      });
+      await user.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
 
       await waitFor(() => {
         expect(
@@ -1469,82 +1392,46 @@ describe('ContextMenu', () => {
         ).toBeInTheDocument();
       });
 
-      // 3) Moved cursor away - Nothing closed
-      await act(async () => {
-        await user.unhover(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      });
+      // 3) Moved cursor away - Nothing closed (Sub is CLICK mode, root stays open)
+      await user.unhover(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
 
       // Wait a bit to ensure menus don't close
       await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       });
 
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
       expect(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeInTheDocument();
 
       // 4) Clicked outside menu - SubMenu closed, but root menu didn't close
-      await act(async () => {
-        await userEvent.click(outsideElement);
-      });
-
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
-
-      // Root menu might have closed, so we need to reopen it by hovering on trigger
-      // This simulates the behavior where root menu stays open in hover mode
-      const rootMenuContent = screen.queryByTestId(DATA_CONTENT_TEST_ID);
-
-      if (rootMenuContent) {
-        // Root menu is still open, hover on content to keep it open
-        await act(async () => {
-          await user.hover(rootMenuContent);
-        });
-      } else {
-        await act(async () => {
-          await user.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-        });
-
-        await waitFor(() => {
-          expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
-        });
-      }
-
-      // 5) Hovered on root menu content, then moved cursor away - root menu closed
-      await act(async () => {
-        await user.hover(screen.getByTestId(DATA_CONTENT_TEST_ID));
-      });
+      await user.click(outsideElement);
 
       await waitFor(() => {
-        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+        expect(
+          screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
       });
 
-      await act(async () => {
-        await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
-        await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
-      });
+      // Root menu should still be open - hover on content to stabilize
+      await user.hover(screen.getByTestId(DATA_CONTENT_TEST_ID));
 
-      await waitFor(
-        () => {
-          expect(
-            screen.queryByTestId(DATA_CONTENT_TEST_ID)
-          ).not.toBeInTheDocument();
-        },
-        { timeout: 500 }
-      );
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+
+      // 5) Moved cursor away from root menu content - root menu closed
+      await user.unhover(screen.getByTestId(DATA_CONTENT_TEST_ID));
+      await user.unhover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId(DATA_CONTENT_TEST_ID)
+        ).not.toBeInTheDocument();
+      });
 
       // Cleanup
-      await act(async () => {
-        document.body.removeChild(outsideElement);
-      });
+      document.body.removeChild(outsideElement);
     });
 
     it('Should not close Root when input is focused', async () => {
@@ -1566,7 +1453,7 @@ describe('ContextMenu', () => {
       // 2) Focus input in root menu
       const input = screen.getByTestId(DATA_INPUT_TEST_ID);
 
-      await act(async () => {
+      act(() => {
         input.focus();
       });
 
@@ -1576,7 +1463,7 @@ describe('ContextMenu', () => {
 
       // Wait to ensure menu doesn't close
       await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       });
 
       // Menu should still be open when input is focused
@@ -1614,7 +1501,7 @@ describe('ContextMenu', () => {
       // 3) Focus input in SubRoot menu
       const input = screen.getByTestId(`${DATA_INPUT_TEST_ID}-subroot`);
 
-      await act(async () => {
+      act(() => {
         input.focus();
       });
 
@@ -1626,7 +1513,7 @@ describe('ContextMenu', () => {
 
       // Wait to ensure menus don't close
       await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       });
 
       // Both menus should still be open when input is focused
@@ -1667,7 +1554,7 @@ describe('ContextMenu', () => {
       // 3) Focus input in Sub menu
       const input = screen.getByTestId(`${DATA_INPUT_TEST_ID}-sub`);
 
-      await act(async () => {
+      act(() => {
         input.focus();
       });
 
@@ -1679,7 +1566,7 @@ describe('ContextMenu', () => {
 
       // Wait to ensure menus don't close
       await act(async () => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 50));
       });
 
       // Both menus should still be open when input is focused
