@@ -4,6 +4,8 @@ import { useIsTouchDevice, useIsAiming } from '@kommo-crm/react-hooks';
 
 import { useFocusChange, FocusChangeEvent } from 'src/hooks';
 
+import { noop } from 'src/utils';
+
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
@@ -64,6 +66,8 @@ export const useContextMenu = (
   const pendingCloseRef = useRef(false);
   const deferredEmitRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isChildAimingRef = useRef(false);
+  const isHoveredRef = useRef(false);
+  const handleContentEnterRef = useRef<() => void>(noop);
   const onFocusOutsideCallbackRef = useRef(onFocusOutside);
 
   const isTouchDevice = useIsTouchDevice();
@@ -108,6 +112,7 @@ export const useContextMenu = (
 
   const handleAimingChange = (aiming: boolean) => {
     onAiming?.(aiming);
+    contextMenuBus.emitAimingChange(aiming);
 
     /**
      * When aiming stops and there's a pending close request,
@@ -322,6 +327,8 @@ export const useContextMenu = (
    * Keeps the menu open in hover mode by canceling close timers.
    */
   const handleContentEnter = () => {
+    isHoveredRef.current = true;
+
     if (
       mode !== ContextMenuMode.HOVER ||
       (contextMenuBus.isAiming?.() && contextMenuBus.activeMenuId !== id)
@@ -366,11 +373,15 @@ export const useContextMenu = (
     }
   };
 
+  handleContentEnterRef.current = handleContentEnter;
+
   /**
    * Handles leaving the menu content area.
    * Allows the menu to close in hover mode.
    */
   const handleContentLeave = () => {
+    isHoveredRef.current = false;
+
     if (mode !== ContextMenuMode.HOVER) {
       return;
     }
@@ -434,6 +445,24 @@ export const useContextMenu = (
 
     return unsubscribe;
   }, [id, isOpenForcefully]);
+
+  /**
+   * When another menu's aiming stops and cursor is hovering this menu's
+   * trigger/content, retry opening this menu.
+   */
+  useEffect(() => {
+    if (mode !== ContextMenuMode.HOVER) {
+      return;
+    }
+
+    const unsubscribe = contextMenuBus.subscribeAimingChange((aiming) => {
+      if (!aiming && isHoveredRef.current) {
+        handleContentEnterRef.current();
+      }
+    });
+
+    return unsubscribe;
+  }, [mode]);
 
   /**
    * Handles the hover close delay.

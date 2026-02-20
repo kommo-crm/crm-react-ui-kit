@@ -17,3 +17,8 @@ export type ContextMenuBusPayload = {
  * Callback function for context menu bus subscribers.
  */
 export type ContextMenuBusCallback = (payload: ContextMenuBusPayload) => void;
+
+/**
+ * Callback function for aiming state change subscribers.
+ */
+export type ContextMenuBusAimingChangeCallback = (aiming: boolean) => void;
