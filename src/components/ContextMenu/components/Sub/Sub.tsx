@@ -16,7 +16,7 @@ import { ContextMenuSubProvider, DISPLAY_NAME } from './Sub.context';
 export const Sub = (props: SubProps) => {
   const {
     children,
-    mode = ContextMenuMode.HOVER,
+    mode: initialMode = ContextMenuMode.HOVER,
     onOpen,
     defaultOpen,
     shouldCloseRootMenuOnSelect = true,
@@ -29,6 +29,7 @@ export const Sub = (props: SubProps) => {
   } = props;
 
   const {
+    mode,
     isOpen,
     setIsOpen,
     isAnimatedOpen,
@@ -48,7 +49,7 @@ export const Sub = (props: SubProps) => {
     handlePointerDownOutside,
   } = useContextMenuSub({
     displayName: DISPLAY_NAME,
-    mode,
+    mode: initialMode,
     defaultOpen,
     onOpen,
     onAiming,

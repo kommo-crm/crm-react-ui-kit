@@ -489,5 +489,6 @@ export const useContextMenuSub = (
     itemWithFocusedInput,
     setItemWithFocusedInput,
     isAiming,
+    mode,
   };
 };

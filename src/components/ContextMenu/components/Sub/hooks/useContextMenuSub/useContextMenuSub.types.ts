@@ -111,4 +111,8 @@ export interface UseContextMenuSubResult {
    * Returns whether the cursor is currently moving toward the submenu.
    */
   isAiming: () => boolean;
+  /**
+   * The mode of the submenu.
+   */
+  mode: ContextMenuModeType;
 }
