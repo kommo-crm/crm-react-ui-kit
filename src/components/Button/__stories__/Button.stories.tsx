@@ -94,13 +94,18 @@ export const Icons: Story = {
 };
 
 export const Refs: Story = {
-  args: {},
+  args: {
+    successfulStateText: i18n.t('Saved'),
+  },
   argTypes: {
     theme: {
       table: { disable: false },
       control: 'select',
       mapping: ThemesMap,
       options: Object.keys(ThemesMap),
+    },
+    successfulStateText: {
+      control: 'text',
     },
   },
   render: (props) => {
@@ -120,22 +125,23 @@ export const Refs: Story = {
     };
 
     return (
-      <div>
-        <Button
-          {...props}
-          onClick={handleSuccessClick}
-          showSuccessfulStateRef={successRef}
-          successfulStateText={i18n.t('Saved')}
-        >
-          {i18n.t('Success Ref')}
-        </Button>
-        <Button
-          {...props}
-          showInvalidAnimationRef={invalidRef}
-          onClick={handleInvalidClick}
-        >
-          {i18n.t('Invalid Ref')}
-        </Button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div>
+          <div style={{ color: 'white' }}>{i18n.t('Success Ref')}</div>
+          <Button
+            {...props}
+            onClick={handleSuccessClick}
+            showSuccessfulStateRef={successRef}
+          />
+        </div>
+        <div>
+          <div style={{ color: 'white' }}>{i18n.t('Invalid Ref')}</div>
+          <Button
+            {...props}
+            showInvalidAnimationRef={invalidRef}
+            onClick={handleInvalidClick}
+          />
+        </div>
       </div>
     );
   },
