@@ -79,7 +79,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
     case shouldShowSuccessfulState:
       content = (
         <React.Fragment>
-          <span className={cx(s.state_overlay)}>{successfulStateText}</span>
+          <span>{successfulStateText}</span>
           <span className={cx(s.invisible)}>
             {before && <span className={cx(s.before)}>{before}</span>}
             <span>{children}</span>

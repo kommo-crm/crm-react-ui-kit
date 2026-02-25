@@ -81,14 +81,6 @@
   margin-left: var(--crm-ui-kit-button-elements-spacing);
 }
 
-.state_overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .invisible {
   visibility: hidden;
 }
@@ -106,5 +98,13 @@
   &:not(.disabled):hover {
     background: var(--crm-ui-kit-button-success-hover-background-color);
     border-color: var(--crm-ui-kit-button-success-border-color);
+  }
+
+  & .content {
+    display: inline-grid;
+  }
+
+  & .content > * {
+    grid-area: 1 / 1;
   }
 }
