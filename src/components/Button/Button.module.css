@@ -81,7 +81,7 @@
   margin-left: var(--crm-ui-kit-button-elements-spacing);
 }
 
-.spinner_overlay {
+.action_overlay {
   position: absolute;
   inset: 0;
   display: flex;

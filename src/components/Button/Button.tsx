@@ -77,12 +77,21 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
 
   switch (true) {
     case shouldShowSuccessfulState:
-      content = <span>{successfulStateText || content}</span>;
+      content = (
+        <React.Fragment>
+          <span className={cx(s.action_overlay)}>{successfulStateText}</span>
+          <span className={cx(s.invisible)}>
+            {before && <span className={cx(s.before)}>{before}</span>}
+            <span>{children}</span>
+            {after && <span className={cx(s.after)}>{after}</span>}
+          </span>
+        </React.Fragment>
+      );
       break;
     case isLoading:
       content = (
         <React.Fragment>
-          <span className={cx(s.spinner_overlay)}>
+          <span className={cx(s.action_overlay)}>
             <Spinner
               theme={
                 isDisabled
