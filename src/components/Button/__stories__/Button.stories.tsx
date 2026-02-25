@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useGlobals } from '@storybook/preview-api';
 
 import { CanvasCentered, IconsMap } from '@storybook-utils/constants';
 
 import { noop } from 'src/utils';
+import { Appearance } from 'src/lib/appearance';
 
 import { i18n } from '@i18n';
 
@@ -109,6 +111,10 @@ export const Refs: Story = {
     },
   },
   render: (props) => {
+    const [{ appearance }] = useGlobals();
+    const labelColor =
+      appearance === Appearance.ALTERNATIVE ? 'white' : 'black';
+
     const successRef = useRef(noop);
     const invalidRef = useRef(noop);
 
@@ -127,7 +133,7 @@ export const Refs: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <div style={{ color: 'white' }}>{i18n.t('Success Ref')}</div>
+          <div style={{ color: labelColor }}>{i18n.t('Success Ref')}</div>
           <Button
             {...props}
             onClick={handleSuccessClick}
@@ -135,7 +141,7 @@ export const Refs: Story = {
           />
         </div>
         <div>
-          <div style={{ color: 'white' }}>{i18n.t('Invalid Ref')}</div>
+          <div style={{ color: labelColor }}>{i18n.t('Invalid Ref')}</div>
           <Button
             {...props}
             showInvalidAnimationRef={invalidRef}
