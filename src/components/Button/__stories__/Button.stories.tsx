@@ -80,6 +80,12 @@ export const Loading: Story = {
   },
 };
 
+export const Disabled: Story = {
+  args: {
+    isDisabled: true,
+  },
+};
+
 export const Icons: Story = {
   args: {
     before: IconsMap.CopyIcon,
