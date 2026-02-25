@@ -90,6 +90,20 @@
   animation-fill-mode: both;
 }
 
+.loading,
+.success {
+  & .content {
+    display: inline-grid;
+  }
+
+  & .content > * {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .success {
   color: var(--crm-ui-kit-button-success-color);
   background: var(--crm-ui-kit-button-success-background-color);
@@ -98,13 +112,5 @@
   &:not(.disabled):hover {
     background: var(--crm-ui-kit-button-success-hover-background-color);
     border-color: var(--crm-ui-kit-button-success-border-color);
-  }
-
-  & .content {
-    display: inline-grid;
-  }
-
-  & .content > * {
-    grid-area: 1 / 1;
   }
 }

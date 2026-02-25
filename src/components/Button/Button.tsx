@@ -97,7 +97,6 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
                 ? spinnerThemes.disabledTheme
                 : spinnerThemes.defaultTheme
             }
-            isCentered
           />
           <span className={cx(s.invisible)}>
             {before && <span className={cx(s.before)}>{before}</span>}
@@ -127,6 +126,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
       onClick={handleClick}
       className={cx(s.button, themeClassName, className, {
         [s.invalid]: shouldShowInvalidAnimation,
+        [s.loading]: isLoading,
         [s.success]: shouldShowSuccessfulState,
         [s.disabled]: isDisabled,
       })}
