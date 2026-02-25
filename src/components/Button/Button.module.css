@@ -81,7 +81,7 @@
   margin-left: var(--crm-ui-kit-button-elements-spacing);
 }
 
-.action_overlay {
+.state_overlay {
   position: absolute;
   inset: 0;
   display: flex;

@@ -79,7 +79,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
     case shouldShowSuccessfulState:
       content = (
         <React.Fragment>
-          <span className={cx(s.action_overlay)}>{successfulStateText}</span>
+          <span className={cx(s.state_overlay)}>{successfulStateText}</span>
           <span className={cx(s.invisible)}>
             {before && <span className={cx(s.before)}>{before}</span>}
             <span>{children}</span>
@@ -91,7 +91,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
     case isLoading:
       content = (
         <React.Fragment>
-          <span className={cx(s.action_overlay)}>
+          <span className={cx(s.state_overlay)}>
             <Spinner
               theme={
                 isDisabled
