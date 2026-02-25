@@ -81,16 +81,23 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
       break;
     case isLoading:
       content = (
-        <span className={cx(s.spinner_container)}>
-          <Spinner
-            theme={
-              isDisabled
-                ? spinnerThemes.disabledTheme
-                : spinnerThemes.defaultTheme
-            }
-            isCentered
-          />
-        </span>
+        <React.Fragment>
+          <span className={cx(s.spinner_overlay)}>
+            <Spinner
+              theme={
+                isDisabled
+                  ? spinnerThemes.disabledTheme
+                  : spinnerThemes.defaultTheme
+              }
+              isCentered
+            />
+          </span>
+          <span className={cx(s.invisible)}>
+            {before && <span className={cx(s.before)}>{before}</span>}
+            <span>{children}</span>
+            {after && <span className={cx(s.after)}>{after}</span>}
+          </span>
+        </React.Fragment>
       );
       break;
 
