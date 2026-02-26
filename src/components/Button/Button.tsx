@@ -77,20 +77,33 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
 
   switch (true) {
     case shouldShowSuccessfulState:
-      content = <span>{successfulStateText || content}</span>;
+      content = (
+        <React.Fragment>
+          <span>{successfulStateText}</span>
+          <span className={cx(s.invisible)}>
+            {before && <span className={cx(s.before)}>{before}</span>}
+            <span>{children}</span>
+            {after && <span className={cx(s.after)}>{after}</span>}
+          </span>
+        </React.Fragment>
+      );
       break;
     case isLoading:
       content = (
-        <span className={cx(s.spinner_container)}>
+        <React.Fragment>
           <Spinner
             theme={
               isDisabled
                 ? spinnerThemes.disabledTheme
                 : spinnerThemes.defaultTheme
             }
-            isCentered
           />
-        </span>
+          <span className={cx(s.invisible)}>
+            {before && <span className={cx(s.before)}>{before}</span>}
+            <span>{children}</span>
+            {after && <span className={cx(s.after)}>{after}</span>}
+          </span>
+        </React.Fragment>
       );
       break;
 
@@ -113,6 +126,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
       onClick={handleClick}
       className={cx(s.button, themeClassName, className, {
         [s.invalid]: shouldShowInvalidAnimation,
+        [s.loading]: isLoading,
         [s.success]: shouldShowSuccessfulState,
         [s.disabled]: isDisabled,
       })}
