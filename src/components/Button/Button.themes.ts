@@ -50,11 +50,13 @@ const ButtonBaseThemeValues = {
 
   '--crm-ui-kit-button-border-width': '1px',
   '--crm-ui-kit-button-border-style': 'solid',
-  '--crm-ui-kit-button-border-radius': '3px',
+  '--crm-ui-kit-button-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
 
   '--crm-ui-kit-button-hover-border-width': '1px',
   '--crm-ui-kit-button-hover-border-style': 'solid',
-  '--crm-ui-kit-button-hover-border-radius': '3px',
+  '--crm-ui-kit-button-hover-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
 
   '--crm-ui-kit-button-success-color': 'var(--crm-ui-kit-color-white)',
   '--crm-ui-kit-button-success-background-color':

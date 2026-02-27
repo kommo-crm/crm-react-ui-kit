@@ -55,7 +55,8 @@ const TextAreaBaseValues: Omit<
   '--crm-ui-kit-textarea-padding-top': '8px',
   '--crm-ui-kit-textarea-padding-horizontal': '9px',
   '--crm-ui-kit-textarea-padding-bottom': '7px',
-  '--crm-ui-kit-textarea-border-radius': '3px',
+  '--crm-ui-kit-textarea-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-textarea-spacing': '4px',
   '--crm-ui-kit-textarea-width': '100%',
   '--crm-ui-kit-textarea-min-height': '56px',

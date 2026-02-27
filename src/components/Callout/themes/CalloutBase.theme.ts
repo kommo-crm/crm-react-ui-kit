@@ -18,6 +18,6 @@ export const CalloutBaseValues: Omit<
 > = {
   '--crm-ui-kit-callout-padding': '12px',
   '--crm-ui-kit-callout-border-radius':
-    'var(--crm-ui-kit-palette-focus-visible-border-radius)',
+    'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-callout-icon-color': 'var(--crm-ui-kit-palette-text-primary);',
 };

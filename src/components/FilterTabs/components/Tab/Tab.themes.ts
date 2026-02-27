@@ -22,7 +22,8 @@ export const TabPrimaryTheme: TabThemeType = {
     'var(--crm-ui-kit-color-blueberry)',
 
   '--crm-ui-kit-filter-tabs-tab-border-width': '1px',
-  '--crm-ui-kit-filter-tabs-tab-border-radius': '3px',
+  '--crm-ui-kit-filter-tabs-tab-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-filter-tabs-tab-border-style': 'solid',
 
   '--crm-ui-kit-filter-tabs-tab-focus-visible-outline-color':
