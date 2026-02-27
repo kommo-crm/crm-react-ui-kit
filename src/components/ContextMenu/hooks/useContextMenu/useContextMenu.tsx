@@ -4,6 +4,8 @@ import { useIsTouchDevice, useIsAiming } from '@kommo-crm/react-hooks';
 
 import { useFocusChange, FocusChangeEvent } from 'src/hooks';
 
+import { noop } from 'src/utils';
+
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
@@ -32,6 +34,8 @@ export const useContextMenu = (
     onAnimatedOpen,
     onAiming,
     onFocusOutside,
+    aimingTolerance,
+    aimingIdleTimeout,
   } = options;
 
   const id = useId();
@@ -40,6 +44,7 @@ export const useContextMenu = (
     isOpenForcefully ?? defaultOpen ?? false
   );
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
+  const [skipAnimation, setSkipAnimation] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
@@ -58,10 +63,11 @@ export const useContextMenu = (
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shouldPreventFocusRestoreRef = useRef(false);
-  const movementCheckIntervalRef = useRef<ReturnType<
-    typeof setInterval
-  > | null>(null);
   const pendingCloseRef = useRef(false);
+  const deferredEmitRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isChildAimingRef = useRef(false);
+  const isHoveredRef = useRef(false);
+  const handleContentEnterRef = useRef<() => void>(noop);
   const onFocusOutsideCallbackRef = useRef(onFocusOutside);
 
   const isTouchDevice = useIsTouchDevice();
@@ -70,11 +76,6 @@ export const useContextMenu = (
    * The mode of the ContextMenu.Root.
    */
   const mode = isTouchDevice ? ContextMenuMode.CLICK : rootMode;
-
-  const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
-    isEnabled: isOpen && mode === ContextMenuMode.HOVER,
-    onChange: onAiming,
-  });
 
   /**
    * Clears the timers.
@@ -90,9 +91,9 @@ export const useContextMenu = (
       closeTimerRef.current = null;
     }
 
-    if (movementCheckIntervalRef.current) {
-      clearInterval(movementCheckIntervalRef.current);
-      movementCheckIntervalRef.current = null;
+    if (deferredEmitRef.current) {
+      clearTimeout(deferredEmitRef.current);
+      deferredEmitRef.current = null;
     }
   };
 
@@ -109,11 +110,75 @@ export const useContextMenu = (
     setIsRootContentBlocked(false);
   };
 
+  const handleAimingChange = (aiming: boolean) => {
+    onAiming?.(aiming);
+    contextMenuBus.emitAimingChange(aiming);
+
+    /**
+     * When aiming stops and there's a pending close request,
+     * proceed with closing the menu (if cursor is not inside content
+     * and no child submenu is being aimed at).
+     */
+    if (
+      !aiming &&
+      pendingCloseRef.current &&
+      !isInsideContentRef.current &&
+      !isChildAimingRef.current
+    ) {
+      pendingCloseRef.current = false;
+      setIsAnimatedOpen(false);
+
+      closeTimerRef.current = setTimeout(() => {
+        handleClose();
+      }, animationDuration);
+    }
+  };
+
+  const { isAiming, ref: contentRef } = useIsAiming<HTMLDivElement>({
+    isEnabled: isOpen && mode === ContextMenuMode.HOVER,
+    onChange: handleAimingChange,
+    tolerance: aimingTolerance,
+    idleTimeout: aimingIdleTimeout,
+  });
+
+  /**
+   * Returns whether any child submenu is being aimed at.
+   */
+  const isChildAiming = () => isChildAimingRef.current;
+
+  /**
+   * Called by child submenus (via LevelProvider) when their aiming state changes.
+   * Also triggers pending close when child aiming stops.
+   */
+  const handleChildAimingChange = (aiming: boolean) => {
+    isChildAimingRef.current = aiming;
+
+    if (
+      !aiming &&
+      pendingCloseRef.current &&
+      !isInsideContentRef.current &&
+      !isAiming()
+    ) {
+      pendingCloseRef.current = false;
+      setIsAnimatedOpen(false);
+
+      closeTimerRef.current = setTimeout(() => {
+        handleClose();
+      }, animationDuration);
+    }
+  };
+
   /**
    * Requests the close of the menu.
    */
   const requestClose = () => {
     clearTimers();
+
+    /**
+     * Reset skipAnimation for normal close (not via contextMenuBus)
+     * to ensure animation plays on timeout-based closure
+     */
+    setSkipAnimation(false);
 
     if (mode === ContextMenuMode.HOVER) {
       if (
@@ -136,47 +201,22 @@ export const useContextMenu = (
       }
 
       /**
-       * Mark that we have a pending close request
+       * Mark that we have a pending close request.
+       * If currently aiming, handleAimingChange will handle close when aiming stops.
        */
       pendingCloseRef.current = true;
 
       /**
-       * Start checking movement periodically
+       * If not currently aiming (own or child), proceed with close immediately.
+       * Otherwise, handleAimingChange or handleChildAimingChange will handle it.
        */
-      if (!movementCheckIntervalRef.current) {
-        movementCheckIntervalRef.current = setInterval(() => {
-          /**
-           * If cursor entered content, stop checking and cancel close
-           */
-          if (isInsideContentRef.current) {
-            clearTimers();
-            pendingCloseRef.current = false;
-            setIsAnimatedOpen(true);
+      if (!isAiming() && !isChildAimingRef.current) {
+        pendingCloseRef.current = false;
+        setIsAnimatedOpen(false);
 
-            return;
-          }
-
-          /**
-           * Check if still moving toward menu
-           */
-          if (isAiming()) {
-            /**
-             * Still moving toward menu, keep delaying close
-             */
-            return;
-          }
-
-          /**
-           * Not moving toward menu anymore, proceed with close
-           */
-          clearTimers();
-          pendingCloseRef.current = false;
-          setIsAnimatedOpen(false);
-
-          closeTimerRef.current = setTimeout(() => {
-            handleClose();
-          }, animationDuration);
-        }, 50);
+        closeTimerRef.current = setTimeout(() => {
+          handleClose();
+        }, animationDuration);
       }
     } else {
       handleClose();
@@ -185,15 +225,27 @@ export const useContextMenu = (
 
   /**
    * Closes the menu immediately.
+   * Used when closing via contextMenuBus or other immediate close scenarios.
    * @param preventFocusRestore - If true, prevents Radix from restoring focus to trigger.
+   * @param skipAnimationFlag - If true, skips animation when closing or opening.
    */
-  const closeMenuImmediately = (preventFocusRestore = false) => {
+  const closeMenuImmediately = ({
+    preventFocusRestore = false,
+    skipAnimationFlag = false,
+  }: {
+    preventFocusRestore?: boolean;
+    skipAnimationFlag?: boolean;
+  }) => {
     shouldPreventFocusRestoreRef.current = preventFocusRestore;
     clearTimers();
+    pendingCloseRef.current = false;
+    setSkipAnimation(skipAnimationFlag);
     setIsAnimatedOpen(false);
     setIsOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
+    isInsideContentRef.current = false;
+    setIsRootContentBlocked(false);
   };
 
   /**
@@ -201,16 +253,7 @@ export const useContextMenu = (
    */
   useEffect(() => {
     if (!isOpen) {
-      /**
-       * Reset flag after menu closes to allow normal behavior on next open
-       */
-      const timeoutId = setTimeout(() => {
-        shouldPreventFocusRestoreRef.current = false;
-      }, 0);
-
-      return () => {
-        clearTimeout(timeoutId);
-      };
+      shouldPreventFocusRestoreRef.current = false;
     }
   }, [isOpen]);
 
@@ -235,6 +278,14 @@ export const useContextMenu = (
         closeTimerRef.current = null;
       }
 
+      /**
+       * Cancel any pending close when opening
+       */
+      if (pendingCloseRef.current) {
+        clearTimers();
+        pendingCloseRef.current = false;
+      }
+
       if (mode === ContextMenuMode.HOVER) {
         setIsAnimatedOpen(true);
       }
@@ -242,16 +293,24 @@ export const useContextMenu = (
       setIsOpen(true);
       onOpen?.(true);
 
-      setTimeout(() => {
-        if (isOpenForcefully !== false) {
-          contextMenuBus.emit({
-            id,
-            isAiming,
-          });
-        }
-      }, 0);
-    } else {
+      if (isOpenForcefully !== false) {
+        contextMenuBus.emit({
+          id,
+          isAiming,
+        });
+      }
+
+      return;
+    }
+
+    /**
+     * Don't immediately set isOpen to false in HOVER mode.
+     * Let requestClose handle the state change after checking aiming.
+     */
+    if (mode === ContextMenuMode.HOVER) {
       requestClose();
+    } else {
+      handleClose();
     }
   };
 
@@ -268,6 +327,8 @@ export const useContextMenu = (
    * Keeps the menu open in hover mode by canceling close timers.
    */
   const handleContentEnter = () => {
+    isHoveredRef.current = true;
+
     if (
       mode !== ContextMenuMode.HOVER ||
       (contextMenuBus.isAiming?.() && contextMenuBus.activeMenuId !== id)
@@ -299,7 +360,9 @@ export const useContextMenu = (
       setIsInsideContent(true);
       isInsideContentRef.current = true;
 
-      setTimeout(() => {
+      deferredEmitRef.current = setTimeout(() => {
+        deferredEmitRef.current = null;
+
         if (isOpenForcefully !== false) {
           contextMenuBus.emit({
             id,
@@ -310,11 +373,15 @@ export const useContextMenu = (
     }
   };
 
+  handleContentEnterRef.current = handleContentEnter;
+
   /**
    * Handles leaving the menu content area.
    * Allows the menu to close in hover mode.
    */
   const handleContentLeave = () => {
+    isHoveredRef.current = false;
+
     if (mode !== ContextMenuMode.HOVER) {
       return;
     }
@@ -329,42 +396,16 @@ export const useContextMenu = (
     }
 
     /**
-     * When leaving content, if there's a pending close, restart the check
+     * When leaving content, if there's a pending close and not aiming,
+     * proceed with close. If aiming, handleAimingChange will handle it.
      */
-    if (pendingCloseRef.current && !movementCheckIntervalRef.current) {
-      movementCheckIntervalRef.current = setInterval(() => {
-        /**
-         * If cursor re-entered content, stop checking and cancel close
-         */
-        if (isInsideContentRef.current) {
-          clearTimers();
-          pendingCloseRef.current = false;
-          setIsAnimatedOpen(true);
+    if (pendingCloseRef.current && !isAiming() && !isChildAimingRef.current) {
+      pendingCloseRef.current = false;
+      setIsAnimatedOpen(false);
 
-          return;
-        }
-
-        /**
-         * Check if still moving toward menu
-         */
-        if (isAiming()) {
-          /**
-           * Still moving toward menu, keep delaying close
-           */
-          return;
-        }
-
-        /**
-         * Not moving toward menu anymore, proceed with close
-         */
-        clearTimers();
-        pendingCloseRef.current = false;
-        setIsAnimatedOpen(false);
-
-        closeTimerRef.current = setTimeout(() => {
-          handleClose();
-        }, animationDuration);
-      }, 50);
+      closeTimerRef.current = setTimeout(() => {
+        handleClose();
+      }, animationDuration);
     }
   };
 
@@ -395,12 +436,33 @@ export const useContextMenu = (
 
     const unsubscribe = contextMenuBus.subscribe(({ id: openedId }) => {
       if (openedId !== id) {
-        closeMenuImmediately(true);
+        closeMenuImmediately({
+          preventFocusRestore: true,
+          skipAnimationFlag: true,
+        });
       }
     });
 
     return unsubscribe;
   }, [id, isOpenForcefully]);
+
+  /**
+   * When another menu's aiming stops and cursor is hovering this menu's
+   * trigger/content, retry opening this menu.
+   */
+  useEffect(() => {
+    if (mode !== ContextMenuMode.HOVER) {
+      return;
+    }
+
+    const unsubscribe = contextMenuBus.subscribeAimingChange((aiming) => {
+      if (!aiming && isHoveredRef.current) {
+        handleContentEnterRef.current();
+      }
+    });
+
+    return unsubscribe;
+  }, [mode]);
 
   /**
    * Handles the hover close delay.
@@ -518,7 +580,7 @@ export const useContextMenu = (
         /**
          * Prevent focus restoration when closing due to focus loss
          */
-        closeMenuImmediately(true);
+        closeMenuImmediately({ preventFocusRestore: true });
       }
     },
   });
@@ -539,6 +601,10 @@ export const useContextMenu = (
     onFocusOutsideCallbackRef.current = callback;
   };
 
+  const handleCloseMenuImmediately = (preventFocusRestore?: boolean) => {
+    closeMenuImmediately({ preventFocusRestore });
+  };
+
   return {
     isOpen,
     mode,
@@ -547,9 +613,10 @@ export const useContextMenu = (
     triggerRef,
     contentRef,
     isAnimatedOpen,
+    skipAnimation,
     animationDuration,
     hoverCloseDelay,
-    closeMenuImmediately,
+    closeMenuImmediately: handleCloseMenuImmediately,
     onContentEnter: handleContentEnter,
     onContentLeave: handleContentLeave,
     onChildOpen: handleChildOpen,
@@ -560,5 +627,7 @@ export const useContextMenu = (
     setItemWithFocusedInput,
     shouldPreventFocusRestore,
     setOnFocusOutside,
+    isChildAiming,
+    onChildAiming: handleChildAimingChange,
   };
 };
