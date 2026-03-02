@@ -12,12 +12,16 @@ import {
   ButtonNeutralTheme,
   ButtonPrimaryTheme,
   ButtonSecondaryTheme,
+  ButtonDangerPrimaryTheme,
+  ButtonDangerTertiaryTheme,
 } from '..';
 
 const ThemesMap = {
   ButtonNeutralTheme,
   ButtonPrimaryTheme,
   ButtonSecondaryTheme,
+  ButtonDangerPrimaryTheme,
+  ButtonDangerTertiaryTheme,
 };
 
 const USAGE = `
@@ -150,5 +154,17 @@ export const ButtonPrimary: Story = {
 export const ButtonSecondary: Story = {
   tags: ['!dev'],
   args: { theme: ButtonSecondaryTheme },
+  render: (props) => <Button {...props} />,
+};
+
+export const ButtonDangerPrimary: Story = {
+  tags: ['!dev'],
+  args: { theme: ButtonDangerPrimaryTheme },
+  render: (props) => <Button {...props} />,
+};
+
+export const ButtonDangerTertiary: Story = {
+  tags: ['!dev'],
+  args: { theme: ButtonDangerTertiaryTheme },
   render: (props) => <Button {...props} />,
 };
