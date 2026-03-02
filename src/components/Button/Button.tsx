@@ -73,50 +73,15 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
     onClick(e);
   };
 
-  let content: React.ReactNode = null;
+  const innerContent = (
+    <React.Fragment>
+      {before && <span className={cx(s.before)}>{before}</span>}
+      <span>{children}</span>
+      {after && <span className={cx(s.after)}>{after}</span>}
+    </React.Fragment>
+  );
 
-  switch (true) {
-    case shouldShowSuccessfulState:
-      content = (
-        <React.Fragment>
-          <span>{successfulStateText}</span>
-          <span className={cx(s.invisible)}>
-            {before && <span className={cx(s.before)}>{before}</span>}
-            <span>{children}</span>
-            {after && <span className={cx(s.after)}>{after}</span>}
-          </span>
-        </React.Fragment>
-      );
-      break;
-    case isLoading:
-      content = (
-        <React.Fragment>
-          <Spinner
-            theme={
-              isDisabled
-                ? spinnerThemes.disabledTheme
-                : spinnerThemes.defaultTheme
-            }
-          />
-          <span className={cx(s.invisible)}>
-            {before && <span className={cx(s.before)}>{before}</span>}
-            <span>{children}</span>
-            {after && <span className={cx(s.after)}>{after}</span>}
-          </span>
-        </React.Fragment>
-      );
-      break;
-
-    default:
-      content = (
-        <React.Fragment>
-          {before && <span className={cx(s.before)}>{before}</span>}
-          <span>{children}</span>
-          {after && <span className={cx(s.after)}>{after}</span>}
-        </React.Fragment>
-      );
-      break;
-  }
+  const isOverlayVisible = isLoading || shouldShowSuccessfulState;
 
   return (
     <button
@@ -132,7 +97,23 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
       })}
       disabled={isDisabled && !isClickableWhileDisabled}
     >
-      <span className={cx(s.content)}>{content}</span>
+      <span className={cx(s.content)}>
+        {shouldShowSuccessfulState && <span>{successfulStateText}</span>}
+        {isLoading && !shouldShowSuccessfulState && (
+          <Spinner
+            theme={
+              isDisabled
+                ? spinnerThemes.disabledTheme
+                : spinnerThemes.defaultTheme
+            }
+          />
+        )}
+        {isOverlayVisible ? (
+          <span className={cx(s.invisible)}>{innerContent}</span>
+        ) : (
+          innerContent
+        )}
+      </span>
     </button>
   );
 });
