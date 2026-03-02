@@ -131,8 +131,21 @@ export const Refs: Story = {
     };
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '16px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           <div style={{ color: labelColor }}>{i18n.t('Success Ref')}</div>
           <Button
             {...props}
@@ -140,7 +153,13 @@ export const Refs: Story = {
             showSuccessfulStateRef={successRef}
           />
         </div>
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           <div style={{ color: labelColor }}>{i18n.t('Invalid Ref')}</div>
           <Button
             {...props}
