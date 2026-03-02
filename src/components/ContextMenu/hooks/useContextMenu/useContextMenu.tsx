@@ -103,6 +103,7 @@ export const useContextMenu = (
   const handleClose = () => {
     clearTimers();
     pendingCloseRef.current = false;
+    isHoveredRef.current = false;
     setIsOpen(false);
     onOpen?.(false);
     setIsInsideContent(false);
@@ -239,6 +240,7 @@ export const useContextMenu = (
     shouldPreventFocusRestoreRef.current = preventFocusRestore;
     clearTimers();
     pendingCloseRef.current = false;
+    isHoveredRef.current = false;
     setSkipAnimation(skipAnimationFlag);
     setIsAnimatedOpen(false);
     setIsOpen(false);
