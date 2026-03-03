@@ -251,10 +251,14 @@ export const useContextMenu = (
   };
 
   /**
-   * Resets the focus restore prevention flag when menu closes.
+   * Resets the focus restore prevention flag when menu opens.
+   * We reset on open (not close) because Radix's FocusScope restores focus
+   * asynchronously via setTimeout(0) on unmount. If we reset the flag on close,
+   * it gets cleared before the async focus restoration fires, making
+   * shouldPreventFocusRestore() return false when handleCloseAutoFocus is called.
    */
   useEffect(() => {
-    if (!isOpen) {
+    if (isOpen) {
       shouldPreventFocusRestoreRef.current = false;
     }
   }, [isOpen]);
