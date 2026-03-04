@@ -18,6 +18,7 @@ import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu, ContextMenuRootProps } from '..';
 import { ContextMenuSubRootProps } from '../components/SubRoot/SubRoot.props';
 import { SubProps } from '../components/Sub';
+import { contextMenuBus } from '../hooks/useContextMenu/utils';
 
 const DATA_ROOT_TEST_ID = 'ContextMenuRoot';
 const DATA_ITEM_TEST_ID = 'ContextMenuItem';
@@ -262,6 +263,58 @@ const renderContextMenu = async ({
   };
 
   return render(<ContextMenuWrapped />);
+};
+
+const renderTwoContextMenus = async ({
+  firstMenuMode = ContextMenuMode.CLICK,
+  secondMenuMode = ContextMenuMode.CLICK,
+}: {
+  firstMenuMode?: ContextMenuMode;
+  secondMenuMode?: ContextMenuMode;
+} = {}) => {
+  const TwoContextMenus = () => (
+    <>
+      <ContextMenu.Root mode={firstMenuMode}>
+        <ContextMenu.Trigger data-testid="FirstMenuTrigger">
+          <ContextMenuTriggerIcon />
+        </ContextMenu.Trigger>
+
+        <ContextMenu.Portal>
+          <ContextMenu.Content
+            disableAutoPositioning
+            data-testid="FirstMenuContent"
+          >
+            <ContextMenu.Item>
+              <Text theme={TextContextMenuTheme} size="l">
+                Item in First Menu
+              </Text>
+            </ContextMenu.Item>
+          </ContextMenu.Content>
+        </ContextMenu.Portal>
+      </ContextMenu.Root>
+
+      <ContextMenu.Root mode={secondMenuMode}>
+        <ContextMenu.Trigger data-testid="SecondMenuTrigger">
+          <ContextMenuTriggerIcon />
+        </ContextMenu.Trigger>
+
+        <ContextMenu.Portal>
+          <ContextMenu.Content
+            disableAutoPositioning
+            data-testid="SecondMenuContent"
+          >
+            <ContextMenu.Item>
+              <Text theme={TextContextMenuTheme} size="l">
+                Item in Second Menu
+              </Text>
+            </ContextMenu.Item>
+          </ContextMenu.Content>
+        </ContextMenu.Portal>
+      </ContextMenu.Root>
+    </>
+  );
+
+  return render(<TwoContextMenus />);
 };
 
 describe('ContextMenu', () => {
@@ -1572,6 +1625,112 @@ describe('ContextMenu', () => {
       // Both menus should still be open when input is focused
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
       expect(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeInTheDocument();
+    });
+  });
+
+  describe('Menu synchronization', () => {
+    beforeEach(() => {
+      // Clear any leaked timers from previous tests
+      jest.useFakeTimers();
+      jest.clearAllTimers();
+      jest.useRealTimers();
+    });
+
+    it('Should synchronize between two hover menus', async () => {
+      const user = userEvent.setup();
+
+      await renderTwoContextMenus({
+        firstMenuMode: ContextMenuMode.HOVER,
+        secondMenuMode: ContextMenuMode.HOVER,
+      });
+
+      // 1) Hover on first trigger - first menu opens
+      await user.hover(screen.getByTestId('FirstMenuTrigger'));
+
+      await waitFor(() => {
+        expect(screen.getByTestId('FirstMenuContent')).toBeInTheDocument();
+      });
+
+      // 2) Quickly hover on second trigger without aiming toward first menu content
+      await user.hover(screen.getByTestId('SecondMenuTrigger'));
+
+      // 3) Verify instant switch - first menu closed, second menu opened
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId('FirstMenuContent')
+        ).not.toBeInTheDocument();
+        expect(screen.getByTestId('SecondMenuContent')).toBeInTheDocument();
+      });
+    });
+
+    it('Should synchronize between two click menus', async () => {
+      await renderTwoContextMenus({
+        firstMenuMode: ContextMenuMode.CLICK,
+        secondMenuMode: ContextMenuMode.CLICK,
+      });
+
+      // 1) Click first trigger - first menu opens
+      await userEvent.click(screen.getByTestId('FirstMenuTrigger'));
+
+      expect(screen.getByTestId('FirstMenuContent')).toBeInTheDocument();
+
+      // 2) Click second trigger
+      await userEvent.click(screen.getByTestId('SecondMenuTrigger'));
+
+      // 3) Verify instant switch - first menu closed, second menu opened
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId('FirstMenuContent')
+        ).not.toBeInTheDocument();
+      });
+
+      expect(screen.getByTestId('SecondMenuContent')).toBeInTheDocument();
+    });
+
+    it('Should not reopen first hover menu after item click when aiming stops', async () => {
+      const user = userEvent.setup();
+
+      await renderTwoContextMenus({
+        firstMenuMode: ContextMenuMode.HOVER,
+        secondMenuMode: ContextMenuMode.HOVER,
+      });
+
+      // 1) Hover on first trigger - first menu opens (sets isHoveredRef = true)
+      await user.hover(screen.getByTestId('FirstMenuTrigger'));
+
+      await waitFor(() => {
+        expect(screen.getByTestId('FirstMenuContent')).toBeInTheDocument();
+      });
+
+      // 2) Click item in first menu that closes root menu
+      // isHoveredRef must be reset to false in handleClose,
+      // otherwise stale isHoveredRef will cause the menu to reopen on aiming change
+      await user.click(screen.getByText('Item in First Menu'));
+
+      await waitFor(() => {
+        expect(
+          screen.queryByTestId('FirstMenuContent')
+        ).not.toBeInTheDocument();
+      });
+
+      // 3) Hover on second trigger - second menu opens
+      await user.hover(screen.getByTestId('SecondMenuTrigger'));
+
+      await waitFor(() => {
+        expect(screen.getByTestId('SecondMenuContent')).toBeInTheDocument();
+      });
+
+      // 4) Simulate aiming stop (in real browser, useIsAiming fires this
+      // when cursor reaches the content area). The first menu's
+      // subscribeAimingChange callback checks isHoveredRef — if it wasn't
+      // reset on close, it would call handleContentEnter and reopen the menu.
+      act(() => {
+        contextMenuBus.emitAimingChange(false);
+      });
+
+      // 5) First menu must NOT reopen, second menu stays open
+      expect(screen.queryByTestId('FirstMenuContent')).not.toBeInTheDocument();
+      expect(screen.getByTestId('SecondMenuContent')).toBeInTheDocument();
     });
   });
 });
