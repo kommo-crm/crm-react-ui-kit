@@ -44,6 +44,14 @@
     transform: translateY(1px);
   }
 
+  &:focus-visible {
+    outline-color: var(--crm-ui-kit-button-focus-visible-outline-color);
+    outline-width: var(--crm-ui-kit-button-focus-visible-outline-width);
+    outline-style: var(--crm-ui-kit-button-focus-visible-outline-style);
+    outline-offset: var(--crm-ui-kit-button-focus-visible-outline-offset);
+    border-radius: var(--crm-ui-kit-button-focus-visible-border-radius);
+  }
+
   &:not(.disabled):hover {
     color: var(--crm-ui-kit-button-hover-color);
     background: var(--crm-ui-kit-button-hover-background-color);
