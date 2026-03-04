@@ -166,10 +166,12 @@ export const ButtonDangerPrimaryTheme: ButtonThemeType = {
   '--crm-ui-kit-button-color': 'var(--crm-ui-kit-color-white)',
   '--crm-ui-kit-button-border-color': 'var(--crm-ui-kit-color-error)',
   '--crm-ui-kit-button-background-color': 'var(--crm-ui-kit-color-froly)',
+
   '--crm-ui-kit-button-hover-background-color':
     'var(--crm-ui-kit-color-deep-blush)',
   '--crm-ui-kit-button-hover-border-color': 'transparent',
   '--crm-ui-kit-button-hover-color': 'var(--crm-ui-kit-color-white)',
+
   '--crm-ui-kit-button-disabled-color': 'var(--crm-ui-kit-color-white)',
 };
 export const ButtonDangerTertiaryTheme: ButtonThemeType = {
@@ -178,4 +180,53 @@ export const ButtonDangerTertiaryTheme: ButtonThemeType = {
   '--crm-ui-kit-button-hover-color': 'var(--crm-ui-kit-color-indian-red)',
   '--crm-ui-kit-button-spinner-border-color': 'var(--crm-ui-kit-color-error)',
   '--crm-ui-kit-button-disabled-color': 'var(--crm-ui-kit-color-error)',
+};
+
+export const ButtonIconSecondaryTheme: ButtonThemeType = {
+  ...ButtonNeutralTheme,
+  '--crm-ui-kit-button-height': '36px',
+  '--crm-ui-kit-button-padding': '7px',
+  '--crm-ui-kit-button-spinner-border-color':
+    'var(--crm-ui-kit-palette-active-element-900)',
+};
+export const ButtonIconGhostTheme: ButtonThemeType = {
+  ...ButtonSecondaryTheme,
+  '--crm-ui-kit-button-height': '36px',
+  '--crm-ui-kit-button-padding': '7px',
+
+  '--crm-ui-kit-button-hover-background-color':
+    'var(--crm-ui-kit-palette-background-secondary-800)',
+
+  '--crm-ui-kit-button-spinner-border-color':
+    'var(--crm-ui-kit-palette-active-element-900)',
+};
+export const ButtonIconDangerGhostTheme: ButtonThemeType = {
+  ...ButtonDangerTertiaryTheme,
+  '--crm-ui-kit-button-height': '36px',
+  '--crm-ui-kit-button-padding': '7px',
+
+  '--crm-ui-kit-button-hover-background-color':
+    'var(--crm-ui-kit-palette-background-secondary-800)',
+};
+export const ButtonIconSmallGhostTheme: ButtonThemeType = {
+  ...ButtonIconGhostTheme,
+  '--crm-ui-kit-button-height': '24px',
+  '--crm-ui-kit-button-padding': '3px',
+
+  '--crm-ui-kit-button-hover-background-color':
+    'var(--crm-ui-kit-palette-background-secondary-800)',
+
+  '--crm-ui-kit-button-spinner-circle-size': '12px',
+  '--crm-ui-kit-button-spinner-border-color':
+    'var(--crm-ui-kit-palette-active-element-900)',
+};
+export const ButtonIconSmallDangerGhostTheme: ButtonThemeType = {
+  ...ButtonIconDangerGhostTheme,
+  '--crm-ui-kit-button-height': '24px',
+  '--crm-ui-kit-button-padding': '3px',
+
+  '--crm-ui-kit-button-hover-background-color':
+    'var(--crm-ui-kit-palette-background-secondary-800)',
+
+  '--crm-ui-kit-button-spinner-circle-size': '12px',
 };

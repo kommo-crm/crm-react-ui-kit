@@ -7,6 +7,10 @@ import { noop } from 'src/utils';
 
 import { i18n } from '@i18n';
 
+import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
+import TriggerIcon from '@storybook-utils/icons/trigger.svg';
+import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
+
 import {
   Button,
   ButtonNeutralTheme,
@@ -14,6 +18,11 @@ import {
   ButtonSecondaryTheme,
   ButtonDangerPrimaryTheme,
   ButtonDangerTertiaryTheme,
+  ButtonIconSecondaryTheme,
+  ButtonIconGhostTheme,
+  ButtonIconDangerGhostTheme,
+  ButtonIconSmallGhostTheme,
+  ButtonIconSmallDangerGhostTheme,
 } from '..';
 
 const ThemesMap = {
@@ -23,6 +32,14 @@ const ThemesMap = {
   ButtonDangerPrimaryTheme,
   ButtonDangerTertiaryTheme,
 };
+
+const buttonIconVariants = [
+  { size: 'm', theme: ButtonIconSecondaryTheme, Icon: MicrophoneIcon },
+  { size: 'm', theme: ButtonIconGhostTheme, Icon: TriggerIcon },
+  { size: 'm', theme: ButtonIconDangerGhostTheme, Icon: TrashcanIcon },
+  { size: 's', theme: ButtonIconSmallGhostTheme, Icon: TriggerIcon },
+  { size: 's', theme: ButtonIconSmallDangerGhostTheme, Icon: TrashcanIcon },
+];
 
 const USAGE = `
 import { Button, ButtonPrimaryTheme } from "@kommo-crm/crm-react-ui-kit/Button";
@@ -137,6 +154,26 @@ export const Refs: Story = {
       </div>
     );
   },
+};
+
+export const ButtonIcon: Story = {
+  render: (props) => (
+    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+      {buttonIconVariants.map(({ size, theme, Icon }, index) => {
+        const iconSize = size === 'm' ? 20 : 16;
+
+        return (
+          <Button key={index} {...props} theme={theme}>
+            <Icon
+              width={iconSize}
+              height={iconSize}
+              style={{ display: 'flex' }}
+            />
+          </Button>
+        );
+      })}
+    </div>
+  ),
 };
 
 export const ButtonNeutral: Story = {

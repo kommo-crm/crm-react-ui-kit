@@ -61,6 +61,8 @@
   --crm-ui-kit-color-zumthor: #e5eeff;
   --crm-ui-kit-color-orange-white: #fef7ec;
   --crm-ui-kit-color-japanese-indigo: #2b3d43;
+  --crm-ui-kit-color-firefly: #102535;
+  --crm-ui-kit-color-mercury: #e4e4e4;
 
   --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-onyx);
   --crm-ui-kit-palette-text-secondary-light: var(
@@ -81,6 +83,9 @@
   --crm-ui-kit-palette-background-primary: var(--crm-ui-kit-color-white);
   --crm-ui-kit-palette-background-primary-disabled: var(
     --crm-ui-kit-color-white-smoke
+  );
+  --crm-ui-kit-palette-background-secondary-800: var(
+    --crm-ui-kit-color-mercury
   );
 
   --crm-ui-kit-palette-surface-background-color: var(
@@ -159,6 +164,10 @@
   --crm-ui-kit-palette-background-primary-disabled: var(
     --crm-ui-kit-color-nato-blue
   );
+  --crm-ui-kit-palette-background-secondary-800: var(
+    --crm-ui-kit-color-firefly
+  );
+
   --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-anti-flash-white);
   --crm-ui-kit-palette-text-secondary-light: var(
     --crm-ui-kit-color-shadow-blue
