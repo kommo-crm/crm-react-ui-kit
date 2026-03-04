@@ -49,6 +49,16 @@ export interface UseContextMenuOptions {
    * Call preventDefault() to prevent menu closure.
    */
   onFocusOutside?: (event: FocusChangeEvent) => void;
+  /**
+   * Tolerance in pixels for detecting cursor movement toward the menu.
+   * Higher values make the detection more lenient.
+   */
+  aimingTolerance: number;
+  /**
+   * Timeout in milliseconds before considering cursor movement as idle.
+   * Used to reset aiming state when cursor stops moving.
+   */
+  aimingIdleTimeout: number;
 }
 
 export interface UseContextMenuResult {
@@ -80,6 +90,10 @@ export interface UseContextMenuResult {
    * Whether the context menu is animated open.
    */
   isAnimatedOpen: boolean;
+  /**
+   * Whether to skip animation when closing.
+   */
+  skipAnimation: boolean;
   /**
    * The duration of the animation.
    */
@@ -134,4 +148,12 @@ export interface UseContextMenuResult {
   setOnFocusOutside: (
     callback: ((event: FocusChangeEvent) => void) | undefined
   ) => void;
+  /**
+   * Returns whether any child submenu is being aimed at.
+   */
+  isChildAiming: () => boolean;
+  /**
+   * Called when a child submenu's aiming state changes.
+   */
+  onChildAiming: (aiming: boolean) => void;
 }

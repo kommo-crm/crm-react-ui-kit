@@ -30,6 +30,16 @@ export interface UseContextMenuSubOptions {
    * The callback is triggered whenever this tracking state changes.
    */
   onAiming?: (isAiming: boolean) => void;
+  /**
+   * Tolerance in pixels for detecting cursor movement toward the submenu.
+   * Higher values make the detection more lenient.
+   */
+  aimingTolerance: number;
+  /**
+   * Timeout in milliseconds before considering cursor movement as idle.
+   * Used to reset aiming state when cursor stops moving.
+   */
+  aimingIdleTimeout: number;
 }
 
 export interface UseContextMenuSubResult {
@@ -101,4 +111,8 @@ export interface UseContextMenuSubResult {
    * Returns whether the cursor is currently moving toward the submenu.
    */
   isAiming: () => boolean;
+  /**
+   * The mode of the submenu.
+   */
+  mode: ContextMenuModeType;
 }

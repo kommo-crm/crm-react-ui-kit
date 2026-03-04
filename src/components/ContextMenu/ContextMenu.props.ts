@@ -42,6 +42,20 @@ export type ContextMenuRootProps = Omit<
    * The callback is triggered whenever this tracking state changes.
    */
   onAiming?: (isAiming: boolean) => void;
+  /**
+   * Tolerance in pixels for detecting cursor movement toward the menu.
+   * Higher values make the detection more lenient.
+   *
+   * @default 20
+   */
+  aimingTolerance?: number;
+  /**
+   * Timeout in milliseconds before considering cursor movement as idle.
+   * Used to reset aiming state when cursor stops moving.
+   *
+   * @default 200
+   */
+  aimingIdleTimeout?: number;
 };
 
 export interface ContextMenuContextProps {
@@ -70,6 +84,14 @@ export interface ContextMenuContextProps {
    * its content (used to coordinate animations).
    */
   isAnimatedOpen: boolean;
+  /**
+   * Whether to skip the animation when closing or opening the menu.
+   * Used to instantly close the first and open the second ContextMenu via contextMenuBus.
+   *
+   * @remarks
+   * This prop is only used for `ContextMenu` (root) components.
+   */
+  skipAnimation?: boolean;
   /**
    * The duration of the menu and submenus opening/closing animation in milliseconds.
    */
@@ -178,6 +200,14 @@ export interface ContextMenuContextProps {
   setOnFocusOutside?: (
     callback: ((event: FocusChangeEvent) => void) | undefined
   ) => void;
+  /**
+   * Returns whether any child submenu is being aimed at.
+   */
+  isChildAiming?: () => boolean;
+  /**
+   * Called when a child submenu's aiming state changes.
+   */
+  onChildAiming?: (aiming: boolean) => void;
 }
 
 export interface ContextMenuRootContextProps {

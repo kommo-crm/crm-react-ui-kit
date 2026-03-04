@@ -2,7 +2,6 @@ import React, {
   ComponentPropsWithoutRef,
   forwardRef,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
@@ -84,21 +83,12 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
    */
   const isAiming = () => false;
 
-  /**
-   * Tracks if any child submenu is being aimed at.
-   */
-  const isChildAimingRef = useRef(false);
-  const isChildAiming = () => isChildAimingRef.current;
-
-  const onChildAiming = (aiming: boolean) => {
-    isChildAimingRef.current = aiming;
-  };
-
   const {
     triggerRef,
     contentRef,
     isOpen,
     isAnimatedOpen,
+    skipAnimation,
     animationDuration,
     mode,
     isRootContentBlocked,
@@ -112,6 +102,8 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
     setItemWithFocusedInput,
     shouldPreventFocusRestore,
     setOnFocusOutside,
+    isChildAiming,
+    onChildAiming,
   } = useContextMenuContext(DISPLAY_NAME);
 
   const { align, offset, isPositioned } = useContentPositioning({
@@ -148,7 +140,7 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
         ? 1
         : 0,
     config:
-      mode === ContextMenuMode.CLICK
+      mode === ContextMenuMode.CLICK || skipAnimation
         ? { duration: 0 }
         : { duration: animationDuration, easing: easings.easeInOutCubic },
   });

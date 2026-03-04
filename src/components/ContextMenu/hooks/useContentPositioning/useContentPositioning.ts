@@ -167,7 +167,19 @@ export const useContentPositioning = (
       return;
     }
 
-    requestAnimationFrame(measureAndAdjust);
+    /**
+     * Schedule measurement via macrotask instead of rAF.
+     *
+     * requestAnimationFrame callbacks run right before the next repaint.
+     * In some cases, the browser may already have painted the initial state
+     * (e.g., opacity: 0) before rAF executes, causing a one-frame flash.
+     *
+     * Using setTimeout queues a separate macrotask, which may allow layout
+     * adjustments to complete before the browser commits the first paint.
+     */
+    setTimeout(() => {
+      measureAndAdjust();
+    }, 0);
 
     if (
       !disableRepositioning &&
@@ -271,7 +283,13 @@ export const useContentPositioning = (
       setPositionedOffset(true);
     };
 
-    requestAnimationFrame(updateOffset);
+    /**
+     * Same as above: use macrotask for the initial measurement.
+     * The internal rAF retry (for empty rects) is kept as a fallback.
+     */
+    setTimeout(() => {
+      updateOffset();
+    }, 0);
 
     if (disableRepositioning) {
       return;

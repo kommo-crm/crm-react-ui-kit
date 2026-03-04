@@ -34,6 +34,9 @@ import {
 const HOVER_CLOSE_DELAY = 200;
 const ANIMATION_DURATION = 150;
 
+export const DEFAULT_AIMING_TOLERANCE = 20;
+export const DEFAULT_AIMING_IDLE_TIMEOUT = 200;
+
 const ContextMenu = (props: ContextMenuRootProps) => {
   const {
     children,
@@ -44,6 +47,8 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     onOpen,
     onAnimatedOpen,
     onAiming,
+    aimingTolerance = DEFAULT_AIMING_TOLERANCE,
+    aimingIdleTimeout = DEFAULT_AIMING_IDLE_TIMEOUT,
 
     ...rest
   } = props;
@@ -54,6 +59,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     triggerRef,
     contentRef,
     isAnimatedOpen,
+    skipAnimation,
     animationDuration,
     hoverCloseDelay,
     isRootContentBlocked,
@@ -69,6 +75,8 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     setItemWithFocusedInput,
     shouldPreventFocusRestore,
     setOnFocusOutside,
+    isChildAiming,
+    onChildAiming,
   } = useContextMenu({
     mode: mode as ContextMenuMode,
     defaultOpen,
@@ -78,6 +86,8 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     onOpen,
     onAnimatedOpen,
     onAiming,
+    aimingTolerance,
+    aimingIdleTimeout,
   });
 
   const { navigationContentRef } = useContextMenuKeyboardNavigation({
@@ -95,6 +105,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
         triggerRef={triggerRef}
         contentRef={contentRef}
         isAnimatedOpen={isAnimatedOpen}
+        skipAnimation={skipAnimation}
         animationDuration={animationDuration}
         hoverCloseDelay={hoverCloseDelay}
         closeMenuImmediately={closeMenuImmediately}
@@ -111,6 +122,8 @@ const ContextMenu = (props: ContextMenuRootProps) => {
         setItemWithFocusedInput={setItemWithFocusedInput}
         shouldPreventFocusRestore={shouldPreventFocusRestore}
         setOnFocusOutside={setOnFocusOutside}
+        isChildAiming={isChildAiming}
+        onChildAiming={onChildAiming}
       >
         <RadixDropdownMenuRoot
           open={isOpenForcefully ?? isOpen}

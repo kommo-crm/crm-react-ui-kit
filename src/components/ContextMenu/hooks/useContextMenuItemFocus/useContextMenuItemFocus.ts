@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 
@@ -45,8 +45,22 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
 
   const [isFocused, setIsFocused] = useState(false);
 
+  /**
+   * Interval ref for polling aiming state.
+   * Used to detect when aiming stops while the cursor is over this item,
+   * so we can activate the item that was blocked during aiming.
+   */
+  const aimingCheckRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   const { setActiveItemId, activeItemId, isAiming, isChildAiming } =
     useLevelContext(displayName);
+
+  const clearAimingCheck = () => {
+    if (aimingCheckRef.current) {
+      clearInterval(aimingCheckRef.current);
+      aimingCheckRef.current = null;
+    }
+  };
 
   useLayoutEffect(() => {
     if (hasSubmenu) {
@@ -60,6 +74,13 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
       setIsFocused(false);
     }
   }, [activeItemId, subMenuTriggerId, hasSubmenu, id]);
+
+  /**
+   * Cleanup aiming check interval on unmount.
+   */
+  useEffect(() => {
+    return () => clearAimingCheck();
+  }, []);
 
   return {
     dataHighlighted: isFocused && isSelectable && !isDisabled ? '' : undefined,
@@ -83,6 +104,23 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
         setIsFocused(!isDisabled);
       }
 
+      /**
+       * When aiming is active, the item cannot be activated immediately.
+       * Start polling for aiming to stop — once it does, activate this item
+       * since the cursor is still over it.
+       */
+      if (isAimingActive && isSelectable && !isDisabled) {
+        clearAimingCheck();
+
+        aimingCheckRef.current = setInterval(() => {
+          if (!isAiming?.() && !isChildAiming?.()) {
+            setActiveItemId(id);
+            setIsFocused(true);
+            clearAimingCheck();
+          }
+        }, 16);
+      }
+
       if (!isAimingActive) {
         onMouseEnter?.(e);
       }
@@ -99,6 +137,8 @@ export const useContextMenuItemFocus = <T extends HTMLElement>(
     },
 
     onMouseLeave: (e: React.MouseEvent<T>) => {
+      clearAimingCheck();
+
       const isAimingActive = isAiming?.() || isChildAiming?.();
 
       if (isSelectable && !isDisabled && !isAimingActive) {
