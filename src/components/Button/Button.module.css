@@ -64,6 +64,7 @@
 
 .content {
   display: flex;
+  position: relative;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -80,16 +81,27 @@
   margin-left: var(--crm-ui-kit-button-elements-spacing);
 }
 
-.spinner_container {
-  position: relative;
-  margin: auto;
-  height: 14px;
-  width: 12px;
+.invisible {
+  visibility: hidden;
 }
 
 .invalid {
   animation: 0.3s buttonShakeAnimation;
   animation-fill-mode: both;
+}
+
+.loading,
+.success {
+  & .content {
+    display: inline-grid;
+  }
+
+  & .content > * {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .success {
