@@ -15,7 +15,7 @@ export type AccordionItemThemeType = KeyType<ItemThemeKey>;
 
 export const AccordionItemTheme: AccordionItemThemeType = {
   '--crm-ui-kit-accordion-item-border-radius':
-    'var(--crm-ui-kit-palette-focus-visible-border-radius)',
+    'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-accordion-item-box-shadow':
     'var(--crm-ui-kit-palette-accordion-item-box-shadow)',
   '--crm-ui-kit-accordion-item-background-color':
