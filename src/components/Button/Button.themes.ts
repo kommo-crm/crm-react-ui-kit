@@ -75,9 +75,9 @@ const ButtonBaseThemeValues = {
     'var(--crm-ui-kit-color-goldenrod)',
 
   '--crm-ui-kit-button-spinner-border-color':
-    'var(--crm-ui-kit-color-bright-blue)',
+    'var(--crm-ui-kit-palette-active-element-900)',
   '--crm-ui-kit-button-spinner-disabled-border-color':
-    'var(--crm-ui-kit-color-bright-blue)',
+    'var(--crm-ui-kit-palette-active-element-900)',
   '--crm-ui-kit-button-spinner-border-width': '2px',
   '--crm-ui-kit-button-spinner-circle-size': '16px',
   '--crm-ui-kit-button-spinner-border-style': 'solid',
@@ -144,8 +144,6 @@ export const ButtonPrimaryTheme: ButtonThemeType = {
     'var(--crm-ui-kit-color-cerulean-blue)',
 
   '--crm-ui-kit-button-spinner-border-color': 'var(--crm-ui-kit-color-white)',
-  '--crm-ui-kit-button-spinner-disabled-border-color':
-    'var(--crm-ui-kit-color-bright-blue)',
 };
 export const ButtonSecondaryTheme: ButtonThemeType = {
   ...ButtonBaseThemeValues,
@@ -167,6 +165,8 @@ export const ButtonSecondaryTheme: ButtonThemeType = {
 
   '--crm-ui-kit-button-spinner-border-color':
     'var(--crm-ui-kit-palette-text-secondary-light)',
+  '--crm-ui-kit-button-spinner-disabled-border-color':
+    'var(--crm-ui-kit-button-spinner-border-color)',
 };
 export const ButtonDangerPrimaryTheme: ButtonThemeType = {
   ...ButtonPrimaryTheme,
@@ -219,8 +219,6 @@ export const ButtonIconGhostTheme: ButtonThemeType = {
   ...ButtonIconBaseThemeValues,
   '--crm-ui-kit-button-hover-background-color':
     'var(--crm-ui-kit-palette-background-secondary-800)',
-  '--crm-ui-kit-button-spinner-border-color':
-    'var(--crm-ui-kit-palette-active-element-900)',
 };
 export const ButtonIconDangerGhostTheme: ButtonThemeType = {
   ...ButtonDangerTertiaryTheme,
@@ -233,8 +231,6 @@ export const ButtonIconSmallGhostTheme: ButtonThemeType = {
   ...ButtonIconSmallBaseThemeValues,
   '--crm-ui-kit-button-hover-background-color':
     'var(--crm-ui-kit-palette-background-secondary-800)',
-  '--crm-ui-kit-button-spinner-border-color':
-    'var(--crm-ui-kit-palette-active-element-900)',
 };
 export const ButtonIconSmallDangerGhostTheme: ButtonThemeType = {
   ...ButtonIconDangerGhostTheme,
