@@ -60,6 +60,8 @@ const meta = {
       mapping: IconsMap,
       options: Object.keys(IconsMap),
     },
+    showSuccessfulStateRef: { table: { disable: true } },
+    showInvalidAnimationRef: { table: { disable: true } },
   },
   render: (props) => (
     <div>
