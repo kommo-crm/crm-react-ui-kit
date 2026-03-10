@@ -92,7 +92,7 @@
   position: relative;
   margin: auto;
   height: 14px;
-  width: 12px;
+  width: var(--crm-ui-kit-button-spinner-container-width);
 }
 
 .invalid {
