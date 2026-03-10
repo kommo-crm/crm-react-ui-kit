@@ -31,7 +31,7 @@ export const ListTheme: ListThemeType = {
     'var(--crm-ui-kit-palette-background-primary)',
   '--crm-ui-kit-list-border-width': '1px',
   '--crm-ui-kit-list-border-color': 'var(--crm-ui-kit-palette-border-primary)',
-  '--crm-ui-kit-list-border-radius': '3px',
+  '--crm-ui-kit-list-border-radius': 'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-list-outline': 'none',
   '--crm-ui-kit-list-color': 'var(--crm-ui-kit-palette-text-primary)',
 };

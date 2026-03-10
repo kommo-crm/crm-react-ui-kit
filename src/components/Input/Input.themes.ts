@@ -75,7 +75,7 @@ const InputBaseValues: Omit<
   '--crm-ui-kit-input-after-min-width': '36px',
   '--crm-ui-kit-input-error-description-offset-placement-bottom': '5px',
   '--crm-ui-kit-input-error-description-offset-placement-right': '10px',
-  '--crm-ui-kit-input-border-radius': '3px',
+  '--crm-ui-kit-input-border-radius': 'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-input-padding-right': '9px',
   '--crm-ui-kit-input-padding-left': '9px',
   '--crm-ui-kit-input-height': '34px',
