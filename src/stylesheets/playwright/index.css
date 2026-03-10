@@ -1,0 +1,4 @@
+.component-playground {
+  border: 8px solid var(--playwright-border);
+  background: var(--playwright-background);
+}
