@@ -192,6 +192,8 @@ export const ButtonIconSecondaryTheme: ButtonThemeType = {
   '--crm-ui-kit-button-padding': '7px',
   '--crm-ui-kit-button-spinner-border-color':
     'var(--crm-ui-kit-palette-active-element-900)',
+  '--crm-ui-kit-button-spinner-disabled-border-color':
+    'var(--crm-ui-kit-palette-active-element-900)',
 };
 export const ButtonIconGhostTheme: ButtonThemeType = {
   ...ButtonSecondaryTheme,
@@ -203,6 +205,8 @@ export const ButtonIconGhostTheme: ButtonThemeType = {
 
   '--crm-ui-kit-button-spinner-border-color':
     'var(--crm-ui-kit-palette-active-element-900)',
+  '--crm-ui-kit-button-spinner-disabled-border-color':
+    'var(--crm-ui-kit-palette-active-element-900)',
 };
 export const ButtonIconDangerGhostTheme: ButtonThemeType = {
   ...ButtonDangerTertiaryTheme,
@@ -211,6 +215,9 @@ export const ButtonIconDangerGhostTheme: ButtonThemeType = {
 
   '--crm-ui-kit-button-hover-background-color':
     'var(--crm-ui-kit-palette-background-secondary-800)',
+
+  '--crm-ui-kit-button-spinner-disabled-border-color':
+    'var(--crm-ui-kit-color-error)',
 };
 export const ButtonIconSmallGhostTheme: ButtonThemeType = {
   ...ButtonIconGhostTheme,
