@@ -1,4 +1,4 @@
-import React from 'react';
+import { isValidElement } from 'react';
 
 type TestProps<Props> = Array<Props>;
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> };
@@ -33,6 +33,14 @@ export function multiCartesian<Props>(
   );
 }
 
+function isPlaywrightWrappedComponent(object: Record<string, any>) {
+  return (
+    typeof object === 'object' &&
+    object !== null &&
+    Object.hasOwn(object, '__pw_type')
+  );
+}
+
 export function prettyProps(props: any) {
   return Object.entries(props)
     .sort(([key1], [key2]) => Number(key1 > key2))
@@ -46,9 +54,25 @@ export function prettyProps(props: any) {
       }
 
       if (
-        React.isValidElement(value) ||
-        (Array.isArray(value) &&
-          value.every((node: any) => React.isValidElement(node)))
+        isValidElement(value) ||
+        (Array.isArray(value) && value.every(isValidElement))
+      ) {
+        return `${prop}=<jsx>`;
+      }
+
+      /*
+       * In Playwright CT, the test runner compiles JSX via a Vite plugin that
+       * transforms React elements into a serializable `{ __pw_type }` format so
+       * they can be transferred from the Node.js test context to the browser.
+       * This means that when `prettyProps` is called at test-name generation time
+       * (before `mount()`), JSX props are already wrapped objects rather than
+       * valid React elements — so `isValidElement` returns false for them.
+       * We handle both representations here to produce a consistent label
+       * regardless of which context `prettyProps` is running in.
+       */
+      if (
+        isPlaywrightWrappedComponent(value) ||
+        (Array.isArray(value) && value.every(isPlaywrightWrappedComponent))
       ) {
         return `${prop}=<jsx>`;
       }

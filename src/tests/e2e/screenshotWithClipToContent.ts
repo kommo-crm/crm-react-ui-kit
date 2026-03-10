@@ -42,9 +42,18 @@ export async function screenshotWithClipToContent(
 
   const viewportSize = page.viewportSize() ?? { width: 0, height: 0 };
 
+  if (
+    !isFinite(clip.x) ||
+    !isFinite(clip.y) ||
+    clip.width <= 0 ||
+    clip.height <= 0
+  ) {
+    return page.screenshot({ fullPage: true, animations: 'disabled' });
+  }
+
   await page.setViewportSize({
-    width: Math.max(clip.width, viewportSize.width),
-    height: Math.max(clip.height, viewportSize.height),
+    width: Math.max(clip.x + clip.width, viewportSize.width),
+    height: Math.max(clip.y + clip.height, viewportSize.height),
   });
 
   return page.screenshot({
