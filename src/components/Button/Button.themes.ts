@@ -180,8 +180,6 @@ export const ButtonDangerPrimaryTheme: ButtonThemeType = {
     'var(--crm-ui-kit-color-deep-blush)',
   '--crm-ui-kit-button-hover-border-color': 'transparent',
   '--crm-ui-kit-button-hover-color': 'var(--crm-ui-kit-color-white)',
-
-  '--crm-ui-kit-button-disabled-color': 'var(--crm-ui-kit-color-white)',
 };
 export const ButtonDangerTertiaryTheme: ButtonThemeType = {
   ...ButtonSecondaryTheme,
@@ -213,8 +211,6 @@ const ButtonIconSmallBaseThemeValues: Partial<ButtonThemeType> = {
 export const ButtonIconSecondaryTheme: ButtonThemeType = {
   ...ButtonNeutralTheme,
   ...ButtonIconBaseThemeValues,
-  '--crm-ui-kit-button-spinner-border-color':
-    'var(--crm-ui-kit-palette-active-element-900)',
 };
 export const ButtonIconGhostTheme: ButtonThemeType = {
   ...ButtonSecondaryTheme,

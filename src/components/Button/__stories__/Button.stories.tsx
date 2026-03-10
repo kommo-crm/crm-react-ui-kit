@@ -7,10 +7,6 @@ import { noop } from 'src/utils';
 
 import { i18n } from '@i18n';
 
-import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
-import TriggerIcon from '@storybook-utils/icons/trigger.svg';
-import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
-
 import {
   Button,
   ButtonNeutralTheme,
@@ -18,12 +14,8 @@ import {
   ButtonSecondaryTheme,
   ButtonDangerPrimaryTheme,
   ButtonDangerTertiaryTheme,
-  ButtonIconSecondaryTheme,
-  ButtonIconGhostTheme,
-  ButtonIconDangerGhostTheme,
-  ButtonIconSmallGhostTheme,
-  ButtonIconSmallDangerGhostTheme,
 } from '..';
+import { buttonIconVariants } from '../__tests__/Button.e2e-playground';
 
 const ThemesMap = {
   ButtonNeutralTheme,
@@ -32,14 +24,6 @@ const ThemesMap = {
   ButtonDangerPrimaryTheme,
   ButtonDangerTertiaryTheme,
 };
-
-const buttonIconVariants = [
-  { size: 'm', theme: ButtonIconSecondaryTheme, Icon: MicrophoneIcon },
-  { size: 'm', theme: ButtonIconGhostTheme, Icon: TriggerIcon },
-  { size: 'm', theme: ButtonIconDangerGhostTheme, Icon: TrashcanIcon },
-  { size: 's', theme: ButtonIconSmallGhostTheme, Icon: TriggerIcon },
-  { size: 's', theme: ButtonIconSmallDangerGhostTheme, Icon: TrashcanIcon },
-];
 
 const USAGE = `
 import { Button, ButtonPrimaryTheme } from "@kommo-crm/crm-react-ui-kit/Button";
