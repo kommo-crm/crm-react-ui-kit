@@ -29,7 +29,8 @@ export const CheckboxBaseValues: Omit<
   '--crm-ui-kit-checkbox-z-index': '3',
 
   '--crm-ui-kit-checkbox-border-width': '1px',
-  '--crm-ui-kit-checkbox-border-radius': '3px',
+  '--crm-ui-kit-checkbox-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-checkbox-border-style': 'solid',
 
   '--crm-ui-kit-checkbox-background-color':
