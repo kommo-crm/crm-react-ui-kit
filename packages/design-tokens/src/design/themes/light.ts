@@ -2,7 +2,7 @@ import primitives from '@/design/primitives';
 import semantic from '@/design/semantics';
 
 const lightTheme = {
-  theme: 'light',
+  id: 'light',
   primitives,
   semantic: semantic.light,
 };

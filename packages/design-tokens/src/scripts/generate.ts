@@ -25,7 +25,7 @@ function generateCSS(): string {
         const value = (shades as Record<number, string>)[scale];
 
         if (value !== undefined) {
-          primitiveVars[`color-${family}-${scale}`] = value;
+          primitiveVars[`color-${theme.id}-${family}-${scale}`] = value;
         }
       }
     }
