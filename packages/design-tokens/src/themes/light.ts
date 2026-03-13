@@ -1,3 +1,10 @@
-const light = {};
+import primitives from '@/primitives';
+import lightSemanticTokens from '@/semantic/light';
 
-export default light;
+const lightTheme = {
+  theme: 'light',
+  primitives,
+  semantic: lightSemanticTokens,
+};
+
+export default lightTheme;

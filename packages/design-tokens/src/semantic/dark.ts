@@ -1,3 +1,28 @@
-const dark = {} as const;
+const dark = {
+  palette: {
+    background: {
+      base: 'color.dark.azure.900',
+      primary: 'color.dark.azure.800',
+      secondary: 'color.dark.azure.700',
+      error: 'color.dark.red.900',
+    },
+    foreground: {
+      primary: 'color.dark.azure.50',
+      inverted: 'color.dark.azure.700',
+      secondary: 'color.dark.azure.200',
+      tertiary: 'color.dark.azure.400',
+      error: 'color.dark.red.300',
+      accent: 'color.dark.blue.300',
+    },
+    border: {
+      medium: 'color.dark.azure.600',
+      strong: 'color.dark.azure.500',
+      error: 'color.dark.red.400',
+    },
+    overlay: {
+      disabled: 'rgba(21, 48, 67, 0.2)',
+    },
+  },
+} as const;
 
 export default dark;

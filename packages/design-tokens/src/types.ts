@@ -1,6 +1,8 @@
-import { SCALES } from '@/const';
+import { SCALES, THEMES } from '@/const';
 
 export type Scale = (typeof SCALES)[number];
+
+export type Theme = (typeof THEMES)[number];
 
 export type ColorShades = readonly [
   string, // 50

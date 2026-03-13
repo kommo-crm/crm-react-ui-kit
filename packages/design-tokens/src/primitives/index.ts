@@ -1,4 +1,7 @@
-import light from './light';
-import dark from './dark';
+import color from './color';
 
-export default { light, dark };
+const primitives = {
+  color,
+} as const;
+
+export default primitives;
