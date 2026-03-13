@@ -81,7 +81,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
     </React.Fragment>
   );
 
-  const isOverlayVisible = isLoading || shouldShowSuccessfulState;
+  const isInnerContentVisible = !isLoading && !shouldShowSuccessfulState;
 
   return (
     <button
@@ -108,10 +108,10 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
             }
           />
         )}
-        {isOverlayVisible ? (
-          <span className={cx(s.invisible)}>{innerContent}</span>
-        ) : (
+        {isInnerContentVisible ? (
           innerContent
+        ) : (
+          <span className={cx(s.invisible)}>{innerContent}</span>
         )}
       </span>
     </button>
