@@ -1,5 +1,5 @@
-import { ColorShades } from '../types';
-import { buildColorShades } from '../utils/buildColorShades';
+import { ColorShades } from '@/types';
+import { buildColorShades } from '@/utils/buildColorShades';
 
 const azure: ColorShades = [
   '#f8fcfe', // 50
