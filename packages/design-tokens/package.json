@@ -5,8 +5,22 @@
   "files": [
     "dist"
   ],
+  "main": "./dist/tokens.cjs",
+  "module": "./dist/tokens.mjs",
+  "types": "./dist/tokens.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/tokens.mjs",
+      "require": "./dist/tokens.cjs",
+      "types": "./dist/tokens.d.ts"
+    },
+    "./css": "./dist/tokens.css",
+    "./less": "./dist/tokens.less",
+    "./scss": "./dist/tokens.scss"
+  },
   "scripts": {
-    "build": "ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}' src/index.ts"
+    "clean": "rm -rf dist",
+    "build": "npm run clean && ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}' src/index.ts"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

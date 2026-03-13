@@ -29,6 +29,17 @@ function buildTokens(): unknown {
   );
 }
 
-export function generateJs(): string {
-  return `export const tokens = ${JSON.stringify(buildTokens(), null, 2)};\n`;
+const serialized = (): string => JSON.stringify(buildTokens(), null, 2);
+
+export function generateEsm(): string {
+  return `export const tokens = ${serialized()};\n`;
+}
+
+export function generateCjs(): string {
+  return [
+    '"use strict";',
+    'Object.defineProperty(exports, "__esModule", { value: true });',
+    `exports.tokens = ${serialized()};`,
+    '',
+  ].join('\n');
 }

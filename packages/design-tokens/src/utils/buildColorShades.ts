@@ -1,10 +1,12 @@
-import { SCALES } from '@/const';
-import { ColorShades, Scale } from '@/types/common';
+import { COLOR_SCALES, ColorScale } from '@/const';
+import { ColorShades } from '@/types/color';
 import validateHEXColor from '@/utils/validateHEXColor';
 
-export const buildColorShades = (shades: ColorShades): Record<Scale, string> =>
+export const buildColorShades = (
+  shades: ColorShades
+): Record<ColorScale, string> =>
   Object.fromEntries(
-    SCALES.map((scale, i) => {
+    COLOR_SCALES.map((scale, i) => {
       const value = shades[i];
 
       if (!validateHEXColor(value)) {
@@ -15,4 +17,4 @@ export const buildColorShades = (shades: ColorShades): Record<Scale, string> =>
 
       return [scale, value];
     })
-  ) as Record<Scale, string>;
+  ) as Record<ColorScale, string>;

@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import { generateCss, generateMinCss } from '@/scripts/generateCss';
-import { generateJs } from '@/scripts/generateJs';
+import { generateCjs, generateEsm } from '@/scripts/generateJs';
 import { generateLess } from '@/scripts/generateLess';
 import { generateSass } from '@/scripts/generateSass';
 
@@ -35,5 +35,6 @@ write('tokens.css', generateCss());
 write('tokens.min.css', generateMinCss());
 write('tokens.less', generateLess());
 write('tokens.scss', generateSass());
-write('tokens.js', generateJs());
+write('tokens.mjs', generateEsm());
+write('tokens.cjs', generateCjs());
 copy('types/color.ts', 'types/color.ts');

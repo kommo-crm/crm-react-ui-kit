@@ -1,4 +1,4 @@
-import { PRIMITIVE_GROUPS, SCALES, THEMES, themesConfig } from '@/const';
+import { COLOR_SCALES, PRIMITIVE_GROUPS, THEMES, themesConfig } from '@/const';
 import themes from '@/design/themes';
 import flattenVars from '@/utils/flattenVars';
 import getPrimitiveVarName from '@/utils/getPrimitiveVarName';
@@ -30,7 +30,7 @@ export function collectTokens(): ThemeTokens[] {
         for (const [family, shades] of Object.entries(
           data as Record<string, unknown>
         )) {
-          for (const scale of SCALES) {
+          for (const scale of COLOR_SCALES) {
             const value = (shades as Record<number, string>)[scale];
 
             if (value !== undefined) {

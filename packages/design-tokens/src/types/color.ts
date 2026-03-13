@@ -1,4 +1,4 @@
-import { Scale } from './common';
+import { ColorScale } from '@/const';
 
 export type Hex = `#${string}`; // #fff, #ffffff, #ffffffff
 
@@ -60,4 +60,4 @@ export type ColorShades = readonly [
 
 /** Values of a single color family indexed by scale:
  * { 50: '#fff', 100: '#f5f5f5', ... } */
-export type ScaledShades = Record<Scale, ColorValue>;
+export type ScaledShades = Record<ColorScale, ColorValue>;
