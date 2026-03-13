@@ -1,5 +1,5 @@
-import primitives from '@/primitives';
-import semantic from '@/semantic';
+import primitives from '@/design/primitives';
+import semantic from '@/design/semantic';
 
 const lightTheme = {
   theme: 'light',

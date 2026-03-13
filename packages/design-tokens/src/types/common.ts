@@ -1,5 +1,5 @@
 import { SCALES, THEMES } from '@/const';
-import { PrimitivePath } from '@/primitives';
+import { PrimitivePath } from '@/design/primitives';
 
 import { ColorValue } from './color';
 

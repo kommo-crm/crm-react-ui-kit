@@ -1,4 +1,4 @@
-import type { PrimitivePath, Primitives } from '@/primitives';
+import type { PrimitivePath, Primitives } from '@/design/primitives';
 import type { ColorValue } from '@/types/color';
 import { isRawValue } from '@/utils/isRawValue';
 

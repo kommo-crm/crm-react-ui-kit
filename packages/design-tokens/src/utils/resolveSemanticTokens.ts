@@ -1,4 +1,4 @@
-import type { Primitives } from '@/primitives';
+import type { Primitives } from '@/design/primitives';
 import type { ColorValue } from '@/types/color';
 import { resolveTokenValue } from '@/utils/resolveToken';
 

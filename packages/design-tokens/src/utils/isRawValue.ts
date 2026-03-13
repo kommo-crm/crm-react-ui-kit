@@ -1,4 +1,4 @@
-import { PrimitivePath } from '@/primitives';
+import { PrimitivePath } from '@/design/primitives';
 import { ColorValue } from '@/types/color';
 
 const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
