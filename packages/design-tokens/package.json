@@ -8,10 +8,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}' src/scripts/generate.ts",
     "dev": "tsc --watch"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "typescript": "5.5.4"
   }
 }
