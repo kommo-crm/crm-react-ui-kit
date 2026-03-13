@@ -8816,6 +8816,48 @@ tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.6.2, tslib@^2.8
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
+turbo-darwin-64@2.8.16:
+  version "2.8.16"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-64/-/turbo-darwin-64-2.8.16.tgz#f7a66de1f5fd2e7c97657bdade08b9cabde47fdd"
+  integrity sha512-KWa4hUMWrpADC6Q/wIHRkBLw6X6MV9nx6X7hSXbTrrMz0KdaKhmfudUZ3sS76bJFmgArBU25cSc0AUyyrswYxg==
+
+turbo-darwin-arm64@2.8.16:
+  version "2.8.16"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-arm64/-/turbo-darwin-arm64-2.8.16.tgz#98cbc111dbec39b20383cbbab66998181a9cc9e7"
+  integrity sha512-NBgaqBDLQSZlJR4D5XCkQq6noaO0RvIgwm5eYFJYL3bH5dNu8o0UBpq7C5DYnQI8+ybyoHFjT5/icN4LeUYLow==
+
+turbo-linux-64@2.8.16:
+  version "2.8.16"
+  resolved "https://registry.yarnpkg.com/turbo-linux-64/-/turbo-linux-64-2.8.16.tgz#8d9d8833a72ca0a811c545bd8c3b971726f76c36"
+  integrity sha512-VYPdcCRevI9kR/hr1H1xwXy7QQt/jNKiim1e1mjANBXD2E9VZWMkIL74J1Huad5MbU3/jw7voHOqDPLJPC2p6w==
+
+turbo-linux-arm64@2.8.16:
+  version "2.8.16"
+  resolved "https://registry.yarnpkg.com/turbo-linux-arm64/-/turbo-linux-arm64-2.8.16.tgz#41c163ea246d38cca17d37953e936a9b21f3c509"
+  integrity sha512-beq8tgUVI3uwkQkXJMiOr/hfxQRw54M3elpBwqgYFfemiK5LhCjjcwO0DkE8GZZfElBIlk+saMAQOZy3885wNQ==
+
+turbo-windows-64@2.8.16:
+  version "2.8.16"
+  resolved "https://registry.yarnpkg.com/turbo-windows-64/-/turbo-windows-64-2.8.16.tgz#08f4b08b1d2f8f571a1efe5f0e7d1c37f562e92b"
+  integrity sha512-Ig7b46iUgiOIkea/D3Z7H+zNzvzSnIJcLYFpZLA0RxbUTrbLhv9qIPwv3pT9p/abmu0LXVKHxaOo+p26SuDhzw==
+
+turbo-windows-arm64@2.8.16:
+  version "2.8.16"
+  resolved "https://registry.yarnpkg.com/turbo-windows-arm64/-/turbo-windows-arm64-2.8.16.tgz#b95ae921fb18b492d48443713e489d7b309e6339"
+  integrity sha512-fOWjbEA2PiE2HEnFQrwNZKYEdjewyPc2no9GmrXklZnTCuMsxeCN39aVlKpKpim03Zq/ykIuvApGwq8ZbfS2Yw==
+
+turbo@^2.8.16:
+  version "2.8.16"
+  resolved "https://registry.yarnpkg.com/turbo/-/turbo-2.8.16.tgz#5f7029a6888acc06d9e54039d1e551b05bd5022a"
+  integrity sha512-u6e9e3cTTpE2adQ1DYm3A3r8y3LAONEx1jYvJx6eIgSY4bMLxIxs0riWzI0Z/IK903ikiUzRPZ2c1Ph5lVLkhA==
+  optionalDependencies:
+    turbo-darwin-64 "2.8.16"
+    turbo-darwin-arm64 "2.8.16"
+    turbo-linux-64 "2.8.16"
+    turbo-linux-arm64 "2.8.16"
+    turbo-windows-64 "2.8.16"
+    turbo-windows-arm64 "2.8.16"
+
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.4.0.tgz#07b8203bfa7056c0657050e3ccd2c37730bab8f1"
