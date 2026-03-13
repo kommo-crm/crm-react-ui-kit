@@ -21,6 +21,25 @@ export type FlatPrimitive = Record<string, ScaledShades | ColorValue>;
 
 export type PrimitiveVars = ThemeVariantPrimitive | FlatPrimitive;
 
+export type ColorShades = readonly [
+  ColorValue, // 50
+  ColorValue, // 100
+  ColorValue, // 200
+  ColorValue, // 300
+  ColorValue, // 400
+  ColorValue, // 500
+  ColorValue, // 600
+  ColorValue, // 700
+  ColorValue, // 800
+  ColorValue, // 900
+];
+
+export type ThemeConfig<S extends SemanticNode> = {
+  id: Theme;
+  primitives: Record<Primitive, PrimitiveVars>;
+  semantic: S;
+};
+
 export type SemanticNode =
   | PrimitivePath
   | {

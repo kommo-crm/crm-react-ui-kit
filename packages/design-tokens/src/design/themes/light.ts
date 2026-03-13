@@ -1,7 +1,8 @@
 import primitives from '@/design/primitives';
-import semantic from '@/design/semantics';
+import semantic, { SemanticLight } from '@/design/semantics';
+import { ThemeConfig } from '@/types/common';
 
-const lightTheme = {
+const lightTheme: ThemeConfig<SemanticLight> = {
   id: 'light',
   primitives,
   semantic: semantic.light,

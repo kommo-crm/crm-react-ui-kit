@@ -1,10 +1,11 @@
 import primitives from '@/design/primitives';
-import semantic from '@/design/semantics';
+import semantic, { SemanticDark } from '@/design/semantics';
+import { ThemeConfig } from '@/types/common';
 
-const darkTheme = {
+const darkTheme: ThemeConfig<SemanticDark> = {
   id: 'dark',
   primitives,
   semantic: semantic.dark,
-} as const;
+};
 
 export default darkTheme;
