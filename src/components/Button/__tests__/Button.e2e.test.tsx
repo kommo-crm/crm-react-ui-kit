@@ -6,6 +6,9 @@ import {
   ButtonPrimaryPlayground,
   ButtonNeutralPlayground,
   ButtonSecondaryPlayground,
+  ButtonDangerPrimarytPlayground,
+  ButtonDangerTertiaryPlayground,
+  ButtonIconPlayground,
 } from './Button.e2e-playground';
 
 test('Button Primary', async ({
@@ -32,5 +35,32 @@ test('Button Secondary', async ({
   expectScreenshotClippedToContent,
 }) => {
   await mount(<ButtonSecondaryPlayground appearance={appearance} />);
+  await expectScreenshotClippedToContent();
+});
+
+test('Button Danger Primary', async ({
+  mount,
+  appearance,
+  expectScreenshotClippedToContent,
+}) => {
+  await mount(<ButtonDangerPrimarytPlayground appearance={appearance} />);
+  await expectScreenshotClippedToContent();
+});
+
+test('Button Danger Tertiary', async ({
+  mount,
+  appearance,
+  expectScreenshotClippedToContent,
+}) => {
+  await mount(<ButtonDangerTertiaryPlayground appearance={appearance} />);
+  await expectScreenshotClippedToContent();
+});
+
+test('Button Icon', async ({
+  mount,
+  appearance,
+  expectScreenshotClippedToContent,
+}) => {
+  await mount(<ButtonIconPlayground appearance={appearance} />);
   await expectScreenshotClippedToContent();
 });
