@@ -393,6 +393,13 @@ export default tseslint.config(
   },
 
   {
+    files: ['packages/design-tokens/src/scripts/**/*.ts'],
+    rules: {
+      'max-depth': ['error', { max: 10 }],
+    },
+  },
+
+  {
     ...mdx.flat,
     rules: {
       'prettier/prettier': 'error',
