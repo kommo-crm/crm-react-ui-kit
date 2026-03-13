@@ -37,6 +37,7 @@ export default tseslint.config(
       'storybook-static',
       'playwright/.cache',
       'coverage',
+      'packages/design-tokens/dist',
     ],
   },
   {
@@ -392,6 +393,20 @@ export default tseslint.config(
   },
 
   {
+    files: ['packages/design-tokens/src/scripts/**/*.ts'],
+    rules: {
+      'max-depth': ['error', { max: 10 }],
+    },
+  },
+
+  {
+    files: ['packages/design-tokens/src/index.ts'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
+  {
     ...mdx.flat,
     rules: {
       'prettier/prettier': 'error',
@@ -409,6 +424,7 @@ export default tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
+          project: ['tsconfig.json', 'packages/*/tsconfig.json'],
         },
       },
     },

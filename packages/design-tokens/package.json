@@ -1,0 +1,15 @@
+{
+  "name": "@kommo-crm/design-tokens",
+  "version": "0.1.0",
+  "description": "Design tokens for Kommo CRM UI",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}' src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "5.5.4"
+  }
+}
