@@ -1,3 +1,5 @@
+@import '@kommo-crm/design-tokens/min.css';
+
 .sb-show-main,
 .docs-story {
   background: var(--crm-ui-kit-palette-background-default);
