@@ -1,10 +1,11 @@
 import type { Leaves } from '@/types/token-path';
+import { Primitive, PrimitiveVars } from '@/types/common';
 
 import color from './color';
 
 const primitives = {
   color,
-} as const;
+} as Record<Primitive, PrimitiveVars>;
 
 type Primitives = typeof primitives;
 

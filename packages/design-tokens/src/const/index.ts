@@ -1,14 +1,15 @@
-import { Theme } from '@/types/common';
+import { Primitive, Theme } from '@/types/common';
 
 export const SCALES = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900,
 ] as const;
 export const THEMES = ['light', 'dark'] as const;
 export const SEMANTIC_GROUPS = ['palette'] as const;
+export const PRIMITIVE_KEYS = ['color'] as const;
 
 export type PrimitiveGroupConfig = {
   /** Key in the `primitives` object */
-  key: string;
+  key: Primitive;
   /** CSS variable prefix, e.g. `color` → `--color-light-azure-50` */
   prefix: string;
   /**

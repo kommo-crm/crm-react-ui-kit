@@ -13,8 +13,20 @@ if (!fs.existsSync(distDir)) {
 }
 
 const write = (filename: string, content: string): void => {
-  fs.writeFileSync(path.join(distDir, filename), content, 'utf8');
+  const dest = path.join(distDir, filename);
+
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.writeFileSync(dest, content, 'utf8');
   console.log(`  ✓ dist/${filename}`);
+};
+
+const copy = (srcRelative: string, destRelative: string): void => {
+  const src = path.resolve(__dirname, srcRelative);
+  const dest = path.join(distDir, destRelative);
+
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.copyFileSync(src, dest);
+  console.log(`  ✓ dist/${destRelative}`);
 };
 
 console.log('Generating design tokens...');
@@ -24,3 +36,4 @@ write('tokens.min.css', generateMinCss());
 write('tokens.less', generateLess());
 write('tokens.scss', generateSass());
 write('tokens.js', generateJs());
+copy('types/color.ts', 'types/color.ts');

@@ -1,4 +1,4 @@
-import { ColorShades } from '@/types/common';
+import { ColorShades } from '@/types/color';
 import { buildColorShades } from '@/utils/buildColorShades';
 
 const azureLight: ColorShades = [

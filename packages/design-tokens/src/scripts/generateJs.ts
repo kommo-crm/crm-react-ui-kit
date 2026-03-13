@@ -1,17 +1,34 @@
+import { PRIMITIVE_GROUPS } from '@/const';
 import themes from '@/design/themes';
 import { resolveSemanticTokens } from '@/utils/resolveSemanticTokens';
 
 import { collectTokens } from './collectTokens';
 
-export function generateJs(): string {
-  const result = Object.fromEntries(
-    collectTokens().map(({ themeId, primitiveVars }) => {
+function buildTokens(): unknown {
+  return Object.fromEntries(
+    collectTokens().map(({ themeId }) => {
       const theme = themes[themeId as keyof typeof themes];
+
+      const primitives = Object.fromEntries(
+        PRIMITIVE_GROUPS.map((group) => {
+          const groupData = (theme.primitives as Record<string, unknown>)[
+            group.key
+          ];
+          const data = group.themeVariant
+            ? (groupData as Record<string, unknown>)[themeId]
+            : groupData;
+
+          return [group.key, data];
+        })
+      );
+
       const semantic = resolveSemanticTokens(theme.semantic, theme.primitives);
 
-      return [themeId, { primitives: primitiveVars, semantic }];
+      return [themeId, { primitives, semantic }];
     })
   );
+}
 
-  return `export const tokens = ${JSON.stringify(result, null, 2)};\n`;
+export function generateJs(): string {
+  return `export const tokens = ${JSON.stringify(buildTokens(), null, 2)};\n`;
 }

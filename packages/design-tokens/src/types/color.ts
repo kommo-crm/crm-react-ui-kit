@@ -1,3 +1,5 @@
+import { Scale } from './common';
+
 export type Hex = `#${string}`; // #fff, #ffffff, #ffffffff
 
 export type RGB =
@@ -42,3 +44,20 @@ export type ColorValue =
   | CSSVariable
   | ColorFunction
   | ColorKeyword;
+
+export type ColorShades = readonly [
+  ColorValue, // 50
+  ColorValue, // 100
+  ColorValue, // 200
+  ColorValue, // 300
+  ColorValue, // 400
+  ColorValue, // 500
+  ColorValue, // 600
+  ColorValue, // 700
+  ColorValue, // 800
+  ColorValue, // 900
+];
+
+/** Values of a single color family indexed by scale:
+ * { 50: '#fff', 100: '#f5f5f5', ... } */
+export type ScaledShades = Record<Scale, ColorValue>;
