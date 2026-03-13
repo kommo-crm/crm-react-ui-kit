@@ -228,3 +228,68 @@ export const ButtonDangerTertiary: Story = {
   args: { theme: ButtonDangerTertiaryTheme },
   render: (props) => <Button {...props} />,
 };
+
+export const ButtonIconSecondary: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[0];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[1];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconDangerGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[2];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconSmallGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[3];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={16} height={16} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconSmallDangerGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[4];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={16} height={16} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};

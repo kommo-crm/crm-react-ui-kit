@@ -95,7 +95,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
         [s.success]: shouldShowSuccessfulState,
         [s.disabled]: isDisabled,
       })}
-      disabled={isDisabled && !isClickableWhileDisabled}
+      disabled={(isDisabled || isLoading) && !isClickableWhileDisabled}
     >
       <span className={cx(s.content)}>
         {shouldShowSuccessfulState && <span>{successfulStateText}</span>}

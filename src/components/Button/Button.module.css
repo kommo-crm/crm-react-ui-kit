@@ -40,7 +40,7 @@
     margin-left: var(--crm-ui-kit-button-sibling-element-spacing);
   }
 
-  &:not(.disabled):active {
+  &:not(.disabled):not(.loading):active {
     transform: translateY(1px);
   }
 
@@ -52,7 +52,7 @@
     border-radius: var(--crm-ui-kit-button-focus-visible-border-radius);
   }
 
-  &:not(.disabled):hover {
+  &:not(.disabled):not(.loading):hover {
     color: var(--crm-ui-kit-button-hover-color);
     background: var(--crm-ui-kit-button-hover-background-color);
     border-width: var(--crm-ui-kit-button-hover-border-width);
@@ -117,7 +117,7 @@
   background: var(--crm-ui-kit-button-success-background-color);
   border-color: var(--crm-ui-kit-button-success-border-color);
 
-  &:not(.disabled):hover {
+  &:not(.disabled):not(.loading):hover {
     background: var(--crm-ui-kit-button-success-hover-background-color);
     border-color: var(--crm-ui-kit-button-success-border-color);
   }
