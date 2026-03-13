@@ -1,5 +1,5 @@
 import { SCALES } from '@/const';
-import { ColorShades, Scale } from '@/types';
+import { ColorShades, Scale } from '@/types/common';
 import validateHEXColor from '@/utils/validateHEXColor';
 
 export const buildColorShades = (shades: ColorShades): Record<Scale, string> =>

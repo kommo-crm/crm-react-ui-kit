@@ -1,10 +1,10 @@
 import primitives from '@/primitives';
-import darkSemanticTokens from '@/semantic/dark';
+import semantic from '@/semantic';
 
 const darkTheme = {
   theme: 'dark',
   primitives,
-  semantic: darkSemanticTokens,
+  semantic: semantic.dark,
 } as const;
 
 export default darkTheme;

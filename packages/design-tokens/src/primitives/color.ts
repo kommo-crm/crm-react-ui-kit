@@ -1,4 +1,4 @@
-import { ColorShades } from '@/types';
+import { ColorShades } from '@/types/common';
 import { buildColorShades } from '@/utils/buildColorShades';
 
 const azureLight: ColorShades = [
@@ -197,38 +197,24 @@ const purpleDark: ColorShades = [
 ];
 
 const color = {
-  color: {
-    azure: {
-      light: buildColorShades(azureLight),
-      dark: buildColorShades(azureDark),
-    },
-    blue: {
-      light: buildColorShades(blueLight),
-      dark: buildColorShades(blueDark),
-    },
-    green: {
-      light: buildColorShades(greenLight),
-      dark: buildColorShades(greenDark),
-    },
-    orange: {
-      light: buildColorShades(orangeLight),
-      dark: buildColorShades(orangeDark),
-    },
-    red: {
-      light: buildColorShades(redLight),
-      dark: buildColorShades(redDark),
-    },
-    pink: {
-      light: buildColorShades(pinkLight),
-      dark: buildColorShades(pinkDark),
-    },
-    purple: {
-      light: buildColorShades(purpleLight),
-      dark: buildColorShades(purpleDark),
-    },
-    neutral: {
-      light: buildColorShades(neutralLight),
-    },
+  light: {
+    azure: buildColorShades(azureLight),
+    blue: buildColorShades(blueLight),
+    green: buildColorShades(greenLight),
+    orange: buildColorShades(orangeLight),
+    red: buildColorShades(redLight),
+    pink: buildColorShades(pinkLight),
+    purple: buildColorShades(purpleLight),
+    neutral: buildColorShades(neutralLight),
+  },
+  dark: {
+    azure: buildColorShades(azureDark),
+    blue: buildColorShades(blueDark),
+    green: buildColorShades(greenDark),
+    orange: buildColorShades(orangeDark),
+    red: buildColorShades(redDark),
+    pink: buildColorShades(pinkDark),
+    purple: buildColorShades(purpleDark),
   },
 } as const;
 

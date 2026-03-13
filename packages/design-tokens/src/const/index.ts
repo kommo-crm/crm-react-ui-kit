@@ -1,4 +1,4 @@
-import { Theme } from '@/types';
+import { Theme } from '@/types/common';
 
 export const SCALES = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900,
@@ -8,11 +8,10 @@ export const SEMANTIC_GROUPS = ['palette'] as const;
 
 export const themesConfig: Record<
   Theme,
-  { name: string; conditions: string[] }
+  { name: string; conditions?: string[] }
 > = {
   light: {
     name: 'light',
-    conditions: [],
   },
   dark: {
     name: 'dark',
