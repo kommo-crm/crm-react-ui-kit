@@ -1,13 +1,26 @@
-import primitives from '@/design/primitives';
-import semantic from '@/design/semantics';
-import { resolveSemanticTokens } from '@/utils/resolveSemanticTokens';
+import * as fs from 'fs';
+import * as path from 'path';
 
-export const tokens = {
-  primitive: primitives,
-  semantic: {
-    light: resolveSemanticTokens(semantic.light, primitives),
-    dark: resolveSemanticTokens(semantic.dark, primitives),
-  },
+import { generateCss, generateMinCss } from '@/scripts/generateCss';
+import { generateJs } from '@/scripts/generateJs';
+import { generateLess } from '@/scripts/generateLess';
+import { generateSass } from '@/scripts/generateSass';
+
+const distDir = path.resolve(__dirname, '../dist');
+
+if (!fs.existsSync(distDir)) {
+  fs.mkdirSync(distDir, { recursive: true });
+}
+
+const write = (filename: string, content: string): void => {
+  fs.writeFileSync(path.join(distDir, filename), content, 'utf8');
+  console.log(`  ✓ dist/${filename}`);
 };
 
-export type Tokens = typeof tokens;
+console.log('Generating design tokens...');
+
+write('tokens.css', generateCss());
+write('tokens.min.css', generateMinCss());
+write('tokens.less', generateLess());
+write('tokens.scss', generateSass());
+write('tokens.js', generateJs());

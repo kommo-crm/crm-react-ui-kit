@@ -393,7 +393,7 @@ export default tseslint.config(
   },
 
   {
-    files: ['packages/design-tokens/src/scripts/**/*.ts'],
+    files: ['packages/design-tokens/src/**/*.ts'],
     rules: {
       'max-depth': ['error', { max: 10 }],
       'no-console': 'off',
