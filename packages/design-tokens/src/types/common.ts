@@ -25,3 +25,23 @@ export type ThemeConfig<S extends SemanticNode> = {
 
 /** Dot-separated primitive path or raw CSS value */
 export type SemanticNode = string | { [key: string]: SemanticNode };
+
+type PrimitiveGroupBase = {
+  /** Key in the `primitives` object */
+  key: Primitive;
+  /** CSS variable prefix, e.g. `color` → `--color-light-azure-50` */
+  prefix: string;
+  /**
+   * Whether the primitive has per-theme sub-objects
+   * (e.g. `primitives.color.light` / `primitives.color.dark`)
+   */
+  themeVariant: boolean;
+};
+
+export type PrimitiveGroupConfig =
+  | (PrimitiveGroupBase & {
+      scaled: true;
+      /** Scale values used to index into family shades */
+      scales: readonly number[];
+    })
+  | (PrimitiveGroupBase & { scaled: false });

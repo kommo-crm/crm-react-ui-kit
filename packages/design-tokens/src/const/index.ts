@@ -1,3 +1,5 @@
+import { PrimitiveGroupConfig } from '@/types/common';
+
 export const COLOR_SCALES = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900,
 ] as const;
@@ -10,30 +12,13 @@ export type ColorScale = (typeof COLOR_SCALES)[number];
 export type Theme = (typeof THEMES)[number];
 export type Primitive = (typeof PRIMITIVE_KEYS)[number];
 
-export type PrimitiveGroupConfig = {
-  /** Key in the `primitives` object */
-  key: Primitive;
-  /** CSS variable prefix, e.g. `color` → `--color-light-azure-50` */
-  prefix: string;
-  /**
-   * Whether the primitive has per-theme sub-objects
-   * (e.g. `primitives.color.light` / `primitives.color.dark`)
-   */
-  themeVariant: boolean;
-  /**
-   * Whether values inside families are indexed by numeric SCALES.
-   * `true`  → `--{prefix}-{themeId}-{family}-{scale}: value`
-   * `false` → flattened with flattenVars → `--{prefix}-{key}: value`
-   */
-  scaled: boolean;
-};
-
 export const PRIMITIVE_GROUPS: PrimitiveGroupConfig[] = [
   {
     key: 'color',
     prefix: 'color',
     themeVariant: true,
     scaled: true,
+    scales: COLOR_SCALES,
   },
 ];
 
