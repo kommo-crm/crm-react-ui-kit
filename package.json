@@ -128,8 +128,7 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
-    "dev": "turbo dev",
-    "dev:all": "concurrently \"turbo dev\" \"storybook dev -p 6006\"",
+    "dev": "concurrently --kill-others \"storybook dev -p 6006\" \"turbo run dev --filter=@kommo-crm/design-tokens\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build:turbo": "turbo build",

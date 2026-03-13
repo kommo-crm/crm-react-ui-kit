@@ -15,15 +15,18 @@
       "types": "./dist/tokens.d.ts"
     },
     "./css": "./dist/tokens.css",
+    "./min.css": "./dist/tokens.min.css",
     "./less": "./dist/tokens.less",
     "./scss": "./dist/tokens.scss"
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}' src/index.ts"
+    "build": "npm run clean && ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}' src/index.ts",
+    "dev": "nodemon --watch src --ext ts --exec \"ts-node -r tsconfig-paths/register --compiler-options '{\\\"module\\\":\\\"CommonJS\\\"}' src/index.ts\""
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "nodemon": "^3.1.9",
     "typescript": "5.5.4"
   }
 }
