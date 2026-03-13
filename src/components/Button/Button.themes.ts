@@ -160,7 +160,7 @@ export const ButtonSecondaryTheme: ButtonThemeType = {
   '--crm-ui-kit-button-hover-background-color': 'inherit',
   '--crm-ui-kit-button-hover-border-color': 'transparent',
   '--crm-ui-kit-button-hover-color':
-    'var(--crm-ui-kit-palette-text-secondary-light)',
+    'var(--crm-ui-kit-palette-text-secondary-dark)',
 
   '--crm-ui-kit-button-spinner-border-color':
     'var(--crm-ui-kit-palette-text-secondary-light)',

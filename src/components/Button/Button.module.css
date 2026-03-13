@@ -98,6 +98,10 @@
   animation-fill-mode: both;
 }
 
+.loading {
+  cursor: default;
+}
+
 .loading,
 .success {
   & .content {
