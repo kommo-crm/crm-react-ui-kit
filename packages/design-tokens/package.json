@@ -10,9 +10,9 @@
   "types": "./dist/tokens.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/tokens.d.ts",
       "import": "./dist/tokens.mjs",
-      "require": "./dist/tokens.cjs",
-      "types": "./dist/tokens.d.ts"
+      "require": "./dist/tokens.cjs"
     },
     "./css": "./dist/tokens.css",
     "./min.css": "./dist/tokens.min.css",
@@ -21,11 +21,13 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsx src/index.ts",
-    "dev": "tsx watch src/index.ts"
+    "build": "npm run clean && tsx src/index.ts && tsup",
+    "dev": "concurrently \"tsx watch src/index.ts\" \"tsup --watch --no-dts\""
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "concurrently": "^9.1.2",
+    "tsup": "^8.3.0",
     "tsx": "^4.19.2",
     "typescript": "5.5.4"
   }

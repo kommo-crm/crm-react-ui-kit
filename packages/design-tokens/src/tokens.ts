@@ -1,10 +1,12 @@
 import { PRIMITIVE_GROUPS } from '@/const';
 import themes from '@/design/themes';
+import { collectTokens } from '@/scripts/collectTokens';
 import { resolveSemanticTokens } from '@/utils/resolveSemanticTokens';
 
-import { collectTokens } from './collectTokens';
+export type { ColorValue, Hex, RGB, RGBA, HSL, HSLA, CSSVariable, ColorFunction, ColorKeyword, ColorShades, ScaledShades } from '@/types/color';
+export type { Theme, ColorScale } from '@/const';
 
-function buildTokens(): unknown {
+function buildTokens() {
   return Object.fromEntries(
     collectTokens().map(({ themeId }) => {
       const theme = themes[themeId as keyof typeof themes];
@@ -29,17 +31,4 @@ function buildTokens(): unknown {
   );
 }
 
-const serialized = (): string => JSON.stringify(buildTokens(), null, 2);
-
-export function generateEsm(): string {
-  return `export const tokens = ${serialized()};\n`;
-}
-
-export function generateCjs(): string {
-  return [
-    '"use strict";',
-    'Object.defineProperty(exports, "__esModule", { value: true });',
-    `exports.tokens = ${serialized()};`,
-    '',
-  ].join('\n');
-}
+export const tokens = buildTokens();
