@@ -208,8 +208,17 @@ export const ButtonIconSecondaryTheme: ButtonThemeType = {
 export const ButtonIconGhostTheme: ButtonThemeType = {
   ...ButtonSecondaryTheme,
   ...ButtonIconBaseThemeValues,
+  '--crm-ui-kit-button-color': 'var(--crm-ui-kit-palette-text-primary)',
+  '--crm-ui-kit-button-hover-color': 'var(--crm-ui-kit-palette-text-primary)',
+  '--crm-ui-kit-button-disabled-color':
+    'var(--crm-ui-kit-palette-text-primary)',
   '--crm-ui-kit-button-hover-background-color':
     'var(--crm-ui-kit-palette-background-secondary-800)',
+
+  '--crm-ui-kit-button-spinner-border-color':
+    'var(--crm-ui-kit-palette-active-element-900)',
+  '--crm-ui-kit-button-spinner-disabled-border-color':
+    'var(--crm-ui-kit-palette-active-element-900)',
 };
 export const ButtonIconDangerGhostTheme: ButtonThemeType = {
   ...ButtonDangerTertiaryTheme,
