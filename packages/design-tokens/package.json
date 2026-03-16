@@ -21,12 +21,12 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}' src/index.ts",
-    "dev": "nodemon --watch src --ext ts --exec \"ts-node -r tsconfig-paths/register --compiler-options '{\\\"module\\\":\\\"CommonJS\\\"}' src/index.ts\""
+    "build": "npm run clean && tsx src/index.ts",
+    "dev": "tsx watch src/index.ts"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "nodemon": "^3.1.9",
+    "tsx": "^4.19.2",
     "typescript": "5.5.4"
   }
 }

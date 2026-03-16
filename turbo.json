@@ -11,8 +11,16 @@
       "cache": false
     },
     "dev": {
+      "dependsOn": ["^build"],
       "persistent": true,
       "cache": false
+    },
+    "storybook": {
+      "persistent": true,
+      "cache": false
+    },
+    "build-storybook": {
+      "outputs": ["storybook-static/**"]
     },
     "lint": {
       "cache": false

@@ -11,6 +11,8 @@
     "dev": "turbo run dev",
     "dev:ui-kit": "turbo run dev --filter=@kommo-crm/crm-react-ui-kit",
     "dev:design-tokens": "turbo run dev --filter=@kommo-crm/design-tokens",
+    "storybook": "turbo run storybook --filter=@kommo-crm/crm-react-ui-kit",
+    "build-storybook": "turbo run build-storybook --filter=@kommo-crm/crm-react-ui-kit",
     "lint": "turbo run lint",
     "prepare": "husky"
   },
