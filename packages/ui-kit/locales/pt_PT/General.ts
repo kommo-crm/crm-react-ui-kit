@@ -4,6 +4,8 @@ export default {
   'Usage': 'Uso',
   'Themes': 'Temas',
   'Typography': 'Tipografia',
+  'Color': 'Cores',
+  'Display scales': 'Exibir escalas',
   'Components': 'Componentes',
   'Default': 'Padrão',
   'Sizes': 'Tamanhos',

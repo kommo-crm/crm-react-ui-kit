@@ -11,7 +11,8 @@ const CenteredStyle: React.CSSProperties = {
 };
 
 export const WithConfigProvider: Decorator = (Component, context) => {
-  const { appearance } = context.globals;
+  const appearance =
+    context.parameters.appearance ?? context.globals.appearance;
   const { centered } = context.parameters;
 
   return (
