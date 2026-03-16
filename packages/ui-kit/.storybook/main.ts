@@ -54,6 +54,7 @@ const config: StorybookConfig = {
       plugins,
       resolve: {
         alias: {
+          'src': resolve(__dirname, '../src'),
           '@storybook-utils': resolve(__dirname, '../storybook'),
           '@i18n': resolve(__dirname, './i18n.ts'),
         },

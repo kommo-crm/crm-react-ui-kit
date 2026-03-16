@@ -25,6 +25,6 @@
       "@i18n": [".storybook/i18n.ts"]
     }
   },
-  "include": ["./**/*.tsx", "./**/*.ts", ".storybook/**/*"],
-  "exclude": ["node_modules", "packages/**"]
+  "include": ["./**/*.tsx", "./**/*.ts", "./.storybook/**/*"],
+  "exclude": ["node_modules"]
 }
