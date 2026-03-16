@@ -1,1 +1,1 @@
-export { tokens } from './_tokens.generated';
+export { tokens } from '../.generated/tokens';

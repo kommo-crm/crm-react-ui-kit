@@ -6,12 +6,12 @@ import { generateLess } from '@/scripts/generateLess';
 import { generateSass } from '@/scripts/generateSass';
 import { generateTs } from '@/scripts/generateTs';
 
-const srcDir = __dirname;
-const distDir = path.resolve(srcDir, '../dist');
+const rootDir = path.resolve(__dirname, '..');
+const distDir = path.resolve(rootDir, 'dist');
+const generatedDir = path.resolve(rootDir, '.generated');
 
-if (!fs.existsSync(distDir)) {
-  fs.mkdirSync(distDir, { recursive: true });
-}
+fs.mkdirSync(distDir, { recursive: true });
+fs.mkdirSync(generatedDir, { recursive: true });
 
 const write = (filename: string, content: string): void => {
   const dest = path.join(distDir, filename);
@@ -23,8 +23,8 @@ const write = (filename: string, content: string): void => {
 
 console.log('Generating design tokens...');
 
-fs.writeFileSync(path.join(srcDir, '_tokens.generated.ts'), generateTs(), 'utf8');
-console.log('  ✓ src/_tokens.generated.ts');
+fs.writeFileSync(path.join(generatedDir, 'tokens.ts'), generateTs(), 'utf8');
+console.log('  ✓ .generated/tokens.ts');
 
 write('tokens.css', generateCss());
 write('tokens.min.css', generateMinCss());
