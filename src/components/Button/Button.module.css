@@ -99,9 +99,6 @@
       *  state). All child elements are placed in the same grid cell (1 / 1),
       *  so the cell — and therefore the button — always takes the size of the
       *  largest child, keeping dimensions stable across state transitions.
-      *
-      *  More info provided in this comment:
-      *  https://github.com/kommo-crm/crm-react-ui-kit/pull/22#discussion_r2925755831
       */
     display: inline-grid;
   }
