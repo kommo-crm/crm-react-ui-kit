@@ -65,6 +65,11 @@ export const test = testBase.extend<TestOptions>({
 
       const hashedProps = hash(props);
 
+      /*
+       *  This is necessary for the correct formation
+       *  of the folder structure
+       *  w/o array we get a long-named snapshot
+       */
       return [
         platform,
         browserName,
