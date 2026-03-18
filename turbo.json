@@ -20,6 +20,19 @@
       "cache": false
     },
     "build-storybook": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".storybook/**",
+        "stories/**",
+        "**/*.stories.*",
+        "**/*.mdx",
+        "tsconfig.json",
+        "tsconfig.*.json",
+        "vite.config.*",
+        "webpack.config.*",
+        ".env*"
+      ],
       "outputs": ["storybook-static/**"]
     },
     "lint": {
