@@ -64,6 +64,7 @@
 
 .content {
   display: flex;
+  position: relative;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -80,16 +81,34 @@
   margin-left: var(--crm-ui-kit-button-elements-spacing);
 }
 
-.spinner_container {
-  position: relative;
-  margin: auto;
-  height: 14px;
-  width: 12px;
+.invisible {
+  visibility: hidden;
 }
 
 .invalid {
   animation: 0.3s buttonShakeAnimation;
   animation-fill-mode: both;
+}
+
+.loading,
+.success {
+  & .content {
+    /**
+      *  Grid layout is used here to prevent incorrect resizing of the button when its
+      *  state changes (e.g. switching between loading/success and the default
+      *  state). All child elements are placed in the same grid cell (1 / 1),
+      *  so the cell — and therefore the button — always takes the size of the
+      *  largest child, keeping dimensions stable across state transitions.
+      */
+    display: inline-grid;
+  }
+
+  & .content > * {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .success {
