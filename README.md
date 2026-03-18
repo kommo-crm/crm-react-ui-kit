@@ -50,6 +50,12 @@ yarn test:e2e
 yarn test:e2e:update-snapshots
 ```
 
+**Generate screenshots with grep filter:**
+
+```sh
+yarn test:e2e:update-snapshots -g button
+```
+
 ## Contribute to this repo
 
 Pull requests are welcome. See the [contribution guidelines](./.github/CONTRIBUTING.md) for more information.
