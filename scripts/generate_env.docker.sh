@@ -12,6 +12,10 @@ while [[ $# -gt 0 ]]; do
       -u)
         echo "UPDATE_SNAPSHOTS_FLAG=-u" >> .env.docker
         ;;
+      -g)
+        shift
+        echo "GREP_FLAG=-g $1" >> .env.docker
+        ;;
   esac
   shift
 done
