@@ -60,7 +60,7 @@ export function prettyProps(props: any) {
         return `${prop}=<jsx>`;
       }
 
-      /*
+      /**
        * In Playwright CT, the test runner compiles JSX via a Vite plugin that
        * transforms React elements into a serializable `{ __pw_type }` format so
        * they can be transferred from the Node.js test context to the browser.
