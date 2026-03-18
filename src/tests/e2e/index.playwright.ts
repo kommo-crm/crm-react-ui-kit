@@ -53,10 +53,10 @@ export const test = testBase.extend<TestOptions>({
         .filter((path) => !/.+\.ts(x)?$/.test(path))
         .map((path) => path.toLowerCase().replace(/\s+/g, '-'));
 
-      /*
-        Only Button component supports snapshot splitting by props
-        See: https://github.com/kommo-crm/crm-react-ui-kit/issues/20
-      */
+      /**
+       * Only Button component supports snapshot splitting by props
+       * See: https://github.com/kommo-crm/crm-react-ui-kit/issues/20
+       */
       if (!/button/gi.test(testName)) {
         return [testInfo.title, platform, browserName, appearance, 'snap.png']
           .join('-')
@@ -65,7 +65,7 @@ export const test = testBase.extend<TestOptions>({
 
       const hashedProps = hash(props);
 
-      /*
+      /**
        *  This is necessary for the correct formation
        *  of the folder structure
        *  w/o array we get a long-named snapshot
