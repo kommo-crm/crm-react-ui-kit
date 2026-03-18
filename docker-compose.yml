@@ -9,7 +9,7 @@ services:
       apt-get install -y python3 build-essential &&
       corepack enable &&
       YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
-      yarn test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-}
+      yarn test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-} ${GREP_FLAG:-}
       "
     volumes:
       - ./:/app

@@ -22,7 +22,7 @@ export interface TestOptions {
   /**
    * Function for generating the name of the snapshot file
    */
-  getSnapshotFileName: () => string;
+  getSnapshotFileName: () => string[] | string;
   /**
    * Function for checking screenshot with content cropping
    */
@@ -37,5 +37,5 @@ export interface TestHelpers {
   /**
    * Asynchronous function to get the name of the snapshot file
    */
-  getSnapshotFileName: () => Promise<string>;
+  getSnapshotFileName: () => Promise<string[] | string>;
 }
