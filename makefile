@@ -8,4 +8,3 @@ build:
 
 push:
 	docker push ${REGISTRY_URL}/crm-react-ui-kit:build_${DATE}
-
