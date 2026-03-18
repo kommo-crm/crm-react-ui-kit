@@ -7,10 +7,10 @@
   "scripts": {
     "build": "turbo run build",
     "build:ui-kit": "turbo run build --filter=@kommo-crm/crm-react-ui-kit",
-    "build:design-tokens": "turbo run build --filter=@kommo-crm/design-tokens",
+    "build:design-tokens": "turbo run build --filter=@kommo-crm/tokens",
     "dev": "turbo run dev",
     "dev:ui-kit": "turbo run dev --filter=@kommo-crm/crm-react-ui-kit",
-    "dev:design-tokens": "turbo run dev --filter=@kommo-crm/design-tokens",
+    "dev:design-tokens": "turbo run dev --filter=@kommo-crm/tokens",
     "storybook": "turbo run storybook --filter=@kommo-crm/crm-react-ui-kit",
     "build-storybook": "turbo run build-storybook --filter=@kommo-crm/crm-react-ui-kit",
     "lint": "turbo run lint",

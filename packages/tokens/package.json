@@ -1,5 +1,5 @@
 {
-  "name": "@kommo-crm/design-tokens",
+  "name": "@kommo-crm/tokens",
   "version": "0.1.0",
   "description": "Design tokens for Kommo CRM UI",
   "files": [
