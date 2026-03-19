@@ -14,7 +14,11 @@ import {
   ButtonSecondaryPlaygroundItem,
   ButtonDangerPrimaryPlaygroundItem,
   ButtonDangerTertiaryPlaygroundItem,
-  ButtonIconPlaygroundItem,
+  ButtonIconSecondaryPlaygroundItem,
+  ButtonIconGhostPlaygroundItem,
+  ButtonIconDangerGhostPlaygroundItem,
+  ButtonIconSmallGhostPlaygroundItem,
+  ButtonIconSmallDangerGhostPlaygroundItem,
 } from './Button.e2e-playground';
 
 export const combinations = multiCartesian<ButtonProps>([
@@ -105,12 +109,75 @@ const iconCombinations = multiCartesian<ButtonProps>([
 for (const props of iconCombinations) {
   const label = prettyProps(props);
 
-  test.describe('Button Icon', () => {
+  test.describe('Button Icon Secondary', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
-          <ButtonIconPlaygroundItem appearance={appearance} props={props} />
+          <ButtonIconSecondaryPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Button Icon Ghost', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonIconGhostPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Button Icon Danger Ghost', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonIconDangerGhostPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Button Icon Small Ghost', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonIconSmallGhostPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Button Icon Small Danger Ghost', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonIconSmallDangerGhostPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
         );
         await expectScreenshotClippedToContent();
       }

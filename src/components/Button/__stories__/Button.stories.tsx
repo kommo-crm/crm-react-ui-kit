@@ -9,6 +9,10 @@ import { Appearance } from 'src/lib/appearance';
 
 import { i18n } from '@i18n';
 
+import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
+import TriggerIcon from '@storybook-utils/icons/trigger.svg';
+import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
+
 import {
   Button,
   ButtonNeutralTheme,
@@ -16,8 +20,12 @@ import {
   ButtonSecondaryTheme,
   ButtonDangerPrimaryTheme,
   ButtonDangerTertiaryTheme,
+  ButtonIconSecondaryTheme,
+  ButtonIconGhostTheme,
+  ButtonIconDangerGhostTheme,
+  ButtonIconSmallGhostTheme,
+  ButtonIconSmallDangerGhostTheme,
 } from '..';
-import { buttonIconVariants } from '../__tests__/Button.e2e-playground';
 
 const ThemesMap = {
   ButtonNeutralTheme,
@@ -178,6 +186,14 @@ export const Refs: Story = {
     );
   },
 };
+
+const buttonIconVariants = [
+  { size: 'm', theme: ButtonIconSecondaryTheme, Icon: MicrophoneIcon },
+  { size: 'm', theme: ButtonIconGhostTheme, Icon: TriggerIcon },
+  { size: 'm', theme: ButtonIconDangerGhostTheme, Icon: TrashcanIcon },
+  { size: 's', theme: ButtonIconSmallGhostTheme, Icon: TriggerIcon },
+  { size: 's', theme: ButtonIconSmallDangerGhostTheme, Icon: TrashcanIcon },
+];
 
 export const ButtonIcon: Story = {
   render: (props) => (

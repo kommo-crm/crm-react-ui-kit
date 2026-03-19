@@ -24,14 +24,6 @@ import {
   type ButtonProps,
 } from '..';
 
-export const buttonIconVariants = [
-  { size: 'm', theme: ButtonIconSecondaryTheme, Icon: MicrophoneIcon },
-  { size: 'm', theme: ButtonIconGhostTheme, Icon: TriggerIcon },
-  { size: 'm', theme: ButtonIconDangerGhostTheme, Icon: TrashcanIcon },
-  { size: 's', theme: ButtonIconSmallGhostTheme, Icon: TriggerIcon },
-  { size: 's', theme: ButtonIconSmallDangerGhostTheme, Icon: TrashcanIcon },
-];
-
 export const ButtonNeutralPlaygroundItem = ({
   appearance,
   props,
@@ -99,33 +91,67 @@ export const ButtonDangerTertiaryPlaygroundItem = ({
   </ComponentPlaygroundItem>
 );
 
-export const ButtonIconPlaygroundItem = ({
+export const ButtonIconSecondaryPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundItemProps<ButtonProps>) => (
   <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
-      <div
-        style={{
-          display: 'flex',
-          gap: '8px',
-          alignItems: 'center',
-        }}
-      >
-        {buttonIconVariants.map(({ size, theme, Icon }, index) => {
-          const iconSize = size === 'm' ? 20 : 16;
+      <Button {...p} theme={ButtonIconSecondaryTheme}>
+        <MicrophoneIcon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
 
-          return (
-            <Button key={index} {...p} theme={theme}>
-              <Icon
-                width={iconSize}
-                height={iconSize}
-                style={{ display: 'flex' }}
-              />
-            </Button>
-          );
-        })}
-      </div>
+export const ButtonIconGhostPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonIconGhostTheme}>
+        <TriggerIcon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
+
+export const ButtonIconDangerGhostPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonIconDangerGhostTheme}>
+        <TrashcanIcon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
+
+export const ButtonIconSmallGhostPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonIconSmallGhostTheme}>
+        <TriggerIcon width={16} height={16} style={{ display: 'flex' }} />
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
+
+export const ButtonIconSmallDangerGhostPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonIconSmallDangerGhostTheme}>
+        <TrashcanIcon width={16} height={16} style={{ display: 'flex' }} />
+      </Button>
     )}
   </ComponentPlaygroundItem>
 );
