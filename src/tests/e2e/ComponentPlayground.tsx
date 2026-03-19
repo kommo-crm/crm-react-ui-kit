@@ -3,8 +3,9 @@ import React from 'react';
 import { ConfigProvider } from 'src/components/ConfigProvider';
 import { Appearance } from 'src/lib/appearance';
 
-import { multiCartesian, prettyProps } from './utils';
+import { prettyProps } from './utils';
 import { TEST_CLASS_NAMES } from './constants';
+
 import 'src/stylesheets/playwright/index.css';
 
 export interface InternalComponentPlaygroundProps<Props> {
@@ -13,11 +14,11 @@ export interface InternalComponentPlaygroundProps<Props> {
    */
   appearance: Appearance;
   /**
-   * An object containing sets of values for different component props.
+   * Props for the single component variation to render
    */
-  propSets?: Parameters<typeof multiCartesian<Props>>[0];
+  props: Props;
   /**
-   * A function that takes props (generated from propSets) and returns a React element
+   * A function that takes props and returns a React element
    */
   children: (props: Props) => React.ReactNode;
 }
@@ -28,27 +29,22 @@ export type ComponentPlaygroundProps<Props> = Omit<
 >;
 
 /**
- * Renders the component passed to `children` with different parameters (`propSets`).
+ * Renders a single variation of the component with the given props.
+ * Use this when you want to define combinations outside the component.
  */
 export const ComponentPlayground = <P extends object>({
   appearance,
-  propSets = [{}],
+  props: itemProps,
   children,
-  ...props
 }: InternalComponentPlaygroundProps<P>) => {
   return (
     <ConfigProvider appearance={appearance}>
-      <div className="component-playground" {...props}>
-        {multiCartesian(propSets).map((propSet, i) => {
-          return (
-            <React.Fragment key={i}>
-              <div className={TEST_CLASS_NAMES.PARAMS_CONTENT}>
-                {prettyProps(propSet)}
-              </div>
-              <div>{children(propSet)}</div>
-            </React.Fragment>
-          );
-        })}
+      <div className="component-playground">
+        <div className={TEST_CLASS_NAMES.PARAMS_CONTENT}>
+          {prettyProps(itemProps)}
+        </div>
+
+        <div>{children(itemProps)}</div>
       </div>
     </ConfigProvider>
   );

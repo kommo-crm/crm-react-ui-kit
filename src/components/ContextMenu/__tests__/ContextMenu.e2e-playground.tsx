@@ -19,31 +19,24 @@ import {
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';
-import { ContentProps, Direction } from '../components/Content';
 
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
   '--crm-ui-kit-text-color': 'inherit',
 };
 
-interface ContextMenuComponentProps {
-  /**
-   * The direction of the context menu.
-   */
-  direction?: ContentProps['direction'];
-  /**
-   * Whether the sub menu is default open.
-   */
+export interface ContextMenuComponentProps {
+  direction?:
+    | 'up-left'
+    | 'up-right'
+    | 'down-left'
+    | 'down-right'
+    | 'left-up'
+    | 'left-down'
+    | 'right-up'
+    | 'right-down';
   isDefaultOpenSubMenu: boolean | undefined;
-  /**
-   * Whether the sub menu is default open.
-   */
   isDefaultOpenSub: boolean | undefined;
-  /**
-   * Whether the checkbox is checked.
-   *
-   * @default true
-   */
   isCheckboxChecked?: boolean;
 }
 
@@ -224,91 +217,55 @@ const ContextMenuComponent = ({
   );
 };
 
-export const ContextMenuPlayground = (
-  props: ComponentPlaygroundProps<ContextMenuComponentProps>
-) => {
-  return (
-    <ComponentPlayground<ContextMenuComponentProps>
-      {...props}
-      propSets={[
-        {
-          isDefaultOpenSubMenu: [true],
-          isDefaultOpenSub: [false],
-          direction: [Direction.DOWN_RIGHT],
-        },
-        {
-          isDefaultOpenSubMenu: [false],
-          isDefaultOpenSub: [true],
-          direction: [Direction.DOWN_RIGHT],
-          isCheckboxChecked: [true],
-        },
-        {
-          isDefaultOpenSubMenu: [false],
-          isDefaultOpenSub: [true],
-          direction: [Direction.DOWN_RIGHT],
-          isCheckboxChecked: [false],
-        },
-        {
-          isDefaultOpenSubMenu: [false],
-          isDefaultOpenSub: [false],
-          direction: [
-            Direction.DOWN_RIGHT,
-            Direction.DOWN_LEFT,
-            Direction.UP_RIGHT,
-            Direction.UP_LEFT,
-            Direction.RIGHT_UP,
-            Direction.RIGHT_DOWN,
-            Direction.LEFT_UP,
-            Direction.LEFT_DOWN,
-          ],
-        },
-      ]}
-    >
-      {(itemProps: ContextMenuComponentProps) => {
-        const { direction, isDefaultOpenSubMenu, isDefaultOpenSub } = itemProps;
-        let alignItems: 'flex-start' | 'center' | 'flex-end' = 'center';
-        let justifyContent: 'flex-start' | 'center' | 'flex-end' = 'center';
-        let height = '320px';
+export const ContextMenuPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<ContextMenuComponentProps>) => (
+  <ComponentPlayground<ContextMenuComponentProps>
+    appearance={appearance}
+    props={props}
+  >
+    {(itemProps) => {
+      const { direction, isDefaultOpenSubMenu, isDefaultOpenSub } = itemProps;
+      let alignItems: 'flex-start' | 'center' | 'flex-end' = 'center';
+      let justifyContent: 'flex-start' | 'center' | 'flex-end' = 'center';
+      let height = '320px';
 
-        if (!isDefaultOpenSubMenu && !isDefaultOpenSub) {
-          height = '270px';
-        }
+      if (!isDefaultOpenSubMenu && !isDefaultOpenSub) {
+        height = '270px';
+      }
 
-        if (direction?.startsWith('right') || direction?.startsWith('left')) {
-          height = '220px';
-        }
+      if (direction?.startsWith('right') || direction?.startsWith('left')) {
+        height = '220px';
+      }
 
-        if (direction?.startsWith('down') || direction?.endsWith('down')) {
-          alignItems = 'flex-start';
-        } else if (direction?.startsWith('up') || direction?.endsWith('up')) {
-          alignItems = 'flex-end';
-        }
+      if (direction?.startsWith('down') || direction?.endsWith('down')) {
+        alignItems = 'flex-start';
+      } else if (direction?.startsWith('up') || direction?.endsWith('up')) {
+        alignItems = 'flex-end';
+      }
 
-        if (direction?.endsWith('right') || direction?.startsWith('right')) {
-          justifyContent = 'flex-start';
-        } else if (
-          direction?.endsWith('left') ||
-          direction?.startsWith('left')
-        ) {
-          justifyContent = 'flex-end';
-        }
+      if (direction?.endsWith('right') || direction?.startsWith('right')) {
+        justifyContent = 'flex-start';
+      } else if (direction?.endsWith('left') || direction?.startsWith('left')) {
+        justifyContent = 'flex-end';
+      }
 
-        return (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent,
-              alignItems,
-              height,
-              width: '320px',
-              padding: '20px',
-              marginTop: direction?.endsWith('down') ? '100px' : undefined,
-            }}
-          >
-            <ContextMenuComponent {...itemProps} />
-          </div>
-        );
-      }}
-    </ComponentPlayground>
-  );
-};
+      return (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent,
+            alignItems,
+            height,
+            width: '320px',
+            padding: '20px',
+            marginTop: direction?.endsWith('down') ? '100px' : undefined,
+          }}
+        >
+          <ContextMenuComponent {...itemProps} />
+        </div>
+      );
+    }}
+  </ComponentPlayground>
+);

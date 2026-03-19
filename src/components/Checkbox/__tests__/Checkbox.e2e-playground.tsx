@@ -14,114 +14,54 @@ import {
   type CheckboxProps,
 } from '..';
 
-export const CheckboxLightPlayground = (
-  props: ComponentPlaygroundProps<CheckboxProps>
-) => {
-  return (
-    <ComponentPlayground<CheckboxProps>
-      {...props}
-      propSets={[
-        {
-          isDisabled: [false, true],
-          checkedStyle: ['mark', 'indeterminate'],
-          isDefaultChecked: [true, false],
-        },
-        {
-          isInvalid: [true],
-          isDisabled: [false, true],
-          isDefaultChecked: [true, false],
-        },
-      ]}
-    >
-      {(itemProps: CheckboxProps) => (
-        <div>
-          <Checkbox {...itemProps} theme={CheckboxLightTheme} />
-        </div>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CheckboxLightPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CheckboxProps>) => (
+  <ComponentPlayground<CheckboxProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div>
+        <Checkbox {...p} theme={CheckboxLightTheme} />
+      </div>
+    )}
+  </ComponentPlayground>
+);
 
-export const CheckboxSmallLightPlayground = (
-  props: ComponentPlaygroundProps<CheckboxProps>
-) => {
-  return (
-    <ComponentPlayground<CheckboxProps>
-      {...props}
-      propSets={[
-        {
-          isDisabled: [false, true],
-          checkedStyle: ['mark', 'indeterminate'],
-          isDefaultChecked: [true, false],
-        },
-        {
-          isInvalid: [true],
-          isDisabled: [false, true],
-          isDefaultChecked: [true, false],
-        },
-      ]}
-    >
-      {(itemProps: CheckboxProps) => (
-        <div>
-          <Checkbox {...itemProps} theme={CheckboxSmallLightTheme} />
-        </div>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CheckboxSmallLightPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CheckboxProps>) => (
+  <ComponentPlayground<CheckboxProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div>
+        <Checkbox {...p} theme={CheckboxSmallLightTheme} />
+      </div>
+    )}
+  </ComponentPlayground>
+);
 
-export const CheckboxDarkPlayground = (
-  props: ComponentPlaygroundProps<CheckboxProps>
-) => {
-  return (
-    <ComponentPlayground<CheckboxProps>
-      {...props}
-      propSets={[
-        {
-          isDisabled: [false, true],
-          checkedStyle: ['mark', 'indeterminate'],
-          isDefaultChecked: [true, false],
-        },
-        {
-          isInvalid: [true],
-          isDisabled: [false, true],
-          isDefaultChecked: [true, false],
-        },
-      ]}
-    >
-      {(itemProps: CheckboxProps) => (
-        <div>
-          <Checkbox {...itemProps} theme={CheckboxDarkTheme} />
-        </div>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CheckboxDarkPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CheckboxProps>) => (
+  <ComponentPlayground<CheckboxProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div>
+        <Checkbox {...p} theme={CheckboxDarkTheme} />
+      </div>
+    )}
+  </ComponentPlayground>
+);
 
-export const CheckboxSmallDarkPlayground = (
-  props: ComponentPlaygroundProps<CheckboxProps>
-) => {
-  return (
-    <ComponentPlayground<CheckboxProps>
-      {...props}
-      propSets={[
-        {
-          isDisabled: [false, true],
-          checkedStyle: ['mark', 'indeterminate'],
-          isDefaultChecked: [true, false],
-        },
-        {
-          isInvalid: [true],
-          isDisabled: [false, true],
-          isDefaultChecked: [true, false],
-        },
-      ]}
-    >
-      {(itemProps: CheckboxProps) => (
-        <div>
-          <Checkbox {...itemProps} theme={CheckboxSmallDarkTheme} />
-        </div>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CheckboxSmallDarkPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CheckboxProps>) => (
+  <ComponentPlayground<CheckboxProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div>
+        <Checkbox {...p} theme={CheckboxSmallDarkTheme} />
+      </div>
+    )}
+  </ComponentPlayground>
+);

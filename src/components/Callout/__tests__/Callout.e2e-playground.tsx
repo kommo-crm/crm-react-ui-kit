@@ -13,102 +13,70 @@ import { CalloutInfoTheme } from '../themes/CalloutInfo.theme';
 import { CalloutSuccessTheme } from '../themes/CalloutSuccess.theme';
 import { CalloutWarningTheme } from '../themes/CalloutWarning.theme';
 
-export const CalloutPlaygroundError = (
-  props: ComponentPlaygroundProps<CalloutProps>
-) => {
-  return (
-    <ComponentPlayground<CalloutProps>
-      {...props}
-      propSets={[
-        {
-          children: [
-            <Text key="children" theme={TextPrimaryTheme} size="l">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-              ipsam ducimus inventore minima optio error unde incidunt atque.
-              Minima, maxime?
-            </Text>,
-          ],
-        },
-      ]}
-    >
-      {(itemProps: CalloutProps) => (
-        <Callout {...itemProps} theme={CalloutErrorTheme} />
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CalloutErrorPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CalloutProps>) => (
+  <ComponentPlayground<CalloutProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Callout {...p} theme={CalloutErrorTheme}>
+        <Text theme={TextPrimaryTheme} size="l">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+          ipsam ducimus inventore minima optio error unde incidunt atque.
+          Minima, maxime?
+        </Text>
+      </Callout>
+    )}
+  </ComponentPlayground>
+);
 
-export const CalloutPlaygroundInfo = (
-  props: ComponentPlaygroundProps<CalloutProps>
-) => {
-  return (
-    <ComponentPlayground<CalloutProps>
-      {...props}
-      propSets={[
-        {
-          children: [
-            <Text key="children" theme={TextPrimaryTheme} size="l">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-              ipsam ducimus inventore minima optio error unde incidunt atque.
-              Minima, maxime?
-            </Text>,
-          ],
-        },
-      ]}
-    >
-      {(itemProps: CalloutProps) => (
-        <Callout {...itemProps} theme={CalloutInfoTheme} />
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CalloutInfoPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CalloutProps>) => (
+  <ComponentPlayground<CalloutProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Callout {...p} theme={CalloutInfoTheme}>
+        <Text theme={TextPrimaryTheme} size="l">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+          ipsam ducimus inventore minima optio error unde incidunt atque.
+          Minima, maxime?
+        </Text>
+      </Callout>
+    )}
+  </ComponentPlayground>
+);
 
-export const CalloutPlaygroundSuccess = (
-  props: ComponentPlaygroundProps<CalloutProps>
-) => {
-  return (
-    <ComponentPlayground<CalloutProps>
-      {...props}
-      propSets={[
-        {
-          children: [
-            <Text key="children" theme={TextPrimaryTheme} size="l">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-              ipsam ducimus inventore minima optio error unde incidunt atque.
-              Minima, maxime?
-            </Text>,
-          ],
-        },
-      ]}
-    >
-      {(itemProps: CalloutProps) => (
-        <Callout {...itemProps} theme={CalloutSuccessTheme} />
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CalloutSuccessPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CalloutProps>) => (
+  <ComponentPlayground<CalloutProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Callout {...p} theme={CalloutSuccessTheme}>
+        <Text theme={TextPrimaryTheme} size="l">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+          ipsam ducimus inventore minima optio error unde incidunt atque.
+          Minima, maxime?
+        </Text>
+      </Callout>
+    )}
+  </ComponentPlayground>
+);
 
-export const CalloutPlaygroundWarning = (
-  props: ComponentPlaygroundProps<CalloutProps>
-) => {
-  return (
-    <ComponentPlayground<CalloutProps>
-      {...props}
-      propSets={[
-        {
-          children: [
-            <Text key="children" theme={TextPrimaryTheme} size="l">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-              ipsam ducimus inventore minima optio error unde incidunt atque.
-              Minima, maxime?
-            </Text>,
-          ],
-        },
-      ]}
-    >
-      {(itemProps: CalloutProps) => (
-        <Callout {...itemProps} theme={CalloutWarningTheme} />
-      )}
-    </ComponentPlayground>
-  );
-};
+export const CalloutWarningPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<CalloutProps>) => (
+  <ComponentPlayground<CalloutProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Callout {...p} theme={CalloutWarningTheme}>
+        <Text theme={TextPrimaryTheme} size="l">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+          ipsam ducimus inventore minima optio error unde incidunt atque.
+          Minima, maxime?
+        </Text>
+      </Callout>
+    )}
+  </ComponentPlayground>
+);

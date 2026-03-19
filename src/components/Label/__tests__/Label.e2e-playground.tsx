@@ -13,46 +13,35 @@ import {
 
 import { Label, type LabelProps, LabelTheme } from '..';
 
-export const LabelPlayground = (
-  props: ComponentPlaygroundProps<LabelProps>
-) => {
-  return (
-    <ComponentPlayground<LabelProps>
-      {...props}
-      propSets={[
-        {
-          text: [
-            <Text size="l" key="text" theme={TextPrimaryTheme}>
-              Label
-            </Text>,
-          ],
-          description: [
-            undefined,
-            <Text size="m" key="description" theme={TextSecondaryLightTheme}>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Obcaecati, autem.
-            </Text>,
-          ],
-          textPlacement: ['left', 'right', 'top'],
-        },
-        {
-          isCentered: [true],
-          textPlacement: ['left', 'right'],
-          text: [
-            <Text size="s" key="text-s" theme={TextPrimaryTheme}>
-              Label
-            </Text>,
-          ],
-        },
-      ]}
-    >
-      {(itemProps: LabelProps) => (
-        <Label {...itemProps} theme={LabelTheme}>
-          <Text size="l" key={'label'} theme={TextPrimaryTheme}>
-            Label Children
-          </Text>
-        </Label>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const LabelPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<LabelProps>) => (
+  <ComponentPlayground<LabelProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Label {...p} theme={LabelTheme}>
+        <Text size="l" theme={TextPrimaryTheme}>
+          Label Children
+        </Text>
+      </Label>
+    )}
+  </ComponentPlayground>
+);
+
+export const labelText = (
+  <Text size="l" key="text" theme={TextPrimaryTheme}>
+    Label
+  </Text>
+);
+
+export const labelTextSmall = (
+  <Text size="s" key="text-s" theme={TextPrimaryTheme}>
+    Label
+  </Text>
+);
+
+export const labelDescription = (
+  <Text size="m" key="description" theme={TextSecondaryLightTheme}>
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, autem.
+  </Text>
+);
