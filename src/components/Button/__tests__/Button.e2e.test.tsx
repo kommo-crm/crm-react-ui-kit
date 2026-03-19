@@ -2,65 +2,118 @@ import React from 'react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
+import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
+
+import { IconsMap } from '@storybook-utils/constants';
+
+import { ButtonProps } from '../Button.props';
+
 import {
-  ButtonPrimaryPlayground,
-  ButtonNeutralPlayground,
-  ButtonSecondaryPlayground,
-  ButtonDangerPrimarytPlayground,
-  ButtonDangerTertiaryPlayground,
-  ButtonIconPlayground,
+  ButtonNeutralPlaygroundItem,
+  ButtonPrimaryPlaygroundItem,
+  ButtonSecondaryPlaygroundItem,
+  ButtonDangerPrimaryPlaygroundItem,
+  ButtonDangerTertiaryPlaygroundItem,
+  ButtonIconPlaygroundItem,
 } from './Button.e2e-playground';
 
-test('Button Primary', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<ButtonPrimaryPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+export const combinations = multiCartesian<ButtonProps>([
+  { isLoading: [true, false], isDisabled: [true, false] },
+  {
+    before: [IconsMap.CalendarIcon, undefined],
+    after: [IconsMap.CopyIcon, undefined],
+  },
+]);
 
-test('Button Neutral', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<ButtonNeutralPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+for (const props of combinations) {
+  const label = prettyProps(props);
 
-test('Button Secondary', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<ButtonSecondaryPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Button Neutral', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonNeutralPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
 
-test('Button Danger Primary', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<ButtonDangerPrimarytPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Button Primary', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonPrimaryPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
 
-test('Button Danger Tertiary', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<ButtonDangerTertiaryPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Button Secondary', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonSecondaryPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
 
-test('Button Icon', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<ButtonIconPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Button Danger Primary', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonDangerPrimaryPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Button Danger Tertiary', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonDangerTertiaryPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}
+
+const iconCombinations = multiCartesian<ButtonProps>([
+  { isLoading: [true, false], isDisabled: [true, false] },
+]);
+
+for (const props of iconCombinations) {
+  const label = prettyProps(props);
+
+  test.describe('Button Icon', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonIconPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}

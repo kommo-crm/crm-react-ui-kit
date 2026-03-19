@@ -1,11 +1,9 @@
 import React from 'react';
 
 import {
-  ComponentPlayground,
-  ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
-
-import { IconsMap } from '@storybook-utils/constants';
+  ComponentPlaygroundItem,
+  ComponentPlaygroundItemProps,
+} from 'src/tests/e2e/ComponentPlaygroundItem';
 
 import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
 import TriggerIcon from '@storybook-utils/icons/trigger.svg';
@@ -34,129 +32,100 @@ export const buttonIconVariants = [
   { size: 's', theme: ButtonIconSmallDangerGhostTheme, Icon: TrashcanIcon },
 ];
 
-const defaultPropsSet = {
-  isLoading: [true, false],
-  isDisabled: [true, false],
-};
-
-const iconsPropsSet = {
-  before: [IconsMap.CalendarIcon, undefined],
-  after: [IconsMap.CopyIcon, undefined],
-};
-
-export const ButtonNeutralPlayground = (
-  props: ComponentPlaygroundProps<ButtonProps>
-) => {
+export const ButtonNeutralPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => {
   return (
-    <ComponentPlayground<ButtonProps>
-      {...props}
-      propSets={[defaultPropsSet, iconsPropsSet]}
-    >
-      {(itemProps: ButtonProps) => (
-        <Button {...itemProps} theme={ButtonNeutralTheme}>
+    <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+      {(p) => (
+        <Button {...p} theme={ButtonNeutralTheme}>
           Button
         </Button>
       )}
-    </ComponentPlayground>
+    </ComponentPlaygroundItem>
   );
 };
 
-export const ButtonPrimaryPlayground = (
-  props: ComponentPlaygroundProps<ButtonProps>
-) => {
-  return (
-    <ComponentPlayground<ButtonProps>
-      {...props}
-      propSets={[defaultPropsSet, iconsPropsSet]}
-    >
-      {(itemProps: ButtonProps) => (
-        <Button {...itemProps} theme={ButtonPrimaryTheme}>
-          Button
-        </Button>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const ButtonPrimaryPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonPrimaryTheme}>
+        Button
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
 
-export const ButtonSecondaryPlayground = (
-  props: ComponentPlaygroundProps<ButtonProps>
-) => {
-  return (
-    <ComponentPlayground<ButtonProps>
-      {...props}
-      propSets={[defaultPropsSet, iconsPropsSet]}
-    >
-      {(itemProps: ButtonProps) => (
-        <Button {...itemProps} theme={ButtonSecondaryTheme}>
-          Button
-        </Button>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const ButtonSecondaryPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonSecondaryTheme}>
+        Button
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
 
-export const ButtonDangerPrimarytPlayground = (
-  props: ComponentPlaygroundProps<ButtonProps>
-) => {
-  return (
-    <ComponentPlayground<ButtonProps>
-      {...props}
-      propSets={[defaultPropsSet, iconsPropsSet]}
-    >
-      {(itemProps: ButtonProps) => (
-        <Button {...itemProps} theme={ButtonDangerPrimaryTheme}>
-          Button
-        </Button>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const ButtonDangerPrimaryPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonDangerPrimaryTheme}>
+        Button
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
 
-export const ButtonDangerTertiaryPlayground = (
-  props: ComponentPlaygroundProps<ButtonProps>
-) => {
-  return (
-    <ComponentPlayground<ButtonProps>
-      {...props}
-      propSets={[defaultPropsSet, iconsPropsSet]}
-    >
-      {(itemProps: ButtonProps) => (
-        <Button {...itemProps} theme={ButtonDangerTertiaryTheme}>
-          Button
-        </Button>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const ButtonDangerTertiaryPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonDangerTertiaryTheme}>
+        Button
+      </Button>
+    )}
+  </ComponentPlaygroundItem>
+);
 
-export const ButtonIconPlayground = (
-  props: ComponentPlaygroundProps<ButtonProps>
-) => {
-  return (
-    <ComponentPlayground<ButtonProps> {...props} propSets={[defaultPropsSet]}>
-      {(itemProps: ButtonProps) => (
-        <div
-          style={{
-            display: 'flex',
-            gap: '8px',
-            alignItems: 'center',
-          }}
-        >
-          {buttonIconVariants.map(({ size, theme, Icon }, index) => {
-            const iconSize = size === 'm' ? 20 : 16;
+export const ButtonIconPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundItemProps<ButtonProps>) => (
+  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div
+        style={{
+          display: 'flex',
+          gap: '8px',
+          alignItems: 'center',
+        }}
+      >
+        {buttonIconVariants.map(({ size, theme, Icon }, index) => {
+          const iconSize = size === 'm' ? 20 : 16;
 
-            return (
-              <Button key={index} {...itemProps} theme={theme}>
-                <Icon
-                  width={iconSize}
-                  height={iconSize}
-                  style={{ display: 'flex' }}
-                />
-              </Button>
-            );
-          })}
-        </div>
-      )}
-    </ComponentPlayground>
-  );
-};
+          return (
+            <Button key={index} {...p} theme={theme}>
+              <Icon
+                width={iconSize}
+                height={iconSize}
+                style={{ display: 'flex' }}
+              />
+            </Button>
+          );
+        })}
+      </div>
+    )}
+  </ComponentPlaygroundItem>
+);
