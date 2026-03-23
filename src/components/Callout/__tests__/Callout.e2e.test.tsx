@@ -2,45 +2,67 @@ import React from 'react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
+import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
+
+import { type CalloutProps } from '..';
+
 import {
-  CalloutPlaygroundWarning,
-  CalloutPlaygroundSuccess,
-  CalloutPlaygroundInfo,
-  CalloutPlaygroundError,
+  CalloutErrorPlaygroundItem,
+  CalloutInfoPlaygroundItem,
+  CalloutSuccessPlaygroundItem,
+  CalloutWarningPlaygroundItem,
 } from './Callout.e2e-playground';
 
-test('CalloutWarning', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<CalloutPlaygroundWarning appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+export const combinations = multiCartesian<CalloutProps>([{}]);
 
-test('CalloutSuccess', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<CalloutPlaygroundSuccess appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+for (const props of combinations) {
+  const label = prettyProps(props);
 
-test('CalloutInfo', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<CalloutPlaygroundInfo appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Callout Warning', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <CalloutWarningPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
 
-test('CalloutError', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<CalloutPlaygroundError appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Callout Success', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <CalloutSuccessPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Callout Info', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <CalloutInfoPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Callout Error', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <CalloutErrorPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}

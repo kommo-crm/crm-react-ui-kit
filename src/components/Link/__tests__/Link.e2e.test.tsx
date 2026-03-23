@@ -2,13 +2,26 @@ import React from 'react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
-import { LinkPlayground } from './Link.e2e-playground';
+import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
 
-test('Link', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<LinkPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+import { type LinkProps } from '..';
+
+import { LinkPlaygroundItem } from './Link.e2e-playground';
+
+export const combinations = multiCartesian<LinkProps>([{}]);
+
+for (const props of combinations) {
+  const label = prettyProps(props);
+
+  test.describe('Link', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <LinkPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}

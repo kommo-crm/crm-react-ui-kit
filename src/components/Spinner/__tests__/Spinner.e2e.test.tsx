@@ -2,13 +2,30 @@ import React from 'react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
-import { SpinnerPlayground } from './Spinner.e2e-playground';
+import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
 
-test('Spinner', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<SpinnerPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+import { SpinnerProps } from '../Spinner.props';
+
+import { SpinnerPlaygroundItem } from './Spinner.e2e-playground';
+
+export const combinations = multiCartesian<SpinnerProps>([
+  {
+    isCentered: [true, false],
+  },
+]);
+
+for (const props of combinations) {
+  const label = prettyProps(props);
+
+  test.describe('Spinner', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <SpinnerPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}

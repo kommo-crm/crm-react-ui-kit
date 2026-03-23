@@ -14,91 +14,67 @@ import {
   type TextProps,
 } from '..';
 
-export const TextPlayground = (props: ComponentPlaygroundProps<TextProps>) => {
-  return (
-    <ComponentPlayground<TextProps>
-      {...props}
-      propSets={[
-        {
-          size: ['m'],
-          isEllipsis: [true, false],
-          maxRows: [undefined, 2],
-        },
-      ]}
-    >
-      {(itemProps: TextProps) => (
-        <Text style={{ width: 100 }} {...itemProps} theme={TextPrimaryTheme}>
-          Long text that will be truncated.
-        </Text>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const TextPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<TextProps>) => (
+  <ComponentPlayground<TextProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Text style={{ width: 100 }} {...p} theme={TextPrimaryTheme}>
+        Long text that will be truncated.
+      </Text>
+    )}
+  </ComponentPlayground>
+);
 
-export const TextPlaygroundPrimary = (
-  props: ComponentPlaygroundProps<TextProps>
-) => {
-  return (
-    <ComponentPlayground<TextProps>
-      {...props}
-      propSets={[{ size: ['s', 'm', 'ms', 'l', 'xl'] }]}
-    >
-      {(itemProps: TextProps) => (
-        <Text {...itemProps} theme={TextPrimaryTheme}>
-          Text
-        </Text>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const TextPrimaryPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<TextProps>) => (
+  <ComponentPlayground<TextProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Text {...p} theme={TextPrimaryTheme}>
+        Text
+      </Text>
+    )}
+  </ComponentPlayground>
+);
 
-export const TextPlaygroundSecondaryLight = (
-  props: ComponentPlaygroundProps<TextProps>
-) => {
-  return (
-    <ComponentPlayground<TextProps>
-      {...props}
-      propSets={[{ size: ['s', 'm', 'ms', 'l', 'xl'] }]}
-    >
-      {(itemProps: TextProps) => (
-        <Text {...itemProps} theme={TextSecondaryLightTheme}>
-          Text
-        </Text>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const TextSecondaryLightPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<TextProps>) => (
+  <ComponentPlayground<TextProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Text {...p} theme={TextSecondaryLightTheme}>
+        Text
+      </Text>
+    )}
+  </ComponentPlayground>
+);
 
-export const TextPlaygroundSecondaryDark = (
-  props: ComponentPlaygroundProps<TextProps>
-) => {
-  return (
-    <ComponentPlayground<TextProps>
-      {...props}
-      propSets={[{ size: ['s', 'm', 'ms', 'l', 'xl'] }]}
-    >
-      {(itemProps: TextProps) => (
-        <Text {...itemProps} theme={TextSecondaryDarkTheme}>
-          Text
-        </Text>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const TextSecondaryDarkPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<TextProps>) => (
+  <ComponentPlayground<TextProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Text {...p} theme={TextSecondaryDarkTheme}>
+        Text
+      </Text>
+    )}
+  </ComponentPlayground>
+);
 
-export const TextPlaygroundError = (
-  props: ComponentPlaygroundProps<TextProps>
-) => {
-  return (
-    <ComponentPlayground<TextProps>
-      {...props}
-      propSets={[{ size: ['s', 'm', 'ms', 'l', 'xl'] }]}
-    >
-      {(itemProps: TextProps) => (
-        <Text {...itemProps} theme={TextErrorTheme}>
-          Text
-        </Text>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const TextErrorPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<TextProps>) => (
+  <ComponentPlayground<TextProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Text {...p} theme={TextErrorTheme}>
+        Text
+      </Text>
+    )}
+  </ComponentPlayground>
+);
