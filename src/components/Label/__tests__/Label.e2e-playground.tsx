@@ -13,35 +13,50 @@ import {
 
 import { Label, type LabelProps, LabelTheme } from '..';
 
+export type TextVariant = 'default' | 'small';
+
+export interface LabelTestProps {
+  textVariant: TextVariant;
+  hasDescription?: boolean;
+  textPlacement?: LabelProps['textPlacement'];
+  isCentered?: boolean;
+}
+
+const textMap: Record<TextVariant, React.ReactNode> = {
+  default: (
+    <Text size="l" theme={TextPrimaryTheme}>
+      Label
+    </Text>
+  ),
+  small: (
+    <Text size="s" theme={TextPrimaryTheme}>
+      Label
+    </Text>
+  ),
+};
+
+const description = (
+  <Text size="m" theme={TextSecondaryLightTheme}>
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, autem.
+  </Text>
+);
+
 export const LabelPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundProps<LabelProps>) => (
-  <ComponentPlayground<LabelProps> appearance={appearance} props={props}>
-    {(p) => (
-      <Label {...p} theme={LabelTheme}>
+}: ComponentPlaygroundProps<LabelTestProps>) => (
+  <ComponentPlayground<LabelTestProps> appearance={appearance} props={props}>
+    {({ textVariant, hasDescription, ...restProps }) => (
+      <Label
+        {...restProps}
+        theme={LabelTheme}
+        text={textMap[textVariant]}
+        description={hasDescription ? description : undefined}
+      >
         <Text size="l" theme={TextPrimaryTheme}>
           Label Children
         </Text>
       </Label>
     )}
   </ComponentPlayground>
-);
-
-export const labelText = (
-  <Text size="l" key="text" theme={TextPrimaryTheme}>
-    Label
-  </Text>
-);
-
-export const labelTextSmall = (
-  <Text size="s" key="text-s" theme={TextPrimaryTheme}>
-    Label
-  </Text>
-);
-
-export const labelDescription = (
-  <Text size="m" key="description" theme={TextSecondaryLightTheme}>
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, autem.
-  </Text>
 );

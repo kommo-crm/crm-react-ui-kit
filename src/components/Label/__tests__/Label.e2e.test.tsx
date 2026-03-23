@@ -4,25 +4,21 @@ import { test } from '@crm-react-ui-kit-e2e/test';
 
 import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
 
-import { type LabelProps } from '..';
-
 import {
   LabelPlaygroundItem,
-  labelText,
-  labelTextSmall,
-  labelDescription,
+  type LabelTestProps,
 } from './Label.e2e-playground';
 
-export const combinations = multiCartesian<LabelProps>([
+export const combinations = multiCartesian<LabelTestProps>([
   {
-    text: [labelText],
-    description: [undefined, labelDescription],
+    textVariant: ['default'],
+    hasDescription: [true, false],
     textPlacement: ['left', 'right', 'top'],
   },
   {
+    textVariant: ['small'],
     isCentered: [true],
     textPlacement: ['left', 'right'],
-    text: [labelTextSmall],
   },
 ]);
 

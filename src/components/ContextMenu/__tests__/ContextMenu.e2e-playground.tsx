@@ -19,6 +19,7 @@ import {
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';
+import { ContentProps } from '../components/Content';
 
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
@@ -26,17 +27,23 @@ const TextContextMenuTheme: TextTheme = {
 };
 
 export interface ContextMenuComponentProps {
-  direction?:
-    | 'up-left'
-    | 'up-right'
-    | 'down-left'
-    | 'down-right'
-    | 'left-up'
-    | 'left-down'
-    | 'right-up'
-    | 'right-down';
-  isDefaultOpenSubMenu: boolean | undefined;
-  isDefaultOpenSub: boolean | undefined;
+  /**
+   * The direction of the context menu.
+   */
+  direction?: ContentProps['direction'];
+  /**
+   * Whether the sub menu is default open.
+   */
+  isDefaultOpenSubMenu?: boolean;
+  /**
+   * Whether the sub menu is default open.
+   */
+  isDefaultOpenSub?: boolean;
+  /**
+   * Whether the checkbox is checked.
+   *
+   * @default true
+   */
   isCheckboxChecked?: boolean;
 }
 
