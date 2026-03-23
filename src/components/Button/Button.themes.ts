@@ -188,14 +188,14 @@ export const ButtonDangerTertiaryTheme: ButtonThemeType = {
 
 const ButtonIconBaseThemeValues: Partial<ButtonThemeType> = {
   '--crm-ui-kit-button-height': '36px',
-  '--crm-ui-kit-button-padding': '7px',
+  '--crm-ui-kit-button-padding': '0 7px',
   '--crm-ui-kit-button-spinner-disabled-border-color':
     'var(--crm-ui-kit-button-spinner-border-color)',
 };
 
 const ButtonIconSmallBaseThemeValues: Partial<ButtonThemeType> = {
   '--crm-ui-kit-button-height': '24px',
-  '--crm-ui-kit-button-padding': '3px',
+  '--crm-ui-kit-button-padding': '0 3px',
   '--crm-ui-kit-button-spinner-circle-size': '12px',
   '--crm-ui-kit-button-spinner-disabled-border-color':
     'var(--crm-ui-kit-button-spinner-border-color)',
