@@ -1,10 +1,9 @@
-import { PRIMITIVE_GROUPS, THEMES, themesConfig } from '@/const';
+import { Theme, themesConfig } from '@/const';
 import themes from '@/design/themes';
 import flattenVars from '@/utils/flattenVars';
-import getPrimitiveVarName from '@/utils/getPrimitiveVarName';
 
 export type ThemeTokens = {
-  themeId: string;
+  themeId: Theme;
   selector: string;
   /** Flat map of primitive var names to actual values */
   primitiveVars: Record<string, string>;
@@ -13,47 +12,16 @@ export type ThemeTokens = {
 };
 
 export function collectTokens(): ThemeTokens[] {
-  return [...THEMES].map((themeName) => {
-    const config = themesConfig[themeName];
-    const theme = themes[themeName];
-    const primitiveVars: Record<string, string> = {};
-
-    for (const group of PRIMITIVE_GROUPS) {
-      const groupData = (theme.primitives as Record<string, unknown>)[
-        group.key
-      ];
-      const data = group.themeVariant
-        ? (groupData as Record<string, unknown>)[theme.id]
-        : groupData;
-
-      if (group.scaled) {
-        for (const [family, shades] of Object.entries(
-          data as Record<string, unknown>
-        )) {
-          for (const scale of group.scales) {
-            const value = (shades as Record<number, string>)[scale];
-
-            if (value !== undefined) {
-              const varName = getPrimitiveVarName(
-                `${group.prefix}.${theme.id}.${family}.${scale}`
-              );
-
-              primitiveVars[varName] = value;
-            }
-          }
-        }
-      } else {
-        Object.assign(
-          primitiveVars,
-          flattenVars(data as Record<string, unknown>, group.prefix)
-        );
-      }
-    }
+  return (
+    Object.entries(themesConfig) as [Theme, (typeof themesConfig)[Theme]][]
+  ).map(([themeKey, themeConfig]) => {
+    const { conditions } = themeConfig;
+    const theme = themes[themeKey];
 
     return {
-      themeId: theme.id,
-      selector: config.conditions ? config.conditions.join(',\n') : ':root',
-      primitiveVars,
+      themeId: themeKey,
+      selector: conditions ? conditions.join(',\n') : ':root',
+      primitiveVars: flattenVars(theme.primitives as Record<string, unknown>),
       semantic: flattenVars(theme.semantic as Record<string, unknown>),
     };
   });

@@ -18,7 +18,6 @@ export type FlatPrimitive = Record<string, ScaledShades | ColorValue>;
 export type PrimitiveVars = ThemeVariantPrimitive | FlatPrimitive;
 
 export type ThemeConfig<S extends SemanticNode> = {
-  id: Theme;
   primitives: Record<Primitive, PrimitiveVars>;
   semantic: S;
 };
