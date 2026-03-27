@@ -1,0 +1,7 @@
+.buttonGhost[data-highlighted] {
+  background-color: var(--crm-ui-kit-palette-background-secondary-800);
+}
+
+.buttonNeutral[data-highlighted] {
+  background-color: var(--crm-ui-kit-palette-button-classic-hover-background);
+}

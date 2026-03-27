@@ -1,0 +1,3 @@
+.button[data-highlighted] {
+  background-color: var(--crm-ui-kit-palette-background-secondary-800);
+}

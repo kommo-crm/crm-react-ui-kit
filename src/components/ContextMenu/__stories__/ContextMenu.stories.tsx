@@ -19,12 +19,18 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
-import { Button, ButtonNeutralTheme } from 'src/components/Button';
+import {
+  Button,
+  ButtonIconSmallGhostTheme,
+  ButtonNeutralTheme,
+} from 'src/components/Button';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContentProps } from '../components/Content/Content.props';
 
 import { ContextMenuModeType } from '../ContextMenu.types';
+
+import s from './ContextMenu.module.css';
 
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
@@ -34,13 +40,18 @@ const TextContextMenuTheme: TextTheme = {
 const USAGE = `
 import { useState } from "react";
 
-import { ContextMenu } from 'src/components/ContextMenu';
+import { ContextMenu } from '@kommo-crm/crm-react-ui-kit/ContextMenu';
+
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryDarkTheme,
   type TextTheme,
-} from 'src/components/Text';
+} from '@kommo-crm/crm-react-ui-kit/Text';
+import {
+  Button,
+  ButtonIconSmallGhostTheme,
+} from '@kommo-crm/crm-react-ui-kit/Button';
 
 import ContextMenuTriggerIcon from 'public/icons/trigger.svg';
 import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';
@@ -70,19 +81,10 @@ function App() {
 
   return (
     <ContextMenu.Root mode="click">
-      <ContextMenu.Trigger
-        style={{
-          display: 'flex',
-          padding: '10px 16px',
-          margin: 0,
-          color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
-          background: 'none',
-          outline: 'none',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-      >
-        <ContextMenuTriggerIcon />
+      <ContextMenu.Trigger asChild>
+        <Button theme={ButtonIconSmallGhostTheme} className={s.buttonGhost}>
+          <ContextMenuTriggerIcon />
+        </Button>
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
@@ -243,7 +245,6 @@ interface StoryComponentProps {
   onCheckboxChange?: (checked: boolean) => void;
   onRadioChange?: (value: string) => void;
   button?: React.ReactNode;
-  isTriggerAsChild?: boolean;
   isOpen?: boolean;
 }
 
@@ -255,8 +256,19 @@ const StoryComponent = (props: StoryComponentProps) => {
     direction,
     onCheckboxChange,
     onRadioChange,
-    button = <ContextMenuTriggerIcon />,
-    isTriggerAsChild = false,
+    button = (
+      <Button
+        theme={ButtonIconSmallGhostTheme}
+        className={s.buttonGhost}
+        {...props}
+      >
+        <ContextMenuTriggerIcon
+          width={16}
+          height={16}
+          style={{ display: 'flex' }}
+        />
+      </Button>
+    ),
     isOpen,
   } = props;
 
@@ -282,25 +294,7 @@ const StoryComponent = (props: StoryComponentProps) => {
 
   return (
     <ContextMenu.Root mode={mode} isOpen={isOpen}>
-      <ContextMenu.Trigger
-        style={
-          isTriggerAsChild
-            ? {}
-            : {
-                display: 'flex',
-                padding: '10px 16px',
-                margin: 0,
-                color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
-                background: 'none',
-                outline: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }
-        }
-        asChild={isTriggerAsChild}
-      >
-        {button}
-      </ContextMenu.Trigger>
+      <ContextMenu.Trigger asChild>{button}</ContextMenu.Trigger>
 
       <ContextMenu.Portal>
         <ContextMenu.Content
@@ -582,9 +576,10 @@ export const Modes: Story = {
           subMode={ContextMenuMode.CLICK}
           subMenuMode={ContextMenuMode.CLICK}
           button={
-            <Button theme={ButtonNeutralTheme}>{i18n.t('Click me')}</Button>
+            <Button theme={ButtonNeutralTheme} className={s.buttonNeutral}>
+              {i18n.t('Click me')}
+            </Button>
           }
-          isTriggerAsChild
         />
 
         <StoryComponent
@@ -593,9 +588,10 @@ export const Modes: Story = {
           subMode={ContextMenuMode.HOVER}
           subMenuMode={ContextMenuMode.HOVER}
           button={
-            <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me')}</Button>
+            <Button theme={ButtonNeutralTheme} className={s.buttonNeutral}>
+              {i18n.t('Hover me')}
+            </Button>
           }
-          isTriggerAsChild
         />
       </div>
     );
@@ -661,11 +657,14 @@ export const Directions: Story = {
               {...args}
               direction={dir}
               button={
-                <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
+                <Button
+                  theme={ButtonNeutralTheme}
+                  style={{ width: '100px' }}
+                  className={s.buttonNeutral}
+                >
                   {dir}
                 </Button>
               }
-              isTriggerAsChild
             />
           </div>
         ))}
@@ -696,11 +695,14 @@ export const Directions: Story = {
                 {...args}
                 direction={dir}
                 button={
-                  <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
+                  <Button
+                    theme={ButtonNeutralTheme}
+                    style={{ width: '100px' }}
+                    className={s.buttonNeutral}
+                  >
                     {dir}
                   </Button>
                 }
-                isTriggerAsChild
               />
             </div>
           ))}
@@ -765,11 +767,11 @@ export const VerticalMenu: Story = {
               <Button
                 theme={ButtonNeutralTheme}
                 style={{ width: '100px', marginLeft: '0px' }}
+                className={s.buttonNeutral}
               >
                 {index + 1}
               </Button>
             }
-            isTriggerAsChild
           />
         ))}
       </div>
