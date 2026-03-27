@@ -30,8 +30,6 @@ import { ContentProps } from '../components/Content/Content.props';
 
 import { ContextMenuModeType } from '../ContextMenu.types';
 
-import s from './ContextMenu.module.css';
-
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
   '--crm-ui-kit-text-color': 'inherit',
@@ -58,8 +56,6 @@ import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';
 import ContextMenuCheckIcon from 'public/icons/check.svg';
 import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
 
-import s from './ContextMenu.module.css';
-
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
   '--crm-ui-kit-text-color': 'inherit',
@@ -82,7 +78,7 @@ function App() {
   return (
     <ContextMenu.Root mode="click">
       <ContextMenu.Trigger asChild>
-        <Button theme={ButtonIconSmallGhostTheme} className={s.buttonGhost}>
+        <Button theme={ButtonIconSmallGhostTheme}>
           <ContextMenuTriggerIcon />
         </Button>
       </ContextMenu.Trigger>
@@ -257,11 +253,7 @@ const StoryComponent = (props: StoryComponentProps) => {
     onCheckboxChange,
     onRadioChange,
     button = (
-      <Button
-        theme={ButtonIconSmallGhostTheme}
-        className={s.buttonGhost}
-        {...props}
-      >
+      <Button theme={ButtonIconSmallGhostTheme} {...props}>
         <ContextMenuTriggerIcon
           width={16}
           height={16}
@@ -576,7 +568,7 @@ export const Modes: Story = {
           subMode={ContextMenuMode.CLICK}
           subMenuMode={ContextMenuMode.CLICK}
           button={
-            <Button theme={ButtonNeutralTheme} className={s.buttonNeutral}>
+            <Button theme={ButtonNeutralTheme}>
               {i18n.t('Click me')}
             </Button>
           }
@@ -588,7 +580,7 @@ export const Modes: Story = {
           subMode={ContextMenuMode.HOVER}
           subMenuMode={ContextMenuMode.HOVER}
           button={
-            <Button theme={ButtonNeutralTheme} className={s.buttonNeutral}>
+            <Button theme={ButtonNeutralTheme}>
               {i18n.t('Hover me')}
             </Button>
           }
@@ -660,7 +652,6 @@ export const Directions: Story = {
                 <Button
                   theme={ButtonNeutralTheme}
                   style={{ width: '100px' }}
-                  className={s.buttonNeutral}
                 >
                   {dir}
                 </Button>
@@ -698,7 +689,6 @@ export const Directions: Story = {
                   <Button
                     theme={ButtonNeutralTheme}
                     style={{ width: '100px' }}
-                    className={s.buttonNeutral}
                   >
                     {dir}
                   </Button>
@@ -767,7 +757,6 @@ export const VerticalMenu: Story = {
               <Button
                 theme={ButtonNeutralTheme}
                 style={{ width: '100px', marginLeft: '0px' }}
-                className={s.buttonNeutral}
               >
                 {index + 1}
               </Button>

@@ -28,8 +28,6 @@ const TextContextMenuTheme: TextTheme = {
   '--crm-ui-kit-text-color': 'inherit',
 };
 
-import s from './ContextMenu.module.css';
-
 export interface ContextMenuComponentProps {
   /**
    * The direction of the context menu.
@@ -72,7 +70,7 @@ const ContextMenuComponent = ({
   return (
     <ContextMenu.Root mode={ContextMenuMode.CLICK} defaultOpen>
       <ContextMenu.Trigger asChild>
-        <Button theme={ButtonIconSmallGhostTheme} className={s.button}>
+        <Button theme={ButtonIconSmallGhostTheme}>
           <ContextMenuTriggerIcon
             width={16}
             height={16}
