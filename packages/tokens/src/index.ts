@@ -3,6 +3,7 @@ import * as path from 'path';
 
 import { collectTokens } from '@/scripts/collectTokens';
 import { generateCss, generateMinCss } from '@/scripts/generateCss';
+import { generateJson } from '@/scripts/generateJson';
 import { generateLess } from '@/scripts/generateLess';
 import { generateSass } from '@/scripts/generateSass';
 import { generateTs } from '@/scripts/generateTs';
@@ -30,6 +31,7 @@ const cssTokens = generateCss(tokens);
 const minCssTokens = generateMinCss(cssTokens);
 const sassTokens = generateSass(tokens);
 const lessTokens = generateLess(tokens);
+const jsonTokens = generateJson();
 
 for (const theme of Object.keys(tsTokens) as Array<keyof typeof tsTokens>) {
   fs.writeFileSync(
@@ -43,4 +45,5 @@ for (const theme of Object.keys(tsTokens) as Array<keyof typeof tsTokens>) {
   write(`${theme}/tokens.min.css`, minCssTokens[theme]);
   write(`${theme}/tokens.scss`, sassTokens[theme]);
   write(`${theme}/tokens.less`, lessTokens[theme]);
+  write(`${theme}/tokens.json`, jsonTokens[theme]);
 }
