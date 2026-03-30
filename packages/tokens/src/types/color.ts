@@ -1,5 +1,3 @@
-import { ColorScale } from '@/const';
-
 export type Hex = `#${string}`; // #fff, #ffffff, #ffffffff
 
 export type RGB =
@@ -45,19 +43,14 @@ export type ColorValue =
   | ColorFunction
   | ColorKeyword;
 
-export type ColorShades = readonly [
-  ColorValue, // 50
-  ColorValue, // 100
-  ColorValue, // 200
-  ColorValue, // 300
-  ColorValue, // 400
-  ColorValue, // 500
-  ColorValue, // 600
-  ColorValue, // 700
-  ColorValue, // 800
-  ColorValue, // 900
-];
-
-/** Values of a single color family indexed by scale:
- * { 50: '#fff', 100: '#f5f5f5', ... } */
-export type ScaledShades = Record<ColorScale, ColorValue>;
+export type ColorScales =
+  | 50
+  | 100
+  | 200
+  | 300
+  | 400
+  | 500
+  | 600
+  | 700
+  | 800
+  | 900;

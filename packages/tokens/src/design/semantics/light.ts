@@ -1,5 +1,3 @@
-import { SemanticNode } from '@/types/common';
-
 const light = {
   palette: {
     background: {
@@ -25,7 +23,6 @@ const light = {
       disabled: 'rgba(255, 255, 255, 0.2)',
     },
   },
-} satisfies SemanticNode;
+};
 
-export type SemanticLight = typeof light;
 export default light;

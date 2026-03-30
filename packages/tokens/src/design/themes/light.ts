@@ -1,10 +1,10 @@
 import primitives from '@/design/primitives';
-import semantic, { SemanticLight } from '@/design/semantics';
+import { light as semantic } from '@/design/semantics';
 import { ThemeConfig } from '@/types/common';
 
-const lightTheme: ThemeConfig<SemanticLight> = {
+const lightTheme: ThemeConfig = {
   primitives,
-  semantic: semantic.light,
+  semantic,
 };
 
 export default lightTheme;

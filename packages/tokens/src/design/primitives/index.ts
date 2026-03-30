@@ -1,14 +1,13 @@
-import type { Leaves } from '@/types/token-path';
-import { Primitive, PrimitiveVars } from '@/types/common';
+import type { ObjectLeaves } from '@/types/object-leaves';
 
 import color from './color';
 
 const primitives = {
   color,
-} as Record<Primitive, PrimitiveVars>;
+} as const;
 
 type Primitives = typeof primitives;
 
-export type PrimitivePath = Leaves<Primitives>;
+export type PrimitivePath = ObjectLeaves<Primitives>;
 export type { Primitives };
 export default primitives;

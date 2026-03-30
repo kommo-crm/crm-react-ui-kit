@@ -1,5 +1,4 @@
-import light, { SemanticLight } from './light';
-import dark, { SemanticDark } from './dark';
+import light from './light';
+import dark from './dark';
 
-export default { light, dark };
-export type { SemanticLight, SemanticDark };
+export { light, dark };
