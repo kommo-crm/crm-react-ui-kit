@@ -1,3 +1,6 @@
+import flattenVars from '@/libs/flattenVars';
+import validateHEXColor from '@/libs/validateHEXColor';
+
 const color = {
   light: {
     azure: {
@@ -184,5 +187,13 @@ const color = {
     },
   },
 } as const;
+
+for (const [path, value] of Object.entries(flattenVars(color))) {
+  if (!validateHEXColor(value)) {
+    throw new Error(
+      `Invalid HEX color at "${path}": "${value}". Expected format: #RGB or #RRGGBB.`
+    );
+  }
+}
 
 export default color;

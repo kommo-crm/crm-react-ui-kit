@@ -2,7 +2,7 @@ import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
 import { isRawValue } from '@/libs/isRawValue';
 import { Theme } from '@/types/common';
 
-import { collectTokens } from './collectTokens';
+import { ThemeTokens } from './collectTokens';
 
 function toVarRef(value: string): string {
   return isRawValue(value as Parameters<typeof isRawValue>[0])
@@ -10,9 +10,9 @@ function toVarRef(value: string): string {
     : `@${getPrimitiveVarName(value)}`;
 }
 
-export function generateLess(): Record<Theme, string> {
+export function generateLess(tokens: ThemeTokens[]): Record<Theme, string> {
   return Object.fromEntries(
-    collectTokens().map(({ themeId, primitiveVars, semantic }) => {
+    tokens.map(({ themeId, primitiveVars, semantic }) => {
       const lines: string[] = [];
 
       for (const [name, value] of Object.entries(primitiveVars)) {

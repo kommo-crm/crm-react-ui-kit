@@ -3,7 +3,7 @@ import { isRawValue } from '@/libs/isRawValue';
 import minify from '@/libs/minify';
 import { Theme } from '@/types/common';
 
-import { collectTokens } from './collectTokens';
+import { ThemeTokens } from './collectTokens';
 
 function toVarRef(value: string): string {
   return isRawValue(value as Parameters<typeof isRawValue>[0])
@@ -11,9 +11,9 @@ function toVarRef(value: string): string {
     : `var(--${getPrimitiveVarName(value)})`;
 }
 
-export function generateCss(): Record<Theme, string> {
+export function generateCss(tokens: ThemeTokens[]): Record<Theme, string> {
   return Object.fromEntries(
-    collectTokens().map(({ themeId, selector, primitiveVars, semantic }) => {
+    tokens.map(({ themeId, selector, primitiveVars, semantic }) => {
       const allVars = {
         ...primitiveVars,
         ...Object.fromEntries(
@@ -30,8 +30,8 @@ export function generateCss(): Record<Theme, string> {
   ) as Record<Theme, string>;
 }
 
-export function generateMinCss(): Record<Theme, string> {
+export function generateMinCss(cssTokens: Record<Theme, string>): Record<Theme, string> {
   return Object.fromEntries(
-    Object.entries(generateCss()).map(([theme, css]) => [theme, minify(css)])
+    Object.entries(cssTokens).map(([theme, css]) => [theme, minify(css)])
   ) as Record<Theme, string>;
 }

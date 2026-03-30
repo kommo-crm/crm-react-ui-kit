@@ -1,9 +1,7 @@
 import type { ColorFunction, ColorKeyword, ColorValue } from '@/types/color';
 import type { PrimitivePath } from '@/design/primitives';
 
-export type PaletteValue =
-  | PrimitivePath
-  | Exclude<ColorValue, ColorFunction | ColorKeyword>;
+export type PaletteValue = PrimitivePath | ColorValue;
 
 export type PaletteBackground = 'base' | 'primary' | 'secondary' | 'error';
 export type PaletteForeground =

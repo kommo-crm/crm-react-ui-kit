@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { collectTokens } from '@/scripts/collectTokens';
 import { generateCss, generateMinCss } from '@/scripts/generateCss';
 import { generateLess } from '@/scripts/generateLess';
 import { generateSass } from '@/scripts/generateSass';
@@ -23,11 +24,12 @@ const write = (filename: string, content: string): void => {
 
 console.log('Generating design tokens...');
 
+const tokens = collectTokens();
 const tsTokens = generateTs();
-const cssTokens = generateCss();
-const minCssTokens = generateMinCss();
-const sassTokens = generateSass();
-const lessTokens = generateLess();
+const cssTokens = generateCss(tokens);
+const minCssTokens = generateMinCss(cssTokens);
+const sassTokens = generateSass(tokens);
+const lessTokens = generateLess(tokens);
 
 for (const theme of Object.keys(tsTokens) as Array<keyof typeof tsTokens>) {
   fs.writeFileSync(

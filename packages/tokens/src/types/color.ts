@@ -1,4 +1,4 @@
-export type Hex = `#${string}`; // #fff, #ffffff, #ffffffff
+export type Hex = `#${string}`;
 
 export type RGB =
   | `rgb(${number}, ${number}, ${number})`
@@ -15,8 +15,6 @@ export type HSL =
 export type HSLA =
   | `hsla(${number}, ${number}%, ${number}%, ${number})`
   | `hsl(${number} ${number}% ${number}% / ${number})`;
-
-export type CSSVariable = `var(--${string})`;
 
 export type ColorFunction =
   | `color(${string})`
@@ -39,7 +37,6 @@ export type ColorValue =
   | RGBA
   | HSL
   | HSLA
-  | CSSVariable
   | ColorFunction
   | ColorKeyword;
 
