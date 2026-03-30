@@ -1,4 +1,6 @@
-const dark = {
+import type { SemanticTokens } from '@/types/semantic';
+
+const dark: SemanticTokens = {
   palette: {
     background: {
       base: 'color.dark.azure.900',

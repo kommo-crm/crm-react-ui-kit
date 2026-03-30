@@ -1,4 +1,6 @@
-const light = {
+import type { SemanticTokens } from '@/types/semantic';
+
+const light: SemanticTokens = {
   palette: {
     background: {
       base: 'color.light.neutral.100',

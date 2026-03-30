@@ -1,4 +1,4 @@
-import type { ObjectLeaves } from '@/types/object-leaves';
+import type { ObjectLeaves } from '@/types/utils/object-leaves';
 
 import color from './color';
 
