@@ -1,0 +1,73 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as BadgeStories from './Badge.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import {
+  BadgeNeutralTheme,
+  BadgePurpleTheme,
+  BadgeBlueTheme,
+  BadgePinkTheme,
+  BadgeGreenTheme,
+  BadgeOrangeTheme,
+  BadgeRedTheme,
+} from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Badge/Themes" of={BadgeStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## BadgeNeutralTheme
+
+```jsx
+import { BadgeNeutralTheme } from '@kommo-crm/crm-react-ui-kit/Badge';
+```
+
+<ThemeVisualization theme={BadgeNeutralTheme} of={BadgeStories.BadgeNeutral} />
+
+## BadgePurpleTheme
+
+```jsx
+import { BadgePurpleTheme } from '@kommo-crm/crm-react-ui-kit/Badge';
+```
+
+<ThemeVisualization theme={BadgePurpleTheme} of={BadgeStories.BadgePurple} />
+
+## BadgeBlueTheme
+
+```jsx
+import { BadgeBlueTheme } from '@kommo-crm/crm-react-ui-kit/Badge';
+```
+
+<ThemeVisualization theme={BadgeBlueTheme} of={BadgeStories.BadgeBlue} />
+
+## BadgePinkTheme
+
+```jsx
+import { BadgePinkTheme } from '@kommo-crm/crm-react-ui-kit/Badge';
+```
+
+<ThemeVisualization theme={BadgePinkTheme} of={BadgeStories.BadgePink} />
+
+## BadgeGreenTheme
+
+```jsx
+import { BadgeGreenTheme } from '@kommo-crm/crm-react-ui-kit/Badge';
+```
+
+<ThemeVisualization theme={BadgeGreenTheme} of={BadgeStories.BadgeGreen} />
+
+## BadgeOrangeTheme
+
+```jsx
+import { BadgeOrangeTheme } from '@kommo-crm/crm-react-ui-kit/Badge';
+```
+
+<ThemeVisualization theme={BadgeOrangeTheme} of={BadgeStories.BadgeOrange} />
+
+## BadgeRedTheme
+
+```jsx
+import { BadgeRedTheme } from '@kommo-crm/crm-react-ui-kit/Badge';
+```
+
+<ThemeVisualization theme={BadgeRedTheme} of={BadgeStories.BadgeRed} />
