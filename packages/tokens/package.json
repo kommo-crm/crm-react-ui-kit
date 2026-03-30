@@ -20,10 +20,12 @@
     "./light/min.css": "./dist/light/tokens.min.css",
     "./light/less": "./dist/light/tokens.less",
     "./light/scss": "./dist/light/tokens.scss",
+    "./light/json": "./dist/light/tokens.json",
     "./dark/css": "./dist/dark/tokens.css",
     "./dark/min.css": "./dist/dark/tokens.min.css",
     "./dark/less": "./dist/dark/tokens.less",
-    "./dark/scss": "./dist/dark/tokens.scss"
+    "./dark/scss": "./dist/dark/tokens.scss",
+    "./dark/json": "./dist/dark/tokens.json"
   },
   "scripts": {
     "clean": "rm -rf dist",
