@@ -1,5 +1,6 @@
 import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
 import { isRawValue } from '@/libs/isRawValue';
+import { Theme } from '@/types/common';
 
 import { collectTokens } from './collectTokens';
 
@@ -9,25 +10,20 @@ function toVarRef(value: string): string {
     : `@${getPrimitiveVarName(value)}`;
 }
 
-export function generateLess(): string {
-  const lines: string[] = [];
+export function generateLess(): Record<Theme, string> {
+  return Object.fromEntries(
+    collectTokens().map(({ themeId, primitiveVars, semantic }) => {
+      const lines: string[] = [];
 
-  for (const { themeId, primitiveVars, semantic } of collectTokens()) {
-    const isLight = themeId === 'light';
-    const semanticPrefix = isLight ? '' : `${themeId}-`;
+      for (const [name, value] of Object.entries(primitiveVars)) {
+        lines.push(`@${name}: ${value};`);
+      }
 
-    lines.push(`// === ${themeId} ===`);
+      for (const [name, value] of Object.entries(semantic)) {
+        lines.push(`@${name}: ${toVarRef(value)};`);
+      }
 
-    for (const [name, value] of Object.entries(primitiveVars)) {
-      lines.push(`@${name}: ${value};`);
-    }
-
-    for (const [name, value] of Object.entries(semantic)) {
-      lines.push(`@${semanticPrefix}${name}: ${toVarRef(value)};`);
-    }
-
-    lines.push('');
-  }
-
-  return lines.join('\n');
+      return [themeId, lines.join('\n')];
+    })
+  ) as Record<Theme, string>;
 }

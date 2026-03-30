@@ -2,7 +2,7 @@ import themes from '@/design/themes';
 import { resolveSemanticTokens } from '@/libs/resolveSemanticTokens';
 import { Theme, ThemeConfig } from '@/types/common';
 
-function buildTokens() {
+export function generateTs(): Record<Theme, string> {
   return Object.fromEntries(
     (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
       ([themeId, theme]) => {
@@ -11,15 +11,11 @@ function buildTokens() {
           theme.primitives
         );
 
-        return [
-          themeId,
-          { primitives: theme.primitives, semantic: semanticVars },
-        ];
+        const tokens = { primitives: theme.primitives, semantic: semanticVars };
+        const content = `// Auto-generated. Do not edit manually.\nexport const tokens = ${JSON.stringify(tokens, null, 2)} as const;\n`;
+
+        return [themeId, content];
       }
     )
-  );
-}
-
-export function generateTs(): string {
-  return `// Auto-generated. Do not edit manually.\nexport const tokens = ${JSON.stringify(buildTokens(), null, 2)} as const;\n`;
+  ) as Record<Theme, string>;
 }

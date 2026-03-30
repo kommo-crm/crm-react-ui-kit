@@ -23,10 +23,22 @@ const write = (filename: string, content: string): void => {
 
 console.log('Generating design tokens...');
 
-fs.writeFileSync(path.join(generatedDir, 'tokens.ts'), generateTs(), 'utf8');
-console.log('  ✓ .generated/tokens.ts');
+const tsTokens = generateTs();
+const cssTokens = generateCss();
+const minCssTokens = generateMinCss();
+const sassTokens = generateSass();
+const lessTokens = generateLess();
 
-write('tokens.css', generateCss());
-write('tokens.min.css', generateMinCss());
-write('tokens.less', generateLess());
-write('tokens.scss', generateSass());
+for (const theme of Object.keys(tsTokens) as Array<keyof typeof tsTokens>) {
+  fs.writeFileSync(
+    path.join(generatedDir, `${theme}.ts`),
+    tsTokens[theme],
+    'utf8'
+  );
+  console.log(`  ✓ .generated/${theme}.ts`);
+
+  write(`${theme}/tokens.css`, cssTokens[theme]);
+  write(`${theme}/tokens.min.css`, minCssTokens[theme]);
+  write(`${theme}/tokens.scss`, sassTokens[theme]);
+  write(`${theme}/tokens.less`, lessTokens[theme]);
+}

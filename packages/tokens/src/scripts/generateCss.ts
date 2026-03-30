@@ -1,6 +1,7 @@
 import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
 import { isRawValue } from '@/libs/isRawValue';
 import minify from '@/libs/minify';
+import { Theme } from '@/types/common';
 
 import { collectTokens } from './collectTokens';
 
@@ -10,9 +11,9 @@ function toVarRef(value: string): string {
     : `var(--${getPrimitiveVarName(value)})`;
 }
 
-export function generateCss(): string {
-  const blocks = collectTokens().map(
-    ({ selector, primitiveVars, semantic }) => {
+export function generateCss(): Record<Theme, string> {
+  return Object.fromEntries(
+    collectTokens().map(({ themeId, selector, primitiveVars, semantic }) => {
       const allVars = {
         ...primitiveVars,
         ...Object.fromEntries(
@@ -24,13 +25,13 @@ export function generateCss(): string {
         .map(([name, value]) => `  --${name}: ${value};`)
         .join('\n');
 
-      return `${selector} {\n${varLines}\n}`;
-    }
-  );
-
-  return blocks.join('\n\n');
+      return [themeId, `${selector} {\n${varLines}\n}`];
+    })
+  ) as Record<Theme, string>;
 }
 
-export function generateMinCss(): string {
-  return minify(generateCss());
+export function generateMinCss(): Record<Theme, string> {
+  return Object.fromEntries(
+    Object.entries(generateCss()).map(([theme, css]) => [theme, minify(css)])
+  ) as Record<Theme, string>;
 }

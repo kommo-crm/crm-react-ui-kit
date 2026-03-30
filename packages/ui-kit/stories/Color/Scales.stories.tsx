@@ -1,15 +1,15 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { tokens } from '@kommo-crm/tokens';
+import { tokens as lightTokens } from '@kommo-crm/tokens/light';
+import { tokens as darkTokens } from '@kommo-crm/tokens/dark';
 
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
 type ThemeColorPalette = Record<string, Record<string, string>>;
 
-const lightPalette = tokens.light.primitives
+const lightPalette = lightTokens.primitives
   .color as unknown as ThemeColorPalette;
-const darkPalette = tokens.dark.primitives
-  .color as unknown as ThemeColorPalette;
+const darkPalette = darkTokens.primitives.color as unknown as ThemeColorPalette;
 
 const lightFamilies = Object.keys(lightPalette);
 const darkFamilies = Object.keys(darkPalette);
