@@ -1,0 +1,14 @@
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: var(--crm-ui-kit-badge-height);
+  padding: var(--crm-ui-kit-badge-padding);
+
+  border-radius: var(--crm-ui-kit-badge-border-radius);
+  font-weight: var(--crm-ui-kit-badge-font-weight);
+
+  color: var(--crm-ui-kit-badge-color);
+  background-color: var(--crm-ui-kit-badge-background-color);
+}
