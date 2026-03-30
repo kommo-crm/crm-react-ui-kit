@@ -1,13 +1,22 @@
 import themes from '@/design/themes';
-import { resolveSemanticTokens } from '@/utils/resolveSemanticTokens';
+import { resolveSemanticTokens } from '@/libs/resolveSemanticTokens';
+import { Theme, ThemeConfig } from '@/types/common';
 
 function buildTokens() {
   return Object.fromEntries(
-    Object.entries(themes).map(([themeId, theme]) => {
-      const semanticVars = resolveSemanticTokens(theme.semantic, theme.primitives);
+    (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
+      ([themeId, theme]) => {
+        const semanticVars = resolveSemanticTokens(
+          theme.semantic,
+          theme.primitives
+        );
 
-      return [themeId, { primitives: theme.primitives, semantic: semanticVars }];
-    })
+        return [
+          themeId,
+          { primitives: theme.primitives, semantic: semanticVars },
+        ];
+      }
+    )
   );
 }
 

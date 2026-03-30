@@ -1,28 +1,25 @@
-import { Theme, themesConfig } from '@/const';
 import themes from '@/design/themes';
-import flattenVars from '@/utils/flattenVars';
+import flattenVars from '@/libs/flattenVars';
+import { Theme, ThemeConfig } from '@/types/common';
 
 export type ThemeTokens = {
   themeId: Theme;
   selector: string;
-  /** Flat map of primitive var names to actual values */
   primitiveVars: Record<string, string>;
-  /** Flat map of semantic var names to raw paths or raw CSS values */
   semantic: Record<string, string>;
 };
 
 export function collectTokens(): ThemeTokens[] {
-  return (
-    Object.entries(themesConfig) as [Theme, (typeof themesConfig)[Theme]][]
-  ).map(([themeKey, themeConfig]) => {
-    const { conditions } = themeConfig;
-    const theme = themes[themeKey];
+  return (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
+    ([themeKey, themeConfig]) => {
+      const { conditions } = themeConfig;
 
-    return {
-      themeId: themeKey,
-      selector: conditions ? conditions.join(',\n') : ':root',
-      primitiveVars: flattenVars(theme.primitives as Record<string, unknown>),
-      semantic: flattenVars(theme.semantic as Record<string, unknown>),
-    };
-  });
+      return {
+        themeId: themeKey,
+        selector: conditions ? conditions.join(',\n') : ':root',
+        primitiveVars: flattenVars(themeConfig.primitives),
+        semantic: flattenVars(themeConfig.semantic),
+      };
+    }
+  );
 }

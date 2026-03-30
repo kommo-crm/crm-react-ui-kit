@@ -1,6 +1,6 @@
 import type { Primitives } from '@/design/primitives';
 import type { ColorValue } from '@/types/color';
-import { resolveTokenValue } from '@/utils/resolveToken';
+import { resolveTokenValue } from '@/libs/resolveToken';
 
 export type Resolved<T> = T extends string
   ? string

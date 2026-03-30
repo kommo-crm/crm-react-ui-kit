@@ -1,5 +1,5 @@
-import getPrimitiveVarName from '@/utils/getPrimitiveVarName';
-import { isRawValue } from '@/utils/isRawValue';
+import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
+import { isRawValue } from '@/libs/isRawValue';
 
 import { collectTokens } from './collectTokens';
 

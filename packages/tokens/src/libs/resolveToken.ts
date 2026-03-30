@@ -1,6 +1,6 @@
 import type { PrimitivePath, Primitives } from '@/design/primitives';
 import type { ColorValue } from '@/types/color';
-import { isRawValue } from '@/utils/isRawValue';
+import { isRawValue } from '@/libs/isRawValue';
 
 export const resolveTokenValue = (
   primitives: Primitives,

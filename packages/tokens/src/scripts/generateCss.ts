@@ -1,6 +1,6 @@
-import getPrimitiveVarName from '@/utils/getPrimitiveVarName';
-import { isRawValue } from '@/utils/isRawValue';
-import minify from '@/utils/minify';
+import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
+import { isRawValue } from '@/libs/isRawValue';
+import minify from '@/libs/minify';
 
 import { collectTokens } from './collectTokens';
 
