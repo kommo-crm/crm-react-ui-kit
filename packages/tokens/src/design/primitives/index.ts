@@ -6,8 +6,8 @@ const primitives = {
   color,
 } as const;
 
-type Primitives = typeof primitives;
+type PrimitiveTokens = typeof primitives;
 
-export type PrimitivePath = ObjectLeaves<Primitives>;
-export type { Primitives };
+export type PrimitivePath = ObjectLeaves<PrimitiveTokens>;
+export type { PrimitiveTokens };
 export default primitives;

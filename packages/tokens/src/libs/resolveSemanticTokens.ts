@@ -1,4 +1,4 @@
-import type { Primitives } from '@/design/primitives';
+import type { PrimitiveTokens } from '@/design/primitives';
 import type { ColorValue } from '@/types/color';
 import { resolveTokenValue } from '@/libs/resolveToken';
 
@@ -8,7 +8,7 @@ export type Resolved<T> = T extends string
 
 export const resolveSemanticTokens = <T>(
   node: T,
-  primitives: Primitives
+  primitives: PrimitiveTokens
 ): Resolved<T> => {
   if (typeof node === 'string') {
     return resolveTokenValue(primitives, node as ColorValue) as Resolved<T>;

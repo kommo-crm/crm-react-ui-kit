@@ -1,6 +1,9 @@
+import { PrimitiveTokens } from '@/design/primitives';
+import { SemanticTokens } from './semantic';
+
 export type ThemeConfig = {
-  primitives: Record<string, unknown>;
-  semantic: Record<string, unknown>;
+  primitives: PrimitiveTokens;
+  semantic: SemanticTokens;
   conditions?: string[];
 };
 
