@@ -7,6 +7,7 @@ export default defineConfig({
     'dark/tokens': 'src/dark.ts',
   },
   format: ['esm', 'cjs'],
+  minify: true,
   outExtension({ format }) {
     return { js: format === 'cjs' ? '.cjs' : '.mjs' };
   },
