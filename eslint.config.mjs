@@ -37,7 +37,8 @@ export default tseslint.config(
       'storybook-static',
       'playwright/.cache',
       'coverage',
-      'packages/design-tokens/dist',
+      'packages/tokens/dist',
+      'packages/ui-kit/dist',
     ],
   },
   {
@@ -393,14 +394,14 @@ export default tseslint.config(
   },
 
   {
-    files: ['packages/design-tokens/src/scripts/**/*.ts'],
+    files: ['packages/tokens/src/scripts/**/*.ts'],
     rules: {
       'max-depth': ['error', { max: 10 }],
     },
   },
 
   {
-    files: ['packages/design-tokens/src/index.ts'],
+    files: ['packages/tokens/src/index.ts'],
     rules: {
       'no-console': 'off',
     },
