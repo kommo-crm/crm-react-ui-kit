@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { tokens as lightTokens } from '@kommo-crm/tokens/light';
-import { tokens as darkTokens } from '@kommo-crm/tokens/dark';
+import primitives from '@kommo-crm/tokens/primitives';
 
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
@@ -18,8 +17,8 @@ function contrastColor(hex: string): string {
   return luminance > 0.5 ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.8)';
 }
 
-const lightPalette = lightTokens.primitives.color;
-const darkPalette = darkTokens.primitives.color;
+const lightPalette = primitives.color.light;
+const darkPalette = primitives.color.dark;
 
 function ColorColumn({
   family,

@@ -6,21 +6,31 @@
     "dist"
   ],
   "exports": {
+    "./primitives": {
+      "types": "./dist/primitives/tokens.d.ts",
+      "import": "./dist/primitives/tokens.mjs",
+      "require": "./dist/primitives/tokens.cjs"
+    },
+    "./primitives/css": "./dist/primitives/tokens.css",
+    "./primitives/min.css": "./dist/primitives/tokens.min.css",
+    "./primitives/scss": "./dist/primitives/tokens.scss",
+    "./primitives/less": "./dist/primitives/tokens.less",
+    "./primitives/json": "./dist/primitives/tokens.json",
     "./light": {
       "types": "./dist/light/tokens.d.ts",
       "import": "./dist/light/tokens.mjs",
       "require": "./dist/light/tokens.cjs"
-    },
-    "./dark": {
-      "types": "./dist/dark/tokens.d.ts",
-      "import": "./dist/dark/tokens.mjs",
-      "require": "./dist/dark/tokens.cjs"
     },
     "./light/css": "./dist/light/tokens.css",
     "./light/min.css": "./dist/light/tokens.min.css",
     "./light/less": "./dist/light/tokens.less",
     "./light/scss": "./dist/light/tokens.scss",
     "./light/json": "./dist/light/tokens.json",
+    "./dark": {
+      "types": "./dist/dark/tokens.d.ts",
+      "import": "./dist/dark/tokens.mjs",
+      "require": "./dist/dark/tokens.cjs"
+    },
     "./dark/css": "./dist/dark/tokens.css",
     "./dark/min.css": "./dist/dark/tokens.min.css",
     "./dark/less": "./dist/dark/tokens.less",

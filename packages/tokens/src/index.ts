@@ -1,12 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { collectTokens } from '@/scripts/collectTokens';
-import { generateCss, generateMinCss } from '@/scripts/generateCss';
-import { generateJson } from '@/scripts/generateJson';
-import { generateLess } from '@/scripts/generateLess';
-import { generateSass } from '@/scripts/generateSass';
-import { generateTs } from '@/scripts/generateTs';
+import { collectPrimitives, collectThemes } from '@/scripts/collectTokens';
+import { generatePrimitivesCss, generateThemesCss, minifyCss } from '@/scripts/generateCss';
+import { generatePrimitivesJson, generateThemesJson } from '@/scripts/generateJson';
+import { generatePrimitivesLess, generateThemesLess } from '@/scripts/generateLess';
+import { generatePrimitivesSass, generateThemesSass } from '@/scripts/generateSass';
+import { generatePrimitivesTs, generateThemesTs } from '@/scripts/generateTs';
 
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.resolve(rootDir, 'dist');
@@ -15,35 +15,70 @@ const generatedDir = path.resolve(rootDir, '.generated');
 fs.mkdirSync(distDir, { recursive: true });
 fs.mkdirSync(generatedDir, { recursive: true });
 
-const write = (filename: string, content: string): void => {
-  const dest = path.join(distDir, filename);
-
+function write(relPath: string, content: string): void {
+  const dest = path.join(distDir, relPath);
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.writeFileSync(dest, content, 'utf8');
-  console.log(`  ✓ dist/${filename}`);
-};
-
-console.log('Generating design tokens...');
-
-const tokens = collectTokens();
-const tsTokens = generateTs();
-const cssTokens = generateCss(tokens);
-const minCssTokens = generateMinCss(cssTokens);
-const sassTokens = generateSass(tokens);
-const lessTokens = generateLess(tokens);
-const jsonTokens = generateJson();
-
-for (const theme of Object.keys(tsTokens) as Array<keyof typeof tsTokens>) {
-  fs.writeFileSync(
-    path.join(generatedDir, `${theme}.ts`),
-    tsTokens[theme],
-    'utf8'
-  );
-  console.log(`  ✓ .generated/${theme}.ts`);
-
-  write(`${theme}/tokens.css`, cssTokens[theme]);
-  write(`${theme}/tokens.min.css`, minCssTokens[theme]);
-  write(`${theme}/tokens.scss`, sassTokens[theme]);
-  write(`${theme}/tokens.less`, lessTokens[theme]);
-  write(`${theme}/tokens.json`, jsonTokens[theme]);
+  console.log(`  ✓ dist/${relPath}`);
 }
+
+function writeGenerated(filename: string, content: string): void {
+  fs.writeFileSync(path.join(generatedDir, filename), content, 'utf8');
+  console.log(`  ✓ .generated/${filename}`);
+}
+
+console.log('Generating design tokens...\n');
+
+const primitiveCollection = collectPrimitives();
+const themeCollections = collectThemes();
+
+// ── TypeScript ──────────────────────────────────────────────────────────────
+console.log('TypeScript:');
+
+writeGenerated('primitives.ts', generatePrimitivesTs());
+
+for (const [themeId, content] of Object.entries(generateThemesTs())) {
+  writeGenerated(`${themeId}.ts`, content);
+}
+
+// ── CSS ─────────────────────────────────────────────────────────────────────
+console.log('\nCSS:');
+
+const primitivesCss = generatePrimitivesCss(primitiveCollection);
+write('primitives/tokens.css', primitivesCss);
+write('primitives/tokens.min.css', minifyCss(primitivesCss));
+
+const themesCss = generateThemesCss(themeCollections);
+for (const [themeId, css] of Object.entries(themesCss)) {
+  write(`${themeId}/tokens.css`, css);
+  write(`${themeId}/tokens.min.css`, minifyCss(css));
+}
+
+// ── SCSS ─────────────────────────────────────────────────────────────────────
+console.log('\nSCSS:');
+
+write('primitives/tokens.scss', generatePrimitivesSass(primitiveCollection));
+
+for (const [themeId, scss] of Object.entries(generateThemesSass(themeCollections))) {
+  write(`${themeId}/tokens.scss`, scss);
+}
+
+// ── LESS ─────────────────────────────────────────────────────────────────────
+console.log('\nLESS:');
+
+write('primitives/tokens.less', generatePrimitivesLess(primitiveCollection));
+
+for (const [themeId, less] of Object.entries(generateThemesLess(themeCollections))) {
+  write(`${themeId}/tokens.less`, less);
+}
+
+// ── JSON ─────────────────────────────────────────────────────────────────────
+console.log('\nJSON:');
+
+write('primitives/tokens.json', generatePrimitivesJson());
+
+for (const [themeId, json] of Object.entries(generateThemesJson())) {
+  write(`${themeId}/tokens.json`, json);
+}
+
+console.log('\nDone!');

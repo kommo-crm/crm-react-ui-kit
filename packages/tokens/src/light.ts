@@ -1,1 +1,1 @@
-export { tokens } from '../.generated/light';
+export * from '../.generated/light';

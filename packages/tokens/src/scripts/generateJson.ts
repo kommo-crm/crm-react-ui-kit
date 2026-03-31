@@ -1,12 +1,8 @@
+import primitives from '@/design/primitives';
 import themes from '@/design/themes';
 import { isRawValue } from '@/libs/isRawValue';
-import { Theme, ThemeConfig } from '@/types/common';
 
-type DTCGToken = {
-  $type: string;
-  $value: string;
-};
-
+type DTCGToken = { $type: string; $value: string };
 type DTCGNode = DTCGToken | { [key: string]: DTCGNode };
 
 function primitiveToDTO(node: unknown): DTCGNode {
@@ -15,42 +11,33 @@ function primitiveToDTO(node: unknown): DTCGNode {
   }
 
   return Object.fromEntries(
-    Object.entries(node as Record<string, unknown>).map(([k, v]) => [
-      k,
-      primitiveToDTO(v),
-    ])
+    Object.entries(node as Record<string, unknown>).map(([k, v]) => [k, primitiveToDTO(v)])
   );
 }
 
 function semanticToDTO(node: unknown): DTCGNode {
   if (typeof node === 'string') {
-    const value = isRawValue(node as Parameters<typeof isRawValue>[0])
-      ? node
-      : `{${node}}`;
-
+    const value = isRawValue(node as Parameters<typeof isRawValue>[0]) ? node : `{${node}}`;
     return { $type: 'color', $value: value };
   }
 
   return Object.fromEntries(
-    Object.entries(node as Record<string, unknown>).map(([k, v]) => [
-      k,
-      semanticToDTO(v),
-    ])
+    Object.entries(node as Record<string, unknown>).map(([k, v]) => [k, semanticToDTO(v)])
   );
 }
 
-export function generateJson(): Record<Theme, string> {
-  return Object.fromEntries(
-    (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
-      ([themeId, theme]) => {
-        const filteredPrimitives = { color: theme.primitives.color[themeId] };
-        const dtcg: DTCGNode = {
-          primitives: primitiveToDTO(filteredPrimitives),
-          semantic: semanticToDTO(theme.semantic),
-        };
+export function generatePrimitivesJson(): string {
+  return JSON.stringify(primitiveToDTO(primitives), null, 2);
+}
 
-        return [themeId, JSON.stringify(dtcg, null, 2)];
-      }
-    )
-  ) as Record<Theme, string>;
+export function generateThemesJson(): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(themes).map(([themeId, theme]) => {
+      const dto: DTCGNode = {
+        semantic: semanticToDTO(theme.semanticTokens),
+        component: semanticToDTO(theme.componentTokens),
+      };
+      return [themeId, JSON.stringify(dto, null, 2)];
+    })
+  );
 }

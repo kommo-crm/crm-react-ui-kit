@@ -1,22 +1,23 @@
+import primitives from '@/design/primitives';
 import themes from '@/design/themes';
 import { resolveSemanticTokens } from '@/libs/resolveSemanticTokens';
-import { Theme, ThemeConfig } from '@/types/common';
 
-export function generateTs(): Record<Theme, string> {
+const HEADER = '// Auto-generated. Do not edit manually.\n';
+
+export function generatePrimitivesTs(): string {
+  return `${HEADER}export const color = ${JSON.stringify(primitives.color, null, 2)} as const;\n`;
+}
+
+export function generateThemesTs(): Record<string, string> {
   return Object.fromEntries(
-    (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
-      ([themeId, theme]) => {
-        const semanticVars = resolveSemanticTokens(
-          theme.semanticTokens,
-          theme.primitiveTokens
-        );
-
-        const primitives = { color: theme.primitiveTokens.color[themeId] };
-        const tokens = { primitives, semantic: semanticVars };
-        const content = `// Auto-generated. Do not edit manually.\nexport const tokens = ${JSON.stringify(tokens, null, 2)} as const;\n`;
-
-        return [themeId, content];
-      }
-    )
-  ) as Record<Theme, string>;
+    Object.entries(themes).map(([themeId, theme]) => {
+      const semantic = resolveSemanticTokens(theme.semanticTokens, primitives);
+      const component = resolveSemanticTokens(theme.componentTokens, primitives);
+      const lines = [
+        `${HEADER}export const semantic = ${JSON.stringify(semantic, null, 2)} as const;`,
+        `export const component = ${JSON.stringify(component, null, 2)} as const;\n`,
+      ].join('\n');
+      return [themeId, lines];
+    })
+  );
 }

@@ -1,34 +1,74 @@
+import primitives from '@/design/primitives';
 import themes from '@/design/themes';
 import flattenVars from '@/libs/flattenVars';
-import { Theme, ThemeConfig } from '@/types/common';
 
-export type ThemeTokens = {
-  themeId: Theme;
-  selector: string;
-  primitiveVars: Record<string, string>;
-  semantic: Record<string, string>;
+export type VarGroup = {
+  name: string;
+  vars: Record<string, string>;
 };
 
-export function collectTokens(): ThemeTokens[] {
-  return (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
-    ([themeKey, themeConfig]) => {
-      const { conditions } = themeConfig;
+export type PrimitiveCollection = {
+  flat: Record<string, string>;
+  groups: VarGroup[];
+};
 
-      const prefix = `color.${themeKey}.`;
-      const rawSemantic = flattenVars(themeConfig.semantic);
-      const semantic = Object.fromEntries(
-        Object.entries(rawSemantic).map(([k, v]) => [
-          k,
-          v.startsWith(prefix) ? `color.${v.slice(prefix.length)}` : v,
-        ])
-      );
+export type ThemeCollection = {
+  themeId: string;
+  selector: string;
+  semantic: {
+    flat: Record<string, string>;
+    groups: VarGroup[];
+  };
+  component: {
+    flat: Record<string, string>;
+    groups: VarGroup[];
+  };
+};
 
-      return {
-        themeId: themeKey,
-        selector: conditions ? conditions.join(',\n') : ':root',
-        primitiveVars: flattenVars({ color: themeConfig.primitives.color[themeKey] }),
-        semantic,
-      };
-    }
-  );
+function toGroups(flat: Record<string, string>): VarGroup[] {
+  const map = new Map<string, Record<string, string>>();
+
+  for (const [key, value] of Object.entries(flat)) {
+    const group = key.split('-')[0];
+
+    if (!map.has(group)) map.set(group, {});
+    map.get(group)![key] = value;
+  }
+
+  return Array.from(map.entries()).map(([name, vars]) => ({ name, vars }));
+}
+
+export function collectPrimitives(): PrimitiveCollection {
+  const flat = flattenVars(primitives as unknown as Record<string, unknown>);
+
+  // Group by color family: 'color-light-azure-50' → family = 'azure' (index 2)
+  const familyMap = new Map<string, Record<string, string>>();
+
+  for (const [key, value] of Object.entries(flat)) {
+    const family = key.split('-')[2];
+
+    if (!familyMap.has(family)) familyMap.set(family, {});
+    familyMap.get(family)![key] = value;
+  }
+
+  const groups = Array.from(familyMap.entries()).map(([name, vars]) => ({ name, vars }));
+
+  return { flat, groups };
+}
+
+export function collectThemes(): ThemeCollection[] {
+  return Object.values(themes).map((themeConfig) => {
+    const { id, conditions, semanticTokens, componentTokens } = themeConfig;
+    const selector = conditions ? conditions.join(',\n') : ':root';
+
+    const semanticFlat = flattenVars(semanticTokens as unknown as Record<string, unknown>);
+    const componentFlat = flattenVars(componentTokens as unknown as Record<string, unknown>);
+
+    return {
+      themeId: id,
+      selector,
+      semantic: { flat: semanticFlat, groups: toGroups(semanticFlat) },
+      component: { flat: componentFlat, groups: toGroups(componentFlat) },
+    };
+  });
 }

@@ -2,6 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: {
+    'primitives/tokens': 'src/primitives.ts',
     'light/tokens': 'src/light.ts',
     'dark/tokens': 'src/dark.ts',
   },

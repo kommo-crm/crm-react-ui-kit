@@ -1,9 +1,8 @@
 import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
 import { isRawValue } from '@/libs/isRawValue';
 import minify from '@/libs/minify';
-import { Theme } from '@/types/common';
 
-import { ThemeTokens } from './collectTokens';
+import type { PrimitiveCollection, ThemeCollection, VarGroup } from './collectTokens';
 
 function toVarRef(value: string): string {
   return isRawValue(value as Parameters<typeof isRawValue>[0])
@@ -11,27 +10,32 @@ function toVarRef(value: string): string {
     : `var(--${getPrimitiveVarName(value)})`;
 }
 
-export function generateCss(tokens: ThemeTokens[]): Record<Theme, string> {
-  return Object.fromEntries(
-    tokens.map(({ themeId, selector, primitiveVars, semantic }) => {
-      const allVars = {
-        ...primitiveVars,
-        ...Object.fromEntries(
-          Object.entries(semantic).map(([k, v]) => [k, toVarRef(v)])
-        ),
-      };
-
-      const varLines = Object.entries(allVars)
-        .map(([name, value]) => `  --${name}: ${value};`)
+function renderGroups(groups: VarGroup[], transform: (v: string) => string): string {
+  return groups
+    .map(({ name, vars }) => {
+      const lines = Object.entries(vars)
+        .map(([k, v]) => `  --${k}: ${transform(v)};`)
         .join('\n');
-
-      return [themeId, `${selector} {\n${varLines}\n}`];
+      return `  /* ${name} */\n${lines}`;
     })
-  ) as Record<Theme, string>;
+    .join('\n\n');
 }
 
-export function generateMinCss(cssTokens: Record<Theme, string>): Record<Theme, string> {
+export function generatePrimitivesCss(collection: PrimitiveCollection): string {
+  return `:root {\n${renderGroups(collection.groups, (v) => v)}\n}`;
+}
+
+export function generateThemesCss(collections: ThemeCollection[]): Record<string, string> {
   return Object.fromEntries(
-    Object.entries(cssTokens).map(([theme, css]) => [theme, minify(css)])
-  ) as Record<Theme, string>;
+    collections.map(({ themeId, selector, semantic, component }) => {
+      const semanticSection = `  /* ── Semantic ── */\n\n${renderGroups(semantic.groups, toVarRef)}`;
+      const componentSection = `  /* ── Component ── */\n\n${renderGroups(component.groups, toVarRef)}`;
+      const body = `${semanticSection}\n\n${componentSection}`;
+      return [themeId, `${selector} {\n${body}\n}`];
+    })
+  );
+}
+
+export function minifyCss(css: string): string {
+  return minify(css);
 }

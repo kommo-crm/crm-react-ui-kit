@@ -1,8 +1,7 @@
 import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
 import { isRawValue } from '@/libs/isRawValue';
-import { Theme } from '@/types/common';
 
-import { ThemeTokens } from './collectTokens';
+import type { PrimitiveCollection, ThemeCollection, VarGroup } from './collectTokens';
 
 function toVarRef(value: string): string {
   return isRawValue(value as Parameters<typeof isRawValue>[0])
@@ -10,20 +9,27 @@ function toVarRef(value: string): string {
     : `@${getPrimitiveVarName(value)}`;
 }
 
-export function generateLess(tokens: ThemeTokens[]): Record<Theme, string> {
-  return Object.fromEntries(
-    tokens.map(({ themeId, primitiveVars, semantic }) => {
-      const lines: string[] = [];
-
-      for (const [name, value] of Object.entries(primitiveVars)) {
-        lines.push(`@${name}: ${value};`);
-      }
-
-      for (const [name, value] of Object.entries(semantic)) {
-        lines.push(`@${name}: ${toVarRef(value)};`);
-      }
-
-      return [themeId, lines.join('\n')];
+function renderGroups(groups: VarGroup[], transform: (v: string) => string): string {
+  return groups
+    .map(({ name, vars }) => {
+      const lines = Object.entries(vars)
+        .map(([k, v]) => `@${k}: ${transform(v)};`)
+        .join('\n');
+      return `// ${name}\n${lines}`;
     })
-  ) as Record<Theme, string>;
+    .join('\n\n');
+}
+
+export function generatePrimitivesLess(collection: PrimitiveCollection): string {
+  return renderGroups(collection.groups, (v) => v);
+}
+
+export function generateThemesLess(collections: ThemeCollection[]): Record<string, string> {
+  return Object.fromEntries(
+    collections.map(({ themeId, semantic, component }) => {
+      const semanticSection = `// ── Semantic ──\n\n${renderGroups(semantic.groups, toVarRef)}`;
+      const componentSection = `// ── Component ──\n\n${renderGroups(component.groups, toVarRef)}`;
+      return [themeId, `${semanticSection}\n\n${componentSection}`];
+    })
+  );
 }
