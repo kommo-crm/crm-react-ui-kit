@@ -1,5 +1,7 @@
 import { SemanticTokens } from '@/types/semantic';
 import { ComponentTokens } from '@/types/component';
+import { ColorValue } from './color';
+import { PrimitivePath } from '@/design/primitives';
 
 export type ThemeConfig = {
   id: string;
@@ -8,4 +10,4 @@ export type ThemeConfig = {
   conditions?: string[];
 };
 
-export type Theme = 'light' | 'dark';
+export type ColorTokenValue = ColorValue | PrimitivePath;

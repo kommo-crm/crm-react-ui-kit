@@ -1,96 +1,96 @@
-import { PrimitivePath } from '@/design/primitives';
+import { ColorTokenValue } from '@/types/common';
 
 export type SemanticTokens = {
-  background: {
+  'background': {
     default: {
-      $: PrimitivePath;
-      disabled: PrimitivePath;
+      $: ColorTokenValue;
+      disabled: ColorTokenValue;
     };
-    base: PrimitivePath;
+    base: ColorTokenValue;
     primary: {
-      $: PrimitivePath;
-      disabled: PrimitivePath;
+      $: ColorTokenValue;
+      disabled: ColorTokenValue;
     };
     secondary: {
-      $: PrimitivePath;
-      100: PrimitivePath;
-      200: PrimitivePath;
-      300: PrimitivePath;
-      500: PrimitivePath;
-      800: PrimitivePath;
-      900: PrimitivePath;
+      $: ColorTokenValue;
+      100: ColorTokenValue;
+      200: ColorTokenValue;
+      300: ColorTokenValue;
+      500: ColorTokenValue;
+      800: ColorTokenValue;
+      900: ColorTokenValue;
     };
-    tour: PrimitivePath;
-    qualification: PrimitivePath;
-    error: PrimitivePath;
+    tour: ColorTokenValue;
+    qualification: ColorTokenValue;
+    error: ColorTokenValue;
   };
-  foreground: {
-    primary: PrimitivePath;
-    inverted: PrimitivePath;
-    secondary: PrimitivePath;
-    tertiary: PrimitivePath;
-    error: PrimitivePath;
-    accent: PrimitivePath;
+  'foreground': {
+    primary: ColorTokenValue;
+    inverted: ColorTokenValue;
+    secondary: ColorTokenValue;
+    tertiary: ColorTokenValue;
+    error: ColorTokenValue;
+    accent: ColorTokenValue;
   };
-  border: {
-    default: PrimitivePath;
-    primary: PrimitivePath;
-    medium: PrimitivePath;
-    strong: PrimitivePath;
-    error: PrimitivePath;
+  'border': {
+    default: ColorTokenValue;
+    primary: ColorTokenValue;
+    medium: ColorTokenValue;
+    strong: ColorTokenValue;
+    error: ColorTokenValue;
   };
-  hover: {
-    'light-blue': PrimitivePath;
+  'hover': {
+    'light-blue': ColorTokenValue;
   };
-  shadow: {
-    default: PrimitivePath;
+  'box-shadow': {
+    default: ColorTokenValue;
   };
-  placeholder: {
-    default: PrimitivePath;
-    primary: PrimitivePath;
+  'placeholder': {
+    default: ColorTokenValue;
+    primary: ColorTokenValue;
   };
-  action: {
-    droppable: PrimitivePath;
+  'action': {
+    droppable: ColorTokenValue;
   };
-  active: {
+  'active': {
     element: {
-      900: PrimitivePath;
-      800: PrimitivePath;
-      700: PrimitivePath;
+      900: ColorTokenValue;
+      800: ColorTokenValue;
+      700: ColorTokenValue;
     };
   };
-  scrollbar: {
+  'scrollbar': {
     track: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
     thumb: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
-  text: {
+  'text': {
     primary: {
-      $: PrimitivePath;
-      inverse: PrimitivePath;
+      $: ColorTokenValue;
+      inverse: ColorTokenValue;
     };
     secondary: {
-      light: PrimitivePath;
+      light: ColorTokenValue;
       dark: {
-        $: PrimitivePath;
-        green: PrimitivePath;
+        $: ColorTokenValue;
+        green: ColorTokenValue;
       };
       disabled: {
-        light: PrimitivePath;
-        dark: PrimitivePath;
+        light: ColorTokenValue;
+        dark: ColorTokenValue;
       };
     };
     success: {
-      primary: PrimitivePath;
+      primary: ColorTokenValue;
     };
     error: {
-      primary: PrimitivePath;
+      primary: ColorTokenValue;
     };
   };
-  link: {
-    primary: PrimitivePath;
+  'link': {
+    primary: ColorTokenValue;
   };
 };

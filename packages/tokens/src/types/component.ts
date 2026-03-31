@@ -1,204 +1,209 @@
-import { PrimitivePath } from '@/design/primitives';
+import { ColorTokenValue } from '@/types/common';
 
 export type ComponentTokens = {
-  triggers: {
+  'triggers': {
     plug: {
       lead: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
   };
-  trigger: {
+  'trigger': {
     plug: {
       item: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
   };
-  button: {
+  'button': {
     classic: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
       hover: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
   };
-  highlight: {
+  'highlight': {
     mark: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
   'left-menu': {
-    border: PrimitivePath;
+    border: ColorTokenValue;
     background: {
-      primary: PrimitivePath;
-      secondary: PrimitivePath;
+      primary: ColorTokenValue;
+      secondary: ColorTokenValue;
     };
     text: {
-      primary: PrimitivePath;
+      primary: ColorTokenValue;
     };
   };
-  table: {
+  'table': {
     hover: {
+      background: ColorTokenValue;
       selected: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
     multiaction: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
-  search: {
+  'search': {
     breadcrumbs: {
-      background: PrimitivePath;
-      border: PrimitivePath;
+      background: ColorTokenValue;
+      border: ColorTokenValue;
     };
   };
-  notification: {
+  'notification': {
     favorite: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
-  pipeline: {
+  'pipeline': {
     item: {
-      drag: {
-        placeholder: PrimitivePath;
+      'drag': {
+        placeholder: ColorTokenValue;
       };
-      message: {
-        background: PrimitivePath;
+      'message': {
+        background: ColorTokenValue;
       };
       'not-purchase': {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
   };
-  card: {
+  'card': {
     top: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
   'digital-pipeline': {
     item: {
-      recently: PrimitivePath;
+      recently: ColorTokenValue;
     };
     trigger: {
-      default: PrimitivePath;
-      widget: PrimitivePath;
-      calendly: PrimitivePath;
-      webhook: PrimitivePath;
-      adwords: PrimitivePath;
-      mandrill: PrimitivePath;
-      twilio: PrimitivePath;
-      mailchimp: PrimitivePath;
-      facebook: PrimitivePath;
-      stripe: PrimitivePath;
-      task: PrimitivePath;
-      form: PrimitivePath;
-      email: PrimitivePath;
-      'generate-store-card': PrimitivePath;
-      'delete-files': PrimitivePath;
-      'default-widget': PrimitivePath;
+      'default': ColorTokenValue;
+      'widget': ColorTokenValue;
+      'calendly': ColorTokenValue;
+      'webhook': ColorTokenValue;
+      'adwords': ColorTokenValue;
+      'mandrill': ColorTokenValue;
+      'twilio': ColorTokenValue;
+      'mailchimp': ColorTokenValue;
+      'facebook': ColorTokenValue;
+      'stripe': ColorTokenValue;
+      'task': ColorTokenValue;
+      'form': ColorTokenValue;
+      'email': ColorTokenValue;
+      'analytics': ColorTokenValue;
+      'vk': ColorTokenValue;
+      'store-card': ColorTokenValue;
+      'generate-store-card': ColorTokenValue;
+      'delete-files': ColorTokenValue;
+      'default-widget': ColorTokenValue;
     };
   };
-  salesbot: {
+  'salesbot': {
     list: {
       trigger: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
     action: {
       show: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
         button: {
-          background: PrimitivePath;
-          border: PrimitivePath;
+          background: ColorTokenValue;
+          border: ColorTokenValue;
         };
       };
       exit: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
     validation: {
-      background: PrimitivePath;
+      border: ColorTokenValue;
+      background: ColorTokenValue;
     };
   };
   'external-message': {
-    background: PrimitivePath;
+    background: ColorTokenValue;
     reply: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
-  mail: {
+  'mail': {
     error: {
-      background: PrimitivePath;
-      border: PrimitivePath;
+      background: ColorTokenValue;
+      border: ColorTokenValue;
     };
   };
-  kalendae: {
+  'kalendae': {
     active: {
-      element: PrimitivePath;
+      element: ColorTokenValue;
     };
     range: {
-      element: PrimitivePath;
+      element: ColorTokenValue;
     };
     hover: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
-  tasks: {
+  'tasks': {
     date: {
       active: {
-        element: PrimitivePath;
+        element: ColorTokenValue;
       };
       today: {
-        element: PrimitivePath;
+        element: ColorTokenValue;
       };
       draggable: {
-        element: PrimitivePath;
+        element: ColorTokenValue;
       };
     };
   };
-  amomarket: {
+  'amomarket': {
     statuses: {
       installed: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
   };
-  info: {
+  'info': {
     bubble: {
       error: {
-        background: PrimitivePath;
-        border: PrimitivePath;
+        background: ColorTokenValue;
+        border: ColorTokenValue;
       };
     };
   };
-  transaction: {
-    background: PrimitivePath;
-    border: PrimitivePath;
+  'transaction': {
+    background: ColorTokenValue;
+    border: ColorTokenValue;
   };
-  payment: {
+  'payment': {
     status: {
       paid: {
-        background: PrimitivePath;
+        background: ColorTokenValue;
       };
     };
   };
-  global: {
+  'global': {
     onboarding: {
-      'light-blue': PrimitivePath;
-      'blue-purple': PrimitivePath;
+      'light-blue': ColorTokenValue;
+      'blue-purple': ColorTokenValue;
     };
   };
   'help-center': {
     tip: {
-      background: PrimitivePath;
+      background: ColorTokenValue;
     };
   };
-  list: {
+  'list': {
     hover: {
       default: {
-        transparent: PrimitivePath;
+        transparent: ColorTokenValue;
       };
     };
   };

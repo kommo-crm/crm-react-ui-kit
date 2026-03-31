@@ -1,30 +1,30 @@
 import { SemanticTokens } from '@/types/semantic';
 
 const semanticTokens: SemanticTokens = {
-  background: {
+  'background': {
     default: {
-      $: 'color.light.neutral.100',
-      disabled: 'color.light.azure.900',
+      $: 'color.dark.azure.900',
+      disabled: 'color.dark.azure.900',
     },
     base: 'color.light.neutral.100',
     primary: {
-      $: 'color.light.neutral.50',
-      disabled: 'color.light.neutral.100',
+      $: 'color.dark.azure.800',
+      disabled: 'color.dark.azure.900',
     },
     secondary: {
-      $: 'color.light.neutral.50',
-      100: 'color.light.neutral.50',
-      200: 'color.light.neutral.100',
-      300: 'color.light.blue.50',
-      500: 'color.light.neutral.200',
-      800: 'color.light.neutral.200',
-      900: 'color.light.neutral.300',
+      $: 'color.dark.azure.900',
+      100: 'color.dark.azure.900',
+      200: 'color.dark.azure.800',
+      300: 'color.dark.azure.900',
+      500: 'color.dark.azure.800',
+      800: 'color.dark.azure.900',
+      900: 'color.dark.azure.900',
     },
-    tour: 'color.light.neutral.900',
-    qualification: 'color.light.blue.600',
+    tour: 'color.dark.azure.900',
+    qualification: 'color.dark.azure.600',
     error: 'color.light.red.200',
   },
-  foreground: {
+  'foreground': {
     primary: 'color.light.neutral.800',
     inverted: 'color.light.neutral.50',
     secondary: 'color.light.neutral.600',
@@ -32,66 +32,66 @@ const semanticTokens: SemanticTokens = {
     error: 'color.light.red.600',
     accent: 'color.light.blue.600',
   },
-  border: {
-    default: 'color.light.neutral.300',
-    primary: 'color.light.neutral.200',
+  'border': {
+    default: 'color.dark.azure.500',
+    primary: 'color.dark.azure.600',
     medium: 'color.light.neutral.200',
     strong: 'color.light.neutral.300',
     error: 'color.light.red.500',
   },
-  hover: {
-    ['light-blue']: 'color.light.blue.100',
+  'hover': {
+    'light-blue': 'color.dark.blue.500',
   },
-  shadow: {
-    default: 'color.light.neutral.100',
+  'box-shadow': {
+    default: 'color.dark.azure.900',
   },
-  placeholder: {
-    default: 'color.light.neutral.500',
-    primary: 'color.light.neutral.400',
+  'placeholder': {
+    default: 'color.dark.azure.400',
+    primary: 'color.dark.azure.400',
   },
-  action: {
-    droppable: 'color.light.blue.700',
+  'action': {
+    droppable: 'color.dark.blue.400',
   },
-  active: {
+  'active': {
     element: {
-      900: 'color.light.blue.500',
-      800: 'color.light.blue.600',
-      700: 'color.light.blue.600',
+      900: 'color.dark.blue.800',
+      800: 'color.dark.blue.700',
+      700: 'color.dark.blue.700',
     },
   },
-  scrollbar: {
+  'scrollbar': {
     track: {
-      background: 'color.light.neutral.100',
+      background: 'color.dark.azure.700',
     },
     thumb: {
-      background: 'color.light.neutral.300',
+      background: 'color.dark.azure.600',
     },
   },
-  text: {
+  'text': {
     primary: {
-      $: 'color.light.neutral.800',
-      inverse: 'color.light.neutral.50',
+      $: 'color.dark.azure.50',
+      inverse: 'color.dark.azure.800',
     },
     secondary: {
-      light: 'color.light.neutral.500',
+      light: 'color.dark.azure.200',
       dark: {
-        $: 'color.light.neutral.600',
-        green: 'color.light.azure.600',
+        $: 'color.dark.azure.400',
+        green: 'color.dark.azure.500',
       },
       disabled: {
-        light: 'color.light.green.400',
-        dark: 'color.light.azure.500',
+        light: 'color.dark.azure.400',
+        dark: 'color.dark.azure.400',
       },
     },
     success: {
       primary: 'color.light.green.600',
     },
     error: {
-      primary: 'color.light.red.600',
+      primary: 'color.dark.red.300',
     },
   },
-  link: {
-    primary: 'color.light.blue.600',
+  'link': {
+    primary: 'color.dark.blue.300',
   },
 };
 

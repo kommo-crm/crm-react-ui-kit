@@ -1,21 +1,21 @@
 import { ComponentTokens } from '@/types/component';
 
 const componentTokens: ComponentTokens = {
-  triggers: {
+  'triggers': {
     plug: {
       lead: {
         background: 'color.light.green.300',
       },
     },
   },
-  trigger: {
+  'trigger': {
     plug: {
       item: {
         background: 'color.light.blue.200',
       },
     },
   },
-  button: {
+  'button': {
     classic: {
       background: 'color.light.neutral.100',
       hover: {
@@ -23,12 +23,12 @@ const componentTokens: ComponentTokens = {
       },
     },
   },
-  highlight: {
+  'highlight': {
     mark: {
       background: 'color.light.orange.100',
     },
   },
-  ['left-menu']: {
+  'left-menu': {
     border: 'color.light.blue.800',
     background: {
       primary: 'color.light.azure.800',
@@ -38,8 +38,9 @@ const componentTokens: ComponentTokens = {
       primary: 'color.light.azure.400',
     },
   },
-  table: {
+  'table': {
     hover: {
+      background: 'color.light.blue.50',
       selected: {
         background: 'color.light.blue.100',
       },
@@ -48,59 +49,62 @@ const componentTokens: ComponentTokens = {
       background: 'color.light.azure.50',
     },
   },
-  search: {
+  'search': {
     breadcrumbs: {
       background: 'color.light.blue.200',
       border: 'color.light.blue.300',
     },
   },
-  notification: {
+  'notification': {
     favorite: {
       background: 'color.light.orange.50',
     },
   },
-  pipeline: {
+  'pipeline': {
     item: {
-      drag: {
+      'drag': {
         placeholder: 'color.light.neutral.100',
       },
-      message: {
+      'message': {
         background: 'color.light.blue.100',
       },
-      ['not-purchase']: {
+      'not-purchase': {
         background: 'color.light.pink.100',
       },
     },
   },
-  card: {
+  'card': {
     top: {
       background: 'color.light.azure.800',
     },
   },
-  ['digital-pipeline']: {
+  'digital-pipeline': {
     item: {
       recently: 'color.light.green.50',
     },
     trigger: {
-      default: 'color.light.orange.400',
-      widget: 'color.light.neutral.600',
-      calendly: 'color.light.neutral.700',
-      webhook: 'color.light.purple.50',
-      adwords: 'color.light.green.100',
-      mandrill: 'color.light.red.400',
-      twilio: 'color.light.red.50',
-      mailchimp: 'color.light.orange.100',
-      facebook: 'color.light.blue.200',
-      stripe: 'color.light.purple.100',
-      task: 'color.light.green.50',
-      form: 'color.light.pink.50',
-      email: 'color.light.azure.100',
-      ['generate-store-card']: 'color.light.blue.100',
-      ['delete-files']: 'color.light.red.200',
-      ['default-widget']: 'color.light.green.100',
+      'default': 'color.light.orange.400',
+      'widget': 'color.light.neutral.600',
+      'calendly': 'color.light.neutral.700',
+      'webhook': 'color.light.purple.50',
+      'adwords': 'color.light.green.100',
+      'mandrill': 'color.light.red.400',
+      'twilio': 'color.light.red.50',
+      'mailchimp': 'color.light.orange.100',
+      'facebook': 'color.light.blue.200',
+      'stripe': 'color.light.purple.100',
+      'task': 'color.light.green.50',
+      'form': 'color.light.pink.50',
+      'email': 'color.light.azure.100',
+      'analytics': 'color.light.orange.100',
+      'vk': 'color.light.blue.100',
+      'store-card': 'color.light.blue.100',
+      'generate-store-card': 'color.light.blue.100',
+      'delete-files': 'color.light.red.200',
+      'default-widget': 'color.light.green.100',
     },
   },
-  salesbot: {
+  'salesbot': {
     list: {
       trigger: {
         background: 'color.light.blue.200',
@@ -119,22 +123,23 @@ const componentTokens: ComponentTokens = {
       },
     },
     validation: {
+      border: 'color.light.blue.500',
       background: 'color.light.neutral.100',
     },
   },
-  ['external-message']: {
+  'external-message': {
     background: 'color.light.blue.100',
     reply: {
       background: 'color.light.blue.200',
     },
   },
-  mail: {
+  'mail': {
     error: {
       background: 'color.light.red.200',
       border: 'color.light.red.500',
     },
   },
-  kalendae: {
+  'kalendae': {
     active: {
       element: 'color.light.neutral.200',
     },
@@ -145,7 +150,7 @@ const componentTokens: ComponentTokens = {
       background: 'color.light.neutral.100',
     },
   },
-  tasks: {
+  'tasks': {
     date: {
       active: {
         element: 'color.light.neutral.100',
@@ -158,14 +163,14 @@ const componentTokens: ComponentTokens = {
       },
     },
   },
-  amomarket: {
+  'amomarket': {
     statuses: {
       installed: {
         background: 'color.light.green.300',
       },
     },
   },
-  info: {
+  'info': {
     bubble: {
       error: {
         background: 'color.light.red.200',
@@ -173,29 +178,29 @@ const componentTokens: ComponentTokens = {
       },
     },
   },
-  transaction: {
+  'transaction': {
     background: 'color.light.green.100',
     border: 'color.light.green.400',
   },
-  payment: {
+  'payment': {
     status: {
       paid: {
         background: 'color.light.green.300',
       },
     },
   },
-  global: {
+  'global': {
     onboarding: {
-      ['light-blue']: 'color.light.azure.50',
-      ['blue-purple']: 'color.light.blue.800',
+      'light-blue': 'color.light.azure.50',
+      'blue-purple': 'color.light.blue.800',
     },
   },
-  ['help-center']: {
+  'help-center': {
     tip: {
       background: 'color.light.green.50',
     },
   },
-  list: {
+  'list': {
     hover: {
       default: {
         transparent: 'color.light.neutral.50',

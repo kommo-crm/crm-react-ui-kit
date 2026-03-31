@@ -1,7 +1,7 @@
 import { SemanticTokens } from '@/types/semantic';
 
 const semanticTokens: SemanticTokens = {
-  background: {
+  'background': {
     default: {
       $: 'color.light.neutral.100',
       disabled: 'color.light.azure.900',
@@ -24,7 +24,7 @@ const semanticTokens: SemanticTokens = {
     qualification: 'color.light.blue.600',
     error: 'color.light.red.200',
   },
-  foreground: {
+  'foreground': {
     primary: 'color.light.neutral.800',
     inverted: 'color.light.neutral.50',
     secondary: 'color.light.neutral.600',
@@ -32,34 +32,34 @@ const semanticTokens: SemanticTokens = {
     error: 'color.light.red.600',
     accent: 'color.light.blue.600',
   },
-  border: {
+  'border': {
     default: 'color.light.neutral.300',
     primary: 'color.light.neutral.200',
     medium: 'color.light.neutral.200',
     strong: 'color.light.neutral.300',
     error: 'color.light.red.500',
   },
-  hover: {
-    ['light-blue']: 'color.light.blue.100',
+  'hover': {
+    'light-blue': 'color.light.blue.100',
   },
-  shadow: {
+  'box-shadow': {
     default: 'color.light.neutral.100',
   },
-  placeholder: {
+  'placeholder': {
     default: 'color.light.neutral.500',
     primary: 'color.light.neutral.400',
   },
-  action: {
+  'action': {
     droppable: 'color.light.blue.700',
   },
-  active: {
+  'active': {
     element: {
       900: 'color.light.blue.500',
       800: 'color.light.blue.600',
       700: 'color.light.blue.600',
     },
   },
-  scrollbar: {
+  'scrollbar': {
     track: {
       background: 'color.light.neutral.100',
     },
@@ -67,7 +67,7 @@ const semanticTokens: SemanticTokens = {
       background: 'color.light.neutral.300',
     },
   },
-  text: {
+  'text': {
     primary: {
       $: 'color.light.neutral.800',
       inverse: 'color.light.neutral.50',
@@ -90,7 +90,7 @@ const semanticTokens: SemanticTokens = {
       primary: 'color.light.red.600',
     },
   },
-  link: {
+  'link': {
     primary: 'color.light.blue.600',
   },
 };
