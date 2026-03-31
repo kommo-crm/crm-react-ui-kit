@@ -5,47 +5,85 @@ import { tokens as darkTokens } from '@kommo-crm/tokens/dark';
 
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
-type ThemeColorPalette = Record<string, Record<string, string>>;
+function contrastColor(hex: string): string {
+  const normalized = hex.length === 4
+    ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
+    : hex;
+  const r = parseInt(normalized.slice(1, 3), 16);
+  const g = parseInt(normalized.slice(3, 5), 16);
+  const b = parseInt(normalized.slice(5, 7), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
-const lightPalette = lightTokens.primitives
-  .color as unknown as ThemeColorPalette;
-const darkPalette = darkTokens.primitives.color as unknown as ThemeColorPalette;
+  return luminance > 0.5 ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.8)';
+}
 
-const lightFamilies = Object.keys(lightPalette);
-const darkFamilies = Object.keys(darkPalette);
+const lightPalette = lightTokens.primitives.color;
+const darkPalette = darkTokens.primitives.color;
 
-function Swatch({
-  color,
-  scale,
-  isDark,
+function ColorColumn({
+  family,
+  palette,
+  labelColor,
 }: {
-  color: string;
-  scale: number;
-  isDark?: boolean;
+  family: string;
+  palette: Record<string, Record<number, string>>;
+  labelColor: string;
 }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
-        title={color}
         style={{
-          height: 40,
-          borderRadius: 6,
-          backgroundColor: color,
-          boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)',
-        }}
-      />
-      <span
-        style={{
-          fontSize: 11,
+          marginBottom: 8,
+          fontSize: 12,
           fontWeight: 600,
-          color: isDark ? '#cdd2da' : 'var(--crm-ui-kit-color-onyx, #363b44)',
+          textTransform: 'capitalize',
+          color: labelColor,
         }}
       >
-        {scale}
-      </span>
-      <span style={{ fontSize: 10, color: '#888', fontFamily: 'monospace' }}>
-        {color}
-      </span>
+        {family}
+      </div>
+      {SCALES.map((scale) => {
+        const color = palette[family as keyof typeof palette][scale];
+
+        return (
+          <div
+            key={scale}
+            title={`${scale} · ${color}`}
+            style={{
+              position: 'relative',
+              height: 36,
+              backgroundColor: color,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <span
+              style={{
+                fontSize: 10,
+                fontFamily: 'monospace',
+                color: contrastColor(color),
+              }}
+            >
+              {color}
+            </span>
+            <span
+              style={{
+                position: 'absolute',
+                top: 3,
+                left: 5,
+                fontSize: 9,
+                fontWeight: 600,
+                fontFamily: 'monospace',
+                color: contrastColor(color),
+                opacity: 0.6,
+              }}
+            >
+              {scale}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -53,38 +91,34 @@ function Swatch({
 function ColorScales() {
   return (
     <div
-      style={{ display: 'flex', flexDirection: 'column', gap: 32, padding: 32 }}
+      style={{ padding: 32, fontFamily: 'PT Sans, Nunito Sans, sans-serif' }}
     >
-      {lightFamilies.map((family) => (
-        <div key={family}>
-          <div
-            style={{
-              marginBottom: 12,
-              fontSize: 14,
-              fontWeight: 600,
-              textTransform: 'capitalize',
-              color: 'var(--crm-ui-kit-color-onyx, #363b44)',
-            }}
-          >
-            {family}
-          </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(10, 1fr)',
-              gap: 8,
-            }}
-          >
-            {SCALES.map((scale) => (
-              <Swatch
-                key={scale}
-                scale={scale}
-                color={lightPalette[family][scale]}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+      <div
+        style={{
+          marginBottom: 24,
+          fontSize: 20,
+          fontWeight: 700,
+          color: 'var(--crm-ui-kit-color-onyx, #363b44)',
+        }}
+      >
+        Light
+      </div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${Object.keys(lightPalette).length}, 1fr)`,
+          gap: 16,
+        }}
+      >
+        {Object.keys(lightPalette).map((family) => (
+          <ColorColumn
+            key={family}
+            family={family}
+            palette={lightPalette as Record<string, Record<number, string>>}
+            labelColor="var(--crm-ui-kit-color-onyx, #363b44)"
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -92,39 +126,34 @@ function ColorScales() {
 function ColorScalesDark() {
   return (
     <div
-      style={{ display: 'flex', flexDirection: 'column', gap: 32, padding: 32 }}
+      style={{ padding: 32, fontFamily: 'PT Sans, Nunito Sans, sans-serif' }}
     >
-      {darkFamilies.map((family) => (
-        <div key={family}>
-          <div
-            style={{
-              marginBottom: 12,
-              fontSize: 14,
-              fontWeight: 600,
-              textTransform: 'capitalize',
-              color: '#fff',
-            }}
-          >
-            {family}
-          </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(10, 1fr)',
-              gap: 8,
-            }}
-          >
-            {SCALES.map((scale) => (
-              <Swatch
-                key={scale}
-                scale={scale}
-                color={darkPalette[family][scale]}
-                isDark
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+      <div
+        style={{
+          marginBottom: 24,
+          fontSize: 20,
+          fontWeight: 700,
+          color: '#cdd2da',
+        }}
+      >
+        Dark
+      </div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${Object.keys(darkPalette).length}, 1fr)`,
+          gap: 16,
+        }}
+      >
+        {Object.keys(darkPalette).map((family) => (
+          <ColorColumn
+            key={family}
+            family={family}
+            palette={darkPalette as Record<string, Record<number, string>>}
+            labelColor="#cdd2da"
+          />
+        ))}
+      </div>
     </div>
   );
 }

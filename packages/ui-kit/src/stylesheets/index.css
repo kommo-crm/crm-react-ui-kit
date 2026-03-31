@@ -1,4 +1,5 @@
-@import '@kommo-crm/tokens/min.css';
+@import '@kommo-crm/tokens/light/min.css';
+@import '@kommo-crm/tokens/dark/min.css';
 
 .sb-show-main,
 .docs-story {
