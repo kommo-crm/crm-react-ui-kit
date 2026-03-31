@@ -14,11 +14,20 @@ export function collectTokens(): ThemeTokens[] {
     ([themeKey, themeConfig]) => {
       const { conditions } = themeConfig;
 
+      const prefix = `color.${themeKey}.`;
+      const rawSemantic = flattenVars(themeConfig.semantic);
+      const semantic = Object.fromEntries(
+        Object.entries(rawSemantic).map(([k, v]) => [
+          k,
+          v.startsWith(prefix) ? `color.${v.slice(prefix.length)}` : v,
+        ])
+      );
+
       return {
         themeId: themeKey,
         selector: conditions ? conditions.join(',\n') : ':root',
-        primitiveVars: flattenVars(themeConfig.primitives),
-        semantic: flattenVars(themeConfig.semantic),
+        primitiveVars: flattenVars({ color: themeConfig.primitives.color[themeKey] }),
+        semantic,
       };
     }
   );

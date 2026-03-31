@@ -43,8 +43,9 @@ export function generateJson(): Record<Theme, string> {
   return Object.fromEntries(
     (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
       ([themeId, theme]) => {
+        const filteredPrimitives = { color: theme.primitives.color[themeId] };
         const dtcg: DTCGNode = {
-          primitives: primitiveToDTO(theme.primitives),
+          primitives: primitiveToDTO(filteredPrimitives),
           semantic: semanticToDTO(theme.semantic),
         };
 
