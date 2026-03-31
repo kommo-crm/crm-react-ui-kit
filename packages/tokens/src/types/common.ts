@@ -1,9 +1,11 @@
 import { PrimitiveTokens } from '@/design/primitives';
-import { SemanticTokens } from './semantic';
+import { SemanticTokens } from '@/design/semantics';
+import { ComponentTokens } from '@/design/components';
 
 export type ThemeConfig = {
-  primitives: PrimitiveTokens;
-  semantic: SemanticTokens;
+  primitiveTokens: PrimitiveTokens;
+  semanticTokens: SemanticTokens;
+  componentTokens: ComponentTokens;
   conditions?: string[];
 };
 

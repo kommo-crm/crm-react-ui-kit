@@ -4,7 +4,7 @@ export default function flattenVars(
 ): Record<string, string> {
   return Object.entries(obj).reduce(
     (acc, [key, value]) => {
-      const name = prefix ? `${prefix}-${key}` : key;
+      const name = key === '$' ? (prefix || '$') : prefix ? `${prefix}-${key}` : key;
 
       if (typeof value === 'string') {
         acc[name] = value;
