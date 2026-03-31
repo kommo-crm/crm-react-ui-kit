@@ -6,9 +6,10 @@ import { tokens as darkTokens } from '@kommo-crm/tokens/dark';
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
 function contrastColor(hex: string): string {
-  const normalized = hex.length === 4
-    ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
-    : hex;
+  const normalized =
+    hex.length === 4
+      ? `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`
+      : hex;
   const r = parseInt(normalized.slice(1, 3), 16);
   const g = parseInt(normalized.slice(3, 5), 16);
   const b = parseInt(normalized.slice(5, 7), 16);
