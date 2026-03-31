@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import primitives from '@kommo-crm/tokens/primitives';
+import { color } from '@kommo-crm/tokens/primitives';
 
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
@@ -17,8 +17,8 @@ function contrastColor(hex: string): string {
   return luminance > 0.5 ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.8)';
 }
 
-const lightPalette = primitives.color.light;
-const darkPalette = primitives.color.dark;
+const lightPalette = color.light;
+const darkPalette = color.dark;
 
 function ColorColumn({
   family,
@@ -43,16 +43,16 @@ function ColorColumn({
         {family}
       </div>
       {SCALES.map((scale) => {
-        const color = palette[family as keyof typeof palette][scale];
+        const hex = palette[family as keyof typeof palette][scale];
 
         return (
           <div
             key={scale}
-            title={`${scale} · ${color}`}
+            title={`${scale} · ${hex}`}
             style={{
               position: 'relative',
               height: 36,
-              backgroundColor: color,
+              backgroundColor: hex,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -62,10 +62,10 @@ function ColorColumn({
               style={{
                 fontSize: 10,
                 fontFamily: 'monospace',
-                color: contrastColor(color),
+                color: contrastColor(hex),
               }}
             >
-              {color}
+              {hex}
             </span>
             <span
               style={{
@@ -75,7 +75,7 @@ function ColorColumn({
                 fontSize: 9,
                 fontWeight: 600,
                 fontFamily: 'monospace',
-                color: contrastColor(color),
+                color: contrastColor(hex),
                 opacity: 0.6,
               }}
             >
