@@ -1,4 +1,4 @@
-const components = {
+const componentTokens = {
   triggers: {
     plug: {
       lead: {
@@ -202,4 +202,4 @@ const components = {
   },
 };
 
-export default components;
+export default componentTokens;

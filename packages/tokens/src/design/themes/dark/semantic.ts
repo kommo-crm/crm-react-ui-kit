@@ -1,9 +1,9 @@
 import type { SemanticTokens } from '@/types/semantic';
 
-const dark: SemanticTokens = {
+const semanticTokens: SemanticTokens = {
   palette: {
     background: {
-      base: 'color.dark.azure.900',
+      base: 'color.semanticTokens.azure.900',
       primary: 'color.dark.azure.800',
       secondary: 'color.dark.azure.700',
       error: 'color.dark.red.900',
@@ -27,4 +27,4 @@ const dark: SemanticTokens = {
   },
 };
 
-export default dark;
+export default semanticTokens;
