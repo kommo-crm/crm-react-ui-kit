@@ -1,6 +1,6 @@
-import { SemanticTokens } from './types';
+import { SemanticTokens } from '@/types/semantic';
 
-const semantic: SemanticTokens = {
+const semanticTokens: SemanticTokens = {
   background: {
     default: {
       $: 'color.light.neutral.100',
@@ -95,4 +95,4 @@ const semantic: SemanticTokens = {
   },
 };
 
-export default semantic;
+export default semanticTokens;

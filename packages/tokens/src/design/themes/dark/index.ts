@@ -1,6 +1,6 @@
 import semanticTokens from './semantic';
-import { ThemeConfig } from '@/types/common';
 import componentTokens from './component';
+import { ThemeConfig } from '@/types/common';
 
 const darkTheme: ThemeConfig = {
   id: 'dark',

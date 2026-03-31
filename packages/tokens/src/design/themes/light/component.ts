@@ -1,6 +1,6 @@
-import { ComponentTokens } from './types';
+import { ComponentTokens } from '@/types/component';
 
-const components: ComponentTokens = {
+const componentTokens: ComponentTokens = {
   triggers: {
     plug: {
       lead: {
@@ -204,4 +204,4 @@ const components: ComponentTokens = {
   },
 };
 
-export default components;
+export default componentTokens;
