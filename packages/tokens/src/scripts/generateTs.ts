@@ -7,11 +7,11 @@ export function generateTs(): Record<Theme, string> {
     (Object.entries(themes) as Array<[Theme, ThemeConfig]>).map(
       ([themeId, theme]) => {
         const semanticVars = resolveSemanticTokens(
-          theme.semantic,
-          theme.primitives
+          theme.semanticTokens,
+          theme.primitiveTokens
         );
 
-        const primitives = { color: theme.primitives.color[themeId] };
+        const primitives = { color: theme.primitiveTokens.color[themeId] };
         const tokens = { primitives, semantic: semanticVars };
         const content = `// Auto-generated. Do not edit manually.\nexport const tokens = ${JSON.stringify(tokens, null, 2)} as const;\n`;
 

@@ -1,4 +1,6 @@
-const semantic = {
+import { SemanticTokens } from './types';
+
+const semantic: SemanticTokens = {
   background: {
     default: {
       $: 'color.light.neutral.100',
