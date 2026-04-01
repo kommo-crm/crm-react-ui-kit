@@ -23,7 +23,7 @@ export const CounterBadge = forwardRef<S, CounterBadgeProps>((props, ref) => {
       className={cx(s.badge, themeClassName, className)}
       {...rest}
     >
-      <Text size="ms" theme={TextInheritTheme}>
+      <Text size="ms" theme={TextInheritTheme} className={s.text}>
         {children}
       </Text>
     </span>
