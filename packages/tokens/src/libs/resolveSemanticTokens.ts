@@ -6,6 +6,10 @@ export type Resolved<T> = T extends string
   ? string
   : { [K in keyof T]: Resolved<T[K]> };
 
+/**
+ * Recursively resolves a semantic/component token tree by replacing primitive path references
+ * with their actual values from the primitives object.
+ */
 export const resolveSemanticTokens = <T>(
   node: T,
   primitives: PrimitiveTokens

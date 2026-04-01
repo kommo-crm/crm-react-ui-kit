@@ -1,16 +1,23 @@
 import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
-import { isRawValue } from '@/libs/isRawValue';
+import { isRawColorValue } from '@/libs/isRawColorValue';
 import minify from '@/libs/minify';
 
-import type { PrimitiveCollection, ThemeCollection, VarGroup } from './collectTokens';
+import type {
+  PrimitiveCollection,
+  ThemeCollection,
+  VarGroup,
+} from './collectTokens';
 
 function toVarRef(value: string): string {
-  return isRawValue(value as Parameters<typeof isRawValue>[0])
+  return isRawColorValue(value as Parameters<typeof isRawColorValue>[0])
     ? value
     : `var(--${getPrimitiveVarName(value)})`;
 }
 
-function renderGroups(groups: VarGroup[], transform: (v: string) => string): string {
+function renderGroups(
+  groups: VarGroup[],
+  transform: (v: string) => string
+): string {
   return groups
     .map(({ name, vars }) => {
       const lines = Object.entries(vars)
@@ -25,7 +32,9 @@ export function generatePrimitivesCss(collection: PrimitiveCollection): string {
   return `:root {\n${renderGroups(collection.groups, (v) => v)}\n}`;
 }
 
-export function generateThemesCss(collections: ThemeCollection[]): Record<string, string> {
+export function generateThemesCss(
+  collections: ThemeCollection[]
+): Record<string, string> {
   return Object.fromEntries(
     collections.map(({ themeId, selector, semantic, component }) => {
       const semanticSection = `  /* ── Semantic ── */\n\n${renderGroups(semantic.groups, toVarRef)}`;

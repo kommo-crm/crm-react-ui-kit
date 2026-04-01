@@ -1,4 +1,3 @@
-import { PrimitivePath } from '@/design/primitives';
 import { ColorValue } from '@/types/color';
 
 const HEX_RE = /^#([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
@@ -21,12 +20,12 @@ const CSS_VAR_RE = /^var\(--[\w-]+\)$/;
 
 const KEYWORD_RE = /^(transparent|currentcolor|inherit|initial|unset|revert)$/i;
 
-export const isRawValue = (
-  value: PrimitivePath | ColorValue
-): value is ColorValue => {
-  if (typeof value !== 'string') {
-    return true;
-  }
+/**
+ * Returns `true` if the value is a raw CSS color (hex, rgb, hsl, css var, keyword, etc.)
+ * rather than a reference to a primitive token path.
+ */
+export const isRawColorValue = (value: unknown): boolean => {
+  if (typeof value !== 'string') return false;
 
   return (
     HEX_RE.test(value) ||
