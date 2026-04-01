@@ -8,12 +8,16 @@
     "build": "turbo run build",
     "build:ui-kit": "turbo run build --filter=@kommo-crm/crm-react-ui-kit",
     "build:tokens": "turbo run build --filter=@kommo-crm/tokens",
+    "build:storybook": "turbo run build-storybook --filter=@kommo-crm/crm-react-ui-kit",
     "dev": "turbo run dev",
     "dev:ui-kit": "turbo run dev --filter=@kommo-crm/crm-react-ui-kit",
     "dev:tokens": "turbo run dev --filter=@kommo-crm/tokens",
     "storybook": "turbo run storybook --filter=@kommo-crm/crm-react-ui-kit",
-    "build-storybook": "turbo run build-storybook --filter=@kommo-crm/crm-react-ui-kit",
     "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "test:tokens": "turbo run test --filter=@kommo-crm/tokens",
+    "test:e2e": "yarn workspace @kommo-crm/crm-react-ui-kit test:e2e",
+    "test:e2e:update-snapshots": "yarn workspace @kommo-crm/crm-react-ui-kit test:e2e:update-snapshots",
     "prepare": "husky"
   },
   "devDependencies": {
