@@ -137,7 +137,7 @@
     "test:e2e": "./scripts/generate_env.docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e:update-snapshots": "./scripts/generate_env.docker.sh -u && docker compose --env-file=./.env.docker up --abort-on-container-exit",
     "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
-    "eslint": "eslint --quiet {src,stories,storybook,locales,.storybook}/**/*.{ts,tsx}",
+    "eslint": "eslint --quiet",
     "tslint": "tsc --noEmit -p tsconfig.build.json",
     "lint": "concurrently --kill-others-on-fail \"yarn eslint\" \"yarn tslint\"",
     "lint:fix": "eslint --fix"

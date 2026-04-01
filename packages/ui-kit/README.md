@@ -6,19 +6,19 @@
 
 ## Installation
 
-| npm | yarn | pnpm |
-| --- | ---- | ---- |
+| npm                                 | yarn                                   | pnpm                                   |
+| ----------------------------------- | -------------------------------------- | -------------------------------------- |
 | `npm i @kommo-crm/crm-react-ui-kit` | `yarn add @kommo-crm/crm-react-ui-kit` | `pnpm add @kommo-crm/crm-react-ui-kit` |
 
 ## Commands
 
-| Command | Runs |
-| ------- | ---- |
-| `yarn lint` | Lint the package |
-| `yarn lint:fix` | Lint and auto-fix |
-| `yarn storybook` | Start Storybook on port 6006 |
+| Command                | Runs                               |
+| ---------------------- | ---------------------------------- |
+| `yarn lint`            | Lint the package                   |
+| `yarn lint:fix`        | Lint and auto-fix                  |
+| `yarn storybook`       | Start Storybook on port 6006       |
 | `yarn build-storybook` | Build Storybook for static hosting |
-| `yarn build` | Build the package |
+| `yarn build`           | Build the package                  |
 
 ## Testing
 

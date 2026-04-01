@@ -32,13 +32,13 @@ export default tseslint.config(
   },
   {
     ignores: [
-      'dist',
-      '.swc',
-      'storybook-static',
-      'playwright/.cache',
-      'coverage',
-      'packages/tokens/dist',
+      'packages/ui-kit/.swc',
+      'packages/ui-kit/storybook-static',
+      'packages/ui-kit/playwright/.cache',
+      'packages/ui-kit/coverage',
       'packages/ui-kit/dist',
+
+      'packages/tokens/dist',
     ],
   },
   {
