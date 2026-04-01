@@ -1,9 +1,7 @@
+import { ThemeConfig } from '@/types/common';
 import dark from './dark';
 import light from './light';
 
-const themes = {
-  [light.id]: light,
-  [dark.id]: dark,
-};
+const themes: ThemeConfig[] = [light, dark];
 
 export default themes;

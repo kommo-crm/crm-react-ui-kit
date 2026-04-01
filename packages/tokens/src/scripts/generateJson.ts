@@ -32,12 +32,12 @@ export function generatePrimitivesJson(): string {
 
 export function generateThemesJson(): Record<string, string> {
   return Object.fromEntries(
-    Object.entries(themes).map(([themeId, theme]) => {
+    themes.map((theme) => {
       const dto: DTCGNode = {
         semantic: semanticToDTO(theme.semanticTokens),
         component: semanticToDTO(theme.componentTokens),
       };
-      return [themeId, JSON.stringify(dto, null, 2)];
+      return [theme.id, JSON.stringify(dto, null, 2)];
     })
   );
 }

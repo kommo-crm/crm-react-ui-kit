@@ -10,14 +10,14 @@ export function generatePrimitivesTs(): string {
 
 export function generateThemesTs(): Record<string, string> {
   return Object.fromEntries(
-    Object.entries(themes).map(([themeId, theme]) => {
+    themes.map((theme) => {
       const semantic = resolveSemanticTokens(theme.semanticTokens, primitives);
       const component = resolveSemanticTokens(theme.componentTokens, primitives);
       const lines = [
         `${HEADER}export const semantic = ${JSON.stringify(semantic, null, 2)} as const;`,
         `export const component = ${JSON.stringify(component, null, 2)} as const;\n`,
       ].join('\n');
-      return [themeId, lines];
+      return [theme.id, lines];
     })
   );
 }
