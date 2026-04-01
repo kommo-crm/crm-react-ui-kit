@@ -40,11 +40,15 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npm run clean && tsx src/index.ts && tsup",
-    "dev": "concurrently \"tsx watch src/index.ts\" \"tsup --watch --no-dts\""
+    "dev": "concurrently \"tsx watch src/index.ts\" \"tsup --watch --no-dts\"",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^20.0.0",
     "concurrently": "^9.1.2",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.6",
     "tsup": "^8.3.0",
     "tsx": "^4.19.2",
     "typescript": "5.5.4"

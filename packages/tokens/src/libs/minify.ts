@@ -7,6 +7,7 @@ export default function minify(string: string): string {
     .replace(/\s+/g, ' ')
     .replace(/\s*\{\s*/g, '{')
     .replace(/\s*\}\s*/g, '}')
+    .replace(/\s*:\s*/g, ':')
     .replace(/\s*;\s*/g, ';')
     .replace(/\s*,\s*/g, ',')
     .trim();

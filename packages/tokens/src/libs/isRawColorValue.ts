@@ -12,11 +12,9 @@ const HSL_RE =
   /^hsla?\(\s*\d+(?:deg|rad|grad|turn)?\s*,\s*\d+%\s*,\s*\d+%(?:\s*,\s*(?:\d+|\d*\.\d+))?\s*\)$/i;
 
 const HSL_SPACE_RE =
-  /^hsl\(\s*\d+(?:deg|rad|grad|turn)?\s+\d+%\s+\d+(?:%\s*\/\s*(?:\d+|\d*\.\d+))?\s*\)$/i;
+  /^hsl\(\s*\d+(?:deg|rad|grad|turn)?\s+\d+%\s+\d+%?(?:\s*\/\s*(?:\d+|\d*\.\d+))?\s*\)$/i;
 
 const COLOR_FUNC_RE = /^(color|lab|lch|oklab|oklch)\(.+\)$/i;
-
-const CSS_VAR_RE = /^var\(--[\w-]+\)$/;
 
 const KEYWORD_RE = /^(transparent|currentcolor|inherit|initial|unset|revert)$/i;
 
@@ -24,7 +22,7 @@ const KEYWORD_RE = /^(transparent|currentcolor|inherit|initial|unset|revert)$/i;
  * Returns `true` if the value is a raw CSS color (hex, rgb, hsl, css var, keyword, etc.)
  * rather than a reference to a primitive token path.
  */
-export const isRawColorValue = (value: unknown): boolean => {
+export const isRawColorValue = (value: unknown): value is ColorValue => {
   if (typeof value !== 'string') return false;
 
   return (
@@ -34,7 +32,6 @@ export const isRawColorValue = (value: unknown): boolean => {
     HSL_RE.test(value) ||
     HSL_SPACE_RE.test(value) ||
     COLOR_FUNC_RE.test(value) ||
-    CSS_VAR_RE.test(value) ||
     KEYWORD_RE.test(value)
   );
 };
