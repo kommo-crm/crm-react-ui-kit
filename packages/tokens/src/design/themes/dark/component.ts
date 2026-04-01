@@ -18,7 +18,7 @@ const componentTokens: ComponentTokens = {
     },
     'button': {
       classic: {
-        background: 'color.dark.azure.500',
+        background: 'color.dark.azure.50',
         hover: {
           background: 'color.dark.azure.700',
         },
@@ -72,6 +72,9 @@ const componentTokens: ComponentTokens = {
         'not-purchase': {
           background: 'color.dark.pink.900',
         },
+        'actions': {
+          background: 'rgba(55, 80, 98, 0.9)',
+        },
       },
     },
     'card': {
@@ -110,6 +113,9 @@ const componentTokens: ComponentTokens = {
         trigger: {
           background: 'color.dark.blue.600',
         },
+      },
+      block: {
+        background: 'rgba(0, 0, 0, 0.2)',
       },
       action: {
         show: {

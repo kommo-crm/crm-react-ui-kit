@@ -72,6 +72,9 @@ export type ComponentTokens = {
         'not-purchase': {
           background: ColorTokenValue;
         };
+        'actions': {
+          background: ColorTokenValue;
+        };
       };
     };
     'card': {
@@ -110,6 +113,9 @@ export type ComponentTokens = {
         trigger: {
           background: ColorTokenValue;
         };
+      };
+      block: {
+        background: ColorTokenValue;
       };
       action: {
         show: {

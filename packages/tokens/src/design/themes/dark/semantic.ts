@@ -41,7 +41,7 @@ const semanticTokens: SemanticTokens = {
       error: 'color.light.red.500',
     },
     'hover': {
-      'light-blue': 'color.dark.blue.500',
+      'light-blue': 'color.dark.blue.50',
     },
     'box-shadow': {
       default: 'color.dark.azure.900',
