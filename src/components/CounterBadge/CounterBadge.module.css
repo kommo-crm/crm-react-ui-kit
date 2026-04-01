@@ -1,0 +1,20 @@
+.badge {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--crm-ui-kit-counter-badge-min-width);
+  min-height: var(--crm-ui-kit-counter-badge-min-height);
+  padding: var(--crm-ui-kit-counter-badge-padding);
+
+  font-weight: var(--crm-ui-kit-counter-badge-font-weight);
+  color: var(--crm-ui-kit-counter-badge-color);
+  white-space: nowrap;
+
+  border-radius: var(--crm-ui-kit-counter-badge-border-radius);
+  background: var(--crm-ui-kit-counter-badge-background-color);
+}
+
+.text {
+  line-height: 12px;
+}
