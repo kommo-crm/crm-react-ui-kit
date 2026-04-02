@@ -10,7 +10,7 @@ export type ThemeConfig = {
   conditions?: string[];
 };
 
-export type TokenPrimitiveValue = ColorValue | PrimitivePath;
+export type TokenPrimitiveValue = ColorValue;
 export type TokenSemanticValue = PrimitivePath;
 export type TokenComponentValue = PrimitivePath | SemanticTokenPath;
 export type TokenValue = ColorValue;
