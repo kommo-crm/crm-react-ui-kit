@@ -233,6 +233,67 @@ function App() {
 }
 `;
 
+export const PUBLIC_API = `
+## ${i18n.t('Data Attributes (Public API)')}
+
+${i18n.t('contextmenu-data-attrs-intro')}
+
+### \`ContextMenu.Trigger\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-highlighted\` | ${i18n.t('contextmenu-trigger-highlighted-presence')} | ${i18n.t('contextmenu-trigger-highlighted-desc')} |
+
+### \`ContextMenu.Item\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-item-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-presence-focused-or-submenu')} | ${i18n.t('contextmenu-item-highlighted-desc')} |
+| \`data-non-selectable\` | ${i18n.t('contextmenu-presence-non-selectable')} | ${i18n.t('contextmenu-item-non-selectable-desc')} |
+
+### \`ContextMenu.CheckboxItem\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-checkbox-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-presence-focused-or-submenu')} | ${i18n.t('contextmenu-checkbox-highlighted-desc')} |
+
+### \`ContextMenu.RadioItem\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-radio-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-presence-focused-or-submenu')} | ${i18n.t('contextmenu-radio-highlighted-desc')} |
+
+### \`ContextMenu.SubTrigger\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-subtrigger-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-subtrigger-highlighted-presence')} | ${i18n.t('contextmenu-subtrigger-highlighted-desc')} |
+| \`data-submenu-trigger\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-subtrigger-submenu-trigger-desc')} |
+
+### \`ContextMenu.experimental_SubRoot.Trigger\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-highlighted\` | ${i18n.t('contextmenu-subroot-highlighted-presence')} | ${i18n.t('contextmenu-subroot-highlighted-desc')} |
+| \`data-submenu-trigger\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-subroot-submenu-trigger-desc')} |
+
+### \`ContextMenu.Content\` / \`SubContent\` / \`SubRoot.Content\`
+
+| Attribute | Value | Description |
+| --- | --- | --- |
+| \`data-menu-level\` | ${i18n.t('contextmenu-content-menu-level-value')} | ${i18n.t('contextmenu-content-menu-level-desc')} |
+
+### \`ContextMenu.FocusBlocker\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-blocker\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-focusblocker-blocker-desc')} |
+`;
+
 interface StoryComponentProps {
   mode: ContextMenuModeType;
   subMode?: ContextMenuModeType;
@@ -440,6 +501,7 @@ const StoryComponent = (props: StoryComponentProps) => {
 
 const meta: Meta<typeof StoryComponent> = {
   title: 'Components/ContextMenu',
+  excludeStories: ['PUBLIC_API'],
   component: StoryComponent,
   parameters: {
     ...CanvasCentered,
@@ -568,9 +630,7 @@ export const Modes: Story = {
           subMode={ContextMenuMode.CLICK}
           subMenuMode={ContextMenuMode.CLICK}
           button={
-            <Button theme={ButtonNeutralTheme}>
-              {i18n.t('Click me')}
-            </Button>
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Click me')}</Button>
           }
         />
 
@@ -580,9 +640,7 @@ export const Modes: Story = {
           subMode={ContextMenuMode.HOVER}
           subMenuMode={ContextMenuMode.HOVER}
           button={
-            <Button theme={ButtonNeutralTheme}>
-              {i18n.t('Hover me')}
-            </Button>
+            <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me')}</Button>
           }
         />
       </div>
@@ -649,10 +707,7 @@ export const Directions: Story = {
               {...args}
               direction={dir}
               button={
-                <Button
-                  theme={ButtonNeutralTheme}
-                  style={{ width: '100px' }}
-                >
+                <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
                   {dir}
                 </Button>
               }
@@ -686,10 +741,7 @@ export const Directions: Story = {
                 {...args}
                 direction={dir}
                 button={
-                  <Button
-                    theme={ButtonNeutralTheme}
-                    style={{ width: '100px' }}
-                  >
+                  <Button theme={ButtonNeutralTheme} style={{ width: '100px' }}>
                     {dir}
                   </Button>
                 }
