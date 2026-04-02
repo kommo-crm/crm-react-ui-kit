@@ -89,38 +89,6 @@ const componentTokens: ComponentTokens = {
 export default componentTokens;
 ```
 
----
-
-## The `$` key
-
-`$` is the default value for a node that has both nested variants and a base value of its own.
-
-```ts
-background: {
-  default: {
-    $: 'color.light.neutral.100',      // → var(--palette-background-default)
-    disabled: 'color.light.azure.900', // → var(--palette-background-default-disabled)
-  },
-}
-```
-
-Without `$`, the `default` object would only be a container for nested tokens and would not generate a CSS variable for `background-default` itself.
-
-```ts
-// Without $: --palette-background-primary is NOT generated
-primary: {
-  hover: 'color.light.blue.100',
-}
-
-// With $: both variables are generated
-primary: {
-  $: 'color.light.blue.600',        // --palette-background-primary
-  hover: 'color.light.blue.100',    // --palette-background-primary-hover
-}
-```
-
----
-
 ## Token values
 
 A token can be:
