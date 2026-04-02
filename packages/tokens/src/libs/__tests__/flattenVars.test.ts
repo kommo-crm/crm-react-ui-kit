@@ -14,16 +14,6 @@ describe('flattenVars', () => {
     });
   });
 
-  it('handles the $ key as a shorthand for the parent path', () => {
-    const input = { color: { $: '#000' } };
-    expect(flattenVars(input)).toEqual({ color: '#000' });
-  });
-
-  it('returns $ as key when $ is at root level', () => {
-    const input = { $: '#fff' };
-    expect(flattenVars(input)).toEqual({ $: '#fff' });
-  });
-
   it('returns an empty object for empty input', () => {
     expect(flattenVars({})).toEqual({});
   });

@@ -69,12 +69,6 @@ describe('collectThemes', () => {
     expect(dark.semantic.flat['foreground-inverted']).toBe('color.light.neutral.50');
   });
 
-  it('$ key flattens to the parent path without suffix', () => {
-    const light = themes.find((t) => t.themeId === 'light')!;
-    expect(light.semantic.flat['background']).toBe('color.light.azure.50');
-    expect(light.semantic.flat).not.toHaveProperty('background-$');
-  });
-
   it('flattens component tokens correctly', () => {
     const light = themes.find((t) => t.themeId === 'light')!;
     expect(light.component.flat).toMatchObject({

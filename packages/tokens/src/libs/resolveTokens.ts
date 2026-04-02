@@ -9,12 +9,11 @@ export type Resolved<T> = T extends string
  * Recursively resolves a token tree by replacing dot-path references
  * with their actual values from the provided tokens object.
  */
-export const resolveTokens = <T>(
+export const resolveTokens = <T extends string | Record<string, unknown>>(
   node: T,
   tokens: UsableTokens
 ): Resolved<T> => {
   if (typeof node === 'string') {
-    console.log(node, tokens);
     return resolveTokenValue(
       tokens,
       node as TokenPath | TokenValue
@@ -22,9 +21,9 @@ export const resolveTokens = <T>(
   }
 
   return Object.fromEntries(
-    Object.entries(node as Record<string, unknown>).map(([key, value]) => [
+    Object.entries(node).map(([key, value]) => [
       key,
-      resolveTokens(value, tokens),
+      resolveTokens(value as string | Record<string, unknown>, tokens),
     ])
   ) as Resolved<T>;
 };

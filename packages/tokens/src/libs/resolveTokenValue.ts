@@ -1,5 +1,5 @@
 import { isRawColorValue } from '@/libs/isRawColorValue';
-import { TokenPath, TokenValue } from '@/types/common';
+import { TokenPath, TokenValue, UsableTokens } from '@/types/common';
 
 /**
  * Resolves a single token value: returns it as-is if it's a raw CSS color,
@@ -7,14 +7,19 @@ import { TokenPath, TokenValue } from '@/types/common';
  * @example 'color.light.azure.50' → '#f8fcfe'
  */
 export const resolveTokenValue = (
-  tokens: Record<string, unknown>,
+  tokens: UsableTokens,
   value: TokenPath | TokenValue
 ): string =>
   isRawColorValue(value)
     ? value
-    : (value
-        .split('.')
-        .reduce<unknown>(
-          (acc, key) => (acc as Record<string, unknown>)[key],
-          tokens
-        ) as string);
+    : (value.split('.').reduce<unknown>((acc, key, index, parts) => {
+        const node = (acc as Record<string, unknown>)[key];
+        if (node === undefined) {
+          const resolved = parts.slice(0, index).join('.');
+          const location = resolved ? `"${resolved}" → "${key}"` : `"${key}"`;
+          throw new Error(
+            `Token not found: ${location} does not exist in path "${value}"`
+          );
+        }
+        return node;
+      }, tokens) as string);

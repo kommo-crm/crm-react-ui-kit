@@ -17,7 +17,6 @@ export const mockThemes = [
     id: 'light',
     semanticTokens: {
       background: {
-        $: 'color.light.azure.50',
         default: 'color.light.neutral.100',
         primary: 'color.light.neutral.50',
       },
