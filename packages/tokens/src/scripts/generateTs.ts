@@ -1,6 +1,6 @@
 import primitives from '@/design/primitives';
 import themes from '@/design/themes';
-import { resolveSemanticTokens } from '@/libs/resolveSemanticTokens';
+import { resolveTokens } from '@/libs/resolveTokens';
 
 const HEADER = '// Auto-generated. Do not edit manually.\n';
 
@@ -11,8 +11,11 @@ export function generatePrimitivesTs(): string {
 export function generateThemesTs(): Record<string, string> {
   return Object.fromEntries(
     themes.map((theme) => {
-      const semantic = resolveSemanticTokens(theme.semanticTokens, primitives);
-      const component = resolveSemanticTokens(theme.componentTokens, primitives);
+      const semantic = resolveTokens(theme.semanticTokens, primitives);
+      const component = resolveTokens(
+        theme.componentTokens,
+        Object.assign({}, primitives, semantic)
+      );
       const lines = [
         `${HEADER}export const semantic = ${JSON.stringify(semantic, null, 2)} as const;`,
         `export const component = ${JSON.stringify(component, null, 2)} as const;\n`,

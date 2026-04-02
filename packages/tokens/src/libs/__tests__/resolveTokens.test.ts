@@ -1,4 +1,4 @@
-import { resolveSemanticTokens } from '@/libs/resolveSemanticTokens';
+import { resolveTokens } from '@/libs/resolveTokens';
 
 const primitives = {
   color: {
@@ -8,13 +8,13 @@ const primitives = {
   },
 } as any;
 
-describe('resolveSemanticTokens', () => {
+describe('resolveTokens', () => {
   it('resolves a flat string primitive path to its value', () => {
-    expect(resolveSemanticTokens('color.light.azure.50', primitives)).toBe('#f8fcfe');
+    expect(resolveTokens('color.light.azure.50', primitives)).toBe('#f8fcfe');
   });
 
   it('passes through a raw CSS color unchanged', () => {
-    expect(resolveSemanticTokens('#ff0000', primitives)).toBe('#ff0000');
+    expect(resolveTokens('#ff0000', primitives)).toBe('#ff0000');
   });
 
   it('recursively resolves a nested token object', () => {
@@ -23,7 +23,7 @@ describe('resolveSemanticTokens', () => {
         default: 'color.light.azure.50',
       },
     };
-    expect(resolveSemanticTokens(tokens, primitives)).toEqual({
+    expect(resolveTokens(tokens, primitives)).toEqual({
       background: { default: '#f8fcfe' },
     });
   });
@@ -33,7 +33,7 @@ describe('resolveSemanticTokens', () => {
       a: 'color.light.azure.50',
       b: '#000000',
     };
-    expect(resolveSemanticTokens(tokens, primitives)).toEqual({
+    expect(resolveTokens(tokens, primitives)).toEqual({
       a: '#f8fcfe',
       b: '#000000',
     });

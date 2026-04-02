@@ -1,15 +1,18 @@
-import { SemanticTokens } from '@/types/semantic';
+import { SemanticTokens, SemanticTokenPath } from '@/types/semantic';
 import { ComponentTokens } from '@/types/component';
 import { ColorValue } from './color';
 import { PrimitivePath } from '@/design/primitives';
 
-export type Theme = string;
-
 export type ThemeConfig = {
-  id: Theme;
+  id: string;
   semanticTokens: SemanticTokens;
   componentTokens: ComponentTokens;
   conditions?: string[];
 };
 
-export type ColorTokenValue = ColorValue | PrimitivePath;
+export type TokenPrimitiveValue = ColorValue | PrimitivePath;
+export type TokenSemanticValue = PrimitivePath;
+export type TokenComponentValue = PrimitivePath | SemanticTokenPath;
+export type TokenValue = ColorValue;
+export type TokenPath = PrimitivePath | SemanticTokenPath;
+export type UsableTokens = Record<string, unknown>;

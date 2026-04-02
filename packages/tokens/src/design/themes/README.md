@@ -27,10 +27,11 @@ import componentTokens from './component';
 import { ThemeConfig } from '@/types/common';
 
 const myTheme: ThemeConfig = {
-  id: 'my-theme',          // unique identifier
+  id: 'my-theme', // unique identifier
   semanticTokens,
   componentTokens,
-  conditions: [            // CSS selectors that activate this theme
+  conditions: [
+    // CSS selectors that activate this theme
     ":root[data-crm-ui-kit-theme='my-theme']",
   ],
 };
@@ -60,6 +61,9 @@ const semanticTokens: SemanticTokens = {
   },
 };
 
+type SemanticTokens = typeof semanticTokens;
+export type Semantic_ThemeName_Path = ObjectLeaves<SemanticTokens>;
+
 export default semanticTokens;
 ```
 
@@ -76,7 +80,7 @@ const componentTokens: ComponentTokens = {
   palette: {
     button: {
       classic: {
-        background: 'color.light.neutral.100',
+        background: 'palette.background.default',
       },
     },
   },
@@ -128,15 +132,70 @@ A token can be:
 
 ## Registering a new theme
 
-Add the import to `themes/index.ts`:
+### Step 1 — create `themes/dark/semantic.ts`
+
+```ts
+import { SemanticTokens } from '@/types/semantic';
+
+export const semanticTokens: SemanticTokens = {
+  text: {
+    primary: 'color.dark.azure.100',
+  },
+};
+```
+
+---
+
+### Step 2 — create `themes/dark/component.ts`
+
+```ts
+import { ComponentTokens } from '@/types/component';
+
+export const componentTokens: ComponentTokens = {
+  button: {
+    text: 'color.dark.azure.900',
+    border: 'text.primary',
+  },
+};
+```
+
+---
+
+### Step 3 — create `themes/dark/index.ts`
+
+Non-default themes must include `conditions` — CSS selectors that activate the theme:
 
 ```ts
 import { ThemeConfig } from '@/types/common';
-import dark from './dark';
-import light from './light';
-import myTheme from './my-theme';
+import { semanticTokens } from './semantic';
+import { componentTokens } from './component';
 
-const themes: ThemeConfig[] = [light, dark, myTheme];
+const darkTheme: ThemeConfig = {
+  id: 'dark',
+  semanticTokens,
+  componentTokens,
+  conditions: [":root[data-crm-ui-kit-theme='dark']"],
+};
+
+export default darkTheme;
+```
+
+> The default theme (light) has no `conditions` and is applied globally. Every other theme must specify at least one selector.
+
+---
+
+### Step 4 — update `themes/index.ts`
+
+Add the import and register the theme in the array:
+
+```ts
+import { ThemeConfig } from '@/types/common';
+import light from './light';
+import dark from './dark';
+
+const themes: ThemeConfig[] = [light, dark];
 
 export default themes;
 ```
+
+`SemanticTokenPath` is derived automatically from `SemanticTokens` in `@/types/semantic` — no type changes needed when adding a theme.

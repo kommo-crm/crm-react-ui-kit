@@ -1,4 +1,4 @@
-import { resolveTokenValue } from '@/libs/resolveToken';
+import { resolveTokenValue } from '@/libs/resolveTokenValue';
 
 const primitives = {
   color: {
@@ -15,10 +15,14 @@ describe('resolveTokenValue', () => {
   });
 
   it('resolves a dot-separated primitive path', () => {
-    expect(resolveTokenValue(primitives, 'color.light.azure.50')).toBe('#f8fcfe');
+    expect(resolveTokenValue(primitives, 'color.light.azure.50')).toBe(
+      '#f8fcfe'
+    );
   });
 
   it('resolves a deeper primitive path', () => {
-    expect(resolveTokenValue(primitives, 'color.light.azure.500')).toBe('#76939f');
+    expect(resolveTokenValue(primitives, 'color.light.azure.500')).toBe(
+      '#76939f'
+    );
   });
 });
