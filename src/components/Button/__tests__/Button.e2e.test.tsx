@@ -19,6 +19,8 @@ import {
   ButtonIconDangerGhostPlaygroundItem,
   ButtonIconSmallGhostPlaygroundItem,
   ButtonIconSmallDangerGhostPlaygroundItem,
+  ButtonContextPlaygroundItem,
+  ButtonIconContextPlaygroundItem,
 } from './Button.e2e-playground';
 
 export const combinations = multiCartesian<ButtonProps>([
@@ -100,6 +102,18 @@ for (const props of combinations) {
       }
     );
   });
+
+  test.describe('Button Context', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonContextPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
 }
 
 const iconCombinations = multiCartesian<ButtonProps>([
@@ -108,6 +122,21 @@ const iconCombinations = multiCartesian<ButtonProps>([
 
 for (const props of iconCombinations) {
   const label = prettyProps(props);
+
+  test.describe('Button Icon Context', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonIconContextPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
 
   test.describe('Button Icon Secondary', () => {
     test(
