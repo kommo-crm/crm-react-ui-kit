@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Trigger as RadixDropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
@@ -41,6 +41,8 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
     onContentLeave,
     onOpenByKeyboard,
   } = useContextMenuContext(DISPLAY_NAME);
+
+  const [isHovered, setIsHovered] = useState(false);
 
   /**
    * Handles pointer down on SubRoot trigger.
@@ -87,12 +89,16 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsHovered(true);
+
     onContentEnter(e);
 
     onMouseEnter?.(e);
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsHovered(false);
+
     onContentLeave(e);
 
     onMouseLeave?.(e);
@@ -126,6 +132,7 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
     <RadixDropdownMenuTrigger
       ref={mergeRefs(triggerRef, ref)}
       className={cx(className)}
+      data-highlighted={isOpen || isHovered ? '' : undefined}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onKeyDown={handleKeyDown}

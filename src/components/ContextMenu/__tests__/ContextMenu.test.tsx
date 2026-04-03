@@ -388,6 +388,34 @@ describe('ContextMenu', () => {
         expect(screen.getByText(/Light/i)).toBeInTheDocument();
       }
     });
+
+    it('Trigger has data-highlighted when menu is open', async () => {
+      await renderContextMenu();
+
+      const trigger = screen.getByTestId(DATA_TRIGGER_TEST_ID);
+
+      expect(trigger).not.toHaveAttribute('data-highlighted');
+
+      await userEvent.click(trigger);
+
+      expect(trigger).toHaveAttribute('data-highlighted', '');
+    });
+
+    it('Trigger has data-highlighted when hovered', async () => {
+      await renderContextMenu();
+
+      const trigger = screen.getByTestId(DATA_TRIGGER_TEST_ID);
+
+      expect(trigger).not.toHaveAttribute('data-highlighted');
+
+      await userEvent.hover(trigger);
+
+      expect(trigger).toHaveAttribute('data-highlighted', '');
+
+      await userEvent.unhover(trigger);
+
+      expect(trigger).not.toHaveAttribute('data-highlighted');
+    });
   });
 
   describe('Item data attributes', () => {

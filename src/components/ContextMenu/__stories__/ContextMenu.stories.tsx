@@ -19,7 +19,11 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
-import { Button, ButtonNeutralTheme } from 'src/components/Button';
+import {
+  Button,
+  ButtonIconSmallGhostTheme,
+  ButtonNeutralTheme,
+} from 'src/components/Button';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContentProps } from '../components/Content/Content.props';
@@ -34,20 +38,23 @@ const TextContextMenuTheme: TextTheme = {
 const USAGE = `
 import { useState } from "react";
 
-import { ContextMenu } from 'src/components/ContextMenu';
+import { ContextMenu } from '@kommo-crm/crm-react-ui-kit/ContextMenu';
+
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryDarkTheme,
   type TextTheme,
-} from 'src/components/Text';
+} from '@kommo-crm/crm-react-ui-kit/Text';
+import {
+  Button,
+  ButtonIconSmallGhostTheme,
+} from '@kommo-crm/crm-react-ui-kit/Button';
 
 import ContextMenuTriggerIcon from 'public/icons/trigger.svg';
 import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';
 import ContextMenuCheckIcon from 'public/icons/check.svg';
 import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
-
-import s from './ContextMenu.module.css';
 
 const TextContextMenuTheme: TextTheme = {
   ...TextPrimaryTheme,
@@ -70,19 +77,10 @@ function App() {
 
   return (
     <ContextMenu.Root mode="click">
-      <ContextMenu.Trigger
-        style={{
-          display: 'flex',
-          padding: '10px 16px',
-          margin: 0,
-          color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
-          background: 'none',
-          outline: 'none',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-      >
-        <ContextMenuTriggerIcon />
+      <ContextMenu.Trigger asChild>
+        <Button theme={ButtonIconSmallGhostTheme}>
+          <ContextMenuTriggerIcon />
+        </Button>
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
@@ -235,6 +233,67 @@ function App() {
 }
 `;
 
+export const PUBLIC_API = `
+## ${i18n.t('Data Attributes (Public API)')}
+
+${i18n.t('contextmenu-data-attrs-intro')}
+
+### \`ContextMenu.Trigger\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-highlighted\` | ${i18n.t('contextmenu-trigger-highlighted-presence')} | ${i18n.t('contextmenu-trigger-highlighted-desc')} |
+
+### \`ContextMenu.Item\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-item-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-presence-focused-or-submenu')} | ${i18n.t('contextmenu-item-highlighted-desc')} |
+| \`data-non-selectable\` | ${i18n.t('contextmenu-presence-non-selectable')} | ${i18n.t('contextmenu-item-non-selectable-desc')} |
+
+### \`ContextMenu.CheckboxItem\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-checkbox-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-presence-focused-or-submenu')} | ${i18n.t('contextmenu-checkbox-highlighted-desc')} |
+
+### \`ContextMenu.RadioItem\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-radio-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-presence-focused-or-submenu')} | ${i18n.t('contextmenu-radio-highlighted-desc')} |
+
+### \`ContextMenu.SubTrigger\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-item\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-subtrigger-data-item-desc')} |
+| \`data-highlighted\` | ${i18n.t('contextmenu-subtrigger-highlighted-presence')} | ${i18n.t('contextmenu-subtrigger-highlighted-desc')} |
+| \`data-submenu-trigger\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-subtrigger-submenu-trigger-desc')} |
+
+### \`ContextMenu.experimental_SubRoot.Trigger\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-highlighted\` | ${i18n.t('contextmenu-subroot-highlighted-presence')} | ${i18n.t('contextmenu-subroot-highlighted-desc')} |
+| \`data-submenu-trigger\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-subroot-submenu-trigger-desc')} |
+
+### \`ContextMenu.Content\` / \`SubContent\` / \`SubRoot.Content\`
+
+| Attribute | Value | Description |
+| --- | --- | --- |
+| \`data-menu-level\` | ${i18n.t('contextmenu-content-menu-level-value')} | ${i18n.t('contextmenu-content-menu-level-desc')} |
+
+### \`ContextMenu.FocusBlocker\`
+
+| Attribute | Presence | Description |
+| --- | --- | --- |
+| \`data-blocker\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-focusblocker-blocker-desc')} |
+`;
+
 interface StoryComponentProps {
   mode: ContextMenuModeType;
   subMode?: ContextMenuModeType;
@@ -243,7 +302,6 @@ interface StoryComponentProps {
   onCheckboxChange?: (checked: boolean) => void;
   onRadioChange?: (value: string) => void;
   button?: React.ReactNode;
-  isTriggerAsChild?: boolean;
   isOpen?: boolean;
 }
 
@@ -255,8 +313,15 @@ const StoryComponent = (props: StoryComponentProps) => {
     direction,
     onCheckboxChange,
     onRadioChange,
-    button = <ContextMenuTriggerIcon />,
-    isTriggerAsChild = false,
+    button = (
+      <Button theme={ButtonIconSmallGhostTheme} {...props}>
+        <ContextMenuTriggerIcon
+          width={16}
+          height={16}
+          style={{ display: 'flex' }}
+        />
+      </Button>
+    ),
     isOpen,
   } = props;
 
@@ -282,25 +347,7 @@ const StoryComponent = (props: StoryComponentProps) => {
 
   return (
     <ContextMenu.Root mode={mode} isOpen={isOpen}>
-      <ContextMenu.Trigger
-        style={
-          isTriggerAsChild
-            ? {}
-            : {
-                display: 'flex',
-                padding: '10px 16px',
-                margin: 0,
-                color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
-                background: 'none',
-                outline: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }
-        }
-        asChild={isTriggerAsChild}
-      >
-        {button}
-      </ContextMenu.Trigger>
+      <ContextMenu.Trigger asChild>{button}</ContextMenu.Trigger>
 
       <ContextMenu.Portal>
         <ContextMenu.Content
@@ -454,6 +501,7 @@ const StoryComponent = (props: StoryComponentProps) => {
 
 const meta: Meta<typeof StoryComponent> = {
   title: 'Components/ContextMenu',
+  excludeStories: ['PUBLIC_API'],
   component: StoryComponent,
   parameters: {
     ...CanvasCentered,
@@ -584,7 +632,6 @@ export const Modes: Story = {
           button={
             <Button theme={ButtonNeutralTheme}>{i18n.t('Click me')}</Button>
           }
-          isTriggerAsChild
         />
 
         <StoryComponent
@@ -595,7 +642,6 @@ export const Modes: Story = {
           button={
             <Button theme={ButtonNeutralTheme}>{i18n.t('Hover me')}</Button>
           }
-          isTriggerAsChild
         />
       </div>
     );
@@ -665,7 +711,6 @@ export const Directions: Story = {
                   {dir}
                 </Button>
               }
-              isTriggerAsChild
             />
           </div>
         ))}
@@ -700,7 +745,6 @@ export const Directions: Story = {
                     {dir}
                   </Button>
                 }
-                isTriggerAsChild
               />
             </div>
           ))}
@@ -769,7 +813,6 @@ export const VerticalMenu: Story = {
                 {index + 1}
               </Button>
             }
-            isTriggerAsChild
           />
         ))}
       </div>
