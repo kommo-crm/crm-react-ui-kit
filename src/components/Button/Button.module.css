@@ -74,6 +74,7 @@
   display: flex;
   position: relative;
   box-sizing: border-box;
+  height: 100%;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -82,11 +83,13 @@
 .before {
   display: inline-flex;
   margin-right: var(--crm-ui-kit-button-elements-spacing);
+  color: var(--crm-ui-kit-button-icon-color);
 }
 
 .after {
   display: inline-flex;
   margin-left: var(--crm-ui-kit-button-elements-spacing);
+  color: var(--crm-ui-kit-button-icon-color);
 }
 
 .invisible {

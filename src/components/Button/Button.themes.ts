@@ -38,7 +38,8 @@ type ButtonThemeOptionalKey =
   | '--crm-ui-kit-button-focus-visible-outline-width'
   | '--crm-ui-kit-button-focus-visible-outline-style'
   | '--crm-ui-kit-button-focus-visible-outline-offset'
-  | '--crm-ui-kit-button-focus-visible-border-radius';
+  | '--crm-ui-kit-button-focus-visible-border-radius'
+  | '--crm-ui-kit-button-icon-color';
 
 export type ButtonThemeType = {
   [K in ButtonThemeKey]: string;
@@ -238,4 +239,32 @@ export const ButtonIconSmallDangerGhostTheme: ButtonThemeType = {
   ...ButtonIconSmallBaseThemeValues,
   '--crm-ui-kit-button-hover-background-color':
     'var(--crm-ui-kit-palette-background-secondary-800)',
+};
+
+export const ButtonContextTheme: ButtonThemeType = {
+  ...ButtonNeutralTheme,
+  '--crm-ui-kit-button-height': '24px',
+  '--crm-ui-kit-button-padding': '0 8px',
+
+  '--crm-ui-kit-button-font-size': '13px',
+  '--crm-ui-kit-button-line-height': '15px',
+  '--crm-ui-kit-button-font-weight': '400',
+
+  '--crm-ui-kit-button-spinner-circle-size': '12px',
+  '--crm-ui-kit-button-spinner-disabled-border-color':
+    'var(--crm-ui-kit-button-spinner-border-color)',
+
+  '--crm-ui-kit-button-icon-color':
+    'var(--crm-ui-kit-palette-text-secondary-light)',
+};
+
+export const ButtonIconContextTheme: ButtonThemeType = {
+  ...ButtonContextTheme,
+  '--crm-ui-kit-button-padding': '0 3px',
+
+  '--crm-ui-kit-button-color': 'var(--crm-ui-kit-palette-text-secondary-light)',
+  '--crm-ui-kit-button-hover-color':
+    'var(--crm-ui-kit-palette-text-secondary-light)',
+  '--crm-ui-kit-button-disabled-color':
+    'var(--crm-ui-kit-palette-text-secondary-light)',
 };
