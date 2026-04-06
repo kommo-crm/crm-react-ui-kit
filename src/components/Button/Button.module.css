@@ -83,13 +83,13 @@
 .before {
   display: inline-flex;
   margin-right: var(--crm-ui-kit-button-elements-spacing);
-  color: var(--crm-ui-kit-button-icon-color);
+  color: var(--crm-ui-kit-button-before-color);
 }
 
 .after {
   display: inline-flex;
   margin-left: var(--crm-ui-kit-button-elements-spacing);
-  color: var(--crm-ui-kit-button-icon-color);
+  color: var(--crm-ui-kit-button-after-color);
 }
 
 .invisible {
