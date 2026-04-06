@@ -68,90 +68,90 @@ export const ButtonSecondaryPlaygroundItem = ({
 export const ButtonDangerPrimaryPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundItemProps<ButtonProps>) => (
-  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
       <Button {...p} theme={ButtonDangerPrimaryTheme}>
         Button
       </Button>
     )}
-  </ComponentPlaygroundItem>
+  </ComponentPlayground>
 );
 
 export const ButtonDangerTertiaryPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundItemProps<ButtonProps>) => (
-  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
       <Button {...p} theme={ButtonDangerTertiaryTheme}>
         Button
       </Button>
     )}
-  </ComponentPlaygroundItem>
+  </ComponentPlayground>
 );
 
 export const ButtonIconSecondaryPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundItemProps<ButtonProps>) => (
-  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
       <Button {...p} theme={ButtonIconSecondaryTheme}>
         <MicrophoneIcon width={20} height={20} style={{ display: 'flex' }} />
       </Button>
     )}
-  </ComponentPlaygroundItem>
+  </ComponentPlayground>
 );
 
 export const ButtonIconGhostPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundItemProps<ButtonProps>) => (
-  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
       <Button {...p} theme={ButtonIconGhostTheme}>
         <TriggerIcon width={20} height={20} style={{ display: 'flex' }} />
       </Button>
     )}
-  </ComponentPlaygroundItem>
+  </ComponentPlayground>
 );
 
 export const ButtonIconDangerGhostPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundItemProps<ButtonProps>) => (
-  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
       <Button {...p} theme={ButtonIconDangerGhostTheme}>
         <TrashcanIcon width={20} height={20} style={{ display: 'flex' }} />
       </Button>
     )}
-  </ComponentPlaygroundItem>
+  </ComponentPlayground>
 );
 
 export const ButtonIconSmallGhostPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundItemProps<ButtonProps>) => (
-  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
       <Button {...p} theme={ButtonIconSmallGhostTheme}>
         <TriggerIcon width={16} height={16} style={{ display: 'flex' }} />
       </Button>
     )}
-  </ComponentPlaygroundItem>
+  </ComponentPlayground>
 );
 
 export const ButtonIconSmallDangerGhostPlaygroundItem = ({
   appearance,
   props,
-}: ComponentPlaygroundItemProps<ButtonProps>) => (
-  <ComponentPlaygroundItem<ButtonProps> appearance={appearance} props={props}>
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
     {(p) => (
       <Button {...p} theme={ButtonIconSmallDangerGhostTheme}>
         <TrashcanIcon width={16} height={16} style={{ display: 'flex' }} />
       </Button>
     )}
-  </ComponentPlaygroundItem>
+  </ComponentPlayground>
 );
