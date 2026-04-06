@@ -55,6 +55,13 @@ const meta = {
   argTypes: {
     theme: { table: { disable: true } },
   },
+} satisfies Meta<typeof Badge>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
   render: (props) => (
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
       {Object.keys(themeMap).map((key) => (
@@ -62,13 +69,7 @@ const meta = {
       ))}
     </div>
   ),
-} satisfies Meta<typeof Badge>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {};
+};
 
 export const BadgeNeutral: Story = {
   tags: ['!dev'],
