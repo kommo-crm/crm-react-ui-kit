@@ -319,7 +319,7 @@ export const ButtonIconContext: Story = {
   tags: ['!dev'],
   args: { theme: ButtonIconContextTheme },
   render: (props) => {
-    const { theme, Icon } = buttonIconVariants[5];
+    const { theme, Icon } = buttonIconVariants[3];
 
     return (
       <Button {...props} theme={theme}>
@@ -332,7 +332,7 @@ export const ButtonIconContext: Story = {
 export const ButtonIconSmallGhost: Story = {
   tags: ['!dev'],
   render: (props) => {
-    const { theme, Icon } = buttonIconVariants[3];
+    const { theme, Icon } = buttonIconVariants[4];
 
     return (
       <Button {...props} theme={theme}>
@@ -345,7 +345,7 @@ export const ButtonIconSmallGhost: Story = {
 export const ButtonIconSmallDangerGhost: Story = {
   tags: ['!dev'],
   render: (props) => {
-    const { theme, Icon } = buttonIconVariants[4];
+    const { theme, Icon } = buttonIconVariants[5];
 
     return (
       <Button {...props} theme={theme}>
