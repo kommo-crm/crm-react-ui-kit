@@ -38,9 +38,7 @@ type ButtonThemeOptionalKey =
   | '--crm-ui-kit-button-focus-visible-outline-width'
   | '--crm-ui-kit-button-focus-visible-outline-style'
   | '--crm-ui-kit-button-focus-visible-outline-offset'
-  | '--crm-ui-kit-button-focus-visible-border-radius'
-  | '--crm-ui-kit-button-before-color'
-  | '--crm-ui-kit-button-after-color';
+  | '--crm-ui-kit-button-focus-visible-border-radius';
 
 export type ButtonThemeType = {
   [K in ButtonThemeKey]: string;
@@ -254,11 +252,6 @@ export const ButtonContextTheme: ButtonThemeType = {
   '--crm-ui-kit-button-spinner-circle-size': '12px',
   '--crm-ui-kit-button-spinner-disabled-border-color':
     'var(--crm-ui-kit-button-spinner-border-color)',
-
-  '--crm-ui-kit-button-before-color':
-    'var(--crm-ui-kit-palette-text-secondary-light)',
-  '--crm-ui-kit-button-after-color':
-    'var(--crm-ui-kit-palette-text-secondary-light)',
 };
 
 export const ButtonIconContextTheme: ButtonThemeType = {
