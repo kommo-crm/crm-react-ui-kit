@@ -7,7 +7,7 @@ import { Props } from './NumericValues.props';
 export const NumericValues: FC<Props> = ({ numericValues }) => {
   return (
     <>
-      <h2>{i18n.t('Numeric values')}</h2>
+      <h3>{i18n.t('Numeric values')}</h3>
 
       <table style={{ width: '100%' }}>
         <thead>

@@ -13,6 +13,9 @@ import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
 import TriggerIcon from '@storybook-utils/icons/trigger.svg';
 import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 
+import { ContextMenu } from 'src/components/ContextMenu';
+import { Text, TextPrimaryTheme, type TextTheme } from 'src/components/Text';
+
 import {
   Button,
   ButtonNeutralTheme,
@@ -26,6 +29,11 @@ import {
   ButtonIconSmallGhostTheme,
   ButtonIconSmallDangerGhostTheme,
 } from '..';
+
+const TextContextMenuTheme: TextTheme = {
+  ...TextPrimaryTheme,
+  '--crm-ui-kit-text-color': 'inherit',
+};
 
 const ThemesMap = {
   ButtonNeutralTheme,
@@ -45,8 +53,19 @@ function App() {
 }
 `;
 
+export const PUBLIC_API = `
+## ${i18n.t('Data Attributes (Public API)')}
+
+### \`data-highlighted\`
+
+${i18n.t('button-data-highlighted-description')}
+
+${i18n.t('button-data-highlighted-usage')}
+`;
+
 const meta = {
   title: 'Components/Button',
+  excludeStories: ['PUBLIC_API'],
   parameters: {
     ...CanvasCentered,
     docs: {
@@ -308,4 +327,29 @@ export const ButtonIconSmallDangerGhost: Story = {
       </Button>
     );
   },
+};
+
+export const DataHighlighted: Story = {
+  tags: ['!dev'],
+  render: () => (
+    <div style={{ padding: 20 }}>
+      <ContextMenu.Root mode="click" isOpen>
+        <ContextMenu.Trigger asChild>
+          <Button theme={ButtonIconSmallGhostTheme}>
+            <TriggerIcon width={16} height={16} style={{ display: 'flex' }} />
+          </Button>
+        </ContextMenu.Trigger>
+
+        <ContextMenu.Portal>
+          <ContextMenu.Content direction="down-right" sideOffset={5}>
+            <ContextMenu.Item>
+              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                {i18n.t('Edit')}
+              </Text>
+            </ContextMenu.Item>
+          </ContextMenu.Content>
+        </ContextMenu.Portal>
+      </ContextMenu.Root>
+    </div>
+  ),
 };
