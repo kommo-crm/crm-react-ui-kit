@@ -3,8 +3,6 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
-import { Text, TextInheritTheme } from 'src/components/Text';
-
 import { CounterBadgeProps } from './CounterBadge.props';
 import { CounterBadgeTheme } from './CounterBadge.themes';
 
@@ -23,9 +21,7 @@ export const CounterBadge = forwardRef<S, CounterBadgeProps>((props, ref) => {
       className={cx(s.badge, themeClassName, className)}
       {...rest}
     >
-      <Text size="ms" theme={TextInheritTheme} className={s.text}>
-        {children}
-      </Text>
+      {children}
     </span>
   );
 });
