@@ -76,9 +76,9 @@ const ButtonBaseThemeValues = {
     'var(--crm-ui-kit-color-goldenrod)',
 
   '--crm-ui-kit-button-spinner-border-color':
-    'var(--crm-ui-kit-palette-active-element-900)',
+    'var(--crm-ui-kit-palette-spinner-border-color)',
   '--crm-ui-kit-button-spinner-disabled-border-color':
-    'var(--crm-ui-kit-palette-active-element-900)',
+    'var(--crm-ui-kit-palette-spinner-border-color)',
   '--crm-ui-kit-button-spinner-border-width': '2px',
   '--crm-ui-kit-button-spinner-circle-size': '16px',
   '--crm-ui-kit-button-spinner-border-style': 'solid',
@@ -216,9 +216,9 @@ export const ButtonIconGhostTheme: ButtonThemeType = {
     'var(--crm-ui-kit-palette-background-secondary-800)',
 
   '--crm-ui-kit-button-spinner-border-color':
-    'var(--crm-ui-kit-palette-active-element-900)',
+    'var(--crm-ui-kit-palette-spinner-border-color)',
   '--crm-ui-kit-button-spinner-disabled-border-color':
-    'var(--crm-ui-kit-palette-active-element-900)',
+    'var(--crm-ui-kit-palette-spinner-border-color)',
 };
 export const ButtonIconDangerGhostTheme: ButtonThemeType = {
   ...ButtonDangerTertiaryTheme,

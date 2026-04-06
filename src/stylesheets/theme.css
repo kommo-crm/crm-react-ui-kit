@@ -161,7 +161,9 @@
       rgba(16, 24, 40, 0.03),
     0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 
-  --crm-ui-kit-palette-counter-badge-background: var(--crm-ui-kit-color-flush-mahogany);
+    --crm-ui-kit-palette-spinner-border-color: var(--crm-ui-kit-color-blueberry);
+
+    --crm-ui-kit-palette-counter-badge-background: var(--crm-ui-kit-color-flush-mahogany);
 }
 
 :root[data-crm-ui-kit-theme='alternative'] {
