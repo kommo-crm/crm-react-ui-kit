@@ -24,42 +24,35 @@ export const BadgeNeutralTheme: BadgeThemeType = {
     'var(--crm-ui-kit-palette-badge-background-color-neutral)',
 };
 
-export const BadgePurpleTheme: BadgeThemeType = {
+export const BadgePromoTheme: BadgeThemeType = {
   ...BadgeBaseThemeValues,
   '--crm-ui-kit-badge-color': 'var(--crm-ui-kit-palette-badge-color-purple)',
   '--crm-ui-kit-badge-background-color':
     'var(--crm-ui-kit-palette-badge-background-color-purple)',
 };
 
-export const BadgeBlueTheme: BadgeThemeType = {
+export const BadgeInfoTheme: BadgeThemeType = {
   ...BadgeBaseThemeValues,
   '--crm-ui-kit-badge-color': 'var(--crm-ui-kit-palette-badge-color-blue)',
   '--crm-ui-kit-badge-background-color':
     'var(--crm-ui-kit-palette-badge-background-color-blue)',
 };
 
-export const BadgePinkTheme: BadgeThemeType = {
-  ...BadgeBaseThemeValues,
-  '--crm-ui-kit-badge-color': 'var(--crm-ui-kit-palette-badge-color-pink)',
-  '--crm-ui-kit-badge-background-color':
-    'var(--crm-ui-kit-palette-badge-background-color-pink)',
-};
-
-export const BadgeGreenTheme: BadgeThemeType = {
+export const BadgeSafetyTheme: BadgeThemeType = {
   ...BadgeBaseThemeValues,
   '--crm-ui-kit-badge-color': 'var(--crm-ui-kit-palette-badge-color-green)',
   '--crm-ui-kit-badge-background-color':
     'var(--crm-ui-kit-palette-badge-background-color-green)',
 };
 
-export const BadgeOrangeTheme: BadgeThemeType = {
+export const BadgeWarningTheme: BadgeThemeType = {
   ...BadgeBaseThemeValues,
   '--crm-ui-kit-badge-color': 'var(--crm-ui-kit-palette-badge-color-orange)',
   '--crm-ui-kit-badge-background-color':
     'var(--crm-ui-kit-palette-badge-background-color-orange)',
 };
 
-export const BadgeRedTheme: BadgeThemeType = {
+export const BadgeDangerTheme: BadgeThemeType = {
   ...BadgeBaseThemeValues,
   '--crm-ui-kit-badge-color': 'var(--crm-ui-kit-palette-badge-color-red)',
   '--crm-ui-kit-badge-background-color':

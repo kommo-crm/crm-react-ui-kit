@@ -201,9 +201,6 @@
   --crm-ui-kit-palette-badge-color-neutral: var(--crm-ui-kit-color-dove-gray);
   --crm-ui-kit-palette-badge-background-color-neutral: var(--crm-ui-kit-color-cultured);
 
-  --crm-ui-kit-palette-badge-color-pink: var(--crm-ui-kit-color-hibiscus);
-  --crm-ui-kit-palette-badge-background-color-pink: var(--crm-ui-kit-color-wisp-pink);
-
   --crm-ui-kit-palette-badge-color-blue: var(--crm-ui-kit-color-mariner);
   --crm-ui-kit-palette-badge-background-color-blue: var(--crm-ui-kit-color-solitude);
 }
@@ -292,9 +289,6 @@
 
   --crm-ui-kit-palette-badge-color-neutral: var(--crm-ui-kit-color-link-water);
   --crm-ui-kit-palette-badge-background-color-neutral: var(--crm-ui-kit-color-cello);
-
-  --crm-ui-kit-palette-badge-color-pink: var(--crm-ui-kit-color-classic-rose);
-  --crm-ui-kit-palette-badge-background-color-pink: var(--crm-ui-kit-color-mulled-wine);
 
   --crm-ui-kit-palette-badge-color-blue: var(--crm-ui-kit-color-link-water);
   --crm-ui-kit-palette-badge-background-color-blue: var(--crm-ui-kit-color-astronaut);

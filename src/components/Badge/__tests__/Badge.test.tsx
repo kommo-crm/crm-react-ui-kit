@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { type BadgeProps, Badge, BadgeGreenTheme } from '..';
+import { type BadgeProps, Badge, BadgeSafetyTheme } from '..';
 
 import '@testing-library/jest-dom';
 
@@ -11,7 +11,7 @@ const renderBadge = (props: Partial<BadgeProps>) => {
   return render(
     <Badge
       data-testid={dataTestId}
-      theme={BadgeGreenTheme}
+      theme={BadgeSafetyTheme}
       title="Badge"
       {...props}
     />

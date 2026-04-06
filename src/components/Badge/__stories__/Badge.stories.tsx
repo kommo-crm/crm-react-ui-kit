@@ -7,32 +7,30 @@ import {
   Badge,
   type BadgeThemeType,
   BadgeNeutralTheme,
-  BadgePurpleTheme,
-  BadgeBlueTheme,
-  BadgePinkTheme,
-  BadgeGreenTheme,
-  BadgeOrangeTheme,
-  BadgeRedTheme,
+  BadgePromoTheme,
+  BadgeInfoTheme,
+  BadgeSafetyTheme,
+  BadgeWarningTheme,
+  BadgeDangerTheme,
 } from '..';
 
 const themeMap: Record<string, BadgeThemeType> = {
   BadgeNeutralTheme,
-  BadgePurpleTheme,
-  BadgeBlueTheme,
-  BadgePinkTheme,
-  BadgeGreenTheme,
-  BadgeOrangeTheme,
-  BadgeRedTheme,
+  BadgePromoTheme,
+  BadgeInfoTheme,
+  BadgeSafetyTheme,
+  BadgeWarningTheme,
+  BadgeDangerTheme,
 };
 
 const USAGE = `
 import {
   Badge,
-  BadgeGreenTheme,
+  BadgeSafetyTheme,
 } from '@kommo-crm/crm-react-ui-kit/Badge';
 
 function App() {
-  return <Badge theme={BadgeGreenTheme} title="Badge" />;
+  return <Badge theme={BadgeSafetyTheme} title="Badge" />;
 }
 `;
 
@@ -76,32 +74,27 @@ export const BadgeNeutral: Story = {
   args: { theme: BadgeNeutralTheme },
 };
 
-export const BadgePurple: Story = {
+export const BadgePromo: Story = {
   tags: ['!dev'],
-  args: { theme: BadgePurpleTheme },
+  args: { theme: BadgePromoTheme },
 };
 
-export const BadgeBlue: Story = {
+export const BadgeInfo: Story = {
   tags: ['!dev'],
-  args: { theme: BadgeBlueTheme },
+  args: { theme: BadgeInfoTheme },
 };
 
-export const BadgePink: Story = {
+export const BadgeSafety: Story = {
   tags: ['!dev'],
-  args: { theme: BadgePinkTheme },
+  args: { theme: BadgeSafetyTheme },
 };
 
-export const BadgeGreen: Story = {
+export const BadgeWarning: Story = {
   tags: ['!dev'],
-  args: { theme: BadgeGreenTheme },
+  args: { theme: BadgeWarningTheme },
 };
 
-export const BadgeOrange: Story = {
+export const BadgeDanger: Story = {
   tags: ['!dev'],
-  args: { theme: BadgeOrangeTheme },
-};
-
-export const BadgeRed: Story = {
-  tags: ['!dev'],
-  args: { theme: BadgeRedTheme },
+  args: { theme: BadgeDangerTheme },
 };

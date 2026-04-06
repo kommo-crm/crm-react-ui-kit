@@ -8,12 +8,11 @@ import {
 import {
   Badge,
   BadgeNeutralTheme,
-  BadgePurpleTheme,
-  BadgeBlueTheme,
-  BadgePinkTheme,
-  BadgeGreenTheme,
-  BadgeOrangeTheme,
-  BadgeRedTheme,
+  BadgePromoTheme,
+  BadgeInfoTheme,
+  BadgeSafetyTheme,
+  BadgeWarningTheme,
+  BadgeDangerTheme,
   type BadgeProps,
 } from '..';
 
@@ -26,56 +25,47 @@ export const BadgeNeutralPlaygroundItem = ({
   </ComponentPlayground>
 );
 
-export const BadgePurplePlaygroundItem = ({
+export const BadgePromoPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgePurpleTheme} title="Badge" />}
+    {(p) => <Badge {...p} theme={BadgePromoTheme} title="Badge" />}
   </ComponentPlayground>
 );
 
-export const BadgeBluePlaygroundItem = ({
+export const BadgeInfoPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeBlueTheme} title="Badge" />}
+    {(p) => <Badge {...p} theme={BadgeInfoTheme} title="Badge" />}
   </ComponentPlayground>
 );
 
-export const BadgePinkPlaygroundItem = ({
+export const BadgeSafetyPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgePinkTheme} title="Badge" />}
+    {(p) => <Badge {...p} theme={BadgeSafetyTheme} title="Badge" />}
   </ComponentPlayground>
 );
 
-export const BadgeGreenPlaygroundItem = ({
+export const BadgeWarningPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeGreenTheme} title="Badge" />}
+    {(p) => <Badge {...p} theme={BadgeWarningTheme} title="Badge" />}
   </ComponentPlayground>
 );
 
-export const BadgeOrangePlaygroundItem = ({
+export const BadgeDangerPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeOrangeTheme} title="Badge" />}
-  </ComponentPlayground>
-);
-
-export const BadgeRedPlaygroundItem = ({
-  appearance,
-  props,
-}: ComponentPlaygroundProps<BadgeProps>) => (
-  <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeRedTheme} title="Badge" />}
+    {(p) => <Badge {...p} theme={BadgeDangerTheme} title="Badge" />}
   </ComponentPlayground>
 );
