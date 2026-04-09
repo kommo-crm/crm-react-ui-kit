@@ -2,6 +2,8 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { color } from '@kommo-crm/tokens/primitives';
 
+import { i18n } from '@i18n';
+
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
 function contrastColor(hex: string): string {
@@ -19,6 +21,14 @@ function contrastColor(hex: string): string {
 
 const lightPalette = color.light;
 const darkPalette = color.dark;
+
+async function copyTokenName(tokenName: string): Promise<void> {
+  if (!navigator.clipboard?.writeText) {
+    return;
+  }
+
+  await navigator.clipboard.writeText(tokenName);
+}
 
 function ColorColumn({
   family,
@@ -44,11 +54,15 @@ function ColorColumn({
       </div>
       {SCALES.map((scale) => {
         const hex = palette[family as keyof typeof palette][scale];
+        const tokenName = `color-${family}-${scale}`;
 
         return (
           <div
             key={scale}
-            title={`${scale} · ${hex}`}
+            title={`${tokenName} · ${hex}`}
+            onClick={() => {
+              void copyTokenName(tokenName);
+            }}
             style={{
               position: 'relative',
               height: 36,
@@ -56,6 +70,7 @@ function ColorColumn({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              cursor: 'pointer',
             }}
           >
             <span
@@ -119,6 +134,15 @@ function ColorScales() {
           />
         ))}
       </div>
+      <div
+        style={{
+          marginTop: 16,
+          fontSize: 13,
+          color: 'var(--crm-ui-kit-color-dusk-gray, #69768d)',
+        }}
+      >
+        {i18n.t('Click any color swatch to copy its token name.')}
+      </div>
     </div>
   );
 }
@@ -153,6 +177,15 @@ function ColorScalesDark() {
             labelColor="#cdd2da"
           />
         ))}
+      </div>
+      <div
+        style={{
+          marginTop: 16,
+          fontSize: 13,
+          color: 'rgba(205, 210, 218, 0.8)',
+        }}
+      >
+        {i18n.t('Click any color swatch to copy its token name.')}
       </div>
     </div>
   );
