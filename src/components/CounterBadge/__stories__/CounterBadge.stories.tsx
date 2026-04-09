@@ -2,7 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
-import { CounterBadge, CounterBadgePrimaryTheme } from '..';
+import {
+  CounterBadge,
+  CounterBadgePrimaryTheme,
+  CounterBadgeSmallPrimaryTheme,
+} from '..';
 
 const USAGE = `
 import {
@@ -38,3 +42,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const CounterBadgePrimary: Story = {
+  tags: ['!dev'],
+  args: { theme: CounterBadgePrimaryTheme },
+};
+
+export const CounterBadgeSmallPrimary: Story = {
+  tags: ['!dev'],
+  args: { theme: CounterBadgeSmallPrimaryTheme },
+};

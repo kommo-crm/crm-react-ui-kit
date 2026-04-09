@@ -25,3 +25,9 @@ export const CounterBadgePrimaryTheme: CounterBadgeTheme = {
   '--crm-ui-kit-counter-badge-background-color':
     'var(--crm-ui-kit-palette-counter-badge-background)',
 };
+
+export const CounterBadgeSmallPrimaryTheme: CounterBadgeTheme = {
+  ...CounterBadgePrimaryTheme,
+  '--crm-ui-kit-counter-badge-font-size': '10px',
+  '--crm-ui-kit-counter-badge-line-height': '12px',
+};
