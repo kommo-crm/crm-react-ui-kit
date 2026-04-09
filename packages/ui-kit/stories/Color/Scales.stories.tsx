@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { color } from '@kommo-crm/tokens/primitives';
 
@@ -22,23 +22,68 @@ function contrastColor(hex: string): string {
 const lightPalette = color.light;
 const darkPalette = color.dark;
 
-async function copyTokenName(tokenName: string): Promise<void> {
-  if (!navigator.clipboard?.writeText) {
-    return;
+function copyTokenNameLegacy(tokenName: string): boolean {
+  const textArea = document.createElement('textarea');
+
+  textArea.value = tokenName;
+  textArea.setAttribute('readonly', '');
+  textArea.style.position = 'fixed';
+  textArea.style.top = '0';
+  textArea.style.left = '0';
+  textArea.style.opacity = '0';
+
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    return document.execCommand('copy');
+  } finally {
+    document.body.removeChild(textArea);
+  }
+}
+
+async function copyTokenName(tokenName: string): Promise<boolean> {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(tokenName);
+
+      return true;
+    } catch {
+      return copyTokenNameLegacy(tokenName);
+    }
   }
 
-  await navigator.clipboard.writeText(tokenName);
+  return copyTokenNameLegacy(tokenName);
 }
 
 function ColorColumn({
   family,
   palette,
   labelColor,
+  helperTextColor,
 }: {
   family: string;
   palette: Record<string, Record<number, string>>;
   labelColor: string;
+  helperTextColor: string;
 }) {
+  const [status, setStatus] = useState<'success' | 'error' | null>(null);
+
+  useEffect(() => {
+    if (!status) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setStatus(null);
+    }, 1500);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [status]);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
@@ -60,8 +105,10 @@ function ColorColumn({
           <div
             key={scale}
             title={`${tokenName} · ${hex}`}
-            onClick={() => {
-              void copyTokenName(tokenName);
+            onClick={async () => {
+              const isCopied = await copyTokenName(tokenName);
+
+              setStatus(isCopied ? 'success' : 'error');
             }}
             style={{
               position: 'relative',
@@ -99,6 +146,18 @@ function ColorColumn({
           </div>
         );
       })}
+      <div
+        aria-live="polite"
+        style={{
+          minHeight: 18,
+          marginTop: 8,
+          fontSize: 12,
+          color: helperTextColor,
+        }}
+      >
+        {status === 'success' && i18n.t('Copied token name.')}
+        {status === 'error' && i18n.t('Failed to copy token name.')}
+      </div>
     </div>
   );
 }
@@ -131,6 +190,7 @@ function ColorScales() {
             family={family}
             palette={lightPalette as Record<string, Record<number, string>>}
             labelColor="var(--crm-ui-kit-color-onyx, #363b44)"
+            helperTextColor="var(--crm-ui-kit-color-dusk-gray, #69768d)"
           />
         ))}
       </div>
@@ -175,6 +235,7 @@ function ColorScalesDark() {
             family={family}
             palette={darkPalette as Record<string, Record<number, string>>}
             labelColor="#cdd2da"
+            helperTextColor="rgba(205, 210, 218, 0.8)"
           />
         ))}
       </div>

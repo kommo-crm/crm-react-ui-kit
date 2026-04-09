@@ -40,6 +40,8 @@ export default {
   'Page markup': 'Marcador de página',
   'Click any color swatch to copy its token name.':
     'Haz clic en cualquier muestra de color para copiar su nombre de token.',
+  'Copied token name.': 'Nombre del token copiado.',
+  'Failed to copy token name.': 'No se pudo copiar el nombre del token.',
 
   /* Components */
 
