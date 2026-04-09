@@ -1,0 +1,31 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as CounterBadgeStories from './CounterBadge.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { CounterBadgePrimaryTheme, CounterBadgeSmallPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/CounterBadge/Themes" of={CounterBadgeStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## CounterBadgePrimaryTheme
+
+```jsx
+import { CounterBadgePrimaryTheme } from '@kommo-crm/crm-react-ui-kit/CounterBadge';
+```
+
+<ThemeVisualization
+  theme={CounterBadgePrimaryTheme}
+  of={CounterBadgeStories.CounterBadgePrimary}
+/>
+
+## CounterBadgeSmallPrimaryTheme
+
+```jsx
+import { CounterBadgeSmallPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/CounterBadge';
+```
+
+<ThemeVisualization
+  theme={CounterBadgeSmallPrimaryTheme}
+  of={CounterBadgeStories.CounterBadgeSmallPrimary}
+/>
