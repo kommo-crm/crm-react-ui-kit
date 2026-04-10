@@ -51,12 +51,13 @@ export function collectThemes(): ThemeCollection[] {
 
     const semanticFlat = flattenVars(semanticTokens, prefix);
     const componentFlat = flattenVars(componentTokens, prefix);
+    const prefixDepth = prefix ? prefix.split('-').length : 0;
 
     return {
       themeId: id,
       selector,
-      semantic: { flat: semanticFlat, groups: toGroups(semanticFlat) },
-      component: { flat: componentFlat, groups: toGroups(componentFlat) },
+      semantic: { flat: semanticFlat, groups: toGroups(semanticFlat, prefixDepth) },
+      component: { flat: componentFlat, groups: toGroups(componentFlat, prefixDepth) },
     };
   });
 }
