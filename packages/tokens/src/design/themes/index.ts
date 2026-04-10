@@ -1,6 +1,7 @@
 import { ThemeConfig } from '@/types/common';
-import light from './light';
+import lightUiKit from './lightUiKit';
+import alternativeUiKit from './alternativeUiKit';
 
-const themes: ThemeConfig[] = [light];
+const themes: ThemeConfig[] = [lightUiKit, alternativeUiKit];
 
 export default themes;

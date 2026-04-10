@@ -2,8 +2,15 @@ import { TokenSemanticValue } from './common';
 import { ObjectLeaves } from '@/types/utils/object-leaves';
 
 export type SemanticTokens = {
-  text: {
-    primary: TokenSemanticValue;
+  palette: {
+    border: {
+      error: TokenSemanticValue;
+    };
+    callout: {
+      error: {
+        'background-color': TokenSemanticValue;
+      };
+    };
   };
 };
 

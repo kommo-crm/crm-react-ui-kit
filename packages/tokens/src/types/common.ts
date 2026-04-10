@@ -8,6 +8,7 @@ export type ThemeConfig = {
   semanticTokens: SemanticTokens;
   componentTokens: ComponentTokens;
   conditions?: string[];
+  prefix?: string;
 };
 
 export type TokenPrimitiveValue = ColorValue;
