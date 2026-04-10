@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { CounterBadgeTheme } from './CounterBadge.themes';
 
 export interface CounterBadgeProps
@@ -9,5 +11,5 @@ export interface CounterBadgeProps
   /**
    * Badge content.
    */
-  children: number | string;
+  children: ReactNode;
 }
