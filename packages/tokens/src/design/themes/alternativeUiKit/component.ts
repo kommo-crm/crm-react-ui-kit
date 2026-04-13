@@ -1,6 +1,6 @@
-import { ComponentUiKitTokens } from '@/types/component';
+import { defineUiKitComponentTokens } from '@/define';
 
-export const componentTokens: ComponentUiKitTokens = {
+export default defineUiKitComponentTokens({
   'input': {
     error: {
       description: {
@@ -33,4 +33,4 @@ export const componentTokens: ComponentUiKitTokens = {
       'border-color': 'color.dark.red.400',
     },
   },
-};
+});

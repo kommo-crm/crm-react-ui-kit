@@ -1,14 +1,11 @@
-import { ThemeConfig } from '@/types/common';
-import { semanticTokens } from './semantic';
-import { componentTokens } from './component';
+import { defineUiKitTheme } from '@/define';
+import semanticTokens from './semantic';
+import componentTokens from './component';
 
-const alternativeUiKitTheme: ThemeConfig = {
+export default defineUiKitTheme({
   id: 'alternative-ui-kit',
+  prefix: 'crm-ui-kit',
+  conditions: [':root[data-crm-ui-kit-theme="alternative"]'],
   semanticTokens,
   componentTokens,
-  conditions: [':root[data-crm-ui-kit-theme="alternative"]'],
-  prefix: 'crm-ui-kit',
-  isUiKitTheme: true,
-};
-
-export default alternativeUiKitTheme;
+});

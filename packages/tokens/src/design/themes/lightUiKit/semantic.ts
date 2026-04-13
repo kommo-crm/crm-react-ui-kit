@@ -1,6 +1,6 @@
-import { SemanticUiKitTokens } from '@/types/semantic';
+import { defineUiKitSemanticTokens } from '@/define';
 
-export const semanticTokens: SemanticUiKitTokens = {
+export default defineUiKitSemanticTokens({
   palette: {
     callout: {
       error: {
@@ -11,4 +11,4 @@ export const semanticTokens: SemanticUiKitTokens = {
       error: 'color.light.red.500',
     },
   },
-};
+});

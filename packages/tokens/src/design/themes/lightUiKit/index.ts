@@ -1,13 +1,10 @@
-import { ThemeConfig } from '@/types/common';
-import { semanticTokens } from './semantic';
-import { componentTokens } from './component';
+import { defineUiKitTheme } from '@/define';
+import semanticTokens from './semantic';
+import componentTokens from './component';
 
-const lightUiKitTheme: ThemeConfig = {
+export default defineUiKitTheme({
   id: 'light-ui-kit',
+  prefix: 'crm-ui-kit',
   semanticTokens,
   componentTokens,
-  prefix: 'crm-ui-kit',
-  isUiKitTheme: true,
-};
-
-export default lightUiKitTheme;
+});
