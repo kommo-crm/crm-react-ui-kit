@@ -1,6 +1,7 @@
 import { TokenComponentValue } from './common';
+import { DeepPartial } from './utils/deep-partial';
 
-export type ComponentUiKitTokens = Partial<{
+export type ComponentUiKitTokens = DeepPartial<{
   'input': {
     error: {
       description: {

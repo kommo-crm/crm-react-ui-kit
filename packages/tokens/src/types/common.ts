@@ -10,21 +10,21 @@ import { PrimitivePath } from '@/design/primitives';
 
 export type ThemeConfig = CoreThemeConfig | UiKitThemeConfig;
 
-type BaseThemeConfig = {
+export type UiKitThemeConfig = {
   id: string;
-  semanticTokens: SemanticTokens;
-  componentTokens: ComponentTokens;
   conditions?: string[];
   prefix?: string;
-};
-
-export type UiKitThemeConfig = BaseThemeConfig & {
   isUiKitTheme: true;
   semanticTokens: SemanticUiKitTokens;
   componentTokens: ComponentUiKitTokens;
 };
 
-export type CoreThemeConfig = BaseThemeConfig & {
+export type CoreThemeConfig = {
+  id: string;
+  semanticTokens: SemanticTokens;
+  componentTokens: ComponentTokens;
+  conditions?: string[];
+  prefix?: string;
   isUiKitTheme?: false;
 };
 
