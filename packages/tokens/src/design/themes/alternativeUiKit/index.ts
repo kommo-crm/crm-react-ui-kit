@@ -8,6 +8,7 @@ const alternativeUiKitTheme: ThemeConfig = {
   componentTokens,
   conditions: [':root[data-crm-ui-kit-theme="alternative"]'],
   prefix: 'crm-ui-kit',
+  isUiKitTheme: true,
 };
 
 export default alternativeUiKitTheme;

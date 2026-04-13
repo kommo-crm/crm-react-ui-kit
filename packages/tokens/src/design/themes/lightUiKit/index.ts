@@ -7,6 +7,7 @@ const lightUiKitTheme: ThemeConfig = {
   semanticTokens,
   componentTokens,
   prefix: 'crm-ui-kit',
+  isUiKitTheme: true,
 };
 
 export default lightUiKitTheme;

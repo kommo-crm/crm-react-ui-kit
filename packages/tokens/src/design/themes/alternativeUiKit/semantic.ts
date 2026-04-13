@@ -1,6 +1,6 @@
-import { SemanticTokens } from '@/types/semantic';
+import { SemanticUiKitTokens } from '@/types/semantic';
 
-export const semanticTokens: SemanticTokens = {
+export const semanticTokens: SemanticUiKitTokens = {
   palette: {
     callout: {
       error: {

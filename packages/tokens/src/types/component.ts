@@ -1,6 +1,6 @@
 import { TokenComponentValue } from './common';
 
-export type ComponentTokens = {
+export type ComponentUiKitTokens = Partial<{
   'input': {
     error: {
       description: {
@@ -33,4 +33,6 @@ export type ComponentTokens = {
       'border-color': TokenComponentValue;
     };
   };
-};
+}>;
+
+export type ComponentTokens = Record<'', string>;

@@ -1,6 +1,6 @@
-import { ComponentTokens } from '@/types/component';
+import { ComponentUiKitTokens } from '@/types/component';
 
-export const componentTokens: ComponentTokens = {
+export const componentTokens: ComponentUiKitTokens = {
   'input': {
     error: {
       description: {
