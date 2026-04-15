@@ -4,7 +4,6 @@ import {
   SemanticTokens,
   SemanticTokenPath,
 } from '@/types/semantic';
-import { ComponentTokens, ComponentUiKitTokens } from '@/types/component';
 import { ColorValue } from './color';
 import { PrimitivePath } from '@/design/primitives';
 
@@ -16,13 +15,11 @@ export type UiKitThemeConfig = {
   prefix?: string;
   isUiKitTheme: true;
   semanticTokens: SemanticUiKitTokens;
-  componentTokens: ComponentUiKitTokens;
 };
 
 export type CoreThemeConfig = {
   id: string;
   semanticTokens: SemanticTokens;
-  componentTokens: ComponentTokens;
   conditions?: string[];
   prefix?: string;
   isUiKitTheme?: false;
