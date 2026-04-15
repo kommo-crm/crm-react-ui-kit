@@ -50,9 +50,9 @@ export default {
   'Invalid Ref': 'Referencia no válida',
   'Data Attributes (Public API)': 'Atributos de datos (API pública)',
   'button-data-highlighted-description':
-    'El Button trata `data-highlighted` como un contrato público para el control externo de resaltado. Cuando este atributo está presente en el elemento `<button>`, el botón se muestra en su **estado hover** (usando las variables de tema `--crm-ui-kit-button-hover-*`), independientemente de si el cursor está realmente sobre él.',
+    'El botón utiliza el atributo `data-highlighted` como una API pública para controlar su estado resaltado de forma externa. Cuando se agrega este atributo al elemento `<button>`, el botón se mostrará en su **estado hover** (aplicando las variables de tema `--crm-ui-kit-button-hover-*`), incluso si el cursor no se encuentra sobre él.',
   'button-data-highlighted-usage':
-    'Esto es útil cuando el botón está integrado en un componente compuesto (por ejemplo, un disparador de menú desplegable) que necesita mantener el botón visualmente resaltado mientras su panel asociado está abierto.',
+    'Esto es útil cuando el botón forma parte de un componente compuesto (por ejemplo, un disparador de menú desplegable) y necesita permanecer visualmente resaltado mientras su panel asociado se encuentra abierto.',
 
   /* Checkbox */
   'Mark': 'Marcar',
@@ -98,49 +98,49 @@ export default {
 
   /* ContextMenu */
   'contextmenu-data-attrs-intro':
-    'ContextMenu expone varios atributos `data-*` en los elementos DOM renderizados. Estos atributos sirven como un contrato público: el código externo puede confiar en ellos para estilos, pruebas e integración con otros componentes.',
+    'El ContextMenu expone varios atributos `data-*` en los elementos DOM que renderiza. Estos atributos funcionan como una API pública, lo que permite que el código externo los utilice para estilos, pruebas e integración con otros componentes.',
   'contextmenu-trigger-highlighted-presence':
-    'Cuando el menú está **abierto** o el disparador está **señalado**',
+    'Cuando el menú está **abierto** o el disparador está en **hover**',
   'contextmenu-trigger-highlighted-desc':
-    'Indica que el disparador está en un estado activo. Útil para mantener el disparador visualmente resaltado mientras el menú está abierto. Cuando se usa un `Button` como hijo con `asChild`, los propios estilos `:hover / [data-highlighted]` del botón se aplican automáticamente.',
+    'Indica que el disparador está en estado activo, lo cual es útil para mantenerlo resaltado visualmente mientras el menú está abierto. Cuando se usa un `Button` como elemento secundario con la propiedad `asChild`, los estilos propios del botón `:hover o [data-highlighted]` se aplican automáticamente.',
   'contextmenu-presence-always': '**Siempre**',
   'contextmenu-item-data-item-desc':
-    'Atributo marcador presente en cada elemento. Se usa internamente para la navegación por teclado y la lógica de auto-posicionamiento. También se puede usar en pruebas y selectores para apuntar a elementos del menú.',
+    'Atributo marcador presente en cada ítem del menú. Se utiliza internamente para la navegación por teclado y la lógica de posicionamiento automático. También puede usarse en pruebas y selectores para apuntar a ítems específicos del menú.',
   'contextmenu-presence-focused-or-submenu':
-    'Cuando el elemento está **enfocado/señalado** o su **submenú está abierto**',
+    'Cuando el ítem está **enfocado/en hover** o su **submenú está abierto**',
   'contextmenu-item-highlighted-desc':
-    'Atributo de resaltado estándar de Radix. Indica que el elemento está actualmente activo — ya sea por hover del ratón, enfoque del teclado, o porque un submenú hijo (`SubRoot`) está abierto.',
+    'Atributo de resaltado estándar de Radix. Indica que el elemento está activo en ese momento; se activa al pasar el cursor por encima, al recibir el foco del teclado o cuando hay un submenú secundario abierto (`SubRoot`).',
   'contextmenu-presence-non-selectable': 'Cuando `isSelectable={false}`',
   'contextmenu-item-non-selectable-desc':
-    'Presente en elementos no seleccionables. Estos elementos se excluyen del ciclo de navegación por teclado y de los cálculos de auto-posicionamiento. No cierran el menú al hacer clic.',
+    'Presente en ítems no seleccionables. Estos ítems quedan excluidos del ciclo de navegación por teclado y de los cálculos de posicionamiento automático, y no cierran el menú al hacer clic en ellos.',
   'contextmenu-checkbox-data-item-desc':
-    'Mismo marcador que `Item`. Presente en cada elemento checkbox para navegación por teclado y posicionamiento.',
+    'Mismo marcador que `Item`. Presente en cada casilla de verificación para el posicionamiento y la navegación por teclado.',
   'contextmenu-checkbox-highlighted-desc':
-    'Mismo comportamiento que `Item`. Activo cuando está resaltado o cuando un `SubRoot` hijo está abierto dentro de este elemento checkbox.',
+    'Mismo comportamiento que `Item`. Activo cuando está resaltado o cuando un elemento secundario `SubRoot` está abierto dentro de este elemento de casilla de verificación.',
   'contextmenu-radio-data-item-desc':
-    'Mismo marcador que `Item`. Presente en cada elemento radio para navegación por teclado y posicionamiento.',
+    'Mismo marcador que `Item`. Presente en todos los elementos de radio para el posicionamiento y la navegación por teclado.',
   'contextmenu-radio-highlighted-desc':
-    'Mismo comportamiento que `Item`. Activo cuando está resaltado o cuando un `SubRoot` hijo está abierto dentro de este elemento radio.',
+    'Mismo comportamiento que `Item`. Activo cuando está resaltado o cuando un elemento secundario `SubRoot` está abierto dentro de este elemento de radio.',
   'contextmenu-subtrigger-data-item-desc':
-    'Atributo marcador, igual que `Item`. Permite a SubTrigger participar en el ciclo de navegación por teclado.',
+    'Atributo marcador, igual que `Item`. Permite que el SubTrigger participe en el ciclo de navegación por teclado.',
   'contextmenu-subtrigger-highlighted-presence':
-    'Cuando el **sub está abierto** o el elemento está **resaltado**',
+    'Cuando el submenú está **abierto** o el ítem está **resaltado**',
   'contextmenu-subtrigger-highlighted-desc':
-    'Mantiene el disparador visualmente activo mientras se muestra su submenú, o cuando está señalado/enfocado.',
+    'Mantiene el disparador visualmente activo mientras su submenú está abierto, o cuando está en hover o enfocado.',
   'contextmenu-subtrigger-submenu-trigger-desc':
-    'Marcador interno que identifica este elemento como un disparador de submenú. Usado por `ItemRightSlot` y `useSubMenu` para detectar submenús anidados.',
+    'Atributo interno que identifica este elemento como un disparador de submenú. Es utilizado por `ItemRightSlot` y `useSubMenu` para detectar submenús anidados.',
   'contextmenu-subroot-highlighted-presence':
-    'Cuando el **SubRoot está abierto** o el elemento está **resaltado**',
+    'Cuando el **SubRoot está abierto** o el ítem está **resaltado**',
   'contextmenu-subroot-highlighted-desc':
-    'Mantiene el disparador visualmente activo mientras se muestra su menú SubRoot.',
+    'Mantiene el disparador visualmente activo mientras el menú SubRoot está visible.',
   'contextmenu-subroot-submenu-trigger-desc':
-    'Mismo marcador que `SubTrigger`. Identifica este elemento como un disparador de submenú para detección interna por `ItemRightSlot` y `useSubMenu`.',
+    'Mismo marcador que `SubTrigger`. Identifica este elemento como un disparador de submenú para su detección interna por `ItemRightSlot` y `useSubMenu`.',
   'contextmenu-content-menu-level-value':
-    'Número (`1` para raíz, `2+` para anidado)',
+    'Número (`1` para raíz, `2+` para anidados)',
   'contextmenu-content-menu-level-desc':
-    'Indica la profundidad de anidamiento del menú. El contenido raíz es nivel `1`, cada `SubContent` o `SubRoot.Content` incrementa en uno. Se usa internamente para la detección de pérdida de foco para determinar qué menús están abiertos.',
+    'Indica la profundidad de anidación del menú. El contenido raíz es nivel `1`, y cada `SubContent` o `SubRoot.Content` incrementa el nivel en uno. Se utiliza internamente para detectar la pérdida de foco y determinar qué menús están abiertos.',
   'contextmenu-focusblocker-blocker-desc':
-    'Marcador interno en la capa superpuesta que bloquea eventos de puntero/foco en el menú padre mientras un submenú `SubRoot` está abierto. Se usa principalmente internamente; raramente necesitado por los consumidores.',
+    'Marcador interno en la superposición que bloquea los eventos de puntero y foco en el menú principal mientras un submenú `SubRoot` está abierto. Es principalmente interno y rara vez se necesita en el código del usuario.',
   'Profile': 'Perfil',
   'User ID': 'ID de usuario',
   'Settings': 'Configuración',
