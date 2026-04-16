@@ -43,7 +43,6 @@ export function generateThemesJson(): Record<string, string> {
     themes.map((theme) => {
       const dto: DTCGNode = {
         semantic: semanticToDTO(theme.semanticTokens),
-        component: semanticToDTO(theme.componentTokens),
       };
       return [theme.id, JSON.stringify(dto, null, 2)];
     })

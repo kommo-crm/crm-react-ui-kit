@@ -36,10 +36,9 @@ export function generateThemesCss(
   collections: ThemeCollection[]
 ): Record<string, string> {
   return Object.fromEntries(
-    collections.map(({ themeId, selector, semantic, component }) => {
+    collections.map(({ themeId, selector, semantic }) => {
       const semanticSection = `  /* ── Semantic ── */\n\n${renderGroups(semantic.groups, toVarRef)}`;
-      const componentSection = `  /* ── Component ── */\n\n${renderGroups(component.groups, toVarRef)}`;
-      const body = `${semanticSection}\n\n${componentSection}`;
+      const body = `${semanticSection}\n`;
       return [themeId, `${selector} {\n${body}\n}`];
     })
   );

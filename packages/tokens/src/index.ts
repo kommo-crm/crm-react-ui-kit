@@ -26,11 +26,12 @@ const themeCollections = collectThemes();
 
 const primitiveCount = Object.keys(primitiveCollection.flat).length;
 const themeTokenCount = themeCollections.reduce(
-  (sum, { semantic, component }) =>
-    sum + Object.keys(semantic.flat).length + Object.keys(component.flat).length,
+  (sum, { semantic }) => sum + Object.keys(semantic.flat).length,
   0
 );
-console.log(`Primitives: ${primitiveCount}, Theme tokens: ${themeTokenCount} (across ${themeCollections.length} themes)\n`);
+console.log(
+  `Primitives: ${primitiveCount}, Theme tokens: ${themeTokenCount} (across ${themeCollections.length} themes)\n`
+);
 
 // ── TypeScript ──────────────────────────────────────────────────────────────
 console.log('TypeScript:');

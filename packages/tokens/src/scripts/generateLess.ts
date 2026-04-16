@@ -37,10 +37,9 @@ export function generateThemesLess(
   collections: ThemeCollection[]
 ): Record<string, string> {
   return Object.fromEntries(
-    collections.map(({ themeId, semantic, component }) => {
+    collections.map(({ themeId, semantic }) => {
       const semanticSection = `// ── Semantic ──\n\n${renderGroups(semantic.groups, toVarRef)}`;
-      const componentSection = `// ── Component ──\n\n${renderGroups(component.groups, toVarRef)}`;
-      return [themeId, `${semanticSection}\n\n${componentSection}`];
+      return [themeId, `${semanticSection}\n`];
     })
   );
 }

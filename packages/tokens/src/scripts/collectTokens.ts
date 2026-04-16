@@ -19,10 +19,6 @@ export type ThemeCollection = {
     flat: Record<string, string>;
     groups: VarGroup[];
   };
-  component: {
-    flat: Record<string, string>;
-    groups: VarGroup[];
-  };
 };
 
 function toGroups(flat: Record<string, string>, keyIndex = 0): VarGroup[] {
@@ -45,19 +41,19 @@ export function collectPrimitives(): PrimitiveCollection {
 
 export function collectThemes(): ThemeCollection[] {
   return themes.map((themeConfig) => {
-    const { id, conditions, semanticTokens, componentTokens, prefix } =
-      themeConfig;
+    const { id, conditions, semanticTokens, prefix } = themeConfig;
     const selector = conditions ? conditions.join(',\n') : ':root';
 
     const semanticFlat = flattenVars(semanticTokens, prefix);
-    const componentFlat = flattenVars(componentTokens, prefix);
     const prefixDepth = prefix ? prefix.split('-').length : 0;
 
     return {
       themeId: id,
       selector,
-      semantic: { flat: semanticFlat, groups: toGroups(semanticFlat, prefixDepth) },
-      component: { flat: componentFlat, groups: toGroups(componentFlat, prefixDepth) },
+      semantic: {
+        flat: semanticFlat,
+        groups: toGroups(semanticFlat, prefixDepth),
+      },
     };
   });
 }
