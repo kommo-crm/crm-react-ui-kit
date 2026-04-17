@@ -94,6 +94,7 @@ export const Button = forwardRef<B, ButtonProps>((props, ref) => {
         [s.loading]: isLoading,
         [s.success]: shouldShowSuccessfulState,
         [s.disabled]: isDisabled,
+        [s.with_icon]: before && !after,
       })}
       disabled={(isDisabled || isLoading) && !isClickableWhileDisabled}
     >

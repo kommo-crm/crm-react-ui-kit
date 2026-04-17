@@ -38,7 +38,8 @@ type ButtonThemeOptionalKey =
   | '--crm-ui-kit-button-focus-visible-outline-width'
   | '--crm-ui-kit-button-focus-visible-outline-style'
   | '--crm-ui-kit-button-focus-visible-outline-offset'
-  | '--crm-ui-kit-button-focus-visible-border-radius';
+  | '--crm-ui-kit-button-focus-visible-border-radius'
+  | '--crm-ui-kit-button-padding-with-icon';
 
 export type ButtonThemeType = {
   [K in ButtonThemeKey]: string;
@@ -55,7 +56,7 @@ const ButtonBaseThemeValues = {
   '--crm-ui-kit-button-font-weight': 'bold',
   '--crm-ui-kit-button-sibling-element-spacing': '7px',
   '--crm-ui-kit-button-disabled-opacity': 'var(--crm-ui-kit-disabled-opacity)',
-  '--crm-ui-kit-button-padding': '0px 10px',
+  '--crm-ui-kit-button-padding': '0px 12px',
 
   '--crm-ui-kit-button-border-width': '1px',
   '--crm-ui-kit-button-border-style': 'solid',
@@ -93,6 +94,8 @@ const ButtonBaseThemeValues = {
     'var(--crm-ui-kit-palette-focus-visible-outline-offset)',
   '--crm-ui-kit-button-focus-visible-border-radius':
     'var(--crm-ui-kit-palette-focus-visible-border-radius)',
+
+  '--crm-ui-kit-button-padding-with-icon': '0px 16px 0px 12px',
 };
 
 export const ButtonNeutralTheme: ButtonThemeType = {

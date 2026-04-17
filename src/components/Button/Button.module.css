@@ -36,6 +36,10 @@
   -moz-user-select: none;
   user-select: none;
 
+  &.with_icon {
+    padding: var(--crm-ui-kit-button-padding-with-icon);
+  }
+
   + .button {
     margin-left: var(--crm-ui-kit-button-sibling-element-spacing);
   }
