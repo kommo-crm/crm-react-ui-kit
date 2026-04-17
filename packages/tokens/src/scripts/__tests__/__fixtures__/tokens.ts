@@ -25,12 +25,6 @@ export const mockThemes = [
         inverted: 'color.dark.azure.50', // cross: light theme uses dark primitive
       },
     },
-    componentTokens: {
-      button: {
-        background: 'color.light.blue.600',
-        color: '#ffffff',
-      },
-    },
   },
   {
     id: 'dark',
@@ -43,12 +37,6 @@ export const mockThemes = [
       foreground: {
         default: 'color.dark.azure.500',
         inverted: 'color.light.neutral.50', // cross: dark theme uses light primitive
-      },
-    },
-    componentTokens: {
-      button: {
-        background: 'color.dark.azure.50',
-        color: '#ffffff',
       },
     },
   },

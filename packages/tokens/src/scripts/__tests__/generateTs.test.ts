@@ -39,33 +39,27 @@ describe('generateThemesTs', () => {
   });
 
   it('resolves primitive paths to actual hex values in semantic tokens', () => {
-    const match = result.light.match(/export const semantic = ([\s\S]+?) as const;/);
+    const match = result.light.match(
+      /export const semantic = ([\s\S]+?) as const;/
+    );
     const semantic = JSON.parse(match![1]);
     expect(semantic.background.default).toBe('#f5f5f5'); // color.light.neutral.100
     expect(semantic.foreground.default).toBe('#76939f'); // color.light.azure.500
   });
 
   it('resolves cross-theme primitive references to correct hex values', () => {
-    const lightMatch = result.light.match(/export const semantic = ([\s\S]+?) as const;/);
+    const lightMatch = result.light.match(
+      /export const semantic = ([\s\S]+?) as const;/
+    );
     const lightSemantic = JSON.parse(lightMatch![1]);
     // light theme uses color.dark.azure.50
     expect(lightSemantic.foreground.inverted).toBe('#0b2934');
 
-    const darkMatch = result.dark.match(/export const semantic = ([\s\S]+?) as const;/);
+    const darkMatch = result.dark.match(
+      /export const semantic = ([\s\S]+?) as const;/
+    );
     const darkSemantic = JSON.parse(darkMatch![1]);
     // dark theme uses color.light.neutral.50
     expect(darkSemantic.foreground.inverted).toBe('#ffffff');
-  });
-
-  it('resolves primitive paths to actual hex values in component tokens', () => {
-    const match = result.light.match(/export const component = ([\s\S]+?) as const;/);
-    const component = JSON.parse(match![1]);
-    expect(component.button.background).toBe('#326fd8'); // color.light.blue.600
-  });
-
-  it('keeps raw color values as-is', () => {
-    const match = result.light.match(/export const component = ([\s\S]+?) as const;/);
-    const component = JSON.parse(match![1]);
-    expect(component.button.color).toBe('#ffffff');
   });
 });

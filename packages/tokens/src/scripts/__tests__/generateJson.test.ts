@@ -7,15 +7,27 @@ jest.mock('@/design/themes', () => ({
   default: require('./__fixtures__/tokens').mockThemes,
 }));
 
-import { generatePrimitivesJson, generateThemesJson } from '@/scripts/generateJson';
+import {
+  generatePrimitivesJson,
+  generateThemesJson,
+} from '@/scripts/generateJson';
 
 describe('generatePrimitivesJson', () => {
   const parsed = JSON.parse(generatePrimitivesJson());
 
   it('wraps each primitive value in a DTCG token', () => {
-    expect(parsed.color.light.azure[50]).toEqual({ $type: 'color', $value: '#f8fcfe' });
-    expect(parsed.color.light.azure[500]).toEqual({ $type: 'color', $value: '#76939f' });
-    expect(parsed.color.dark.azure[50]).toEqual({ $type: 'color', $value: '#0b2934' });
+    expect(parsed.color.light.azure[50]).toEqual({
+      $type: 'color',
+      $value: '#f8fcfe',
+    });
+    expect(parsed.color.light.azure[500]).toEqual({
+      $type: 'color',
+      $value: '#76939f',
+    });
+    expect(parsed.color.dark.azure[50]).toEqual({
+      $type: 'color',
+      $value: '#0b2934',
+    });
   });
 });
 
@@ -28,11 +40,9 @@ describe('generateThemesJson', () => {
     expect(Object.keys(result)).toEqual(['light', 'dark']);
   });
 
-  it('each theme has semantic and component sections', () => {
+  it('each theme has semantic section', () => {
     expect(light).toHaveProperty('semantic');
-    expect(light).toHaveProperty('component');
     expect(dark).toHaveProperty('semantic');
-    expect(dark).toHaveProperty('component');
   });
 
   it('primitive path references are wrapped in {curly braces}', () => {
@@ -40,9 +50,5 @@ describe('generateThemesJson', () => {
       $type: 'color',
       $value: '{color.light.neutral.100}',
     });
-  });
-
-  it('raw color values are kept as-is', () => {
-    expect(light.component.button.color).toEqual({ $type: 'color', $value: '#ffffff' });
   });
 });

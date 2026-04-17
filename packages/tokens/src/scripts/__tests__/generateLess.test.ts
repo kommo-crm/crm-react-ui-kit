@@ -8,7 +8,10 @@ jest.mock('@/design/themes', () => ({
 }));
 
 import { collectPrimitives, collectThemes } from '@/scripts/collectTokens';
-import { generatePrimitivesLess, generateThemesLess } from '@/scripts/generateLess';
+import {
+  generatePrimitivesLess,
+  generateThemesLess,
+} from '@/scripts/generateLess';
 
 const primitives = collectPrimitives();
 const themes = collectThemes();
@@ -36,18 +39,21 @@ describe('generateThemesLess', () => {
   });
 
   it('primitive path references become @color-... references', () => {
-    expect(result.light).toContain('@background-default: @color-light-neutral-100;');
-    expect(result.light).toContain('@button-background: @color-light-blue-600;');
+    expect(result.light).toContain(
+      '@background-default: @color-light-neutral-100;'
+    );
+    expect(result.light).toContain(
+      '@button-background: @color-light-blue-600;'
+    );
   });
 
   it('raw color values are kept as-is', () => {
     expect(result.light).toContain('@button-color: #ffffff;');
   });
 
-  it('contains semantic and component sections', () => {
+  it('contains semantic section', () => {
     for (const less of Object.values(result)) {
       expect(less).toContain('// ── Semantic ──');
-      expect(less).toContain('// ── Component ──');
     }
   });
 });

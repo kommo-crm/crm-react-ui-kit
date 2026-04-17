@@ -1,4 +1,4 @@
-import { CoreThemeConfig, UiKitThemeConfig } from '@/types/common';
+import { ThemeConfig, UiKitThemeConfig } from '@/types/common';
 import { SemanticUiKitTokens, SemanticTokens } from '@/types/semantic';
 
 // ── UiKit ────────────────────────────────────────────────────────────────────
@@ -11,11 +11,9 @@ export const defineUiKitTheme = (
   config: Omit<UiKitThemeConfig, 'isUiKitTheme'>
 ): UiKitThemeConfig => ({ ...config, isUiKitTheme: true });
 
-// ── Core ─────────────────────────────────────────────────────────────────────
+// ── Base ─────────────────────────────────────────────────────────────────────
 
-export const defineCoreSemanticTokens = (
-  tokens: SemanticTokens
-): SemanticTokens => tokens;
+export const defineSemanticTokens = (tokens: SemanticTokens): SemanticTokens =>
+  tokens;
 
-export const defineCoreTheme = (config: CoreThemeConfig): CoreThemeConfig =>
-  config;
+export const defineTheme = (config: ThemeConfig): ThemeConfig => config;

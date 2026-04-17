@@ -7,7 +7,7 @@ import {
 import { ColorValue } from './color';
 import { PrimitivePath } from '@/design/primitives';
 
-export type ThemeConfig = CoreThemeConfig | UiKitThemeConfig;
+export type ThemeConfig = BaseThemeConfig | UiKitThemeConfig;
 
 export type UiKitThemeConfig = {
   id: string;
@@ -17,7 +17,7 @@ export type UiKitThemeConfig = {
   semanticTokens: SemanticUiKitTokens;
 };
 
-export type CoreThemeConfig = {
+export type BaseThemeConfig = {
   id: string;
   semanticTokens: SemanticTokens;
   conditions?: string[];

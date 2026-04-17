@@ -64,17 +64,13 @@ describe('collectThemes', () => {
     const light = themes.find((t) => t.themeId === 'light')!;
     const dark = themes.find((t) => t.themeId === 'dark')!;
     // light theme references a dark primitive
-    expect(light.semantic.flat['foreground-inverted']).toBe('color.dark.azure.50');
+    expect(light.semantic.flat['foreground-inverted']).toBe(
+      'color.dark.azure.50'
+    );
     // dark theme references a light primitive
-    expect(dark.semantic.flat['foreground-inverted']).toBe('color.light.neutral.50');
-  });
-
-  it('flattens component tokens correctly', () => {
-    const light = themes.find((t) => t.themeId === 'light')!;
-    expect(light.component.flat).toMatchObject({
-      'button-background': 'color.light.blue.600',
-      'button-color': '#ffffff',
-    });
+    expect(dark.semantic.flat['foreground-inverted']).toBe(
+      'color.light.neutral.50'
+    );
   });
 
   it('semantic groups are keyed by first token segment', () => {

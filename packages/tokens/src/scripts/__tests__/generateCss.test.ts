@@ -8,7 +8,11 @@ jest.mock('@/design/themes', () => ({
 }));
 
 import { collectPrimitives, collectThemes } from '@/scripts/collectTokens';
-import { generatePrimitivesCss, generateThemesCss, minifyCss } from '@/scripts/generateCss';
+import {
+  generatePrimitivesCss,
+  generateThemesCss,
+  minifyCss,
+} from '@/scripts/generateCss';
 
 const primitives = collectPrimitives();
 const themes = collectThemes();
@@ -49,8 +53,12 @@ describe('generateThemesCss', () => {
   });
 
   it('primitive path references become var(--color-...) references', () => {
-    expect(result.light).toContain('--background-default: var(--color-light-neutral-100);');
-    expect(result.light).toContain('--button-background: var(--color-light-blue-600);');
+    expect(result.light).toContain(
+      '--background-default: var(--color-light-neutral-100);'
+    );
+    expect(result.light).toContain(
+      '--button-background: var(--color-light-blue-600);'
+    );
   });
 
   it('raw color values are kept as-is', () => {
@@ -59,15 +67,18 @@ describe('generateThemesCss', () => {
 
   it('cross-theme references point to the correct primitive var', () => {
     // light theme uses dark primitive → var(--color-dark-azure-50)
-    expect(result.light).toContain('--foreground-inverted: var(--color-dark-azure-50);');
+    expect(result.light).toContain(
+      '--foreground-inverted: var(--color-dark-azure-50);'
+    );
     // dark theme uses light primitive → var(--color-light-neutral-50)
-    expect(result.dark).toContain('--foreground-inverted: var(--color-light-neutral-50);');
+    expect(result.dark).toContain(
+      '--foreground-inverted: var(--color-light-neutral-50);'
+    );
   });
 
-  it('contains semantic and component sections', () => {
+  it('contains semantic section', () => {
     for (const css of Object.values(result)) {
       expect(css).toContain('/* ── Semantic ── */');
-      expect(css).toContain('/* ── Component ── */');
     }
   });
 });
