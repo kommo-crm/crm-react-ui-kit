@@ -29,6 +29,8 @@ export interface ButtonProps extends Button {
   before?: React.ReactNode;
   /**
    * Adds an icon on the right.
+   *
+   * @deprecated Use `before` instead.
    */
   after?: React.ReactNode;
   /**
