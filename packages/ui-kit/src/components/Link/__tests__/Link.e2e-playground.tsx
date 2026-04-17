@@ -7,14 +7,15 @@ import {
 
 import { type LinkProps, LinkPrimaryTheme, Link } from '..';
 
-export const LinkPlayground = (props: ComponentPlaygroundProps<LinkProps>) => {
-  return (
-    <ComponentPlayground<LinkProps> {...props} propSets={[{}]}>
-      {(itemProps: LinkProps) => (
-        <Link {...itemProps} theme={LinkPrimaryTheme}>
-          Go to Dashboard
-        </Link>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const LinkPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<LinkProps>) => (
+  <ComponentPlayground<LinkProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Link {...p} theme={LinkPrimaryTheme}>
+        Go to Dashboard
+      </Link>
+    )}
+  </ComponentPlayground>
+);

@@ -1,3 +1,5 @@
+import hash from 'hash-sum';
+
 import { test as testBase, expect } from '@playwright/experimental-ct-react';
 
 import { Appearance } from 'src/lib/appearance';
@@ -47,9 +49,23 @@ export const test = testBase.extend<TestOptions>({
     testInfo
   ) => {
     const getFileName = () => {
-      return [testInfo.title, platform, browserName, appearance, 'snap.png']
-        .join('-')
-        .toLowerCase();
+      const [testName, props] = testInfo.titlePath
+        .filter((path) => !/.+\.ts(x)?$/.test(path))
+        .map((path) => path.toLowerCase().replace(/\s+/g, '-'));
+
+      const hashedProps = hash(props);
+
+      /**
+       *  This is necessary for the correct formation
+       *  of the folder structure
+       *  w/o array we get a long-named snapshot
+       */
+      return [
+        platform,
+        browserName,
+        appearance,
+        `${testName}-${hashedProps}.png`,
+      ];
     };
 
     await use(getFileName);

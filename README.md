@@ -31,6 +31,12 @@ yarn install && yarn build
 | `yarn test:e2e`                  | Run ui-kit Playwright screenshot tests |
 | `yarn test:e2e:update-snapshots` | Run ui-kit update screenshots          |
 
+**Generate screenshots with grep filter:**
+
+```sh
+yarn test:e2e:update-snapshots -g button
+```
+
 ## Contribute to this repo
 
 Pull requests are welcome. See the [contribution guidelines](./.github/CONTRIBUTING.md) for more information.

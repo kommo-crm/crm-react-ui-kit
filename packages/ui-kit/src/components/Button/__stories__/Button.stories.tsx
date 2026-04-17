@@ -1,23 +1,38 @@
 import React, { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useGlobals } from '@storybook/preview-api';
 
 import { CanvasCentered, IconsMap } from '@storybook-utils/constants';
 
 import { noop } from 'src/utils';
+import { Appearance } from 'src/lib/appearance';
 
 import { i18n } from '@i18n';
+
+import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
+import TriggerIcon from '@storybook-utils/icons/trigger.svg';
+import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 
 import {
   Button,
   ButtonNeutralTheme,
   ButtonPrimaryTheme,
   ButtonSecondaryTheme,
+  ButtonDangerPrimaryTheme,
+  ButtonDangerTertiaryTheme,
+  ButtonIconSecondaryTheme,
+  ButtonIconGhostTheme,
+  ButtonIconDangerGhostTheme,
+  ButtonIconSmallGhostTheme,
+  ButtonIconSmallDangerGhostTheme,
 } from '..';
 
 const ThemesMap = {
   ButtonNeutralTheme,
   ButtonPrimaryTheme,
   ButtonSecondaryTheme,
+  ButtonDangerPrimaryTheme,
+  ButtonDangerTertiaryTheme,
 };
 
 const USAGE = `
@@ -58,6 +73,8 @@ const meta = {
       mapping: IconsMap,
       options: Object.keys(IconsMap),
     },
+    showSuccessfulStateRef: { table: { disable: true } },
+    showInvalidAnimationRef: { table: { disable: true } },
   },
   render: (props) => (
     <div>
@@ -80,6 +97,12 @@ export const Loading: Story = {
   },
 };
 
+export const Disabled: Story = {
+  args: {
+    isDisabled: true,
+  },
+};
+
 export const Icons: Story = {
   args: {
     before: IconsMap.CopyIcon,
@@ -88,7 +111,9 @@ export const Icons: Story = {
 };
 
 export const Refs: Story = {
-  args: {},
+  args: {
+    successfulStateText: i18n.t('Saved'),
+  },
   argTypes: {
     theme: {
       table: { disable: false },
@@ -96,8 +121,15 @@ export const Refs: Story = {
       mapping: ThemesMap,
       options: Object.keys(ThemesMap),
     },
+    successfulStateText: {
+      control: 'text',
+    },
   },
   render: (props) => {
+    const [{ appearance }] = useGlobals();
+    const labelColor =
+      appearance === Appearance.ALTERNATIVE ? 'white' : 'black';
+
     const successRef = useRef(noop);
     const invalidRef = useRef(noop);
 
@@ -114,25 +146,73 @@ export const Refs: Story = {
     };
 
     return (
-      <div>
-        <Button
-          {...props}
-          onClick={handleSuccessClick}
-          showSuccessfulStateRef={successRef}
-          successfulStateText={i18n.t('Saved')}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '16px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
         >
-          {i18n.t('Success Ref')}
-        </Button>
-        <Button
-          {...props}
-          showInvalidAnimationRef={invalidRef}
-          onClick={handleInvalidClick}
+          <div style={{ color: labelColor }}>{i18n.t('Success Ref')}</div>
+          <Button
+            {...props}
+            onClick={handleSuccessClick}
+            showSuccessfulStateRef={successRef}
+          />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
         >
-          {i18n.t('Invalid Ref')}
-        </Button>
+          <div style={{ color: labelColor }}>{i18n.t('Invalid Ref')}</div>
+          <Button
+            {...props}
+            showInvalidAnimationRef={invalidRef}
+            onClick={handleInvalidClick}
+          />
+        </div>
       </div>
     );
   },
+};
+
+const buttonIconVariants = [
+  { size: 'm', theme: ButtonIconSecondaryTheme, Icon: MicrophoneIcon },
+  { size: 'm', theme: ButtonIconGhostTheme, Icon: TriggerIcon },
+  { size: 'm', theme: ButtonIconDangerGhostTheme, Icon: TrashcanIcon },
+  { size: 's', theme: ButtonIconSmallGhostTheme, Icon: TriggerIcon },
+  { size: 's', theme: ButtonIconSmallDangerGhostTheme, Icon: TrashcanIcon },
+];
+
+export const ButtonIcon: Story = {
+  render: (props) => (
+    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+      {buttonIconVariants.map(({ size, theme, Icon }, index) => {
+        const iconSize = size === 'm' ? 20 : 16;
+
+        return (
+          <Button key={index} {...props} theme={theme}>
+            <Icon
+              width={iconSize}
+              height={iconSize}
+              style={{ display: 'flex' }}
+            />
+          </Button>
+        );
+      })}
+    </div>
+  ),
 };
 
 export const ButtonNeutral: Story = {
@@ -151,4 +231,81 @@ export const ButtonSecondary: Story = {
   tags: ['!dev'],
   args: { theme: ButtonSecondaryTheme },
   render: (props) => <Button {...props} />,
+};
+
+export const ButtonDangerPrimary: Story = {
+  tags: ['!dev'],
+  args: { theme: ButtonDangerPrimaryTheme },
+  render: (props) => <Button {...props} />,
+};
+
+export const ButtonDangerTertiary: Story = {
+  tags: ['!dev'],
+  args: { theme: ButtonDangerTertiaryTheme },
+  render: (props) => <Button {...props} />,
+};
+
+export const ButtonIconSecondary: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[0];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[1];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconDangerGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[2];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={20} height={20} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconSmallGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[3];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={16} height={16} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
+export const ButtonIconSmallDangerGhost: Story = {
+  tags: ['!dev'],
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[4];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={16} height={16} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
 };

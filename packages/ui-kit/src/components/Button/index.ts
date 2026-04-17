@@ -3,6 +3,13 @@ export {
   ButtonNeutralTheme,
   ButtonPrimaryTheme,
   ButtonSecondaryTheme,
+  ButtonDangerPrimaryTheme,
+  ButtonDangerTertiaryTheme,
+  ButtonIconSecondaryTheme,
+  ButtonIconGhostTheme,
+  ButtonIconDangerGhostTheme,
+  ButtonIconSmallGhostTheme,
+  ButtonIconSmallDangerGhostTheme,
   type ButtonThemeType,
 } from './Button.themes';
 export { type ButtonProps } from './Button.props';

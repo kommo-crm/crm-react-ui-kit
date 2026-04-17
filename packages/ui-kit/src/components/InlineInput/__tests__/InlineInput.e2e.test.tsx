@@ -2,81 +2,108 @@ import React from 'react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
+import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
+import { FOCUSABLE_ELEMENT_ID } from 'src/tests/e2e/constants';
+
 import {
-  InlineInputPlayground,
-  InlineInputPrimaryFocusedPlayground,
-  InlineInputWithFocusPlayground,
-  InlineInputInvalidWithFocusPlayground,
-  InlineInputPrimaryFocusedWithFocusPlayground,
-  InlineInputPrimaryFocusedInvalidWithFocusPlayground,
+  InlineInputPlaygroundItem,
+  type InlineInputTestProps,
 } from './InlineInput.e2e-playground';
 
-test('Inline Input', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<InlineInputPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+const baseCombinations = multiCartesian<InlineInputTestProps>([
+  {
+    variant: ['primary', 'primaryFocused'],
+    value: ['Jhon', undefined],
+    isDisabled: [true, false],
+  },
+  {
+    variant: ['primary', 'primaryFocused'],
+    value: ['Jhon', undefined],
+    isDisabled: [true, false],
+    placeholder: ['Placeholder'],
+  },
+  {
+    variant: ['primary', 'primaryFocused'],
+    isInvalid: [true],
+    invalidDescription: ['Required field'],
+    value: ['Jhon', undefined],
+  },
+]);
 
-test('Inline Input Primary Focused', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-}) => {
-  await mount(<InlineInputPrimaryFocusedPlayground appearance={appearance} />);
-  await expectScreenshotClippedToContent();
-});
+for (const props of baseCombinations) {
+  const label = prettyProps(props);
 
-test('Inline Input With Focus', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-  setFocusOnElement,
-}) => {
-  await mount(<InlineInputWithFocusPlayground appearance={appearance} />);
-  await setFocusOnElement();
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Inline Input', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <InlineInputPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}
 
-test('Inline Input Invalid With Focus', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-  setFocusOnElement,
-}) => {
-  await mount(
-    <InlineInputInvalidWithFocusPlayground appearance={appearance} />
-  );
-  await setFocusOnElement();
-  await expectScreenshotClippedToContent();
-});
+const focusedCombinations = multiCartesian<InlineInputTestProps>([
+  {
+    variant: ['primary', 'primaryFocused'],
+    value: ['Jhon'],
+    id: [FOCUSABLE_ELEMENT_ID],
+  },
+]);
 
-test('Inline Input Primary Focused With Focus', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-  setFocusOnElement,
-}) => {
-  await mount(
-    <InlineInputPrimaryFocusedWithFocusPlayground appearance={appearance} />
-  );
-  await setFocusOnElement();
-  await expectScreenshotClippedToContent();
-});
+for (const props of focusedCombinations) {
+  const label = prettyProps(props);
 
-test('Inline Input Primary Focused Invalid With Focus', async ({
-  mount,
-  appearance,
-  expectScreenshotClippedToContent,
-  setFocusOnElement,
-}) => {
-  await mount(
-    <InlineInputPrimaryFocusedInvalidWithFocusPlayground
-      appearance={appearance}
-    />
-  );
-  await setFocusOnElement();
-  await expectScreenshotClippedToContent();
-});
+  test.describe('Inline Input Focused', () => {
+    test(
+      label,
+      async ({
+        mount,
+        appearance,
+        expectScreenshotClippedToContent,
+        setFocusOnElement,
+      }) => {
+        await mount(
+          <InlineInputPlaygroundItem appearance={appearance} props={props} />
+        );
+        await setFocusOnElement();
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}
+
+const invalidFocusedCombinations = multiCartesian<InlineInputTestProps>([
+  {
+    variant: ['primary', 'primaryFocused'],
+    value: ['Jhon'],
+    isInvalid: [true],
+    invalidDescription: ['Required field'],
+    id: [FOCUSABLE_ELEMENT_ID],
+  },
+]);
+
+for (const props of invalidFocusedCombinations) {
+  const label = prettyProps(props);
+
+  test.describe('Inline Input Invalid Focused', () => {
+    test(
+      label,
+      async ({
+        mount,
+        appearance,
+        expectScreenshotClippedToContent,
+        setFocusOnElement,
+      }) => {
+        await mount(
+          <InlineInputPlaygroundItem appearance={appearance} props={props} />
+        );
+        await setFocusOnElement();
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}

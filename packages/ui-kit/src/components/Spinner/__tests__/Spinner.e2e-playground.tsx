@@ -9,23 +9,15 @@ import { Spinner } from '../Spinner';
 import { SpinnerPrimaryTheme } from '../Spinner.themes';
 import { SpinnerProps } from '../Spinner.props';
 
-export const SpinnerPlayground = (
-  props: ComponentPlaygroundProps<SpinnerProps>
-) => {
-  return (
-    <ComponentPlayground<SpinnerProps>
-      {...props}
-      propSets={[
-        {
-          isCentered: [true, false],
-        },
-      ]}
-    >
-      {(itemProps: SpinnerProps) => (
-        <div style={{ position: 'relative', height: 20 }}>
-          <Spinner {...itemProps} theme={SpinnerPrimaryTheme} />
-        </div>
-      )}
-    </ComponentPlayground>
-  );
-};
+export const SpinnerPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<SpinnerProps>) => (
+  <ComponentPlayground<SpinnerProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div style={{ position: 'relative', height: 20 }}>
+        <Spinner {...p} theme={SpinnerPrimaryTheme} />
+      </div>
+    )}
+  </ComponentPlayground>
+);
