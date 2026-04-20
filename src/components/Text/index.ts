@@ -6,5 +6,5 @@ export {
   TextSecondaryDarkTheme,
   TextSecondaryLightTheme,
   TextErrorTheme,
-  TextInheritTheme,
+  TextInheritColorTheme,
 } from './Text.themes';

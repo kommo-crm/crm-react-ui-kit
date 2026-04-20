@@ -58,7 +58,7 @@ export const TextErrorTheme: TextTheme = {
   '--crm-ui-kit-text-font': 'PT Sans',
 };
 
-export const TextInheritTheme: TextTheme = {
+export const TextInheritColorTheme: TextTheme = {
   ...TextBaseSizesTheme,
   '--crm-ui-kit-text-color': 'inherit',
   '--crm-ui-kit-text-font': 'PT Sans',

@@ -12,7 +12,7 @@ import {
   TextSecondaryLightPlaygroundItem,
   TextSecondaryDarkPlaygroundItem,
   TextErrorPlaygroundItem,
-  TextInheritPlaygroundItem,
+  TextInheritColorPlaygroundItem,
 } from './Text.e2e-playground';
 
 const ellipsisCombinations = multiCartesian<TextProps>([
@@ -100,12 +100,15 @@ for (const props of sizeCombinations) {
     );
   });
 
-  test.describe('Text Inherit', () => {
+  test.describe('Text Inherit Color', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
-          <TextInheritPlaygroundItem appearance={appearance} props={props} />
+          <TextInheritColorPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
         );
         await expectScreenshotClippedToContent();
       }

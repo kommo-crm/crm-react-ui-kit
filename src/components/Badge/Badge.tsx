@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
-import { Text, TextInheritTheme } from 'src/components/Text';
+import { Text, TextInheritColorTheme } from 'src/components/Text';
 
 import { type BadgeProps } from './Badge.props';
 import { type BadgeThemeType } from './Badge.themes';
@@ -23,7 +23,7 @@ export const Badge = forwardRef<S, BadgeProps>((props, ref) => {
       className={cx(s.badge, themeClassName, className)}
       {...rest}
     >
-      <Text size="ms" isEllipsis theme={TextInheritTheme}>
+      <Text size="ms" isEllipsis theme={TextInheritColorTheme}>
         {title}
       </Text>
     </span>

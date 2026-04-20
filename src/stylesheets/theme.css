@@ -22,6 +22,7 @@
   --crm-ui-kit-color-nato-blue: #132b3c;
   --crm-ui-kit-color-deep-navy-blue: #19374d;
   --crm-ui-kit-color-dark-slate-gray: #284860;
+  --crm-ui-kit-color-cello: #394e5f;
   --crm-ui-kit-color-shadow-blue: #7f8ba4;
   --crm-ui-kit-color-dark-silver: #6b6d72;
   --crm-ui-kit-color-bright-blue: #158fd2;
@@ -66,7 +67,7 @@
   --crm-ui-kit-color-padua: #c2ecc9;
   --crm-ui-kit-color-link-water: #d4e3f1;
   --crm-ui-kit-color-deep-sea: #02815a;
-  --crm-ui-kit-color-cello: #224e6b;
+  --crm-ui-kit-color-petrol-blue: #224e6b;
   --crm-ui-kit-color-astronaut: #2a4d75;
   --crm-ui-kit-color-mariner: #326fd8;
   --crm-ui-kit-color-east-bay: #3f4775;
@@ -246,7 +247,7 @@
   --crm-ui-kit-palette-link-hover-primary: var(--crm-ui-kit-color-dodger-blue);
 
   --crm-ui-kit-palette-scrollbar-thumb-background: var(
-    --crm-ui-kit-color-dark-slate
+    --crm-ui-kit-color-cello
   );
 
   --crm-ui-kit-palette-button-classic-hover-background: var(
@@ -288,7 +289,7 @@
   --crm-ui-kit-palette-badge-background-color-purple: var(--crm-ui-kit-color-east-bay);
 
   --crm-ui-kit-palette-badge-color-neutral: var(--crm-ui-kit-color-link-water);
-  --crm-ui-kit-palette-badge-background-color-neutral: var(--crm-ui-kit-color-cello);
+  --crm-ui-kit-palette-badge-background-color-neutral: var(--crm-ui-kit-color-petrol-blue);
 
   --crm-ui-kit-palette-badge-color-blue: var(--crm-ui-kit-color-link-water);
   --crm-ui-kit-palette-badge-background-color-blue: var(--crm-ui-kit-color-astronaut);

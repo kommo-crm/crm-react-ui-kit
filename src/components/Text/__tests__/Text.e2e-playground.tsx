@@ -11,7 +11,7 @@ import {
   TextPrimaryTheme,
   TextSecondaryLightTheme,
   TextErrorTheme,
-  TextInheritTheme,
+  TextInheritColorTheme,
   type TextProps,
 } from '..';
 
@@ -80,14 +80,14 @@ export const TextErrorPlaygroundItem = ({
   </ComponentPlayground>
 );
 
-export const TextInheritPlaygroundItem = ({
+export const TextInheritColorPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<TextProps>) => (
   <ComponentPlayground<TextProps> appearance={appearance} props={props}>
     {(p) => (
       <div style={{ color: 'var(--crm-ui-kit-color-bright-blue)' }}>
-        <Text {...p} theme={TextInheritTheme}>
+        <Text {...p} theme={TextInheritColorTheme}>
           Text
         </Text>
       </div>
