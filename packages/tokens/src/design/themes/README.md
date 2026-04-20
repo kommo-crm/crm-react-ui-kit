@@ -20,9 +20,11 @@ themes/
 ### `index.ts` — theme config
 
 ```ts
-import { defineUiKitSemanticTokens, defineUiKitTheme } from '@/define';
+import { SemanticUiKitTokens } from '@/types/semantic';
 
-const semanticTokens = defineUiKitSemanticTokens({
+import { defineSemanticTokens, defineTheme } from '@/define';
+
+const semanticTokens = defineSemanticTokens<SemanticUiKitTokens>({
   palette: {
     border: {
       error: 'color.dark.red.400',
@@ -30,7 +32,7 @@ const semanticTokens = defineUiKitSemanticTokens({
   },
 });
 
-export const theme = defineUiKitTheme({
+export const theme = defineTheme<SemanticUiKitTokens>({
   id: 'my-theme',
   prefix: 'crm-ui-kit',
   conditions: [":root[data-crm-ui-kit-theme='my-theme']"],
@@ -39,8 +41,6 @@ export const theme = defineUiKitTheme({
 ```
 
 > `conditions` omitted for default theme — applied globally.
->
-> `isUiKitTheme` injected by `defineUiKitTheme` — do not set manually.
 
 ---
 
@@ -57,9 +57,11 @@ Valid keys and values enforced by TypeScript — IDE provides autocomplete and r
 ### Step 1 — create `themes/myTheme/index.ts`
 
 ```ts
-import { defineUiKitSemanticTokens, defineUiKitTheme } from '@/define';
+import { SemanticUiKitTokens } from '@/types/semantic';
 
-const semanticTokens = defineUiKitSemanticTokens({
+import { defineSemanticTokens, defineTheme } from '@/define';
+
+const semanticTokens = defineSemanticTokens<SemanticUiKitTokens>({
   palette: {
     background: {
       default: 'color.dark.neutral.900',
@@ -67,10 +69,31 @@ const semanticTokens = defineUiKitSemanticTokens({
   },
 });
 
-export const theme = defineUiKitTheme({
+export const theme = defineTheme<SemanticUiKitTokens>({
   id: 'my-theme',
   prefix: 'crm-ui-kit',
   conditions: [":root[data-crm-ui-kit-theme='my-theme']"],
+  semanticTokens,
+});
+
+// or
+// for base theme
+
+import { SemanticTokens } from '@/types/semantic';
+
+import { defineSemanticTokens, defineTheme } from '@/define';
+
+const semanticTokens = defineSemanticTokens<SemanticTokens>({
+  palette: {
+    background: {
+      default: 'color.dark.neutral.900',
+    },
+  },
+});
+
+export const theme = defineTheme<SemanticTokens>({
+  id: 'my-theme',
+  conditions: [":root[data-color-scheme='dark']"],
   semanticTokens,
 });
 ```

@@ -1,30 +1,13 @@
-import {
-  SemanticUiKitTokens,
-  SemanticUiKitTokenPath,
-  SemanticTokens,
-  SemanticTokenPath,
-} from '@/types/semantic';
+import { SemanticUiKitTokenPath, SemanticTokenPath } from '@/types/semantic';
 
 import { PrimitivePath } from '@/design/primitives';
 
 import { ColorValue } from './color';
-
-export type ThemeConfig = BaseThemeConfig | UiKitThemeConfig;
-
-export interface UiKitThemeConfig {
-  id: string;
-  conditions?: string[];
-  prefix?: string;
-  isUiKitTheme: true;
-  semanticTokens: SemanticUiKitTokens;
-}
-
-export interface BaseThemeConfig {
+export interface ThemeConfig<SemanticTokens> {
   id: string;
   semanticTokens: SemanticTokens;
   conditions?: string[];
   prefix?: string;
-  isUiKitTheme?: false;
 }
 
 export type TokenPrimitiveValue = ColorValue;

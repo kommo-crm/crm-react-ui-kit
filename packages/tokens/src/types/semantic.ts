@@ -7,6 +7,7 @@ import { AtomicSegments, Tokens } from './ui-kit-tokens';
 import { TokenSemanticValue } from './common';
 
 import { TokenComponentValue } from './common';
+import { BaseAtomicSegments, BaseTokens } from './base-tokens';
 
 export type SemanticTokensType = TokensToObject<
   Tokens,
@@ -22,8 +23,14 @@ type SemanticUiKitTokensShape = TokensToObject<
 >;
 
 export type SemanticUiKitTokens = DeepPartial<SemanticUiKitTokensShape>;
-
-export type SemanticTokens = Record<'', string>;
-
 export type SemanticUiKitTokenPath = ObjectLeaves<SemanticUiKitTokensShape>;
-export type SemanticTokenPath = ObjectLeaves<SemanticTokens>;
+
+type SemanticTokensShape = TokensToObject<
+  BaseTokens,
+  TokenSemanticValue,
+  BaseAtomicSegments,
+  '-'
+>;
+
+export type SemanticTokens = DeepPartial<SemanticTokensShape>;
+export type SemanticTokenPath = ObjectLeaves<SemanticTokensShape>;

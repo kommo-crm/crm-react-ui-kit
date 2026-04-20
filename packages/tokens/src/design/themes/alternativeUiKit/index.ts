@@ -1,8 +1,10 @@
-import { defineUiKitSemanticTokens, defineUiKitTheme } from '@/define';
+import { SemanticUiKitTokens } from '@/types/semantic';
 
-const semanticTokens = defineUiKitSemanticTokens({});
+import { defineSemanticTokens, defineTheme } from '@/define';
 
-export const alternativeUiKitTheme = defineUiKitTheme({
+const semanticTokens = defineSemanticTokens<SemanticUiKitTokens>({});
+
+export const alternativeUiKitTheme = defineTheme<SemanticUiKitTokens>({
   id: 'alternative-ui-kit',
   prefix: 'crm-ui-kit',
   conditions: [':root[data-crm-ui-kit-theme="alternative"]'],

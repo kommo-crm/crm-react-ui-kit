@@ -1,8 +1,10 @@
-import { defineUiKitSemanticTokens, defineUiKitTheme } from '@/define';
+import { SemanticUiKitTokens } from '@/types/semantic';
 
-const semanticTokens = defineUiKitSemanticTokens({});
+import { defineSemanticTokens, defineTheme } from '@/define';
 
-export const lightUiKitTheme = defineUiKitTheme({
+const semanticTokens = defineSemanticTokens<SemanticUiKitTokens>({});
+
+export const lightUiKitTheme = defineTheme<SemanticUiKitTokens>({
   id: 'light-ui-kit',
   prefix: 'crm-ui-kit',
   semanticTokens,
