@@ -54,6 +54,7 @@ export const TextSecondaryDarkTheme: TextTheme = {
 
 export const TextErrorTheme: TextTheme = {
   ...TextBaseSizesTheme,
-  '--crm-ui-kit-text-color': 'var(--crm-ui-kit-color-error)',
+  '--crm-ui-kit-text-color':
+    'var(--crm-ui-kit-palette-text-error, var(--_crm-ui-kit-palette-text-error))',
   '--crm-ui-kit-text-font': 'PT Sans',
 };
