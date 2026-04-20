@@ -250,6 +250,7 @@ export const ButtonContextTheme: ButtonThemeType = {
   '--crm-ui-kit-button-font-weight': '400',
 
   '--crm-ui-kit-button-spinner-circle-size': '12px',
+  '--crm-ui-kit-button-spinner-border-width': '1.4px',
   '--crm-ui-kit-button-spinner-disabled-border-color':
     'var(--crm-ui-kit-button-spinner-border-color)',
 };
