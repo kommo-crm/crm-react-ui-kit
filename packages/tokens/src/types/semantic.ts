@@ -3,20 +3,13 @@ import { DeepPartial } from '@/types/utils/deep-partial';
 
 import { TokensToObject } from '@/types/utils/tokens-to-object';
 
-import { AtomicSegments, Tokens } from './ui-kit-tokens';
+import { AtomicSegments, UiKitTokens } from './ui-kit-tokens';
 import { TokenSemanticValue } from './common';
 
-import { TokenComponentValue } from './common';
 import { BaseAtomicSegments, BaseTokens } from './base-tokens';
 
-export type SemanticTokensType = TokensToObject<
-  Tokens,
-  TokenComponentValue,
-  AtomicSegments
->;
-
 type SemanticUiKitTokensShape = TokensToObject<
-  Tokens,
+  UiKitTokens,
   TokenSemanticValue,
   AtomicSegments,
   '--crm-ui-kit'

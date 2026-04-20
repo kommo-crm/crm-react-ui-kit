@@ -1,4 +1,4 @@
-export type Tokens =
+export type UiKitTokens =
   | '--crm-ui-kit-base-font-size'
   | '--crm-ui-kit-disabled-opacity'
   | '--crm-ui-kit-border-radius-default'
@@ -39,7 +39,8 @@ export type Tokens =
   | '--crm-ui-kit-palette-callout-error-background-color'
   | '--crm-ui-kit-palette-callout-warning-background-color'
   | '--crm-ui-kit-palette-callout-info-background-color'
-  | '--crm-ui-kit-palette-callout-success-background-color';
+  | '--crm-ui-kit-palette-callout-success-background-color'
+  | '--crm-ui-kit-palette-text-error';
 
 export type AtomicSegments =
   | 'box-shadow'
