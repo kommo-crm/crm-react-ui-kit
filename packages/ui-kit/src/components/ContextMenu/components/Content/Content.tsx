@@ -9,9 +9,9 @@ import cx from 'classnames';
 
 import { useSpring, animated, easings } from '@react-spring/web';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@/lib/utils';
 
-import { KeyboardKey } from 'src/lib/keyboard';
+import { KeyboardKey } from '@/lib/keyboard';
 
 import { LevelProvider } from '../../providers/LevelProvider';
 

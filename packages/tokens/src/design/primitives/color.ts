@@ -1,7 +1,7 @@
-import flattenVars from '@/libs/flattenVars';
-import validateHEXColor from '@/libs/validateHEXColor';
+import { flattenVars } from '@/libs/flattenVars';
+import { validateHEXColor } from '@/libs/validateHEXColor';
 
-const color = {
+export const color = {
   light: {
     azure: {
       50: '#f8fcfe',
@@ -195,5 +195,3 @@ for (const [path, value] of Object.entries(flattenVars(color))) {
     );
   }
 }
-
-export default color;

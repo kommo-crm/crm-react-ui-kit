@@ -1,10 +1,14 @@
 jest.mock('@/design/primitives', () => ({
   __esModule: true,
-  default: require('./__fixtures__/tokens').mockPrimitives,
+  primitives: jest.requireActual<typeof import('./__fixtures__/tokens')>(
+    './__fixtures__/tokens'
+  ).mockPrimitives,
 }));
 jest.mock('@/design/themes', () => ({
   __esModule: true,
-  default: require('./__fixtures__/tokens').mockThemes,
+  themes: jest.requireActual<typeof import('./__fixtures__/tokens')>(
+    './__fixtures__/tokens'
+  ).mockThemes,
 }));
 
 import { collectPrimitives, collectThemes } from '@/scripts/collectTokens';
@@ -22,6 +26,7 @@ describe('collectPrimitives', () => {
 
   it('groups by color family (index 2)', () => {
     const names = collection.groups.map((g) => g.name);
+
     expect(names).toEqual(expect.arrayContaining(['azure', 'blue', 'neutral']));
   });
 
@@ -43,16 +48,19 @@ describe('collectThemes', () => {
 
   it('light theme uses :root selector', () => {
     const light = themes.find((t) => t.themeId === 'light')!;
+
     expect(light.selector).toBe(':root');
   });
 
   it('dark theme joins conditions with newline', () => {
     const dark = themes.find((t) => t.themeId === 'dark')!;
+
     expect(dark.selector).toBe(":root[data-theme='dark']");
   });
 
   it('flattens semantic tokens correctly', () => {
     const light = themes.find((t) => t.themeId === 'light')!;
+
     expect(light.semantic.flat).toMatchObject({
       'background-default': 'color.light.neutral.100',
       'background-primary': 'color.light.neutral.50',
@@ -63,6 +71,7 @@ describe('collectThemes', () => {
   it('preserves cross-theme primitive references as-is in flat map', () => {
     const light = themes.find((t) => t.themeId === 'light')!;
     const dark = themes.find((t) => t.themeId === 'dark')!;
+
     // light theme references a dark primitive
     expect(light.semantic.flat['foreground-inverted']).toBe(
       'color.dark.azure.50'

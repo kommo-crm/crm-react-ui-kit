@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import ChevronDownIcon from 'src/icons/chevronDown.svg';
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import ChevronDownIcon from '@/icons/chevronDown.svg';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
 import { Text } from '../../../Text/Text';
 import { TextPrimaryTheme } from '../../../Text/Text.themes';

@@ -29,6 +29,7 @@ const themeTokenCount = themeCollections.reduce(
   (sum, { semantic }) => sum + Object.keys(semantic.flat).length,
   0
 );
+
 console.log(
   `Primitives: ${primitiveCount}, Theme tokens: ${themeTokenCount} (across ${themeCollections.length} themes)\n`
 );
@@ -50,6 +51,7 @@ for (const [themeId, content] of Object.entries(generateThemesTs())) {
 console.log('\nCSS:');
 
 const primitivesCss = generatePrimitivesCss(primitiveCollection);
+
 writeFile(distDir, 'primitives/tokens.css', primitivesCss, () =>
   console.log('  ✓ primitives/tokens.css')
 );
@@ -58,6 +60,7 @@ writeFile(distDir, 'primitives/tokens.min.css', minifyCss(primitivesCss), () =>
 );
 
 const themesCss = generateThemesCss(themeCollections);
+
 for (const [themeId, css] of Object.entries(themesCss)) {
   writeFile(distDir, `${themeId}/tokens.css`, css, () =>
     console.log(`  ✓ ${themeId}/tokens.css`)

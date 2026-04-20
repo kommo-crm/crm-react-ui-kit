@@ -1,8 +1,8 @@
 {
   "name": "@kommo-crm/tokens",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Design tokens for Kommo CRM UI",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "files": [
     "dist"
   ],
@@ -42,16 +42,17 @@
     "clean": "rm -rf dist",
     "build": "npm run clean && tsx src/index.ts && tsup",
     "dev": "concurrently \"tsx watch src/index.ts\" \"tsup --watch --no-dts\"",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^20.0.0",
-    "concurrently": "^9.1.2",
-    "jest": "^30.3.0",
-    "ts-jest": "^29.4.6",
-    "tsup": "^8.3.0",
-    "tsx": "^4.19.2",
+    "@types/jest": "30.0.0",
+    "@types/node": "20.0.0",
+    "concurrently": "9.1.2",
+    "jest": "30.3.0",
+    "ts-jest": "29.4.6",
+    "tsup": "8.3.0",
+    "tsx": "4.19.2",
     "typescript": "5.5.4"
   }
 }

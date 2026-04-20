@@ -32,13 +32,13 @@ The ContextMenu component is a flexible and powerful dropdown menu system that s
 ## Installation
 
 ```typescript
-import { ContextMenu } from 'src/components/ContextMenu';
+import { ContextMenu } from '@/components/ContextMenu';
 ```
 
 ## Basic Usage
 
 ```tsx
-import { ContextMenu } from 'src/components/ContextMenu';
+import { ContextMenu } from '@/components/ContextMenu';
 
 function MyComponent() {
   return (

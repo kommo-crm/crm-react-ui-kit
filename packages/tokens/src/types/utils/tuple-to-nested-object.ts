@@ -1,4 +1,4 @@
-type TupleToNestedObject<T extends unknown[], Value> = T extends [
+export type TupleToNestedObject<T extends unknown[], Value> = T extends [
   infer Head extends string,
   ...infer Tail extends unknown[],
 ]

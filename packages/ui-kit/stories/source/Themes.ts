@@ -1,4 +1,4 @@
-import { i18n } from '@i18n';
+import { i18n } from '@kommo-crm/storybook/i18n';
 
 export const SPINNER_WITH_CUSTOM_THEME = `
 import { Spinner } from '@kommo-crm/crm-react-ui-kit/Spinner';

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { SelectButtonLightTheme } from 'src/components/SelectButton';
+import { SelectButtonLightTheme } from '@/components/SelectButton';
 
 import { Select, SelectArrowTheme, SelectItemTheme, SelectListTheme } from '..';
 

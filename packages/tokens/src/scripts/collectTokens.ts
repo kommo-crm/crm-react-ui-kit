@@ -1,6 +1,6 @@
-import primitives from '@/design/primitives';
-import themes from '@/design/themes';
-import flattenVars from '@/libs/flattenVars';
+import { primitives } from '@/design/primitives';
+import { themes } from '@/design/themes';
+import { flattenVars } from '@/libs/flattenVars';
 
 export type VarGroup = {
   name: string;
@@ -26,7 +26,11 @@ function toGroups(flat: Record<string, string>, keyIndex = 0): VarGroup[] {
 
   for (const [key, value] of Object.entries(flat)) {
     const group = key.split('-')[keyIndex];
-    if (!map.has(group)) map.set(group, {});
+
+    if (!map.has(group)) {
+      map.set(group, {});
+    }
+
     map.get(group)![key] = value;
   }
 
@@ -36,6 +40,7 @@ function toGroups(flat: Record<string, string>, keyIndex = 0): VarGroup[] {
 export function collectPrimitives(): PrimitiveCollection {
   // Group by color family: 'color-light-azure-50' → family = 'azure' (index 2)
   const flat = flattenVars(primitives);
+
   return { flat, groups: toGroups(flat, 2) };
 }
 

@@ -3,14 +3,14 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@/tests/e2e/ComponentPlayground';
 
-import { LabelTheme } from 'src/components/Label';
+import { LabelTheme } from '@/components/Label';
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryLightTheme,
-} from 'src/components/Text';
+} from '@/components/Text';
 
 import {
   RadioGroup,

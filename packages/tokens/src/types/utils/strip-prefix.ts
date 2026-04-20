@@ -1,4 +1,4 @@
 export type StripPrefix<
   T extends string,
-  Prefix extends string = '--crm-ui-kit',
+  Prefix extends string,
 > = T extends `${Prefix}-${infer Rest}` ? Rest : never;

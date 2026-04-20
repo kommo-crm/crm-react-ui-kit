@@ -1,4 +1,4 @@
-import { createComponentContext } from 'src/lib/react';
+import { createComponentContext } from '@/lib/react';
 
 import { ContextMenuSubContextProps } from './Sub.props';
 

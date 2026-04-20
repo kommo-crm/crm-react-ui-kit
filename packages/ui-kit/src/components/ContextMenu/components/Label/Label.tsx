@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { Label as RadixDropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@/lib/utils';
 
 import { useSubMenu } from '../../hooks';
 

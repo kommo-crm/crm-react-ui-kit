@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-import { isValidRenderValue } from 'src/lib/utils';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
+import { isValidRenderValue } from '@/lib/utils';
 
 import {
   type LabelGroupProps,

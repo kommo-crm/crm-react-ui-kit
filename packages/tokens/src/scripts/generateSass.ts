@@ -1,4 +1,4 @@
-import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
+import { getPrimitiveVarName } from '@/libs/getPrimitiveVarName';
 import { isRawColorValue } from '@/libs/isRawColorValue';
 
 import type {
@@ -22,6 +22,7 @@ function renderGroups(
       const lines = Object.entries(vars)
         .map(([k, v]) => `$${k}: ${transform(v)};`)
         .join('\n');
+
       return `// ${name}\n${lines}`;
     })
     .join('\n\n');
@@ -39,6 +40,7 @@ export function generateThemesSass(
   return Object.fromEntries(
     collections.map(({ themeId, semantic }) => {
       const semanticSection = `// ── Semantic ──\n\n${renderGroups(semantic.groups, toVarRef)}`;
+
       return [themeId, `${semanticSection}\n`];
     })
   );

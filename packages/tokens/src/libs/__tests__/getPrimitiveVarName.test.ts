@@ -1,8 +1,10 @@
-import getPrimitiveVarName from '@/libs/getPrimitiveVarName';
+import { getPrimitiveVarName } from '@/libs/getPrimitiveVarName';
 
 describe('getPrimitiveVarName', () => {
   it('converts a dot-separated path to a dash-separated CSS variable name', () => {
-    expect(getPrimitiveVarName('color.light.azure.50')).toBe('color-light-azure-50');
+    expect(getPrimitiveVarName('color.light.azure.50')).toBe(
+      'color-light-azure-50'
+    );
   });
 
   it('handles a single segment with no dots', () => {

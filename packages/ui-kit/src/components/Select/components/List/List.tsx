@@ -8,13 +8,13 @@ import React, {
 
 import { useOnOutsideClick } from '@kommo-crm/react-hooks';
 
-import { Portal } from 'src/components/Portal';
+import { Portal } from '@/components/Portal';
 
-import { List as BaseList } from 'src/components/List';
+import { List as BaseList } from '@/components/List';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@/lib/utils';
 
-import { noop } from 'src/utils';
+import { noop } from '@/utils';
 
 import { useSelectContext } from '../../Select.context';
 

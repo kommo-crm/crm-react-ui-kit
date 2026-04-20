@@ -28,12 +28,12 @@ describe('isRawColorValue', () => {
   });
 
   describe('returns false for primitive token paths', () => {
-    it.each([
-      'color.light.azure.50',
-      'color.dark.neutral.100',
-    ])('%s', (value) => {
-      expect(isRawColorValue(value)).toBe(false);
-    });
+    it.each(['color.light.azure.50', 'color.dark.neutral.100'])(
+      '%s',
+      (value) => {
+        expect(isRawColorValue(value)).toBe(false);
+      }
+    );
   });
 
   describe('returns false for non-string values', () => {

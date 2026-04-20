@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { noop } from 'src/utils';
+import { noop } from '@/utils';
 
 type Ref = React.MutableRefObject<(onAnimationEnd?: () => void) => void | null>;
 

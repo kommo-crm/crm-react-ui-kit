@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { CanvasCentered } from '@storybook-utils/constants';
+import { CanvasCentered } from '@kommo-crm/storybook/constants';
 
 import { Spinner, SpinnerPrimaryTheme } from '..';
 

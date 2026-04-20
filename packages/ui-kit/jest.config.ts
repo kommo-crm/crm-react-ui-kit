@@ -12,11 +12,12 @@ const config: Config.InitialOptions = {
   coverageDirectory: 'coverage',
   testMatch: ['<rootDir>/src/**/*.test.(ts|tsx)'],
   testPathIgnorePatterns: ['<rootDir>/src/.*\\.e2e\\.test\\.(ts|tsx)$'],
-  transformIgnorePatterns: ['<rootDir>/node_modules/!(nanoid)'],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/(?!(@kommo-crm/storybook|nanoid)/)',
+  ],
   moduleNameMapper: {
-    '^src/(.*)$': '<rootDir>/src/$1',
-    '^src$': '<rootDir>/src/index.ts',
-    '^@storybook-utils/(.*)$': '<rootDir>/storybook/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@$': '<rootDir>/src/index.ts',
   },
 };
 

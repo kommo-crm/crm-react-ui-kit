@@ -1,9 +1,9 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { CanvasCentered } from '@storybook-utils/constants';
+import { CanvasCentered } from '@kommo-crm/storybook/constants';
 
-import { i18n } from '@i18n';
+import { i18n } from '@kommo-crm/storybook/i18n';
 
 import { Link, LinkPrimaryTheme } from '..';
 

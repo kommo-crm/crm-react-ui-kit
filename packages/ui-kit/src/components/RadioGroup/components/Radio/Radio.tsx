@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { VisuallyHiddenInput } from 'src/components/VisuallyHiddenInput';
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { VisuallyHiddenInput } from '@/components/VisuallyHiddenInput';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
 import { useRadioGroupContext } from '../../RadioGroup.context';
 import { useRadioItemRootContext } from '../ItemRoot/ItemRoot.context';

@@ -22,6 +22,7 @@ export default defineConfig({
     return { js: format === 'cjs' ? '.cjs' : '.mjs' };
   },
   dts: true,
+  tsconfig: './tsconfig.build.json',
   outDir: 'dist',
   clean: false,
 });

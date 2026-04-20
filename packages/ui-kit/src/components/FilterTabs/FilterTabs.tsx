@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
 import { type FilterTabsType, type FilterTabsProps } from './FilterTabs.props';
 import { FilterTabsProvider, DISPLAY_NAME } from './FilterTabs.context';

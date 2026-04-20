@@ -1,10 +1,10 @@
 import React from 'react';
 
+import { IconsMap } from '@storybook-utils/constants';
+
 import { test } from '@crm-react-ui-kit-e2e/test';
 
 import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
-
-import { IconsMap } from '@storybook-utils/constants';
 
 import { ButtonProps } from '../Button.props';
 

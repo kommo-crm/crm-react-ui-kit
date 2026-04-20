@@ -19,12 +19,12 @@
     "jsx": "react",
     "moduleResolution": "bundler",
     "paths": {
-      "src/*": ["./src/*"],
-      "@storybook-utils/*": ["./storybook/*"],
+      "@/*": ["./src/*"],
       "@crm-react-ui-kit-e2e/test": ["./src/tests/e2e/index.playwright"],
-      "@i18n": [".storybook/i18n.ts"]
+      "@storybook-utils/*": ["../storybook/src/*"],
+      "@i18n": ["../storybook/src/i18n.ts"]
     }
   },
-  "include": ["./**/*.tsx", "./**/*.ts", "./.storybook/**/*"],
+  "include": ["./**/*.tsx", "./**/*.ts"],
   "exclude": ["node_modules"]
 }

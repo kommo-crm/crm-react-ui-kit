@@ -1,4 +1,4 @@
-import minify from '@/libs/minify';
+import { minify } from '@/libs/minify';
 
 describe('minify', () => {
   it('removes CSS comments', () => {

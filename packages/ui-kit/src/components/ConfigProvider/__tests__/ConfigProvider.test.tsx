@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { Appearance, APPEARANCE_ATTRIBUTE_NAME } from 'src/lib/appearance';
+import { Appearance, APPEARANCE_ATTRIBUTE_NAME } from '@/lib/appearance';
 
 import { ConfigProvider } from '../ConfigProvider';
 

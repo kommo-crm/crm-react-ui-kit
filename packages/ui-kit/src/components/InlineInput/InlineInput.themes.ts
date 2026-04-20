@@ -1,4 +1,4 @@
-import { TextPrimaryTheme, type TextTheme } from 'src/components/Text';
+import { TextPrimaryTheme, type TextTheme } from '@/components/Text';
 
 type InlineInputThemeKey =
   | '--crm-ui-kit-inline-input-font-size'

@@ -1,0 +1,207 @@
+import { Title, Meta } from '@storybook/blocks';
+import { i18n } from '@kommo-crm/storybook/i18n';
+
+import ReactMarkdown from 'react-markdown';
+
+<Meta title="Getting Started/Design Tokens" />
+
+<Title>{i18n.t('Design Tokens')}</Title>
+
+<ReactMarkdown>
+  {i18n.t(
+    'You can use our design tokens and themes from `@kommo-crm/tokens` package'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    'The package provides two tiers of tokens: **Primitives** (raw color palette) and **Themes** (semantic & component-level tokens mapped to primitives).'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>{`## ${i18n.t('Installation')}`}</ReactMarkdown>
+
+```sh
+npm i @kommo-crm/tokens
+# yarn add @kommo-crm/tokens
+# pnpm add @kommo-crm/tokens
+```
+
+<ReactMarkdown>{`## ${i18n.t('Primitives')}`}</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t('Primitives contain the raw color palette shared across all themes.')}
+</ReactMarkdown>
+
+<ReactMarkdown>{`### CSS`}</ReactMarkdown>
+
+```css
+@import '@kommo-crm/tokens/primitives/css';
+/* minified: @import '@kommo-crm/tokens/primitives/min.css'; */
+```
+
+<ReactMarkdown>
+  {i18n.t('After importing, CSS custom properties are available on `:root`:')}
+</ReactMarkdown>
+
+```css
+.my-element {
+  color: var(--color-light-azure-900);
+  background: var(--color-dark-blue-100);
+}
+```
+
+<ReactMarkdown>{`### SCSS / Sass`}</ReactMarkdown>
+
+```scss
+@use '@kommo-crm/tokens/primitives/scss' as tokens;
+
+.my-element {
+  color: tokens.$color-light-azure-900;
+}
+```
+
+<ReactMarkdown>{`### LESS`}</ReactMarkdown>
+
+```less
+@import '@kommo-crm/tokens/primitives/less';
+
+.my-element {
+  color: @color-light-azure-900;
+}
+```
+
+<ReactMarkdown>{`### JavaScript / TypeScript`}</ReactMarkdown>
+
+```ts
+import { color } from '@kommo-crm/tokens/primitives';
+
+const azure900 = color.light.azure[900]; // '#0b2934'
+```
+
+<ReactMarkdown>{`### JSON`}</ReactMarkdown>
+
+```json
+// @kommo-crm/tokens/primitives/json
+{ "color": { "light": { "azure": { "900": "#0b2934" } } } }
+```
+
+<ReactMarkdown>{`## ${i18n.t('Themes')}`}</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    'Themes map semantic and component-level names to primitive values. Currently only the `light` theme is available.'
+  )}
+</ReactMarkdown>
+
+<table>
+  <thead>
+    <tr>
+      <th>{i18n.t('Name')}</th>
+      <th>{i18n.t('Description')}</th>
+      <th>{i18n.t('Selector')}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>light</code>
+      </td>
+      <td>{i18n.t('Default light theme, always active')}</td>
+      <td>
+        <code>:root</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>alternative</code>
+      </td>
+      <td>{i18n.t('Dark theme')}</td>
+      <td>
+        <code>:root[data-crm-ui-kit-theme=alternative]</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ReactMarkdown>
+  {i18n.t(
+    'Each theme defines a CSS scope where its tokens are applied. The `light` theme targets `:root` globally. Future themes may use an attribute selector to allow switching at runtime:'
+  )}
+</ReactMarkdown>
+
+```css
+/* light — always active, targets :root */
+:root {
+  --text-primary: var(--color-light-azure-900);
+}
+
+/* dark — active only when data-theme="dark" is set on <html> */
+:root[data-theme='dark'] {
+  --text-primary: var(--color-dark-azure-50);
+}
+```
+
+<ReactMarkdown>{`### CSS`}</ReactMarkdown>
+
+```css
+@import '@kommo-crm/tokens/light/css';
+/* minified: @import '@kommo-crm/tokens/light/min.css'; */
+```
+
+<ReactMarkdown>
+  {i18n.t('Theme tokens are exposed as CSS custom properties on `:root`:')}
+</ReactMarkdown>
+
+```css
+.my-element {
+  /* semantic */
+  color: var(--text-primary);
+
+  /* component */
+  background: var(--button-text);
+  border-color: var(--button-border);
+}
+```
+
+<ReactMarkdown>{`### SCSS / Sass`}</ReactMarkdown>
+
+```scss
+@use '@kommo-crm/tokens/light/scss' as theme;
+
+.my-element {
+  color: theme.$text-primary;
+  background: theme.$button-text;
+}
+```
+
+<ReactMarkdown>{`### LESS`}</ReactMarkdown>
+
+```less
+@import '@kommo-crm/tokens/light/less';
+
+.my-element {
+  color: @text-primary;
+  background: @button-text;
+}
+```
+
+<ReactMarkdown>{`### JavaScript / TypeScript`}</ReactMarkdown>
+
+```ts
+import { semantic, component } from '@kommo-crm/tokens/light';
+
+const primaryText = semantic.text.primary; // '#0b2934'
+const buttonText = component.button.text; // '#d4e3f1'
+const buttonBorder = component.button.border; // '#0b2934'
+```
+
+<ReactMarkdown>{`### JSON`}</ReactMarkdown>
+
+```json
+// @kommo-crm/tokens/light/json
+{
+  "semantic": { "text": { "primary": "#0b2934" } },
+  "component": { "button": { "text": "#d4e3f1", "border": "#0b2934" } }
+}
+```

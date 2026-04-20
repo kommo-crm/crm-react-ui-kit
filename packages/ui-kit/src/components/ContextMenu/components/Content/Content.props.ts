@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { Content as RadixDropdownMenuContent } from '@radix-ui/react-dropdown-menu';
 
-import type { FocusChangeEvent } from 'src/hooks';
+import type { FocusChangeEvent } from '@/hooks';
 
 import { DirectionType } from './Content.types';
 

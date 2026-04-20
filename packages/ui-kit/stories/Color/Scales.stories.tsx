@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { color } from '@kommo-crm/tokens/primitives';
 
-import { i18n } from '@i18n';
+import { i18n } from '@kommo-crm/storybook/i18n';
 
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 

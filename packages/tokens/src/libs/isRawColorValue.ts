@@ -23,7 +23,9 @@ const KEYWORD_RE = /^(transparent|currentcolor|inherit|initial|unset|revert)$/i;
  * rather than a reference to a primitive token path.
  */
 export const isRawColorValue = (value: unknown): value is ColorValue => {
-  if (typeof value !== 'string') return false;
+  if (typeof value !== 'string') {
+    return false;
+  }
 
   return (
     HEX_RE.test(value) ||

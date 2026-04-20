@@ -1,9 +1,9 @@
 import React, { forwardRef, KeyboardEvent } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
-import { noop } from 'src/utils';
+import { noop } from '@/utils';
 
 import { SelectButtonProps } from './SelectButton.props';
 import { SelectButtonThemeType } from './SelectButton.theme';

@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 
+import ContextMenuTriggerIcon from '@kommo-crm/storybook/icons/trigger.svg';
+import ContextMenuTrashcanIcon from '@kommo-crm/storybook/icons/trashcan.svg';
+import ContextMenuCheckIcon from '@kommo-crm/storybook/icons/check.svg';
+import ContextMenuChevronRightIcon from '@kommo-crm/storybook/icons/chevronRight.svg';
+
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
-
-import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
-import ContextMenuTrashcanIcon from '@storybook-utils/icons/trashcan.svg';
-import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
-import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
+} from '@/tests/e2e/ComponentPlayground';
 
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryDarkTheme,
   TextTheme,
-} from 'src/components/Text';
+} from '@/components/Text';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';

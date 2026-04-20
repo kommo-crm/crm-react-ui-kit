@@ -1,6 +1,6 @@
-import { type VisuallyHiddenInputProps } from 'src/components/VisuallyHiddenInput/VisuallyHiddenInput.props';
+import { type VisuallyHiddenInputProps } from '@/components/VisuallyHiddenInput/VisuallyHiddenInput.props';
 
-import { type LabelProps } from 'src/components/Label';
+import { type LabelProps } from '@/components/Label';
 
 import { type SwitcherTheme } from './Switcher.themes';
 

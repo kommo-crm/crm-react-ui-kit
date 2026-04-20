@@ -1,10 +1,14 @@
 jest.mock('@/design/primitives', () => ({
   __esModule: true,
-  default: require('./__fixtures__/tokens').mockPrimitives,
+  primitives: jest.requireActual<typeof import('./__fixtures__/tokens')>(
+    './__fixtures__/tokens'
+  ).mockPrimitives,
 }));
 jest.mock('@/design/themes', () => ({
   __esModule: true,
-  default: require('./__fixtures__/tokens').mockThemes,
+  themes: jest.requireActual<typeof import('./__fixtures__/tokens')>(
+    './__fixtures__/tokens'
+  ).mockThemes,
 }));
 
 import { collectPrimitives, collectThemes } from '@/scripts/collectTokens';
@@ -86,12 +90,14 @@ describe('generateThemesCss', () => {
 describe('minifyCss', () => {
   it('removes newlines and extra whitespace from generated CSS', () => {
     const minified = minifyCss(generatePrimitivesCss(primitives));
+
     expect(minified).not.toContain('\n');
     expect(minified).not.toMatch(/\s{2,}/);
   });
 
   it('minified output is shorter than original', () => {
     const original = generatePrimitivesCss(primitives);
+
     expect(minifyCss(original).length).toBeLessThan(original.length);
   });
 });

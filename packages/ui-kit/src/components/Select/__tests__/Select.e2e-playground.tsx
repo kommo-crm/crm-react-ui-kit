@@ -3,11 +3,11 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@/tests/e2e/ComponentPlayground';
 
-import { SelectButtonLightTheme } from 'src/components/SelectButton';
+import { SelectButtonLightTheme } from '@/components/SelectButton';
 
-import { ListTheme } from 'src/components/List';
+import { ListTheme } from '@/components/List';
 
 import { Select, SelectArrowTheme, SelectItemTheme, SelectRootTheme } from '..';
 import { SelectItem } from '../Select.types';

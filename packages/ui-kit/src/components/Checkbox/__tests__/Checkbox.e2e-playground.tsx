@@ -3,7 +3,7 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@/tests/e2e/ComponentPlayground';
 
 import {
   Checkbox,

@@ -37,7 +37,7 @@ export default tseslint.config(
       'packages/ui-kit/playwright/.cache',
       'packages/ui-kit/coverage',
       'packages/ui-kit/dist',
-
+      'packages/tokens/.generated',
       'packages/tokens/dist',
     ],
   },
@@ -394,13 +394,6 @@ export default tseslint.config(
   },
 
   {
-    files: ['packages/tokens/src/scripts/**/*.ts'],
-    rules: {
-      'max-depth': ['error', { max: 10 }],
-    },
-  },
-
-  {
     files: ['packages/tokens/src/index.ts'],
     rules: {
       'no-console': 'off',
@@ -446,6 +439,7 @@ export default tseslint.config(
 
           'pathGroups': [
             { pattern: '@ui/**', group: 'external', position: 'after' },
+            { pattern: '@/*', group: 'internal', position: 'after' },
 
             {
               pattern: '{lib/common/**,lib/utils/**,@utils/**}',

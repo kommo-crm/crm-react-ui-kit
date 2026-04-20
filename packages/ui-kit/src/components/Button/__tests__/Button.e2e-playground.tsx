@@ -1,13 +1,13 @@
 import React from 'react';
 
+import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
+import TriggerIcon from '@storybook-utils/icons/trigger.svg';
+import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
+
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
 } from 'src/tests/e2e/ComponentPlayground';
-
-import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
-import TriggerIcon from '@storybook-utils/icons/trigger.svg';
-import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 
 import {
   Button,

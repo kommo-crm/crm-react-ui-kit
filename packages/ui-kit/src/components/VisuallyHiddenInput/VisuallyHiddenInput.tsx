@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { BaseInput } from 'src/components/BaseInput/BaseInput';
+import { BaseInput } from '@/components/BaseInput/BaseInput';
 
 import { type VisuallyHiddenInputProps } from './VisuallyHiddenInput.props';
 

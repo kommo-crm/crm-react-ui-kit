@@ -2,6 +2,7 @@
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
   "version": "1.7.0",
+  "license": "SEE LICENSE IN LICENSE",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -128,12 +129,7 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "docker:clear-playwright-cache": "./scripts/generate_env.docker.sh && docker compose --env-file=./.env.docker rm -f && docker volume rm crm-react-ui-kit_playwright_cache",
     "test": "jest --maxWorkers 2",
-    "test:e2e": "./scripts/generate_env.docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
-    "test:e2e:update-snapshots": "sh -c './scripts/generate_env.docker.sh -u \"$@\" && docker compose --env-file=./.env.docker up --abort-on-container-exit' --",
     "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
     "eslint": "eslint --quiet",
     "tslint": "tsc --noEmit -p tsconfig.build.json",
@@ -142,21 +138,16 @@
     "prepare": "husky"
   },
   "devDependencies": {
+    "@kommo-crm/storybook": "*",
     "@eslint/js": "9.12.0",
     "@playwright/experimental-ct-react": "1.47.0",
     "@playwright/test": "1.47.0",
-    "@storybook/addon-essentials": "8.6.0",
-    "@storybook/blocks": "8.6.0",
-    "@storybook/react": "8.6.0",
-    "@storybook/react-vite": "8.6.0",
-    "@storybook/test": "8.6.0",
     "@stylistic/eslint-plugin": "2.9.0",
     "@swc/core": "1.7.28",
     "@swc/jest": "0.2.36",
     "@testing-library/jest-dom": "6.5.0",
     "@testing-library/react": "16.0.1",
     "@testing-library/user-event": "14.5.2",
-    "@types/css": "0.0.38",
     "@types/glob": "8.1.0",
     "@types/hash-sum": "1.0.2",
     "@types/jest": "29.5.12",
@@ -165,7 +156,6 @@
     "@types/react-dom": "18",
     "@vitejs/plugin-react": "4.3.1",
     "concurrently": "9.1.2",
-    "css": "3.0.0",
     "eslint": "9.12.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-import-resolver-typescript": "3.6.3",
@@ -192,15 +182,12 @@
     "prettier": "3.4.2",
     "prop-types": "15.8.1",
     "react": "18",
-    "react-docgen-typescript": "2.2.2",
     "react-dom": "18",
-    "storybook": "8.6.0",
     "ts-jest": "29.2.4",
     "ts-node": "10.9.2",
     "typescript": "5.5.4",
     "typescript-eslint": "8.2.0",
     "vite": "5.4.2",
-    "vite-plugin-css-injected-by-js": "3.5.2",
     "vite-plugin-dts": "4.0.3",
     "vite-plugin-lib-inject-css": "2.1.1",
     "vite-plugin-svgr": "4.2.0"
@@ -210,17 +197,14 @@
     "@radix-ui/react-dropdown-menu": "2.1.15",
     "@react-spring/web": "10.0.1",
     "classnames": "2.5.1",
-    "i18next": "24.2.2",
-    "i18next-browser-languagedetector": "8.0.4",
     "nanoid": "3.3.4",
-    "react-i18next": "15.4.1",
     "react-markdown": "10.0.1"
   },
   "peerDependencies": {
     "@types/react": "*",
     "@types/react-dom": "*",
-    "react": "^18.0",
-    "react-dom": "^18.0"
+    "react": "18.0",
+    "react-dom": "18.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

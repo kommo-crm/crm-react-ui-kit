@@ -1,4 +1,4 @@
-import SuccessIcon from 'src/icons/success.svg';
+import SuccessIcon from '@/icons/success.svg';
 
 import { CalloutBaseValues, CalloutThemeType } from './CalloutBase.theme';
 

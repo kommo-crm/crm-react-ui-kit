@@ -4,26 +4,28 @@ import {
   SemanticTokens,
   SemanticTokenPath,
 } from '@/types/semantic';
-import { ColorValue } from './color';
+
 import { PrimitivePath } from '@/design/primitives';
+
+import { ColorValue } from './color';
 
 export type ThemeConfig = BaseThemeConfig | UiKitThemeConfig;
 
-export type UiKitThemeConfig = {
+export interface UiKitThemeConfig {
   id: string;
   conditions?: string[];
   prefix?: string;
   isUiKitTheme: true;
   semanticTokens: SemanticUiKitTokens;
-};
+}
 
-export type BaseThemeConfig = {
+export interface BaseThemeConfig {
   id: string;
   semanticTokens: SemanticTokens;
   conditions?: string[];
   prefix?: string;
   isUiKitTheme?: false;
-};
+}
 
 export type TokenPrimitiveValue = ColorValue;
 export type TokenSemanticValue = PrimitivePath;
@@ -36,4 +38,6 @@ export type TokenPath =
   | PrimitivePath
   | SemanticTokenPath
   | SemanticUiKitTokenPath;
-export type UsableTokens = Record<string, unknown>;
+export interface UsableTokens {
+  [key: string]: unknown;
+}

@@ -2,9 +2,9 @@ import React, { CSSProperties, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { CanvasCentered, IconsMap } from '@storybook-utils/constants';
+import { CanvasCentered, IconsMap } from '@kommo-crm/storybook/constants';
 
-import { i18n } from '@i18n';
+import { i18n } from '@kommo-crm/storybook/i18n';
 
 import {
   InlineInput,

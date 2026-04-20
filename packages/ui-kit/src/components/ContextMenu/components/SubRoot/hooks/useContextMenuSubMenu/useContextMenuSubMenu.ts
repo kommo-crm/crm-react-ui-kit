@@ -2,7 +2,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 
 import { useIsTouchDevice } from '@kommo-crm/react-hooks';
 
-import { focusFirstFocusableItem } from 'src/components/ContextMenu/utils';
+import { focusFirstFocusableItem } from '@/components/ContextMenu/utils';
 
 import { ContextMenuMode } from '../../../../ContextMenu.enums';
 

@@ -2,7 +2,5 @@
  * Converts a dot-separated primitive path to a CSS variable name.
  * @example 'color.light.neutral.100' → 'color-light-neutral-100'
  */
-const getPrimitiveVarName = (path: string): string =>
+export const getPrimitiveVarName = (path: string): string =>
   path.split('.').join('-');
-
-export default getPrimitiveVarName;

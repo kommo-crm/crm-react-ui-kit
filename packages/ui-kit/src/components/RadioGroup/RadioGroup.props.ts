@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 
-import { type LabelProps } from 'src/components/Label';
+import { type LabelProps } from '@/components/Label';
 
 import { type RadioGroupThemeType } from './RadioGroup.themes';
 import { type RadioProps } from './components/Radio';

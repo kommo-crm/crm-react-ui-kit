@@ -11,7 +11,16 @@
       "cache": false
     },
     "dev": {
-      "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false
+    },
+    "@kommo-crm/tokens#dev": {
+      "dependsOn": [],
+      "persistent": true,
+      "cache": false
+    },
+    "@kommo-crm/storybook#dev": {
+      "dependsOn": [],
       "persistent": true,
       "cache": false
     },
@@ -21,6 +30,7 @@
     },
     "build-storybook": {
       "dependsOn": ["^build"],
+      "cache": false,
       "inputs": [
         "$TURBO_DEFAULT$",
         ".storybook/**",
@@ -33,6 +43,11 @@
         "webpack.config.*",
         ".env*"
       ],
+      "outputs": ["storybook-static/**"]
+    },
+    "@kommo-crm/storybook#build-storybook": {
+      "dependsOn": [],
+      "cache": false,
       "outputs": ["storybook-static/**"]
     },
     "lint": {

@@ -3,11 +3,11 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@/tests/e2e/ComponentPlayground';
 
-import { LabelTheme } from 'src/components/Label';
-import { Text, TextPrimaryTheme } from 'src/components/Text';
-import { CheckboxLightTheme } from 'src/components/Checkbox';
+import { LabelTheme } from '@/components/Label';
+import { Text, TextPrimaryTheme } from '@/components/Text';
+import { CheckboxLightTheme } from '@/components/Checkbox';
 
 import {
   CheckboxGroup,

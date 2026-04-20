@@ -1,4 +1,4 @@
-import { LabelTheme, type LabelThemeType } from 'src/components/Label';
+import { LabelTheme, type LabelThemeType } from '@/components/Label';
 
 type CheckboxThemeKey =
   | '--crm-ui-kit-checkbox-size'

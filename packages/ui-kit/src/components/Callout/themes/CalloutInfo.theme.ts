@@ -1,4 +1,4 @@
-import InfoIcon from 'src/icons/info.svg';
+import InfoIcon from '@/icons/info.svg';
 
 import { CalloutBaseValues, CalloutThemeType } from './CalloutBase.theme';
 

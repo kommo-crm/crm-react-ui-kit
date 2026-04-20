@@ -1,4 +1,4 @@
-import WarningIcon from 'src/icons/warning.svg';
+import WarningIcon from '@/icons/warning.svg';
 
 import { CalloutBaseValues, CalloutThemeType } from './CalloutBase.theme';
 

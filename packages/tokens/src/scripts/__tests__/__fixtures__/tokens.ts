@@ -24,6 +24,10 @@ export const mockThemes = [
         default: 'color.light.azure.500',
         inverted: 'color.dark.azure.50', // cross: light theme uses dark primitive
       },
+      button: {
+        background: 'color.light.blue.600',
+        color: '#ffffff',
+      },
     },
   },
   {

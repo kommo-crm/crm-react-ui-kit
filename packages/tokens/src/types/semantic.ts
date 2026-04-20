@@ -1,8 +1,10 @@
-import { TokenSemanticValue } from './common';
 import { ObjectLeaves } from '@/types/utils/object-leaves';
 import { DeepPartial } from '@/types/utils/deep-partial';
-import { AtomicSegments, Tokens } from './ui-kit-tokens';
+
 import { TokensToObject } from '@/types/utils/tokens-to-object';
+
+import { AtomicSegments, Tokens } from './ui-kit-tokens';
+import { TokenSemanticValue } from './common';
 
 import { TokenComponentValue } from './common';
 
@@ -15,7 +17,8 @@ export type SemanticTokensType = TokensToObject<
 type SemanticUiKitTokensShape = TokensToObject<
   Tokens,
   TokenSemanticValue,
-  AtomicSegments
+  AtomicSegments,
+  '--crm-ui-kit'
 >;
 
 export type SemanticUiKitTokens = DeepPartial<SemanticUiKitTokensShape>;

@@ -1,4 +1,4 @@
-import ErrorIcon from 'src/icons/error.svg';
+import ErrorIcon from '@/icons/error.svg';
 
 import { CalloutBaseValues, CalloutThemeType } from './CalloutBase.theme';
 

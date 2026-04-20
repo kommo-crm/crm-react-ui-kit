@@ -8,6 +8,7 @@
 | -------------------------------------------------- | ------------------------------------------------------- | ------------------------------------- |
 | [`@kommo-crm/crm-react-ui-kit`](./packages/ui-kit) | Ready-to-use React components implementing Kommo design | [README](./packages/ui-kit/README.md) |
 | [`@kommo-crm/tokens`](./packages/tokens)           | Design tokens (primitives, light & dark themes)         | [README](./packages/tokens/README.md) |
+| [`@kommo-crm/storybook`](./packages/storybook)     | Storybook workspace for ui-kit docs and demos           | [README](./packages/storybook/README.md) |
 
 ## Getting started
 

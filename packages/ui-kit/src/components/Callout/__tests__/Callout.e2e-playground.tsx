@@ -3,8 +3,8 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+} from '@/tests/e2e/ComponentPlayground';
+import { Text, TextPrimaryTheme } from '@/components/Text';
 
 import { Callout, type CalloutProps } from '..';
 

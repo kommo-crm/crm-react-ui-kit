@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { waitForNextFrame } from 'src/lib/utils';
+import { waitForNextFrame } from '@/lib/utils';
 
 import { Input } from '../Input';
 import { InputLightTheme } from '../Input.themes';

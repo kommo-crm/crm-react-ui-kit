@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 
-import { APPEARANCE_ATTRIBUTE_NAME } from 'src/lib/appearance';
+import { APPEARANCE_ATTRIBUTE_NAME } from '@/lib/appearance';
 
 import { type ConfigProviderProps } from './ConfigProvider.props';
 

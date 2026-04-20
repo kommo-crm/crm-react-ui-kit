@@ -1,9 +1,9 @@
 import React, { forwardRef, useCallback, useState } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
-import { noop } from 'src/utils';
+import { noop } from '@/utils';
 
 import { SelectProps, SelectType } from './Select.props';
 import { DISPLAY_NAME, SelectProvider } from './Select.context';

@@ -12,13 +12,11 @@
 
 ## Commands
 
-| Command                | Runs                               |
-| ---------------------- | ---------------------------------- |
-| `yarn lint`            | Lint the package                   |
-| `yarn lint:fix`        | Lint and auto-fix                  |
-| `yarn storybook`       | Start Storybook on port 6006       |
-| `yarn build-storybook` | Build Storybook for static hosting |
-| `yarn build`           | Build the package                  |
+| Command         | Runs              |
+| --------------- | ----------------- |
+| `yarn lint`     | Lint the package  |
+| `yarn lint:fix` | Lint and auto-fix |
+| `yarn build`    | Build the package |
 
 ## Testing
 

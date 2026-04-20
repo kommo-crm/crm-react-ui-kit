@@ -1,4 +1,4 @@
-import { Appearance } from 'src/lib/appearance';
+import { Appearance } from '@/lib/appearance';
 
 export interface ConfigProviderProps {
   /**

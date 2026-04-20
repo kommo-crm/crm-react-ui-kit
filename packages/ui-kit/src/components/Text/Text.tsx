@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
 import { type TextProps } from './Text.props';
 

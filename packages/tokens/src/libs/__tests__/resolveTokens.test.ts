@@ -6,7 +6,7 @@ const primitives = {
       azure: { 50: '#f8fcfe' },
     },
   },
-} as any;
+};
 
 describe('resolveTokens', () => {
   it('resolves a flat string primitive path to its value', () => {
@@ -23,6 +23,7 @@ describe('resolveTokens', () => {
         default: 'color.light.azure.50',
       },
     };
+
     expect(resolveTokens(tokens, primitives)).toEqual({
       background: { default: '#f8fcfe' },
     });
@@ -33,6 +34,7 @@ describe('resolveTokens', () => {
       a: 'color.light.azure.50',
       b: '#000000',
     };
+
     expect(resolveTokens(tokens, primitives)).toEqual({
       a: '#f8fcfe',
       b: '#000000',

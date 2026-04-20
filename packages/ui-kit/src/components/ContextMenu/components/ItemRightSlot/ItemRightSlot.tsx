@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState, useRef } from 'react';
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@/lib/utils';
 
 import type { ItemRightSlotProps } from './ItemRightSlot.props';
 

@@ -1,8 +1,9 @@
 import React, { forwardRef, useState } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-import { noop } from 'src/utils';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
+
+import { noop } from '@/utils';
 
 import { AccordionProvider } from '../../Accordion.context';
 import { AccordionThemeType } from '../../Accordion.themes';

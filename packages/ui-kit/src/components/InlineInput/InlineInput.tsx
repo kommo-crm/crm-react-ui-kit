@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
-import { Text } from 'src/components/Text';
-import { BaseInput } from 'src/components/BaseInput/BaseInput';
-import { isValidRenderValue } from 'src/lib/utils';
+import { Text } from '@/components/Text';
+import { BaseInput } from '@/components/BaseInput/BaseInput';
+import { isValidRenderValue } from '@/lib/utils';
 
 import { type InlineInputProps } from './InlineInput.props';
 import {

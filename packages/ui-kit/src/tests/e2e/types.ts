@@ -1,5 +1,5 @@
-import { Appearance } from 'src/lib/appearance';
-import { Platform } from 'src/lib/platform';
+import { Appearance } from '@/lib/appearance';
+import { Platform } from '@/lib/platform';
 
 export interface TestOptions {
   /**

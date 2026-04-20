@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
-import { Label } from 'src/components/Label';
+import { Label } from '@/components/Label';
 
 import { type RadioGroupType, type RadioGroupProps } from './RadioGroup.props';
 import { RadioGroupProvider, DISPLAY_NAME } from './RadioGroup.context';

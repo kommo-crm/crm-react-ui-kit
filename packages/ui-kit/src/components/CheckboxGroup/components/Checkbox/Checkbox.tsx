@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { Checkbox as CheckboxCore } from 'src/components/Checkbox/Checkbox';
+import { Checkbox as CheckboxCore } from '@/components/Checkbox/Checkbox';
 
 import { useCheckboxGroupContext } from '../../CheckboxGroup.context';
 import { useCheckboxItemRootContext } from '../ItemRoot/ItemRoot.context';

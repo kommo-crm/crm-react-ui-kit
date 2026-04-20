@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-import { VisuallyHiddenInput } from 'src/components/VisuallyHiddenInput';
-import { Label } from 'src/components/Label';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
+import { VisuallyHiddenInput } from '@/components/VisuallyHiddenInput';
+import { Label } from '@/components/Label';
 
 import { SwitcherType, type SwitcherProps } from './Switcher.props';
 import { type SwitcherTheme } from './Switcher.themes';

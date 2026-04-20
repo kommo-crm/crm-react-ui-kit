@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { useMemo, useState } from 'react';
 
-import { CrmUiKitCSSProperties } from 'src/lib/theme';
+import { CrmUiKitCSSProperties } from '@/lib/theme';
 
 const DEFAULT_PREFIX = 'crm-ui-kit-theme';
 

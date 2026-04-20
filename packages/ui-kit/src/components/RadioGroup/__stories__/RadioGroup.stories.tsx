@@ -2,17 +2,15 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { useArgs } from '@storybook/preview-api';
-
-import { CanvasCentered } from '@storybook-utils/constants';
+import { i18n } from '@kommo-crm/storybook/i18n';
+import { CanvasCentered } from '@kommo-crm/storybook/constants';
 
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryLightTheme,
-} from 'src/components/Text';
-import { Label, LabelTheme } from 'src/components/Label';
-
-import { i18n } from '@i18n';
+} from '@/components/Text';
+import { Label, LabelTheme } from '@/components/Label';
 
 import {
   RadioPrimaryTheme,

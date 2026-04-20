@@ -3,7 +3,7 @@ import { Trigger as RadixDropdownMenuTrigger } from '@radix-ui/react-dropdown-me
 
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@/lib/utils';
 
 import { useContextMenuContext } from '../../../../ContextMenu.context';
 

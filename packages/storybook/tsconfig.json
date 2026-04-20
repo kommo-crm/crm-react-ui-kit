@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": true,
+    "rootDir": "..",
+    "outDir": "./dist/",
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "react",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@sb/*": ["./src/*"],
+      "@ui-kit/*": ["../ui-kit/src/*"]
+    }
+  },
+  "include": [
+    "./**/*.d.ts",
+    "./**/*.tsx",
+    "./**/*.ts",
+    "./.storybook/**/*",
+    "../ui-kit/src/icons/svg.d.ts",
+    "../ui-kit/src/stylesheets/styles.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}

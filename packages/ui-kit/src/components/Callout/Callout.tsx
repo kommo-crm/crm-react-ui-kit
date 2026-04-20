@@ -1,9 +1,9 @@
 import React, { forwardRef, useMemo } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
-import { omit } from 'src/utils';
+import { omit } from '@/utils';
 
 import { type CalloutProps } from './Callout.props';
 import { CalloutThemeType } from './themes/CalloutBase.theme';

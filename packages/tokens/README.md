@@ -1,6 +1,6 @@
 <h1 align="center">@kommo-crm/tokens</h1>
 
-> Design tokens for Kommo CRM — primitives and light/dark themes, available in multiple formats
+> Design tokens for Kommo CRM — primitives and themes, available in multiple formats
 
 ## Installation
 
@@ -10,22 +10,22 @@
 
 ## Available exports
 
-| Export                         | Formats                      | Description                 |
-| ------------------------------ | ---------------------------- | --------------------------- |
-| `@kommo-crm/tokens/primitives` | JS/TS, CSS, SCSS, LESS, JSON | Base primitive token values |
-| `@kommo-crm/tokens/light`      | JS/TS, CSS, SCSS, LESS, JSON | Light theme semantic tokens |
-| `@kommo-crm/tokens/dark`       | JS/TS, CSS, SCSS, LESS, JSON | Dark theme semantic tokens  |
+| Export                                 | Formats                      | Description                       |
+| -------------------------------------- | ---------------------------- | --------------------------------- |
+| `@kommo-crm/tokens/primitives`         | JS/TS, CSS, SCSS, LESS, JSON | Base primitive token values       |
+| `@kommo-crm/tokens/light-ui-kit`       | JS/TS, CSS, SCSS, LESS, JSON | Light theme semantic tokens       |
+| `@kommo-crm/tokens/alternative-ui-kit` | JS/TS, CSS, SCSS, LESS, JSON | Alternative theme semantic tokens |
 
 ### Format suffixes
 
-| Suffix       | Import path example               |
-| ------------ | --------------------------------- |
-| JS/TS        | `@kommo-crm/tokens/light`         |
-| CSS          | `@kommo-crm/tokens/light/css`     |
-| Minified CSS | `@kommo-crm/tokens/light/min.css` |
-| SCSS         | `@kommo-crm/tokens/light/scss`    |
-| LESS         | `@kommo-crm/tokens/light/less`    |
-| JSON         | `@kommo-crm/tokens/light/json`    |
+| Suffix       | Import path example                      |
+| ------------ | ---------------------------------------- |
+| JS/TS        | `@kommo-crm/tokens/{THEME_NAME}`         |
+| CSS          | `@kommo-crm/tokens/{THEME_NAME}/css`     |
+| Minified CSS | `@kommo-crm/tokens/{THEME_NAME}/min.css` |
+| SCSS         | `@kommo-crm/tokens/{THEME_NAME}/scss`    |
+| LESS         | `@kommo-crm/tokens/{THEME_NAME}/less`    |
+| JSON         | `@kommo-crm/tokens/{THEME_NAME}/json`    |
 
 ## Commands
 

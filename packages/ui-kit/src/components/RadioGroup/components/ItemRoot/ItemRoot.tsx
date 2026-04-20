@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@/hooks/useThemeClassName';
 
 import { useRadioGroupContext } from '../../RadioGroup.context';
 

@@ -30,7 +30,7 @@ const semanticTokens = defineUiKitSemanticTokens({
   },
 });
 
-export default defineUiKitTheme({
+export const theme = defineUiKitTheme({
   id: 'my-theme',
   prefix: 'crm-ui-kit',
   conditions: [":root[data-crm-ui-kit-theme='my-theme']"],
@@ -67,7 +67,7 @@ const semanticTokens = defineUiKitSemanticTokens({
   },
 });
 
-export default defineUiKitTheme({
+export const theme = defineUiKitTheme({
   id: 'my-theme',
   prefix: 'crm-ui-kit',
   conditions: [":root[data-crm-ui-kit-theme='my-theme']"],
@@ -79,12 +79,10 @@ export default defineUiKitTheme({
 
 ```ts
 import { ThemeConfig } from '@/types/common';
-import lightUiKit from './lightUiKit';
-import myTheme from './myTheme';
+import { lightUiKit } from './lightUiKit';
+import { myTheme } from './myTheme';
 
-const themes: ThemeConfig[] = [lightUiKit, myTheme];
-
-export default themes;
+export const themes: ThemeConfig[] = [lightUiKit, myTheme];
 ```
 
 ---

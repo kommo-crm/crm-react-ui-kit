@@ -1,4 +1,4 @@
-import { TextPrimaryTheme, TextTheme } from 'src/components/Text';
+import { TextPrimaryTheme, TextTheme } from '@/components/Text';
 
 export const OptionTextTheme: TextTheme = {
   ...TextPrimaryTheme,

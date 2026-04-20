@@ -3,7 +3,7 @@ import { SubContent as RadixDropdownMenuSubContent } from '@radix-ui/react-dropd
 import { useSpring, animated, easings } from '@react-spring/web';
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@/lib/utils';
 
 import { LevelProvider, useLevelContext } from '../../providers/LevelProvider';
 

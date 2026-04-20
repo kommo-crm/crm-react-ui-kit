@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import cx from 'classnames';
 
-import { Text } from 'src/components/Text';
+import { Text } from '@/components/Text';
 
 import { OptionProps } from './Option.props';
 

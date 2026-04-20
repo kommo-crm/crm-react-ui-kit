@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { ListProps as BaseListProps } from 'src/components/List';
+import { ListProps as BaseListProps } from '@/components/List';
 
 export type ListPortalProps = {
   /**

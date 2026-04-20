@@ -1,12 +1,10 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { i18n } from '@kommo-crm/storybook/i18n';
+import { CanvasCentered } from '@kommo-crm/storybook/constants';
 
-import { CanvasCentered } from '@storybook-utils/constants';
-
-import { Text, TextPrimaryTheme } from 'src/components/Text';
-
-import { i18n } from '@i18n';
+import { Text, TextPrimaryTheme } from '@/components/Text';
 
 import {
   TabPrimaryTheme,
