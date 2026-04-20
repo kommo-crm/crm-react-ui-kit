@@ -13,8 +13,8 @@
 | Export                                 | Formats                      | Description                       |
 | -------------------------------------- | ---------------------------- | --------------------------------- |
 | `@kommo-crm/tokens/primitives`         | JS/TS, CSS, SCSS, LESS, JSON | Base primitive token values       |
-| `@kommo-crm/tokens/light-ui-kit`       | JS/TS, CSS, SCSS, LESS, JSON | Light theme semantic tokens       |
-| `@kommo-crm/tokens/alternative-ui-kit` | JS/TS, CSS, SCSS, LESS, JSON | Alternative theme semantic tokens |
+| `@kommo-crm/tokens/ui-kit/light`       | JS/TS, CSS, SCSS, LESS, JSON | Light theme semantic tokens       |
+| `@kommo-crm/tokens/ui-kit/alternative` | JS/TS, CSS, SCSS, LESS, JSON | Alternative theme semantic tokens |
 
 ### Format suffixes
 
