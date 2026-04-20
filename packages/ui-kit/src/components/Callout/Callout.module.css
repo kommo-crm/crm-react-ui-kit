@@ -3,6 +3,7 @@
   padding: var(--crm-ui-kit-callout-padding);
   background-color: var(--crm-ui-kit-callout-background-color);
   border-radius: var(--crm-ui-kit-callout-border-radius);
+  color: var(--crm-ui-kit-callout-text-color);
 }
 
 .icon {

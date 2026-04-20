@@ -59,11 +59,15 @@ const meta = {
   args: {
     theme: CalloutErrorTheme,
     children: (
-      <Text theme={TextPrimaryTheme} size="l">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
-        ducimus inventore minima optio error unde incidunt atque. Minima,
-        maxime?
-      </Text>
+      // FIXME: before merge
+      <span>
+        some base text
+        <Text theme={TextPrimaryTheme} size="l">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+          ipsam ducimus inventore minima optio error unde incidunt atque.
+          Minima, maxime?
+        </Text>
+      </span>
     ),
   },
 } satisfies Meta<typeof Callout>;
