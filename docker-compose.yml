@@ -3,26 +3,28 @@ services:
     image: ${IMAGE}
     ipc: host
     user: root
-    working_dir: '/app'
+    working_dir: '/monorepo/packages/ui-kit'
     command: sh -c "
       apt-get update &&
       apt-get install -y python3 build-essential &&
       corepack enable &&
-      YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
+      cd /monorepo &&
+      YARN_ENABLE_SCRIPTS=false yarn install --immutable --ignore-engines &&
+      cd packages/ui-kit &&
       yarn test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-} ${GREP_FLAG:-}
       "
     volumes:
-      - ./:/app
+      - ./:/monorepo
       # Exclude node_modules.
-      - /app/node_modules
+      - /monorepo/node_modules
       # Cache the node_modules installed inside the container and cache the directory.
       - yarn_cache:/yarn
-      - node_modules_cache:/app/node_modules
-      - playwright_cache:/app/playwright/.cache
+      - node_modules_cache:/monorepo/packages/ui-kit/node_modules
+      - playwright_cache:/monorepo/packages/ui-kit/playwright/.cache
       # Exclude anything that won't be needed in the container.
-      - /app/.git
-      - /app/.cache
-      - /app/.swc
+      - /monorepo/.git
+      - /monorepo/packages/ui-kit/.cache
+      - /monorepo/packages/ui-kit/.swc
 
 volumes:
   yarn_cache:

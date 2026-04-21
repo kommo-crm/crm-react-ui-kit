@@ -32,11 +32,13 @@ export default tseslint.config(
   },
   {
     ignores: [
-      'dist',
-      '.swc',
-      'storybook-static',
-      'playwright/.cache',
-      'coverage',
+      'packages/ui-kit/.swc',
+      'packages/ui-kit/storybook-static',
+      'packages/ui-kit/playwright/.cache',
+      'packages/ui-kit/coverage',
+      'packages/ui-kit/dist',
+      'packages/tokens/.generated',
+      'packages/tokens/dist',
     ],
   },
   {
@@ -392,6 +394,13 @@ export default tseslint.config(
   },
 
   {
+    files: ['packages/tokens/src/index.ts'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+
+  {
     ...mdx.flat,
     rules: {
       'prettier/prettier': 'error',
@@ -409,6 +418,7 @@ export default tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
+          project: ['tsconfig.json', 'packages/*/tsconfig.json'],
         },
       },
     },
@@ -429,6 +439,7 @@ export default tseslint.config(
 
           'pathGroups': [
             { pattern: '@ui/**', group: 'external', position: 'after' },
+            { pattern: '@/*', group: 'internal', position: 'after' },
 
             {
               pattern: '{lib/common/**,lib/utils/**,@utils/**}',

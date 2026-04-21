@@ -78,3 +78,6 @@ e2e-results.json
 .swc
 __diff_output__
 e2e-result.json
+
+# monorepo
+.turbo
