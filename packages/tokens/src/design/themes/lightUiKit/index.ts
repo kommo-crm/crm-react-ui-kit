@@ -2,13 +2,7 @@ import { SemanticUiKitTokens } from '@/types/semantic';
 
 import { defineSemanticTokens, defineTheme } from '@/define';
 
-const semanticTokens = defineSemanticTokens<SemanticUiKitTokens>({
-  palette: {
-    text: {
-      error: 'color.light.red.600',
-    },
-  },
-});
+const semanticTokens = defineSemanticTokens<SemanticUiKitTokens>({});
 
 export const lightUiKitTheme = defineTheme<SemanticUiKitTokens>({
   id: 'light-ui-kit',
