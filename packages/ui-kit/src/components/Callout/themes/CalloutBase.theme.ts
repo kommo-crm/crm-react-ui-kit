@@ -4,8 +4,7 @@ type CalloutKey =
   | '--crm-ui-kit-callout-background-color'
   | '--crm-ui-kit-callout-padding'
   | '--crm-ui-kit-callout-border-radius'
-  | '--crm-ui-kit-callout-icon-color'
-  | '--crm-ui-kit-callout-text-color';
+  | '--crm-ui-kit-callout-icon-color';
 
 export type CalloutThemeType = {
   Icon: FC<React.SVGProps<SVGSVGElement>>;
@@ -20,6 +19,5 @@ export const CalloutBaseValues: Omit<
   '--crm-ui-kit-callout-padding': '12px',
   '--crm-ui-kit-callout-border-radius':
     'var(--crm-ui-kit-border-radius-default)',
-  '--crm-ui-kit-callout-icon-color': 'var(--crm-ui-kit-palette-text-primary)',
-  '--crm-ui-kit-callout-text-color': 'var(--crm-ui-kit-palette-text-primary)',
+  '--crm-ui-kit-callout-icon-color': 'var(--crm-ui-kit-palette-text-primary);',
 };
