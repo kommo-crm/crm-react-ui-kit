@@ -62,8 +62,7 @@ const InputBaseValues: Omit<
     'var(--crm-ui-kit-palette-placeholder-primary)',
   '--crm-ui-kit-input-error-placeholder-color':
     'var(--crm-ui-kit-palette-placeholder-primary)',
-  '--crm-ui-kit-input-error-description-color':
-    'var(--crm-ui-kit-palette-text-error, var(--_crm-ui-kit-palette-text-error))',
+  '--crm-ui-kit-input-error-description-color': 'var(--crm-ui-kit-color-error)',
   '--crm-ui-kit-input-background-color':
     'var(--crm-ui-kit-palette-background-primary)',
   '--crm-ui-kit-input-font-size': 'var(--crm-ui-kit-base-font-size)',
