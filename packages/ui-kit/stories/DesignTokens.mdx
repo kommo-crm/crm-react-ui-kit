@@ -100,6 +100,7 @@ const azure900 = color.light.azure[900]; // '#0b2934'
       <th>{i18n.t('Name')}</th>
       <th>{i18n.t('Description')}</th>
       <th>{i18n.t('Selector')}</th>
+      <th>{i18n.t('Import path')}</th>
     </tr>
   </thead>
   <tbody>
@@ -111,6 +112,9 @@ const azure900 = color.light.azure[900]; // '#0b2934'
       <td>
         <code>:root</code>
       </td>
+      <td>
+        <code>{i18n.t('@kommo-crm/tokens/ui-kit/light/*')}</code>
+      </td>
     </tr>
     <tr>
       <td>
@@ -119,6 +123,9 @@ const azure900 = color.light.azure[900]; // '#0b2934'
       <td>{i18n.t('Dark theme')}</td>
       <td>
         <code>:root[data-crm-ui-kit-theme=alternative]</code>
+      </td>
+      <td>
+        <code>{i18n.t('@kommo-crm/tokens/ui-kit/alternative/*')}</code>
       </td>
     </tr>
   </tbody>
@@ -145,8 +152,8 @@ const azure900 = color.light.azure[900]; // '#0b2934'
 <ReactMarkdown>{`### CSS`}</ReactMarkdown>
 
 ```css
-@import '@kommo-crm/tokens/light/css';
-/* minified: @import '@kommo-crm/tokens/light/min.css'; */
+@import '@kommo-crm/tokens/ui-kit/light/css';
+/* minified: @import '@kommo-crm/tokens/ui-kit/light/min.css'; */
 ```
 
 <ReactMarkdown>
@@ -167,7 +174,7 @@ const azure900 = color.light.azure[900]; // '#0b2934'
 <ReactMarkdown>{`### SCSS / Sass`}</ReactMarkdown>
 
 ```scss
-@use '@kommo-crm/tokens/light/scss' as theme;
+@use '@kommo-crm/tokens/ui-kit/light/scss' as theme;
 
 .my-element {
   color: theme.$text-primary;
@@ -178,7 +185,7 @@ const azure900 = color.light.azure[900]; // '#0b2934'
 <ReactMarkdown>{`### LESS`}</ReactMarkdown>
 
 ```less
-@import '@kommo-crm/tokens/light/less';
+@import '@kommo-crm/tokens/ui-kit/light/less';
 
 .my-element {
   color: @text-primary;
@@ -189,7 +196,7 @@ const azure900 = color.light.azure[900]; // '#0b2934'
 <ReactMarkdown>{`### JavaScript / TypeScript`}</ReactMarkdown>
 
 ```ts
-import { semantic, component } from '@kommo-crm/tokens/light';
+import { semantic, component } from '@kommo-crm/tokens/ui-kit/light';
 
 const primaryText = semantic.text.primary; // '#0b2934'
 const buttonText = component.button.text; // '#d4e3f1'

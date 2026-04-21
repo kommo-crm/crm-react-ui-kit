@@ -15,7 +15,9 @@ export default {
     'Cada tema define un ámbito CSS donde se aplican sus tokens. El tema `light` apunta a `:root` globalmente. Los temas futuros podrán usar un selector de atributo para permitir el cambio en tiempo de ejecución:',
   'Description': 'Descripción',
   'Selector': 'Selector',
-  'Default light theme, always active': 'Tema claro predeterminado, siempre activo',
+  'Import path': 'Ruta de importación',
+  'Default light theme, always active':
+    'Tema claro predeterminado, siempre activo',
   'Dark theme': 'Tema oscuro',
   'Theme tokens are exposed as CSS custom properties on `:root`:':
     'Los tokens de tema se exponen como propiedades personalizadas CSS en `:root`:',

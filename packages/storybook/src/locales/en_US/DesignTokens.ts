@@ -15,6 +15,7 @@ export default {
     'Each theme defines a CSS scope where its tokens are applied. The `light` theme targets `:root` globally. Future themes may use an attribute selector to allow switching at runtime:',
   'Description': 'Description',
   'Selector': 'Selector',
+  'Import path': 'Import path',
   'Default light theme, always active': 'Default light theme, always active',
   'Dark theme': 'Dark theme',
   'Theme tokens are exposed as CSS custom properties on `:root`:':
