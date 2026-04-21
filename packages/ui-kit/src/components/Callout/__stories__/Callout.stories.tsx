@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@kommo-crm/storybook/constants';
 
+import { Text, TextPrimaryTheme } from '@/components/Text';
+
 import { Callout } from '..';
 
 import { CalloutErrorTheme } from '../themes/CalloutError.theme';
@@ -57,10 +59,14 @@ const meta = {
   args: {
     theme: CalloutErrorTheme,
     children: (
+      // FIXME: before merge
       <span>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
-        ducimus inventore minima optio error unde incidunt atque. Minima,
-        maxime?
+        some base text
+        <Text theme={TextPrimaryTheme} size="l">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+          ipsam ducimus inventore minima optio error unde incidunt atque.
+          Minima, maxime?
+        </Text>
       </span>
     ),
   },
