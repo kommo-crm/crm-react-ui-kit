@@ -24,7 +24,7 @@ Snapshots will be written to `src/components/<Name>/__image_snapshots__/` automa
 
 ```bash
 yarn test:e2e:update-snapshots
-yarn test:e2e:update-snapshots -- -g "<Name>"   # filter — MUST use -g, not --grep
+yarn test:e2e:update-snapshots -g "<Name>"   # filter — MUST use -g, not --grep
 ```
 
 `scripts/generate_env.docker.sh` parses only `-g`; `--grep` is silently dropped and the run fans out to the full suite, which can abort with `unexpected EOF` partway and leave orphan PNGs for `<Name>` behind. If that happens, delete `src/components/<Name>/__image_snapshots__/` and retry with `-g`.

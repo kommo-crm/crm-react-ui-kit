@@ -228,10 +228,11 @@ Keep alphabetical/visual grouping consistent with neighbouring entries.
 - [ ] Identify theme tokens (colors, sizes, spacing) and decide which are required vs optional
 - [ ] Create the 5 files with templates above
 - [ ] Replace ALL <Name>, <name>, <Tag>, <tag> placeholders
-- [ ] Verify the component is lint-clean (run `yarn lint`, not just `yarn tslint` — prettier/eslint catches formatting issues that `tsc` ignores)
 - [ ] Add entries to package.json (exports + typesVersions)
 - [ ] Hand off to crm-ui-kit-unit-test, crm-ui-kit-e2e-test, crm-ui-kit-stories
 ```
+
+When used as part of `crm-ui-kit-full-component`, do NOT run `yarn lint` after this phase — the orchestrator runs lint once in Phase 6 against the full file set (source + tests + stories + e2e) so prettier violations are resolved in a single pass.
 
 ## Reference Components (FALLBACK ONLY)
 

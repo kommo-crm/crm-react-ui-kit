@@ -31,8 +31,8 @@ Task Progress:
 - [ ] Phase 2: Unit tests                       → crm-ui-kit-unit-test
 - [ ] Phase 3: Storybook stories + MDX          → crm-ui-kit-stories
 - [ ] Phase 4: Playwright e2e + playground      → crm-ui-kit-e2e-test
-- [ ] Phase 5: Wire into package.json + verify
-- [ ] Phase 6: Generate snapshots
+- [ ] Phase 5: Wire into package.json
+- [ ] Phase 6: Lint + unit tests + snapshots
 ```
 
 Phases 2–4 can be executed in parallel only if you have already completed Phase 1 — they all depend on the public API exposed by `index.ts`.
@@ -83,11 +83,11 @@ src/components/<Name>/
 └── <Name>.module.css
 ```
 
-After writing all 5 files, **run `yarn lint`** (eslint + tslint in parallel). Fix every error before moving to phases 2–4. Do NOT run only `yarn tslint`: prettier/eslint catches formatting violations that `tsc` cannot — e.g. a short `.themes.ts` `key: value` pair that prettier wants collapsed onto one line, or an MDX tag (`<ThemeVisualization>`) that exceeds 80 columns and must be wrapped. Skipping eslint here just moves the rework into Phase 5.
+Do NOT run `yarn lint` here. Lint is deferred to Phase 6 (right before snapshot generation) so it runs ONCE against the full set of files — source, tests, stories, e2e, `package.json` — and you fix every prettier/eslint violation in a single pass instead of playing whack-a-mole between phases.
 
 ## Phases 2–4 — Tests + Stories (run in parallel)
 
-After Phase 1 passes `yarn lint`, **read all three sub-skills in a single parallel batch**, then **write all three file groups in parallel** (they only depend on the `index.ts` public API, not on each other):
+After Phase 1, **read all three sub-skills in a single parallel batch**, then **write all three file groups in parallel** (they only depend on the `index.ts` public API, not on each other):
 
 **Read in parallel:**
 
@@ -119,7 +119,7 @@ src/components/<Name>/__tests__/
 
 One playground wrapper per theme preset.
 
-## Phase 5 — Package wiring & lint
+## Phase 5 — Package wiring
 
 Read `package.json` ONCE, then make ALL four changes in a single editing session (do not re-read between edits — a formatter runs on save and will reject a stale edit):
 
@@ -147,22 +147,31 @@ Read `package.json` ONCE, then make ALL four changes in a single editing session
    "version": "X.Y+1.0"
    ```
 
-Then run:
+Do NOT run `yarn lint` or `yarn test` here — both are part of Phase 6.
+
+## Phase 6 — Lint, tests, and snapshots
+
+> **Requires Docker.** The snapshot command spins up containers defined in `docker-compose` to run Playwright. Make sure Docker is running before executing.
+
+Run, in order:
 
 ```bash
-yarn lint           # eslint + tslint in parallel
-yarn test           # all unit tests
+yarn lint:fix                                   # eslint --fix: autofix + report non-fixable errors
+yarn tslint                                     # type-check (not included in lint:fix)
+yarn test                                       # all unit tests
+yarn test:e2e:update-snapshots -- -g "<Name>"   # visual snapshots in Docker
 ```
 
-Fix any error introduced before moving on.
+`yarn lint:fix` runs `eslint --fix` — it autofixes every prettier/trailing-comma violation the templates produce AND exits non-zero on any remaining (non-autofixable) eslint error, so a clean exit proves eslint is green. It does NOT run `tslint`, so follow up with `yarn tslint` separately for the type check. Do NOT run `yarn lint` after `lint:fix` — the eslint half is redundant (it just re-checks what `lint:fix` already confirmed) and costs an extra cold start.
 
-## Phase 6 — Generate snapshots
+Fix every lint / test error before starting the Docker snapshot run — lint failures there are cheap to resolve, and Docker setup takes minutes.
 
-> **Requires Docker.** The command spins up containers defined in `docker-compose` to run Playwright. Make sure Docker is running before executing.
+### If snapshot generation fails
 
-```bash
-yarn test:e2e:update-snapshots -- -g "<Name>"
-```
+1. **First response:** run `yarn docker:clear-playwright-cache` and retry `yarn test:e2e:update-snapshots -- -g "<Name>"`. Stale volumes (node_modules_cache, playwright_cache) hold onto old bundler state that references files that no longer exist — clearing them resolves most transient failures (`vite-plugin-svgr` pointing at a deleted asset, `unexpected EOF`, etc.) without any code investigation.
+2. **Only if the retry still fails**, investigate the actual error (grep the repo for the missing import, check recent changes to `playwright/`, `storybook/`, or `src/tests/e2e/`).
+
+Do NOT jump straight to grepping the codebase on the first failure — Docker cache staleness is by far the most likely cause and the fix is a single command.
 
 **Use `-g`, NOT `--grep`.** `scripts/generate_env.docker.sh` parses only `-g` — `--grep` is silently dropped and the run fans out to the full suite, which can abort with `unexpected EOF` partway and leave orphan PNGs for `<Name>` behind.
 
