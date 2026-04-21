@@ -1,4 +1,5 @@
 import { TokenSemanticValue } from '../common';
+
 import { TokenToObject } from './token-to-object';
 import { UnionToIntersection } from './union-to-intersection';
 
