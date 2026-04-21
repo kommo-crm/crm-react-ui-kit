@@ -7,7 +7,4 @@ export const CalloutErrorTheme: CalloutThemeType = {
   'Icon': ErrorIcon,
   '--crm-ui-kit-callout-background-color':
     'var(--crm-ui-kit-palette-callout-error-background-color)',
-  '--crm-ui-kit-callout-icon-color': 'var(--crm-ui-kit-palette-text-error)',
-  '--crm-ui-kit-callout-text-color':
-    'var(--crm-ui-kit-palette-text-error, var(--_crm-ui-kit-palette-text-error))',
 };
