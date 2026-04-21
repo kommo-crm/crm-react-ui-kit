@@ -42,8 +42,7 @@ const TextAreaBaseValues: Omit<
     'var(--crm-ui-kit-palette-placeholder-primary)',
   '--crm-ui-kit-textarea-error-border-color':
     'var(--crm-ui-kit-palette-border-error)',
-  '--crm-ui-kit-textarea-error-color':
-    'var(--crm-ui-kit-palette-text-error, var(--_crm-ui-kit-palette-text-error))',
+  '--crm-ui-kit-textarea-error-color': 'var(--crm-ui-kit-color-error)',
   '--crm-ui-kit-textarea-error-placeholder-color':
     'var(--crm-ui-kit-palette-placeholder-primary)',
   '--crm-ui-kit-textarea-background-color':
