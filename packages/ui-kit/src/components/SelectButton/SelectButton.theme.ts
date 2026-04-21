@@ -33,8 +33,7 @@ const SelectButtonBaseValues: Omit<
   '--crm-ui-kit-select-button-width': '100%',
   '--crm-ui-kit-select-button-background-color':
     'var(--crm-ui-kit-palette-background-primary)',
-  '--crm-ui-kit-select-button-error-color':
-    'var(--crm-ui-kit-palette-text-error, var(--_crm-ui-kit-palette-text-error))',
+  '--crm-ui-kit-select-button-error-color': 'var(--crm-ui-kit-color-error)',
   '--crm-ui-kit-select-button-border-radius':
     'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-select-button-padding': '0px 7px 0px 9px',
