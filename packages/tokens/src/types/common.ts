@@ -1,5 +1,3 @@
-import { SemanticUiKitTokenPath, SemanticTokenPath } from '@/types/semantic';
-
 import { PrimitivePath } from '@/design/primitives';
 
 import { ColorValue } from './color';
@@ -12,15 +10,8 @@ export interface ThemeConfig<SemanticTokens> {
 
 export type TokenPrimitiveValue = ColorValue;
 export type TokenSemanticValue = PrimitivePath;
-export type TokenComponentValue =
-  | PrimitivePath
-  | SemanticTokenPath
-  | SemanticUiKitTokenPath;
 export type TokenValue = ColorValue;
-export type TokenPath =
-  | PrimitivePath
-  | SemanticTokenPath
-  | SemanticUiKitTokenPath;
+export type TokenPath = PrimitivePath;
 export interface UsableTokens {
   [key: string]: unknown;
 }

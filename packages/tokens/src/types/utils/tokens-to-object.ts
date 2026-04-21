@@ -1,11 +1,10 @@
-import { TokenComponentValue } from '../common';
-
+import { TokenSemanticValue } from '../common';
 import { TokenToObject } from './token-to-object';
 import { UnionToIntersection } from './union-to-intersection';
 
 export type TokensToObject<
   T extends string,
-  V = TokenComponentValue,
+  V = TokenSemanticValue,
   Atoms extends string = never,
-  Prefix extends string = '',
+  Prefix extends string = '-',
 > = UnionToIntersection<TokenToObject<T, V, Atoms, Prefix>>;

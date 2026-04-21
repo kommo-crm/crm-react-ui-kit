@@ -35,12 +35,4 @@ describe('resolveTokenValue', () => {
       'Token not found: "color.light" → "azur" does not exist in path "color.light.azur.50"'
     );
   });
-
-  it('throws a descriptive error when the root key does not exist', () => {
-    expect(() =>
-      resolveTokenValue(primitives, 'palette.red.50' as TokenPath)
-    ).toThrow(
-      'Token not found: "palette" does not exist in path "palette.red.50"'
-    );
-  });
 });

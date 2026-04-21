@@ -1,4 +1,3 @@
-import { ObjectLeaves } from '@/types/utils/object-leaves';
 import { DeepPartial } from '@/types/utils/deep-partial';
 
 import { TokensToObject } from '@/types/utils/tokens-to-object';
@@ -16,14 +15,11 @@ type SemanticUiKitTokensShape = TokensToObject<
 >;
 
 export type SemanticUiKitTokens = DeepPartial<SemanticUiKitTokensShape>;
-export type SemanticUiKitTokenPath = ObjectLeaves<SemanticUiKitTokensShape>;
 
 type SemanticTokensShape = TokensToObject<
   BaseTokens,
   TokenSemanticValue,
-  BaseAtomicSegments,
-  '-'
+  BaseAtomicSegments
 >;
 
 export type SemanticTokens = DeepPartial<SemanticTokensShape>;
-export type SemanticTokenPath = ObjectLeaves<SemanticTokensShape>;
