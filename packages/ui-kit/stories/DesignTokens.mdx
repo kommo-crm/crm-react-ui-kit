@@ -106,7 +106,7 @@ const azure900 = color.light.azure[900]; // '#0b2934'
   <tbody>
     <tr>
       <td>
-        <code>light</code>
+        <code>ui-kit/light</code>
       </td>
       <td>{i18n.t('Default light theme, always active')}</td>
       <td>
@@ -118,7 +118,7 @@ const azure900 = color.light.azure[900]; // '#0b2934'
     </tr>
     <tr>
       <td>
-        <code>alternative</code>
+        <code>ui-kit/alternative</code>
       </td>
       <td>{i18n.t('Dark theme')}</td>
       <td>
@@ -126,6 +126,30 @@ const azure900 = color.light.azure[900]; // '#0b2934'
       </td>
       <td>
         <code>{i18n.t('@kommo-crm/tokens/ui-kit/alternative/*')}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>light</code>
+      </td>
+      <td>{i18n.t('Default light theme, always active')}</td>
+      <td>
+        <code>:root</code>
+      </td>
+      <td>
+        <code>{i18n.t('@kommo-crm/tokens/light/*')}</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>dark</code>
+      </td>
+      <td>{i18n.t('Dark theme')}</td>
+      <td>
+        <code>:root[data-color-scheme=dark]</code>
+      </td>
+      <td>
+        <code>{i18n.t('@kommo-crm/tokens/dark/*')}</code>
       </td>
     </tr>
   </tbody>

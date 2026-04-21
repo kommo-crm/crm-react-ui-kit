@@ -36,7 +36,27 @@
     "./ui-kit/alternative/min.css": "./dist/alternative-ui-kit/tokens.min.css",
     "./ui-kit/alternative/less": "./dist/alternative-ui-kit/tokens.less",
     "./ui-kit/alternative/scss": "./dist/alternative-ui-kit/tokens.scss",
-    "./ui-kit/alternative/json": "./dist/alternative-ui-kit/tokens.json"
+    "./ui-kit/alternative/json": "./dist/alternative-ui-kit/tokens.json",
+    "./light": {
+      "types": "./dist/light/tokens.d.ts",
+      "import": "./dist/light/tokens.mjs",
+      "require": "./dist/light/tokens.cjs"
+    },
+    "./light/css": "./dist/light/tokens.css",
+    "./light/min.css": "./dist/light/tokens.min.css",
+    "./light/scss": "./dist/light/tokens.scss",
+    "./light/less": "./dist/light/tokens.less",
+    "./light/json": "./dist/light/tokens.json",
+    "./dark": {
+      "types": "./dist/dark/tokens.d.ts",
+      "import": "./dist/dark/tokens.mjs",
+      "require": "./dist/dark/tokens.cjs"
+    },
+    "./dark/css": "./dist/dark/tokens.css",
+    "./dark/min.css": "./dist/dark/tokens.min.css",
+    "./dark/scss": "./dist/dark/tokens.scss",
+    "./dark/less": "./dist/dark/tokens.less",
+    "./dark/json": "./dist/dark/tokens.json"
   },
   "scripts": {
     "clean": "rm -rf dist",

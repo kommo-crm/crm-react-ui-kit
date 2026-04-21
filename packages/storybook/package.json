@@ -26,7 +26,6 @@
     "build-storybook": "storybook build -c ./.storybook -o ./storybook-static"
   },
   "dependencies": {
-    "@kommo-crm/tokens": "*",
     "i18next": "24.2.2",
     "i18next-browser-languagedetector": "8.0.4",
     "react": "18",
