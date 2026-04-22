@@ -5,7 +5,6 @@ export default {
   'Themes': 'Temas',
   'Typography': 'Tipografía',
   'Color': 'Bandera',
-  'Display scales': 'Escalas de visualización',
   'Components': 'Componentes',
   'Default': 'Predeterminado',
   'Sizes': 'Tamaños',
@@ -38,10 +37,6 @@ export default {
   'Parameters': 'Parámetros',
   'Component logic': 'Lógica del componente',
   'Page markup': 'Marcador de página',
-  'Click any color swatch to copy its token name.':
-    'Haz clic en cualquier muestra de color para copiar su nombre de token.',
-  'Copied token name.': 'Nombre del token copiado.',
-  'Failed to copy token name.': 'No se pudo copiar el nombre del token.',
 
   /* Components */
 
@@ -109,4 +104,5 @@ export default {
   'Export to PDF': 'Exportar a PDF',
   'Enable notifications': 'Activar notificaciones',
   'Hover me': 'Pasa el cursor',
+  'Copied!': '¡Copiado!',
 };

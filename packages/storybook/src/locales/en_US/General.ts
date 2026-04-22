@@ -4,6 +4,7 @@ export default {
   'Usage': 'Usage',
   'Themes': 'Themes',
   'Typography': 'Typography',
+  'Color': 'Color',
   'Components': 'Components',
   'Default': 'Default',
   'Sizes': 'Sizes',
@@ -36,10 +37,6 @@ export default {
   'Parameters': 'Parameters',
   'Component logic': 'Component logic',
   'Page markup': 'Page markup',
-  'Click any color swatch to copy its token name.':
-    'Click any color swatch to copy its token name.',
-  'Copied token name.': 'Copied token name.',
-  'Failed to copy token name.': 'Failed to copy token name.',
 
   /* Components */
 
@@ -107,4 +104,5 @@ export default {
   'Export to PDF': 'Export to PDF',
   'Enable notifications': 'Enable notifications',
   'Hover me': 'Hover me',
+  'Copied!': 'Copied!',
 };
