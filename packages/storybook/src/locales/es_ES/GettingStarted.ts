@@ -10,7 +10,8 @@ export default {
     'También ofrecemos soporte para un [**Storybook heredado**](https://developers.kommo.com/docs/native-control), que incluye un conjunto más reducido de componentes utilizados en la pila tecnológica anterior.',
   'Install the package using one of the following methods':
     'Instala el paquete utilizando uno de los siguientes métodos',
-  'Standalone usage(out of Kommo CRM)': 'Uso independiente (fuera de Kommo CRM)',
+  'Standalone usage(out of Kommo CRM)':
+    'Uso independiente (fuera de Kommo CRM)',
   'Do not forget import ui-kit styles in root of your stylesheets for use default themes':
     'No olvides importar los estilos del ui-kit en la raíz de tus hojas de estilo para usar los temas predeterminados',
 };

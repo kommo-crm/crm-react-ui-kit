@@ -10,6 +10,7 @@ import {
 import '@ui-kit/stylesheets/theme.css';
 import '@ui-kit/stylesheets/icons.css';
 import '@ui-kit/stylesheets/index.css';
+// eslint-disable-next-line import/no-unresolved
 import '@ui-kit/public/fonts/ptsans.css';
 
 const preview: Preview = {

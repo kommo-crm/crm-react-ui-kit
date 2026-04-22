@@ -37,8 +37,8 @@ export default tseslint.config(
       'packages/ui-kit/playwright/.cache',
       'packages/ui-kit/coverage',
       'packages/ui-kit/dist',
-      'packages/tokens/.generated',
-      'packages/tokens/dist',
+      'packages/crm-tokens/.generated',
+      'packages/crm-tokens/dist',
     ],
   },
   {
@@ -394,7 +394,7 @@ export default tseslint.config(
   },
 
   {
-    files: ['packages/tokens/src/index.ts'],
+    files: ['packages/crm-tokens/src/index.ts'],
     rules: {
       'no-console': 'off',
     },

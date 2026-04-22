@@ -13,6 +13,7 @@ import {
   LOCALE_LIST,
   type Langs,
 } from '@kommo-crm/storybook/utils';
+
 export const LangSelect = () => {
   const [locale, setLocale] = useState(INITIAL_LANGUAGE);
 

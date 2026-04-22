@@ -1,11 +1,7 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import {
-  INITIAL_LANGUAGE,
-  SUPPORTED_LANGUAGES,
-  type Langs,
-} from './utils';
+import { INITIAL_LANGUAGE, SUPPORTED_LANGUAGES, type Langs } from './utils';
 import locales from './locales';
 
 i18n.use(LanguageDetector).init({

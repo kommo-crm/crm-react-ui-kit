@@ -139,7 +139,7 @@
   },
   "devDependencies": {
     "@kommo-crm/storybook": "*",
-    "@kommo-crm/tokens": "*",
+    "@kommo-crm/crm-tokens": "*",
     "@eslint/js": "9.12.0",
     "@playwright/experimental-ct-react": "1.47.0",
     "@playwright/test": "1.47.0",

@@ -14,7 +14,7 @@
       "persistent": true,
       "cache": false
     },
-    "@kommo-crm/tokens#dev": {
+    "@kommo-crm/crm-tokens#dev": {
       "dependsOn": [],
       "persistent": true,
       "cache": false

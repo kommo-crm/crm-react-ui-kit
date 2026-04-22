@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { color } from '@kommo-crm/tokens/primitives';
+import { color } from '@kommo-crm/crm-tokens/primitives';
 
 import { i18n } from '@kommo-crm/storybook/i18n';
 
