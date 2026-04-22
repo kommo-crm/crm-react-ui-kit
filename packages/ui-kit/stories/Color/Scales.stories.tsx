@@ -31,7 +31,7 @@ const styles = `
     position: relative;
     height: 48px;
     flex: 1 1 0;
-    min-width: 0;
+    min-width: 64px;
     cursor: pointer;
     border-radius: 3px;
     transition: box-shadow 0.1s ease;
@@ -86,6 +86,45 @@ const styles = `
   @keyframes tooltipFadeIn {
     from { opacity: 0; transform: translateX(-50%) translateY(2px); }
     to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+  .color-palette-light {
+    height: 100vh;
+    overflow-y: hidden;
+    scrollbar-color: #c1c9d2 #f1f3f5;
+    scrollbar-width: thin;
+  }
+  .color-palette-light::-webkit-scrollbar {
+    height: 6px;
+  }
+  .color-palette-light::-webkit-scrollbar-track {
+    background: #f1f3f5;
+  }
+  .color-palette-light::-webkit-scrollbar-thumb {
+    background: #c1c9d2;
+    border-radius: 3px;
+  }
+  .color-palette-light::-webkit-scrollbar-thumb:hover {
+    background: #a0aab4;
+  }
+  .color-palette-dark {
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    scrollbar-color: #3d5068 #1e2d3d;
+    scrollbar-width: thin;
+  }
+  .color-palette-dark::-webkit-scrollbar {
+    height: 6px;
+  }
+  .color-palette-dark::-webkit-scrollbar-track {
+    background: #1e2d3d;
+  }
+  .color-palette-dark::-webkit-scrollbar-thumb {
+    background: #3d5068;
+    border-radius: 3px;
+  }
+  .color-palette-dark::-webkit-scrollbar-thumb:hover {
+    background: #5a7090;
   }
 `;
 
@@ -222,6 +261,7 @@ function ScaleHeaders({ labelColor }: { labelColor: string }) {
             key={scale}
             style={{
               flex: 1,
+              minWidth: 64,
               textAlign: 'center',
               fontSize: 11,
               fontWeight: 600,
@@ -243,9 +283,11 @@ function ColorScales() {
 
   return (
     <div
+      className="color-palette-light"
       style={{
         padding: '32px 40px',
         fontFamily: "'PT Sans', 'Nunito Sans', sans-serif",
+        overflowX: 'auto',
       }}
     >
       <style>{styles}</style>
@@ -267,9 +309,11 @@ function ColorScalesDark() {
 
   return (
     <div
+      className="color-palette-dark"
       style={{
         padding: '32px 40px',
         fontFamily: "'PT Sans', 'Nunito Sans', sans-serif",
+        overflowX: 'auto',
       }}
     >
       <style>{styles}</style>
