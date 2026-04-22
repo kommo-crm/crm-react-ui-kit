@@ -3,45 +3,27 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { color } from '@kommo-crm/crm-tokens/primitives';
 
 import { i18n } from '@kommo-crm/storybook/i18n';
+import classNames from 'classnames';
 
 const SCALES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 
 const lightPalette = color.light;
 const darkPalette = color.dark;
 
-function copyTokenNameLegacy(tokenName: string): boolean {
-  const textArea = document.createElement('textarea');
+type CopyStatus = 'copied' | 'error';
 
-  textArea.value = tokenName;
-  textArea.setAttribute('readonly', '');
-  textArea.style.position = 'fixed';
-  textArea.style.top = '0';
-  textArea.style.left = '0';
-  textArea.style.opacity = '0';
-
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-
-  try {
-    return document.execCommand('copy');
-  } finally {
-    document.body.removeChild(textArea);
-  }
-}
-
-async function copyTokenName(tokenName: string): Promise<boolean> {
+async function copyTokenName(tokenName: string): Promise<CopyStatus> {
   if (navigator.clipboard?.writeText) {
     try {
       await navigator.clipboard.writeText(tokenName);
 
-      return true;
+      return 'copied';
     } catch {
-      return copyTokenNameLegacy(tokenName);
+      return 'error';
     }
   }
 
-  return copyTokenNameLegacy(tokenName);
+  return 'error';
 }
 
 const styles = `
@@ -95,6 +77,12 @@ const styles = `
   .color-swatch-tooltip-dark::after {
     border-top-color: #e8eaed;
   }
+  .color-swatch-tooltip-error {
+    background: #d93025;
+  }
+  .color-swatch-tooltip-error::after {
+    border-top-color: #d93025;
+  }
   @keyframes tooltipFadeIn {
     from { opacity: 0; transform: translateX(-50%) translateY(2px); }
     to   { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -110,20 +98,18 @@ function Swatch({
   tokenName: string;
   isDark?: boolean;
 }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<CopyStatus | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleClick = useCallback(async () => {
-    const ok = await copyTokenName(tokenName);
+    const result = await copyTokenName(tokenName);
 
-    if (ok) {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-
-      setCopied(true);
-      timerRef.current = setTimeout(() => setCopied(false), 1500);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
     }
+
+    setStatus(result);
+    timerRef.current = setTimeout(() => setStatus(null), 1500);
   }, [tokenName]);
 
   useEffect(
@@ -137,7 +123,9 @@ function Swatch({
 
   return (
     <div
-      className={`color-swatch${isDark ? ' color-swatch-dark' : ''}`}
+      className={classNames('color-swatch', {
+        'color-swatch-dark': isDark,
+      })}
       style={{ backgroundColor: hex }}
       title={`${tokenName} · ${hex}`}
       onClick={handleClick}
@@ -149,11 +137,16 @@ function Swatch({
         }
       }}
     >
-      {copied && (
+      {status && (
         <div
-          className={`color-swatch-tooltip${isDark ? ' color-swatch-tooltip-dark' : ''}`}
+          className={classNames('color-swatch-tooltip', {
+            'color-swatch-tooltip-dark': isDark,
+            'color-swatch-tooltip-error': status === 'error',
+          })}
         >
-          {i18n.t('Copied!')}
+          {status === 'copied'
+            ? i18n.t('Copied!')
+            : i18n.t('Failed to copy to clipboard')}
         </div>
       )}
     </div>

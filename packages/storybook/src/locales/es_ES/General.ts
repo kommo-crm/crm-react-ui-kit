@@ -105,4 +105,5 @@ export default {
   'Enable notifications': 'Activar notificaciones',
   'Hover me': 'Pasa el cursor',
   'Copied!': '¡Copiado!',
+  'Failed to copy to clipboard': 'Error al copiar al portapapeles',
 };

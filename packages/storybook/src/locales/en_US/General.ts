@@ -105,4 +105,5 @@ export default {
   'Enable notifications': 'Enable notifications',
   'Hover me': 'Hover me',
   'Copied!': 'Copied!',
+  'Failed to copy to clipboard': 'Failed to copy to clipboard',
 };
