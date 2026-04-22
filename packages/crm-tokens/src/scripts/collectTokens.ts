@@ -11,15 +11,6 @@ export type PrimitiveCollection = {
   groups: VarGroup[];
 };
 
-export type ThemeCollection = {
-  themeId: string;
-  selector: string;
-  semantic: {
-    flat: Record<string, string>;
-    groups: VarGroup[];
-  };
-};
-
 function toGroups(flat: Record<string, string>, keyIndex = 0): VarGroup[] {
   const map = new Map<string, Record<string, string>>();
 

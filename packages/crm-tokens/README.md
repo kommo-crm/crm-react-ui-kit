@@ -14,17 +14,6 @@
 | ---------------------------------- | ---------------------------- | --------------------------- |
 | `@kommo-crm/crm-tokens/primitives` | JS/TS, CSS, SCSS, LESS, JSON | Base primitive token values |
 
-### Format suffixes
-
-| Suffix       | Import path example                          |
-| ------------ | -------------------------------------------- |
-| JS/TS        | `@kommo-crm/crm-tokens/{THEME_NAME}`         |
-| CSS          | `@kommo-crm/crm-tokens/{THEME_NAME}/css`     |
-| Minified CSS | `@kommo-crm/crm-tokens/{THEME_NAME}/min.css` |
-| SCSS         | `@kommo-crm/crm-tokens/{THEME_NAME}/scss`    |
-| LESS         | `@kommo-crm/crm-tokens/{THEME_NAME}/less`    |
-| JSON         | `@kommo-crm/crm-tokens/{THEME_NAME}/json`    |
-
 ## Commands
 
 | Command      | Runs                            |
