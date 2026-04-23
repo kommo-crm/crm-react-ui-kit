@@ -13,8 +13,12 @@ const primitives = collectPrimitives();
 describe('generatePrimitivesCss', () => {
   const css = generatePrimitivesCss(primitives);
 
+  it('starts with the auto-generated header comment', () => {
+    expect(css).toMatch(/^\/\* Auto-generated\. Do not edit manually\. \*\//);
+  });
+
   it('wraps output in :root {}', () => {
-    expect(css).toMatch(/^:root \{[\s\S]+\}$/);
+    expect(css).toMatch(/:root \{[\s\S]+\}$/);
   });
 
   it('contains expected CSS variables with hex values', () => {

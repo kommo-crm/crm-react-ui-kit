@@ -2,6 +2,8 @@ import { minify } from '@/libs/minify';
 
 import type { PrimitiveCollection, VarGroup } from './collectTokens';
 
+const HEADER = '/* Auto-generated. Do not edit manually. */\n';
+
 function renderGroups(
   groups: VarGroup[],
   transform: (v: string) => string
@@ -18,7 +20,7 @@ function renderGroups(
 }
 
 export function generatePrimitivesCss(collection: PrimitiveCollection): string {
-  return `:root {\n${renderGroups(collection.groups, (v) => v)}\n}`;
+  return `${HEADER}:root {\n${renderGroups(collection.groups, (v) => v)}\n}`;
 }
 
 export function minifyCss(css: string): string {
