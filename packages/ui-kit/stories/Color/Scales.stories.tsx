@@ -89,6 +89,7 @@ const styles = `
   }
   .color-palette-light {
     height: 100vh;
+    box-sizing: border-box;
     overflow-y: hidden;
     scrollbar-color: #c1c9d2 #f1f3f5;
     scrollbar-width: thin;
