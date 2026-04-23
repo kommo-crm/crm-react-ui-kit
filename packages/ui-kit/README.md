@@ -30,10 +30,10 @@ yarn test
 
 > For `Playwright` to work, [Docker](https://www.docker.com) must be installed
 
-**Run screenshot tests:**
+**Run screenshot ci/cd tests:**
 
 ```sh
-yarn test:e2e
+yarn test:e2e:ci
 ```
 
 ## Licenses
