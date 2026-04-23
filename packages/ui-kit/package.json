@@ -132,7 +132,6 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
     "test": "jest --maxWorkers 2",
     "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
-    "eslint": "eslint --quiet",
     "tslint": "tsc --noEmit -p tsconfig.build.json",
     "lint": "concurrently --kill-others-on-fail \"yarn eslint\" \"yarn tslint\"",
     "lint:fix": "eslint --fix"
