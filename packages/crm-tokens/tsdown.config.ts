@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs';
 import { basename, resolve } from 'path';
 
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
 const generatedDir = resolve(__dirname, '.generated');
 
@@ -11,7 +11,7 @@ const entry = Object.fromEntries(
     .map((f) => {
       const name = basename(f, '.ts');
 
-      return [`${name}/tokens`, `.generated/${f}`];
+      return [`${name}/tokens`, resolve(generatedDir, f)];
     })
 );
 

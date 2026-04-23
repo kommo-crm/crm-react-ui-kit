@@ -8,9 +8,14 @@
   ],
   "exports": {
     "./primitives": {
-      "types": "./dist/primitives/tokens.d.ts",
-      "import": "./dist/primitives/tokens.mjs",
-      "require": "./dist/primitives/tokens.cjs"
+      "import": {
+        "types": "./dist/primitives/tokens.d.mts",
+        "default": "./dist/primitives/tokens.mjs"
+      },
+      "require": {
+        "types": "./dist/primitives/tokens.d.cts",
+        "default": "./dist/primitives/tokens.cjs"
+      }
     },
     "./primitives/css": "./dist/primitives/tokens.css",
     "./primitives/min.css": "./dist/primitives/tokens.min.css",
@@ -21,8 +26,8 @@
   "scripts": {
     "prepack": "cp ../../LICENSE ./LICENSE",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsx src/index.ts && tsup",
-    "dev": "concurrently \"tsx watch src/index.ts\" \"tsup --watch --no-dts\"",
+    "build": "npm run clean && tsx src/index.ts && tsdown",
+    "dev": "concurrently \"tsx watch src/index.ts\" \"tsdown --watch --no-dts\"",
     "test": "jest",
     "lint": "eslint src"
   },
@@ -32,7 +37,7 @@
     "concurrently": "9.1.2",
     "jest": "30.3.0",
     "ts-jest": "29.4.6",
-    "tsup": "8.3.0",
+    "tsdown": "0.21.10",
     "tsx": "4.19.2",
     "typescript": "5.5.4"
   }
