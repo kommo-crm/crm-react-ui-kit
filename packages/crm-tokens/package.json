@@ -29,7 +29,8 @@
     "build": "yarn clean && tsx src/index.ts && tsdown",
     "dev": "concurrently \"tsx watch src/index.ts\" \"tsdown --watch --no-dts\"",
     "test": "jest",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "devDependencies": {
     "@types/jest": "30.0.0",
