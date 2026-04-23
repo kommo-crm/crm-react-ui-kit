@@ -40,7 +40,7 @@ export type ColorValue =
   | ColorFunction
   | ColorKeyword;
 
-export type ColorScales =
+export type ColorScale =
   | 50
   | 100
   | 200
