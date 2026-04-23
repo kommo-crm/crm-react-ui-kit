@@ -7,8 +7,7 @@
     },
     "@kommo-crm/crm-react-ui-kit#build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"],
-      "cache": false
+      "outputs": ["dist/**"]
     },
     "dev": {
       "persistent": true,
@@ -39,15 +38,12 @@
         "**/*.mdx",
         "tsconfig.json",
         "tsconfig.*.json",
-        "vite.config.*",
-        "webpack.config.*",
-        ".env*"
+        "vite.config.*"
       ],
       "outputs": ["storybook-static/**"]
     },
     "@kommo-crm/storybook#build-storybook": {
       "dependsOn": [],
-      "cache": false,
       "outputs": ["storybook-static/**"]
     },
     "lint": {
