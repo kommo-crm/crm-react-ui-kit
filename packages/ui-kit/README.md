@@ -36,12 +36,6 @@ yarn test
 yarn test:e2e
 ```
 
-**Update screenshots:**
-
-```sh
-yarn test:e2e:update-snapshots
-```
-
 ## Licenses
 
-Source code is under a [custom license](./LICENCE) based on MIT.
+Source code is under a [custom license](./<projectRoot>) based on MIT.
