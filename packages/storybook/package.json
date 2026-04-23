@@ -2,7 +2,7 @@
   "name": "@kommo-crm/storybook",
   "private": true,
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
@@ -21,6 +21,7 @@
     "./icons/trigger.svg": "./src/icons/trigger.svg"
   },
   "scripts": {
+    "prepack": "cp ../../LICENSE ./LICENSE",
     "dev": "storybook dev -p 6006 -c ./.storybook",
     "storybook": "storybook dev -p 6006 -c ./.storybook",
     "build-storybook": "storybook build -c ./.storybook -o ./storybook-static"

@@ -19,6 +19,7 @@
     "./primitives/json": "./dist/primitives/tokens.json"
   },
   "scripts": {
+    "prepack": "cp ../../LICENSE ./LICENSE",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsx src/index.ts && tsup",
     "dev": "concurrently \"tsx watch src/index.ts\" \"tsup --watch --no-dts\"",
