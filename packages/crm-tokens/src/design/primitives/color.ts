@@ -1,5 +1,6 @@
 import { flattenVars } from '@/libs/flattenVars';
-import { validateHEXColor } from '@/libs/validateHEXColor';
+
+import { isHexColor } from '@/libs/isHexColor';
 
 export const color = {
   light: {
@@ -189,7 +190,7 @@ export const color = {
 } as const;
 
 for (const [path, value] of Object.entries(flattenVars(color))) {
-  if (!validateHEXColor(value)) {
+  if (!isHexColor(value)) {
     throw new Error(
       `Invalid HEX color at "${path}": "${value}". Expected format: #RGB or #RRGGBB.`
     );

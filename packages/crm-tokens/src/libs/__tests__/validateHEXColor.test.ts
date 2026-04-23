@@ -1,11 +1,11 @@
-import { validateHEXColor } from '@/libs/validateHEXColor';
+import { isHexColor } from '@/libs/isHexColor';
 
-describe('validateHEXColor', () => {
+describe('isHexColor', () => {
   describe('returns true for valid hex colors', () => {
     it.each(['#fff', '#FFF', '#ffffff', '#FFFFFF', '#1a2b3c'])(
       '%s',
       (color) => {
-        expect(validateHEXColor(color)).toBe(true);
+        expect(isHexColor(color)).toBe(true);
       }
     );
   });
@@ -22,7 +22,7 @@ describe('validateHEXColor', () => {
       'red',
       '#1a2b3c4d',
     ])('%s', (color) => {
-      expect(validateHEXColor(color)).toBe(false);
+      expect(isHexColor(color)).toBe(false);
     });
   });
 });
