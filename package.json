@@ -10,7 +10,6 @@
     "build:tokens": "turbo run build --filter=@kommo-crm/crm-tokens",
     "build:storybook": "turbo run build-storybook --filter=@kommo-crm/storybook",
     "dev": "turbo run dev --filter=@kommo-crm/crm-tokens --filter=@kommo-crm/storybook",
-    "dev:ui-kit": "turbo run dev --filter=@kommo-crm/crm-react-ui-kit",
     "dev:tokens": "turbo run dev --filter=@kommo-crm/crm-tokens",
     "storybook": "turbo run storybook --filter=@kommo-crm/storybook",
     "lint": "turbo run lint",
