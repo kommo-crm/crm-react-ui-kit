@@ -2,6 +2,7 @@
 
 > Ready-to-use React components that implement the design of [Kommo](https://www.kommo.com/)
 
+For storybook preview see README in storybook package
 [Storybook](https://storybook.kommo.com) preview
 
 ## Installation
