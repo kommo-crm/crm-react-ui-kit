@@ -15,7 +15,7 @@ export const resolveTokenValue = (
     : (value.split('.').reduce<unknown>((acc, key, index, parts) => {
         const node = (acc as Record<string, unknown>)[key];
 
-        if (node === undefined) {
+        if (!node) {
           const resolved = parts.slice(0, index).join('.');
           const location = resolved ? `"${resolved}" → "${key}"` : `"${key}"`;
 
