@@ -64,7 +64,7 @@ const config: StorybookConfig = {
 
     const plugins: (Plugin<any> | Plugin<any>[])[] = [
       {
-        name: 'ui-kit-at-alias-resolver',
+        name: 'uiKitAtAliasResolver',
         enforce: 'pre',
         resolveId(source, importer) {
           if (!importer || !source.startsWith('@/')) {
