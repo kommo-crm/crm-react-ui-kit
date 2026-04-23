@@ -135,8 +135,7 @@
     "eslint": "eslint --quiet",
     "tslint": "tsc --noEmit -p tsconfig.build.json",
     "lint": "concurrently --kill-others-on-fail \"yarn eslint\" \"yarn tslint\"",
-    "lint:fix": "eslint --fix",
-    "prepare": "husky"
+    "lint:fix": "eslint --fix"
   },
   "devDependencies": {
     "@kommo-crm/storybook": "*",
