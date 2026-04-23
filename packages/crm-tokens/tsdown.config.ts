@@ -19,7 +19,7 @@ export default defineConfig({
   entry,
   format: ['esm', 'cjs'],
   minify: true,
-  outExtension({ format }) {
+  outExtensions({ format }) {
     return { js: format === 'cjs' ? '.cjs' : '.mjs' };
   },
   dts: true,
