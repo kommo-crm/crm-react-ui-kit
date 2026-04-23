@@ -15,7 +15,7 @@ const primitiveCount = Object.keys(primitiveCollection.flat).length;
 console.log(`Primitives: ${primitiveCount}\n`);
 
 /**
- *TypeScript
+ * TypeScript
  */
 console.log('TypeScript:');
 
