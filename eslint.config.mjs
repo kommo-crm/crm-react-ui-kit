@@ -394,7 +394,10 @@ export default tseslint.config(
   },
 
   {
-    files: ['packages/crm-tokens/src/index.ts'],
+    files: [
+      'packages/crm-tokens/src/index.ts',
+      'packages/crm-tokens/src/libs/generatePrimitives.ts',
+    ],
     rules: {
       'no-console': 'off',
     },
