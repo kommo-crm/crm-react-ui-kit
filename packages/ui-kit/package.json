@@ -132,13 +132,14 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
     "test": "jest --maxWorkers 2",
     "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
+    "test:e2e": "./scripts/generate_env.docker.sh && docker compose --env-file=./.env.docker up --abort-on-container-exit",
+    "test:e2e:update-snapshots": "sh -c './scripts/generate_env.docker.sh -u \"$@\" && docker compose --env-file=./.env.docker up --abort-on-container-exit' --",
+    "docker:clear-playwright-cache": "./scripts/generate_env.docker.sh && docker compose --env-file=./.env.docker rm -f && docker volume rm crm-react-ui-kit_playwright_cache",
     "tslint": "tsc --noEmit -p tsconfig.build.json",
     "lint": "concurrently --kill-others-on-fail \"yarn eslint\" \"yarn tslint\"",
     "lint:fix": "eslint --fix"
   },
   "devDependencies": {
-    "@kommo-crm/storybook": "*",
-    "@kommo-crm/crm-tokens": "*",
     "@playwright/experimental-ct-react": "1.47.0",
     "@playwright/test": "1.47.0",
     "@swc/core": "1.7.28",
@@ -166,7 +167,8 @@
     "react-dom": "18",
     "ts-node": "10.9.2",
     "vite-plugin-dts": "4.0.3",
-    "vite-plugin-lib-inject-css": "2.1.1"
+    "vite-plugin-lib-inject-css": "2.1.1",
+    "vite-plugin-svgr": "4.2.0"
   },
   "dependencies": {
     "@kommo-crm/react-hooks": "1.2.1",

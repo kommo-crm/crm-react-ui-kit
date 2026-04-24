@@ -51,6 +51,15 @@
     },
     "lint:fix": {
       "cache": false
+    },
+    "test:e2e": {
+      "cache": false
+    },
+    "test:e2e:update-snapshots": {
+      "cache": false
+    },
+    "docker:clear-playwright-cache": {
+      "cache": false
     }
   }
 }
