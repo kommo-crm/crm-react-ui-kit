@@ -48,7 +48,6 @@ export const Callout = forwardRef<D, CalloutProps>((props, ref) => {
           theme={ButtonIconSmallGhostTheme}
           className={s.closeButton}
           onClick={onClose}
-          aria-label="Close"
         >
           <CloseIcon />
         </Button>
