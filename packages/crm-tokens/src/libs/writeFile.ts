@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs/promises';
 import * as path from 'path';
 
 const rootDir = path.resolve(__dirname, '../..');
@@ -6,23 +6,19 @@ const rootDir = path.resolve(__dirname, '../..');
 export const distDir = path.resolve(rootDir, 'dist');
 export const generatedDir = path.resolve(rootDir, '.generated');
 
-fs.mkdirSync(distDir, { recursive: true });
-fs.rmSync(generatedDir, { recursive: true, force: true });
-fs.mkdirSync(generatedDir, { recursive: true });
+export async function setup(): Promise<void> {
+  await fs.mkdir(distDir, { recursive: true });
+  await fs.rm(generatedDir, { recursive: true, force: true });
+  await fs.mkdir(generatedDir, { recursive: true });
+}
 
-/**
- * Writes `content` to `<dir>/<relPath>`, creating any missing parent directories.
- * Calls `cb` after the file is written if provided.
- */
-export function writeFile(
+export async function writeFile(
   dir: string,
   relPath: string,
-  content: string,
-  cb?: () => void
-): void {
+  content: string
+): Promise<void> {
   const dest = path.join(dir, relPath);
 
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.writeFileSync(dest, content, 'utf8');
-  cb?.();
+  await fs.mkdir(path.dirname(dest), { recursive: true });
+  await fs.writeFile(dest, content, 'utf8');
 }

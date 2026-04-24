@@ -4,71 +4,74 @@ import { generatePrimitivesJson } from '@/scripts/generateJson';
 import { generatePrimitivesLess } from '@/scripts/generateLess';
 import { generatePrimitivesSass } from '@/scripts/generateSass';
 import { generatePrimitivesTs } from '@/scripts/generateTs';
-import { writeFile, distDir, generatedDir } from '@/libs/writeFile';
+import { setup, writeFile, distDir, generatedDir } from '@/libs/writeFile';
 
-console.log('Generating design tokens...\n');
+(async () => {
+  await setup();
 
-const primitiveCollection = collectPrimitives();
+  console.log('Generating design tokens...\n');
 
-const primitiveCount = Object.keys(primitiveCollection.flat).length;
+  const primitiveCollection = collectPrimitives();
+  const primitiveCount = Object.keys(primitiveCollection.flat).length;
 
-console.log(`Primitives: ${primitiveCount}\n`);
+  console.log(`Primitives: ${primitiveCount}\n`);
 
-/**
- * TypeScript
- */
-console.log('TypeScript:');
+  /**
+   * TypeScript
+   */
+  console.log('TypeScript:');
 
-writeFile(generatedDir, 'primitives.ts', generatePrimitivesTs(), () =>
-  console.log('  ✓ primitives.ts')
-);
+  await writeFile(generatedDir, 'primitives.ts', generatePrimitivesTs());
+  console.log('  ✓ primitives.ts');
 
-/**
- * CSS
- */
-console.log('\nCSS:');
+  /**
+   * CSS
+   */
+  console.log('\nCSS:');
 
-const primitivesCss = generatePrimitivesCss(primitiveCollection);
+  const primitivesCss = generatePrimitivesCss(primitiveCollection);
 
-writeFile(distDir, 'primitives/tokens.css', primitivesCss, () =>
-  console.log('  ✓ primitives/tokens.css')
-);
-writeFile(distDir, 'primitives/tokens.min.css', minifyCss(primitivesCss), () =>
-  console.log('  ✓ primitives/tokens.min.css')
-);
+  await writeFile(distDir, 'primitives/tokens.css', primitivesCss);
+  console.log('  ✓ primitives/tokens.css');
 
-/**
- * SCSS
- */
-console.log('\nSCSS:');
+  await writeFile(
+    distDir,
+    'primitives/tokens.min.css',
+    minifyCss(primitivesCss)
+  );
+  console.log('  ✓ primitives/tokens.min.css');
 
-writeFile(
-  distDir,
-  'primitives/tokens.scss',
-  generatePrimitivesSass(primitiveCollection),
-  () => console.log('  ✓ primitives/tokens.scss')
-);
+  /**
+   * SCSS
+   */
+  console.log('\nSCSS:');
 
-/**
- * LESS
- */
-console.log('\nLESS:');
+  await writeFile(
+    distDir,
+    'primitives/tokens.scss',
+    generatePrimitivesSass(primitiveCollection)
+  );
+  console.log('  ✓ primitives/tokens.scss');
 
-writeFile(
-  distDir,
-  'primitives/tokens.less',
-  generatePrimitivesLess(primitiveCollection),
-  () => console.log('  ✓ primitives/tokens.less')
-);
+  /**
+   * LESS
+   */
+  console.log('\nLESS:');
 
-/**
- * JSON
- */
+  await writeFile(
+    distDir,
+    'primitives/tokens.less',
+    generatePrimitivesLess(primitiveCollection)
+  );
+  console.log('  ✓ primitives/tokens.less');
 
-console.log('\nJSON:');
+  /**
+   * JSON
+   */
+  console.log('\nJSON:');
 
-writeFile(distDir, 'primitives/tokens.json', generatePrimitivesJson(), () =>
-  console.log('  ✓ primitives/tokens.json')
-);
+  await writeFile(distDir, 'primitives/tokens.json', generatePrimitivesJson());
+  console.log('  ✓ primitives/tokens.json');
 
-console.log('\nDone!');
+  console.log('\nDone!');
+})();
