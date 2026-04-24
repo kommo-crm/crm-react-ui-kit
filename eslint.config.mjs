@@ -31,17 +31,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: [
-      'packages/ui-kit/.swc',
-      'packages/ui-kit/storybook-static',
-      'packages/ui-kit/playwright/.cache',
-      'packages/ui-kit/coverage',
-      'packages/ui-kit/dist',
-      'packages/crm-tokens/.generated',
-      'packages/crm-tokens/dist',
-    ],
-  },
-  {
     languageOptions: {
       globals: {
         ...globals.amd,
@@ -390,16 +379,6 @@ export default tseslint.config(
         2,
         { rule: '^(are|is|have|has|should|must|with)[A-Z]([A-Za-z0-9]?)+' },
       ],
-    },
-  },
-
-  {
-    files: [
-      'packages/crm-tokens/src/index.ts',
-      'packages/crm-tokens/src/libs/generatePrimitives.ts',
-    ],
-    rules: {
-      'no-console': 'off',
     },
   },
 

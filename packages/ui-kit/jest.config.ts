@@ -1,6 +1,6 @@
-import type { Config } from '@jest/types';
+import type { Config } from 'jest';
 
-const config: Config.InitialOptions = {
+const config: Config = {
   transform: {
     '.+\\.(css)$': 'jest-css-modules-transform',
     '^.+\\.(t|j)sx?$': '@swc/jest',
