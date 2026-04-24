@@ -2,7 +2,7 @@ import { flattenVars } from '@/libs/flattenVars';
 
 import { isHexColor } from '@/libs/isHexColor';
 
-export const color = {
+export const colors = {
   light: {
     azure: {
       50: '#f8fcfe',
@@ -189,7 +189,7 @@ export const color = {
   },
 } as const;
 
-for (const [path, value] of Object.entries(flattenVars(color))) {
+for (const [path, value] of Object.entries(flattenVars(colors))) {
   if (!isHexColor(value)) {
     throw new Error(
       `Invalid HEX color at "${path}": "${value}". Expected format: #RGB or #RRGGBB.`

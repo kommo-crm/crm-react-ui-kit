@@ -1,9 +1,9 @@
 import type { ObjectLeaves } from '@/types/utils/object-leaves';
 
-import { color } from './color';
+import { colors } from './color';
 
 export const primitives = {
-  color,
+  color: colors,
 } as const;
 
 type PrimitiveTokens = typeof primitives;
