@@ -5,10 +5,6 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "@kommo-crm/crm-react-ui-kit#build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
-    },
     "dev": {
       "persistent": true,
       "cache": false
@@ -19,31 +15,23 @@
       "cache": false
     },
     "@kommo-crm/storybook#dev": {
-      "dependsOn": [],
+      "dependsOn": ["@kommo-crm/crm-tokens#build"],
       "persistent": true,
       "cache": false
     },
     "storybook": {
+      "dependsOn": ["@kommo-crm/crm-tokens#build"],
       "persistent": true,
       "cache": false
     },
-    "build-storybook": {
-      "dependsOn": ["^build"],
-      "cache": false,
+    "@kommo-crm/storybook#build-storybook": {
+      "dependsOn": ["@kommo-crm/crm-tokens#build"],
       "inputs": [
         "$TURBO_DEFAULT$",
-        ".storybook/**",
-        "stories/**",
-        "**/*.stories.*",
-        "**/*.mdx",
-        "tsconfig.json",
-        "tsconfig.*.json",
-        "vite.config.*"
+        "../ui-kit/src/**",
+        "../ui-kit/stories/**",
+        "../ui-kit/public/**"
       ],
-      "outputs": ["storybook-static/**"]
-    },
-    "@kommo-crm/storybook#build-storybook": {
-      "dependsOn": [],
       "outputs": ["storybook-static/**"]
     },
     "lint": {
