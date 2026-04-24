@@ -2,7 +2,7 @@
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
   "version": "1.7.0",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "SEE LICENCE IN LICENCE",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -128,7 +128,7 @@
     "**/*.css"
   ],
   "scripts": {
-    "prepack": "cp ../../LICENSE ./LICENSE",
+    "prepack": "cp ../../LICENCE ./LICENCE",
     "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
     "test": "jest --maxWorkers 2",
     "test:e2e:ci": "playwright test --config playwright-ct.config.ts",

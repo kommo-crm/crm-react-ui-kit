@@ -2,7 +2,7 @@
   "name": "@kommo-crm/crm-tokens",
   "version": "1.0.0",
   "description": "Design tokens for Kommo CRM UI",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "SEE LICENCE IN LICENCE",
   "files": [
     "dist"
   ],
@@ -24,7 +24,7 @@
     "./primitives/json": "./dist/primitives/tokens.json"
   },
   "scripts": {
-    "prepack": "cp ../../LICENSE ./LICENSE",
+    "prepack": "cp ../../LICENCE ./LICENCE",
     "clean": "rm -rf dist",
     "build": "yarn clean && tsx src/index.ts && tsdown",
     "dev": "concurrently \"tsx watch src/index.ts\" \"tsdown --watch --no-dts\"",
