@@ -1,4 +1,4 @@
-import { CalloutThemeType } from './themes/CalloutBase.theme';
+import { CalloutThemeType } from './Callout.themes';
 
 type DivProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -18,4 +18,8 @@ export interface CalloutProps extends DivProps {
    * Flag determining whether an icon should be present.
    */
   isIconAvailable?: boolean;
+  /**
+   * Close handler. When provided, a close button is rendered.
+   */
+  onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
