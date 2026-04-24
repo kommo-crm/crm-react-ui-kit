@@ -42,6 +42,10 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
     onOpenByKeyboard,
   } = useContextMenuContext(DISPLAY_NAME);
 
+  /**
+   * Tracked manually to satisfy the contract of highlighting the trigger
+   * in both the opened and hovered states.
+   */
   const [isHovered, setIsHovered] = useState(false);
 
   /**

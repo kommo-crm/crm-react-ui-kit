@@ -14,7 +14,7 @@ import TriggerIcon from '@storybook-utils/icons/trigger.svg';
 import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 
 import { ContextMenu } from 'src/components/ContextMenu';
-import { Text, TextPrimaryTheme, type TextTheme } from 'src/components/Text';
+import { Text, TextPrimaryTheme } from 'src/components/Text';
 
 import {
   Button,
@@ -29,11 +29,6 @@ import {
   ButtonIconSmallGhostTheme,
   ButtonIconSmallDangerGhostTheme,
 } from '..';
-
-const TextContextMenuTheme: TextTheme = {
-  ...TextPrimaryTheme,
-  '--crm-ui-kit-text-color': 'inherit',
-};
 
 const ThemesMap = {
   ButtonNeutralTheme,
@@ -343,7 +338,7 @@ export const DataHighlighted: Story = {
         <ContextMenu.Portal>
           <ContextMenu.Content direction="down-right" sideOffset={5}>
             <ContextMenu.Item>
-              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+              <Text theme={TextPrimaryTheme} size="l" isEllipsis>
                 {i18n.t('Edit')}
               </Text>
             </ContextMenu.Item>

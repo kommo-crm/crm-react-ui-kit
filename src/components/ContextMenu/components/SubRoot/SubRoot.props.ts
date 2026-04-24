@@ -4,8 +4,13 @@ import { ContextMenuModeType } from '../../ContextMenu.types';
 
 export type ContextMenuSubRootProps = Omit<
   RadixDropdownMenuRootProps,
-  'onOpenChange' | 'modal'
+  'onOpenChange' | 'modal' | 'defaultOpen'
 > & {
+  /**
+   * The open state of the submenu when it is initially rendered.
+   * Use when you do not need to control its open state.
+   */
+  isDefaultOpen?: boolean;
   /**
    * Called whenever the open state of the menu changes.
    */

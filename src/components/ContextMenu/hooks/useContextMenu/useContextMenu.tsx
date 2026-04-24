@@ -26,7 +26,7 @@ export const useContextMenu = (
 ): UseContextMenuResult => {
   const {
     mode: rootMode,
-    defaultOpen,
+    isDefaultOpen,
     animationDuration,
     hoverCloseDelay,
     isOpen: isOpenForcefully,
@@ -41,7 +41,7 @@ export const useContextMenu = (
   const id = useId();
 
   const [isOpen, setIsOpen] = useState(
-    isOpenForcefully ?? defaultOpen ?? false
+    isOpenForcefully ?? isDefaultOpen ?? false
   );
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [skipAnimation, setSkipAnimation] = useState(false);
@@ -278,7 +278,7 @@ export const useContextMenu = (
       return;
     }
 
-    if (mode === ContextMenuMode.CLICK && defaultOpen !== undefined) {
+    if (mode === ContextMenuMode.CLICK && isDefaultOpen !== undefined) {
       return;
     }
 

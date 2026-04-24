@@ -68,7 +68,7 @@ const ContextMenuComponent = ({
   };
 
   return (
-    <ContextMenu.Root mode={ContextMenuMode.CLICK} defaultOpen>
+    <ContextMenu.Root mode={ContextMenuMode.CLICK} isDefaultOpen>
       <ContextMenu.Trigger asChild>
         <Button theme={ButtonIconSmallGhostTheme}>
           <ContextMenuTriggerIcon
@@ -103,7 +103,7 @@ const ContextMenuComponent = ({
             <ContextMenu.ItemRightSlot>
               <ContextMenu.experimental_SubRoot
                 mode={ContextMenuMode.CLICK}
-                defaultOpen={isDefaultOpenSubMenu}
+                isDefaultOpen={isDefaultOpenSubMenu}
               >
                 <ContextMenu.experimental_SubRoot.Trigger
                   style={{
@@ -156,7 +156,7 @@ const ContextMenuComponent = ({
 
           <ContextMenu.Sub
             mode={ContextMenuMode.CLICK}
-            defaultOpen={isDefaultOpenSub}
+            isDefaultOpen={isDefaultOpenSub}
           >
             <ContextMenu.SubTrigger>
               <Text theme={TextContextMenuTheme} size="l" isEllipsis>
