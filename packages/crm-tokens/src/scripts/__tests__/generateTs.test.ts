@@ -2,13 +2,6 @@ import { generatePrimitivesTs } from '@/scripts/generateTs';
 
 import { mockPrimitives } from './__fixtures__/tokens';
 
-jest.mock('@/design/primitives', () => ({
-  __esModule: true,
-  primitives: jest.requireActual<typeof import('./__fixtures__/tokens')>(
-    './__fixtures__/tokens'
-  ).mockPrimitives,
-}));
-
 describe('generatePrimitivesTs', () => {
   const output = generatePrimitivesTs();
 

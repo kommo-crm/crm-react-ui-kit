@@ -6,6 +6,7 @@ const config: Config = {
   roots: ['<rootDir>/src'],
   testMatch: ['**/__tests__/**/*.test.ts'],
   moduleNameMapper: {
+    '^@/design/primitives$': '<rootDir>/src/design/__mocks__/primitives.ts',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   transform: {
