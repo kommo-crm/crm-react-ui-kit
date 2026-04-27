@@ -14,7 +14,7 @@ RUN yarn workspace @kommo-crm/storybook build-storybook
 
 FROM nginx:stable-alpine
 COPY --from=build /monorepo/packages/storybook/storybook-static /var/www/nginx
-COPY --from=build /monorepo/packages/ui-kit/nginx/server.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /monorepo/packages/storybook/nginx/server.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
