@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { IconsMap } from '@storybook-utils/constants';
+import MagicIcon from '@storybook-utils/icons/magic.svg';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
@@ -19,6 +20,8 @@ import {
   ButtonIconDangerGhostPlaygroundItem,
   ButtonIconSmallGhostPlaygroundItem,
   ButtonIconSmallDangerGhostPlaygroundItem,
+  ButtonContextPlaygroundItem,
+  ButtonIconContextPlaygroundItem,
 } from './Button.e2e-playground';
 
 export const combinations = multiCartesian<ButtonProps>([
@@ -154,6 +157,21 @@ for (const props of iconCombinations) {
     );
   });
 
+  test.describe('Button Icon Context', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonIconContextPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
   test.describe('Button Icon Small Ghost', () => {
     test(
       label,
@@ -178,6 +196,34 @@ for (const props of iconCombinations) {
             appearance={appearance}
             props={props}
           />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}
+
+const magicIcon = (
+  <MagicIcon width={16} height={16} style={{ display: 'flex' }} />
+);
+
+export const contextCombinations = multiCartesian<ButtonProps>([
+  { isLoading: [true, false], isDisabled: [true, false] },
+  {
+    before: [magicIcon, undefined],
+    after: [magicIcon, undefined],
+  },
+]);
+
+for (const props of contextCombinations) {
+  const label = prettyProps(props);
+
+  test.describe('Button Context', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ButtonContextPlaygroundItem appearance={appearance} props={props} />
         );
         await expectScreenshotClippedToContent();
       }
