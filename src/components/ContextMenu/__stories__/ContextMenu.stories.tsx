@@ -10,9 +10,8 @@ import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg
 import { ContextMenu } from 'src/components/ContextMenu';
 import {
   Text,
-  TextPrimaryTheme,
+  TextInheritColorTheme,
   TextSecondaryDarkTheme,
-  type TextTheme,
 } from 'src/components/Text';
 
 import { CanvasCentered } from '@storybook-utils/constants';
@@ -30,11 +29,6 @@ import { ContentProps } from '../components/Content/Content.props';
 
 import { ContextMenuModeType } from '../ContextMenu.types';
 
-const TextContextMenuTheme: TextTheme = {
-  ...TextPrimaryTheme,
-  '--crm-ui-kit-text-color': 'inherit',
-};
-
 const USAGE = `
 import { useState } from "react";
 
@@ -42,10 +36,9 @@ import { ContextMenu } from '@kommo-crm/crm-react-ui-kit/ContextMenu';
 
 import {
   Text,
-  TextPrimaryTheme,
+  TextInheritColorTheme,
   TextSecondaryDarkTheme,
-  type TextTheme,
-} from '@kommo-crm/crm-react-ui-kit/Text';
+} from 'src/components/Text';
 import {
   Button,
   ButtonIconSmallGhostTheme,
@@ -56,10 +49,7 @@ import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';
 import ContextMenuCheckIcon from 'public/icons/check.svg';
 import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
 
-const TextContextMenuTheme: TextTheme = {
-  ...TextPrimaryTheme,
-  '--crm-ui-kit-text-color': 'inherit',
-};
+import s from './ContextMenu.module.css';
 
 function App() {
   const [isNotificationsEnabled, setIsNotificationsEnabled] = useState(true);
@@ -101,13 +91,13 @@ function App() {
           <ContextMenu.Separator />
 
           <ContextMenu.Item isSelectable={false}>
-            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+            <Text theme={TextInheritColorTheme} size="l" isEllipsis>
               ${i18n.t('User ID')}: 123456
             </Text>
           </ContextMenu.Item>
 
           <ContextMenu.Item style={{ maxHeight: '20px' }}>
-            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+            <Text theme={TextInheritColorTheme} size="l" isEllipsis>
               ${i18n.t('Settings')}
             </Text>
 
@@ -142,7 +132,7 @@ function App() {
                         <ContextMenuCheckIcon />
                       </ContextMenu.ItemIndicator>
 
-                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                      <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                         Enable notifications
                       </Text>
                     </ContextMenu.CheckboxItem>
@@ -164,7 +154,7 @@ function App() {
                       <ContextMenu.RadioItem value="light">
                         {isNotificationsEnabled && <ContextMenu.ItemIcon />}
 
-                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                        <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                           ${i18n.t('Light')}
                         </Text>
                       </ContextMenu.RadioItem>
@@ -172,7 +162,7 @@ function App() {
                       <ContextMenu.RadioItem value="dark">
                         {isNotificationsEnabled && <ContextMenu.ItemIcon />}
 
-                        <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                        <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                           ${i18n.t('Dark')}
                         </Text>
                       </ContextMenu.RadioItem>
@@ -185,7 +175,7 @@ function App() {
 
           <ContextMenu.Sub mode="hover">
             <ContextMenu.SubTrigger>
-              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+              <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                 ${i18n.t('Lead')}
               </Text>
 
@@ -199,7 +189,7 @@ function App() {
                 <ContextMenu.Item>
                   <ContextMenu.ItemIcon />
 
-                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                  <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                     ${i18n.t('Edit')}
                   </Text>
                 </ContextMenu.Item>
@@ -207,7 +197,7 @@ function App() {
                 <ContextMenu.Item isDisabled>
                   <ContextMenu.ItemIcon />
 
-                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                  <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                     ${i18n.t('Export to PDF')}
                   </Text>
                 </ContextMenu.Item>
@@ -217,7 +207,7 @@ function App() {
                     <ContextMenuTrashcanIcon />
                   </ContextMenu.ItemIcon>
 
-                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                  <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                     ${i18n.t('Delete')}
                   </Text>
                 </ContextMenu.Item>
@@ -368,13 +358,13 @@ const StoryComponent = (props: StoryComponentProps) => {
           <ContextMenu.Separator />
 
           <ContextMenu.Item isSelectable={false}>
-            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+            <Text theme={TextInheritColorTheme} size="l" isEllipsis>
               <b>{i18n.t('User ID')}:</b> 123456
             </Text>
           </ContextMenu.Item>
 
           <ContextMenu.Item style={{ maxHeight: '20px' }}>
-            <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+            <Text theme={TextInheritColorTheme} size="l" isEllipsis>
               {i18n.t('Lead')}
             </Text>
 
@@ -404,7 +394,7 @@ const StoryComponent = (props: StoryComponentProps) => {
                     <ContextMenu.Item>
                       <ContextMenu.ItemIcon />
 
-                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                      <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                         {i18n.t('Edit')}
                       </Text>
                     </ContextMenu.Item>
@@ -412,7 +402,7 @@ const StoryComponent = (props: StoryComponentProps) => {
                     <ContextMenu.Item isDisabled>
                       <ContextMenu.ItemIcon />
 
-                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                      <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                         {i18n.t('Export to PDF')}
                       </Text>
                     </ContextMenu.Item>
@@ -422,7 +412,7 @@ const StoryComponent = (props: StoryComponentProps) => {
                         <ContextMenuTrashcanIcon />
                       </ContextMenu.ItemIcon>
 
-                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                      <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                         {i18n.t('Delete')}
                       </Text>
                     </ContextMenu.Item>
@@ -434,7 +424,7 @@ const StoryComponent = (props: StoryComponentProps) => {
 
           <ContextMenu.Sub mode={subMode}>
             <ContextMenu.SubTrigger>
-              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+              <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                 {i18n.t('Settings')}
               </Text>
 
@@ -453,7 +443,7 @@ const StoryComponent = (props: StoryComponentProps) => {
                     <ContextMenuCheckIcon />
                   </ContextMenu.ItemIndicator>
 
-                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                  <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                     {i18n.t('Enable notifications')}
                   </Text>
                 </ContextMenu.CheckboxItem>
@@ -475,7 +465,7 @@ const StoryComponent = (props: StoryComponentProps) => {
                   <ContextMenu.RadioItem value="light">
                     {isNotificationsEnabled && <ContextMenu.ItemIcon />}
 
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       {i18n.t('Light')}
                     </Text>
                   </ContextMenu.RadioItem>
@@ -483,7 +473,7 @@ const StoryComponent = (props: StoryComponentProps) => {
                   <ContextMenu.RadioItem value="dark">
                     {isNotificationsEnabled && <ContextMenu.ItemIcon />}
 
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       {i18n.t('Dark')}
                     </Text>
                   </ContextMenu.RadioItem>

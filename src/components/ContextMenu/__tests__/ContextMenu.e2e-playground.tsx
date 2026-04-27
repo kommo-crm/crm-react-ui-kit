@@ -12,9 +12,8 @@ import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg
 
 import {
   Text,
-  TextPrimaryTheme,
   TextSecondaryDarkTheme,
-  TextTheme,
+  TextInheritColorTheme,
 } from 'src/components/Text';
 
 import { Button, ButtonIconSmallGhostTheme } from 'src/components/Button';
@@ -22,11 +21,6 @@ import { Button, ButtonIconSmallGhostTheme } from 'src/components/Button';
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';
 import { ContentProps } from '../components/Content';
-
-const TextContextMenuTheme: TextTheme = {
-  ...TextPrimaryTheme,
-  '--crm-ui-kit-text-color': 'inherit',
-};
 
 export interface ContextMenuComponentProps {
   /**
@@ -90,13 +84,13 @@ const ContextMenuComponent = ({
           <ContextMenu.Separator />
 
           <ContextMenu.Item isSelectable={false}>
-            <Text theme={TextContextMenuTheme} size="l">
+            <Text theme={TextInheritColorTheme} size="l">
               <b>User ID:</b> 123456
             </Text>
           </ContextMenu.Item>
 
           <ContextMenu.Item style={{ maxHeight: '20px' }}>
-            <Text theme={TextContextMenuTheme} size="l">
+            <Text theme={TextInheritColorTheme} size="l">
               Lead
             </Text>
 
@@ -126,7 +120,7 @@ const ContextMenuComponent = ({
                     <ContextMenu.Item>
                       <ContextMenu.ItemIcon />
 
-                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                      <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                         Edit
                       </Text>
                     </ContextMenu.Item>
@@ -134,7 +128,7 @@ const ContextMenuComponent = ({
                     <ContextMenu.Item isDisabled>
                       <ContextMenu.ItemIcon />
 
-                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                      <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                         Export to PDF
                       </Text>
                     </ContextMenu.Item>
@@ -144,7 +138,7 @@ const ContextMenuComponent = ({
                         <ContextMenuTrashcanIcon />
                       </ContextMenu.ItemIcon>
 
-                      <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                      <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                         Delete
                       </Text>
                     </ContextMenu.Item>
@@ -159,7 +153,7 @@ const ContextMenuComponent = ({
             isDefaultOpen={isDefaultOpenSub}
           >
             <ContextMenu.SubTrigger>
-              <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+              <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                 Settings
               </Text>
 
@@ -178,7 +172,7 @@ const ContextMenuComponent = ({
                     <ContextMenuCheckIcon />
                   </ContextMenu.ItemIndicator>
 
-                  <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                  <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                     Enable notifications
                   </Text>
                 </ContextMenu.CheckboxItem>
@@ -200,7 +194,7 @@ const ContextMenuComponent = ({
                   <ContextMenu.RadioItem value="light">
                     {isNotificationsEnabled && <ContextMenu.ItemIcon />}
 
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       Light
                     </Text>
                   </ContextMenu.RadioItem>
@@ -208,7 +202,7 @@ const ContextMenuComponent = ({
                   <ContextMenu.RadioItem value="dark">
                     {isNotificationsEnabled && <ContextMenu.ItemIcon />}
 
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       Dark
                     </Text>
                   </ContextMenu.RadioItem>
