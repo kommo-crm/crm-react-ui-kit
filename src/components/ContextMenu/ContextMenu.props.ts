@@ -6,7 +6,7 @@ import { ContextMenuModeType } from './ContextMenu.types';
 
 export type ContextMenuRootProps = Omit<
   RadixDropdownMenuRootProps,
-  'onOpenChange' | 'modal' | 'open'
+  'onOpenChange' | 'modal' | 'open' | 'defaultOpen'
 > & {
   /**
    * Called whenever the open state of the menu changes.
@@ -16,6 +16,11 @@ export type ContextMenuRootProps = Omit<
    * Called whenever the animated open state of the menu changes.
    */
   onAnimatedOpen?: (isAnimatedOpen: boolean) => void;
+  /**
+   * The open state of the menu when it is initially rendered.
+   * Use when you do not need to control its open state.
+   */
+  isDefaultOpen?: boolean;
   /**
    * Defines how the menu is triggered.
    *

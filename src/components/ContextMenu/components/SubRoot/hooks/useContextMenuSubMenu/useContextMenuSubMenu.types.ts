@@ -15,7 +15,7 @@ export interface UseContextMenuSubMenuOptions {
    * The open state of the dropdown menu when it is initially rendered.
    * Use when you do not need to control its open state.
    */
-  defaultOpen?: boolean;
+  isDefaultOpen?: boolean;
   /**
    * The callback function to be called when the context menu is opened.
    */

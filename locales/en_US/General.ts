@@ -36,6 +36,7 @@ export default {
   'Parameters': 'Parameters',
   'Component logic': 'Component logic',
   'Page markup': 'Page markup',
+  'Theme details': 'Theme details',
 
   /* Components */
 
@@ -47,6 +48,11 @@ export default {
   'Go to Dashboard': 'Go to Dashboard',
   'Success Ref': 'Success Ref',
   'Invalid Ref': 'Invalid Ref',
+  'Data Attributes (Public API)': 'Data attributes (public API)',
+  'button-data-highlighted-description':
+    'The button uses the `data-highlighted` attribute as a public API to control its highlighted state externally. When this attribute is added to the `<button>` element, the button will display in its **hover state** (applying the `--crm-ui-kit-button-hover-*` theme variables), even if the cursor is not hovering over it.',
+  'button-data-highlighted-usage':
+    'This is useful when the button is part of a composite component (e.g., a dropdown trigger) and needs to remain visually highlighted while its associated panel is open.',
 
   /* Checkbox */
   'Mark': 'Mark',
@@ -91,6 +97,50 @@ export default {
   'Required field': 'Required field',
 
   /* ContextMenu */
+  'contextmenu-data-attrs-intro':
+    'The ContextMenu exposes several `data-*` attributes on its rendered DOM elements. These attributes act as a public API, allowing external code to use them for styling, testing, and integrating with other components.',
+  'contextmenu-trigger-highlighted-presence':
+    'When the menu is **open** or the trigger is **hovered**',
+  'contextmenu-trigger-highlighted-desc':
+    "Indicates that the trigger is in an active state, which is useful for keeping it visually highlighted while the menu is open. When a `Button` is used as a child with the `asChild` prop, the button's own `:hover or [data-highlighted]` styles apply automatically.",
+  'contextmenu-presence-always': '**Always**',
+  'contextmenu-item-data-item-desc':
+    'Marker attribute present on every menu item. It is used internally for keyboard navigation and auto-positioning logic. It can also be used in tests and selectors to target specific menu items.',
+  'contextmenu-presence-focused-or-submenu':
+    'When the item is **focused/hovered** or its **submenu is open**',
+  'contextmenu-item-highlighted-desc':
+    'Standard Radix highlight attribute. Indicates that the item is currently active — triggered by mouse hover, keyboard focus, or by an open child submenu (`SubRoot`).',
+  'contextmenu-presence-non-selectable': 'When `isSelectable={false}`',
+  'contextmenu-item-non-selectable-desc':
+    'Present on non-selectable items. These items are excluded from the keyboard navigation cycle and auto-positioning calculations, and they do not close the menu when clicked.',
+  'contextmenu-checkbox-data-item-desc':
+    'Same marker as `Item`. Present on every checkbox item for keyboard navigation and positioning.',
+  'contextmenu-checkbox-highlighted-desc':
+    'Same behavior as `Item`. Active when highlighted or when a child `SubRoot` is open inside this checkbox item.',
+  'contextmenu-radio-data-item-desc':
+    'Same marker as `Item`. Present on every radio item for keyboard navigation and positioning.',
+  'contextmenu-radio-highlighted-desc':
+    'Same behavior as `Item`. Active when highlighted or when a child `SubRoot` is open inside this radio item.',
+  'contextmenu-subtrigger-data-item-desc':
+    'Marker attribute, same as `Item`. Allows SubTrigger to participate in the keyboard navigation cycle.',
+  'contextmenu-subtrigger-highlighted-presence':
+    'When the **sub is open** or the item is **highlighted**',
+  'contextmenu-subtrigger-highlighted-desc':
+    'Keeps the trigger visually active while its submenu is open, or when it is hovered over or focused.',
+  'contextmenu-subtrigger-submenu-trigger-desc':
+    'Internal marker identifying this element as a submenu trigger. Used by `ItemRightSlot` and `useSubMenu` to detect nested submenus.',
+  'contextmenu-subroot-highlighted-presence':
+    'When the **SubRoot is open** or item is **highlighted**',
+  'contextmenu-subroot-highlighted-desc':
+    'Keeps the trigger visually active while its SubRoot menu is shown.',
+  'contextmenu-subroot-submenu-trigger-desc':
+    'Same marker as `SubTrigger`. Identifies this element as a submenu trigger for internal detection by `ItemRightSlot` and `useSubMenu`.',
+  'contextmenu-content-menu-level-value':
+    'Number (`1` for root, `2+` for nested)',
+  'contextmenu-content-menu-level-desc':
+    'Indicates the nesting depth of the menu. Root content is level `1`, each `SubContent` or `SubRoot.Content` increments by one. Used internally for focus-loss detection to determine which menus are open.',
+  'contextmenu-focusblocker-blocker-desc':
+    'Internal marker on the overlay that blocks pointer and focus events in the parent menu while a `SubRoot` submenu is open. Primarily internal and rarely needed in user code.',
   'Profile': 'Profile',
   'User ID': 'User ID',
   'Settings': 'Settings',

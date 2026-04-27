@@ -14,6 +14,9 @@ import TriggerIcon from '@storybook-utils/icons/trigger.svg';
 import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 import MagicIcon from '@storybook-utils/icons/magic.svg';
 
+import { ContextMenu } from 'src/components/ContextMenu';
+import { Text, TextPrimaryTheme } from 'src/components/Text';
+
 import {
   Button,
   ButtonNeutralTheme,
@@ -48,8 +51,19 @@ function App() {
 }
 `;
 
+export const PUBLIC_API = `
+## ${i18n.t('Data Attributes (Public API)')}
+
+### \`data-highlighted\`
+
+${i18n.t('button-data-highlighted-description')}
+
+${i18n.t('button-data-highlighted-usage')}
+`;
+
 const meta = {
   title: 'Components/Button',
+  excludeStories: ['PUBLIC_API'],
   parameters: {
     ...CanvasCentered,
     docs: {
@@ -353,4 +367,29 @@ export const ButtonIconSmallDangerGhost: Story = {
       </Button>
     );
   },
+};
+
+export const DataHighlighted: Story = {
+  tags: ['!dev'],
+  render: () => (
+    <div style={{ padding: 20 }}>
+      <ContextMenu.Root mode="click" isOpen>
+        <ContextMenu.Trigger asChild>
+          <Button theme={ButtonIconSmallGhostTheme}>
+            <TriggerIcon width={16} height={16} style={{ display: 'flex' }} />
+          </Button>
+        </ContextMenu.Trigger>
+
+        <ContextMenu.Portal>
+          <ContextMenu.Content direction="down-right" sideOffset={5}>
+            <ContextMenu.Item>
+              <Text theme={TextPrimaryTheme} size="l" isEllipsis>
+                {i18n.t('Edit')}
+              </Text>
+            </ContextMenu.Item>
+          </ContextMenu.Content>
+        </ContextMenu.Portal>
+      </ContextMenu.Root>
+    </div>
+  ),
 };
