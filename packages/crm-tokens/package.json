@@ -1,0 +1,40 @@
+{
+  "name": "@kommo-crm/crm-tokens",
+  "version": "1.0.0",
+  "description": "Design tokens for Kommo CRM UI",
+  "license": "SEE LICENCE IN LICENCE",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./primitives": {
+      "import": {
+        "types": "./dist/primitives/tokens.d.mts",
+        "default": "./dist/primitives/tokens.mjs"
+      },
+      "require": {
+        "types": "./dist/primitives/tokens.d.cts",
+        "default": "./dist/primitives/tokens.cjs"
+      }
+    },
+    "./primitives/css": "./dist/primitives/tokens.css",
+    "./primitives/min.css": "./dist/primitives/tokens.min.css",
+    "./primitives/scss": "./dist/primitives/tokens.scss",
+    "./primitives/less": "./dist/primitives/tokens.less",
+    "./primitives/json": "./dist/primitives/tokens.json"
+  },
+  "scripts": {
+    "prepack": "cp ../../LICENCE ./LICENCE",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && tsx src/index.ts && tsc -p tsconfig.build.json --noEmit && tsdown",
+    "dev": "concurrently \"tsx watch src/index.ts\" \"tsdown --watch --no-dts\"",
+    "test": "jest",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
+  },
+  "devDependencies": {
+    "@types/node": "20.0.0",
+    "tsdown": "0.21.10",
+    "tsx": "4.19.2"
+  }
+}

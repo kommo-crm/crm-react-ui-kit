@@ -1,54 +1,38 @@
-<h1 align="center">@kommo-crm/crm-react-ui-kit</h1>
+<h1 align="center">Kommo CRM React UI Kit</h1>
 
-> Ready-to-use React components that implement the design of [Kommo](https://www.kommo.com/)
+> Repo containing React UI components and design tokens for [Kommo](https://www.kommo.com/)
 
-[Storybook](https://storybook.kommo.com) preview
+## Packages
 
-## Installation
+| Package                                            | Description                                             | Docs                                      |
+| -------------------------------------------------- | ------------------------------------------------------- | ----------------------------------------- |
+| [`@kommo-crm/crm-react-ui-kit`](./packages/ui-kit) | Ready-to-use React components implementing Kommo design | [README](./packages/ui-kit/README.md)     |
+| [`@kommo-crm/crm-tokens`](./packages/crm-tokens)   | Design tokens (primitives)                              | [README](./packages/crm-tokens/README.md) |
+| [`@kommo-crm/storybook`](./packages/storybook)     | Storybook workspace for ui-kit docs and demos           | [README](./packages/storybook/README.md)  |
 
-| npm                                 | yarn                                   | pnpm                                   |
-| ----------------------------------- | -------------------------------------- | -------------------------------------- |
-| `npm i @kommo-crm/crm-react-ui-kit` | `yarn add @kommo-crm/crm-react-ui-kit` | `pnpm add @kommo-crm/crm-react-ui-kit` |
-
-## Commands
-
-### Install dependencies and build
+## Getting started
 
 ```sh
 yarn install && yarn build
 ```
 
-### Storybook Commands
+## Commands
 
-| Command                | Runs                               |
-| ---------------------- | ---------------------------------- |
-| `yarn lint`            | Lints your code                    |
-| `yarn storybook`       | Start Storybook on port 6006       |
-| `yarn build-storybook` | Build Storybook for static hosting |
-
-## Testing
-
-**Run Unit tests:**
-
-```sh
-yarn test
-```
-
-### Working with Playwright
-
-> For `Playwright` to work, [Docker](https://www.docker.com) must be installed
-
-**Run screenshot tests:**
-
-```sh
-yarn test:e2e
-```
-
-**Generate screenshots:**
-
-```sh
-yarn test:e2e:update-snapshots
-```
+| Command                          | Runs                                   |
+| -------------------------------- | -------------------------------------- |
+| `yarn build`                     | Build all packages                     |
+| `yarn build:ui-kit`              | Build ui-kit only                      |
+| `yarn build:tokens`              | Build tokens only                      |
+| `yarn dev`                       | Start dev mode for all packages        |
+| `yarn dev:tokens`                | Start dev mode for tokens only         |
+| `yarn lint`                      | Lint all packages                      |
+| `yarn lint:fix`                  | Lint and auto-fix all packages         |
+| `yarn storybook`                 | Start Storybook on port 6006           |
+| `yarn build:storybook`           | Build Storybook for static hosting     |
+| `yarn test:tokens`               | Run tokens unit tests                  |
+| `yarn test:e2e`                  | Run ui-kit Playwright screenshot tests |
+| `yarn test:e2e:update-snapshots` | Run ui-kit update screenshots          |
+| `yarn docker:clear-playwright-cache` | Clear Playwright Docker cache      |
 
 **Generate screenshots with grep filter:**
 

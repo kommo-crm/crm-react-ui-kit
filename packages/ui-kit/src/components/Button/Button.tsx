@@ -1,0 +1,121 @@
+import React, { forwardRef, useMemo } from 'react';
+import cx from 'classnames';
+
+import { useThemeClassName } from '@/hooks/useThemeClassName';
+
+import { Spinner, type SpinnerTheme } from '@/components/Spinner';
+
+import { noop } from '@/utils';
+
+import { useShowInvalidAnimation, useShowSuccessfulState } from './hooks';
+
+import { type ButtonProps } from './Button.props';
+import { type ButtonThemeType } from './Button.themes';
+
+import s from './Button.module.css';
+
+type B = HTMLButtonElement;
+
+const spinnerThemesMapper = (buttonTheme: ButtonThemeType) => {
+  const defaultTheme: SpinnerTheme = {
+    '--crm-ui-kit-spinner-border-color':
+      buttonTheme['--crm-ui-kit-button-spinner-border-color'],
+    '--crm-ui-kit-spinner-border-width':
+      buttonTheme['--crm-ui-kit-button-spinner-border-width'],
+    '--crm-ui-kit-spinner-circle-size':
+      buttonTheme['--crm-ui-kit-button-spinner-circle-size'],
+    '--crm-ui-kit-spinner-border-style':
+      buttonTheme['--crm-ui-kit-button-spinner-border-style'],
+  };
+
+  const disabledTheme: SpinnerTheme = {
+    ...defaultTheme,
+    '--crm-ui-kit-spinner-border-color':
+      buttonTheme['--crm-ui-kit-button-spinner-disabled-border-color'],
+  };
+
+  return { defaultTheme, disabledTheme };
+};
+
+export const Button = forwardRef<B, ButtonProps>((props, ref) => {
+  const {
+    className = '',
+    type = 'button',
+    onClick = noop,
+    theme,
+    isLoading,
+    isDisabled,
+    before,
+    after,
+    children,
+    showInvalidAnimationRef,
+    showSuccessfulStateRef,
+    successfulStateText,
+    isClickableWhileDisabled = false,
+    ...rest
+  } = props;
+
+  const themeClassName = useThemeClassName<ButtonThemeType>(theme);
+  const spinnerThemes = useMemo(() => spinnerThemesMapper(theme), [theme]);
+
+  const shouldShowInvalidAnimation = useShowInvalidAnimation(
+    showInvalidAnimationRef
+  );
+  const shouldShowSuccessfulState = useShowSuccessfulState(
+    showSuccessfulStateRef
+  );
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (isLoading) {
+      return;
+    }
+
+    onClick(e);
+  };
+
+  const innerContent = (
+    <React.Fragment>
+      {before && <span className={cx(s.before)}>{before}</span>}
+      <span>{children}</span>
+      {after && <span className={cx(s.after)}>{after}</span>}
+    </React.Fragment>
+  );
+
+  const isInnerContentVisible = !isLoading && !shouldShowSuccessfulState;
+
+  return (
+    <button
+      {...rest}
+      ref={ref}
+      type={type}
+      onClick={handleClick}
+      className={cx(s.button, themeClassName, className, {
+        [s.invalid]: shouldShowInvalidAnimation,
+        [s.loading]: isLoading,
+        [s.success]: shouldShowSuccessfulState,
+        [s.disabled]: isDisabled,
+      })}
+      disabled={(isDisabled || isLoading) && !isClickableWhileDisabled}
+    >
+      <span className={cx(s.content)}>
+        {shouldShowSuccessfulState && <span>{successfulStateText}</span>}
+        {isLoading && !shouldShowSuccessfulState && (
+          <Spinner
+            theme={
+              isDisabled
+                ? spinnerThemes.disabledTheme
+                : spinnerThemes.defaultTheme
+            }
+          />
+        )}
+        {isInnerContentVisible ? (
+          innerContent
+        ) : (
+          <span className={cx(s.invisible)}>{innerContent}</span>
+        )}
+      </span>
+    </button>
+  );
+});
+
+Button.displayName = 'Button';

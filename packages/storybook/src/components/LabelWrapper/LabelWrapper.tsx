@@ -1,0 +1,33 @@
+import React from 'react';
+import { FC } from 'react';
+
+import { Label, LabelTheme } from '@ui-kit/components/Label';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
+
+import { i18n } from '@sb/i18n';
+
+import { type LabelWrapperProps } from './LabelWrapper.props';
+
+export const LabelWrapper: FC<LabelWrapperProps> = ({
+  Component = Label,
+  children,
+  theme = LabelTheme,
+  textPlacement = 'top',
+  text,
+  isCentered = false,
+}) => {
+  return (
+    <Component
+      theme={theme}
+      textPlacement={textPlacement}
+      isCentered={isCentered}
+      text={
+        <Text theme={TextPrimaryTheme} size="l">
+          {text || i18n.t('Click me')}
+        </Text>
+      }
+    >
+      {children}
+    </Component>
+  );
+};

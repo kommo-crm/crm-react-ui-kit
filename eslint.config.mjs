@@ -31,15 +31,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: [
-      'dist',
-      '.swc',
-      'storybook-static',
-      'playwright/.cache',
-      'coverage',
-    ],
-  },
-  {
     languageOptions: {
       globals: {
         ...globals.amd,
@@ -409,6 +400,7 @@ export default tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
+          project: ['tsconfig.json', 'packages/*/tsconfig.json'],
         },
       },
     },
@@ -428,47 +420,7 @@ export default tseslint.config(
           ],
 
           'pathGroups': [
-            { pattern: '@ui/**', group: 'external', position: 'after' },
-
-            {
-              pattern: '{lib/common/**,lib/utils/**,@utils/**}',
-              group: 'internal',
-              position: 'after',
-            },
-
-            { pattern: '@api/**', group: 'internal', position: 'after' },
-
-            {
-              pattern: '@hoc/**',
-              group: 'internal',
-              position: 'after',
-            },
-
-            { pattern: '@hooks/**', group: 'internal', position: 'after' },
-
-            {
-              pattern: 'lib/interface/**',
-              group: 'internal',
-              position: 'after',
-            },
-
-            {
-              pattern: 'lib/components/**',
-              group: 'internal',
-              position: 'after',
-            },
-
-            {
-              pattern: '@components/**',
-              group: 'internal',
-              position: 'after',
-            },
-
-            {
-              pattern: '@pages/**',
-              group: 'internal',
-              position: 'after',
-            },
+            { pattern: '@/*', group: 'internal', position: 'after' },
 
             {
               pattern: './types',
@@ -486,19 +438,6 @@ export default tseslint.config(
               pattern: './hooks/**',
               group: 'sibling',
               position: 'before',
-            },
-
-            {
-              pattern: '@svg-sprites/**',
-              group: 'sibling',
-              position: 'after',
-            },
-
-            {
-              pattern: '*.(png|jpe?g)',
-              patternOptions: { matchBase: true },
-              group: 'index',
-              position: 'after',
             },
 
             {
