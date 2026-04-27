@@ -58,4 +58,4 @@ yarn docker:clear-playwright-cache
 
 ## Licenses
 
-Source code is under a [custom license](./<projectRoot>) based on MIT.
+Source code is under a [custom license](./../../LICENCE) based on MIT.
