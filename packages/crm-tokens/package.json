@@ -26,7 +26,7 @@
   "scripts": {
     "prepack": "cp ../../LICENCE ./LICENCE",
     "clean": "rm -rf dist",
-    "build": "yarn clean && tsx src/index.ts && tsdown",
+    "build": "yarn clean && tsx src/index.ts && tsc -p tsconfig.build.json --noEmit && tsdown",
     "dev": "concurrently \"tsx watch src/index.ts\" \"tsdown --watch --no-dts\"",
     "test": "jest",
     "lint": "eslint src",
