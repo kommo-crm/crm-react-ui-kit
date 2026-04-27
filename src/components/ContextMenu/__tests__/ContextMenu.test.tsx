@@ -9,7 +9,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
-import { Text, TextTheme, TextPrimaryTheme } from 'src/components/Text';
+import { Text, TextInheritColorTheme } from 'src/components/Text';
 
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
@@ -36,11 +36,6 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
-
-const TextContextMenuTheme: TextTheme = {
-  ...TextPrimaryTheme,
-  '--crm-ui-kit-text-color': 'inherit',
-};
 
 const renderContextMenu = async ({
   rootProps,
@@ -82,7 +77,7 @@ const renderContextMenu = async ({
               data-testid={DATA_ITEM_TEST_ID}
               shouldCloseRootMenuOnSelect={false}
             >
-              <Text theme={TextContextMenuTheme} size="l">
+              <Text theme={TextInheritColorTheme} size="l">
                 Item 1
               </Text>
             </ContextMenu.Item>
@@ -91,7 +86,7 @@ const renderContextMenu = async ({
               data-testid={DATA_NON_SELECTABLE_ITEM_TEST_ID}
               isSelectable={false}
             >
-              <Text theme={TextContextMenuTheme} size="l">
+              <Text theme={TextInheritColorTheme} size="l">
                 Non-selectable Item
               </Text>
             </ContextMenu.Item>
@@ -103,7 +98,7 @@ const renderContextMenu = async ({
               shouldCloseCurrentMenuOnSelect={false}
               shouldCloseRootMenuOnSelect={false}
             >
-              <Text theme={TextContextMenuTheme} size="l">
+              <Text theme={TextInheritColorTheme} size="l">
                 Autoupdate
               </Text>
 
@@ -122,7 +117,7 @@ const renderContextMenu = async ({
                 shouldCloseCurrentMenuOnSelect={false}
                 shouldCloseRootMenuOnSelect={false}
               >
-                <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                   Light
                 </Text>
               </ContextMenu.RadioItem>
@@ -132,7 +127,7 @@ const renderContextMenu = async ({
                 shouldCloseCurrentMenuOnSelect={false}
                 shouldCloseRootMenuOnSelect={false}
               >
-                <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                   Dark
                 </Text>
 
@@ -155,7 +150,7 @@ const renderContextMenu = async ({
                       >
                         <ContextMenu.Item>
                           <Text
-                            theme={TextContextMenuTheme}
+                            theme={TextInheritColorTheme}
                             size="l"
                             isEllipsis
                           >
@@ -168,7 +163,7 @@ const renderContextMenu = async ({
                           shouldCloseRootMenuOnSelect={false}
                         >
                           <Text
-                            theme={TextContextMenuTheme}
+                            theme={TextInheritColorTheme}
                             size="l"
                             isEllipsis
                           >
@@ -177,14 +172,14 @@ const renderContextMenu = async ({
                         </ContextMenu.Item>
 
                         <ContextMenu.Item shouldCloseRootMenuOnSelect={false}>
-                          <Text theme={TextContextMenuTheme} size="l">
+                          <Text theme={TextInheritColorTheme} size="l">
                             ShouldNotCloseRootMenuOnSelect item in SubRoot
                           </Text>
                         </ContextMenu.Item>
 
                         <ContextMenu.Item isDisabled>
                           <Text
-                            theme={TextContextMenuTheme}
+                            theme={TextInheritColorTheme}
                             size="l"
                             isEllipsis
                           >
@@ -210,7 +205,7 @@ const renderContextMenu = async ({
               {...subProps}
             >
               <ContextMenu.SubTrigger data-testid={DATA_SUB_TRIGGER_TEST_ID}>
-                <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                   SubTrigger
                 </Text>
               </ContextMenu.SubTrigger>
@@ -218,7 +213,7 @@ const renderContextMenu = async ({
               <ContextMenu.Portal>
                 <ContextMenu.SubContent data-testid={DATA_SUB_CONTENT_TEST_ID}>
                   <ContextMenu.Item>
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       Item in Sub
                     </Text>
                   </ContextMenu.Item>
@@ -227,19 +222,19 @@ const renderContextMenu = async ({
                     shouldCloseCurrentMenuOnSelect={false}
                     shouldCloseRootMenuOnSelect={false}
                   >
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       ShouldNotCloseCurrentMenuOnSelect item in Sub
                     </Text>
                   </ContextMenu.Item>
 
                   <ContextMenu.Item shouldCloseRootMenuOnSelect={false}>
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       ShouldNotCloseRootMenuOnSelect item in Sub
                     </Text>
                   </ContextMenu.Item>
 
                   <ContextMenu.Item isDisabled>
-                    <Text theme={TextContextMenuTheme} size="l" isEllipsis>
+                    <Text theme={TextInheritColorTheme} size="l" isEllipsis>
                       Disabled item in Sub
                     </Text>
                   </ContextMenu.Item>
@@ -285,7 +280,7 @@ const renderTwoContextMenus = async ({
             data-testid="FirstMenuContent"
           >
             <ContextMenu.Item>
-              <Text theme={TextContextMenuTheme} size="l">
+              <Text theme={TextInheritColorTheme} size="l">
                 Item in First Menu
               </Text>
             </ContextMenu.Item>
@@ -304,7 +299,7 @@ const renderTwoContextMenus = async ({
             data-testid="SecondMenuContent"
           >
             <ContextMenu.Item>
-              <Text theme={TextContextMenuTheme} size="l">
+              <Text theme={TextInheritColorTheme} size="l">
                 Item in Second Menu
               </Text>
             </ContextMenu.Item>
