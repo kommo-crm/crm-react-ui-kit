@@ -10,8 +10,6 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "!src/**/__tests__/**",
-        "!src/**/*.test.*",
-        "!src/**/*.spec.*"
       ],
       "outputs": ["dist/**"]
     },
@@ -20,8 +18,7 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "!src/**/__tests__/**",
-        "!src/**/*.test.*",
-        "!src/**/*.spec.*"
+        "!src/**/*.test.*"
       ],
       "outputs": ["dist/**"]
     },
@@ -51,7 +48,6 @@
         "../ui-kit/src/**",
         "!../ui-kit/src/**/__tests__/**",
         "!../ui-kit/src/**/*.test.*",
-        "!../ui-kit/src/**/*.spec.*",
         "../ui-kit/stories/**",
         "../ui-kit/public/**"
       ],
