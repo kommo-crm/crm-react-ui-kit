@@ -10,7 +10,11 @@ import {
   ComponentPlaygroundProps,
 } from '@/tests/e2e/ComponentPlayground';
 
-import { Text, TextSecondaryDarkTheme } from '@/components/Text';
+import {
+  Text,
+  TextInheritColorTheme,
+  TextSecondaryDarkTheme,
+} from '@/components/Text';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';
