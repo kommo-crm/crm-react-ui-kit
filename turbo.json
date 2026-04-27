@@ -5,6 +5,26 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "@kommo-crm/crm-tokens#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!src/**/__tests__/**",
+        "!src/**/*.test.*",
+        "!src/**/*.spec.*"
+      ],
+      "outputs": ["dist/**"]
+    },
+    "@kommo-crm/ui-kit#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!src/**/__tests__/**",
+        "!src/**/*.test.*",
+        "!src/**/*.spec.*"
+      ],
+      "outputs": ["dist/**"]
+    },
     "dev": {
       "persistent": true,
       "cache": false
@@ -29,6 +49,9 @@
       "inputs": [
         "$TURBO_DEFAULT$",
         "../ui-kit/src/**",
+        "!../ui-kit/src/**/__tests__/**",
+        "!../ui-kit/src/**/*.test.*",
+        "!../ui-kit/src/**/*.spec.*",
         "../ui-kit/stories/**",
         "../ui-kit/public/**"
       ],
