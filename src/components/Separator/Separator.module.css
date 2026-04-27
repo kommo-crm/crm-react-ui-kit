@@ -1,0 +1,17 @@
+.separator {
+  background-color: var(--crm-ui-kit-separator-color);
+  border-radius: var(--crm-ui-kit-separator-border-radius);
+  border: 0;
+  flex-shrink: 0;
+}
+
+.horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.vertical {
+  width: 1px;
+  height: 100%;
+  align-self: stretch;
+}

@@ -1,0 +1,31 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as SeparatorStories from './Separator.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { SeparatorRoundedTheme, SeparatorSquareTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Separator/Themes" of={SeparatorStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## SeparatorRoundedTheme
+
+```jsx
+import { SeparatorRoundedTheme } from '@kommo-crm/crm-react-ui-kit/Separator';
+```
+
+<ThemeVisualization
+  theme={SeparatorRoundedTheme}
+  of={SeparatorStories.SeparatorRounded}
+/>
+
+## SeparatorSquareTheme
+
+```jsx
+import { SeparatorSquareTheme } from '@kommo-crm/crm-react-ui-kit/Separator';
+```
+
+<ThemeVisualization
+  theme={SeparatorSquareTheme}
+  of={SeparatorStories.SeparatorSquare}
+/>

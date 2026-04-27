@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -32,6 +32,7 @@
     "./Callout": "./dist/components/Callout/index.js",
     "./Accordion": "./dist/components/Accordion/index.js",
     "./ContextMenu": "./dist/components/ContextMenu/index.js",
+    "./Separator": "./dist/components/Separator/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -48,6 +49,7 @@
     "./assets/CheckboxGroup.css": "./dist/assets/CheckboxGroup.css",
     "./assets/FilterTabs.css": "./dist/assets/FilterTabs.css",
     "./assets/Button.css": "./dist/assets/Button.css",
+    "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
@@ -112,6 +114,9 @@
       ],
       "ContextMenu": [
         "./dist/components/ContextMenu/index.d.ts"
+      ],
+      "Separator": [
+        "./dist/components/Separator/index.d.ts"
       ]
     }
   },
