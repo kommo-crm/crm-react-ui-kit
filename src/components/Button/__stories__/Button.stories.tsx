@@ -12,6 +12,7 @@ import { i18n } from '@i18n';
 import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
 import TriggerIcon from '@storybook-utils/icons/trigger.svg';
 import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
+import MagicIcon from '@storybook-utils/icons/magic.svg';
 
 import { ContextMenu } from 'src/components/ContextMenu';
 import { Text, TextPrimaryTheme } from 'src/components/Text';
@@ -28,6 +29,8 @@ import {
   ButtonIconDangerGhostTheme,
   ButtonIconSmallGhostTheme,
   ButtonIconSmallDangerGhostTheme,
+  ButtonContextTheme,
+  ButtonIconContextTheme,
 } from '..';
 
 const ThemesMap = {
@@ -201,15 +204,43 @@ export const Refs: Story = {
   },
 };
 
+const ContextIconsMap = {
+  magic: <MagicIcon width={16} height={16} />,
+};
+
+export const ButtonContext: Story = {
+  args: { theme: ButtonContextTheme },
+  argTypes: {
+    before: {
+      control: 'select',
+      mapping: ContextIconsMap,
+      options: Object.keys(ContextIconsMap),
+    },
+    after: {
+      control: 'select',
+      mapping: ContextIconsMap,
+      options: Object.keys(ContextIconsMap),
+    },
+  },
+  render: (props) => {
+    return <Button {...props} />;
+  },
+};
+
 const buttonIconVariants = [
   { size: 'm', theme: ButtonIconSecondaryTheme, Icon: MicrophoneIcon },
   { size: 'm', theme: ButtonIconGhostTheme, Icon: TriggerIcon },
   { size: 'm', theme: ButtonIconDangerGhostTheme, Icon: TrashcanIcon },
+  { size: 's', theme: ButtonIconContextTheme, Icon: MagicIcon },
   { size: 's', theme: ButtonIconSmallGhostTheme, Icon: TriggerIcon },
   { size: 's', theme: ButtonIconSmallDangerGhostTheme, Icon: TrashcanIcon },
 ];
 
 export const ButtonIcon: Story = {
+  argTypes: {
+    before: { table: { disable: true } },
+    after: { table: { disable: true } },
+  },
   render: (props) => (
     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
       {buttonIconVariants.map(({ size, theme, Icon }, index) => {
@@ -298,10 +329,24 @@ export const ButtonIconDangerGhost: Story = {
   },
 };
 
+export const ButtonIconContext: Story = {
+  tags: ['!dev'],
+  args: { theme: ButtonIconContextTheme },
+  render: (props) => {
+    const { theme, Icon } = buttonIconVariants[3];
+
+    return (
+      <Button {...props} theme={theme}>
+        <Icon width={16} height={16} style={{ display: 'flex' }} />
+      </Button>
+    );
+  },
+};
+
 export const ButtonIconSmallGhost: Story = {
   tags: ['!dev'],
   render: (props) => {
-    const { theme, Icon } = buttonIconVariants[3];
+    const { theme, Icon } = buttonIconVariants[4];
 
     return (
       <Button {...props} theme={theme}>
@@ -314,7 +359,7 @@ export const ButtonIconSmallGhost: Story = {
 export const ButtonIconSmallDangerGhost: Story = {
   tags: ['!dev'],
   render: (props) => {
-    const { theme, Icon } = buttonIconVariants[4];
+    const { theme, Icon } = buttonIconVariants[5];
 
     return (
       <Button {...props} theme={theme}>

@@ -10,6 +10,8 @@ export {
   ButtonIconDangerGhostTheme,
   ButtonIconSmallGhostTheme,
   ButtonIconSmallDangerGhostTheme,
+  ButtonContextTheme,
+  ButtonIconContextTheme,
   type ButtonThemeType,
 } from './Button.themes';
 export { type ButtonProps } from './Button.props';

@@ -8,6 +8,7 @@ import {
 import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
 import TriggerIcon from '@storybook-utils/icons/trigger.svg';
 import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
+import MagicIcon from '@storybook-utils/icons/magic.svg';
 
 import {
   Button,
@@ -21,6 +22,8 @@ import {
   ButtonIconDangerGhostTheme,
   ButtonIconSmallGhostTheme,
   ButtonIconSmallDangerGhostTheme,
+  ButtonContextTheme,
+  ButtonIconContextTheme,
   type ButtonProps,
 } from '..';
 
@@ -86,6 +89,32 @@ export const ButtonDangerTertiaryPlaygroundItem = ({
     {(p) => (
       <Button {...p} theme={ButtonDangerTertiaryTheme}>
         Button
+      </Button>
+    )}
+  </ComponentPlayground>
+);
+
+export const ButtonContextPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonContextTheme}>
+        Button
+      </Button>
+    )}
+  </ComponentPlayground>
+);
+
+export const ButtonIconContextPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<ButtonProps>) => (
+  <ComponentPlayground<ButtonProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Button {...p} theme={ButtonIconContextTheme}>
+        <MagicIcon width={16} height={16} style={{ display: 'flex' }} />
       </Button>
     )}
   </ComponentPlayground>
