@@ -12,6 +12,7 @@ import {
   TextPrimaryTheme,
   TextSecondaryDarkTheme,
   TextSecondaryLightTheme,
+  TextInheritColorTheme,
 } from '..';
 
 const sizes: TextSizes[] = ['s', 'm', 'ms', 'l', 'xl'];
@@ -21,6 +22,7 @@ const themeMap = {
   TextSecondaryDarkTheme,
   TextSecondaryLightTheme,
   TextErrorTheme,
+  TextInheritColorTheme,
 };
 
 const USAGE = `
@@ -121,4 +123,14 @@ export const TextSecondaryLight: Story = {
 export const TextError: Story = {
   tags: ['!dev'],
   args: { theme: TextErrorTheme },
+};
+
+export const TextInherit: Story = {
+  tags: ['!dev'],
+  args: { theme: TextInheritColorTheme },
+  render: (props) => (
+    <div style={{ color: 'var(--crm-ui-kit-color-bright-blue)' }}>
+      <Text {...props} />
+    </div>
+  ),
 };
