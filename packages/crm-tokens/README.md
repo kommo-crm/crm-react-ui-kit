@@ -16,11 +16,14 @@
 
 ## Commands
 
-| Command      | Runs                            |
-| ------------ | ------------------------------- |
-| `yarn build` | Build all token outputs         |
-| `yarn dev`   | Watch mode — rebuild on changes |
-| `yarn test`  | Run unit tests                  |
+| Command         | Runs                            |
+| --------------- | ------------------------------- |
+| `yarn build`    | Build all token outputs         |
+| `yarn dev`      | Watch mode — rebuild on changes |
+| `yarn clean`    | Remove dist folder              |
+| `yarn test`     | Run unit tests                  |
+| `yarn lint`     | Lint source                     |
+| `yarn lint:fix` | Lint and auto-fix               |
 
 ## Licenses
 

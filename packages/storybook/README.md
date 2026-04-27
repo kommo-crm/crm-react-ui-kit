@@ -4,7 +4,8 @@
 
 ## Commands
 
-| Command                | Runs                               |
-| ---------------------- | ---------------------------------- |
-| `yarn storybook`       | Start Storybook on port 6006       |
-| `yarn build-storybook` | Build Storybook for static hosting |
+| Command                | Runs                                        |
+| ---------------------- | ------------------------------------------- |
+| `yarn dev`             | Start Storybook on port 6006(for turborepo) |
+| `yarn storybook`       | Start Storybook on port 6006                |
+| `yarn build-storybook` | Build Storybook for static hosting          |

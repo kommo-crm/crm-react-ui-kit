@@ -13,11 +13,12 @@ For storybook preview see README in storybook package
 
 ## Commands
 
-| Command         | Runs              |
-| --------------- | ----------------- |
-| `yarn lint`     | Lint the package  |
-| `yarn lint:fix` | Lint and auto-fix |
-| `yarn build`    | Build the package |
+| Command         | Runs                  |
+| --------------- | --------------------- |
+| `yarn build`    | Build the package     |
+| `yarn lint`     | Lint the package      |
+| `yarn lint:fix` | Lint and auto-fix     |
+| `yarn tslint`   | TypeScript type check |
 
 ## Testing
 
@@ -35,6 +36,24 @@ yarn test
 
 ```sh
 yarn test:e2e:ci
+```
+
+**Run e2e tests via Docker:**
+
+```sh
+yarn test:e2e
+```
+
+**Update snapshots via Docker:**
+
+```sh
+yarn test:e2e:update-snapshots
+```
+
+**Clear Playwright Docker cache:**
+
+```sh
+yarn docker:clear-playwright-cache
 ```
 
 ## Licenses
