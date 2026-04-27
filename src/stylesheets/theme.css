@@ -63,6 +63,32 @@
   --crm-ui-kit-color-japanese-indigo: #2b3d43;
   --crm-ui-kit-color-firefly: #102535;
   --crm-ui-kit-color-mercury: #e4e4e4;
+  --crm-ui-kit-color-plantation: #29554e;
+  --crm-ui-kit-color-padua: #c2ecc9;
+  --crm-ui-kit-color-link-water: #d4e3f1;
+  --crm-ui-kit-color-deep-sea: #02815a;
+  --crm-ui-kit-color-petrol-blue: #224e6b;
+  --crm-ui-kit-color-astronaut: #2a4d75;
+  --crm-ui-kit-color-mariner: #326fd8;
+  --crm-ui-kit-color-east-bay: #3f4775;
+  --crm-ui-kit-color-fuscous-gray: #4b4c41;
+  --crm-ui-kit-color-mortar: #514754;
+  --crm-ui-kit-color-royal-blue: #7259eb;
+  --crm-ui-kit-color-dove-gray: #737373;
+  --crm-ui-kit-color-fiery-orange: #b75610;
+  --crm-ui-kit-color-hibiscus: #cc2d73;
+  --crm-ui-kit-color-flush-mahogany: #ce3942;
+  --crm-ui-kit-color-ottoman: #e2f5eb;
+  --crm-ui-kit-color-blue-chalk: #e8dcfd;
+  --crm-ui-kit-color-solitude: #e9f1fe;
+  --crm-ui-kit-color-selago: #eeeefe;
+  --crm-ui-kit-color-classic-rose: #fbd9e2;
+  --crm-ui-kit-color-cinderella: #fdd9d5;
+  --crm-ui-kit-color-light-apricot: #fdddaf;
+  --crm-ui-kit-color-wisp-pink: #fdebf0;
+  --crm-ui-kit-color-beeswax: #fdf0c3;
+  --crm-ui-kit-color-bridesmaid: #feebea;
+  --crm-ui-kit-color-mulled-wine: #53455d;
   --crm-ui-kit-color-apple-green: #e3f3ed;
   --crm-ui-kit-color-big-stone: #182a39;
 
@@ -162,6 +188,24 @@
     0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 
   --crm-ui-kit-palette-spinner-border-color: var(--crm-ui-kit-color-blueberry);
+
+  --crm-ui-kit-palette-badge-color-green: var(--crm-ui-kit-color-deep-sea);
+  --crm-ui-kit-palette-badge-background-color-green: var(--crm-ui-kit-color-ottoman);
+
+  --crm-ui-kit-palette-badge-color-orange: var(--crm-ui-kit-color-fiery-orange);
+  --crm-ui-kit-palette-badge-background-color-orange: var(--crm-ui-kit-color-beeswax);
+
+  --crm-ui-kit-palette-badge-color-red: var(--crm-ui-kit-color-flush-mahogany);
+  --crm-ui-kit-palette-badge-background-color-red: var(--crm-ui-kit-color-bridesmaid);
+
+  --crm-ui-kit-palette-badge-color-purple: var(--crm-ui-kit-color-royal-blue);
+  --crm-ui-kit-palette-badge-background-color-purple: var(--crm-ui-kit-color-selago);
+
+  --crm-ui-kit-palette-badge-color-neutral: var(--crm-ui-kit-color-dove-gray);
+  --crm-ui-kit-palette-badge-background-color-neutral: var(--crm-ui-kit-color-cultured);
+
+  --crm-ui-kit-palette-badge-color-blue: var(--crm-ui-kit-color-mariner);
+  --crm-ui-kit-palette-badge-background-color-blue: var(--crm-ui-kit-color-solitude);
 }
 
 :root[data-crm-ui-kit-theme='alternative'] {
@@ -233,4 +277,22 @@
 
   --crm-ui-kit-palette-accordion-item-box-shadow: 0px 1px 6px 2px
     rgba(0, 19, 45, 0.06);
+
+  --crm-ui-kit-palette-badge-color-green: var(--crm-ui-kit-color-padua);
+  --crm-ui-kit-palette-badge-background-color-green: var(--crm-ui-kit-color-plantation);
+
+  --crm-ui-kit-palette-badge-color-orange: var(--crm-ui-kit-color-light-apricot);
+  --crm-ui-kit-palette-badge-background-color-orange: var(--crm-ui-kit-color-fuscous-gray);
+
+  --crm-ui-kit-palette-badge-color-red: var(--crm-ui-kit-color-cinderella);
+  --crm-ui-kit-palette-badge-background-color-red: var(--crm-ui-kit-color-mortar);
+
+  --crm-ui-kit-palette-badge-color-purple: var(--crm-ui-kit-color-blue-chalk);
+  --crm-ui-kit-palette-badge-background-color-purple: var(--crm-ui-kit-color-east-bay);
+
+  --crm-ui-kit-palette-badge-color-neutral: var(--crm-ui-kit-color-link-water);
+  --crm-ui-kit-palette-badge-background-color-neutral: var(--crm-ui-kit-color-petrol-blue);
+
+  --crm-ui-kit-palette-badge-color-blue: var(--crm-ui-kit-color-link-water);
+  --crm-ui-kit-palette-badge-background-color-blue: var(--crm-ui-kit-color-astronaut);
 }
