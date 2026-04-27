@@ -3,10 +3,14 @@ import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
+import CloseIcon from 'src/icons/close.svg';
+
 import { omit } from 'src/utils';
 
+import { Button, ButtonIconSmallGhostTheme } from '../Button';
+
 import { type CalloutProps } from './Callout.props';
-import { CalloutThemeType } from './themes/CalloutBase.theme';
+import { CalloutThemeType } from './Callout.themes';
 
 import s from './Callout.module.css';
 
@@ -18,6 +22,7 @@ export const Callout = forwardRef<D, CalloutProps>((props, ref) => {
     isIconAvailable = true,
     theme,
     children,
+    onClose,
     ...rest
   } = props;
 
@@ -37,6 +42,16 @@ export const Callout = forwardRef<D, CalloutProps>((props, ref) => {
       {isIconAvailable && <Icon className={cx(s.icon)} />}
 
       {children}
+
+      {onClose && (
+        <Button
+          theme={ButtonIconSmallGhostTheme}
+          className={s.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </Button>
+      )}
     </div>
   );
 });

@@ -89,6 +89,8 @@
   --crm-ui-kit-color-beeswax: #fdf0c3;
   --crm-ui-kit-color-bridesmaid: #feebea;
   --crm-ui-kit-color-mulled-wine: #53455d;
+  --crm-ui-kit-color-apple-green: #e3f3ed;
+  --crm-ui-kit-color-big-stone: #182a39;
 
   --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-onyx);
   --crm-ui-kit-palette-text-secondary-light: var(
@@ -163,17 +165,17 @@
   --crm-ui-kit-palette-content-block-box-shadow: 0 2px 1px 0
     var(--crm-ui-kit-color-bright-gray);
 
-  --crm-ui-kit-palette-callout-error-background-color: var(
-    --crm-ui-kit-color-misty-rose
-  );
-  --crm-ui-kit-palette-callout-warning-background-color: var(
-    --crm-ui-kit-color-orange-white
-  );
   --crm-ui-kit-palette-callout-info-background-color: var(
     --crm-ui-kit-color-zumthor
   );
   --crm-ui-kit-palette-callout-success-background-color: var(
     --crm-ui-kit-color-panache
+  );
+  --crm-ui-kit-palette-callout-warning-background-color: var(
+    --crm-ui-kit-color-orange-white
+  );
+  --crm-ui-kit-palette-callout-error-background-color: var(
+    --crm-ui-kit-color-misty-rose
   );
 
   --crm-ui-kit-palette-accordion-item-box-shadow: 0px 1px 6px 2px
@@ -260,16 +262,16 @@
   */
   --crm-ui-kit-palette-content-block-box-shadow: none;
 
-  --crm-ui-kit-palette-callout-error-background-color: var(
-    --crm-ui-kit-color-dark-gunmetal
-  );
-  --crm-ui-kit-palette-callout-warning-background-color: var(
-    --crm-ui-kit-color-japanese-indigo
-  );
   --crm-ui-kit-palette-callout-info-background-color: var(
     --crm-ui-kit-color-metallic-blue
   );
   --crm-ui-kit-palette-callout-success-background-color: var(
+    --crm-ui-kit-color-big-stone
+  );
+  --crm-ui-kit-palette-callout-warning-background-color: var(
+    --crm-ui-kit-color-japanese-indigo
+  );
+  --crm-ui-kit-palette-callout-error-background-color: var(
     --crm-ui-kit-color-dark-gunmetal
   );
 
