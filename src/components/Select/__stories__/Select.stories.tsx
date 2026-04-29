@@ -83,7 +83,7 @@ const SelectWrapper = (props: SelectStoryProps) => {
   const handleChange = (item: SelectItem) => {
     props?.onChange!(item);
 
-    if (!('defaultValue' in props)) {
+    if ('value' in props) {
       setValue(item);
     }
   };
@@ -128,7 +128,7 @@ const IconsSelect = (props: SelectStoryProps) => {
   const handleChange = (item: SelectItem) => {
     props.onChange!(item);
 
-    if (!('defaultValue' in props)) {
+    if ('value' in props) {
       setValue(item);
     }
   };
@@ -250,7 +250,6 @@ const meta = {
     children: null,
     isInvalid: false,
     theme: SelectRootTheme,
-    defaultValue: DefaultSelectItems[0],
   },
   component: Select,
   render: (props: Omit<SelectStoryProps, 'description'>) => {
@@ -260,7 +259,7 @@ const meta = {
     const handleChange = (item: SelectItem) => {
       props.onChange!(item);
 
-      if (!('defaultValue' in props)) {
+      if ('value' in props) {
         setArgs({ value: item });
       }
     };

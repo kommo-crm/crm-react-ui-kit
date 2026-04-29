@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type SelectItem = {
   /**
    * Value of the element.
@@ -6,5 +8,5 @@ export type SelectItem = {
   /**
    * Description of the element.
    */
-  option: string;
+  option: ReactNode;
 };
