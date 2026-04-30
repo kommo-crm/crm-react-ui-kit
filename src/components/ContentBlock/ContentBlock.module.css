@@ -4,7 +4,5 @@
   border-radius: var(--crm-ui-kit-content-block-border-radius);
   box-shadow: var(--crm-ui-kit-content-block-box-shadow);
   background: var(--crm-ui-kit-content-block-background);
-  border-width: var(--crm-ui-kit-content-block-border-width);
-  border-style: var(--crm-ui-kit-content-block-border-style);
-  border-color: var(--crm-ui-kit-content-block-border-color);
+  border: var(--crm-ui-kit-content-block-border);
 }

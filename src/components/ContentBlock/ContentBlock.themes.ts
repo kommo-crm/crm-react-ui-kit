@@ -5,10 +5,7 @@ type ContentBlockKey =
   | '--crm-ui-kit-content-block-padding'
   | '--crm-ui-kit-content-block-border-radius';
 
-type ContentBlockOptionalKey =
-  | '--crm-ui-kit-content-block-border-width'
-  | '--crm-ui-kit-content-block-border-color'
-  | '--crm-ui-kit-content-block-border-style';
+type ContentBlockOptionalKey = '--crm-ui-kit-content-block-border';
 
 export type ContentBlockThemeType = {
   [K in ContentBlockKey]: string;
@@ -34,9 +31,7 @@ export const ContentBlockTheme: ContentBlockThemeType = {
 export const ContentBlockSecondaryTheme: ContentBlockThemeType = {
   ...ContentBlockBaseThemeValues,
   '--crm-ui-kit-content-block-padding': '16px',
-  '--crm-ui-kit-content-block-border-style': 'solid',
-  '--crm-ui-kit-content-block-border-width': '1px',
-  '--crm-ui-kit-content-block-border-color':
-    'var(--crm-ui-kit-palette-border-primary)',
+  '--crm-ui-kit-content-block-border':
+    '1px solid var(--crm-ui-kit-palette-border-primary)',
   '--crm-ui-kit-content-block-box-shadow': 'none',
 };
