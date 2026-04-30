@@ -5,7 +5,11 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { Text, TextPrimaryTheme } from 'src/components/Text';
 
-import { ContentBlock, ContentBlockTheme } from '..';
+import {
+  ContentBlock,
+  ContentBlockSecondaryTheme,
+  ContentBlockTheme,
+} from '..';
 
 const USAGE = `
 import { Text, TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
@@ -42,15 +46,6 @@ const meta = {
   component: ContentBlock,
   args: {
     theme: ContentBlockTheme,
-  },
-} satisfies Meta<typeof ContentBlock>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
     children: (
       <Text theme={TextPrimaryTheme} size="l">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
@@ -58,5 +53,18 @@ export const Default: Story = {
         maxime?
       </Text>
     ),
+  },
+} satisfies Meta<typeof ContentBlock>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const ContentBlockSecondary: Story = {
+  tags: ['!dev'],
+  args: {
+    theme: ContentBlockSecondaryTheme,
   },
 };

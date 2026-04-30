@@ -1,14 +1,12 @@
-import { Title, Meta, Canvas } from '@storybook/blocks';
+import { Title, Meta } from '@storybook/blocks';
 import * as ContentBlock from './ContentBlock.stories';
 import { ThemeVisualization } from '@storybook-utils/components';
-import { ContentBlockTheme } from '..';
+import { ContentBlockSecondaryTheme, ContentBlockTheme } from '..';
 import { i18n } from '@i18n';
 
 <Meta title="Components/ContentBlock/Themes" of={ContentBlock} />
 
 <Title>{i18n.t('Themes')}</Title>
-
-<Canvas of={ContentBlock.Default} />
 
 ## ContentBlockTheme
 
@@ -16,4 +14,15 @@ import { i18n } from '@i18n';
 import { ContentBlockTheme } from '@kommo-crm/crm-react-ui-kit/ContentBlock';
 ```
 
-<ThemeVisualization theme={ContentBlockTheme} />
+<ThemeVisualization theme={ContentBlockTheme} of={ContentBlock.Default} />
+
+## ContentBlockSecondaryTheme
+
+```jsx
+import { ContentBlockSecondaryTheme } from '@kommo-crm/crm-react-ui-kit/ContentBlock';
+```
+
+<ThemeVisualization
+  theme={ContentBlockSecondaryTheme}
+  of={ContentBlock.ContentBlockSecondary}
+/>

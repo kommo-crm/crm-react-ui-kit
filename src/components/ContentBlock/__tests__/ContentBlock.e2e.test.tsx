@@ -6,7 +6,10 @@ import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
 
 import { type ContentBlockProps } from '../ContentBlock.props';
 
-import { ContentBlockPlaygroundItem } from './ContentBlock.e2e-playground';
+import {
+  ContentBlockPrimaryPlaygroundItem,
+  ContentBlockSecondaryPlaygroundItem,
+} from './ContentBlock.e2e-playground';
 
 export const combinations = multiCartesian<ContentBlockProps>([{}]);
 
@@ -18,7 +21,25 @@ for (const props of combinations) {
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
-          <ContentBlockPlaygroundItem appearance={appearance} props={props} />
+          <ContentBlockPrimaryPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('ContentBlock Secondary', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ContentBlockSecondaryPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
         );
         await expectScreenshotClippedToContent();
       }
