@@ -28,7 +28,7 @@ export const Value = forwardRef<S, ValueProps>((props, ref) => {
     }
 
     return (
-      <Option className={className} ref={ref}>
+      <Option className={className} ref={ref} title={value?.title}>
         {shouldShowPlaceholder(value) ? placeholder : value?.option}
       </Option>
     );

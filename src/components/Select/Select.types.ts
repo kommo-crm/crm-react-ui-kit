@@ -1,10 +1,16 @@
+import { ReactNode } from 'react';
+
 export type SelectItem = {
   /**
    * Value of the element.
    */
   value: number | string;
   /**
-   * Description of the element.
+   * Visual label shown in the list and in the trigger when the item is selected.
    */
-  option: string;
+  option: ReactNode;
+  /**
+   * Native tooltip text shown on hover.
+   */
+  title?: string;
 };

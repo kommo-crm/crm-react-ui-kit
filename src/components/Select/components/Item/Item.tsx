@@ -62,7 +62,7 @@ export const Item = forwardRef<L, ItemProps>((props, ref) => {
       )}
       onClick={handleClick}
     >
-      {children ? children : <Option>{option}</Option>}
+      {children ? children : <Option title={item.title}>{option}</Option>}
     </li>
   );
 });
