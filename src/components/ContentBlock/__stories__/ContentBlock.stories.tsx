@@ -8,7 +8,7 @@ import { Text, TextPrimaryTheme } from 'src/components/Text';
 import {
   ContentBlock,
   ContentBlockSecondaryTheme,
-  ContentBlockTheme,
+  ContentBlockPrimaryTheme,
 } from '..';
 
 const USAGE = `
@@ -16,12 +16,12 @@ import { Text, TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
 
 import {
   ContentBlock,
-  ContentBlockTheme,
+  ContentBlockPrimaryTheme,
 } from '@kommo-crm/crm-react-ui-kit/ContentBlock';
 
 function App() {
   return (
-    <ContentBlock theme={ContentBlockTheme}>
+    <ContentBlock theme={ContentBlockPrimaryTheme}>
       <Text theme={TextPrimaryTheme} size="l">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
         ducimus inventore minima optio error unde incidunt atque. Minima,
@@ -45,7 +45,7 @@ const meta = {
   },
   component: ContentBlock,
   args: {
-    theme: ContentBlockTheme,
+    theme: ContentBlockPrimaryTheme,
     children: (
       <Text theme={TextPrimaryTheme} size="l">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam

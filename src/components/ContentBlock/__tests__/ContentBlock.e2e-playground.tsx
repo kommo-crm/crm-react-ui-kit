@@ -10,7 +10,7 @@ import { Text, TextPrimaryTheme } from 'src/components/Text';
 import { ContentBlock } from '../ContentBlock';
 import {
   ContentBlockSecondaryTheme,
-  ContentBlockTheme,
+  ContentBlockPrimaryTheme,
 } from '../ContentBlock.themes';
 import { type ContentBlockProps } from '../ContentBlock.props';
 
@@ -35,7 +35,7 @@ export const ContentBlockPrimaryPlaygroundItem = ({
   props,
 }: ComponentPlaygroundProps<ContentBlockProps>) => (
   <ComponentPlayground<ContentBlockProps> appearance={appearance} props={props}>
-    {(p) => <ContentBlockComponent {...p} theme={ContentBlockTheme} />}
+    {(p) => <ContentBlockComponent {...p} theme={ContentBlockPrimaryTheme} />}
   </ComponentPlayground>
 );
 

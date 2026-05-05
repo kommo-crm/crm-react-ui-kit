@@ -21,12 +21,18 @@ const ContentBlockBaseThemeValues = {
     'var(--crm-ui-kit-palette-background-primary)',
 };
 
-export const ContentBlockTheme: ContentBlockThemeType = {
+export const ContentBlockPrimaryTheme: ContentBlockThemeType = {
   ...ContentBlockBaseThemeValues,
   '--crm-ui-kit-content-block-padding': '18px 18px 29px',
   '--crm-ui-kit-content-block-box-shadow':
     'var(--crm-ui-kit-palette-content-block-box-shadow)',
 };
+
+/**
+ * @deprecated This theme will be removed in a future major version.
+ * Use {@link ContentBlockPrimaryTheme} instead.
+ */
+export const ContentBlockTheme = ContentBlockPrimaryTheme;
 
 export const ContentBlockSecondaryTheme: ContentBlockThemeType = {
   ...ContentBlockBaseThemeValues,
