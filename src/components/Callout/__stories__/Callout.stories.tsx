@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+
+import { action } from '@storybook/addon-actions';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
@@ -7,26 +9,32 @@ import { Text, TextPrimaryTheme } from 'src/components/Text';
 
 import { Callout } from '..';
 
-import { CalloutErrorTheme } from '../themes/CalloutError.theme';
-import { CalloutInfoTheme } from '../themes/CalloutInfo.theme';
-import { CalloutSuccessTheme } from '../themes/CalloutSuccess.theme';
-import { CalloutWarningTheme } from '../themes/CalloutWarning.theme';
-
-const themeMap = {
-  CalloutErrorTheme,
+import {
   CalloutInfoTheme,
   CalloutSuccessTheme,
   CalloutWarningTheme,
+  CalloutErrorTheme,
+} from '../Callout.themes';
+
+const themeMap = {
+  CalloutInfoTheme,
+  CalloutSuccessTheme,
+  CalloutWarningTheme,
+  CalloutErrorTheme,
 };
 
 const USAGE = `
 import { Text, TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
 
-import { Callout, CalloutErrorTheme } from '@kommo-crm/crm-react-ui-kit/Callout';
+import { Callout, CalloutInfoTheme } from '@kommo-crm/crm-react-ui-kit/Callout';
 
 function App() {
+  const handleClose = () => {
+    console.log('close');
+  };
+
   return (
-    <Callout theme={CalloutErrorTheme}>
+    <Callout theme={CalloutInfoTheme} onClose={handleClose}>
       <Text theme={TextPrimaryTheme} size="l">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
         ducimus inventore minima optio error unde incidunt atque. Minima,
@@ -57,7 +65,7 @@ const meta = {
     },
   },
   args: {
-    theme: CalloutErrorTheme,
+    theme: CalloutInfoTheme,
     children: (
       <Text theme={TextPrimaryTheme} size="l">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
@@ -65,6 +73,18 @@ const meta = {
         maxime?
       </Text>
     ),
+    onClose: action('onClose'),
+  },
+  render: (args) => {
+    const [isHidden, setIsHidden] = useState(false);
+
+    const handleClose = (event: React.MouseEvent<HTMLButtonElement>) => {
+      args.onClose?.(event);
+      setIsHidden(true);
+      setTimeout(() => setIsHidden(false), 1000);
+    };
+
+    return <>{!isHidden && <Callout {...args} onClose={handleClose} />}</>;
   },
 } satisfies Meta<typeof Callout>;
 
@@ -73,11 +93,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
-
-export const CalloutError: Story = {
-  tags: ['!dev'],
-  args: { theme: CalloutErrorTheme },
-};
 
 export const CalloutInfo: Story = {
   tags: ['!dev'],
@@ -92,4 +107,9 @@ export const CalloutSuccess: Story = {
 export const CalloutWarning: Story = {
   tags: ['!dev'],
   args: { theme: CalloutWarningTheme },
+};
+
+export const CalloutError: Story = {
+  tags: ['!dev'],
+  args: { theme: CalloutErrorTheme },
 };
