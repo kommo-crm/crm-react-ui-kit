@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
-type SelectItemBase = {
+interface SelectItemBase {
   /**
    * Value of the element.
    */
   value: number | string;
-};
+}
 
 export type SelectItem =
   | (SelectItemBase & {
@@ -23,7 +23,7 @@ export type SelectItem =
       /**
        * Visual label shown in the list and in the trigger when the item is selected.
        */
-      option: Exclude<ReactNode, string>;
+      option: ReactElement;
       /**
        * Native tooltip text shown on hover.
        * Required because `option` is not a string and cannot be used as a fallback.
