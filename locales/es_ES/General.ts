@@ -103,4 +103,11 @@ export default {
   'Export to PDF': 'Exportar a PDF',
   'Enable notifications': 'Activar notificaciones',
   'Hover me': 'Pasa el cursor',
+
+  /* List */
+  'Bulleted': 'Con viñetas',
+  'Numbered': 'Numerada',
+  'List level': 'Lista nivel',
+  'Bulleted List level': 'Lista con viñetas nivel',
+  'Numbered List level': 'Lista numerada nivel',
 };

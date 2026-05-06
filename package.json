@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -15,6 +15,7 @@
     "./Switcher": "./dist/components/Switcher/index.js",
     "./Spinner": "./dist/components/Spinner/index.js",
     "./Link": "./dist/components/Link/index.js",
+    "./List": "./dist/components/List/index.js",
     "./TextArea": "./dist/components/TextArea/index.js",
     "./Text": "./dist/components/Text/index.js",
     "./Input": "./dist/components/Input/index.js",
@@ -63,6 +64,9 @@
       ],
       "Link": [
         "./dist/components/Link/index.d.ts"
+      ],
+      "List": [
+        "./dist/components/List/index.d.ts"
       ],
       "TextArea": [
         "./dist/components/TextArea/index.d.ts"
