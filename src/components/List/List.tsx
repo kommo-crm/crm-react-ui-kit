@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback } from 'react';
+import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
@@ -32,17 +32,6 @@ const ListBase = forwardRef<ListElement, ListProps>((props, forwardedRef) => {
 
   const themeClassName = useThemeClassName<TextTheme>(theme);
 
-  const setRef = useCallback(
-    (element: ListElement | null) => {
-      if (typeof forwardedRef === 'function') {
-        forwardedRef(element);
-      } else if (forwardedRef) {
-        forwardedRef.current = element;
-      }
-    },
-    [forwardedRef]
-  );
-
   const classes = cx(
     s.list,
     sizeClassName[size],
@@ -56,14 +45,22 @@ const ListBase = forwardRef<ListElement, ListProps>((props, forwardedRef) => {
 
   if (type === 'numbered') {
     return (
-      <ol ref={setRef} className={classes} {...rest}>
+      <ol
+        ref={forwardedRef as React.RefObject<HTMLOListElement>}
+        className={classes}
+        {...rest}
+      >
         {children}
       </ol>
     );
   }
 
   return (
-    <ul ref={setRef} className={classes} {...rest}>
+    <ul
+      ref={forwardedRef as React.RefObject<HTMLUListElement>}
+      className={classes}
+      {...rest}
+    >
       {children}
     </ul>
   );
