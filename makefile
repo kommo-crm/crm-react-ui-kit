@@ -1,5 +1,12 @@
 DATE:=$(shell date +%Y_%m_%d_%H_%M_%S)
 
+minor:
+	yarn lint
+	npm version minor
+	npm login
+	yarn build
+	npm publish
+	make all
 
 all: build push
 
