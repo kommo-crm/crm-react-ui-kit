@@ -3,6 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
+import { i18n } from '@i18n';
+
+import { useStoryLabel } from 'src/hooks/useStoryLabel';
+
 import {
   Separator,
   SeparatorRoundedLightTheme,
@@ -21,7 +25,7 @@ const themeMap = {
 const USAGE = `
 import {
   Separator,
-  SeparatorRoundedTheme,
+  SeparatorRoundedLightTheme,
 } from '@kommo-crm/crm-react-ui-kit/Separator';
 
 function App() {
@@ -37,6 +41,22 @@ function App() {
 const HORIZONTAL_WRAPPER_STYLE: React.CSSProperties = {
   width: 240,
   display: 'flex',
+};
+
+const CARD_LIST_STYLE: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'row',
+  gap: 16,
+};
+
+const CARD_STYLE: React.CSSProperties = {
+  width: '100%',
+  minHeight: 96,
+  padding: '0 32px',
+  display: 'flex',
+  alignItems: 'center',
+  borderRadius: 'var(--crm-ui-kit-border-radius-default)',
+  boxSizing: 'border-box',
 };
 
 const VERTICAL_WRAPPER_STYLE: React.CSSProperties = {
@@ -87,30 +107,58 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const Horizontal: Story = {
-  args: { orientation: 'horizontal' },
-};
+export const HowToUse: Story = {
+  render: (props) => {
+    const isVertical = props.orientation === 'vertical';
+    const wrapperStyle = isVertical
+      ? VERTICAL_WRAPPER_STYLE
+      : HORIZONTAL_WRAPPER_STYLE;
+    const cardStyle: React.CSSProperties = isVertical
+      ? { ...CARD_STYLE, justifyContent: 'center', minHeight: 120 }
+      : CARD_STYLE;
 
-export const Vertical: Story = {
-  args: { orientation: 'vertical' },
-};
+    const darkThemeLabel = useStoryLabel(
+      i18n.t('...DarkTheme for dark background')
+    );
+    const lightThemeLabel = useStoryLabel(
+      i18n.t('...LightTheme for light background')
+    );
 
-export const SeparatorRounded: Story = {
-  tags: ['!dev'],
-  args: { theme: SeparatorRoundedLightTheme },
-};
+    return (
+      <div style={CARD_LIST_STYLE}>
+        <div>
+          {darkThemeLabel}
+          <div
+            style={{
+              ...cardStyle,
+              background: 'var(--crm-ui-kit-palette-background-default)',
+            }}
+          >
+            <div style={wrapperStyle}>
+              <Separator {...props} theme={SeparatorRoundedDarkTheme} />
+            </div>
+          </div>
+        </div>
 
-export const SeparatorSquare: Story = {
-  tags: ['!dev'],
-  args: { theme: SeparatorSquaredLightTheme },
-};
-
-export const SeparatorLight: Story = {
-  tags: ['!dev'],
-  args: { theme: SeparatorSquaredLightTheme },
-};
-
-export const SeparatorDark: Story = {
-  tags: ['!dev'],
-  args: { theme: SeparatorSquaredDarkTheme },
+        <div>
+          {lightThemeLabel}
+          <div
+            style={{
+              ...cardStyle,
+              background: 'var(--crm-ui-kit-palette-background-primary)',
+            }}
+          >
+            <div style={wrapperStyle}>
+              <Separator {...props} theme={SeparatorRoundedLightTheme} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    controls: {
+      exclude: /theme/,
+    },
+  },
 };
