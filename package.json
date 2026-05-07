@@ -53,6 +53,7 @@
     "./assets/Button.css": "./dist/assets/Button.css",
     "./assets/CounterBadge.css": "./dist/assets/CounterBadge.css",
     "./assets/Badge.css": "./dist/assets/Badge.css",
+    "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
