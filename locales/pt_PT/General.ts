@@ -107,4 +107,11 @@ export default {
   /* Separator */
   '...LightTheme for light background': '...LightTheme para fundo claro',
   '...DarkTheme for dark background': '...DarkTheme para fundo escuro',
+
+  /* List */
+  'Bulleted': 'Com marcadores',
+  'Numbered': 'Numerada',
+  'List level': 'Lista nível',
+  'Bulleted List level': 'Lista com marcadores nível',
+  'Numbered List level': 'Lista numerada nível',
 };

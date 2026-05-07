@@ -1,67 +1,74 @@
-import React, { forwardRef, MutableRefObject } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import cx from 'classnames';
-import { useKeyboardListNavigation } from '@kommo-crm/react-hooks';
 
 import { useThemeClassName } from 'src/hooks/useThemeClassName';
 
-import { CustomScrollClassName } from 'src/stylesheets/utils/BaseClasses';
-
-import { noop } from 'src/utils';
+import { TextPrimaryTheme, TextSizes, TextTheme } from 'src/components/Text';
 
 import { ListProps } from './List.props';
-import { ListThemeType } from './List.theme';
+import { Item } from './components/Item';
 
 import s from './List.module.css';
 
-type L = HTMLUListElement;
+type ListElement = HTMLUListElement | HTMLOListElement;
 
-export const List = forwardRef<L, ListProps>((props, ref) => {
+const sizeClassName: Record<TextSizes, string> = {
+  s: s.s,
+  m: s.m,
+  ms: s.ms,
+  l: s.l,
+  xl: s.xl,
+};
+
+const ListBase = forwardRef<ListElement, ListProps>((props, forwardedRef) => {
   const {
+    type = 'bulleted',
+    size = 'l',
+    theme = TextPrimaryTheme,
     className = '',
-    theme,
     children,
-    isOpened,
-    hoveredIndex = 0,
-    onSelect = noop,
-    onToggle = noop,
-    onHoveredIndexChange = noop,
     ...rest
   } = props;
 
-  const themeClassName = useThemeClassName<ListThemeType>(theme);
+  const themeClassName = useThemeClassName<TextTheme>(theme);
 
-  const { onKeyDown } = useKeyboardListNavigation({
-    itemsLength: React.Children.toArray(children).length,
-    onSelect,
-    onToggle,
-    isOpened,
-    listRef: ref as MutableRefObject<HTMLUListElement>,
-    hoveredIndex,
-    onHoveredIndexChange,
-  });
+  const setRef = useCallback(
+    (element: ListElement | null) => {
+      if (typeof forwardedRef === 'function') {
+        forwardedRef(element);
+      } else if (forwardedRef) {
+        forwardedRef.current = element;
+      }
+    },
+    [forwardedRef]
+  );
+
+  const classes = cx(
+    s.list,
+    sizeClassName[size],
+    themeClassName,
+    {
+      [s.bulleted]: type === 'bulleted',
+      [s.numbered]: type === 'numbered',
+    },
+    className
+  );
+
+  if (type === 'numbered') {
+    return (
+      <ol ref={setRef} className={classes} {...rest}>
+        {children}
+      </ol>
+    );
+  }
 
   return (
-    isOpened && (
-      <ul
-        onKeyDown={onKeyDown}
-        ref={ref}
-        tabIndex={0}
-        className={cx(
-          CustomScrollClassName,
-          s.list,
-          themeClassName,
-          {
-            [s.opened]: isOpened,
-          },
-          className
-        )}
-        role="list"
-        {...rest}
-      >
-        {children}
-      </ul>
-    )
+    <ul ref={setRef} className={classes} {...rest}>
+      {children}
+    </ul>
   );
 });
 
-List.displayName = 'List';
+ListBase.displayName = 'List';
+
+export const List = Object.assign(ListBase, { Item });

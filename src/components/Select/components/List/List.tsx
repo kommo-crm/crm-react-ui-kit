@@ -1,16 +1,23 @@
 import React, {
   forwardRef,
+  MutableRefObject,
   useCallback,
   useEffect,
   useMemo,
   useRef,
 } from 'react';
+import cx from 'classnames';
 
-import { useOnOutsideClick } from '@kommo-crm/react-hooks';
+import {
+  useKeyboardListNavigation,
+  useOnOutsideClick,
+} from '@kommo-crm/react-hooks';
+
+import { useThemeClassName } from 'src/hooks/useThemeClassName';
+
+import { CustomScrollClassName } from 'src/stylesheets/utils/BaseClasses';
 
 import { Portal } from 'src/components/Portal';
-
-import { List as BaseList } from 'src/components/List';
 
 import { mergeRefs } from 'src/lib/utils';
 
@@ -21,6 +28,9 @@ import { useSelectContext } from '../../Select.context';
 import { SelectItem } from '../../Select.types';
 
 import { ListPortalProps, ListProps } from './List.props';
+import { ListThemeType } from './List.theme';
+
+import s from './List.module.css';
 
 type L = HTMLUListElement;
 
@@ -37,7 +47,9 @@ const ListPortal = (props: ListPortalProps) => {
 };
 
 export const List = forwardRef<L, ListProps>((props, ref) => {
-  const { container, children, theme, className } = props;
+  const { container, children, theme, className = '' } = props;
+
+  const themeClassName = useThemeClassName<ListThemeType>(theme);
 
   const {
     isOpened,
@@ -97,6 +109,18 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     [onChange, items]
   );
 
+  const resolvedHoveredIndex = value ? itemsMap[value.value] : hoveredIndex;
+
+  const { onKeyDown } = useKeyboardListNavigation({
+    itemsLength: React.Children.toArray(children).length,
+    onSelect: handleItemSelect,
+    onToggle: handleListToggle,
+    isOpened,
+    listRef: listRef as MutableRefObject<HTMLUListElement>,
+    hoveredIndex: resolvedHoveredIndex,
+    onHoveredIndexChange: handleHoveredIndexChange,
+  });
+
   useEffect(() => {
     /**
      * When opening the list, we transfer focus to it.
@@ -106,20 +130,27 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     }
   }, [isOpened]);
 
+  if (!isOpened) {
+    return null;
+  }
+
   return (
     <ListPortal container={container}>
-      <BaseList
-        className={className}
+      <ul
         ref={mergeRefs(listRef, ref)}
-        isOpened={isOpened}
-        theme={theme}
-        onHoveredIndexChange={handleHoveredIndexChange}
-        onToggle={handleListToggle}
-        onSelect={handleItemSelect}
-        hoveredIndex={value ? itemsMap[value.value] : hoveredIndex}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        className={cx(
+          CustomScrollClassName,
+          s.list,
+          s.opened,
+          themeClassName,
+          className
+        )}
+        role="list"
       >
         {children}
-      </BaseList>
+      </ul>
     </ListPortal>
   );
 });

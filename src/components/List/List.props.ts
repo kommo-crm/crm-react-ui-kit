@@ -1,43 +1,45 @@
-import { HTMLAttributes } from 'react';
+import React from 'react';
 
-import { ListThemeType } from './List.theme';
+import { TextSizes, TextTheme } from 'src/components/Text';
 
-export interface ListProps
-  extends Omit<HTMLAttributes<HTMLUListElement>, 'onSelect'> {
+type ListAttributes = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLUListElement | HTMLOListElement>,
+  HTMLUListElement | HTMLOListElement
+>;
+
+export type ListType = 'bulleted' | 'numbered';
+
+export interface ListProps extends Omit<ListAttributes, 'type'> {
+  /**
+   * The list type.
+   *
+   * - `bulleted` - unordered list, used when item order does not matter.
+   * - `numbered` - ordered list, used when item order is meaningful.
+   *
+   * @default 'bulleted'
+   */
+  type?: ListType;
+  /**
+   * Text size of list items, mirrors the `Text` component sizes.
+   *
+   * - `s - 11/15`
+   * - `m - 13/20`
+   * - `ms - 13/15`
+   * - `l - 15/20`
+   * - `xl - 18/24`
+   *
+   * @default 'l'
+   */
+  size?: TextSizes;
   /**
    * Object with CSS theme properties.
+   * Inherits from `Text` themes.
+   *
+   * @default TextPrimaryTheme
    */
-  theme: ListThemeType;
+  theme?: TextTheme;
   /**
-   * Child elements that will be displayed inside the component.
+   * Items content. Use `List.Item` or another nested `List`.
    */
-  children: React.ReactNode;
-  /**
-   * Custom CSS class for component.
-   */
-  className?: string;
-  /**
-   * Custom CSS class for a list item.
-   */
-  itemClassName?: string;
-  /**
-   * Flag indicates whether the component is in the open state.
-   */
-  isOpened?: boolean;
-  /**
-   * A callback that works on selecting a list item.
-   */
-  onSelect?: (index: number) => void;
-  /**
-   * A callback that works on opening/closing a component.
-   */
-  onToggle?: (toggle: boolean) => void;
-  /**
-   * A callback that works on changing the active element in the list.
-   */
-  onHoveredIndexChange?: (index: number) => void;
-  /**
-   * Index of the hovered element.
-   */
-  hoveredIndex?: number;
+  children?: React.ReactNode;
 }

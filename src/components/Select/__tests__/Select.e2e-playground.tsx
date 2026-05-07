@@ -7,9 +7,13 @@ import {
 
 import { SelectButtonLightTheme } from 'src/components/SelectButton';
 
-import { ListTheme } from 'src/components/List';
-
-import { Select, SelectArrowTheme, SelectItemTheme, SelectRootTheme } from '..';
+import {
+  Select,
+  SelectArrowTheme,
+  SelectItemTheme,
+  SelectListTheme,
+  SelectRootTheme,
+} from '..';
 import { SelectItem } from '../Select.types';
 
 const textItems: SelectItem[] = [
@@ -96,7 +100,7 @@ const SelectPlayground = ({
             <Select.Value placeholder="Select option" />
             <Select.Arrow theme={SelectArrowTheme} />
           </Select.Button>
-          <Select.List key="list" theme={ListTheme}>
+          <Select.List key="list" theme={SelectListTheme}>
             {items.map((item, index) => (
               <Select.Item
                 theme={SelectItemTheme}
