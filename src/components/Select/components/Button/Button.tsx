@@ -36,9 +36,11 @@ export const Button = forwardRef<I, ButtonProps>((props, ref) => {
     };
   }, [isOpened]);
 
-  // Native tooltip for the trigger reflects the currently selected item so the
-  // user can read truncated values without opening the dropdown. Consumer can
-  // still override via `title` prop on <Select.Button>.
+  /**
+   *  Native tooltip for the trigger reflects the currently selected item so the
+   *  user can read truncated values without opening the dropdown. Consumer can
+   *  still override via `title` prop on <Select.Button>.
+   */
   const title = value ? getSelectItemTitle(value) : undefined;
 
   return (

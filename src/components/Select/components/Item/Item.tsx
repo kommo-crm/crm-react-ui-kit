@@ -56,9 +56,11 @@ export const Item = forwardRef<L, ItemProps>((props, ref) => {
   const isSelected = selected?.value === value;
   const isHovered = hoveredIndex === index;
 
-  // Default-rendered <li> shows the native tooltip for the (possibly truncated)
-  // option. When `children` is provided, the consumer is in charge of composing
-  // their own tooltip (they can still pass `title` to <Select.Item> directly).
+  /**
+   *  Default-rendered <li> shows the native tooltip for the (possibly truncated)
+   *  option. When `children` is provided, the consumer is in charge of composing
+   *  their own tooltip (they can still pass `title` to <Select.Item> directly).
+   */
   const title = titleProp ?? (children ? undefined : getSelectItemTitle(item));
 
   return (
