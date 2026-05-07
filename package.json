@@ -34,6 +34,7 @@
     "./ContextMenu": "./dist/components/ContextMenu/index.js",
     "./CounterBadge": "./dist/components/CounterBadge/index.js",
     "./Badge": "./dist/components/Badge/index.js",
+    "./Separator": "./dist/components/Separator/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -52,6 +53,7 @@
     "./assets/Button.css": "./dist/assets/Button.css",
     "./assets/CounterBadge.css": "./dist/assets/CounterBadge.css",
     "./assets/Badge.css": "./dist/assets/Badge.css",
+    "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
@@ -122,6 +124,9 @@
       ],
       "Badge": [
         "./dist/components/Badge/index.d.ts"
+      ],
+      "Separator": [
+        "./dist/components/Separator/index.d.ts"
       ]
     }
   },
