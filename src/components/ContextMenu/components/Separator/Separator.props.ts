@@ -1,6 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Separator as RadixDropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 
-export type SeparatorProps = ComponentPropsWithoutRef<
-  typeof RadixDropdownMenuSeparator
+import { Separator } from 'src/components/Separator';
+
+export type SeparatorProps = Omit<
+  ComponentPropsWithoutRef<typeof Separator>,
+  'theme'
 >;

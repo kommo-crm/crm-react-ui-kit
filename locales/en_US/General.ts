@@ -103,4 +103,8 @@ export default {
   'Export to PDF': 'Export to PDF',
   'Enable notifications': 'Enable notifications',
   'Hover me': 'Hover me',
+
+  /* Separator */
+  '...LightTheme for light background': '...LightTheme for light background',
+  '...DarkTheme for dark background': '...DarkTheme for dark background',
 };
