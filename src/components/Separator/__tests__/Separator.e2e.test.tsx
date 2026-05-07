@@ -22,7 +22,7 @@ export const combinations = multiCartesian<SeparatorProps>([
 for (const props of combinations) {
   const label = prettyProps(props);
 
-  test.describe('Separator Rounded Primary', () => {
+  test.describe('Separator Rounded Light', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
@@ -37,7 +37,7 @@ for (const props of combinations) {
     );
   });
 
-  test.describe('Separator Square Primary', () => {
+  test.describe('Separator Square Light', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
@@ -52,7 +52,7 @@ for (const props of combinations) {
     );
   });
 
-  test.describe('Separator Rounded Secondary', () => {
+  test.describe('Separator Rounded Dark', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
@@ -67,7 +67,7 @@ for (const props of combinations) {
     );
   });
 
-  test.describe('Separator Square Secondary', () => {
+  test.describe('Separator Square Dark', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
