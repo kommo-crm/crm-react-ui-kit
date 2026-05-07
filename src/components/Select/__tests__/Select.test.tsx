@@ -10,7 +10,24 @@ import { SelectItem } from '../Select.types';
 import { SelectRootTheme } from '../Select.theme';
 
 const defaultItems: SelectItem[] = [
-  { value: 'Option 1', option: 'Option 1' },
+  {
+    value: 'Option 1',
+    option: (
+      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+        Option 1
+        <span
+          style={{
+            display: 'inline-block',
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            backgroundColor: '#ff3b30',
+          }}
+        />
+      </div>
+    ),
+    title: 'Option 1',
+  },
   { value: 'Option 2', option: 'Option 2' },
   { value: 'Option 3', option: 'Option 3' },
 ];
