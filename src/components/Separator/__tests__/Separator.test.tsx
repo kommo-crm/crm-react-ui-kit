@@ -4,8 +4,10 @@ import { render, screen } from '@testing-library/react';
 import {
   type SeparatorProps,
   Separator,
-  SeparatorRoundedTheme,
-  SeparatorSquareTheme,
+  SeparatorRoundedLightTheme,
+  SeparatorSquaredLightTheme,
+  SeparatorRoundedDarkTheme,
+  SeparatorSquaredDarkTheme,
 } from '..';
 
 import '@testing-library/jest-dom';
@@ -16,7 +18,7 @@ const renderSeparator = (props: Partial<SeparatorProps> = {}) =>
   render(
     <Separator
       data-testid={dataTestId}
-      theme={SeparatorRoundedTheme}
+      theme={SeparatorRoundedLightTheme}
       {...props}
     />
   );
@@ -67,8 +69,20 @@ describe('Separator', () => {
     expect(element.classList).toHaveLength(4);
   });
 
-  it('should accept the SeparatorSquareTheme', () => {
-    renderSeparator({ theme: SeparatorSquareTheme });
+  it('should accept the SeparatorSquaredLightTheme', () => {
+    renderSeparator({ theme: SeparatorSquaredLightTheme });
+
+    expect(screen.getByRole('separator')).toBeInTheDocument();
+  });
+
+  it('should accept the SeparatorRoundedDarkTheme', () => {
+    renderSeparator({ theme: SeparatorRoundedDarkTheme });
+
+    expect(screen.getByRole('separator')).toBeInTheDocument();
+  });
+
+  it('should accept the SeparatorSquaredDarkTheme', () => {
+    renderSeparator({ theme: SeparatorSquaredDarkTheme });
 
     expect(screen.getByRole('separator')).toBeInTheDocument();
   });

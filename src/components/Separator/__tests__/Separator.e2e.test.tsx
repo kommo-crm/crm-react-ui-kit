@@ -7,8 +7,10 @@ import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
 import { type SeparatorProps } from '..';
 
 import {
-  SeparatorRoundedPlaygroundItem,
-  SeparatorSquarePlaygroundItem,
+  SeparatorRoundedLightPlaygroundItem,
+  SeparatorSquaredLightPlaygroundItem,
+  SeparatorRoundedDarkPlaygroundItem,
+  SeparatorSquaredDarkPlaygroundItem,
 } from './Separator.e2e-playground';
 
 export const combinations = multiCartesian<SeparatorProps>([
@@ -20,12 +22,12 @@ export const combinations = multiCartesian<SeparatorProps>([
 for (const props of combinations) {
   const label = prettyProps(props);
 
-  test.describe('Separator Rounded', () => {
+  test.describe('Separator Rounded Primary', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
-          <SeparatorRoundedPlaygroundItem
+          <SeparatorRoundedLightPlaygroundItem
             appearance={appearance}
             props={props}
           />
@@ -35,12 +37,42 @@ for (const props of combinations) {
     );
   });
 
-  test.describe('Separator Square', () => {
+  test.describe('Separator Square Primary', () => {
     test(
       label,
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
-          <SeparatorSquarePlaygroundItem
+          <SeparatorSquaredLightPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Separator Rounded Secondary', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <SeparatorRoundedDarkPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Separator Square Secondary', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <SeparatorSquaredDarkPlaygroundItem
             appearance={appearance}
             props={props}
           />

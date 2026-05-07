@@ -3,11 +3,19 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
-import { Separator, SeparatorRoundedTheme, SeparatorSquareTheme } from '..';
+import {
+  Separator,
+  SeparatorRoundedLightTheme,
+  SeparatorSquaredLightTheme,
+  SeparatorRoundedDarkTheme,
+  SeparatorSquaredDarkTheme,
+} from '..';
 
 const themeMap = {
-  SeparatorRoundedTheme,
-  SeparatorSquareTheme,
+  SeparatorRoundedLightTheme,
+  SeparatorSquaredLightTheme,
+  SeparatorRoundedDarkTheme,
+  SeparatorSquaredDarkTheme,
 };
 
 const USAGE = `
@@ -19,7 +27,7 @@ import {
 function App() {
   return (
     <Separator
-      theme={SeparatorRoundedTheme}
+      theme={SeparatorRoundedLightTheme}
       orientation="horizontal"
     />
   );
@@ -57,7 +65,7 @@ const meta = {
     },
   },
   args: {
-    theme: SeparatorRoundedTheme,
+    theme: SeparatorRoundedLightTheme,
     orientation: 'horizontal',
   },
   render: (props) => (
@@ -89,10 +97,20 @@ export const Vertical: Story = {
 
 export const SeparatorRounded: Story = {
   tags: ['!dev'],
-  args: { theme: SeparatorRoundedTheme },
+  args: { theme: SeparatorRoundedLightTheme },
 };
 
 export const SeparatorSquare: Story = {
   tags: ['!dev'],
-  args: { theme: SeparatorSquareTheme },
+  args: { theme: SeparatorSquaredLightTheme },
+};
+
+export const SeparatorLight: Story = {
+  tags: ['!dev'],
+  args: { theme: SeparatorSquaredLightTheme },
+};
+
+export const SeparatorDark: Story = {
+  tags: ['!dev'],
+  args: { theme: SeparatorSquaredDarkTheme },
 };

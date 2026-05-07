@@ -7,8 +7,10 @@ import {
 
 import {
   Separator,
-  SeparatorRoundedTheme,
-  SeparatorSquareTheme,
+  SeparatorRoundedLightTheme,
+  SeparatorSquaredLightTheme,
+  SeparatorRoundedDarkTheme,
+  SeparatorSquaredDarkTheme,
   type SeparatorProps,
 } from '..';
 
@@ -29,27 +31,53 @@ const getWrapperStyle = (orientation: SeparatorProps['orientation']) =>
     ? VERTICAL_WRAPPER_STYLE
     : HORIZONTAL_WRAPPER_STYLE;
 
-export const SeparatorRoundedPlaygroundItem = ({
+export const SeparatorRoundedLightPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<SeparatorProps>) => (
   <ComponentPlayground<SeparatorProps> appearance={appearance} props={props}>
     {(p) => (
       <div style={getWrapperStyle(p.orientation)}>
-        <Separator {...p} theme={SeparatorRoundedTheme} />
+        <Separator {...p} theme={SeparatorRoundedLightTheme} />
       </div>
     )}
   </ComponentPlayground>
 );
 
-export const SeparatorSquarePlaygroundItem = ({
+export const SeparatorSquaredLightPlaygroundItem = ({
   appearance,
   props,
 }: ComponentPlaygroundProps<SeparatorProps>) => (
   <ComponentPlayground<SeparatorProps> appearance={appearance} props={props}>
     {(p) => (
       <div style={getWrapperStyle(p.orientation)}>
-        <Separator {...p} theme={SeparatorSquareTheme} />
+        <Separator {...p} theme={SeparatorSquaredLightTheme} />
+      </div>
+    )}
+  </ComponentPlayground>
+);
+
+export const SeparatorRoundedDarkPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<SeparatorProps>) => (
+  <ComponentPlayground<SeparatorProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div style={getWrapperStyle(p.orientation)}>
+        <Separator {...p} theme={SeparatorRoundedDarkTheme} />
+      </div>
+    )}
+  </ComponentPlayground>
+);
+
+export const SeparatorSquaredDarkPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<SeparatorProps>) => (
+  <ComponentPlayground<SeparatorProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div style={getWrapperStyle(p.orientation)}>
+        <Separator {...p} theme={SeparatorSquaredDarkTheme} />
       </div>
     )}
   </ComponentPlayground>

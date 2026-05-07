@@ -13,13 +13,26 @@ const SeparatorBaseThemeValues: Omit<
   '--crm-ui-kit-separator-color': 'var(--crm-ui-kit-palette-border-primary)',
 };
 
-export const SeparatorRoundedTheme: SeparatorTheme = {
+export const SeparatorRoundedLightTheme: SeparatorTheme = {
   ...SeparatorBaseThemeValues,
   '--crm-ui-kit-separator-border-radius':
     'var(--crm-ui-kit-border-radius-default)',
 };
 
-export const SeparatorSquareTheme: SeparatorTheme = {
+export const SeparatorSquaredLightTheme: SeparatorTheme = {
   ...SeparatorBaseThemeValues,
   '--crm-ui-kit-separator-border-radius': '0',
+};
+
+export const SeparatorRoundedDarkTheme: SeparatorTheme = {
+  ...SeparatorBaseThemeValues,
+  '--crm-ui-kit-separator-border-radius':
+    'var(--crm-ui-kit-border-radius-default)',
+  '--crm-ui-kit-separator-color': 'var(--crm-ui-kit-palette-border-default)',
+};
+
+export const SeparatorSquaredDarkTheme: SeparatorTheme = {
+  ...SeparatorBaseThemeValues,
+  '--crm-ui-kit-separator-border-radius': '0',
+  '--crm-ui-kit-separator-color': 'var(--crm-ui-kit-palette-border-default)',
 };

@@ -1,8 +1,10 @@
 export { Separator } from './Separator';
 export {
   type SeparatorTheme,
-  SeparatorRoundedTheme,
-  SeparatorSquareTheme,
+  SeparatorRoundedLightTheme,
+  SeparatorSquaredLightTheme,
+  SeparatorRoundedDarkTheme,
+  SeparatorSquaredDarkTheme,
 } from './Separator.themes';
 export {
   type SeparatorProps,
