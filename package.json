@@ -52,6 +52,7 @@
     "./assets/FilterTabs.css": "./dist/assets/FilterTabs.css",
     "./assets/Button.css": "./dist/assets/Button.css",
     "./assets/CounterBadge.css": "./dist/assets/CounterBadge.css",
+    "./assets/List.css": "./dist/assets/List.css",
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
