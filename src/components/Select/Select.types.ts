@@ -7,7 +7,7 @@ interface SelectItemBase {
   value: number | string;
 }
 
-export type StringSelectItem = SelectItemBase & {
+export interface StringSelectItem extends SelectItemBase {
   /**
    * Visual label shown in the list and in the trigger when the item is selected.
    */
@@ -17,9 +17,9 @@ export type StringSelectItem = SelectItemBase & {
    * Defaults to `option` when omitted.
    */
   title?: string;
-};
+}
 
-export type ReactElementSelectItem = SelectItemBase & {
+export interface ReactElementSelectItem extends SelectItemBase {
   /**
    * Visual label shown in the list and in the trigger when the item is selected.
    */
@@ -29,7 +29,7 @@ export type ReactElementSelectItem = SelectItemBase & {
    * Required because `option` is not a string and cannot be used as a fallback.
    */
   title: string;
-};
+}
 
 export type SelectItem = StringSelectItem | ReactElementSelectItem;
 
@@ -47,4 +47,12 @@ export const getSelectItemTitle = (item: SelectItem): string | undefined => {
   }
 
   return undefined;
+};
+
+export type OrderTableData = {
+  orderId: number;
+  createdAt: string;
+  price: string;
+  status: string;
+  action: ReactElement | null;
 };
