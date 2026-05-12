@@ -1,6 +1,10 @@
 export { Select } from './Select';
 export { type SelectProps } from './Select.props';
-export { type SelectItem } from './Select.types';
+export {
+  type SelectItem,
+  type StringSelectItem,
+  type ReactElementSelectItem,
+} from './Select.types';
 export { SelectRootTheme, type SelectRootThemeType } from './Select.theme';
 
 export { SelectItemTheme, type SelectItemThemeType } from './components/Item';
