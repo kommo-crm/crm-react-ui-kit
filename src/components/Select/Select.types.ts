@@ -48,11 +48,3 @@ export const getSelectItemTitle = (item: SelectItem): string | undefined => {
 
   return undefined;
 };
-
-export type OrderTableData = {
-  orderId: number;
-  createdAt: string;
-  price: string;
-  status: string;
-  action: ReactElement | null;
-};
