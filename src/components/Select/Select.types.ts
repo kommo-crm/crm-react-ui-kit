@@ -7,7 +7,7 @@ interface SelectItemBase {
   value: number | string;
 }
 
-export type SelectStringItem = SelectItemBase & {
+export type StringSelectItem = SelectItemBase & {
   /**
    * Visual label shown in the list and in the trigger when the item is selected.
    */
@@ -19,7 +19,7 @@ export type SelectStringItem = SelectItemBase & {
   title?: string;
 };
 
-export type SelectElementItem = SelectItemBase & {
+export type ReactElementSelectItem = SelectItemBase & {
   /**
    * Visual label shown in the list and in the trigger when the item is selected.
    */
@@ -31,7 +31,7 @@ export type SelectElementItem = SelectItemBase & {
   title: string;
 };
 
-export type SelectItem = SelectStringItem | SelectElementItem;
+export type SelectItem = StringSelectItem | ReactElementSelectItem;
 
 /**
  * Resolves the tooltip text for a `SelectItem`. Uses the explicit `title` when
