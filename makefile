@@ -6,7 +6,7 @@ patch:
 	npm login
 	yarn build
 	npm publish
-	make all
+	make storybook
 
 minor:
 	yarn lint
@@ -14,12 +14,12 @@ minor:
 	npm login
 	yarn build
 	npm publish
-	make all
+	make storybook
 
 storybook: build-storybook storybook-push
 
 build-storybook:
 	docker build -t ${REGISTRY_URL}/crm-react-ui-kit:build_${DATE} --platform linux/amd64 .
 
-push:
+push-storybook:
 	docker push ${REGISTRY_URL}/crm-react-ui-kit:build_${DATE}
