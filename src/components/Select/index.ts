@@ -13,7 +13,7 @@ export { SelectIconTheme, type SelectIconThemeType } from './components/Icon';
 export {
   ListTheme as SelectListTheme,
   type ListThemeType as SelectListThemeType,
-} from '../List';
+} from './components/List';
 export {
   SelectButtonLightTheme,
   SelectButtonDarkTheme,
