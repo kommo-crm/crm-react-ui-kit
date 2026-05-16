@@ -27,23 +27,3 @@
 .list > li > .list {
   margin-top: 8px;
 }
-
-.s {
-  composes: s from '../Text/Text.module.css';
-}
-
-.m {
-  composes: m from '../Text/Text.module.css';
-}
-
-.ms {
-  composes: ms from '../Text/Text.module.css';
-}
-
-.l {
-  composes: l from '../Text/Text.module.css';
-}
-
-.xl {
-  composes: xl from '../Text/Text.module.css';
-}
