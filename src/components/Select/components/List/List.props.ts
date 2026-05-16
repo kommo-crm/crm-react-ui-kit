@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactElement } from 'react';
 
 import { ListThemeType } from './List.theme';
 
-export interface BaseListProps
+export interface BaseDropdownListProps
   extends Omit<HTMLAttributes<HTMLUListElement>, 'onSelect'> {
   /**
    * Object with CSS theme properties.
@@ -49,4 +49,4 @@ export type ListPortalProps = {
   container?: Element | DocumentFragment | null;
 };
 
-export type ListProps = BaseListProps & ListPortalProps;
+export type ListProps = BaseDropdownListProps & ListPortalProps;
