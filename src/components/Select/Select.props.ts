@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ItemProps } from './components/Item/Item.props';
-import { ListProps } from './components/List/List.props';
+import { DropdownListProps } from './components/DropdownList/DropdownList.props';
 import { SelectItem } from './Select.types';
 import { ValueProps } from './components/Value/Value.props';
 import { ArrowProps } from './components/Arrow/Arrow.props';
@@ -107,7 +107,7 @@ export type SelectType = React.ForwardRefExoticComponent<
   /**
    * List component.
    */
-  List: React.ForwardRefExoticComponent<ListProps>;
+  List: React.ForwardRefExoticComponent<DropdownListProps>;
   /**
    * Button component.
    */

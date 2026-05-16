@@ -11,7 +11,7 @@ import { SelectItem } from './Select.types';
 
 import { Button } from './components/Button';
 import { Item } from './components/Item';
-import { List } from './components/List';
+import { DropdownList } from './components/DropdownList';
 
 import { Value } from './components/Value/Value';
 import { Arrow } from './components/Arrow/Arrow';
@@ -108,7 +108,7 @@ export const Select = forwardRef<D, SelectProps>((props, ref) => {
 Select.displayName = DISPLAY_NAME;
 
 Select.Root = Select;
-Select.List = List;
+Select.List = DropdownList;
 Select.Item = Item;
 Select.Button = Button;
 Select.Value = Value;
