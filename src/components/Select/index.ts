@@ -11,9 +11,12 @@ export {
 export { SelectIconTheme, type SelectIconThemeType } from './components/Icon';
 
 export {
+  // @ts-expect-error will be removed
   ListTheme as SelectListTheme,
+
+  // @ts-expect-error will be removed
   type ListThemeType as SelectListThemeType,
-} from './components/List';
+} from '../List';
 export {
   SelectButtonLightTheme,
   SelectButtonDarkTheme,

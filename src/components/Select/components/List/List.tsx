@@ -1,23 +1,16 @@
 import React, {
   forwardRef,
-  MutableRefObject,
   useCallback,
   useEffect,
   useMemo,
   useRef,
 } from 'react';
-import cx from 'classnames';
 
-import {
-  useKeyboardListNavigation,
-  useOnOutsideClick,
-} from '@kommo-crm/react-hooks';
-
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-
-import { CustomScrollClassName } from 'src/stylesheets/utils/BaseClasses';
+import { useOnOutsideClick } from '@kommo-crm/react-hooks';
 
 import { Portal } from 'src/components/Portal';
+
+import { List as BaseList } from 'src/components/List';
 
 import { mergeRefs } from 'src/lib/utils';
 
@@ -27,14 +20,7 @@ import { useSelectContext } from '../../Select.context';
 
 import { SelectItem } from '../../Select.types';
 
-import {
-  BaseDropdownListProps,
-  ListPortalProps,
-  ListProps,
-} from './List.props';
-import { ListThemeType } from './List.theme';
-
-import s from './List.module.css';
+import { ListPortalProps, ListProps } from './List.props';
 
 type L = HTMLUListElement;
 
@@ -49,56 +35,6 @@ const ListPortal = (props: ListPortalProps) => {
     children
   );
 };
-
-const BaseDropdownList = forwardRef<L, BaseDropdownListProps>((props, ref) => {
-  const {
-    isOpened,
-    theme,
-    className = '',
-    onSelect = noop,
-    onToggle = noop,
-    onHoveredIndexChange = noop,
-    hoveredIndex = 0,
-    children,
-    ...rest
-  } = props;
-
-  const themeClassName = useThemeClassName<ListThemeType>(theme);
-  const listRef = useRef<HTMLUListElement>(null);
-
-  const { onKeyDown } = useKeyboardListNavigation({
-    itemsLength: React.Children.toArray(children).length,
-    onSelect,
-    onToggle,
-    isOpened,
-    listRef: listRef as MutableRefObject<HTMLUListElement>,
-    hoveredIndex,
-    onHoveredIndexChange,
-  });
-
-  if (!isOpened) {
-    return null;
-  }
-
-  return (
-    <ul
-      ref={mergeRefs(listRef, ref)}
-      tabIndex={0}
-      onKeyDown={onKeyDown}
-      className={cx(
-        CustomScrollClassName,
-        s.list,
-        s.opened,
-        themeClassName,
-        className
-      )}
-      role="list"
-      {...rest}
-    >
-      {children}
-    </ul>
-  );
-});
 
 export const List = forwardRef<L, ListProps>((props, ref) => {
   const { container, children, theme, className } = props;
@@ -172,22 +108,21 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
 
   return (
     <ListPortal container={container}>
-      <BaseDropdownList
+      <BaseList
         className={className}
         ref={mergeRefs(listRef, ref)}
         isOpened={isOpened}
         theme={theme}
         onHoveredIndexChange={handleHoveredIndexChange}
         onToggle={handleListToggle}
+        // @ts-expect-error TODO: remove before merge in main
         onSelect={handleItemSelect}
         hoveredIndex={value ? itemsMap[value.value] : hoveredIndex}
       >
         {children}
-      </BaseDropdownList>
+      </BaseList>
     </ListPortal>
   );
 });
 
-ListPortal.displayName = 'ListPortal';
-BaseDropdownList.displayName = 'BaseDropdownList';
 List.displayName = DISPLAY_NAME;
