@@ -5,29 +5,29 @@
 
   padding: 0;
   margin: 0;
-  color: var(--crm-ui-kit-dropdown-list-color);
+  color: var(--crm-ui-kit-list-color);
 }
 
 .opened {
   position: absolute;
-  top: var(--crm-ui-kit-dropdown-list-top);
-  left: var(--crm-ui-kit-dropdown-list-left);
+  top: var(--crm-ui-kit-list-top);
+  left: var(--crm-ui-kit-list-left);
   overflow: auto;
 
   display: block;
-  width: var(--crm-ui-kit-dropdown-list-width);
-  max-height: var(--crm-ui-kit-dropdown-list-max-height);
-  padding-right: var(--crm-ui-kit-dropdown-list-padding-right);
-  margin-right: var(--crm-ui-kit-dropdown-list-margin-right);
+  width: var(--crm-ui-kit-list-width);
+  max-height: var(--crm-ui-kit-list-max-height);
+  padding-right: var(--crm-ui-kit-list-padding-right);
+  margin-right: var(--crm-ui-kit-list-margin-right);
   box-sizing: content-box;
 
-  background-color: var(--crm-ui-kit-dropdown-list-background-color);
-  border-width: var(--crm-ui-kit-dropdown-list-border-width);
-  border-style: var(--crm-ui-kit-dropdown-list-border-style);
-  border-color: var(--crm-ui-kit-dropdown-list-border-color);
+  background-color: var(--crm-ui-kit-list-background-color);
+  border-width: var(--crm-ui-kit-list-border-width);
+  border-style: var(--crm-ui-kit-list-border-style);
+  border-color: var(--crm-ui-kit-list-border-color);
 
-  border-radius: var(--crm-ui-kit-dropdown-list-border-radius);
-  outline: var(--crm-ui-kit-dropdown-list-outline);
+  border-radius: var(--crm-ui-kit-list-border-radius);
+  outline: var(--crm-ui-kit-list-outline);
 
-  z-index: var(--crm-ui-kit-dropdown-list-z-index);
+  z-index: var(--crm-ui-kit-list-z-index);
 }
