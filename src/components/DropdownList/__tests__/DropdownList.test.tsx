@@ -2,37 +2,42 @@ import React, { useRef } from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { List, ListTheme, ListProps } from '..';
+import { DropdownList, DropdownListTheme, DropdownListProps } from '..';
 
-const ListWithRef = (props: ListProps) => {
+const DropdownListWithRef = (props: DropdownListProps) => {
   const listRef = useRef<HTMLUListElement>(null);
 
-  return <List {...props} ref={listRef} />;
+  return <DropdownList {...props} ref={listRef} />;
 };
 
-const renderList = (props: Partial<ListProps>) => {
+const renderDropdownList = (props: Partial<DropdownListProps>) => {
   return render(
-    <ListWithRef role="list" theme={ListTheme} isOpened {...props}>
+    <DropdownListWithRef
+      role="list"
+      theme={DropdownListTheme}
+      isOpened
+      {...props}
+    >
       <li>Item 1</li>
       <li>Item 2</li>
       <li>Item 3</li>
-    </ListWithRef>
+    </DropdownListWithRef>
   );
 };
 
-describe('List', () => {
+describe('DropdownList', () => {
   it('should be defined', () => {
-    expect(List).toBeDefined();
+    expect(DropdownList).toBeDefined();
   });
 
   it('should render as a list element', () => {
-    renderList({});
+    renderDropdownList({});
 
     expect(screen.getByRole('list')).toBeInTheDocument();
   });
 
   it('should render children correctly', () => {
-    renderList({});
+    renderDropdownList({});
 
     expect(screen.getByText('Item 1')).toBeInTheDocument();
     expect(screen.getByText('Item 2')).toBeInTheDocument();
@@ -42,7 +47,7 @@ describe('List', () => {
   it('should apply custom className', () => {
     const customClass = 'my-custom-class';
 
-    renderList({ className: customClass });
+    renderDropdownList({ className: customClass });
 
     const element = screen.getByRole('list');
 
@@ -52,7 +57,7 @@ describe('List', () => {
   it('should call onScroll callback when scrolled', () => {
     const onScroll = jest.fn();
 
-    renderList({ onScroll });
+    renderDropdownList({ onScroll });
 
     const element = screen.getByRole('list');
 
@@ -65,7 +70,7 @@ describe('List', () => {
     const onSelect = jest.fn();
     const onToggle = jest.fn();
 
-    renderList({ onSelect, onToggle });
+    renderDropdownList({ onSelect, onToggle });
 
     const element = screen.getByRole('list');
 
@@ -83,7 +88,7 @@ describe('List', () => {
   it('should call onHoveredIndexChange when hoveredIndex changes', () => {
     const onHoveredIndexChange = jest.fn();
 
-    renderList({ onHoveredIndexChange });
+    renderDropdownList({ onHoveredIndexChange });
 
     const element = screen.getByRole('list');
 
@@ -105,7 +110,7 @@ describe('List', () => {
   it('should call onSelect with the correct index', () => {
     const onSelect = jest.fn();
 
-    renderList({ onSelect });
+    renderDropdownList({ onSelect });
 
     const element = screen.getByRole('list');
 
@@ -128,7 +133,7 @@ describe('List', () => {
     const onSelect = jest.fn();
     const onHoveredIndexChange = jest.fn();
 
-    renderList({ isOpened: false, onSelect, onHoveredIndexChange });
+    renderDropdownList({ isOpened: false, onSelect, onHoveredIndexChange });
 
     const element = screen.queryByRole('list');
 

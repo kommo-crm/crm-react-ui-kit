@@ -7,7 +7,7 @@ import {
 
 import { SelectButtonLightTheme } from 'src/components/SelectButton';
 
-import { ListTheme } from 'src/components/List';
+import { DropdownListTheme as ListTheme } from 'src/components/DropdownList';
 
 import { Select, SelectArrowTheme, SelectItemTheme, SelectRootTheme } from '..';
 import { SelectItem } from '../Select.types';

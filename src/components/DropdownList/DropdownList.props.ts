@@ -1,13 +1,13 @@
 import { HTMLAttributes } from 'react';
 
-import { ListThemeType } from './List.theme';
+import { DropdownListThemeType } from './DropdownList.theme';
 
-export interface ListProps
+export interface DropdownListProps
   extends Omit<HTMLAttributes<HTMLUListElement>, 'onSelect'> {
   /**
    * Object with CSS theme properties.
    */
-  theme: ListThemeType;
+  theme: DropdownListThemeType;
   /**
    * Child elements that will be displayed inside the component.
    */

@@ -11,9 +11,9 @@ export {
 export { SelectIconTheme, type SelectIconThemeType } from './components/Icon';
 
 export {
-  ListTheme as SelectListTheme,
-  type ListThemeType as SelectListThemeType,
-} from '../List';
+  DropdownListTheme as SelectListTheme,
+  type DropdownListThemeType as SelectListThemeType,
+} from '../DropdownList';
 export {
   SelectButtonLightTheme,
   SelectButtonDarkTheme,

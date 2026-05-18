@@ -10,7 +10,7 @@ import { useOnOutsideClick } from '@kommo-crm/react-hooks';
 
 import { Portal } from 'src/components/Portal';
 
-import { List as BaseList } from 'src/components/List';
+import { DropdownList as BaseList } from 'src/components/DropdownList';
 
 import { mergeRefs } from 'src/lib/utils';
 
