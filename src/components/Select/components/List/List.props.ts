@@ -1,43 +1,16 @@
-import { HTMLAttributes } from 'react';
+import { ReactElement } from 'react';
 
-import { ListThemeType } from './List.theme';
+import { DropdownListProps as BaseListProps } from 'src/components/DropdownList';
 
-export interface ListProps
-  extends Omit<HTMLAttributes<HTMLUListElement>, 'onSelect'> {
+export type ListPortalProps = {
   /**
-   * Object with CSS theme properties.
+   * Select List.
    */
-  theme: ListThemeType;
+  children: ReactElement | JSX.Element[];
   /**
-   * Child elements that will be displayed inside the component.
+   * The container in which to define the List.
    */
-  children: React.ReactNode;
-  /**
-   * Custom CSS class for component.
-   */
-  className?: string;
-  /**
-   * Custom CSS class for a list item.
-   */
-  itemClassName?: string;
-  /**
-   * Flag indicates whether the component is in the open state.
-   */
-  isOpened?: boolean;
-  /**
-   * A callback that works on selecting a list item.
-   */
-  onSelect?: (index: number) => void;
-  /**
-   * A callback that works on opening/closing a component.
-   */
-  onToggle?: (toggle: boolean) => void;
-  /**
-   * A callback that works on changing the active element in the list.
-   */
-  onHoveredIndexChange?: (index: number) => void;
-  /**
-   * Index of the hovered element.
-   */
-  hoveredIndex?: number;
-}
+  container?: Element | DocumentFragment | null;
+};
+
+export type ListProps = BaseListProps & ListPortalProps;

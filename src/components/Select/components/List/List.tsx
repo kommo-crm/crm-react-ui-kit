@@ -1,67 +1,127 @@
-import React, { forwardRef, MutableRefObject } from 'react';
-import cx from 'classnames';
-import { useKeyboardListNavigation } from '@kommo-crm/react-hooks';
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useOnOutsideClick } from '@kommo-crm/react-hooks';
 
-import { CustomScrollClassName } from 'src/stylesheets/utils/BaseClasses';
+import { Portal } from 'src/components/Portal';
+
+import { DropdownList as BaseList } from 'src/components/DropdownList';
+
+import { mergeRefs } from 'src/lib/utils';
 
 import { noop } from 'src/utils';
 
-import { ListProps } from './List.props';
-import { ListThemeType } from './List.theme';
+import { useSelectContext } from '../../Select.context';
 
-import s from './List.module.css';
+import { SelectItem } from '../../Select.types';
+
+import { ListPortalProps, ListProps } from './List.props';
 
 type L = HTMLUListElement;
 
+const DISPLAY_NAME = 'Select.List';
+
+const ListPortal = (props: ListPortalProps) => {
+  const { container, children } = props;
+
+  return container ? (
+    <Portal container={container}>{children}</Portal>
+  ) : (
+    children
+  );
+};
+
 export const List = forwardRef<L, ListProps>((props, ref) => {
+  const { container, children, theme, className } = props;
+
   const {
-    className = '',
-    theme,
-    children,
     isOpened,
-    hoveredIndex = 0,
-    onSelect = noop,
-    onToggle = noop,
-    onHoveredIndexChange = noop,
-    ...rest
-  } = props;
-
-  const themeClassName = useThemeClassName<ListThemeType>(theme);
-
-  const { onKeyDown } = useKeyboardListNavigation({
-    itemsLength: React.Children.toArray(children).length,
-    onSelect,
-    onToggle,
-    isOpened,
-    listRef: ref as MutableRefObject<HTMLUListElement>,
-    hoveredIndex,
+    onOpen,
     onHoveredIndexChange,
+    onChange = noop,
+    hoveredIndex,
+    value,
+  } = useSelectContext(DISPLAY_NAME);
+
+  const { items, itemsMap } = useMemo(() => {
+    const map: Record<string, number> = {};
+
+    const itemsChildren = React.Children.toArray(children).map(
+      (child, index) => {
+        if (React.isValidElement(child)) {
+          map[child.props.item.value] = index;
+
+          return { ...child.props.item };
+        }
+
+        return {};
+      }
+    ) as SelectItem[];
+
+    return { items: itemsChildren, itemsMap: map };
+  }, [children]);
+
+  const listRef = useRef<HTMLUListElement>(null);
+
+  const handleOutsideClick = useCallback(() => {
+    if (isOpened) {
+      onOpen(false);
+    }
+  }, [isOpened]);
+
+  useOnOutsideClick({
+    ref: listRef,
+    handler: handleOutsideClick,
   });
 
+  const handleHoveredIndexChange = (index: number) => {
+    onHoveredIndexChange(index);
+  };
+
+  const handleListToggle = useCallback(
+    (toggle: boolean) => {
+      onOpen(toggle);
+    },
+    [onOpen]
+  );
+
+  const handleItemSelect = useCallback(
+    (index: number) => {
+      onChange(items[index]);
+    },
+    [onChange, items]
+  );
+
+  useEffect(() => {
+    /**
+     * When opening the list, we transfer focus to it.
+     */
+    if (isOpened) {
+      listRef.current?.focus();
+    }
+  }, [isOpened]);
+
   return (
-    isOpened && (
-      <ul
-        onKeyDown={onKeyDown}
-        ref={ref}
-        tabIndex={0}
-        className={cx(
-          CustomScrollClassName,
-          s.list,
-          themeClassName,
-          {
-            [s.opened]: isOpened,
-          },
-          className
-        )}
-        role="list"
-        {...rest}
+    <ListPortal container={container}>
+      <BaseList
+        className={className}
+        ref={mergeRefs(listRef, ref)}
+        isOpened={isOpened}
+        theme={theme}
+        onHoveredIndexChange={handleHoveredIndexChange}
+        onToggle={handleListToggle}
+        onSelect={handleItemSelect}
+        hoveredIndex={value ? itemsMap[value.value] : hoveredIndex}
       >
         {children}
-      </ul>
-    )
+      </BaseList>
+    </ListPortal>
   );
 });
 
-List.displayName = 'List';
+List.displayName = DISPLAY_NAME;
