@@ -8,14 +8,14 @@ import { CustomScrollClassName } from 'src/stylesheets/utils/BaseClasses';
 
 import { noop } from 'src/utils';
 
-import { ListProps } from './List.props';
-import { ListThemeType } from './List.theme';
+import { DropdownListProps } from './DropdownList.props';
+import { DropdownListThemeType } from './DropdownList.theme';
 
-import s from './List.module.css';
+import s from './DropdownList.module.css';
 
 type L = HTMLUListElement;
 
-export const List = forwardRef<L, ListProps>((props, ref) => {
+export const DropdownList = forwardRef<L, DropdownListProps>((props, ref) => {
   const {
     className = '',
     theme,
@@ -28,7 +28,7 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     ...rest
   } = props;
 
-  const themeClassName = useThemeClassName<ListThemeType>(theme);
+  const themeClassName = useThemeClassName<DropdownListThemeType>(theme);
 
   const { onKeyDown } = useKeyboardListNavigation({
     itemsLength: React.Children.toArray(children).length,
@@ -64,4 +64,4 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
   );
 });
 
-List.displayName = 'List';
+DropdownList.displayName = 'DropdownList';
