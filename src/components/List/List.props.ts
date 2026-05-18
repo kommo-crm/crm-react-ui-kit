@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { TextSizes, TextTheme } from 'src/components/Text';
-
 type ListAttributes = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLUListElement | HTMLOListElement>,
   HTMLUListElement | HTMLOListElement
@@ -19,25 +17,6 @@ export interface ListProps extends Omit<ListAttributes, 'type'> {
    * @default 'bulleted'
    */
   type?: ListType;
-  /**
-   * Text size of list items, mirrors the `Text` component sizes.
-   *
-   * - `s - 11/15`
-   * - `m - 13/20`
-   * - `ms - 13/15`
-   * - `l - 15/20`
-   * - `xl - 18/24`
-   *
-   * @default 'l'
-   */
-  size?: TextSizes;
-  /**
-   * Object with CSS theme properties.
-   * Inherits from `Text` themes.
-   *
-   * @default TextPrimaryTheme
-   */
-  theme?: TextTheme;
   /**
    * Items content. Use `List.Item` or another nested `List`.
    */

@@ -1,11 +1,6 @@
-import { Title, Meta } from '@storybook/blocks';
+import { Title, Meta, Canvas } from '@storybook/blocks';
 import * as ListStories from './List.stories';
-import {
-  TextPrimaryTheme,
-  TextSecondaryLightTheme,
-  TextSecondaryDarkTheme,
-  TextErrorTheme,
-} from 'src/components/Text';
+import { TextPrimaryTheme } from 'src/components/Text';
 import { ThemeVisualization } from '@storybook-utils/components';
 import { i18n } from '@i18n';
 
@@ -13,40 +8,33 @@ import { i18n } from '@i18n';
 
 <Title>{i18n.t('Themes')}</Title>
 
+## Theming with Text component
+
+`List` inherits theme tokens from its parent `Text` component. Pass `theme` to `Text` — the `List` inside picks it up automatically without needing its own `theme` prop.
+
+```jsx
+import { Text } from '@kommo-crm/crm-react-ui-kit/Text';
+import { List } from '@kommo-crm/crm-react-ui-kit/List';
+import { TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
+
+function App() {
+  return (
+    <Text size="l" theme={TextPrimaryTheme}>
+      <List type="bulleted">
+        <List.Item>List item 1</List.Item>
+        <List.Item>List item 2</List.Item>
+      </List>
+    </Text>
+  );
+}
+```
+
+<Canvas of={ListStories.Default} />
+
 ## TextPrimaryTheme
 
 ```jsx
 import { TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
 ```
 
-<ThemeVisualization theme={TextPrimaryTheme} of={ListStories.ListPrimary} />
-
-## TextSecondaryLightTheme
-
-```jsx
-import { TextSecondaryLightTheme } from '@kommo-crm/crm-react-ui-kit/Text';
-```
-
-<ThemeVisualization
-  theme={TextSecondaryLightTheme}
-  of={ListStories.ListSecondaryLight}
-/>
-
-## TextSecondaryDarkTheme
-
-```jsx
-import { TextSecondaryDarkTheme } from '@kommo-crm/crm-react-ui-kit/Text';
-```
-
-<ThemeVisualization
-  theme={TextSecondaryDarkTheme}
-  of={ListStories.ListSecondaryDark}
-/>
-
-## TextErrorTheme
-
-```jsx
-import { TextErrorTheme } from '@kommo-crm/crm-react-ui-kit/Text';
-```
-
-<ThemeVisualization theme={TextErrorTheme} of={ListStories.ListError} />
+<ThemeVisualization theme={TextPrimaryTheme} of={ListStories.Default} />
