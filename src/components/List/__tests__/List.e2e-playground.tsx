@@ -16,7 +16,7 @@ export const BulletedListPlaygroundItem = ({
 }: ComponentPlaygroundProps<ListProps>) => (
   <ComponentPlayground<ListProps> appearance={appearance} props={props}>
     {(p) => (
-      <Text size="l" theme={TextPrimaryTheme}>
+      <Text as="div" size="l" theme={TextPrimaryTheme}>
         <List {...p} type="bulleted">
           <List.Item>Bulleted List level 1</List.Item>
           <List.Item>
@@ -46,7 +46,7 @@ export const NumberedListPlaygroundItem = ({
 }: ComponentPlaygroundProps<ListProps>) => (
   <ComponentPlayground<ListProps> appearance={appearance} props={props}>
     {(p) => (
-      <Text size="l" theme={TextPrimaryTheme}>
+      <Text as="div" size="l" theme={TextPrimaryTheme}>
         <List {...p} type="numbered">
           <List.Item>Numbered List level 1</List.Item>
           <List.Item>
