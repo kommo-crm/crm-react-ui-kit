@@ -414,3 +414,80 @@ export const SelectButtonDark: StoryObj = {
     selectButtonTheme: SelectButtonDarkTheme,
   },
 };
+
+const PlacementSelect = (props: Omit<SelectStoryProps, 'description'>) => {
+  const { placeholder, value: valueProp, ...restProps } = props;
+
+  const [value, setValue] = useState<SelectProps['value'] | undefined>(
+    valueProp ?? DefaultSelectItems[0]
+  );
+
+  const handleChange = (item: SelectItem) => {
+    props.onChange?.(item);
+
+    if ('value' in props) {
+      setValue(item);
+    }
+  };
+
+  return (
+    <div style={{ width: 240 }}>
+      <Select.Root
+        {...restProps}
+        theme={SelectRootTheme}
+        value={value}
+        onChange={handleChange}
+      >
+        <Select.Button
+          theme={props.selectButtonTheme || SelectButtonLightTheme}
+        >
+          <Select.Value placeholder={placeholder} />
+          <Select.Arrow theme={SelectArrowTheme} />
+        </Select.Button>
+
+        <Select.List theme={SelectListTheme}>
+          {DefaultSelectItems.map((item, index) => (
+            <Select.Item
+              theme={SelectItemTheme}
+              key={item.value}
+              item={item}
+              index={index}
+            />
+          ))}
+        </Select.List>
+      </Select.Root>
+    </div>
+  );
+};
+
+export const Directions: StoryObj = {
+  parameters: {
+    layout: 'fullscreen',
+  },
+  render: (props) => (
+    <div
+      style={{
+        position: 'relative',
+        boxSizing: 'border-box',
+        minHeight: '100vh',
+        width: '100%',
+      }}
+    >
+      <div style={{ position: 'absolute', top: 24, left: 24 }}>
+        <PlacementSelect
+          {...props}
+          theme={SelectRootTheme}
+          value={DefaultSelectItems[0]}
+        />
+      </div>
+
+      <div style={{ position: 'absolute', right: 24, bottom: 24 }}>
+        <PlacementSelect
+          {...props}
+          theme={SelectRootTheme}
+          value={DefaultSelectItems[0]}
+        />
+      </div>
+    </div>
+  ),
+};

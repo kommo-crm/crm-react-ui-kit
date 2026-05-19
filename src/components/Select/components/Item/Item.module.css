@@ -5,6 +5,7 @@
   overflow: hidden;
   padding: var(--crm-ui-kit-select-item-padding);
   margin: var(--crm-ui-kit-select-item-margin);
+  margin-left: var(--crm-ui-kit-select-item-margin-left-flipped);
   box-sizing: border-box;
 
   cursor: pointer;

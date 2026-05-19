@@ -1,9 +1,10 @@
 import React, {
   forwardRef,
   useCallback,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 
 import { useOnOutsideClick } from '@kommo-crm/react-hooks';
@@ -23,6 +24,31 @@ import { SelectItem } from '../../Select.types';
 import { ListPortalProps, ListProps } from './List.props';
 
 type L = HTMLUListElement;
+
+type ListPlacement = 'top' | 'bottom';
+
+const DEFAULT_PLACEMENT: ListPlacement = 'bottom';
+
+const resolveListPlacement = (
+  placement: ListPlacement,
+  listEl: HTMLUListElement
+): ListPlacement => {
+  const { top, bottom, height } = listEl.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const overflowsBottom = bottom > viewportHeight;
+  const overflowsTop = top < 0;
+  const tallerThanViewport = height > viewportHeight;
+
+  if (placement === 'bottom') {
+    return overflowsBottom ? 'top' : 'bottom';
+  }
+
+  if (overflowsTop || tallerThanViewport) {
+    return 'bottom';
+  }
+
+  return 'top';
+};
 
 const DISPLAY_NAME = 'Select.List';
 
@@ -67,12 +93,49 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
   }, [children]);
 
   const listRef = useRef<HTMLUListElement>(null);
+  const preferBottomFallbackRef = useRef(false);
+  const [placement, setPlacement] = useState<ListPlacement>(DEFAULT_PLACEMENT);
+
+  useLayoutEffect(() => {
+    if (!isOpened) {
+      preferBottomFallbackRef.current = false;
+      setPlacement(DEFAULT_PLACEMENT);
+
+      return;
+    }
+
+    const listEl = listRef.current;
+
+    if (!listEl || preferBottomFallbackRef.current) {
+      return;
+    }
+
+    const nextPlacement = resolveListPlacement(placement, listEl);
+
+    if (nextPlacement === placement) {
+      return;
+    }
+
+    if (nextPlacement === 'bottom' && placement === 'top') {
+      preferBottomFallbackRef.current = true;
+    }
+
+    setPlacement(nextPlacement);
+  }, [isOpened, children, placement]);
+
+  useLayoutEffect(() => {
+    if (!isOpened) {
+      return;
+    }
+
+    listRef.current?.focus({ preventScroll: true });
+  }, [isOpened, placement]);
 
   const handleOutsideClick = useCallback(() => {
     if (isOpened) {
       onOpen(false);
     }
-  }, [isOpened]);
+  }, [isOpened, onOpen]);
 
   useOnOutsideClick({
     ref: listRef,
@@ -97,21 +160,13 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     [onChange, items]
   );
 
-  useEffect(() => {
-    /**
-     * When opening the list, we transfer focus to it.
-     */
-    if (isOpened) {
-      listRef.current?.focus();
-    }
-  }, [isOpened]);
-
   return (
     <ListPortal container={container}>
       <BaseList
         className={className}
         ref={mergeRefs(listRef, ref)}
         isOpened={isOpened}
+        placement={placement}
         theme={theme}
         onHoveredIndexChange={handleHoveredIndexChange}
         onToggle={handleListToggle}

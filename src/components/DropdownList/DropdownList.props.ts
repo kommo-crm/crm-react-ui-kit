@@ -2,6 +2,8 @@ import { HTMLAttributes } from 'react';
 
 import { DropdownListThemeType } from './DropdownList.theme';
 
+export type DropdownListPlacement = 'top' | 'bottom';
+
 export interface DropdownListProps
   extends Omit<HTMLAttributes<HTMLUListElement>, 'onSelect'> {
   /**
@@ -24,6 +26,10 @@ export interface DropdownListProps
    * Flag indicates whether the component is in the open state.
    */
   isOpened?: boolean;
+  /**
+   * Vertical placement relative to the select root.
+   */
+  placement?: DropdownListPlacement;
   /**
    * A callback that works on selecting a list item.
    */
