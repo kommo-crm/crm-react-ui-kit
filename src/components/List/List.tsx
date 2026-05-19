@@ -1,39 +1,36 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { ListProps } from './List.props';
+import { ListProps, ListType } from './List.props';
 import { Item } from './components/Item';
 
 import s from './List.module.css';
 
-type ListElement = HTMLUListElement | HTMLOListElement;
+const tags: Record<ListType, React.ElementType> = {
+  bulleted: 'ul',
+  numbered: 'ol',
+};
 
-const ListBase = forwardRef<ListElement, ListProps>((props, forwardedRef) => {
+const ListBase = forwardRef<HTMLElement, ListProps>((props, ref) => {
   const { type = 'bulleted', className = '', children, ...rest } = props;
+  const Tag = tags[type];
 
-  switch (type) {
-    case 'bulleted':
-      return (
-        <ul
-          ref={forwardedRef}
-          className={cx(s.list, s.bulleted, className)}
-          {...rest}
-        >
-          {children}
-        </ul>
-      );
-
-    case 'numbered':
-      return (
-        <ol
-          ref={forwardedRef as React.Ref<HTMLOListElement>}
-          className={cx(s.list, s.numbered, className)}
-          {...rest}
-        >
-          {children}
-        </ol>
-      );
-  }
+  return (
+    <Tag
+      ref={ref}
+      className={cx(
+        s.list,
+        {
+          [s.bulleted]: type === 'bulleted',
+          [s.numbered]: type === 'numbered',
+        },
+        className
+      )}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
 });
 
 ListBase.displayName = 'List';

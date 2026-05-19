@@ -15,11 +15,10 @@ const types: ListType[] = ['bulleted', 'numbered'];
 
 const USAGE = `
 import { List } from '@kommo-crm/crm-react-ui-kit/List';
-import { TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
 
 function App() {
   return (
-    <List type="bulleted" size="l" theme={TextPrimaryTheme}>
+    <List type="bulleted">
       <List.Item>${i18n.t('List level')} 1</List.Item>
       <List.Item>${i18n.t('List level')} 1</List.Item>
       <List.Item>${i18n.t('List level')} 1</List.Item>
@@ -50,7 +49,7 @@ const meta = {
     type: 'bulleted',
   },
   render: (props) => (
-    <Text size="l" theme={TextPrimaryTheme}>
+    <Text as="div" size="l" theme={TextPrimaryTheme}>
       <List {...props}>
         <List.Item>{i18n.t('List level')} 1</List.Item>
         <List.Item>{i18n.t('List level')} 1</List.Item>
@@ -69,7 +68,7 @@ export const Default: Story = {};
 export const Bulleted: Story = {
   args: { type: 'bulleted' },
   render: (props) => (
-    <Text size="l" theme={TextPrimaryTheme}>
+    <Text as="div" size="l" theme={TextPrimaryTheme}>
       <List {...props}>
         <List.Item>{i18n.t('Bulleted List level')} 1</List.Item>
         <List.Item>
@@ -95,7 +94,7 @@ export const Bulleted: Story = {
 export const Numbered: Story = {
   args: { type: 'numbered' },
   render: (props) => (
-    <Text size="l" theme={TextPrimaryTheme}>
+    <Text as="div" size="l" theme={TextPrimaryTheme}>
       <List {...props}>
         <List.Item>{i18n.t('Numbered List level')} 1</List.Item>
         <List.Item>

@@ -1,8 +1,8 @@
 import React from 'react';
 
 type ListAttributes = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLUListElement | HTMLOListElement>,
-  HTMLUListElement | HTMLOListElement
+  React.HTMLAttributes<HTMLElement>,
+  HTMLElement
 >;
 
 export type ListType = 'bulleted' | 'numbered';
