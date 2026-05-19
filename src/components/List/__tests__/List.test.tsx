@@ -69,10 +69,10 @@ describe('List', () => {
   });
 
   it('should forward ref for numbered list', () => {
-    const ref = React.createRef<HTMLOListElement>();
+    const ref = React.createRef<HTMLUListElement>();
 
     render(
-      <List type="numbered" ref={ref as React.Ref<HTMLUListElement>}>
+      <List type="numbered" ref={ref}>
         <List.Item>Item</List.Item>
       </List>
     );
