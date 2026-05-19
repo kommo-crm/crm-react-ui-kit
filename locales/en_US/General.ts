@@ -114,4 +114,7 @@ export default {
   'List level': 'List level',
   'Bulleted List level': 'Bulleted List level',
   'Numbered List level': 'Numbered List level',
+  'Theming with Text component': 'Theming with Text component',
+  'List theming description':
+    '`List` inherits theme tokens from its parent `Text` component. Pass `theme` to `Text` — the `List` inside picks it up automatically without needing its own `theme` prop.',
 };

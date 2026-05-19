@@ -114,4 +114,7 @@ export default {
   'List level': 'Lista nível',
   'Bulleted List level': 'Lista com marcadores nível',
   'Numbered List level': 'Lista numerada nível',
+  'Theming with Text component': 'Personalização com o componente Text',
+  'List theming description':
+    '`List` herda os tokens de tema do seu componente pai `Text`. Passe `theme` para `Text` — o `List` interno o recebe automaticamente sem precisar de sua própria prop `theme`.',
 };

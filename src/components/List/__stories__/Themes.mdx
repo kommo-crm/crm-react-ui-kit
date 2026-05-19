@@ -3,14 +3,15 @@ import * as ListStories from './List.stories';
 import { TextPrimaryTheme } from 'src/components/Text';
 import { ThemeVisualization } from '@storybook-utils/components';
 import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
 
 <Meta title="Typography/List/Themes" of={ListStories} />
 
 <Title>{i18n.t('Themes')}</Title>
 
-## Theming with Text component
+<ReactMarkdown>{'## ' + i18n.t('Theming with Text component')}</ReactMarkdown>
 
-`List` inherits theme tokens from its parent `Text` component. Pass `theme` to `Text` — the `List` inside picks it up automatically without needing its own `theme` prop.
+<ReactMarkdown>{i18n.t('List theming description')}</ReactMarkdown>
 
 ```jsx
 import { Text } from '@kommo-crm/crm-react-ui-kit/Text';
@@ -19,10 +20,10 @@ import { TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
 
 function App() {
   return (
-    <Text size="l" theme={TextPrimaryTheme}>
+    <Text as="div" size="l" theme={TextPrimaryTheme}>
       <List type="bulleted">
-        <List.Item>List item 1</List.Item>
-        <List.Item>List item 2</List.Item>
+        <List.Item>{i18n.t('Bulleted List level')} 1</List.Item>
+        <List.Item>{i18n.t('Bulleted List level')} 1</List.Item>
       </List>
     </Text>
   );
