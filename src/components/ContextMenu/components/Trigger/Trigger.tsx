@@ -28,6 +28,7 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
     onMouseMove,
     onPointerDown,
     onPointerUp,
+    isDisabled,
 
     ...rest
   } = props;
@@ -115,7 +116,7 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
    * Changes state on pointer up to emulate onClick behavior.
    */
   const handlePointerUp = (e: React.PointerEvent<HTMLButtonElement>) => {
-    if (mode === ContextMenuMode.CLICK) {
+    if (mode === ContextMenuMode.CLICK && !isDisabled) {
       onOpenByKeyboard?.(!isOpen);
     }
 

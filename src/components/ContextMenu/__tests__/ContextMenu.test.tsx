@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
 import { Text, TextInheritColorTheme } from 'src/components/Text';
+import { Button, ButtonPrimaryTheme } from 'src/components/Button';
 
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
@@ -1726,6 +1727,119 @@ describe('ContextMenu', () => {
       // 5) First menu must NOT reopen, second menu stays open
       expect(screen.queryByTestId('FirstMenuContent')).not.toBeInTheDocument();
       expect(screen.getByTestId('SecondMenuContent')).toBeInTheDocument();
+    });
+  });
+
+  describe('Trigger isDisabled', () => {
+    const renderDisabledMenu = ({
+      isDisabled,
+      asChild = false,
+      onPointerUp,
+    }: {
+      isDisabled?: boolean;
+      asChild?: boolean;
+      onPointerUp?: (e: React.PointerEvent<HTMLButtonElement>) => void;
+    }) =>
+      render(
+        <ContextMenu.Root mode={ContextMenuMode.CLICK}>
+          <ContextMenu.Trigger
+            data-testid={DATA_TRIGGER_TEST_ID}
+            isDisabled={isDisabled}
+            asChild={asChild}
+            onPointerUp={onPointerUp}
+          >
+            {asChild ? (
+              <span data-testid="CustomChild">child</span>
+            ) : (
+              <ContextMenuTriggerIcon />
+            )}
+          </ContextMenu.Trigger>
+
+          <ContextMenu.Portal>
+            <ContextMenu.Content
+              disableAutoPositioning
+              data-testid={DATA_CONTENT_TEST_ID}
+            >
+              <ContextMenu.Item data-testid={DATA_ITEM_TEST_ID}>
+                <Text theme={TextInheritColorTheme} size="l">
+                  Item 1
+                </Text>
+              </ContextMenu.Item>
+            </ContextMenu.Content>
+          </ContextMenu.Portal>
+        </ContextMenu.Root>
+      );
+
+    it('CLICK mode: isDisabled blocks menu open on trigger click', async () => {
+      renderDisabledMenu({ isDisabled: true });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+    });
+
+    it('CLICK mode: without isDisabled menu opens (regression guard)', async () => {
+      renderDisabledMenu({});
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+    });
+
+    it('CLICK mode: isDisabled with asChild blocks open (child-agnostic)', async () => {
+      renderDisabledMenu({ isDisabled: true, asChild: true });
+
+      await userEvent.click(screen.getByTestId('CustomChild'));
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+    });
+
+    it('CLICK mode: isDisabled trigger + asChild + disabled Button = no portal content', async () => {
+      render(
+        <ContextMenu.Root mode={ContextMenuMode.CLICK}>
+          <ContextMenu.Trigger
+            data-testid={DATA_TRIGGER_TEST_ID}
+            isDisabled
+            asChild
+          >
+            <Button
+              theme={ButtonPrimaryTheme}
+              isDisabled
+              isClickableWhileDisabled
+            >
+              Trigger Button
+            </Button>
+          </ContextMenu.Trigger>
+
+          <ContextMenu.Portal>
+            <ContextMenu.Content
+              disableAutoPositioning
+              data-testid={DATA_CONTENT_TEST_ID}
+            >
+              <ContextMenu.Item data-testid={DATA_ITEM_TEST_ID}>
+                <Text theme={TextInheritColorTheme} size="l">
+                  Item 1
+                </Text>
+              </ContextMenu.Item>
+            </ContextMenu.Content>
+          </ContextMenu.Portal>
+        </ContextMenu.Root>
+      );
+
+      const triggerBtn = screen.getByTestId(DATA_TRIGGER_TEST_ID);
+
+      fireEvent.pointerDown(triggerBtn);
+      fireEvent.pointerUp(triggerBtn);
+      await userEvent.click(triggerBtn);
+
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+    });
+
+    it('CLICK mode: forwards onPointerUp when isDisabled', async () => {
+      const onPointerUp = jest.fn();
+
+      renderDisabledMenu({ isDisabled: true, onPointerUp });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      expect(onPointerUp).toHaveBeenCalled();
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
     });
   });
 });
