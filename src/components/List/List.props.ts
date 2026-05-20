@@ -14,7 +14,6 @@ export interface ListProps extends Omit<ListAttributes, 'type'> {
    * - `bulleted` - unordered list, used when item order does not matter.
    * - `numbered` - ordered list, used when item order is meaningful.
    *
-   * @default 'bulleted'
    */
   type: ListType;
   /**
