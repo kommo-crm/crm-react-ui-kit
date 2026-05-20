@@ -16,7 +16,7 @@ export interface ListProps extends Omit<ListAttributes, 'type'> {
    *
    * @default 'bulleted'
    */
-  type?: ListType;
+  type: ListType;
   /**
    * Items content. Use `List.Item` or another nested `List`.
    */
