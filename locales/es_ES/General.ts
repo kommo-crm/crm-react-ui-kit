@@ -107,4 +107,14 @@ export default {
   /* Separator */
   '...LightTheme for light background': '...LightTheme para fondo claro',
   '...DarkTheme for dark background': '...DarkTheme para fondo oscuro',
+
+  /* List */
+  'Bulleted': 'Con viñetas',
+  'Numbered': 'Numerada',
+  'List level': 'Lista nivel',
+  'Bulleted List level': 'Lista con viñetas nivel',
+  'Numbered List level': 'Lista numerada nivel',
+  'Theming with Text component': 'Personalización con el componente Text',
+  'List theming description':
+    '`List` hereda los tokens de tema de su componente padre `Text`. Pasa `theme` a `Text` — el `List` interior lo recoge automáticamente sin necesitar su propia prop `theme`.',
 };
