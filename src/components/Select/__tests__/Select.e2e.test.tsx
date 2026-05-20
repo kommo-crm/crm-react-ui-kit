@@ -29,6 +29,10 @@ export const combinations = multiCartesian<SelectTestProps>([
     useHeightWrapper: [true],
     defaultValue: [{ value: 'option1', option: 'Option 1' }],
   },
+  {
+    isDefaultOpen: [true],
+    pinToViewportBottom: [true],
+  },
 ]);
 
 for (const props of combinations) {
