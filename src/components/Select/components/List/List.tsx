@@ -50,6 +50,30 @@ const resolveListPlacement = (
   return 'top';
 };
 
+const isElementFullyInViewport = (el: HTMLElement) => {
+  const { top, bottom, left, right } = el.getBoundingClientRect();
+
+  return (
+    top >= 0 &&
+    left >= 0 &&
+    bottom <= window.innerHeight &&
+    right <= window.innerWidth
+  );
+};
+
+const focusOpenedList = (listEl: HTMLUListElement) => {
+  const isFullyInView = isElementFullyInViewport(listEl);
+
+  if (isFullyInView) {
+    listEl.focus({ preventScroll: true });
+
+    return;
+  }
+
+  listEl.focus();
+  listEl.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+};
+
 const DISPLAY_NAME = 'Select.List';
 
 const ListPortal = (props: ListPortalProps) => {
@@ -106,13 +130,21 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
 
     const listEl = listRef.current;
 
-    if (!listEl || preferBottomFallbackRef.current) {
+    if (!listEl) {
+      return;
+    }
+
+    if (preferBottomFallbackRef.current) {
+      focusOpenedList(listEl);
+
       return;
     }
 
     const nextPlacement = resolveListPlacement(placement, listEl);
 
     if (nextPlacement === placement) {
+      focusOpenedList(listEl);
+
       return;
     }
 
@@ -122,14 +154,6 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
 
     setPlacement(nextPlacement);
   }, [isOpened, children, placement]);
-
-  useLayoutEffect(() => {
-    if (!isOpened) {
-      return;
-    }
-
-    listRef.current?.focus({ preventScroll: true });
-  }, [isOpened, placement]);
 
   const handleOutsideClick = useCallback(() => {
     if (isOpened) {
