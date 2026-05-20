@@ -1,0 +1,29 @@
+.list {
+  margin: 0;
+  padding-inline-start: 24px;
+
+  font-family: var(--crm-ui-kit-text-font), Arial, sans-serif;
+  color: var(--crm-ui-kit-text-color);
+}
+
+.bulleted,
+.bulleted .bulleted {
+  list-style-type: disc;
+}
+
+.numbered {
+  list-style-type: decimal;
+}
+
+.numbered .numbered {
+  list-style-type: lower-alpha;
+}
+
+.numbered .numbered .numbered {
+  list-style-type: lower-roman;
+}
+
+.list > li + li,
+.list > li > .list {
+  margin-top: 8px;
+}

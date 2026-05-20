@@ -107,4 +107,14 @@ export default {
   /* Separator */
   '...LightTheme for light background': '...LightTheme for light background',
   '...DarkTheme for dark background': '...DarkTheme for dark background',
+
+  /* List */
+  'Bulleted': 'Bulleted',
+  'Numbered': 'Numbered',
+  'List level': 'List level',
+  'Bulleted List level': 'Bulleted List level',
+  'Numbered List level': 'Numbered List level',
+  'Theming with Text component': 'Theming with Text component',
+  'List theming description':
+    '`List` inherits theme tokens from its parent `Text` component. Pass `theme` to `Text` — the `List` inside picks it up automatically without needing its own `theme` prop.',
 };
