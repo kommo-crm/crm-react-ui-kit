@@ -12,7 +12,7 @@ const tags: Record<ListType, React.ElementType> = {
 };
 
 const ListBase = forwardRef<HTMLElement, ListProps>((props, ref) => {
-  const { type = 'bulleted', className = '', children, ...rest } = props;
+  const { type, className = '', children, ...rest } = props;
   const Tag = tags[type];
 
   return (
