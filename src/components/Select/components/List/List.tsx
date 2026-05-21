@@ -11,7 +11,10 @@ import { useOnOutsideClick } from '@kommo-crm/react-hooks';
 
 import { Portal } from 'src/components/Portal';
 
-import { DropdownList as BaseList } from 'src/components/DropdownList';
+import {
+  DropdownList as BaseList,
+  type DropdownListPlacement,
+} from 'src/components/DropdownList';
 
 import { mergeRefs } from 'src/lib/utils';
 
@@ -25,14 +28,10 @@ import { ListPortalProps, ListProps } from './List.props';
 
 type L = HTMLUListElement;
 
-type ListPlacement = 'top' | 'bottom';
-
-const DEFAULT_PLACEMENT: ListPlacement = 'bottom';
-
 const resolveListPlacement = (
-  placement: ListPlacement,
+  placement: DropdownListPlacement,
   listEl: HTMLUListElement
-): ListPlacement => {
+): DropdownListPlacement => {
   const { top, bottom, height } = listEl.getBoundingClientRect();
   const viewportHeight = window.innerHeight;
   const overflowsBottom = bottom > viewportHeight;
@@ -70,7 +69,7 @@ const focusOpenedList = (listEl: HTMLUListElement) => {
     return;
   }
 
-  listEl.focus();
+  listEl.focus({ preventScroll: true });
   listEl.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
 };
 
@@ -118,12 +117,12 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
 
   const listRef = useRef<HTMLUListElement>(null);
   const preferBottomFallbackRef = useRef(false);
-  const [placement, setPlacement] = useState<ListPlacement>(DEFAULT_PLACEMENT);
+  const [placement, setPlacement] = useState<DropdownListPlacement>('bottom');
 
   useLayoutEffect(() => {
     if (!isOpened) {
       preferBottomFallbackRef.current = false;
-      setPlacement(DEFAULT_PLACEMENT);
+      setPlacement('bottom');
 
       return;
     }
@@ -153,7 +152,7 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     }
 
     setPlacement(nextPlacement);
-  }, [isOpened, children, placement]);
+  }, [isOpened, placement]);
 
   const handleOutsideClick = useCallback(() => {
     if (isOpened) {

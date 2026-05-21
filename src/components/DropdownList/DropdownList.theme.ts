@@ -1,13 +1,11 @@
 type DropdownListThemeKey =
   | '--crm-ui-kit-list-top'
-  | '--crm-ui-kit-list-bottom-flipped'
   | '--crm-ui-kit-list-max-height'
   | '--crm-ui-kit-list-width'
   | '--crm-ui-kit-list-border-radius'
   | '--crm-ui-kit-list-border-color'
   | '--crm-ui-kit-list-background-color'
   | '--crm-ui-kit-list-left'
-  | '--crm-ui-kit-list-left-flipped'
   | '--crm-ui-kit-list-padding-right'
   | '--crm-ui-kit-list-margin-right'
   | '--crm-ui-kit-list-border-width'
@@ -16,18 +14,22 @@ type DropdownListThemeKey =
   | '--crm-ui-kit-list-border-style'
   | '--crm-ui-kit-list-color';
 
+type DropdownListThemeOptionalKey =
+  | '--crm-ui-kit-list-bottom-flipped'
+  | '--crm-ui-kit-list-left-flipped';
+
 export type DropdownListThemeType = {
   [K in DropdownListThemeKey]: string;
+} & {
+  [K in DropdownListThemeOptionalKey]?: string;
 };
 
-export const DropdownListTheme: DropdownListThemeType = {
+const DropdownListBaseThemeValues = {
   '--crm-ui-kit-list-top': '0px',
-  '--crm-ui-kit-list-bottom-flipped': '0px',
   '--crm-ui-kit-list-max-height': '211px',
   '--crm-ui-kit-list-z-index': '30',
   '--crm-ui-kit-list-border-style': 'solid',
   '--crm-ui-kit-list-left': '-13px',
-  '--crm-ui-kit-list-left-flipped': '-12px',
   '--crm-ui-kit-list-width': '100%',
   '--crm-ui-kit-list-padding-right': '11px',
   '--crm-ui-kit-list-margin-right': '-13px',
@@ -38,4 +40,11 @@ export const DropdownListTheme: DropdownListThemeType = {
   '--crm-ui-kit-list-border-radius': 'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-list-outline': 'none',
   '--crm-ui-kit-list-color': 'var(--crm-ui-kit-palette-text-primary)',
+
+  '--crm-ui-kit-list-bottom-flipped': '0px',
+  '--crm-ui-kit-list-left-flipped': '-13px',
+};
+
+export const DropdownListTheme: DropdownListThemeType = {
+  ...DropdownListBaseThemeValues,
 };

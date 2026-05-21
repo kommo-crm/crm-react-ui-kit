@@ -41,7 +41,13 @@ for (const props of combinations) {
   test.describe('Select', () => {
     test(
       label,
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
+        if (props.pinToViewportBottom) {
+          const viewport = page.viewportSize() ?? { width: 390, height: 150 };
+
+          await page.setViewportSize({ width: viewport.width, height: 150 });
+        }
+
         await mount(
           <SelectPlaygroundItem appearance={appearance} props={props} />
         );
@@ -53,7 +59,13 @@ for (const props of combinations) {
   test.describe('Select with JSX options', () => {
     test(
       label,
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
+        if (props.pinToViewportBottom) {
+          const viewport = page.viewportSize() ?? { width: 390, height: 150 };
+
+          await page.setViewportSize({ width: viewport.width, height: 150 });
+        }
+
         await mount(
           <SelectPlaygroundItemWithJsxOptions
             appearance={appearance}

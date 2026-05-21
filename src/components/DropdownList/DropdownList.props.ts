@@ -28,6 +28,7 @@ export interface DropdownListProps
   isOpened?: boolean;
   /**
    * Vertical placement relative to the select root.
+   * Determined automatically if not explicitly specified.
    */
   placement?: DropdownListPlacement;
   /**

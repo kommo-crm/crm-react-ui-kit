@@ -112,7 +112,7 @@ const SelectPlayground = ({
 
       const select = (
         <div
-          style={pinToViewportBottom ? { width: 240 } : { margin: '0 20px' }}
+          style={pinToViewportBottom ? { width: '100%' } : { margin: '0 20px' }}
         >
           <Select {...selectProps} theme={SelectRootTheme}>
             {useHeightWrapper ? (
@@ -130,11 +130,18 @@ const SelectPlayground = ({
             style={{
               position: 'relative',
               boxSizing: 'border-box',
-              minHeight: '100vh',
+              height: 150,
               width: '100%',
             }}
           >
-            <div style={{ position: 'absolute', right: 24, bottom: 24 }}>
+            <div
+              style={{
+                position: 'absolute',
+                left: 24,
+                right: 24,
+                bottom: 24,
+              }}
+            >
               {select}
             </div>
           </div>

@@ -461,9 +461,6 @@ const PlacementSelect = (props: Omit<SelectStoryProps, 'description'>) => {
 };
 
 export const Directions: StoryObj = {
-  parameters: {
-    layout: 'fullscreen',
-  },
   render: (props) => (
     <div
       style={{
