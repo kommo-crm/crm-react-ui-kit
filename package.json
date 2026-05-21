@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -24,6 +24,7 @@
     "./Checkbox": "./dist/components/Checkbox/index.js",
     "./Portal": "./dist/components/Portal/index.js",
     "./RadioGroup": "./dist/components/RadioGroup/index.js",
+    "./Ribbon": "./dist/components/Ribbon/index.js",
     "./Select": "./dist/components/Select/index.js",
     "./CheckboxGroup": "./dist/components/CheckboxGroup/index.js",
     "./FilterTabs": "./dist/components/FilterTabs/index.js",
@@ -96,6 +97,9 @@
       ],
       "RadioGroup": [
         "./dist/components/RadioGroup/index.d.ts"
+      ],
+      "Ribbon": [
+        "./dist/components/Ribbon/index.d.ts"
       ],
       "Select": [
         "./dist/components/Select/index.d.ts"

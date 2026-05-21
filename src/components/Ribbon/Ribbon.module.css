@@ -1,0 +1,38 @@
+.container {
+  position: relative;
+
+  width: fit-content;
+  height: fit-content;
+}
+
+.ribbon-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.ribbon {
+  position: absolute;
+  transform-origin: 0 100%;
+  transform: rotateZ(45deg);
+  top: -19px;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 19px;
+
+  background-color: var(--crm-ui-kit-ribbon-background-color);
+  color: var(--crm-ui-kit-ribbon-color);
+}
+
+.text {
+  color: inherit;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 14px;
+  white-space: nowrap;
+}
