@@ -144,7 +144,7 @@ Rules:
 - Optional theme keys go into a separate `<Name>ThemeOptionalKey` union and become optional on the theme type (see `Button.themes.ts` for a focus-visible example).
 - Export at least one preset (`<Name>PrimaryTheme`). Add more presets following the naming `<Name><Variant>Theme`.
 
-### Commonly used palette variables (do NOT read theme.css)
+### Commonly used palette variables (always read `src/stylesheets/theme.css` before creating a new component)
 
 ```text
 Text:
