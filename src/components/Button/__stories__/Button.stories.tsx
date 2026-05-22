@@ -1,11 +1,9 @@
 import React, { useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { useGlobals } from '@storybook/preview-api';
 
 import { CanvasCentered, IconsMap } from '@storybook-utils/constants';
 
 import { noop } from 'src/utils';
-import { Appearance } from 'src/lib/appearance';
 
 import { i18n } from '@i18n';
 
@@ -16,6 +14,7 @@ import MagicIcon from '@storybook-utils/icons/magic.svg';
 
 import { ContextMenu } from 'src/components/ContextMenu';
 import { Text, TextPrimaryTheme } from 'src/components/Text';
+import { useStoryLabel } from 'src/hooks/useStoryLabel';
 
 import {
   Button,
@@ -143,9 +142,9 @@ export const Refs: Story = {
     },
   },
   render: (props) => {
-    const [{ appearance }] = useGlobals();
-    const labelColor =
-      appearance === Appearance.ALTERNATIVE ? 'white' : 'black';
+    const successRefLabel = useStoryLabel(i18n.t('Success Ref'));
+
+    const invalidRefLabel = useStoryLabel(i18n.t('Invalid Ref'));
 
     const successRef = useRef(noop);
     const invalidRef = useRef(noop);
@@ -178,7 +177,7 @@ export const Refs: Story = {
             alignItems: 'center',
           }}
         >
-          <div style={{ color: labelColor }}>{i18n.t('Success Ref')}</div>
+          {successRefLabel}
           <Button
             {...props}
             onClick={handleSuccessClick}
@@ -192,7 +191,7 @@ export const Refs: Story = {
             alignItems: 'center',
           }}
         >
-          <div style={{ color: labelColor }}>{i18n.t('Invalid Ref')}</div>
+          {invalidRefLabel}
           <Button
             {...props}
             showInvalidAnimationRef={invalidRef}

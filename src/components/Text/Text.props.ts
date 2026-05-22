@@ -10,6 +10,7 @@ type SpanAttributes = React.DetailedHTMLProps<
 export type TextSizes = 's' | 'm' | 'ms' | 'l' | 'xl';
 
 export interface TextProps extends SpanAttributes {
+  as?: React.ElementType;
   /**
    * Text size.
    *

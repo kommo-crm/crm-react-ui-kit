@@ -10,3 +10,8 @@
   margin-right: 8px;
   color: var(--crm-ui-kit-callout-icon-color);
 }
+
+.closeButton {
+  flex-shrink: 0;
+  margin-left: 8px;
+}

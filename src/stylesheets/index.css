@@ -1,5 +1,6 @@
 .sb-show-main,
 .docs-story {
+  font-family: 'PT Sans', Arial, sans-serif;
   background: var(--crm-ui-kit-palette-background-default);
 }
 

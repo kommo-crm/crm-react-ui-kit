@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { type CalloutProps, Callout } from '..';
-import { CalloutErrorTheme } from '../themes/CalloutError.theme';
+import { CalloutErrorTheme } from '../Callout.themes';
 
 import '@testing-library/jest-dom';
 
