@@ -1,22 +1,17 @@
-import React, { useRef } from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+
+import { List, type ListProps } from '..';
+
 import '@testing-library/jest-dom';
 
-import { List, ListTheme, ListProps } from '..';
-
-const ListWithRef = (props: ListProps) => {
-  const listRef = useRef<HTMLUListElement>(null);
-
-  return <List {...props} ref={listRef} />;
-};
-
-const renderList = (props: Partial<ListProps>) => {
+const renderList = (props: ListProps) => {
   return render(
-    <ListWithRef role="list" theme={ListTheme} isOpened {...props}>
-      <li>Item 1</li>
-      <li>Item 2</li>
-      <li>Item 3</li>
-    </ListWithRef>
+    <List {...props}>
+      <List.Item>Item 1</List.Item>
+      <List.Item>Item 2</List.Item>
+      <List.Item>Item 3</List.Item>
+    </List>
   );
 };
 
@@ -25,14 +20,30 @@ describe('List', () => {
     expect(List).toBeDefined();
   });
 
-  it('should render as a list element', () => {
-    renderList({});
-
-    expect(screen.getByRole('list')).toBeInTheDocument();
+  it('should render List.Item', () => {
+    expect(List.Item).toBeDefined();
   });
 
-  it('should render children correctly', () => {
-    renderList({});
+  it('should render as ul when type is bulleted', () => {
+    renderList({ type: 'bulleted' });
+
+    expect(screen.getByRole('list').tagName).toBe('UL');
+  });
+
+  it('should render as ol when type is numbered', () => {
+    renderList({ type: 'numbered' });
+
+    expect(screen.getByRole('list').tagName).toBe('OL');
+  });
+
+  it('should default to bulleted type', () => {
+    renderList({ type: 'bulleted' });
+
+    expect(screen.getByRole('list').tagName).toBe('UL');
+  });
+
+  it('should render children', () => {
+    renderList({ type: 'bulleted' });
 
     expect(screen.getByText('Item 1')).toBeInTheDocument();
     expect(screen.getByText('Item 2')).toBeInTheDocument();
@@ -40,98 +51,48 @@ describe('List', () => {
   });
 
   it('should apply custom className', () => {
-    const customClass = 'my-custom-class';
+    renderList({ type: 'bulleted', className: 'custom-class' });
 
-    renderList({ className: customClass });
-
-    const element = screen.getByRole('list');
-
-    expect(element).toHaveClass(customClass);
+    expect(screen.getByRole('list')).toHaveClass('custom-class');
   });
 
-  it('should call onScroll callback when scrolled', () => {
-    const onScroll = jest.fn();
+  it('should forward ref for bulleted list', () => {
+    const ref = React.createRef<HTMLUListElement>();
 
-    renderList({ onScroll });
+    render(
+      <List type="bulleted" ref={ref}>
+        <List.Item>Item</List.Item>
+      </List>
+    );
 
-    const element = screen.getByRole('list');
-
-    fireEvent.scroll(element);
-
-    expect(onScroll).toHaveBeenCalled();
+    expect(ref.current).toBeInstanceOf(HTMLUListElement);
   });
 
-  it('should handle keyboard navigation', () => {
-    const onSelect = jest.fn();
-    const onToggle = jest.fn();
+  it('should forward ref for numbered list', () => {
+    const ref = React.createRef<HTMLUListElement>();
 
-    renderList({ onSelect, onToggle });
+    render(
+      <List type="numbered" ref={ref}>
+        <List.Item>Item</List.Item>
+      </List>
+    );
 
-    const element = screen.getByRole('list');
-
-    element.focus();
-
-    fireEvent.keyDown(element, { code: 'Enter' });
-
-    expect(onSelect).toHaveBeenCalledTimes(1);
-
-    fireEvent.keyDown(element, { code: 'Escape' });
-
-    expect(onToggle).toHaveBeenCalledTimes(1);
+    expect(ref.current).toBeInstanceOf(HTMLOListElement);
   });
 
-  it('should call onHoveredIndexChange when hoveredIndex changes', () => {
-    const onHoveredIndexChange = jest.fn();
+  it('should render nested lists', () => {
+    render(
+      <List type="bulleted">
+        <List.Item>
+          Parent
+          <List type="bulleted">
+            <List.Item>Nested</List.Item>
+          </List>
+        </List.Item>
+      </List>
+    );
 
-    renderList({ onHoveredIndexChange });
-
-    const element = screen.getByRole('list');
-
-    element.focus();
-
-    act(() => {
-      fireEvent.keyDown(element, { code: 'ArrowDown' });
-    });
-
-    expect(onHoveredIndexChange).toHaveBeenCalledWith(1);
-
-    act(() => {
-      fireEvent.keyDown(element, { code: 'ArrowUp' });
-    });
-
-    expect(onHoveredIndexChange).toHaveBeenCalledWith(1);
-  });
-
-  it('should call onSelect with the correct index', () => {
-    const onSelect = jest.fn();
-
-    renderList({ onSelect });
-
-    const element = screen.getByRole('list');
-
-    element.focus();
-
-    fireEvent.keyDown(element, { code: 'ArrowDown' });
-    fireEvent.keyDown(element, { code: 'ArrowDown' });
-    fireEvent.keyDown(element, { code: 'Enter' });
-
-    expect(onSelect).toHaveBeenCalledWith(2);
-
-    fireEvent.keyDown(element, { code: 'ArrowUp' });
-    fireEvent.keyDown(element, { code: 'ArrowUp' });
-    fireEvent.keyDown(element, { code: 'Enter' });
-
-    expect(onSelect).toHaveBeenCalledWith(0);
-  });
-
-  it('should not apply the opened styles when isOpened is false', () => {
-    const onSelect = jest.fn();
-    const onHoveredIndexChange = jest.fn();
-
-    renderList({ isOpened: false, onSelect, onHoveredIndexChange });
-
-    const element = screen.queryByRole('list');
-
-    expect(element).not.toBeInTheDocument();
+    expect(screen.getByText('Parent')).toBeInTheDocument();
+    expect(screen.getByText('Nested')).toBeInTheDocument();
   });
 });

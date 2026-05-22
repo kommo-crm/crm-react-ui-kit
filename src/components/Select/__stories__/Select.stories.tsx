@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { useArgs } from 'storybook/internal/preview-api';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 import { Text, TextPrimaryTheme } from 'src/components/Text';
@@ -16,6 +15,8 @@ import CopyIcon from 'src/icons/copy.svg';
 import DeleteIcon from 'src/icons/delete.svg';
 
 import { i18n } from '@i18n';
+
+import { Badge, BadgeSafetyTheme } from 'src/components/Badge';
 
 import { Select } from '../Select';
 import { SelectItem } from '../Select.types';
@@ -47,12 +48,26 @@ const DefaultSelectItems = [
     option: getOptionLabel(3),
     icon: <DeleteIcon width={20} height={20} />,
   },
-  { value: 'Option 4', option: getOptionLabel(4) },
+  {
+    value: 'Option 4',
+    option: (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {getOptionLabel(4)}{' '}
+        <Badge
+          theme={BadgeSafetyTheme}
+          title="Badge"
+          style={{ marginLeft: 8 }}
+        />
+      </div>
+    ),
+    title: getOptionLabel(4),
+  },
   { value: 'Option 5', option: getOptionLabel(5) },
   { value: 'Option 6', option: getOptionLabel(6) },
   {
     value: 'Option 7',
     option: i18n.t('Really very long option'),
+    title: i18n.t('Really very long option'),
   },
   { value: 'Option 8', option: getOptionLabel(8) },
   { value: 'Option 9', option: getOptionLabel(9) },
@@ -83,7 +98,7 @@ const SelectWrapper = (props: SelectStoryProps) => {
   const handleChange = (item: SelectItem) => {
     props?.onChange!(item);
 
-    if (!('defaultValue' in props)) {
+    if ('value' in props) {
       setValue(item);
     }
   };
@@ -128,7 +143,7 @@ const IconsSelect = (props: SelectStoryProps) => {
   const handleChange = (item: SelectItem) => {
     props.onChange!(item);
 
-    if (!('defaultValue' in props)) {
+    if ('value' in props) {
       setValue(item);
     }
   };
@@ -160,7 +175,7 @@ const IconsSelect = (props: SelectStoryProps) => {
             >
               <Select.Icon theme={SelectIconTheme}>{item.icon}</Select.Icon>
 
-              <Select.Option>{item.option}</Select.Option>
+              <Select.Option title={item.title}>{item.option}</Select.Option>
             </Select.Item>
           ))}
         </Select.List>
@@ -185,12 +200,27 @@ const DefaultSelectItems = [
   { value: "Option 1", option: "${i18n.t('Option')} 1" },
   { value: "Option 2", option: "${i18n.t('Option')} 2" },
   { value: "Option 3", option: "${i18n.t('Option')} 3" },
-  { value: "Option 4", option: "${i18n.t('Option')} 4" },
+  {
+    value: 'Option 4',
+    option: (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        ${i18n.t('Option')} 4{' '}
+        <Badge
+          theme={BadgeSafetyTheme}
+          title="Badge"
+          style={{ marginLeft: 8 }}
+        />
+      </div>
+    ),
+    title: ${i18n.t('Option')} 4,
+  },
   { value: "Option 5", option: "${i18n.t('Option')} 5" },
   { value: "Option 6", option: "${i18n.t('Option')} 6" },
   {
     value: "Option 7",
     option:
+      ${i18n.t('Really very long option')},
+    title:
       ${i18n.t('Really very long option')},
   },
   { value: "Option 8", option: "${i18n.t('Option')} 8" },
@@ -250,24 +280,34 @@ const meta = {
     children: null,
     isInvalid: false,
     theme: SelectRootTheme,
-    defaultValue: DefaultSelectItems[0],
   },
   component: Select,
   render: (props: Omit<SelectStoryProps, 'description'>) => {
-    const { placeholder, ...restProps } = props;
-    const [, setArgs] = useArgs();
+    const { placeholder, value: valueProp, ...restProps } = props;
+
+    const isControlled = 'value' in props;
+
+    const [value, setValue] = useState<SelectProps['value'] | undefined>(
+      valueProp
+    );
 
     const handleChange = (item: SelectItem) => {
       props.onChange!(item);
 
-      if (!('defaultValue' in props)) {
-        setArgs({ value: item });
+      if (isControlled) {
+        setValue(item);
       }
     };
 
+    const controlledProps = isControlled ? { value } : {};
+
     return (
       <div style={{ width: '100%' }}>
-        <Select.Root {...restProps} onChange={handleChange}>
+        <Select.Root
+          {...restProps}
+          {...controlledProps}
+          onChange={handleChange}
+        >
           <Select.Button
             theme={props.selectButtonTheme || SelectButtonLightTheme}
           >

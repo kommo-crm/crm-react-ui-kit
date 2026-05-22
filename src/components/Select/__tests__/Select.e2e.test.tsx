@@ -6,6 +6,7 @@ import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
 
 import {
   SelectPlaygroundItem,
+  SelectPlaygroundItemWithJsxOptions,
   type SelectTestProps,
 } from './Select.e2e-playground';
 
@@ -39,6 +40,21 @@ for (const props of combinations) {
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
           <SelectPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('Select with JSX options', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <SelectPlaygroundItemWithJsxOptions
+            appearance={appearance}
+            props={props}
+          />
         );
         await expectScreenshotClippedToContent();
       }

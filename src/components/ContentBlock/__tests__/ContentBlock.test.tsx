@@ -1,7 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { type ContentBlockProps, ContentBlock, ContentBlockTheme } from '..';
+import {
+  type ContentBlockProps,
+  ContentBlock,
+  ContentBlockPrimaryTheme,
+} from '..';
 
 import '@testing-library/jest-dom';
 
@@ -11,7 +15,7 @@ const DATA_CHILDREN_TEST_ID = 'ContentBlockChildren';
 const renderContentBlock = (props?: Partial<ContentBlockProps>) => {
   return render(
     <ContentBlock
-      theme={ContentBlockTheme}
+      theme={ContentBlockPrimaryTheme}
       data-testid={DATA_COMPONENT_TEST_ID}
       {...props}
     >

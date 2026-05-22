@@ -1,0 +1,58 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as SeparatorStories from './Separator.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import {
+  SeparatorRoundedLightTheme,
+  SeparatorSquaredLightTheme,
+  SeparatorRoundedDarkTheme,
+  SeparatorSquaredDarkTheme,
+} from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Separator/Themes" of={SeparatorStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## SeparatorRoundedLightTheme
+
+```jsx
+import { SeparatorRoundedLightTheme } from '@kommo-crm/crm-react-ui-kit/Separator';
+```
+
+<ThemeVisualization
+  theme={SeparatorRoundedLightTheme}
+  of={SeparatorStories.SeparatorRoundedLightTheme}
+/>
+
+## SeparatorSquaredLightTheme
+
+```jsx
+import { SeparatorSquaredLightTheme } from '@kommo-crm/crm-react-ui-kit/Separator';
+```
+
+<ThemeVisualization
+  theme={SeparatorSquaredLightTheme}
+  of={SeparatorStories.SeparatorSquaredLightTheme}
+/>
+
+## SeparatorRoundedDarkTheme
+
+```jsx
+import { SeparatorRoundedDarkTheme } from '@kommo-crm/crm-react-ui-kit/Separator';
+```
+
+<ThemeVisualization
+  theme={SeparatorRoundedDarkTheme}
+  of={SeparatorStories.SeparatorRoundedDarkTheme}
+/>
+
+## SeparatorSquaredDarkTheme
+
+```jsx
+import { SeparatorSquaredDarkTheme } from '@kommo-crm/crm-react-ui-kit/Separator';
+```
+
+<ThemeVisualization
+  theme={SeparatorSquaredDarkTheme}
+  of={SeparatorStories.SeparatorSquaredDarkTheme}
+/>

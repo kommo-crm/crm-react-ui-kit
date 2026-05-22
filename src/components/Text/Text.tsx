@@ -18,8 +18,9 @@ const cn = {
   xl: s.xl,
 };
 
-export const Text = forwardRef<HTMLSpanElement, TextProps>((props, ref) => {
+export const Text = forwardRef<HTMLElement, TextProps>((props, ref) => {
   const {
+    as: Tag = 'span',
     children,
     className = '',
     isEllipsis = false,
@@ -41,7 +42,7 @@ export const Text = forwardRef<HTMLSpanElement, TextProps>((props, ref) => {
     case 'l':
     case 'xl':
       return (
-        <span
+        <Tag
           ref={ref}
           style={{
             ...(isLineClampAllowed && { WebkitLineClamp: maxRows }),
@@ -54,7 +55,7 @@ export const Text = forwardRef<HTMLSpanElement, TextProps>((props, ref) => {
           {...rest}
         >
           {children}
-        </span>
+        </Tag>
       );
 
     default:

@@ -1,33 +1,29 @@
 .list {
-  display: none;
-  z-index: 'auto';
-  -webkit-overflow-scrolling: touch;
-
-  padding: 0;
   margin: 0;
-  color: var(--crm-ui-kit-list-color);
+  padding-inline-start: 24px;
+
+  font-family: var(--crm-ui-kit-text-font), Arial, sans-serif;
+  color: var(--crm-ui-kit-text-color);
 }
 
-.opened {
-  position: absolute;
-  top: var(--crm-ui-kit-list-top);
-  left: var(--crm-ui-kit-list-left);
-  overflow: auto;
+.bulleted,
+.bulleted .bulleted {
+  list-style-type: disc;
+}
 
-  display: block;
-  width: var(--crm-ui-kit-list-width);
-  max-height: var(--crm-ui-kit-list-max-height);
-  padding-right: var(--crm-ui-kit-list-padding-right);
-  margin-right: var(--crm-ui-kit-list-margin-right);
-  box-sizing: content-box;
+.numbered {
+  list-style-type: decimal;
+}
 
-  background-color: var(--crm-ui-kit-list-background-color);
-  border-width: var(--crm-ui-kit-list-border-width);
-  border-style: var(--crm-ui-kit-list-border-style);
-  border-color: var(--crm-ui-kit-list-border-color);
+.numbered .numbered {
+  list-style-type: lower-alpha;
+}
 
-  border-radius: var(--crm-ui-kit-list-border-radius);
-  outline: var(--crm-ui-kit-list-outline);
+.numbered .numbered .numbered {
+  list-style-type: lower-roman;
+}
 
-  z-index: var(--crm-ui-kit-list-z-index);
+.list > li + li,
+.list > li > .list {
+  margin-top: 8px;
 }

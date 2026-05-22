@@ -1,0 +1,1 @@
+export { useStoryLabel } from './useStoryLabel';

@@ -15,10 +15,10 @@ const DISPLAY_NAME = 'Select.Value';
 type S = HTMLSpanElement;
 
 const Option = forwardRef<S, OptionProps>((props, ref) => {
-  const { children, className } = props;
+  const { children, className, title, ...rest } = props;
 
   return (
-    <span className={cx(s.text, className)} ref={ref}>
+    <span {...rest} className={cx(s.text, className)} ref={ref} title={title}>
       <Text theme={OptionTextTheme} size="l" isEllipsis>
         {children}
       </Text>

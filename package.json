@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.10.0",
+  "version": "1.15.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -15,6 +15,7 @@
     "./Switcher": "./dist/components/Switcher/index.js",
     "./Spinner": "./dist/components/Spinner/index.js",
     "./Link": "./dist/components/Link/index.js",
+    "./List": "./dist/components/List/index.js",
     "./TextArea": "./dist/components/TextArea/index.js",
     "./Text": "./dist/components/Text/index.js",
     "./Input": "./dist/components/Input/index.js",
@@ -32,7 +33,9 @@
     "./Callout": "./dist/components/Callout/index.js",
     "./Accordion": "./dist/components/Accordion/index.js",
     "./ContextMenu": "./dist/components/ContextMenu/index.js",
+    "./CounterBadge": "./dist/components/CounterBadge/index.js",
     "./Badge": "./dist/components/Badge/index.js",
+    "./Separator": "./dist/components/Separator/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -49,7 +52,10 @@
     "./assets/CheckboxGroup.css": "./dist/assets/CheckboxGroup.css",
     "./assets/FilterTabs.css": "./dist/assets/FilterTabs.css",
     "./assets/Button.css": "./dist/assets/Button.css",
+    "./assets/CounterBadge.css": "./dist/assets/CounterBadge.css",
+    "./assets/List.css": "./dist/assets/List.css",
     "./assets/Badge.css": "./dist/assets/Badge.css",
+    "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
@@ -63,6 +69,9 @@
       ],
       "Link": [
         "./dist/components/Link/index.d.ts"
+      ],
+      "List": [
+        "./dist/components/List/index.d.ts"
       ],
       "TextArea": [
         "./dist/components/TextArea/index.d.ts"
@@ -115,8 +124,14 @@
       "ContextMenu": [
         "./dist/components/ContextMenu/index.d.ts"
       ],
+      "CounterBadge": [
+        "./dist/components/CounterBadge/index.d.ts"
+      ],
       "Badge": [
         "./dist/components/Badge/index.d.ts"
+      ],
+      "Separator": [
+        "./dist/components/Separator/index.d.ts"
       ]
     }
   },
