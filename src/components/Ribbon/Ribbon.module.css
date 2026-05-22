@@ -16,23 +16,22 @@
   position: absolute;
   transform-origin: 0 100%;
   transform: rotateZ(45deg);
-  top: -19px;
+  top: calc(var(--crm-ui-kit-ribbon-height) * -1);
   left: 0;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 19px;
+  height: var(--crm-ui-kit-ribbon-height);
 
   background-color: var(--crm-ui-kit-ribbon-background-color);
-  color: var(--crm-ui-kit-ribbon-color);
 }
 
 .text {
-  color: inherit;
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 10px;
-  line-height: 14px;
+  color: var(--crm-ui-kit-ribbon-color);
+  font-weight: var(--crm-ui-kit-ribbon-font-weight);
+  font-size: var(--crm-ui-kit-ribbon-font-size);
+  line-height: var(--crm-ui-kit-ribbon-line-height);
+  text-transform: var(--crm-ui-kit-ribbon-text-transform);
   white-space: nowrap;
 }
