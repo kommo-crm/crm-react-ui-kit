@@ -31,7 +31,7 @@ export const combinations = multiCartesian<SelectTestProps>([
   },
   {
     isDefaultOpen: [true],
-    pinToViewportBottom: [true],
+    isPinnedToBottom: [true],
   },
 ]);
 
@@ -42,7 +42,7 @@ for (const props of combinations) {
     test(
       label,
       async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
-        if (props.pinToViewportBottom) {
+        if (props.isPinnedToBottom) {
           const viewport = page.viewportSize() ?? { width: 390, height: 150 };
 
           await page.setViewportSize({ width: viewport.width, height: 150 });
@@ -60,7 +60,7 @@ for (const props of combinations) {
     test(
       label,
       async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
-        if (props.pinToViewportBottom) {
+        if (props.isPinnedToBottom) {
           const viewport = page.viewportSize() ?? { width: 390, height: 150 };
 
           await page.setViewportSize({ width: viewport.width, height: 150 });

@@ -81,7 +81,7 @@ export interface SelectTestProps {
   isDefaultOpen?: boolean;
   defaultValue?: SelectItem;
   useHeightWrapper?: boolean;
-  pinToViewportBottom?: boolean;
+  isPinnedToBottom?: boolean;
 }
 
 const SelectPlayground = ({
@@ -90,7 +90,7 @@ const SelectPlayground = ({
   items,
 }: ComponentPlaygroundProps<SelectTestProps> & { items: SelectItem[] }) => (
   <ComponentPlayground<SelectTestProps> appearance={appearance} props={props}>
-    {({ useHeightWrapper, pinToViewportBottom, ...selectProps }) => {
+    {({ useHeightWrapper, isPinnedToBottom, ...selectProps }) => {
       const content = (
         <>
           <Select.Button theme={SelectButtonLightTheme} key="button">
@@ -112,7 +112,7 @@ const SelectPlayground = ({
 
       const select = (
         <div
-          style={pinToViewportBottom ? { width: '100%' } : { margin: '0 20px' }}
+          style={isPinnedToBottom ? { width: '100%' } : { margin: '0 20px' }}
         >
           <Select {...selectProps} theme={SelectRootTheme}>
             {useHeightWrapper ? (
@@ -124,7 +124,7 @@ const SelectPlayground = ({
         </div>
       );
 
-      if (pinToViewportBottom) {
+      if (isPinnedToBottom) {
         return (
           <div
             style={{
