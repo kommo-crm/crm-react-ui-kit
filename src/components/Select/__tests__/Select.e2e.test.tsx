@@ -30,8 +30,11 @@ export const combinations = multiCartesian<SelectTestProps>([
     defaultValue: [{ value: 'option1', option: 'Option 1' }],
   },
   {
-    isDefaultOpen: [true],
     isPinnedToBottom: [true],
+  },
+  {
+    isPinnedToBottom: [true],
+    defaultValue: [{ value: 'option1', option: 'Option 1' }],
   },
 ]);
 

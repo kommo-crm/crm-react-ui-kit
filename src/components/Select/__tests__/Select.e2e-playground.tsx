@@ -84,6 +84,25 @@ export interface SelectTestProps {
   isPinnedToBottom?: boolean;
 }
 
+const SelectContent = ({ items }: { items: SelectItem[] }) => (
+  <>
+    <Select.Button theme={SelectButtonLightTheme} key="button">
+      <Select.Value placeholder="Select option" />
+      <Select.Arrow theme={SelectArrowTheme} />
+    </Select.Button>
+    <Select.List key="list" theme={ListTheme}>
+      {items.map((item, index) => (
+        <Select.Item
+          theme={SelectItemTheme}
+          key={item.value}
+          item={item}
+          index={index}
+        />
+      ))}
+    </Select.List>
+  </>
+);
+
 const SelectPlayground = ({
   appearance,
   props,
@@ -91,64 +110,55 @@ const SelectPlayground = ({
 }: ComponentPlaygroundProps<SelectTestProps> & { items: SelectItem[] }) => (
   <ComponentPlayground<SelectTestProps> appearance={appearance} props={props}>
     {({ useHeightWrapper, isPinnedToBottom, ...selectProps }) => {
-      const content = (
-        <>
-          <Select.Button theme={SelectButtonLightTheme} key="button">
-            <Select.Value placeholder="Select option" />
-            <Select.Arrow theme={SelectArrowTheme} />
-          </Select.Button>
-          <Select.List key="list" theme={ListTheme}>
-            {items.map((item, index) => (
-              <Select.Item
-                theme={SelectItemTheme}
-                key={item.value}
-                item={item}
-                index={index}
-              />
-            ))}
-          </Select.List>
-        </>
-      );
+      const makeSelectContent = () => {
+        const content = <SelectContent items={items} />;
 
-      const select = (
-        <div
-          style={isPinnedToBottom ? { width: '100%' } : { margin: '0 20px' }}
-        >
-          <Select {...selectProps} theme={SelectRootTheme}>
-            {useHeightWrapper ? (
-              <div style={{ height: '110px' }}>{content}</div>
-            ) : (
-              content
-            )}
-          </Select>
-        </div>
-      );
+        return useHeightWrapper ? (
+          <div style={{ height: '110px' }}>{content}</div>
+        ) : (
+          content
+        );
+      };
 
       if (isPinnedToBottom) {
         return (
-          <div
-            style={{
-              position: 'relative',
-              boxSizing: 'border-box',
-              height: 150,
-              width: '100%',
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                left: 24,
-                right: 24,
-                bottom: 24,
-              }}
-            >
-              {select}
-            </div>
+          <div style={{ display: 'flex' }}>
+            {([false, true] as const).map((isOpen) => (
+              <div
+                key={String(isOpen)}
+                style={{ position: 'relative', flex: 1, height: 150 }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: 24,
+                    right: 24,
+                    bottom: 24,
+                  }}
+                >
+                  <div style={{ width: '100%' }}>
+                    <Select
+                      {...selectProps}
+                      isDefaultOpen={isOpen}
+                      theme={SelectRootTheme}
+                    >
+                      {makeSelectContent()}
+                    </Select>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         );
       }
 
-      return select;
+      return (
+        <div style={{ margin: '0 20px' }}>
+          <Select {...selectProps} theme={SelectRootTheme}>
+            {makeSelectContent()}
+          </Select>
+        </div>
+      );
     }}
   </ComponentPlayground>
 );
