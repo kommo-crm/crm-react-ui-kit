@@ -49,30 +49,6 @@ const resolveListPlacement = (
   return 'top';
 };
 
-const isElementFullyInViewport = (el: HTMLElement) => {
-  const { top, bottom, left, right } = el.getBoundingClientRect();
-
-  return (
-    top >= 0 &&
-    left >= 0 &&
-    bottom <= window.innerHeight &&
-    right <= window.innerWidth
-  );
-};
-
-const focusOpenedList = (listEl: HTMLUListElement) => {
-  const isFullyInView = isElementFullyInViewport(listEl);
-
-  if (isFullyInView) {
-    listEl.focus({ preventScroll: true });
-
-    return;
-  }
-
-  listEl.focus({ preventScroll: true });
-  listEl.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
-};
-
 const DISPLAY_NAME = 'Select.List';
 
 const ListPortal = (props: ListPortalProps) => {
@@ -119,6 +95,21 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
   const preferBottomFallbackRef = useRef(false);
   const [placement, setPlacement] = useState<DropdownListPlacement>('bottom');
 
+  /**
+   * useLayoutEffect is used instead of useEffect to resolve the list placement
+   * and focus it before the browser paints. This prevents a visible flicker
+   * where the list briefly appears in the wrong position (e.g. bottom) before
+   * jumping to the correct one (e.g. top).
+   *
+   * On open, the effect may run twice when placement needs to change:
+   * 1st run — measures the list via getBoundingClientRect and updates placement state.
+   * 2nd run — placement is already correct, so the list gets focused.
+   *
+   * preferBottomFallbackRef guards against an infinite loop when neither
+   * placement fits (e.g. not enough space above or below). When the list in
+   * "top" placement resolves back to "bottom", we accept "bottom" as the final
+   * placement and skip re-resolving on the next run.
+   */
   useLayoutEffect(() => {
     if (!isOpened) {
       preferBottomFallbackRef.current = false;
@@ -134,7 +125,7 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     }
 
     if (preferBottomFallbackRef.current) {
-      focusOpenedList(listEl);
+      listEl.focus();
 
       return;
     }
@@ -142,7 +133,7 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     const nextPlacement = resolveListPlacement(placement, listEl);
 
     if (nextPlacement === placement) {
-      focusOpenedList(listEl);
+      listEl.focus();
 
       return;
     }
