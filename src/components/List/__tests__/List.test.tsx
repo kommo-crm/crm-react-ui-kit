@@ -5,7 +5,7 @@ import { List, type ListProps } from '..';
 
 import '@testing-library/jest-dom';
 
-const renderList = (props: Partial<ListProps> = {}) => {
+const renderList = (props: ListProps) => {
   return render(
     <List {...props}>
       <List.Item>Item 1</List.Item>
@@ -37,13 +37,13 @@ describe('List', () => {
   });
 
   it('should default to bulleted type', () => {
-    renderList();
+    renderList({ type: 'bulleted' });
 
     expect(screen.getByRole('list').tagName).toBe('UL');
   });
 
   it('should render children', () => {
-    renderList();
+    renderList({ type: 'bulleted' });
 
     expect(screen.getByText('Item 1')).toBeInTheDocument();
     expect(screen.getByText('Item 2')).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe('List', () => {
   });
 
   it('should apply custom className', () => {
-    renderList({ className: 'custom-class' });
+    renderList({ type: 'bulleted', className: 'custom-class' });
 
     expect(screen.getByRole('list')).toHaveClass('custom-class');
   });
