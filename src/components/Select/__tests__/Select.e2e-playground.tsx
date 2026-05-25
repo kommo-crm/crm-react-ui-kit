@@ -136,15 +136,13 @@ const SelectPlayground = ({
                     bottom: 24,
                   }}
                 >
-                  <div style={{ width: '100%' }}>
-                    <Select
-                      {...selectProps}
-                      isDefaultOpen={isOpen}
-                      theme={SelectRootTheme}
-                    >
-                      {makeSelectContent()}
-                    </Select>
-                  </div>
+                  <Select
+                    {...selectProps}
+                    isDefaultOpen={isOpen}
+                    theme={SelectRootTheme}
+                  >
+                    {makeSelectContent()}
+                  </Select>
                 </div>
               </div>
             ))}
