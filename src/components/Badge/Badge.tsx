@@ -13,7 +13,7 @@ import s from './Badge.module.css';
 type S = HTMLSpanElement;
 
 export const Badge = forwardRef<S, BadgeProps>((props, ref) => {
-  const { theme, title, className, ...rest } = props;
+  const { theme, children, title, className, ...rest } = props;
 
   const themeClassName = useThemeClassName<BadgeThemeType>(theme);
 
@@ -24,7 +24,7 @@ export const Badge = forwardRef<S, BadgeProps>((props, ref) => {
       {...rest}
     >
       <Text size="ms" isEllipsis theme={TextInheritColorTheme}>
-        {title}
+        {children ?? title}
       </Text>
     </span>
   );

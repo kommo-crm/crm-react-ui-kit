@@ -30,7 +30,7 @@ import {
 } from '@kommo-crm/crm-react-ui-kit/Badge';
 
 function App() {
-  return <Badge theme={BadgeSafetyTheme} title="Badge" />;
+  return <Badge theme={BadgeSafetyTheme}>Badge</Badge>;
 }
 `;
 
@@ -48,7 +48,7 @@ const meta = {
   component: Badge,
   args: {
     theme: BadgeNeutralTheme,
-    title: 'Badge',
+    children: 'Badge',
   },
   argTypes: {
     theme: { table: { disable: true } },
