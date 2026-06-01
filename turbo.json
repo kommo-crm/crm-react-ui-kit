@@ -6,6 +6,7 @@
       "outputs": ["dist/**"]
     },
     "lint": {
+      "inputs": ["**/*.{ts,tsx,js,jsx,mjs,cjs}"],
       "outputs": []
     },
     "test": {

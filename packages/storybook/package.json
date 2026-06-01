@@ -6,7 +6,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "eslint": "eslint --quiet",
-    "lint": "yarn eslint"
+    "lint": "yarn eslint stories/ .storybook/"
   },
   "dependencies": {
     "@kommo-crm/crm-react-ui-kit": "*"
