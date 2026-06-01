@@ -409,10 +409,6 @@ export default tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: [
-            './packages/ui-kit/tsconfig.json',
-            './packages/storybook/tsconfig.json',
-          ],
         },
       },
     },

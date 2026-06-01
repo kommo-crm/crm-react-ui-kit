@@ -63,9 +63,6 @@ typings/
 .env
 .env.docker
 
-# copied from root before publish
-packages/ui-kit/LICENCE
-
 # next.js build output
 .next
 
@@ -74,7 +71,6 @@ dist
 
 .DS_Store
 .cache
-.turbo
 .playwright/.cache
 playwright-report
 storybook-static/

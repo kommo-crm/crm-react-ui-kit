@@ -10,7 +10,7 @@ import {
 import 'src/stylesheets/theme.css';
 import 'src/stylesheets/icons.css';
 import 'src/stylesheets/index.css';
-import '../../ui-kit/public/fonts/ptsans.css';
+import '../public/fonts/ptsans.css';
 
 const preview: Preview = {
   tags: [],

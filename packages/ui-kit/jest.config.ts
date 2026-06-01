@@ -16,8 +16,7 @@ const config: Config.InitialOptions = {
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
     '^src$': '<rootDir>/src/index.ts',
-    '^@storybook-utils/(.*)$': '<rootDir>/../storybook/storybook/$1',
-    '^public/(.*)$': '<rootDir>/../storybook/storybook/$1',
+    '^@storybook-utils/(.*)$': '<rootDir>/storybook/$1',
   },
 };
 

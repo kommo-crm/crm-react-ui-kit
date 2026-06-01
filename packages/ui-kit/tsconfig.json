@@ -20,10 +20,9 @@
     "moduleResolution": "node",
     "paths": {
       "src/*": ["./src/*"],
-      "@storybook-utils/*": ["../storybook/storybook/*"],
+      "@storybook-utils/*": ["./storybook/*"],
       "@crm-react-ui-kit-e2e/test": ["./src/tests/e2e/index.playwright"],
-      "@i18n": ["../storybook/.storybook/i18n.ts"],
-      "public/*": ["../storybook/storybook/*"]
+      "@i18n": [".storybook/i18n.ts"]
     }
   },
   "include": ["./**/*.tsx", "./**/*.ts", ".storybook/**/*"],

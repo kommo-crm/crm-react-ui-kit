@@ -1,35 +1,65 @@
-<h1 align="center">crm-react-ui-kit</h1>
+<h1 align="center">@kommo-crm/crm-react-ui-kit</h1>
 
-Monorepo for Kommo React UI components and Storybook.
+> Ready-to-use React components that implement the design of [Kommo](https://www.kommo.com/)
 
-| Package | Description |
-| ------- | ----------- |
-| [`packages/ui-kit`](./packages/ui-kit/README.md) | `@kommo-crm/crm-react-ui-kit` — publishable React component library |
-| [`packages/storybook`](./packages/storybook/README.md) | Storybook app for component preview and docs |
+[Storybook](https://storybook.kommo.com) preview
 
-## Setup
+## Installation
+
+| npm                                 | yarn                                   | pnpm                                   |
+| ----------------------------------- | -------------------------------------- | -------------------------------------- |
+| `npm i @kommo-crm/crm-react-ui-kit` | `yarn add @kommo-crm/crm-react-ui-kit` | `pnpm add @kommo-crm/crm-react-ui-kit` |
+
+## Commands
+
+### Install dependencies and build
 
 ```sh
 yarn install && yarn build
 ```
 
-## Commands
+### Storybook Commands
 
-| Command                       | Runs                                      |
-| ----------------------------- | ----------------------------------------- |
-| `yarn build`                  | Build ui-kit                              |
-| `yarn storybook`              | Start Storybook on port 6006              |
-| `yarn build-storybook`        | Build Storybook for static hosting        |
-| `yarn lint`                   | Lint all packages                         |
-| `yarn test`                   | Run unit tests                            |
-| `yarn test:e2e`               | Run Playwright screenshot tests (Docker)  |
-| `make patch`                  | Publish patch release                     |
-| `make minor`                  | Publish minor release                     |
+| Command                | Runs                               |
+| ---------------------- | ---------------------------------- |
+| `yarn lint`            | Lints your code                    |
+| `yarn storybook`       | Start Storybook on port 6006       |
+| `yarn build-storybook` | Build Storybook for static hosting |
 
-## Contribute
+## Testing
+
+**Run Unit tests:**
+
+```sh
+yarn test
+```
+
+### Working with Playwright
+
+> For `Playwright` to work, [Docker](https://www.docker.com) must be installed
+
+**Run screenshot tests:**
+
+```sh
+yarn test:e2e
+```
+
+**Generate screenshots:**
+
+```sh
+yarn test:e2e:update-snapshots
+```
+
+**Generate screenshots with grep filter:**
+
+```sh
+yarn test:e2e:update-snapshots -g button
+```
+
+## Contribute to this repo
 
 Pull requests are welcome. See the [contribution guidelines](./.github/CONTRIBUTING.md) for more information.
 
-## License
+## Licenses
 
 Source code is under a [custom license](./LICENCE) based on MIT.

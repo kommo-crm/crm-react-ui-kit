@@ -120,8 +120,7 @@ export default defineConfig({
       resolve: {
         alias: {
           'src': path.resolve(__dirname, './src'),
-          '@storybook-utils': path.resolve(__dirname, '../storybook/storybook'),
-          'public': path.resolve(__dirname, '../storybook/storybook'),
+          '@storybook-utils': path.resolve(__dirname, 'storybook'),
         },
       },
     },

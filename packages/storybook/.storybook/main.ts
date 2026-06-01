@@ -7,11 +7,11 @@ import svgrPlugin from 'vite-plugin-svgr';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 const config: StorybookConfig = {
-  staticDirs: ['../../ui-kit/public'],
+  staticDirs: ['../public'],
   stories: [
-    '../../ui-kit/src/**/!(*.ignore)*.mdx',
+    '../src/**/!(*.ignore)*.mdx',
     '../stories/**/!(*.ignore).mdx',
-    '../../ui-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: [
     '@storybook/addon-essentials',
@@ -56,8 +56,6 @@ const config: StorybookConfig = {
         alias: {
           '@storybook-utils': resolve(__dirname, '../storybook'),
           '@i18n': resolve(__dirname, './i18n.ts'),
-          'public': resolve(__dirname, '../storybook'),
-          'src': resolve(__dirname, '../../ui-kit/src'),
         },
       },
     });
