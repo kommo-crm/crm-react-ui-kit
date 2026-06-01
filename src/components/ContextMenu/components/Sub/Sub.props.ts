@@ -14,6 +14,10 @@ export type SubProps = Omit<
    */
   isDefaultOpen?: boolean;
   /**
+   * @deprecated Use `isDefaultOpen` instead.
+   */
+  defaultOpen?: boolean;
+  /**
    * Defines how the submenu is triggered.
    *
    * @default "hover"

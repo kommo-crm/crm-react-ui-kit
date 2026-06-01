@@ -139,8 +139,6 @@ export default {
     'Number (`1` for root, `2+` for nested)',
   'contextmenu-content-menu-level-desc':
     'Indicates the nesting depth of the menu. Root content is level `1`, each `SubContent` or `SubRoot.Content` increments by one. Used internally for focus-loss detection to determine which menus are open.',
-  'contextmenu-focusblocker-blocker-desc':
-    'Internal marker on the overlay that blocks pointer and focus events in the parent menu while a `SubRoot` submenu is open. Primarily internal and rarely needed in user code.',
   'Profile': 'Profile',
   'User ID': 'User ID',
   'Settings': 'Settings',

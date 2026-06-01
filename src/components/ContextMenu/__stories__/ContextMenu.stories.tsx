@@ -276,12 +276,6 @@ ${i18n.t('contextmenu-data-attrs-intro')}
 | Attribute | Value | Description |
 | --- | --- | --- |
 | \`data-menu-level\` | ${i18n.t('contextmenu-content-menu-level-value')} | ${i18n.t('contextmenu-content-menu-level-desc')} |
-
-### \`ContextMenu.FocusBlocker\`
-
-| Attribute | Presence | Description |
-| --- | --- | --- |
-| \`data-blocker\` | ${i18n.t('contextmenu-presence-always')} | ${i18n.t('contextmenu-focusblocker-blocker-desc')} |
 `;
 
 interface StoryComponentProps {

@@ -12,6 +12,10 @@ export type ContextMenuSubRootProps = Omit<
    */
   isDefaultOpen?: boolean;
   /**
+   * @deprecated Use `isDefaultOpen` instead.
+   */
+  defaultOpen?: boolean;
+  /**
    * Called whenever the open state of the menu changes.
    */
   onOpen?: (isOpen: boolean) => void;

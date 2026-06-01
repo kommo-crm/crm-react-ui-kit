@@ -22,6 +22,10 @@ export type ContextMenuRootProps = Omit<
    */
   isDefaultOpen?: boolean;
   /**
+   * @deprecated Use `isDefaultOpen` instead.
+   */
+  defaultOpen?: boolean;
+  /**
    * Defines how the menu is triggered.
    *
    * - `click`: menu opens on click, closes on outside click.

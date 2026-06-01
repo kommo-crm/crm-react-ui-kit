@@ -139,8 +139,6 @@ export default {
     'Número (`1` para raiz, `2+` para níveis aninhados)',
   'contextmenu-content-menu-level-desc':
     'Indica a profundidade de aninhamento do menu. O conteúdo raiz é nível `1`, e cada `SubContent` ou `SubRoot.Content` incrementa esse valor em um. É usado internamente para detecção de perda de foco, a fim de determinar quais menus estão abertos.',
-  'contextmenu-focusblocker-blocker-desc':
-    'Marcador interno aplicado ao overlay que bloqueia eventos de ponteiro e foco no menu pai enquanto um submenu `SubRoot` está aberto. É usado principalmente internamente e raramente é necessário no código do usuário.',
   'Profile': 'Perfil',
   'User ID': 'ID do usuário',
   'Settings': 'Configurações',

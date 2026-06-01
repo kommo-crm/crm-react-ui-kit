@@ -139,8 +139,6 @@ export default {
     'Número (`1` para raíz, `2+` para anidados)',
   'contextmenu-content-menu-level-desc':
     'Indica la profundidad de anidación del menú. El contenido raíz es nivel `1`, y cada `SubContent` o `SubRoot.Content` incrementa el nivel en uno. Se utiliza internamente para detectar la pérdida de foco y determinar qué menús están abiertos.',
-  'contextmenu-focusblocker-blocker-desc':
-    'Marcador interno en la superposición que bloquea los eventos de puntero y foco en el menú principal mientras un submenú `SubRoot` está abierto. Es principalmente interno y rara vez se necesita en el código del usuario.',
   'Profile': 'Perfil',
   'User ID': 'ID de usuario',
   'Settings': 'Configuración',
