@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 
 import { BadgeThemeType } from './Badge.themes';
 
@@ -14,5 +14,5 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * Badge text.
    */
-  children?: string;
+  children: ReactNode;
 }
