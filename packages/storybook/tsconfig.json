@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["../ui-kit/src/*"],
+      "@ui-kit/*": ["../ui-kit/src/*"],
+      "@storybook-utils/*": ["./storybook/*"],
+      "@i18n": ["./.storybook/i18n.ts"]
+    }
+  },
+  "include": ["./**/*.tsx", "./**/*.ts", ".storybook/**/*"],
+  "exclude": ["node_modules", "storybook-static"]
+}
