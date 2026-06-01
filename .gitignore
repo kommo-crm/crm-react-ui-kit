@@ -63,6 +63,9 @@ typings/
 .env
 .env.docker
 
+# copied from root before publish
+packages/ui-kit/LICENCE
+
 # next.js build output
 .next
 

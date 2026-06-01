@@ -12,7 +12,7 @@ services:
       yarn test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-} ${GREP_FLAG:-}
       "
     volumes:
-      - ./:/app
+      - ../../:/app
       # Exclude node_modules.
       - /app/node_modules
       # Cache the node_modules installed inside the container and cache the directory.
