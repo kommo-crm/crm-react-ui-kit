@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-import {
-  ComponentPlayground,
-  ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
-
 import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
 import ContextMenuTrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
+
+import {
+  ComponentPlayground,
+  ComponentPlaygroundProps,
+} from 'src/tests/e2e/ComponentPlayground';
 
 import {
   Text,

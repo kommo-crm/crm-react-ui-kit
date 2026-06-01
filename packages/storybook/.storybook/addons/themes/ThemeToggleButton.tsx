@@ -4,6 +4,7 @@ import { IconButton } from '@storybook/components';
 import { SunIcon, MoonIcon } from '@storybook/icons';
 
 import { Appearance } from 'src';
+
 import { getTheme, initialTheme } from '../../../storybook/utils';
 
 export const ThemeToggleButton = () => {

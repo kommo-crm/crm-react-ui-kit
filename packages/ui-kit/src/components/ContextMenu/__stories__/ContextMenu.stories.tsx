@@ -7,16 +7,16 @@ import ContextMenuTrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg';
 
+import { CanvasCentered } from '@storybook-utils/constants';
+
+import { i18n } from '@i18n';
+
 import { ContextMenu } from 'src/components/ContextMenu';
 import {
   Text,
   TextInheritColorTheme,
   TextSecondaryDarkTheme,
 } from 'src/components/Text';
-
-import { CanvasCentered } from '@storybook-utils/constants';
-
-import { i18n } from '@i18n';
 
 import { Button, ButtonNeutralTheme } from 'src/components/Button';
 

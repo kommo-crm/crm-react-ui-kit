@@ -35,6 +35,7 @@ export default tseslint.config(
       'dist',
       '.swc',
       'storybook-static',
+      '**/storybook-static',
       'playwright/.cache',
       'coverage',
     ],

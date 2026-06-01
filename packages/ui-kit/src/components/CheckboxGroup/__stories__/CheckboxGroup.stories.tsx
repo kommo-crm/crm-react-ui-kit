@@ -4,12 +4,12 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
+import { i18n } from '@i18n';
+
 import { LabelTheme } from 'src/components/Label';
 import { Text, TextPrimaryTheme } from 'src/components/Text';
 
 import { CheckboxLightTheme } from 'src/components/Checkbox/Checkbox.themes';
-
-import { i18n } from '@i18n';
 
 import {
   CheckboxGroup,
