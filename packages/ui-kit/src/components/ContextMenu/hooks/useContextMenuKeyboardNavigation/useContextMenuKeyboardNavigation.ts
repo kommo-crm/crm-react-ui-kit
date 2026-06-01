@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { KeyboardKey } from 'src/lib/keyboard';
+import { KeyboardKey } from '@ui-kit/lib/keyboard';
 
 import { focusFirstFocusableItem } from '../../utils';
 

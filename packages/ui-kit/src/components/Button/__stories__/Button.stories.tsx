@@ -10,9 +10,9 @@ import TriggerIcon from '@storybook-utils/icons/trigger.svg';
 import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 import MagicIcon from '@storybook-utils/icons/magic.svg';
 
-import { noop } from 'src/utils';
+import { noop } from '@ui-kit/utils';
 
-import { useStoryLabel } from 'src/hooks/useStoryLabel';
+import { useStoryLabel } from '@ui-kit/hooks/useStoryLabel';
 
 import {
   Button,

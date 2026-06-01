@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import { useCheckboxGroupContext } from '../../CheckboxGroup.context';
 import { type ItemRootThemeType } from '../ItemRoot';

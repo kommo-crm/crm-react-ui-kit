@@ -11,14 +11,14 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
-import { ContextMenu } from 'src/components/ContextMenu';
+import { ContextMenu } from '@ui-kit/components/ContextMenu';
 import {
   Text,
   TextInheritColorTheme,
   TextSecondaryDarkTheme,
-} from 'src/components/Text';
+} from '@ui-kit/components/Text';
 
-import { Button, ButtonNeutralTheme } from 'src/components/Button';
+import { Button, ButtonNeutralTheme } from '@ui-kit/components/Button';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContentProps } from '../components/Content/Content.props';
@@ -28,13 +28,13 @@ import { ContextMenuModeType } from '../ContextMenu.types';
 const USAGE = `
 import { useState } from "react";
 
-import { ContextMenu } from 'src/components/ContextMenu';
+import { ContextMenu } from '@ui-kit/components/ContextMenu';
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryDarkTheme,
   type TextTheme,
-} from 'src/components/Text';
+} from '@ui-kit/components/Text';
 
 import ContextMenuTriggerIcon from 'public/icons/trigger.svg';
 import ContextMenuTrashcanIcon from 'public/icons/trashcan.svg';

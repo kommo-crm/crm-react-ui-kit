@@ -2,8 +2,8 @@ import React from 'react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
-import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
-import { FOCUSABLE_ELEMENT_ID } from 'src/tests/e2e/constants';
+import { multiCartesian, prettyProps } from '@ui-kit/tests/e2e/utils';
+import { FOCUSABLE_ELEMENT_ID } from '@ui-kit/tests/e2e/constants';
 
 import {
   InlineInputPlaygroundItem,

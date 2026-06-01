@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import InfoIcon from 'src/icons/info.svg';
-import SuccessIcon from 'src/icons/success.svg';
-import WarningIcon from 'src/icons/warning.svg';
-import ErrorIcon from 'src/icons/error.svg';
+import InfoIcon from '@ui-kit/icons/info.svg';
+import SuccessIcon from '@ui-kit/icons/success.svg';
+import WarningIcon from '@ui-kit/icons/warning.svg';
+import ErrorIcon from '@ui-kit/icons/error.svg';
 
 type CalloutKey =
   | '--crm-ui-kit-callout-background-color'

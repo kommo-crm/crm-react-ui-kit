@@ -5,14 +5,14 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
-import { TextArea, TextareaLightTheme } from 'src/components/TextArea';
+import { TextArea, TextareaLightTheme } from '@ui-kit/components/TextArea';
 
-import { Switcher, SwitcherPrimaryTheme } from 'src/components/Switcher';
+import { Switcher, SwitcherPrimaryTheme } from '@ui-kit/components/Switcher';
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryLightTheme,
-} from 'src/components/Text';
+} from '@ui-kit/components/Text';
 
 import { Label, LabelGroupTheme, LabelTheme } from '..';
 

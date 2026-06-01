@@ -12,7 +12,7 @@ import '@testing-library/jest-dom';
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
 
-import { Text, TextInheritColorTheme } from 'src/components/Text';
+import { Text, TextInheritColorTheme } from '@ui-kit/components/Text';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu, ContextMenuRootProps } from '..';

@@ -7,9 +7,9 @@ import {
   WithGridProvider,
 } from '@storybook-utils/decorators';
 
-import 'src/stylesheets/theme.css';
-import 'src/stylesheets/icons.css';
-import 'src/stylesheets/index.css';
+import '@ui-kit/stylesheets/theme.css';
+import '@ui-kit/stylesheets/icons.css';
+import '@ui-kit/stylesheets/index.css';
 import '../public/fonts/ptsans.css';
 
 const preview: Preview = {

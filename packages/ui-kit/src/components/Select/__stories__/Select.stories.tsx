@@ -5,18 +5,18 @@ import { action } from '@storybook/addon-actions';
 import { CanvasCentered } from '@storybook-utils/constants';
 import { i18n } from '@i18n';
 
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 import {
   SelectButtonDarkTheme,
   SelectButtonLightTheme,
   SelectButtonThemeType,
-} from 'src/components/SelectButton';
+} from '@ui-kit/components/SelectButton';
 
-import SettingsIcon from 'src/icons/settings.svg';
-import CopyIcon from 'src/icons/copy.svg';
-import DeleteIcon from 'src/icons/delete.svg';
+import SettingsIcon from '@ui-kit/icons/settings.svg';
+import CopyIcon from '@ui-kit/icons/copy.svg';
+import DeleteIcon from '@ui-kit/icons/delete.svg';
 
-import { Badge, BadgeSafetyTheme } from 'src/components/Badge';
+import { Badge, BadgeSafetyTheme } from '@ui-kit/components/Badge';
 
 import { Select } from '../Select';
 import { SelectItem } from '../Select.types';

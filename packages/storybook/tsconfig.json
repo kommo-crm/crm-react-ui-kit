@@ -3,9 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "src/*": ["../ui-kit/src/*"],
-      "src": ["../ui-kit/src/index"],
       "@ui-kit/*": ["../ui-kit/src/*"],
+      "@ui-kit": ["../ui-kit/src/index"],
       "@storybook-utils/*": ["./storybook/*"],
       "@i18n": ["./.storybook/i18n.ts"]
     }

@@ -5,7 +5,7 @@ import {
   ButtonNeutralTheme,
   ButtonPrimaryTheme,
   ButtonSecondaryTheme,
-} from 'src/components/Button';
+} from '@ui-kit/components/Button';
 
 export const ButtonsMap = {
   DefaultButton: <button type="button">Button</button>,

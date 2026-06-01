@@ -11,8 +11,8 @@ import {
   Text,
   TextPrimaryTheme,
   TextSecondaryLightTheme,
-} from 'src/components/Text';
-import { Label, LabelTheme } from 'src/components/Label';
+} from '@ui-kit/components/Text';
+import { Label, LabelTheme } from '@ui-kit/components/Label';
 
 import {
   RadioPrimaryTheme,

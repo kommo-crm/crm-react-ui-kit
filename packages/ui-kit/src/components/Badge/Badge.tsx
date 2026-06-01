@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import { Text, TextInheritColorTheme } from 'src/components/Text';
+import { Text, TextInheritColorTheme } from '@ui-kit/components/Text';
 
 import { type BadgeProps } from './Badge.props';
 import { type BadgeThemeType } from './Badge.themes';

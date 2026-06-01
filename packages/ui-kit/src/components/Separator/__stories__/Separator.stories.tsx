@@ -5,7 +5,7 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
-import { useStoryLabel } from 'src/hooks/useStoryLabel';
+import { useStoryLabel } from '@ui-kit/hooks/useStoryLabel';
 
 import {
   Separator,

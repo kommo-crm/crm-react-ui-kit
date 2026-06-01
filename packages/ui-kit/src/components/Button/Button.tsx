@@ -1,11 +1,11 @@
 import React, { forwardRef, useMemo } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import { noop } from 'src/utils';
+import { noop } from '@ui-kit/utils';
 
-import { Spinner, type SpinnerTheme } from 'src/components/Spinner';
+import { Spinner, type SpinnerTheme } from '@ui-kit/components/Spinner';
 
 import { useShowInvalidAnimation, useShowSuccessfulState } from './hooks';
 

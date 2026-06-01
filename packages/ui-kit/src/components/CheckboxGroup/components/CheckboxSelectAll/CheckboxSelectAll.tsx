@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
-import { Checkbox } from 'src/components/Checkbox/Checkbox';
-import { type CheckedStyleType } from 'src/components/Checkbox/Checkbox.props';
+import { Checkbox } from '@ui-kit/components/Checkbox/Checkbox';
+import { type CheckedStyleType } from '@ui-kit/components/Checkbox/Checkbox.props';
 
 import { type CheckboxProps } from '../Checkbox/Checkbox.props';
 import { useCheckboxGroupContext } from '../../CheckboxGroup.context';

@@ -3,10 +3,10 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+} from '@ui-kit/tests/e2e/ComponentPlayground';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 
-import { noop } from 'src/utils';
+import { noop } from '@ui-kit/utils';
 
 import { Callout, type CalloutProps } from '..';
 

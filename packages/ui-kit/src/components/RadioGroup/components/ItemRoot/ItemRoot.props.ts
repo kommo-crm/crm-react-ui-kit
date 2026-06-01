@@ -1,4 +1,4 @@
-import { VisuallyHiddenInputProps } from 'src/components/VisuallyHiddenInput';
+import { VisuallyHiddenInputProps } from '@ui-kit/components/VisuallyHiddenInput';
 
 import { type RadioProps } from '../../';
 

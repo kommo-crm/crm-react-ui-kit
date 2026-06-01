@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "outDir": "./dist/",
     "paths": {
-      "src/*": ["./src/*"],
+      "@ui-kit/*": ["./src/*"],
       "@crm-react-ui-kit-e2e/test": ["./src/tests/e2e/index.playwright"],
       "@storybook-utils/*": ["../storybook/storybook/*"],
       "@i18n": ["../storybook/.storybook/i18n.ts"]

@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/react';
 
-import { CrmUiKitCSSProperties } from 'src/lib/theme';
+import { CrmUiKitCSSProperties } from '@ui-kit/lib/theme';
 
 export type ThemeVisualizationProps = {
   /**

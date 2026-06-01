@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 import { SubTrigger as RadixDropdownMenuSubTrigger } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
-import { KeyboardKey } from 'src/lib/keyboard';
+import { mergeRefs } from '@ui-kit/lib/utils';
+import { KeyboardKey } from '@ui-kit/lib/keyboard';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 

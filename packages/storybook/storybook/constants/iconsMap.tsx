@@ -1,10 +1,10 @@
 import React from 'react';
 
-import SpinnerIcon from 'src/icons/spinner.svg';
-import SettingsIcon from 'src/icons/settings.svg';
-import CopyIcon from 'src/icons/copy.svg';
-import CalendarIcon from 'src/icons/calendar.svg';
-import DeleteIcon from 'src/icons/delete.svg';
+import SpinnerIcon from '@ui-kit/icons/spinner.svg';
+import SettingsIcon from '@ui-kit/icons/settings.svg';
+import CopyIcon from '@ui-kit/icons/copy.svg';
+import CalendarIcon from '@ui-kit/icons/calendar.svg';
+import DeleteIcon from '@ui-kit/icons/delete.svg';
 
 export const IconsMap = {
   SpinnerIcon: <SpinnerIcon width={16} height={16} />,

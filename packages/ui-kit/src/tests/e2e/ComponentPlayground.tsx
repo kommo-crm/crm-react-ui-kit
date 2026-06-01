@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ConfigProvider } from 'src/components/ConfigProvider';
-import { Appearance } from 'src/lib/appearance';
+import { ConfigProvider } from '@ui-kit/components/ConfigProvider';
+import { Appearance } from '@ui-kit/lib/appearance';
 
 import { prettyProps } from './utils';
 import { TEST_CLASS_NAMES } from './constants';

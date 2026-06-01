@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import { useFilterTabsContext } from '../../FilterTabs.context';
 

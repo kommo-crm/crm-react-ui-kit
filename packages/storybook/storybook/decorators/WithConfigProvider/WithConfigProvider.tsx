@@ -1,7 +1,7 @@
 import React from 'react';
 import { type Decorator } from '@storybook/react';
 
-import { ConfigProvider } from 'src/components/ConfigProvider';
+import { ConfigProvider } from '@ui-kit/components/ConfigProvider';
 
 const CenteredStyle: React.CSSProperties = {
   display: 'flex',

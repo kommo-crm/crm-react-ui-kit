@@ -8,13 +8,13 @@ import ContextMenuChevronRightIcon from '@storybook-utils/icons/chevronRight.svg
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@ui-kit/tests/e2e/ComponentPlayground';
 
 import {
   Text,
   TextSecondaryDarkTheme,
   TextInheritColorTheme,
-} from 'src/components/Text';
+} from '@ui-kit/components/Text';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';

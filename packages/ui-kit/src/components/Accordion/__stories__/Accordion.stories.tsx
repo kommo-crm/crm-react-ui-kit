@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 
 import SpinnerIcon from '/src/icons/spinner.svg';
 import SettingsIcon from '/src/icons/settings.svg';

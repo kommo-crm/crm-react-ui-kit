@@ -2,9 +2,9 @@ import { useEffect, useId, useRef, useState } from 'react';
 
 import { useIsTouchDevice, useIsAiming } from '@kommo-crm/react-hooks';
 
-import { useFocusChange, FocusChangeEvent } from 'src/hooks';
+import { useFocusChange, FocusChangeEvent } from '@ui-kit/hooks';
 
-import { noop } from 'src/utils';
+import { noop } from '@ui-kit/utils';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
 

@@ -8,7 +8,7 @@ import MagicIcon from '@storybook-utils/icons/magic.svg';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@ui-kit/tests/e2e/ComponentPlayground';
 
 import {
   Button,

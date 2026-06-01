@@ -17,7 +17,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      'src': resolve(__dirname, './src'),
+      '@ui-kit': resolve(__dirname, './src'),
     },
   },
   build: {

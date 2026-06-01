@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import { type SeparatorProps } from './Separator.props';
 import { type SeparatorTheme } from './Separator.themes';

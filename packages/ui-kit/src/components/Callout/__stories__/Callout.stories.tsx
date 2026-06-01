@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 
 import { Callout } from '..';
 

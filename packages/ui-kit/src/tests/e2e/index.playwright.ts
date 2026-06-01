@@ -2,9 +2,9 @@ import hash from 'hash-sum';
 
 import { test as testBase, expect } from '@playwright/experimental-ct-react';
 
-import { Appearance } from 'src/lib/appearance';
+import { Appearance } from '@ui-kit/lib/appearance';
 
-import { Platform } from 'src/lib/platform';
+import { Platform } from '@ui-kit/lib/platform';
 
 import { type TestOptions } from './types';
 
