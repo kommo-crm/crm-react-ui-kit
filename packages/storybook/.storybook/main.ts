@@ -34,6 +34,11 @@ const config: StorybookConfig = {
     ];
 
     if (configType === 'PRODUCTION') {
+      /**
+       * Inline all styles that are imported into .storybook/preview.tsx.
+       *
+       * It is necessary for `ThemeVisualization` to work.
+       */
       plugins.push(
         cssInjectedByJsPlugin({
           cssAssetsFilterFunction: (outputAsset) => {
