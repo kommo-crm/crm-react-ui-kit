@@ -52,9 +52,8 @@ const meta = {
   },
   argTypes: {
     theme: { table: { disable: true } },
-    title: {
-      control: false,
-    },
+    title: { control: false },
+    children: { control: 'text' },
   },
 } satisfies Meta<typeof Badge>;
 
