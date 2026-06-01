@@ -8,11 +8,12 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
    */
   theme: BadgeThemeType;
   /**
-   * @deprecated Use children instead.
+   * @deprecated This prop will be removed in a future major version.
+   * Use {@link children} instead.
    */
   title?: string;
   /**
-   * Badge text.
+   * Badge content.
    */
   children: ReactNode;
 }
