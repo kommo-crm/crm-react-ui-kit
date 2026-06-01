@@ -3,9 +3,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { CanvasCentered } from '@storybook-utils/constants';
-
-import { i18n } from '@i18n';
-
 import { Text, TextPrimaryTheme } from 'src/components/Text';
 import {
   SelectButtonDarkTheme,
@@ -16,6 +13,8 @@ import {
 import SettingsIcon from 'src/icons/settings.svg';
 import CopyIcon from 'src/icons/copy.svg';
 import DeleteIcon from 'src/icons/delete.svg';
+
+import { i18n } from '@i18n';
 
 import { Badge, BadgeSafetyTheme } from 'src/components/Badge';
 
