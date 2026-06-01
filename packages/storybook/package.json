@@ -1,5 +1,6 @@
 {
   "name": "@kommo-crm/storybook",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "storybook": "storybook dev -p 6006",
