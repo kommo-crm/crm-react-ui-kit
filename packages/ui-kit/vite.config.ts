@@ -18,7 +18,6 @@ export default defineConfig({
   resolve: {
     alias: {
       'src': resolve(__dirname, './src'),
-      '@i18n': resolve(__dirname, '.storybook/i18n.ts'),
     },
   },
   build: {
