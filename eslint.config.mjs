@@ -33,10 +33,13 @@ export default tseslint.config(
   {
     ignores: [
       'dist',
+      '**/dist',
       '.swc',
       'storybook-static',
       '**/storybook-static',
+      '__diff_output__',
       'playwright/.cache',
+      '**/playwright-report',
       'coverage',
     ],
   },
