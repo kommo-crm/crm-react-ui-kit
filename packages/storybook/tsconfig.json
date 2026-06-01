@@ -1,0 +1,22 @@
+{
+  "extends": "../ui-kit/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/",
+    "paths": {
+      "src/*": ["../ui-kit/src/*"],
+      "@storybook-utils/*": ["./storybook/*"],
+      "@crm-react-ui-kit-e2e/test": ["../ui-kit/src/tests/e2e/index.playwright"],
+      "@i18n": [".storybook/i18n.ts"],
+      "public/*": ["./storybook/*"]
+    }
+  },
+  "include": [
+    ".storybook/**/*",
+    "storybook/**/*",
+    "stories/**/*",
+    "../ui-kit/src/**/*.stories.tsx",
+    "../ui-kit/src/**/*.mdx"
+  ],
+  "exclude": ["node_modules", "dist", "storybook-static"]
+}

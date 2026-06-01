@@ -71,6 +71,7 @@ dist
 
 .DS_Store
 .cache
+.turbo
 .playwright/.cache
 playwright-report
 storybook-static/

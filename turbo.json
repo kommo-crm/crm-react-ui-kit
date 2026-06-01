@@ -1,0 +1,35 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "storybook-static/**"]
+    },
+    "build-storybook": {
+      "dependsOn": ["@kommo-crm/crm-react-ui-kit#build"],
+      "outputs": ["storybook-static/**"]
+    },
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "test:e2e": {
+      "dependsOn": ["@kommo-crm/crm-react-ui-kit#build"],
+      "outputs": ["playwright-report/**", "__diff_output__/**", "e2e-results.json"]
+    },
+    "test:e2e:ci": {
+      "dependsOn": ["@kommo-crm/crm-react-ui-kit#build"],
+      "outputs": ["playwright-report/**", "__diff_output__/**", "e2e-results.json"]
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
+    "tslint": {
+      "dependsOn": ["^build"]
+    }
+  }
+}

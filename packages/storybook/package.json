@@ -1,0 +1,15 @@
+{
+  "name": "@kommo-crm/crm-react-ui-kit-storybook",
+  "private": true,
+  "version": "1.15.0",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "eslint": "eslint --quiet .storybook storybook stories",
+    "lint": "yarn eslint",
+    "lint:fix": "eslint --fix .storybook storybook stories"
+  },
+  "dependencies": {
+    "@kommo-crm/crm-react-ui-kit": "1.15.0"
+  }
+}

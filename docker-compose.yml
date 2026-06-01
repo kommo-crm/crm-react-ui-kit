@@ -18,7 +18,7 @@ services:
       # Cache the node_modules installed inside the container and cache the directory.
       - yarn_cache:/yarn
       - node_modules_cache:/app/node_modules
-      - playwright_cache:/app/playwright/.cache
+      - playwright_cache:/app/packages/ui-kit/playwright/.cache
       # Exclude anything that won't be needed in the container.
       - /app/.git
       - /app/.cache

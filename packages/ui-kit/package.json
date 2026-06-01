@@ -1,0 +1,178 @@
+{
+  "name": "@kommo-crm/crm-react-ui-kit",
+  "description": "Ready-to-use React components which implements Kommo design",
+  "version": "1.15.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./Switcher": "./dist/components/Switcher/index.js",
+    "./Spinner": "./dist/components/Spinner/index.js",
+    "./Link": "./dist/components/Link/index.js",
+    "./List": "./dist/components/List/index.js",
+    "./TextArea": "./dist/components/TextArea/index.js",
+    "./Text": "./dist/components/Text/index.js",
+    "./Input": "./dist/components/Input/index.js",
+    "./InlineInput": "./dist/components/InlineInput/index.js",
+    "./Label": "./dist/components/Label/index.js",
+    "./Checkbox": "./dist/components/Checkbox/index.js",
+    "./Portal": "./dist/components/Portal/index.js",
+    "./RadioGroup": "./dist/components/RadioGroup/index.js",
+    "./Select": "./dist/components/Select/index.js",
+    "./CheckboxGroup": "./dist/components/CheckboxGroup/index.js",
+    "./FilterTabs": "./dist/components/FilterTabs/index.js",
+    "./Button": "./dist/components/Button/index.js",
+    "./ConfigProvider": "./dist/components/ConfigProvider/index.js",
+    "./ContentBlock": "./dist/components/ContentBlock/index.js",
+    "./Callout": "./dist/components/Callout/index.js",
+    "./Accordion": "./dist/components/Accordion/index.js",
+    "./ContextMenu": "./dist/components/ContextMenu/index.js",
+    "./CounterBadge": "./dist/components/CounterBadge/index.js",
+    "./Badge": "./dist/components/Badge/index.js",
+    "./Separator": "./dist/components/Separator/index.js",
+    "./assets/Switcher.css": "./dist/assets/Switcher.css",
+    "./assets/Select.css": "./dist/assets/Select.css",
+    "./assets/Spinner.css": "./dist/assets/Spinner.css",
+    "./assets/Link.css": "./dist/assets/Link.css",
+    "./assets/TextArea.css": "./dist/assets/TextArea.css",
+    "./assets/Text.css": "./dist/assets/Text.css",
+    "./assets/Checkbox.css": "./dist/assets/Checkbox.css",
+    "./assets/Input.css": "./dist/assets/Input.css",
+    "./assets/InlineInput.css": "./dist/assets/InlineInput.css",
+    "./assets/RadioGroup.css": "./dist/assets/RadioGroup.css",
+    "./assets/ContentBlock.css": "./dist/assets/ContentBlock.css",
+    "./assets/Callout.css": "./dist/assets/Callout.css",
+    "./assets/Accordion.css": "./dist/assets/Accordion.css",
+    "./assets/CheckboxGroup.css": "./dist/assets/CheckboxGroup.css",
+    "./assets/FilterTabs.css": "./dist/assets/FilterTabs.css",
+    "./assets/Button.css": "./dist/assets/Button.css",
+    "./assets/CounterBadge.css": "./dist/assets/CounterBadge.css",
+    "./assets/List.css": "./dist/assets/List.css",
+    "./assets/Badge.css": "./dist/assets/Badge.css",
+    "./assets/Separator.css": "./dist/assets/Separator.css",
+    "./assets/theme.css": "./dist/assets/theme.css",
+    "./assets/icons.css": "./dist/assets/icons.css"
+  },
+  "typesVersions": {
+    "*": {
+      "Switcher": [
+        "./dist/components/Switcher/index.d.ts"
+      ],
+      "Spinner": [
+        "./dist/components/Spinner/index.d.ts"
+      ],
+      "Link": [
+        "./dist/components/Link/index.d.ts"
+      ],
+      "List": [
+        "./dist/components/List/index.d.ts"
+      ],
+      "TextArea": [
+        "./dist/components/TextArea/index.d.ts"
+      ],
+      "Text": [
+        "./dist/components/Text/index.d.ts"
+      ],
+      "Input": [
+        "./dist/components/Input/index.d.ts"
+      ],
+      "InlineInput": [
+        "./dist/components/InlineInput/index.d.ts"
+      ],
+      "Label": [
+        "./dist/components/Label/index.d.ts"
+      ],
+      "Checkbox": [
+        "./dist/components/Checkbox/index.d.ts"
+      ],
+      "Portal": [
+        "./dist/components/Portal/index.d.ts"
+      ],
+      "RadioGroup": [
+        "./dist/components/RadioGroup/index.d.ts"
+      ],
+      "Select": [
+        "./dist/components/Select/index.d.ts"
+      ],
+      "CheckboxGroup": [
+        "./dist/components/CheckboxGroup/index.d.ts"
+      ],
+      "FilterTabs": [
+        "./dist/components/FilterTabs/index.d.ts"
+      ],
+      "Button": [
+        "./dist/components/Button/index.d.ts"
+      ],
+      "ConfigProvider": [
+        "./dist/components/ConfigProvider/index.d.ts"
+      ],
+      "ContentBlock": [
+        "./dist/components/ContentBlock/index.d.ts"
+      ],
+      "Callout": [
+        "./dist/components/Callout/index.d.ts"
+      ],
+      "Accordion": [
+        "./dist/components/Accordion/index.d.ts"
+      ],
+      "ContextMenu": [
+        "./dist/components/ContextMenu/index.d.ts"
+      ],
+      "CounterBadge": [
+        "./dist/components/CounterBadge/index.d.ts"
+      ],
+      "Badge": [
+        "./dist/components/Badge/index.d.ts"
+      ],
+      "Separator": [
+        "./dist/components/Separator/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "ui",
+    "Kommo"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
+    "docker:clear-playwright-cache": "./scripts/generate_env.docker.sh && cd ../.. && docker compose --env-file=./packages/ui-kit/.env.docker rm -f && docker volume rm crm-react-ui-kit_playwright_cache",
+    "test": "jest --maxWorkers 2",
+    "test:e2e": "./scripts/generate_env.docker.sh && cd ../.. && docker compose --env-file=./packages/ui-kit/.env.docker up --abort-on-container-exit",
+    "test:e2e:update-snapshots": "sh -c './scripts/generate_env.docker.sh -u \"$@\" && cd ../.. && docker compose --env-file=./packages/ui-kit/.env.docker up --abort-on-container-exit' --",
+    "test:e2e:ci": "playwright test --config playwright-ct.config.ts",
+    "eslint": "cd ../.. && eslint --quiet packages/ui-kit/src packages/ui-kit/vite.config.ts packages/ui-kit/jest.config.ts packages/ui-kit/playwright-ct.config.ts packages/ui-kit/postcss.config.mjs",
+    "tslint": "tsc --noEmit -p tsconfig.build.json",
+    "lint": "concurrently --kill-others-on-fail \"yarn eslint\" \"yarn tslint\"",
+    "lint:fix": "cd ../.. && eslint --fix packages/ui-kit/src packages/ui-kit/vite.config.ts packages/ui-kit/jest.config.ts packages/ui-kit/playwright-ct.config.ts packages/ui-kit/postcss.config.mjs"
+  },
+  "dependencies": {
+    "@kommo-crm/react-hooks": "1.2.1",
+    "@radix-ui/react-dropdown-menu": "2.1.15",
+    "@react-spring/web": "10.0.1",
+    "classnames": "2.5.1",
+    "i18next": "24.2.2",
+    "i18next-browser-languagedetector": "8.0.4",
+    "nanoid": "3.3.4",
+    "react-i18next": "15.4.1",
+    "react-markdown": "10.0.1"
+  },
+  "peerDependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "react": "^18.0",
+    "react-dom": "^18.0"
+  }
+}
