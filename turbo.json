@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "storybook-static/**"]
+      "outputs": ["dist/**"]
     },
     "build-storybook": {
       "dependsOn": ["@kommo-crm/crm-react-ui-kit#build"],

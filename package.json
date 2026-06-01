@@ -1,7 +1,7 @@
 {
-  "name": "crm-react-ui-kit-monorepo",
+  "name": "@kommo-crm/monorepo",
   "private": true,
-  "version": "1.15.0",
+  "version": "1.0.0",
   "engines": {
     "node": ">=20"
   },
