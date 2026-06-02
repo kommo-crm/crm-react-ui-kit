@@ -1,31 +1,6 @@
-import type { Format, TransformedToken } from 'style-dictionary/types';
+import type { Format } from 'style-dictionary/types';
 import { sortTokens } from './sort.js';
-
-type TokenLeaf = { value: string; cssVar: string };
-type TokenTree = { [key: string]: TokenTree | TokenLeaf };
-
-function buildTree(tokens: TransformedToken[], prefix: string): TokenTree {
-  const root: TokenTree = {};
-  for (const token of tokens) {
-    const parts = token.path;
-    let node = root;
-    for (let i = 0; i < parts.length - 1; i++) {
-      const key = parts[i];
-      if (!node[key] || 'value' in (node[key] as object)) node[key] = {};
-      node = node[key] as TokenTree;
-    }
-    const leaf = parts[parts.length - 1];
-    node[leaf] = {
-      value: String(token.$value ?? token.value),
-      cssVar: prefix ? `--${prefix}-${parts.join('-')}` : `--${parts.join('-')}`,
-    };
-  }
-  return root;
-}
-
-function isLeaf(val: unknown): val is TokenLeaf {
-  return typeof val === 'object' && val !== null && 'value' in val && 'cssVar' in val;
-}
+import { buildTree, isLeaf, type TokenTree } from './tree.js';
 
 function buildInterface(tree: TokenTree, indent = ''): string {
   const lines: string[] = [];

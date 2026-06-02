@@ -1,51 +1,20 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
 import { sortTokens } from './sort.js';
+import { buildTree, type TokenLeaf, type TokenTree } from './tree.js';
 
-interface TokenLeaf {
-  value: string;
-  cssVar: string;
-}
-
-type TokenTree = { [key: string]: TokenTree | TokenLeaf };
-
-function toCssVar(path: string[], prefix: string): string {
-  return prefix ? `--${prefix}-${path.join('-')}` : `--${path.join('-')}`;
-}
-
-function buildTree(tokens: TransformedToken[], prefix: string): TokenTree {
-  const root: TokenTree = {};
-  for (const token of tokens) {
-    const parts = token.path;
-    let node = root;
-    for (let i = 0; i < parts.length - 1; i++) {
-      const key = parts[i];
-      if (!node[key] || 'value' in (node[key] as object)) {
-        node[key] = {};
-      }
-      node = node[key] as TokenTree;
-    }
-    const leaf = parts[parts.length - 1];
-    node[leaf] = {
-      value: String(token.$value ?? token.value),
-      cssVar: toCssVar(parts, prefix),
-    };
-  }
-  return root;
-}
-
-function serializeTree(tokens: TransformedToken[], tree: TokenTree, path: string[] = []): string[] {
+function serializeTree(tokenMap: Map<string, TransformedToken>, tree: TokenTree, path: string[] = []): string[] {
   const lines: string[] = [];
   for (const [key, val] of Object.entries(tree)) {
     const currentPath = [...path, key];
     if ('value' in (val as object) && 'cssVar' in (val as object)) {
       const leaf = val as TokenLeaf;
-      const token = tokens.find(t => t.path.join('.') === currentPath.join('.'));
+      const token = tokenMap.get(currentPath.join('.'));
       lines.push(
         `/** @cssVar ${leaf.cssVar} @value ${leaf.value}${token?.comment ? ` — ${token.comment}` : ''} */`,
         `${JSON.stringify(key)}: { value: ${JSON.stringify(leaf.value)}, cssVar: ${JSON.stringify(leaf.cssVar)} },`,
       );
     } else {
-      const nested = serializeTree(tokens, val as TokenTree, currentPath);
+      const nested = serializeTree(tokenMap, val as TokenTree, currentPath);
       lines.push(`${JSON.stringify(key)}: {`, ...nested.map(l => `  ${l}`), `},`);
     }
   }
@@ -58,7 +27,8 @@ export const jsNestedFormat: Format = {
     const prefix = (options?.prefix as string) ?? '';
     const sorted = sortTokens(dictionary.allTokens);
     const tree = buildTree(sorted, prefix);
-    const lines = serializeTree(sorted, tree);
+    const tokenMap = new Map(sorted.map((t) => [t.path.join('.'), t]));
+    const lines = serializeTree(tokenMap, tree);
     const exports = Object.keys(tree).map(key => {
       const camel = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
       return `export const ${camel} = tree[${JSON.stringify(key)}];`;
