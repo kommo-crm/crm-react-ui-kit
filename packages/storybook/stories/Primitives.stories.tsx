@@ -34,7 +34,7 @@ function PrimitivesPage({ groups }: { groups: ReturnType<typeof makeGroups> }) {
 }
 
 const meta: Meta = {
-  title: 'Getting Started/Primitives',
+  title: 'Tokens/Primitives',
   parameters: {
     layout: 'fullscreen',
     docs: { canvas: { sourceState: 'none' } },
