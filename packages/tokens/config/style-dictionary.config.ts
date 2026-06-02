@@ -104,6 +104,30 @@ function buildTheme(name: string, source: string, selector: string, prefix = '')
   });
 }
 
+function deepMerge(
+  target: Record<string, unknown>,
+  source: Record<string, unknown>,
+): Record<string, unknown> {
+  for (const [key, val] of Object.entries(source)) {
+    if (
+      typeof val === 'object' &&
+      val !== null &&
+      !Array.isArray(val) &&
+      typeof target[key] === 'object' &&
+      target[key] !== null &&
+      !Array.isArray(target[key])
+    ) {
+      target[key] = deepMerge(
+        target[key] as Record<string, unknown>,
+        val as Record<string, unknown>,
+      );
+    } else {
+      target[key] = val;
+    }
+  }
+  return target;
+}
+
 function buildMergedJson(): void {
   const primitiveFiles = getJsonFiles('tokens/primitives');
   const semanticFiles = Object.values(themes).map(t => t.source);
@@ -111,7 +135,7 @@ function buildMergedJson(): void {
   const merged: Record<string, unknown> = {};
   for (const file of [...primitiveFiles, ...semanticFiles]) {
     const content = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>;
-    Object.assign(merged, content);
+    deepMerge(merged, content);
   }
 
   mkdirSync('dist', { recursive: true });
