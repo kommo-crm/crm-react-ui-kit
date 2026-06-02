@@ -21,12 +21,12 @@ interface TooltipState {
   text: string;
 }
 
-/** Returns black or white depending on perceived luminance. */
 function contrastColor(hex: string): string {
-  const c = hex.replace('#', '');
-  const r = parseInt(c.substring(0, 2), 16);
-  const g = parseInt(c.substring(2, 4), 16);
-  const b = parseInt(c.substring(4, 6), 16);
+  const clean = hex.replace('#', '');
+  if (!/^[0-9a-fA-F]{6}$/.test(clean)) return '#000000';
+  const r = parseInt(clean.substring(0, 2), 16);
+  const g = parseInt(clean.substring(2, 4), 16);
+  const b = parseInt(clean.substring(4, 6), 16);
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   return luminance > 0.5 ? '#000000' : '#ffffff';
 }
@@ -146,29 +146,33 @@ function useTooltip() {
   return { tooltip, show };
 }
 
-function Swatch({ token }: { token: Token }) {
+interface SwatchProps {
+  token: Token;
+  onShow: (e: React.MouseEvent, text: string) => void;
+}
+
+function Swatch({ token, onShow }: SwatchProps) {
   const [hovered, setHovered] = useState(false);
   const [hexHovered, setHexHovered] = useState(false);
-  const { tooltip, show } = useTooltip();
+
+  const textColor = contrastColor(token.value);
 
   const handleSwatchClick = useCallback(
     (e: React.MouseEvent) => {
       copyText(token.cssVar);
-      show(e, `Copied: ${token.cssVar}`);
+      onShow(e, `Copied: ${token.cssVar}`);
     },
-    [token.cssVar, show]
+    [token.cssVar, onShow],
   );
 
   const handleHexClick = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
       copyText(token.value);
-      show(e, `Copied: ${token.value}`);
+      onShow(e, `Copied: ${token.value}`);
     },
-    [token.value, show]
+    [token.value, onShow],
   );
-
-  const textColor = contrastColor(token.value);
 
   return (
     <>
@@ -178,9 +182,7 @@ function Swatch({ token }: { token: Token }) {
           ...styles.swatch,
           background: token.value,
           filter: hovered ? 'brightness(1.1)' : 'none',
-          outline: hovered
-            ? `2px solid ${textColor}40`
-            : '2px solid transparent',
+          outline: hovered ? `2px solid ${textColor}40` : '2px solid transparent',
           outlineOffset: 2,
         }}
         onMouseEnter={() => setHovered(true)}
@@ -199,16 +201,13 @@ function Swatch({ token }: { token: Token }) {
       >
         {token.value}
       </div>
-      {tooltip.visible && (
-        <div style={{ ...styles.tooltip, left: tooltip.x, top: tooltip.y }}>
-          {tooltip.text}
-        </div>
-      )}
     </>
   );
 }
 
 export function PrimitivePalette({ groups }: Props) {
+  const { tooltip, show } = useTooltip();
+
   const allShades = [
     ...new Set(groups.flatMap((g) => g.shades.map((s) => s.shade))),
   ].sort((a, b) => Number(a) - Number(b));
@@ -238,13 +237,19 @@ export function PrimitivePalette({ groups }: Props) {
               const token = map[shade];
               return (
                 <div key={shade} style={shadeCellStyle}>
-                  {token ? <Swatch token={token} /> : null}
+                  {token ? <Swatch token={token} onShow={show} /> : null}
                 </div>
               );
             })}
           </div>
         );
       })}
+
+      {tooltip.visible && (
+        <div style={{ ...styles.tooltip, left: tooltip.x, top: tooltip.y }}>
+          {tooltip.text}
+        </div>
+      )}
     </div>
   );
 }
