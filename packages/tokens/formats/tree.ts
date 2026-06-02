@@ -7,7 +7,7 @@ export interface TokenLeaf {
 
 export type TokenTree = { [key: string]: TokenTree | TokenLeaf };
 
-export function toCssVar(path: string[], prefix: string): string {
+function toCssVar(path: string[], prefix: string): string {
   return prefix ? `--${prefix}-${path.join('-')}` : `--${path.join('-')}`;
 }
 

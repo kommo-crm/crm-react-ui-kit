@@ -1,12 +1,12 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
 import { sortTokens } from './sort.js';
-import { buildTree, type TokenLeaf, type TokenTree } from './tree.js';
+import { buildTree, isLeaf, type TokenLeaf, type TokenTree } from './tree.js';
 
 function serializeTree(tokenMap: Map<string, TransformedToken>, tree: TokenTree, path: string[] = []): string[] {
   const lines: string[] = [];
   for (const [key, val] of Object.entries(tree)) {
     const currentPath = [...path, key];
-    if ('value' in (val as object) && 'cssVar' in (val as object)) {
+    if (isLeaf(val)) {
       const leaf = val as TokenLeaf;
       const token = tokenMap.get(currentPath.join('.'));
       lines.push(
