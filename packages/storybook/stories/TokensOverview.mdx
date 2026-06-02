@@ -1,0 +1,148 @@
+import { Meta, Title } from '@storybook/blocks';
+
+<Meta title="Tokens/Overview" />
+
+<Title>Design Tokens</Title>
+
+`@kommo-crm/tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.
+
+## Installation
+
+**npm:**
+
+```sh
+npm i @kommo-crm/tokens
+```
+
+**yarn:**
+
+```sh
+yarn add @kommo-crm/tokens
+```
+
+**pnpm:**
+
+```sh
+pnpm add @kommo-crm/tokens
+```
+
+---
+
+## CSS
+
+Import adds CSS custom properties to `:root`.
+
+**Primitive tokens** (absolute values: colors, radii, font sizes):
+
+```css
+@import '@kommo-crm/tokens/css/primitives';
+```
+
+**Semantic tokens** (theme-aware variables — import one or both themes):
+
+```css
+@import '@kommo-crm/tokens/css/semantic/light';
+@import '@kommo-crm/tokens/css/semantic/dark';
+```
+
+Use the variables anywhere after importing:
+
+```css
+.button {
+  background: var(--color-blue-500);
+  border-radius: var(--border-radius-default);
+}
+```
+
+---
+
+## SCSS
+
+```scss
+@use '@kommo-crm/tokens/scss/primitives' as *;
+@use '@kommo-crm/tokens/scss/semantic/light' as *;
+```
+
+---
+
+## Less
+
+```less
+@import '@kommo-crm/tokens/less/primitives';
+@import '@kommo-crm/tokens/less/semantic/light';
+```
+
+---
+
+## JavaScript / TypeScript
+
+The JS export provides typed access to each token's resolved value and CSS variable name.
+
+**Primitives:**
+
+```ts
+import { color, borderRadius, fontSize } from '@kommo-crm/tokens/js/primitives';
+
+color.light.blue[500].value; // '#4c8bf7'
+color.light.blue[500].cssVar; // '--color-blue-500'
+
+borderRadius.default.value; // '4px'
+fontSize.base.value; // '15px'
+```
+
+**Semantic tokens:**
+
+```ts
+import lightTokens from '@kommo-crm/tokens/js/semantic/light';
+import darkTokens from '@kommo-crm/tokens/js/semantic/dark';
+
+lightTokens['background']['default'].cssVar; // '--background-default'
+```
+
+Every token has the following shape:
+
+```ts
+interface Token {
+  value: string; // resolved CSS value
+  cssVar: string; // CSS custom property name (e.g. '--color-blue-500')
+}
+```
+
+---
+
+## JSON
+
+All tokens in a single file:
+
+```ts
+import tokens from '@kommo-crm/tokens/json';
+```
+
+Useful for generating docs or integrating with tools that don't consume CSS.
+
+---
+
+## Token structure
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Path pattern</th>
+      <th>Example variable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Primitive colors</td>
+      <td>
+        <code>
+          color.{'{theme}'}.{'{group}'}.{'{shade}'}
+        </code>
+      </td>
+      <td>
+        <code>--color-dark-blue-500</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
