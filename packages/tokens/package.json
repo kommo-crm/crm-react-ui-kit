@@ -8,22 +8,15 @@
   "types": "./dist/js/primitives.d.ts",
   "exports": {
     "./css/primitives": "./dist/css/primitives.min.css",
-    "./css/semantic/light": "./dist/css/semantic/light.min.css",
-    "./css/semantic/dark": "./dist/css/semantic/dark.min.css",
     "./scss/primitives": "./dist/scss/_primitives.scss",
-    "./scss/semantic/light": "./dist/scss/semantic/_light.scss",
-    "./scss/semantic/dark": "./dist/scss/semantic/_dark.scss",
     "./less/primitives": "./dist/less/_primitives.less",
-    "./less/semantic/light": "./dist/less/semantic/_light.less",
-    "./less/semantic/dark": "./dist/less/semantic/_dark.less",
     "./js/primitives": "./dist/js/primitives.js",
-    "./js/semantic/light": "./dist/js/semantic/light.js",
-    "./js/semantic/dark": "./dist/js/semantic/dark.js",
     "./json": "./dist/tokens.json"
   },
   "scripts": {
     "build": "tsx scripts/build.ts",
     "dev": "tsx scripts/dev.ts",
+    "watch": "tsx scripts/watch.ts",
     "clean": "rm -rf dist"
   },
   "devDependencies": {
