@@ -1,4 +1,5 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
+import { sortTokens } from './sort.js';
 
 interface TokenLeaf {
   value: string;
@@ -55,8 +56,9 @@ export const jsNestedFormat: Format = {
   name: 'custom/js-nested',
   format: ({ dictionary, options }) => {
     const prefix = (options?.prefix as string) ?? '';
-    const tree = buildTree(dictionary.allTokens, prefix);
-    const lines = serializeTree(dictionary.allTokens, tree);
+    const sorted = sortTokens(dictionary.allTokens);
+    const tree = buildTree(sorted, prefix);
+    const lines = serializeTree(sorted, tree);
     const exports = Object.keys(tree).map(key => {
       const camel = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
       return `export const ${camel} = tree[${JSON.stringify(key)}];`;
