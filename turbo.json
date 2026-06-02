@@ -29,6 +29,10 @@
       "dependsOn": ["^build", "@kommo-crm/tokens#build"],
       "outputs": ["dist/**"]
     },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
     "@kommo-crm/storybook#storybook": {
       "dependsOn": ["@kommo-crm/tokens#build"],
       "cache": false,
