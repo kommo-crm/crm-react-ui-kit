@@ -1,7 +1,0 @@
-{
-  "border-radius": {
-    "sm":      { "$value": "2px", "$type": "dimension" },
-    "default": { "$value": "4px", "$type": "dimension" },
-    "lg":      { "$value": "8px", "$type": "dimension" }
-  }
-}

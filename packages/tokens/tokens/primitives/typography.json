@@ -1,7 +1,0 @@
-{
-  "font-size": {
-    "base": { "$value": "15px", "$type": "dimension", "$description": "Base font size" },
-    "sm":   { "$value": "13px", "$type": "dimension" },
-    "lg":   { "$value": "17px", "$type": "dimension" }
-  }
-}
