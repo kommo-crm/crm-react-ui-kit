@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import StyleDictionary from 'style-dictionary';
 import config from '../tokens.config.js';
 import { jsNestedFormat } from '../formats/js-nested.js';
@@ -119,6 +119,7 @@ function buildMergedJson(): void {
 }
 
 export async function build(): Promise<void> {
+  rmSync('dist', { recursive: true, force: true });
   await buildPrimitives().buildAllPlatforms();
   for (const [name, { source, selector, prefix }] of Object.entries(themes)) {
     await buildTheme(name, source, selector, prefix).buildAllPlatforms();

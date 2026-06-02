@@ -2,7 +2,7 @@
   "name": "@kommo-crm/tokens",
   "version": "1.0.0",
   "private": false,
-  "description": "Design tokens for Kommo CRM UI Kit",
+  "description": "Design tokens for Kommo CRM",
   "type": "module",
   "main": "./dist/js/primitives.js",
   "types": "./dist/js/primitives.d.ts",

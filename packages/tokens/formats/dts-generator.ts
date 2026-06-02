@@ -23,10 +23,6 @@ function buildTree(tokens: TransformedToken[], prefix: string): TokenTree {
   return root;
 }
 
-function isNumericKeys(obj: TokenTree): boolean {
-  return Object.keys(obj).length > 0 && Object.keys(obj).every(k => !isNaN(Number(k)));
-}
-
 function isLeaf(val: unknown): val is TokenLeaf {
   return typeof val === 'object' && val !== null && 'value' in val && 'cssVar' in val;
 }
@@ -35,10 +31,13 @@ function buildInterface(tree: TokenTree, indent = ''): string {
   const lines: string[] = [];
   for (const [key, val] of Object.entries(tree)) {
     if (isLeaf(val)) {
-      lines.push(`${indent}${JSON.stringify(key)}: Token;`);
-    } else if (isNumericKeys(val as TokenTree)) {
-      const keys = Object.keys(val as TokenTree).join(' | ');
-      lines.push(`${indent}${JSON.stringify(key)}: Record<${keys}, Token>;`);
+      lines.push(`${indent}/** \`${val.cssVar}\` — ${val.value} */`);
+      lines.push(`${indent}${JSON.stringify(key)}: {`);
+      lines.push(`${indent}  /** \`${val.cssVar}\` */`);
+      lines.push(`${indent}  readonly cssVar: ${JSON.stringify(val.cssVar)};`);
+      lines.push(`${indent}  /** \`${val.value}\` */`);
+      lines.push(`${indent}  readonly value: ${JSON.stringify(val.value)};`);
+      lines.push(`${indent}};`);
     } else {
       lines.push(`${indent}${JSON.stringify(key)}: {`);
       lines.push(buildInterface(val as TokenTree, indent + '  '));
