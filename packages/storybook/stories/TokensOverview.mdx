@@ -65,7 +65,7 @@ pnpm add @kommo-crm/tokens
 
 ```css
 .button {
-  background: var(--color-blue-500);
+  background: var(--color-light-blue-500);
   border-radius: var(--border-radius-default);
 }
 ```
@@ -104,7 +104,7 @@ pnpm add @kommo-crm/tokens
 import { color, borderRadius, fontSize } from '@kommo-crm/tokens/js/primitives';
 
 color.light.blue[500].value; // '#4c8bf7'
-color.light.blue[500].cssVar; // '--color-blue-500'
+color.light.blue[500].cssVar; // '--color-light-blue-500'
 
 borderRadius.default.value; // '4px'
 fontSize.base.value; // '15px'
@@ -124,7 +124,7 @@ lightTokens['background']['default'].cssVar; // '--background-default'
 ```ts
 interface Token {
   value: string; // resolved CSS value
-  cssVar: string; // CSS custom property name (e.g. '--color-blue-500')
+  cssVar: string; // CSS custom property name (e.g. '--color-light-blue-500')
 }
 ```
 
