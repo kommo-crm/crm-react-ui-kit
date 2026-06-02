@@ -9,7 +9,7 @@ StyleDictionary.registerFormat(jsNestedFormat);
 StyleDictionary.registerFormat(cssMinifiedFormat);
 StyleDictionary.registerFormat(dtsFormat);
 
-const { prefix, themes } = config;
+const { themes } = config;
 
 function getJsonFiles(dir: string): string[] {
   const results: string[] = [];
@@ -22,6 +22,7 @@ function getJsonFiles(dir: string): string[] {
 }
 
 function buildPrimitives(): StyleDictionary {
+  const prefix = '';
   return new StyleDictionary({
     source: ['tokens/primitives/**/*.json'],
     platforms: {
@@ -60,7 +61,7 @@ function buildPrimitives(): StyleDictionary {
   });
 }
 
-function buildTheme(name: string, source: string, selector: string): StyleDictionary {
+function buildTheme(name: string, source: string, selector: string, prefix = ''): StyleDictionary {
   const semanticFilter = (token: { filePath: string }) =>
     token.filePath.includes(`semantic/${name}`);
 
@@ -119,8 +120,8 @@ function buildMergedJson(): void {
 
 export async function build(): Promise<void> {
   await buildPrimitives().buildAllPlatforms();
-  for (const [name, { source, selector }] of Object.entries(themes)) {
-    await buildTheme(name, source, selector).buildAllPlatforms();
+  for (const [name, { source, selector, prefix }] of Object.entries(themes)) {
+    await buildTheme(name, source, selector, prefix).buildAllPlatforms();
   }
   buildMergedJson();
 }

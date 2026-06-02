@@ -3,3 +3,4 @@ export { LabelWrapper } from './LabelWrapper/LabelWrapper';
 export { CustomDocsContainer } from './CustomDocsContainer/CustomDocsContainer';
 export { GridProvider } from './GridProvider/GridProvider';
 export { CodeBlock } from './CodeBlock/CodeBlock';
+export { PrimitivePalette } from './PrimitivePalette/PrimitivePalette';

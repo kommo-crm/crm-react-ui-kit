@@ -1,6 +1,3 @@
-# Token sources — provided by Figma/external tool at build time
-tokens/
-
 # Generated artifacts
 dist/
 dist-ts/
