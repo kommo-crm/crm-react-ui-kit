@@ -1,0 +1,9 @@
+{
+  "opacity": {
+    "disabled": { "$value": "0.6", "$type": "number", "$description": "Disabled elements" }
+  },
+  "scrollbar": {
+    "width":               { "$value": "7px",  "$type": "dimension" },
+    "thumb-border-radius": { "$value": "30px", "$type": "dimension" }
+  }
+}

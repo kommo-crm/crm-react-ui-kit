@@ -1,0 +1,126 @@
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs';
+import StyleDictionary from 'style-dictionary';
+import config from '../tokens.config.js';
+import { jsNestedFormat } from '../formats/js-nested.js';
+import { cssMinifiedFormat } from '../formats/css-minified.js';
+import { dtsFormat } from '../formats/dts-generator.js';
+
+StyleDictionary.registerFormat(jsNestedFormat);
+StyleDictionary.registerFormat(cssMinifiedFormat);
+StyleDictionary.registerFormat(dtsFormat);
+
+const { prefix, themes } = config;
+
+function getJsonFiles(dir: string): string[] {
+  const results: string[] = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) results.push(...getJsonFiles(fullPath));
+    else if (entry.name.endsWith('.json')) results.push(fullPath);
+  }
+  return results;
+}
+
+function buildPrimitives(): StyleDictionary {
+  return new StyleDictionary({
+    source: ['tokens/primitives/**/*.json'],
+    platforms: {
+      'css-min': {
+        transformGroup: 'css',
+        prefix,
+        buildPath: 'dist/css/',
+        files: [{
+          destination: 'primitives.min.css',
+          format: 'custom/css-minified',
+          options: { selector: ':root', prefix },
+        }],
+      },
+      scss: {
+        transformGroup: 'scss',
+        prefix,
+        buildPath: 'dist/scss/',
+        files: [{ destination: '_primitives.scss', format: 'scss/variables' }],
+      },
+      less: {
+        transformGroup: 'less',
+        prefix,
+        buildPath: 'dist/less/',
+        files: [{ destination: '_primitives.less', format: 'less/variables' }],
+      },
+      js: {
+        transformGroup: 'js',
+        prefix,
+        buildPath: 'dist/js/',
+        files: [
+          { destination: 'primitives.js',   format: 'custom/js-nested',               options: { prefix } },
+          { destination: 'primitives.d.ts', format: 'custom/typescript-declarations',  options: { prefix } },
+        ],
+      },
+    },
+  });
+}
+
+function buildTheme(name: string, source: string, selector: string): StyleDictionary {
+  const semanticFilter = (token: { filePath: string }) =>
+    token.filePath.includes(`semantic/${name}`);
+
+  return new StyleDictionary({
+    source: ['tokens/primitives/**/*.json', source],
+    platforms: {
+      'css-min': {
+        transformGroup: 'css',
+        prefix,
+        buildPath: 'dist/css/semantic/',
+        files: [{
+          destination: `${name}.min.css`,
+          format: 'custom/css-minified',
+          options: { selector, prefix },
+          filter: semanticFilter,
+        }],
+      },
+      scss: {
+        transformGroup: 'scss',
+        prefix,
+        buildPath: 'dist/scss/semantic/',
+        files: [{ destination: `_${name}.scss`, format: 'scss/variables', filter: semanticFilter }],
+      },
+      less: {
+        transformGroup: 'less',
+        prefix,
+        buildPath: 'dist/less/semantic/',
+        files: [{ destination: `_${name}.less`, format: 'less/variables', filter: semanticFilter }],
+      },
+      js: {
+        transformGroup: 'js',
+        prefix,
+        buildPath: 'dist/js/semantic/',
+        files: [
+          { destination: `${name}.js`,   format: 'custom/js-nested',               options: { prefix }, filter: semanticFilter },
+          { destination: `${name}.d.ts`, format: 'custom/typescript-declarations',  options: { prefix }, filter: semanticFilter },
+        ],
+      },
+    },
+  });
+}
+
+function buildMergedJson(): void {
+  const primitiveFiles = getJsonFiles('tokens/primitives');
+  const semanticFiles = Object.values(themes).map(t => t.source);
+
+  const merged: Record<string, unknown> = {};
+  for (const file of [...primitiveFiles, ...semanticFiles]) {
+    const content = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>;
+    Object.assign(merged, content);
+  }
+
+  mkdirSync('dist', { recursive: true });
+  writeFileSync('dist/tokens.json', JSON.stringify(merged, null, 2));
+}
+
+export async function build(): Promise<void> {
+  await buildPrimitives().buildAllPlatforms();
+  for (const [name, { source, selector }] of Object.entries(themes)) {
+    await buildTheme(name, source, selector).buildAllPlatforms();
+  }
+  buildMergedJson();
+}
