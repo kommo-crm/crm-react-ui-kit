@@ -9,7 +9,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
-    "storybook": "concurrently --kill-others-on-fail \"yarn workspace @kommo-crm/tokens dev\" \"turbo run storybook\"",
+    "storybook": "yarn workspace @kommo-crm/tokens build && concurrently --kill-others-on-fail \"yarn workspace @kommo-crm/tokens watch\" \"turbo run storybook\"",
     "build-storybook": "turbo run build-storybook",
     "prepare": "husky"
   },
