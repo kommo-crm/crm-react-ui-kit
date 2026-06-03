@@ -14,10 +14,12 @@
     "./json": "./dist/tokens.json"
   },
   "scripts": {
+    "prepublishOnly": "cp ../../LICENCE ./LICENCE",
     "build": "tsx scripts/build.ts",
     "dev": "tsx scripts/dev.ts",
     "watch": "tsx scripts/watch.ts",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "jest"
   },
   "devDependencies": {
     "style-dictionary": "^4.3.0",

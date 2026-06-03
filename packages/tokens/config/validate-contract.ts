@@ -1,13 +1,14 @@
 import { readFileSync } from 'node:fs';
 
-function extractCssVars(css: string): string[] {
+export function extractCssVars(css: string): string[] {
   const matches = css.matchAll(/--[\w-]+(?=:)/g);
+
   return [...new Set([...matches].map((m) => m[0]))];
 }
 
 export function validateCssContract(
   cssPath: string,
-  requiredVars: string[],
+  requiredVars: string[]
 ): void {
   const css = readFileSync(cssPath, 'utf8');
   const found = extractCssVars(css);
@@ -17,14 +18,16 @@ export function validateCssContract(
   const extra = found.filter((v) => !allowed.has(v));
 
   const errors: string[] = [];
+
   if (missing.length > 0) {
     errors.push(
-      `Missing required CSS variables:\n${missing.map((v) => `  • ${v}`).join('\n')}`,
+      `Missing required CSS variables:\n${missing.map((v) => `  • ${v}`).join('\n')}`
     );
   }
+
   if (extra.length > 0) {
     errors.push(
-      `Unregistered CSS variables (not in requiredTokens):\n${extra.map((v) => `  • ${v}`).join('\n')}`,
+      `Unregistered CSS variables (not in requiredTokens):\n${extra.map((v) => `  • ${v}`).join('\n')}`
     );
   }
 

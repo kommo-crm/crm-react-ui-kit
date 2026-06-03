@@ -1,8 +1,10 @@
 import type { Format } from 'style-dictionary/types';
+
 import { buildTree, isLeaf, type TokenTree } from './tree.js';
 
 function buildInterface(tree: TokenTree, indent = ''): string {
   const lines: string[] = [];
+
   for (const [key, val] of Object.entries(tree)) {
     if (isLeaf(val)) {
       lines.push(`${indent}/** \`${val.cssVar}\` — ${val.value} */`);
@@ -18,6 +20,7 @@ function buildInterface(tree: TokenTree, indent = ''): string {
       lines.push(`${indent}};`);
     }
   }
+
   return lines.join('\n');
 }
 
@@ -31,7 +34,7 @@ export const dtsFormat: Format = {
       ...new Set(
         dictionary.allTokens
           .filter((t) => t.path.length === 4)
-          .map((t) => t.path[3]),
+          .map((t) => t.path[3])
       ),
     ].sort((a, b) => Number(a) - Number(b));
 
@@ -61,6 +64,7 @@ export const dtsFormat: Format = {
     for (const [key, val] of Object.entries(tree)) {
       const camel = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
       const TypeName = camel.charAt(0).toUpperCase() + camel.slice(1);
+
       lines.push(`export declare const ${camel}: {`);
       lines.push(buildInterface(val as TokenTree, '  '));
       lines.push('};');
@@ -69,10 +73,13 @@ export const dtsFormat: Format = {
     }
 
     lines.push('declare const _default: {');
+
     for (const key of Object.keys(tree)) {
       const camel = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+
       lines.push(`  ${JSON.stringify(key)}: typeof ${camel};`);
     }
+
     lines.push('};');
     lines.push('export default _default;');
 

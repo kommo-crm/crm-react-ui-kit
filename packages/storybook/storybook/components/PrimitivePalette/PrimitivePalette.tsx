@@ -41,7 +41,6 @@ function legacyCopy(text: string): void {
   el.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
   document.body.appendChild(el);
   el.select();
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   document.execCommand('copy');
   document.body.removeChild(el);
 }
@@ -169,7 +168,7 @@ function Swatch({ token, onShow }: SwatchProps) {
       copyText(token.cssVar);
       onShow(e, `Copied: ${token.cssVar}`);
     },
-    [token.cssVar, onShow],
+    [token.cssVar, onShow]
   );
 
   const handleHexClick = useCallback(
@@ -178,7 +177,7 @@ function Swatch({ token, onShow }: SwatchProps) {
       copyText(token.value);
       onShow(e, `Copied: ${token.value}`);
     },
-    [token.value, onShow],
+    [token.value, onShow]
   );
 
   return (
@@ -189,7 +188,9 @@ function Swatch({ token, onShow }: SwatchProps) {
           ...styles.swatch,
           background: token.value,
           filter: hovered ? 'brightness(1.1)' : 'none',
-          outline: hovered ? `2px solid ${textColor}40` : '2px solid transparent',
+          outline: hovered
+            ? `2px solid ${textColor}40`
+            : '2px solid transparent',
           outlineOffset: 2,
         }}
         onMouseEnter={() => setHovered(true)}

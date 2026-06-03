@@ -1,9 +1,18 @@
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import {
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  readdirSync,
+  rmSync,
+} from 'node:fs';
+
 import StyleDictionary from 'style-dictionary';
+
 import config from '../tokens.config.js';
 import { jsNestedFormat } from '../formats/js-nested.js';
 import { cssMinifiedFormat } from '../formats/css-minified.js';
 import { dtsFormat } from '../formats/dts-generator.js';
+
 import { validateCssContract } from './validate-contract.js';
 
 StyleDictionary.registerFormat(jsNestedFormat);
@@ -14,16 +23,23 @@ const { themes } = config;
 
 function getJsonFiles(dir: string): string[] {
   const results: string[] = [];
+
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const fullPath = `${dir}/${entry.name}`;
-    if (entry.isDirectory()) results.push(...getJsonFiles(fullPath));
-    else if (entry.name.endsWith('.json')) results.push(fullPath);
+
+    if (entry.isDirectory()) {
+      results.push(...getJsonFiles(fullPath));
+    } else if (entry.name.endsWith('.json')) {
+      results.push(fullPath);
+    }
   }
+
   return results;
 }
 
 function buildPrimitives(): StyleDictionary {
   const prefix = '';
+
   return new StyleDictionary({
     source: ['tokens/primitives/**/*.json'],
     platforms: {
@@ -31,38 +47,53 @@ function buildPrimitives(): StyleDictionary {
         transformGroup: 'css',
         prefix,
         buildPath: 'dist/css/',
-        files: [{
-          destination: 'primitives.min.css',
-          format: 'custom/css-minified',
-          options: { selector: ':root', prefix },
-        }],
+        files: [
+          {
+            destination: 'primitives.min.css',
+            format: 'custom/css-minified',
+            options: { selector: ':root', prefix },
+          },
+        ],
       },
-      scss: {
+      'scss': {
         transformGroup: 'scss',
         prefix,
         buildPath: 'dist/scss/',
         files: [{ destination: '_primitives.scss', format: 'scss/variables' }],
       },
-      less: {
+      'less': {
         transformGroup: 'less',
         prefix,
         buildPath: 'dist/less/',
         files: [{ destination: '_primitives.less', format: 'less/variables' }],
       },
-      js: {
+      'js': {
         transformGroup: 'js',
         prefix,
         buildPath: 'dist/js/',
         files: [
-          { destination: 'primitives.js',   format: 'custom/js-nested',               options: { prefix } },
-          { destination: 'primitives.d.ts', format: 'custom/typescript-declarations',  options: { prefix } },
+          {
+            destination: 'primitives.js',
+            format: 'custom/js-nested',
+            options: { prefix },
+          },
+          {
+            destination: 'primitives.d.ts',
+            format: 'custom/typescript-declarations',
+            options: { prefix },
+          },
         ],
       },
     },
   });
 }
 
-function buildTheme(name: string, source: string, selector: string, prefix = ''): StyleDictionary {
+function buildTheme(
+  name: string,
+  source: string,
+  selector: string,
+  prefix = ''
+): StyleDictionary {
   const semanticFilter = (token: { filePath: string }) =>
     token.filePath.includes(`semantic/${name}`);
 
@@ -73,32 +104,56 @@ function buildTheme(name: string, source: string, selector: string, prefix = '')
         transformGroup: 'css',
         prefix,
         buildPath: 'dist/css/semantic/',
-        files: [{
-          destination: `${name}.min.css`,
-          format: 'custom/css-minified',
-          options: { selector, prefix },
-          filter: semanticFilter,
-        }],
+        files: [
+          {
+            destination: `${name}.min.css`,
+            format: 'custom/css-minified',
+            options: { selector, prefix },
+            filter: semanticFilter,
+          },
+        ],
       },
-      scss: {
+      'scss': {
         transformGroup: 'scss',
         prefix,
         buildPath: 'dist/scss/semantic/',
-        files: [{ destination: `_${name}.scss`, format: 'scss/variables', filter: semanticFilter }],
+        files: [
+          {
+            destination: `_${name}.scss`,
+            format: 'scss/variables',
+            filter: semanticFilter,
+          },
+        ],
       },
-      less: {
+      'less': {
         transformGroup: 'less',
         prefix,
         buildPath: 'dist/less/semantic/',
-        files: [{ destination: `_${name}.less`, format: 'less/variables', filter: semanticFilter }],
+        files: [
+          {
+            destination: `_${name}.less`,
+            format: 'less/variables',
+            filter: semanticFilter,
+          },
+        ],
       },
-      js: {
+      'js': {
         transformGroup: 'js',
         prefix,
         buildPath: 'dist/js/semantic/',
         files: [
-          { destination: `${name}.js`,   format: 'custom/js-nested',               options: { prefix }, filter: semanticFilter },
-          { destination: `${name}.d.ts`, format: 'custom/typescript-declarations',  options: { prefix }, filter: semanticFilter },
+          {
+            destination: `${name}.js`,
+            format: 'custom/js-nested',
+            options: { prefix },
+            filter: semanticFilter,
+          },
+          {
+            destination: `${name}.d.ts`,
+            format: 'custom/typescript-declarations',
+            options: { prefix },
+            filter: semanticFilter,
+          },
         ],
       },
     },
@@ -107,7 +162,7 @@ function buildTheme(name: string, source: string, selector: string, prefix = '')
 
 function deepMerge(
   target: Record<string, unknown>,
-  source: Record<string, unknown>,
+  source: Record<string, unknown>
 ): Record<string, unknown> {
   for (const [key, val] of Object.entries(source)) {
     if (
@@ -120,22 +175,28 @@ function deepMerge(
     ) {
       target[key] = deepMerge(
         target[key] as Record<string, unknown>,
-        val as Record<string, unknown>,
+        val as Record<string, unknown>
       );
     } else {
       target[key] = val;
     }
   }
+
   return target;
 }
 
 function buildMergedJson(): void {
   const primitiveFiles = getJsonFiles('tokens/primitives');
-  const semanticFiles = Object.values(themes).map(t => t.source);
+  const semanticFiles = Object.values(themes).map((t) => t.source);
 
   const merged: Record<string, unknown> = {};
+
   for (const file of [...primitiveFiles, ...semanticFiles]) {
-    const content = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>;
+    const content = JSON.parse(readFileSync(file, 'utf8')) as Record<
+      string,
+      unknown
+    >;
+
     deepMerge(merged, content);
   }
 
@@ -159,5 +220,6 @@ export async function build(): Promise<void> {
   for (const [name, { source, selector, prefix }] of Object.entries(themes)) {
     await buildTheme(name, source, selector, prefix).buildAllPlatforms();
   }
+
   buildMergedJson();
 }
