@@ -1,11 +1,11 @@
 import React, { forwardRef, useMemo } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import CloseIcon from 'src/icons/close.svg';
+import CloseIcon from '@ui-kit/icons/close.svg';
 
-import { omit } from 'src/utils';
+import { omit } from '@ui-kit/utils';
 
 import { Button, ButtonIconSmallGhostTheme } from '../Button';
 

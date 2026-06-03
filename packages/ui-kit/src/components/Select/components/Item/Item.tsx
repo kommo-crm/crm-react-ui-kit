@@ -1,9 +1,9 @@
 import React, { forwardRef, MouseEvent, useCallback } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import { noop } from 'src/utils';
+import { noop } from '@ui-kit/utils';
 
 import { useSelectContext } from '../../Select.context';
 import { getSelectItemTitle } from '../../Select.types';

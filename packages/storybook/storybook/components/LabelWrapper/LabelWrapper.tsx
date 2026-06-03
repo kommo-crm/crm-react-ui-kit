@@ -1,8 +1,8 @@
 import React from 'react';
 import { FC } from 'react';
 
-import { Label, LabelTheme } from 'src/components/Label';
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+import { Label, LabelTheme } from '@ui-kit/components/Label';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 
 import { i18n } from '@i18n';
 

@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 
-import { Separator } from 'src/components/Separator';
+import { Separator } from '@ui-kit/components/Separator';
 
 export type SeparatorProps = Omit<
   ComponentPropsWithoutRef<typeof Separator>,

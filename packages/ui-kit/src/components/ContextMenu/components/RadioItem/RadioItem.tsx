@@ -2,7 +2,7 @@ import React, { forwardRef, useId } from 'react';
 import { RadioItem as RadixDropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
 import cx from 'classnames';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@ui-kit/lib/utils';
 
 import { useLevelContext } from '../../providers/LevelProvider';
 

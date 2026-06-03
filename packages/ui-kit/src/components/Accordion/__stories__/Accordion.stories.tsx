@@ -3,11 +3,11 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 
-import SpinnerIcon from '/src/icons/spinner.svg';
-import SettingsIcon from '/src/icons/settings.svg';
-import CalendarIcon from '/src/icons/calendar.svg';
+import SpinnerIcon from '@ui-kit/icons/spinner.svg';
+import SettingsIcon from '@ui-kit/icons/settings.svg';
+import CalendarIcon from '@ui-kit/icons/calendar.svg';
 
 import {
   Accordion,

@@ -9,10 +9,10 @@ import {
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
-import { Text, TextInheritColorTheme } from 'src/components/Text';
-
 import ContextMenuCheckIcon from '@storybook-utils/icons/check.svg';
 import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
+
+import { Text, TextInheritColorTheme } from '@ui-kit/components/Text';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu, ContextMenuRootProps } from '..';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGlobals } from 'storybook/internal/preview-api';
 
-import { Appearance } from 'src/lib/appearance';
+import { Appearance } from '@ui-kit/lib/appearance';
 
 export function useStoryLabel(
   text: string,

@@ -3,10 +3,10 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@ui-kit/tests/e2e/ComponentPlayground';
 
-import { TextPrimaryTheme } from 'src/components/Text';
-import { Text } from 'src/components/Text/Text';
+import { TextPrimaryTheme } from '@ui-kit/components/Text';
+import { Text } from '@ui-kit/components/Text/Text';
 
 import { List, type ListProps } from '..';
 

@@ -5,14 +5,14 @@ import { useArgs } from '@storybook/preview-api';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
+import { i18n } from '@i18n';
+
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryLightTheme,
-} from 'src/components/Text';
-import { Label, LabelTheme } from 'src/components/Label';
-
-import { i18n } from '@i18n';
+} from '@ui-kit/components/Text';
+import { Label, LabelTheme } from '@ui-kit/components/Label';
 
 import {
   RadioPrimaryTheme,

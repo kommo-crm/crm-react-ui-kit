@@ -6,7 +6,7 @@ import {
   RenderResult,
 } from '@testing-library/react';
 
-import { CheckboxLightTheme } from 'src/components/Checkbox/Checkbox.themes';
+import { CheckboxLightTheme } from '@ui-kit/components/Checkbox/Checkbox.themes';
 
 import {
   CheckboxGroup,

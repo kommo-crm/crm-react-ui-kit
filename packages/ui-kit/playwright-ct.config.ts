@@ -119,8 +119,8 @@ export default defineConfig({
       plugins: [svgrPlugin({ include: '**/*.svg' })],
       resolve: {
         alias: {
-          'src': path.resolve(__dirname, './src'),
-          '@storybook-utils': path.resolve(__dirname, 'storybook'),
+          '@ui-kit': path.resolve(__dirname, './src'),
+          '@storybook-utils': path.resolve(__dirname, '../storybook/storybook'),
         },
       },
     },

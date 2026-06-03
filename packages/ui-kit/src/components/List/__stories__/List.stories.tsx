@@ -5,7 +5,7 @@ import { CanvasCentered } from '@storybook-utils/constants';
 
 import { i18n } from '@i18n';
 
-import { TextPrimaryTheme } from 'src/components/Text';
+import { TextPrimaryTheme } from '@ui-kit/components/Text';
 
 import { Text } from '../../Text/Text';
 

@@ -1,6 +1,6 @@
 import { create } from '@storybook/theming';
 
-import { Appearance } from '../../../src';
+import { Appearance } from '../../../../ui-kit/src/lib/appearance';
 
 const { window: globalWindow } = global;
 

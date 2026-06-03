@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { VisuallyHiddenInput } from 'src/components/VisuallyHiddenInput';
+import { VisuallyHiddenInput } from '@ui-kit/components/VisuallyHiddenInput';
 
 import { useSelectContext } from '../../Select.context';
 import { SelectItem } from '../../Select.types';

@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
-import { VisuallyHiddenInput } from 'src/components/VisuallyHiddenInput';
-import { Label } from 'src/components/Label';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
+import { VisuallyHiddenInput } from '@ui-kit/components/VisuallyHiddenInput';
+import { Label } from '@ui-kit/components/Label';
 
-import { isTouchableDevice } from 'src/lib/utils';
+import { isTouchableDevice } from '@ui-kit/lib/utils';
 
 import { type CheckboxProps, type CheckboxType } from './Checkbox.props';
 import { type CheckboxThemeType } from './Checkbox.themes';

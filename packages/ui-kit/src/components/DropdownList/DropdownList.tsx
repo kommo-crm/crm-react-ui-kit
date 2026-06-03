@@ -2,11 +2,11 @@ import React, { forwardRef, MutableRefObject } from 'react';
 import cx from 'classnames';
 import { useKeyboardListNavigation } from '@kommo-crm/react-hooks';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import { CustomScrollClassName } from 'src/stylesheets/utils/BaseClasses';
+import { CustomScrollClassName } from '@ui-kit/stylesheets/utils/BaseClasses';
 
-import { noop } from 'src/utils';
+import { noop } from '@ui-kit/utils';
 
 import { DropdownListProps } from './DropdownList.props';
 import { DropdownListThemeType } from './DropdownList.theme';

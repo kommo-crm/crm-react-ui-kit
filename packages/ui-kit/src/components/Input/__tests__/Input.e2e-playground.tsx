@@ -3,15 +3,15 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@ui-kit/tests/e2e/ComponentPlayground';
 
-import SpinnerIcon from 'src/icons/spinner.svg';
-import SettingsIcon from 'src/icons/settings.svg';
+import SpinnerIcon from '@ui-kit/icons/spinner.svg';
+import SettingsIcon from '@ui-kit/icons/settings.svg';
 import {
   Button,
   ButtonNeutralTheme,
   ButtonPrimaryTheme,
-} from 'src/components/Button';
+} from '@ui-kit/components/Button';
 
 import { Input } from '../Input';
 import {

@@ -3,9 +3,9 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@ui-kit/tests/e2e/ComponentPlayground';
 
-import { Text, TextPrimaryTheme } from 'src/components/Text';
+import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 
 import {
   Accordion,

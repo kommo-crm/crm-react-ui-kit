@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { DropdownListProps as BaseListProps } from 'src/components/DropdownList';
+import { DropdownListProps as BaseListProps } from '@ui-kit/components/DropdownList';
 
 export type ListPortalProps = {
   /**

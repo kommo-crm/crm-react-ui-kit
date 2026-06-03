@@ -1,4 +1,4 @@
-import { type BaseInputProps } from 'src/components/BaseInput';
+import { type BaseInputProps } from '@ui-kit/components/BaseInput';
 
 export type VisuallyHiddenInputBaseProps<T> = Omit<
   BaseInputProps,

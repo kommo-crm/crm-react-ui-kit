@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { TextArea, TextareaLightTheme } from 'src/components/TextArea';
-
 import { CanvasCentered } from '@storybook-utils/constants';
 
-import { Switcher, SwitcherPrimaryTheme } from 'src/components/Switcher';
+import { i18n } from '@i18n';
+
+import { TextArea, TextareaLightTheme } from '@ui-kit/components/TextArea';
+
+import { Switcher, SwitcherPrimaryTheme } from '@ui-kit/components/Switcher';
 import {
   Text,
   TextPrimaryTheme,
   TextSecondaryLightTheme,
-} from 'src/components/Text';
-
-import { i18n } from '@i18n';
+} from '@ui-kit/components/Text';
 
 import { Label, LabelGroupTheme, LabelTheme } from '..';
 

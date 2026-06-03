@@ -1,13 +1,13 @@
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import { noop } from 'src/utils';
+import { noop } from '@ui-kit/utils';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@ui-kit/lib/utils';
 
-import { CustomScrollClassName } from 'src/stylesheets/utils/BaseClasses';
+import { CustomScrollClassName } from '@ui-kit/stylesheets/utils/BaseClasses';
 
 import { Text } from '../Text/Text';
 

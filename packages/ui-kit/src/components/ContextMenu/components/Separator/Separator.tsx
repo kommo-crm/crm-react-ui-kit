@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import {
   SeparatorSquaredDarkTheme,
   Separator as UiKitSeparator,
-} from 'src/components/Separator';
+} from '@ui-kit/components/Separator';
 
 import type { SeparatorProps } from './Separator.props';
 

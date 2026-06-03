@@ -3,8 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered, IconsMap } from '@storybook-utils/constants';
 
-import { noop } from 'src/utils';
-
 import { i18n } from '@i18n';
 
 import MicrophoneIcon from '@storybook-utils/icons/microphone.svg';
@@ -12,7 +10,9 @@ import TriggerIcon from '@storybook-utils/icons/trigger.svg';
 import TrashcanIcon from '@storybook-utils/icons/trashcan.svg';
 import MagicIcon from '@storybook-utils/icons/magic.svg';
 
-import { useStoryLabel } from 'src/hooks/useStoryLabel';
+import { noop } from '@ui-kit/utils';
+
+import { useStoryLabel } from '@ui-kit/hooks/useStoryLabel';
 
 import {
   Button,

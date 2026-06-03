@@ -14,9 +14,9 @@ const config: Config.InitialOptions = {
   testPathIgnorePatterns: ['<rootDir>/src/.*\\.e2e\\.test\\.(ts|tsx)$'],
   transformIgnorePatterns: ['<rootDir>/node_modules/!(nanoid)'],
   moduleNameMapper: {
-    '^src/(.*)$': '<rootDir>/src/$1',
-    '^src$': '<rootDir>/src/index.ts',
-    '^@storybook-utils/(.*)$': '<rootDir>/storybook/$1',
+    '^@ui-kit/(.*)$': '<rootDir>/src/$1',
+    '^@ui-kit$': '<rootDir>/src/index.ts',
+    '^@storybook-utils/(.*)$': '<rootDir>/../storybook/storybook/$1',
   },
 };
 

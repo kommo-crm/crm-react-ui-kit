@@ -1,6 +1,6 @@
 import { Declaration, type Rule } from 'css';
 
-import { type CrmUiKitCSSProperties } from 'src/lib/theme';
+import { type CrmUiKitCSSProperties } from '@ui-kit/lib/theme';
 
 import { type ColorItemType, type NumericItemType } from '../types/Items';
 

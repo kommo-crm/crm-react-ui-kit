@@ -1,4 +1,4 @@
-import { type CheckboxProps as CheckboxCoreProps } from 'src/components/Checkbox/Checkbox.props';
+import { type CheckboxProps as CheckboxCoreProps } from '@ui-kit/components/Checkbox/Checkbox.props';
 
 export type CheckboxProps = Omit<
   CheckboxCoreProps,

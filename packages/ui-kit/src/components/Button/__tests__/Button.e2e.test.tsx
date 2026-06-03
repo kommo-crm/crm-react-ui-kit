@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { test } from '@crm-react-ui-kit-e2e/test';
-
-import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
-
 import { IconsMap } from '@storybook-utils/constants';
 
 import MagicIcon from '@storybook-utils/icons/magic.svg';
+
+import { test } from '@crm-react-ui-kit-e2e/test';
+
+import { multiCartesian, prettyProps } from '@ui-kit/tests/e2e/utils';
 
 import { ButtonProps } from '../Button.props';
 

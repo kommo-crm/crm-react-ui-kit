@@ -1,4 +1,4 @@
-import { createComponentContext } from 'src/lib/react';
+import { createComponentContext } from '@ui-kit/lib/react';
 
 import { SelectContextProps } from './Select.props';
 

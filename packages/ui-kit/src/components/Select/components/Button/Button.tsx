@@ -1,8 +1,11 @@
 import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
 
-import { SelectButton, SelectButtonProps } from 'src/components/SelectButton';
+import {
+  SelectButton,
+  SelectButtonProps,
+} from '@ui-kit/components/SelectButton';
 
-import { mergeRefs } from 'src/lib/utils';
+import { mergeRefs } from '@ui-kit/lib/utils';
 
 import { useSelectContext } from '../../Select.context';
 import { getSelectItemTitle } from '../../Select.types';

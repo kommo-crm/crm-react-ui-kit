@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
-import { CrmUiKitCSSProperties } from 'src/lib/theme';
-import { SwitcherPrimaryTheme } from 'src/components/Switcher';
+import { CrmUiKitCSSProperties } from '@ui-kit/lib/theme';
+import { SwitcherPrimaryTheme } from '@ui-kit/components/Switcher';
 
 import { useThemeClassName } from '..';
 

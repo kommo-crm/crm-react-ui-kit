@@ -2,9 +2,9 @@ import React, { forwardRef } from 'react';
 
 import cx from 'classnames';
 
-import DropdownArrowIcon from 'src/icons/dropdownArrow.svg';
+import DropdownArrowIcon from '@ui-kit/icons/dropdownArrow.svg';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import { ArrowProps } from './Arrow.props';
 
