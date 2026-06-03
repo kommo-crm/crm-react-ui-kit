@@ -36,7 +36,6 @@
     "./CounterBadge": "./dist/components/CounterBadge/index.js",
     "./Badge": "./dist/components/Badge/index.js",
     "./Separator": "./dist/components/Separator/index.js",
-    "./SelectButton": "./dist/components/SelectButton/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -62,35 +61,92 @@
   },
   "typesVersions": {
     "*": {
-      "Switcher": ["./dist/components/Switcher/index.d.ts"],
-      "Spinner": ["./dist/components/Spinner/index.d.ts"],
-      "Link": ["./dist/components/Link/index.d.ts"],
-      "List": ["./dist/components/List/index.d.ts"],
-      "TextArea": ["./dist/components/TextArea/index.d.ts"],
-      "Text": ["./dist/components/Text/index.d.ts"],
-      "Input": ["./dist/components/Input/index.d.ts"],
-      "InlineInput": ["./dist/components/InlineInput/index.d.ts"],
-      "Label": ["./dist/components/Label/index.d.ts"],
-      "Checkbox": ["./dist/components/Checkbox/index.d.ts"],
-      "Portal": ["./dist/components/Portal/index.d.ts"],
-      "RadioGroup": ["./dist/components/RadioGroup/index.d.ts"],
-      "Select": ["./dist/components/Select/index.d.ts"],
-      "CheckboxGroup": ["./dist/components/CheckboxGroup/index.d.ts"],
-      "FilterTabs": ["./dist/components/FilterTabs/index.d.ts"],
-      "Button": ["./dist/components/Button/index.d.ts"],
-      "ConfigProvider": ["./dist/components/ConfigProvider/index.d.ts"],
-      "ContentBlock": ["./dist/components/ContentBlock/index.d.ts"],
-      "Callout": ["./dist/components/Callout/index.d.ts"],
-      "Accordion": ["./dist/components/Accordion/index.d.ts"],
-      "ContextMenu": ["./dist/components/ContextMenu/index.d.ts"],
-      "CounterBadge": ["./dist/components/CounterBadge/index.d.ts"],
-      "Badge": ["./dist/components/Badge/index.d.ts"],
-      "Separator": ["./dist/components/Separator/index.d.ts"]
+      "Switcher": [
+        "./dist/components/Switcher/index.d.ts"
+      ],
+      "Spinner": [
+        "./dist/components/Spinner/index.d.ts"
+      ],
+      "Link": [
+        "./dist/components/Link/index.d.ts"
+      ],
+      "List": [
+        "./dist/components/List/index.d.ts"
+      ],
+      "TextArea": [
+        "./dist/components/TextArea/index.d.ts"
+      ],
+      "Text": [
+        "./dist/components/Text/index.d.ts"
+      ],
+      "Input": [
+        "./dist/components/Input/index.d.ts"
+      ],
+      "InlineInput": [
+        "./dist/components/InlineInput/index.d.ts"
+      ],
+      "Label": [
+        "./dist/components/Label/index.d.ts"
+      ],
+      "Checkbox": [
+        "./dist/components/Checkbox/index.d.ts"
+      ],
+      "Portal": [
+        "./dist/components/Portal/index.d.ts"
+      ],
+      "RadioGroup": [
+        "./dist/components/RadioGroup/index.d.ts"
+      ],
+      "Select": [
+        "./dist/components/Select/index.d.ts"
+      ],
+      "CheckboxGroup": [
+        "./dist/components/CheckboxGroup/index.d.ts"
+      ],
+      "FilterTabs": [
+        "./dist/components/FilterTabs/index.d.ts"
+      ],
+      "Button": [
+        "./dist/components/Button/index.d.ts"
+      ],
+      "ConfigProvider": [
+        "./dist/components/ConfigProvider/index.d.ts"
+      ],
+      "ContentBlock": [
+        "./dist/components/ContentBlock/index.d.ts"
+      ],
+      "Callout": [
+        "./dist/components/Callout/index.d.ts"
+      ],
+      "Accordion": [
+        "./dist/components/Accordion/index.d.ts"
+      ],
+      "ContextMenu": [
+        "./dist/components/ContextMenu/index.d.ts"
+      ],
+      "CounterBadge": [
+        "./dist/components/CounterBadge/index.d.ts"
+      ],
+      "Badge": [
+        "./dist/components/Badge/index.d.ts"
+      ],
+      "Separator": [
+        "./dist/components/Separator/index.d.ts"
+      ]
     }
   },
-  "files": ["dist", "LICENCE"],
-  "keywords": ["react", "ui", "Kommo"],
-  "sideEffects": ["**/*.css"],
+  "files": [
+    "dist",
+    "LICENCE"
+  ],
+  "keywords": [
+    "react",
+    "ui",
+    "Kommo"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "prepublishOnly": "cp ../../LICENCE ./LICENCE",
     "build": "rm -rf dist && tsc -p tsconfig.build.json && vite build",
