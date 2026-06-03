@@ -1,5 +1,5 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
-import { buildTree, isLeaf, type TokenLeaf, type TokenTree } from './tree.js';
+import { buildTree, isLeaf, type TokenLeaf, type TokenTree } from './tree';
 
 function serializeTree(
   tokenMap: Map<string, TransformedToken>,

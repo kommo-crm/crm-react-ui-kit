@@ -8,13 +8,13 @@ import {
 
 import StyleDictionary from 'style-dictionary';
 
-import config from '../tokens.config.js';
-import { jsNestedFormat } from '../formats/js-nested.js';
-import { cssMinifiedFormat } from '../formats/css-minified.js';
-import { dtsFormat } from '../formats/dts-generator.js';
+import config from '../tokens.config';
+import { jsNestedFormat } from '../formats/js-nested';
+import { cssMinifiedFormat } from '../formats/css-minified';
+import { dtsFormat } from '../formats/dts-generator';
 
-import { validateCssContract } from './validate-contract.js';
-import { deepMerge } from './utils.js';
+import { validateCssContract } from './validate-contract';
+import { deepMerge } from './utils';
 
 StyleDictionary.registerFormat(jsNestedFormat);
 StyleDictionary.registerFormat(cssMinifiedFormat);

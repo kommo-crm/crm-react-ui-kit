@@ -1,6 +1,6 @@
 import { watch } from 'node:fs';
 import { resolve } from 'node:path';
-import { build } from '../config/style-dictionary.config.js';
+import { build } from '../config/style-dictionary.config';
 
 const TOKENS_DIR = resolve('tokens');
 

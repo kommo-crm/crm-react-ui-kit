@@ -1,4 +1,4 @@
-import { build } from '../config/style-dictionary.config.js';
+import { build } from '../config/style-dictionary.config';
 
 build().catch((err: unknown) => {
   console.error(err);

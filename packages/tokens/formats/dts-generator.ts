@@ -1,6 +1,6 @@
 import type { Format } from 'style-dictionary/types';
 
-import { buildTree, isLeaf, type TokenTree } from './tree.js';
+import { buildTree, isLeaf, type TokenTree } from './tree';
 
 function buildInterface(tree: TokenTree, indent = ''): string {
   const lines: string[] = [];
