@@ -2,28 +2,22 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { color } from '@tokens/primitives';
+import type { Palette, ColorShade, Token } from '@tokens/primitives';
 import { Appearance } from '@ui-kit/lib/appearance';
 
 import { PrimitivePalette } from '@storybook-utils/components';
 
-type RawPalette = Record<
-  string,
-  Record<string, { value: string; cssVar: string }>
->;
-
-function makeGroups(palette: RawPalette) {
+function makeGroups(palette: Palette) {
   return Object.entries(palette).map(([name, shades]) => ({
     name,
-    shades: Object.entries(shades).map(([shade, token]) => ({ shade, token })),
+    shades: (Object.entries(shades) as [ColorShade, Token][]).map(
+      ([shade, token]) => ({ shade, token })
+    ),
   }));
 }
 
-const lightGroups = makeGroups(
-  (color as unknown as { light: RawPalette; dark: RawPalette }).light
-);
-const darkGroups = makeGroups(
-  (color as unknown as { light: RawPalette; dark: RawPalette }).dark
-);
+const lightGroups = makeGroups(color.light as Palette);
+const darkGroups = makeGroups(color.dark as Palette);
 
 function PrimitivesPage({ groups }: { groups: ReturnType<typeof makeGroups> }) {
   return (

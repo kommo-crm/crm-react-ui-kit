@@ -1,13 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react';
-
-interface Token {
-  value: string;
-  cssVar: string;
-}
+import type { Token, ColorShade } from '@tokens/primitives';
 
 interface ColorGroup {
   name: string;
-  shades: Array<{ shade: string; token: Token }>;
+  shades: Array<{ shade: ColorShade; token: Token }>;
 }
 
 interface Props {
