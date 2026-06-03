@@ -50,6 +50,17 @@ function legacyCopy(text: string): void {
   document.body.removeChild(el);
 }
 
+const COLOR_GROUP_ORDER = [
+  'azure',
+  'blue',
+  'green',
+  'orange',
+  'red',
+  'pink',
+  'purple',
+  'neutral',
+];
+
 const LABEL_WIDTH = 80;
 const SWATCH_HEIGHT = 48;
 
@@ -208,8 +219,17 @@ function Swatch({ token, onShow }: SwatchProps) {
 export function PrimitivePalette({ groups }: Props) {
   const { tooltip, show } = useTooltip();
 
+  const sortedGroups = [...groups].sort((a, b) => {
+    const ai = COLOR_GROUP_ORDER.indexOf(a.name);
+    const bi = COLOR_GROUP_ORDER.indexOf(b.name);
+    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+
   const allShades = [
-    ...new Set(groups.flatMap((g) => g.shades.map((s) => s.shade))),
+    ...new Set(sortedGroups.flatMap((g) => g.shades.map((s) => s.shade))),
   ].sort((a, b) => Number(a) - Number(b));
 
   const shadeMap = (group: ColorGroup) =>
@@ -226,7 +246,7 @@ export function PrimitivePalette({ groups }: Props) {
         ))}
       </div>
 
-      {groups.map((group) => {
+      {sortedGroups.map((group) => {
         const map = shadeMap(group);
         return (
           <div key={group.name} style={{ ...rowStyle, marginBottom: 12 }}>

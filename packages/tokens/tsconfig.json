@@ -4,5 +4,11 @@
     "moduleResolution": "bundler",
     "module": "ESNext"
   },
-  "include": ["config/**/*", "formats/**/*", "scripts/**/*", "tokens.config.ts"]
+  "include": [
+    "config/**/*",
+    "formats/**/*",
+    "scripts/**/*",
+    "tokens.config.ts",
+    "config/types.ts"
+  ]
 }

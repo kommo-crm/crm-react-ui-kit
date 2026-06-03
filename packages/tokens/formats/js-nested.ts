@@ -1,5 +1,4 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
-import { sortTokens } from './sort.js';
 import { buildTree, isLeaf, type TokenLeaf, type TokenTree } from './tree.js';
 
 function serializeTree(tokenMap: Map<string, TransformedToken>, tree: TokenTree, path: string[] = []): string[] {
@@ -25,7 +24,7 @@ export const jsNestedFormat: Format = {
   name: 'custom/js-nested',
   format: ({ dictionary, options }) => {
     const prefix = (options?.prefix as string) ?? '';
-    const sorted = sortTokens(dictionary.allTokens);
+    const sorted = dictionary.allTokens;
     const tree = buildTree(sorted, prefix);
     const tokenMap = new Map(sorted.map((t) => [t.path.join('.'), t]));
     const lines = serializeTree(tokenMap, tree);

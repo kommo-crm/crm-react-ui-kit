@@ -4,6 +4,7 @@ import config from '../tokens.config.js';
 import { jsNestedFormat } from '../formats/js-nested.js';
 import { cssMinifiedFormat } from '../formats/css-minified.js';
 import { dtsFormat } from '../formats/dts-generator.js';
+import { validateCssContract } from './validate-contract.js';
 
 StyleDictionary.registerFormat(jsNestedFormat);
 StyleDictionary.registerFormat(cssMinifiedFormat);
@@ -145,6 +146,16 @@ function buildMergedJson(): void {
 export async function build(): Promise<void> {
   rmSync('dist', { recursive: true, force: true });
   await buildPrimitives().buildAllPlatforms();
+
+  if (config.requiredTokens !== undefined) {
+    try {
+      validateCssContract('dist/css/primitives.min.css', config.requiredTokens);
+    } catch (err) {
+      rmSync('dist', { recursive: true, force: true });
+      throw err;
+    }
+  }
+
   for (const [name, { source, selector, prefix }] of Object.entries(themes)) {
     await buildTheme(name, source, selector, prefix).buildAllPlatforms();
   }

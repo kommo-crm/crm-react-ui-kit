@@ -1,4 +1,5 @@
-import type { TokensConfig } from './config/types.js';
+import type { TokensConfig } from './config/types';
+import { primitives } from './config/validation';
 
 const config: TokensConfig = {
   themes: {
@@ -8,6 +9,7 @@ const config: TokensConfig = {
     //   source: 'tokens/semantic/high-contrast.json',
     // },
   },
+  requiredTokens: [...primitives],
 };
 
 export default config;
