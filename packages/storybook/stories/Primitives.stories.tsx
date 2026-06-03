@@ -16,8 +16,8 @@ function makeGroups(palette: Palette) {
   }));
 }
 
-const lightGroups = makeGroups(color.light as Palette);
-const darkGroups = makeGroups(color.dark as Palette);
+const lightGroups = makeGroups(color.light);
+const darkGroups = makeGroups(color.dark);
 
 function PrimitivesPage({ groups }: { groups: ReturnType<typeof makeGroups> }) {
   return (
