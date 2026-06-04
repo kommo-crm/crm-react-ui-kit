@@ -1,7 +1,7 @@
 export default {
   'Design Tokens': 'Design Tokens',
-  '`@kommo-crm/tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.':
-    '`@kommo-crm/tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.',
+  '`@kommo-crm/crm-tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.':
+    '`@kommo-crm/crm-tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.',
   'Installation': 'Installation',
   'CSS': 'CSS',
   'Import adds CSS custom properties to `:root`.':
@@ -17,7 +17,8 @@ export default {
   'JavaScript / TypeScript': 'JavaScript / TypeScript',
   "The JS export provides typed access to each token's resolved value and CSS variable name.":
     "The JS export provides typed access to each token's resolved value and CSS variable name.",
-  'Every token has the following shape:': 'Every token has the following shape:',
+  'Every token has the following shape:':
+    'Every token has the following shape:',
   'JSON': 'JSON',
   'All tokens in a single file:': 'All tokens in a single file:',
   "Useful for generating docs or integrating with tools that don't consume CSS.":
