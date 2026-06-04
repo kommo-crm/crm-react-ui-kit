@@ -9,22 +9,27 @@ services:
       apt-get install -y python3 build-essential &&
       corepack enable &&
       YARN_ENABLE_SCRIPTS=false yarn install --immutable &&
-      yarn test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-} ${GREP_FLAG:-}
+      yarn workspace @kommo-crm/crm-react-ui-kit test:e2e:ci ${UPDATE_SNAPSHOTS_FLAG:-} ${GREP_FLAG:-}
       "
     volumes:
-      - ./:/app
-      # Exclude node_modules.
-      - /app/node_modules
-      # Cache the node_modules installed inside the container and cache the directory.
+      # Mount monorepo root so workspace resolution and @storybook-utils alias work.
+      - ../../:/app
+      - /app/.git
+      # Per-workspace node_modules: prevent host dirs from leaking in, persist between runs.
       - yarn_cache:/yarn
       - node_modules_cache:/app/node_modules
-      - playwright_cache:/app/playwright/.cache
-      # Exclude anything that won't be needed in the container.
-      - /app/.git
-      - /app/.cache
-      - /app/.swc
+      - ui_kit_node_modules_cache:/app/packages/ui-kit/node_modules
+      - storybook_node_modules_cache:/app/packages/storybook/node_modules
+      - tokens_node_modules_cache:/app/packages/tokens/node_modules
+      - playwright_cache:/app/packages/ui-kit/playwright/.cache
+      # Exclude build artifacts that don't belong in the container.
+      - /app/packages/ui-kit/.cache
+      - /app/packages/ui-kit/.swc
 
 volumes:
   yarn_cache:
   node_modules_cache:
+  ui_kit_node_modules_cache:
+  storybook_node_modules_cache:
+  tokens_node_modules_cache:
   playwright_cache:
