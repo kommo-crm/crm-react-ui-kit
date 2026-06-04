@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 
 <ReactMarkdown>
   {i18n.t(
-    '`@kommo-crm/tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.'
+    '`@kommo-crm/crm-tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.'
   )}
 </ReactMarkdown>
 
@@ -17,19 +17,19 @@ import ReactMarkdown from 'react-markdown';
 **npm:**
 
 ```sh
-npm i @kommo-crm/tokens
+npm i @kommo-crm/crm-tokens
 ```
 
 **yarn:**
 
 ```sh
-yarn add @kommo-crm/tokens
+yarn add @kommo-crm/crm-tokens
 ```
 
 **pnpm:**
 
 ```sh
-pnpm add @kommo-crm/tokens
+pnpm add @kommo-crm/crm-tokens
 ```
 
 ---
@@ -45,7 +45,7 @@ pnpm add @kommo-crm/tokens
 </ReactMarkdown>
 
 ```css
-@import '@kommo-crm/tokens/css/primitives';
+@import '@kommo-crm/crm-tokens/css/primitives';
 ```
 
 <ReactMarkdown>
@@ -55,8 +55,8 @@ pnpm add @kommo-crm/tokens
 </ReactMarkdown>
 
 ```css
-@import '@kommo-crm/tokens/css/semantic/light';
-@import '@kommo-crm/tokens/css/semantic/dark';
+@import '@kommo-crm/crm-tokens/css/semantic/light';
+@import '@kommo-crm/crm-tokens/css/semantic/dark';
 ```
 
 <ReactMarkdown>
@@ -75,8 +75,8 @@ pnpm add @kommo-crm/tokens
 <ReactMarkdown>{'## ' + i18n.t('SCSS')}</ReactMarkdown>
 
 ```scss
-@use '@kommo-crm/tokens/scss/primitives' as *;
-@use '@kommo-crm/tokens/scss/semantic/light' as *;
+@use '@kommo-crm/crm-tokens/scss/primitives' as *;
+@use '@kommo-crm/crm-tokens/scss/semantic/light' as *;
 ```
 
 ---
@@ -84,8 +84,8 @@ pnpm add @kommo-crm/tokens
 <ReactMarkdown>{'## ' + i18n.t('Less')}</ReactMarkdown>
 
 ```less
-@import '@kommo-crm/tokens/less/primitives';
-@import '@kommo-crm/tokens/less/semantic/light';
+@import '@kommo-crm/crm-tokens/less/primitives';
+@import '@kommo-crm/crm-tokens/less/semantic/light';
 ```
 
 ---
@@ -101,7 +101,7 @@ pnpm add @kommo-crm/tokens
 **Primitives:**
 
 ```ts
-import { color, borderRadius, fontSize } from '@kommo-crm/tokens';
+import { color, borderRadius, fontSize } from '@kommo-crm/crm-tokens';
 
 color.light.blue[500].value; // '#4c8bf7'
 color.light.blue[500].cssVar; // '--color-light-blue-500'
@@ -113,8 +113,8 @@ fontSize.base.value; // '15px'
 **Semantic tokens:**
 
 ```ts
-import lightTokens from '@kommo-crm/tokens/js/semantic/light';
-import darkTokens from '@kommo-crm/tokens/js/semantic/dark';
+import lightTokens from '@kommo-crm/crm-tokens/js/semantic/light';
+import darkTokens from '@kommo-crm/crm-tokens/js/semantic/dark';
 
 lightTokens['background']['default'].cssVar; // '--background-default'
 ```
@@ -135,7 +135,7 @@ interface Token {
 <ReactMarkdown>{i18n.t('All tokens in a single file:')}</ReactMarkdown>
 
 ```ts
-import tokens from '@kommo-crm/tokens/json';
+import tokens from '@kommo-crm/crm-tokens/json';
 ```
 
 <ReactMarkdown>

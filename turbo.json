@@ -26,7 +26,7 @@
       "outputs": ["storybook-static/**"]
     },
     "@kommo-crm/crm-react-ui-kit#build": {
-      "dependsOn": ["^build", "@kommo-crm/tokens#build"],
+      "dependsOn": ["^build", "@kommo-crm/crm-tokens#build"],
       "outputs": ["dist/**"]
     },
     "dev": {
@@ -34,12 +34,12 @@
       "persistent": true
     },
     "@kommo-crm/storybook#storybook": {
-      "dependsOn": ["@kommo-crm/tokens#build"],
+      "dependsOn": ["@kommo-crm/crm-tokens#build"],
       "cache": false,
       "persistent": true
     },
     "@kommo-crm/storybook#build-storybook": {
-      "dependsOn": ["^build", "@kommo-crm/tokens#build"],
+      "dependsOn": ["^build", "@kommo-crm/crm-tokens#build"],
       "outputs": ["storybook-static/**"]
     }
   }

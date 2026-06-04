@@ -1,7 +1,7 @@
 export default {
   'Design Tokens': 'Tokens de design',
-  '`@kommo-crm/tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.':
-    '`@kommo-crm/tokens` é um pacote de tokens de design para o Kommo CRM. Fornece tokens primitivos e semânticos nos formatos CSS, SCSS, Less e JS/TS.',
+  '`@kommo-crm/crm-tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.':
+    '`@kommo-crm/crm-tokens` é um pacote de tokens de design para o Kommo CRM. Fornece tokens primitivos e semânticos nos formatos CSS, SCSS, Less e JS/TS.',
   'Installation': 'Instalação',
   'CSS': 'CSS',
   'Import adds CSS custom properties to `:root`.':
