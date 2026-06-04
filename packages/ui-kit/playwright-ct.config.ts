@@ -115,6 +115,7 @@ export default defineConfig({
     deviceScaleFactor: 1,
 
     ctViteConfig: {
+      publicDir: path.resolve(__dirname, '../storybook/public'),
       // @ts-expect-error Invalid svgrPlugin initial typing.
       plugins: [svgrPlugin({ include: '**/*.svg' })],
       resolve: {
