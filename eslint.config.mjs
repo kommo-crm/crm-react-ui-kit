@@ -1,5 +1,9 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import eslint from '@eslint/js';
 import globals from 'globals';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 import tseslint from 'typescript-eslint';
 import eslintReact from 'eslint-plugin-react';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -413,6 +417,7 @@ export default tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
+          project: [`${__dirname}/packages/*/tsconfig.json`],
         },
       },
     },

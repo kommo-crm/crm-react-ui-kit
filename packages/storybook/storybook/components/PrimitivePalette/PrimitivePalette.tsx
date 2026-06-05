@@ -19,12 +19,28 @@ interface TooltipState {
 
 function contrastColor(hex: string): string {
   const clean = hex.replace('#', '');
-  if (!/^[0-9a-fA-F]{6}$/.test(clean)) return '#000000';
+
+  if (!/^[0-9a-fA-F]{6}$/.test(clean)) {
+    return '#000000';
+  }
+
   const r = parseInt(clean.substring(0, 2), 16);
   const g = parseInt(clean.substring(2, 4), 16);
   const b = parseInt(clean.substring(4, 6), 16);
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
   return luminance > 0.5 ? '#000000' : '#ffffff';
+}
+
+function legacyCopy(text: string): void {
+  const el = document.createElement('textarea');
+
+  el.value = text;
+  el.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
 }
 
 function copyText(text: string): void {
@@ -33,16 +49,6 @@ function copyText(text: string): void {
   } else {
     legacyCopy(text);
   }
-}
-
-function legacyCopy(text: string): void {
-  const el = document.createElement('textarea');
-  el.value = text;
-  el.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
 }
 
 const COLOR_GROUP_ORDER = [
@@ -141,15 +147,18 @@ function useTooltip() {
   });
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const show = useCallback((e: React.MouseEvent, text: string) => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  const handleShow = useCallback((e: React.MouseEvent, text: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
     setTooltip({ visible: true, x: e.clientX, y: e.clientY, text });
     timeoutRef.current = setTimeout(() => {
       setTooltip((t) => ({ ...t, visible: false }));
     }, 1800);
   }, []);
 
-  return { tooltip, show };
+  return { tooltip, handleShow };
 }
 
 interface SwatchProps {
@@ -214,14 +223,24 @@ function Swatch({ token, onShow }: SwatchProps) {
 }
 
 export function PrimitivePalette({ groups }: Props) {
-  const { tooltip, show } = useTooltip();
+  const { tooltip, handleShow } = useTooltip();
 
   const sortedGroups = [...groups].sort((a, b) => {
     const ai = COLOR_GROUP_ORDER.indexOf(a.name);
     const bi = COLOR_GROUP_ORDER.indexOf(b.name);
-    if (ai === -1 && bi === -1) return 0;
-    if (ai === -1) return 1;
-    if (bi === -1) return -1;
+
+    if (ai === -1 && bi === -1) {
+      return 0;
+    }
+
+    if (ai === -1) {
+      return 1;
+    }
+
+    if (bi === -1) {
+      return -1;
+    }
+
     return ai - bi;
   });
 
@@ -245,6 +264,7 @@ export function PrimitivePalette({ groups }: Props) {
 
       {sortedGroups.map((group) => {
         const map = shadeMap(group);
+
         return (
           <div key={group.name} style={{ ...rowStyle, marginBottom: 12 }}>
             <div style={labelCellStyle}>
@@ -252,9 +272,10 @@ export function PrimitivePalette({ groups }: Props) {
             </div>
             {allShades.map((shade) => {
               const token = map[shade];
+
               return (
                 <div key={shade} style={shadeCellStyle}>
-                  {token ? <Swatch token={token} onShow={show} /> : null}
+                  {token ? <Swatch token={token} onShow={handleShow} /> : null}
                 </div>
               );
             })}
