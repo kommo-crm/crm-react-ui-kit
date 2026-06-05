@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -57,6 +57,7 @@
     "./assets/List.css": "./dist/assets/List.css",
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/Separator.css": "./dist/assets/Separator.css",
+    "./assets/Ribbon.css": "./dist/assets/Ribbon.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
