@@ -46,9 +46,14 @@ for (const props of combinations) {
       label,
       async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
         if (props.isPinnedToBottom) {
-          const viewport = page.viewportSize() ?? { width: 390, height: 150 };
+          const viewportSize = page.viewportSize();
 
-          await page.setViewportSize({ width: viewport.width, height: 150 });
+          if (viewportSize) {
+            await page.setViewportSize({
+              width: viewportSize.width,
+              height: 150,
+            });
+          }
         }
 
         await mount(
@@ -64,9 +69,14 @@ for (const props of combinations) {
       label,
       async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
         if (props.isPinnedToBottom) {
-          const viewport = page.viewportSize() ?? { width: 390, height: 150 };
+          const viewportSize = page.viewportSize();
 
-          await page.setViewportSize({ width: viewport.width, height: 150 });
+          if (viewportSize) {
+            await page.setViewportSize({
+              width: viewportSize.width,
+              height: 150,
+            });
+          }
         }
 
         await mount(
