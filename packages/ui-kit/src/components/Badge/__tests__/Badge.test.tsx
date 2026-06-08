@@ -9,12 +9,9 @@ const dataTestId = 'badge';
 
 const renderBadge = (props: Partial<BadgeProps>) => {
   return render(
-    <Badge
-      data-testid={dataTestId}
-      theme={BadgeSafetyTheme}
-      title="Badge"
-      {...props}
-    />
+    <Badge data-testid={dataTestId} theme={BadgeSafetyTheme} {...props}>
+      Badge
+    </Badge>
   );
 };
 
