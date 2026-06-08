@@ -98,9 +98,7 @@ const SelectWrapper = (props: SelectStoryProps) => {
   const handleChange = (item: SelectItem) => {
     props?.onChange!(item);
 
-    if ('value' in props) {
-      setValue(item);
-    }
+    setValue(item);
   };
 
   return (
