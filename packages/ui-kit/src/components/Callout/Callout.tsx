@@ -1,0 +1,59 @@
+import React, { forwardRef, useMemo } from 'react';
+import cx from 'classnames';
+
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
+
+import CloseIcon from '@ui-kit/icons/close.svg';
+
+import { omit } from '@ui-kit/utils';
+
+import { Button, ButtonIconSmallGhostTheme } from '../Button';
+
+import { type CalloutProps } from './Callout.props';
+import { CalloutThemeType } from './Callout.themes';
+
+import s from './Callout.module.css';
+
+type D = HTMLDivElement;
+
+export const Callout = forwardRef<D, CalloutProps>((props, ref) => {
+  const {
+    className = '',
+    isIconAvailable = true,
+    theme,
+    children,
+    onClose,
+    ...rest
+  } = props;
+
+  const { Icon } = theme;
+
+  const themeStyles = useMemo(() => omit(theme, ['Icon']), [theme]);
+
+  const themeClassName =
+    useThemeClassName<Omit<CalloutThemeType, 'Icon'>>(themeStyles);
+
+  return (
+    <div
+      ref={ref}
+      className={cx(s.wrapper, themeClassName, className)}
+      {...rest}
+    >
+      {isIconAvailable && <Icon className={cx(s.icon)} />}
+
+      {children}
+
+      {onClose && (
+        <Button
+          theme={ButtonIconSmallGhostTheme}
+          className={s.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </Button>
+      )}
+    </div>
+  );
+});
+
+Callout.displayName = 'Callout';

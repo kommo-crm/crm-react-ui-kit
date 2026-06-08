@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/",
+    "paths": {
+      "@ui-kit/*": ["./src/*"],
+      "@crm-react-ui-kit-e2e/test": ["./src/tests/e2e/index.playwright"],
+      "@storybook-utils/*": ["../storybook/storybook/*"],
+      "@i18n": ["../storybook/.storybook/i18n.ts"]
+    }
+  },
+  "include": ["./**/*.tsx", "./**/*.ts"],
+  "exclude": ["node_modules"]
+}
