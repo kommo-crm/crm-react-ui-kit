@@ -21,7 +21,11 @@ export const BadgeNeutralPlaygroundItem = ({
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeNeutralTheme} title="Badge" />}
+    {(p) => (
+      <Badge {...p} theme={BadgeNeutralTheme}>
+        Badge
+      </Badge>
+    )}
   </ComponentPlayground>
 );
 
@@ -30,7 +34,11 @@ export const BadgePromoPlaygroundItem = ({
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgePromoTheme} title="Badge" />}
+    {(p) => (
+      <Badge {...p} theme={BadgePromoTheme}>
+        Badge
+      </Badge>
+    )}
   </ComponentPlayground>
 );
 
@@ -39,7 +47,11 @@ export const BadgeInfoPlaygroundItem = ({
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeInfoTheme} title="Badge" />}
+    {(p) => (
+      <Badge {...p} theme={BadgeInfoTheme}>
+        Badge
+      </Badge>
+    )}
   </ComponentPlayground>
 );
 
@@ -48,7 +60,11 @@ export const BadgeSafetyPlaygroundItem = ({
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeSafetyTheme} title="Badge" />}
+    {(p) => (
+      <Badge {...p} theme={BadgeSafetyTheme}>
+        Badge
+      </Badge>
+    )}
   </ComponentPlayground>
 );
 
@@ -57,7 +73,11 @@ export const BadgeWarningPlaygroundItem = ({
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeWarningTheme} title="Badge" />}
+    {(p) => (
+      <Badge {...p} theme={BadgeWarningTheme}>
+        Badge
+      </Badge>
+    )}
   </ComponentPlayground>
 );
 
@@ -66,6 +86,10 @@ export const BadgeDangerPlaygroundItem = ({
   props,
 }: ComponentPlaygroundProps<BadgeProps>) => (
   <ComponentPlayground<BadgeProps> appearance={appearance} props={props}>
-    {(p) => <Badge {...p} theme={BadgeDangerTheme} title="Badge" />}
+    {(p) => (
+      <Badge {...p} theme={BadgeDangerTheme}>
+        Badge
+      </Badge>
+    )}
   </ComponentPlayground>
 );
