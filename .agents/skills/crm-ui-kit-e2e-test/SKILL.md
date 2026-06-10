@@ -1,9 +1,11 @@
 ---
 name: crm-ui-kit-e2e-test
-description: Write Playwright Component Testing visual e2e tests for crm-react-ui-kit components, including the playground file and the prop-cartesian screenshot test. Use when adding `<Component>.e2e.test.tsx` and `<Component>.e2e-playground.tsx` files under `src/components/<Name>/__tests__/`, generating image snapshots, or asked to write/update visual regression tests.
+description: Write Playwright Component Testing visual e2e tests for crm-react-ui-kit components, including the playground file and the prop-cartesian screenshot test. Use when adding `<Component>.e2e.test.tsx` and `<Component>.e2e-playground.tsx` files under `packages/ui-kit/src/components/<Name>/__tests__/`, generating image snapshots, or asked to write/update visual regression tests.
 ---
 
 # Write E2E (Visual) Tests for a UI Kit Component
+
+> **Monorepo:** everything here lives in the **`packages/ui-kit`** workspace (`@kommo-crm/crm-react-ui-kit`). All `src/...` paths are relative to `packages/ui-kit/`, and all `yarn test:e2e*` scripts must be run **from `packages/ui-kit/`** (or via `yarn workspace @kommo-crm/crm-react-ui-kit <script>` from the repo root). Source imports use the `@ui-kit/*` alias (maps to `packages/ui-kit/src/*`) — not the old bare `src/...` prefix.
 
 The library uses `@playwright/experimental-ct-react` to mount components and compare cropped screenshots across:
 
@@ -15,19 +17,19 @@ A test is a Cartesian combination of props rendered through a thin "playground" 
 ## Files to create
 
 ```
-src/components/<Name>/__tests__/
+packages/ui-kit/src/components/<Name>/__tests__/
 ├── <Name>.e2e-playground.tsx   # Playground wrappers — one per visual variant (theme)
 └── <Name>.e2e.test.tsx         # Tests — multiCartesian + describe/test loops
 ```
 
-Snapshots will be written to `src/components/<Name>/__image_snapshots__/` automatically by:
+Snapshots will be written to `packages/ui-kit/src/components/<Name>/__image_snapshots__/` automatically by (run from `packages/ui-kit/`):
 
 ```bash
 yarn test:e2e:update-snapshots
 yarn test:e2e:update-snapshots -g "<Name>"   # filter — MUST use -g, not --grep
 ```
 
-`scripts/generate_env.docker.sh` parses only `-g`; `--grep` is silently dropped and the run fans out to the full suite, which can abort with `unexpected EOF` partway and leave orphan PNGs for `<Name>` behind. If that happens, delete `src/components/<Name>/__image_snapshots__/` and retry with `-g`.
+`scripts/generate_env.docker.sh` (at `packages/ui-kit/scripts/generate_env.docker.sh`) parses only `-g`; `--grep` is silently dropped and the run fans out to the full suite, which can abort with `unexpected EOF` partway and leave orphan PNGs for `<Name>` behind. If that happens, delete `packages/ui-kit/src/components/<Name>/__image_snapshots__/` and retry with `-g`.
 
 Run-only:
 
@@ -35,7 +37,7 @@ Run-only:
 yarn test:e2e
 ```
 
-The Playwright config (`playwright-ct.config.ts`) targets `**/*.e2e.test.tsx`.
+The Playwright config (`packages/ui-kit/playwright-ct.config.ts`) targets `**/*.e2e.test.tsx`.
 
 ## Required Conventions
 
@@ -45,7 +47,7 @@ The Playwright config (`playwright-ct.config.ts`) targets `**/*.e2e.test.tsx`.
    import { test } from '@crm-react-ui-kit-e2e/test';
    ```
 
-2. Build prop combinations with `multiCartesian<<Name>Props>([...])` from `src/tests/e2e/utils`. Multiple objects in the array are concatenated, not multiplied — use this to skip impossible combinations.
+2. Build prop combinations with `multiCartesian<<Name>Props>([...])` from `@ui-kit/tests/e2e/utils`. Multiple objects in the array are concatenated, not multiplied — use this to skip impossible combinations.
 3. Test labels come from `prettyProps(props)`. NEVER hand-write a label.
 4. Each visual variant (i.e. each theme preset) gets its own `test.describe('<Name> <Variant>', ...)` block. The describe name is what appears in snapshot folder names — keep it human-readable and stable.
 5. Inside a test, always:
@@ -64,7 +66,7 @@ import React from 'react';
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
-} from 'src/tests/e2e/ComponentPlayground';
+} from '@ui-kit/tests/e2e/ComponentPlayground';
 
 import {
   <Name>,
@@ -114,7 +116,7 @@ import React from 'react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
-import { multiCartesian, prettyProps } from 'src/tests/e2e/utils';
+import { multiCartesian, prettyProps } from '@ui-kit/tests/e2e/utils';
 
 import { type <Name>Props } from '..';
 
@@ -200,7 +202,7 @@ For composed visuals (icons, ref-triggered states), define static maps inside th
 
 ## Snapshot file naming
 
-Snapshots are named via `getSnapshotFileName` (in `src/tests/e2e/index.playwright.ts`):
+Snapshots are named via `getSnapshotFileName` (in `@ui-kit/tests/e2e/index.playwright.ts`, i.e. `packages/ui-kit/src/tests/e2e/index.playwright.ts`):
 
 ```
 __image_snapshots__/<platform>/<browser>/<appearance>/<describe-name>-<hashedProps>.png
@@ -216,8 +218,8 @@ You don't pass a name yourself — it's derived from `test.describe` title + `pr
 - [ ] Identify behavioral / state props that change visuals (isDisabled, isLoading, size, ...)
 - [ ] Build the multiCartesian. Split into separate prop-sets to avoid impossible combos.
 - [ ] Write a `test.describe` block per playground variant
-- [ ] Generate snapshots: yarn test:e2e:update-snapshots -- -g "<Name>"
-- [ ] Verify generated images under src/components/<Name>/__image_snapshots__/
+- [ ] Generate snapshots (from packages/ui-kit/): yarn test:e2e:update-snapshots -g "<Name>"
+- [ ] Verify generated images under packages/ui-kit/src/components/<Name>/__image_snapshots__/
 - [ ] Commit both source AND snapshot files
 ```
 
@@ -225,12 +227,12 @@ You don't pass a name yourself — it's derived from `test.describe` title + `pr
 
 The templates above cover the standard playground + cartesian shape. Open one of these files only if the user's component has a non-standard prop matrix not covered above. Read exactly ONE file.
 
-| Edge case                                           | File to read (one only)                                       |
-| --------------------------------------------------- | ------------------------------------------------------------- |
-| Width-bounded ellipsis snapshot                     | `src/components/Text/__tests__/Text.e2e-playground.tsx`       |
-| State matrix split into multiple orthogonal groups  | `src/components/Button/__tests__/Button.e2e.test.tsx`         |
-| Sparse axis (e.g. `isInvalid` only on a sub-matrix) | `src/components/Checkbox/__tests__/Checkbox.e2e.test.tsx`     |
-| Absolute-positioned content needing a wrapper div   | `src/components/Spinner/__tests__/Spinner.e2e-playground.tsx` |
+| Edge case                                           | File to read (one only)                                                  |
+| --------------------------------------------------- | ------------------------------------------------------------------------ |
+| Width-bounded ellipsis snapshot                     | `packages/ui-kit/src/components/Text/__tests__/Text.e2e-playground.tsx`       |
+| State matrix split into multiple orthogonal groups  | `packages/ui-kit/src/components/Button/__tests__/Button.e2e.test.tsx`         |
+| Sparse axis (e.g. `isInvalid` only on a sub-matrix) | `packages/ui-kit/src/components/Checkbox/__tests__/Checkbox.e2e.test.tsx`     |
+| Absolute-positioned content needing a wrapper div   | `packages/ui-kit/src/components/Spinner/__tests__/Spinner.e2e-playground.tsx` |
 
 ## Anti-Patterns
 

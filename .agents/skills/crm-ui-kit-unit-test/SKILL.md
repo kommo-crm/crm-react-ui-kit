@@ -1,21 +1,23 @@
 ---
 name: crm-ui-kit-unit-test
-description: Write Jest + React Testing Library unit tests for components in crm-react-ui-kit, following the project's render-helper pattern, role-based queries, and userEvent interactions. Use when adding `<Component>.test.tsx` files under `src/components/<Name>/__tests__/` or asked to write unit tests for a UI kit component.
+description: Write Jest + React Testing Library unit tests for components in crm-react-ui-kit, following the project's render-helper pattern, role-based queries, and userEvent interactions. Use when adding `<Component>.test.tsx` files under `packages/ui-kit/src/components/<Name>/__tests__/` or asked to write unit tests for a UI kit component.
 ---
 
 # Write Unit Tests for a UI Kit Component
 
 Unit tests verify behavior (event handlers, state transitions, prop reactions). They do NOT verify visual output — that is the job of the e2e screenshot tests (see `crm-ui-kit-e2e-test`).
 
+> **Monorepo:** tests live in the **`packages/ui-kit`** workspace (`@kommo-crm/crm-react-ui-kit`). All `src/...` paths are relative to `packages/ui-kit/`, and `yarn test` runs from `packages/ui-kit/` (or `yarn workspace @kommo-crm/crm-react-ui-kit test` / `turbo run test` from the repo root). Component imports stay relative (`'..'`); only cross-package source imports use the `@ui-kit/*` alias.
+
 ## Location & Naming
 
 ```
-src/components/<Name>/__tests__/<Name>.test.tsx
+packages/ui-kit/src/components/<Name>/__tests__/<Name>.test.tsx
 ```
 
-The Jest config (`jest.config.ts`) picks up `<rootDir>/src/**/*.test.(ts|tsx)` and explicitly ignores `.e2e.test.*`. No special configuration per file is needed.
+The Jest config (`packages/ui-kit/jest.config.ts`) picks up `<rootDir>/src/**/*.test.(ts|tsx)` and explicitly ignores `.e2e.test.*`. No special configuration per file is needed.
 
-Run:
+Run (from `packages/ui-kit/`):
 
 ```bash
 yarn test                    # all
@@ -251,9 +253,9 @@ Always use the self-closing form so `renderHelper({ children: 'text' })` works c
 
 The three templates above cover ~95 % of cases. Open one of these files only if the user's component has a specific behavior not covered above (e.g. ref-driven success state, `MutationObserver`-based assertions). Read exactly ONE file, not the whole directory.
 
-| Edge case                                          | File to read (one only)                               |
-| -------------------------------------------------- | ----------------------------------------------------- |
-| Ref-driven imperative state (success animation)    | `src/components/Button/__tests__/Button.test.tsx`     |
-| Form control with `isInvalid` + controlled toggle  | `src/components/Checkbox/__tests__/Checkbox.test.tsx` |
-| Internal `<Name>.Label` sub-component testing      | `src/components/Switcher/__tests__/Switcher.test.tsx` |
-| className composition assertion on display element | `src/components/Spinner/__tests__/Spinner.test.tsx`   |
+| Edge case                                          | File to read (one only)                                          |
+| -------------------------------------------------- | ---------------------------------------------------------------- |
+| Ref-driven imperative state (success animation)    | `packages/ui-kit/src/components/Button/__tests__/Button.test.tsx`     |
+| Form control with `isInvalid` + controlled toggle  | `packages/ui-kit/src/components/Checkbox/__tests__/Checkbox.test.tsx` |
+| Internal `<Name>.Label` sub-component testing      | `packages/ui-kit/src/components/Switcher/__tests__/Switcher.test.tsx` |
+| className composition assertion on display element | `packages/ui-kit/src/components/Spinner/__tests__/Spinner.test.tsx`   |

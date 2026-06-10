@@ -1,20 +1,22 @@
 ---
 name: crm-ui-kit-stories
-description: Write Storybook 8 stories (.stories.tsx + .mdx) for crm-react-ui-kit components — including the meta with title/USAGE snippet, controlled/uncontrolled stories, hidden per-theme stories tagged !dev, and a Themes.mdx with ThemeVisualization. Use when adding `<Component>.stories.tsx`, `<Component>.mdx`, or `Themes.mdx` files under `src/components/<Name>/__stories__/`.
+description: Write Storybook 8 stories (.stories.tsx + .mdx) for crm-react-ui-kit components — including the meta with title/USAGE snippet, controlled/uncontrolled stories, hidden per-theme stories tagged !dev, and a Themes.mdx with ThemeVisualization. Use when adding `<Component>.stories.tsx`, `<Component>.mdx`, or `Themes.mdx` files under `packages/ui-kit/src/components/<Name>/__stories__/`.
 ---
 
 # Write Storybook Stories for a UI Kit Component
 
+> **Monorepo:** stories stay **co-located** with the component inside the `packages/ui-kit` workspace — they were NOT moved into `packages/storybook`. The `packages/storybook` workspace only holds the Storybook app + shared utilities (`@storybook-utils/*`, `@i18n`); its `.storybook/main.ts` loads stories from `../../ui-kit/src/**`. All `src/...` paths below are relative to `packages/ui-kit/`. The `@storybook-utils/*` and `@i18n` aliases resolve to files in `packages/storybook` and are unchanged.
+
 ## Files to create
 
 ```
-src/components/<Name>/__stories__/
+packages/ui-kit/src/components/<Name>/__stories__/
 ├── <Name>.stories.tsx   # Stories + meta (CSF3)
 ├── <Name>.mdx           # Auto docs page using the Default story
 └── Themes.mdx           # One ThemeVisualization block per theme preset
 ```
 
-Run Storybook:
+Run Storybook (from the repo root via Turbo, or from `packages/storybook/`):
 
 ```bash
 yarn storybook
@@ -270,7 +272,7 @@ import { <Name>SecondaryTheme } from '@kommo-crm/crm-react-ui-kit/<Name>';
 <ThemeVisualization theme={<Name>SecondaryTheme} of={<Name>Stories.<Name>Secondary} />
 ````
 
-For Typography components, use `<Meta title="Typography/Themes" of={...} />` (see `src/components/Text/__stories__/Themes.mdx`).
+For Typography components, use `<Meta title="Typography/Themes" of={...} />` (see `packages/ui-kit/src/components/Text/__stories__/Themes.mdx`).
 
 ## Story design checklist
 
@@ -291,12 +293,12 @@ For Typography components, use `<Meta title="Typography/Themes" of={...} />` (se
 
 The templates above cover Default + per-theme + Themes.mdx for every standard component. Open one of these files only if the user's component needs a specific story shape not covered above. Read exactly ONE file.
 
-| Edge case                                                                | File to read (one only)                                    |
-| ------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| Side-by-side Sizes story rendering all options                           | `src/components/Text/__stories__/Text.stories.tsx`         |
-| Form-control controlled/uncontrolled split + Label                       | `src/components/Switcher/__stories__/Switcher.stories.tsx` |
-| Ref-driven `Refs` story / icon slots / `argTypes` mapping for icon enums | `src/components/Button/__stories__/Button.stories.tsx`     |
-| Minimal `data-testid` display story                                      | `src/components/Spinner/__stories__/Spinner.stories.tsx`   |
+| Edge case                                                                | File to read (one only)                                                 |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| Side-by-side Sizes story rendering all options                           | `packages/ui-kit/src/components/Text/__stories__/Text.stories.tsx`         |
+| Form-control controlled/uncontrolled split + Label                       | `packages/ui-kit/src/components/Switcher/__stories__/Switcher.stories.tsx` |
+| Ref-driven `Refs` story / icon slots / `argTypes` mapping for icon enums | `packages/ui-kit/src/components/Button/__stories__/Button.stories.tsx`     |
+| Minimal `data-testid` display story                                      | `packages/ui-kit/src/components/Spinner/__stories__/Spinner.stories.tsx`   |
 
 ## Anti-Patterns
 

@@ -1,18 +1,25 @@
 ---
 name: crm-ui-kit-component
-description: Create a new React component in the crm-react-ui-kit library following the project's conventions (forwardRef, CSS variables theme system, useThemeClassName hook, .props.ts/.themes.ts/.module.css/index.ts files). Use when adding a new component under src/components, scaffolding component files, or asked to create a new UI kit component.
+description: Create a new React component in the crm-react-ui-kit library following the project's conventions (forwardRef, CSS variables theme system, useThemeClassName hook, .props.ts/.themes.ts/.module.css/index.ts files). Use when adding a new component under packages/ui-kit/src/components, scaffolding component files, or asked to create a new UI kit component.
 ---
 
 # Create a UI Kit Component
 
-This skill scaffolds a new component inside `src/components/<ComponentName>/` following the conventions used by every other component in `crm-react-ui-kit`.
+This skill scaffolds a new component inside `packages/ui-kit/src/components/<ComponentName>/` following the conventions used by every other component in `crm-react-ui-kit`.
+
+## Monorepo Location
+
+The repo is a Yarn-workspaces + Turbo monorepo. The library lives in the **`packages/ui-kit`** workspace (package name `@kommo-crm/crm-react-ui-kit`); the Storybook app lives in `packages/storybook`. Stories, unit tests, and e2e tests all stay **co-located** inside each component folder under `packages/ui-kit/src/components/<Name>/`.
+
+- Every `src/...` path in this skill is relative to `packages/ui-kit/`. Run scripts from that directory, or from the repo root via `yarn workspace @kommo-crm/crm-react-ui-kit <script>` (Turbo also fans `build`/`lint`/`test` out across packages).
+- Source imports use the **`@ui-kit/*`** alias (maps to `packages/ui-kit/src/*`) — e.g. `@ui-kit/hooks/useThemeClassName`. Do NOT use the old bare `src/...` import prefix.
 
 ## Required File Structure
 
 Every component MUST have this exact structure:
 
 ```
-src/components/<ComponentName>/
+packages/ui-kit/src/components/<ComponentName>/
 ├── index.ts                  # public exports
 ├── <ComponentName>.tsx       # forwardRef component
 ├── <ComponentName>.props.ts  # Props interface + JSDoc
@@ -31,7 +38,7 @@ Optional folders are added later via the dedicated skills:
 
 1. The component is exported from `<Name>.tsx` using `forwardRef`. Always set `displayName`.
 2. CSS variable names use the prefix `--crm-ui-kit-<component-name>-*`.
-3. Theming is applied via the `useThemeClassName<ThemeType>(theme)` hook from `src/hooks/useThemeClassName`.
+3. Theming is applied via the `useThemeClassName<ThemeType>(theme)` hook from `@ui-kit/hooks/useThemeClassName`.
 4. Class names are composed with `classnames` (`import cx from 'classnames';`) and CSS Modules (`import s from './<Name>.module.css';`).
 5. Boolean props are prefixed with `is*` (e.g. `isDisabled`, `isLoading`, `isInvalid`, `isCentered`, `isEllipsis`).
 6. The `theme` prop is required and typed strictly as the component's theme type.
@@ -49,7 +56,7 @@ Optional folders are added later via the dedicated skills:
 import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
-import { useThemeClassName } from 'src/hooks/useThemeClassName';
+import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import { type <Name>Props } from './<Name>.props';
 import { type <Name>Theme } from './<Name>.themes';
@@ -139,12 +146,12 @@ export const <Name>PrimaryTheme: <Name>Theme = {
 
 Rules:
 
-- All values reference palette CSS variables defined in `src/stylesheets/theme.css` whenever possible — never hardcode hex colors in default themes.
+- All values reference palette CSS variables defined in `packages/ui-kit/src/stylesheets/theme.css` whenever possible — never hardcode hex colors in default themes.
 - Base values shared across presets MUST go through a `<Name>BaseThemeValues` constant (or `<Name>BaseSizesTheme: Omit<<Name>Theme, '<keys-overriden-per-preset>'>` if they cover most of the theme). Do NOT type the base as `Partial<<Name>Theme>` — it forces an `as <Name>Theme` cast on every preset.
 - Optional theme keys go into a separate `<Name>ThemeOptionalKey` union and become optional on the theme type (see `Button.themes.ts` for a focus-visible example).
 - Export at least one preset (`<Name>PrimaryTheme`). Add more presets following the naming `<Name><Variant>Theme`.
 
-### Commonly used palette variables (always read `src/stylesheets/theme.css` before creating a new component)
+### Commonly used palette variables (always read `packages/ui-kit/src/stylesheets/theme.css` before creating a new component)
 
 ```text
 Text:
@@ -198,7 +205,7 @@ export { type <Name>Props } from './<Name>.props';
 
 ## Wire the component into the package exports
 
-After scaffolding, add the entry to `package.json` so consumers can import it via `@kommo-crm/crm-react-ui-kit/<Name>`:
+After scaffolding, add the entry to `packages/ui-kit/package.json` so consumers can import it via `@kommo-crm/crm-react-ui-kit/<Name>` (build output paths are still `./dist/components/<Name>/...`, unchanged by the monorepo move):
 
 1. Add to `exports`:
 
@@ -238,12 +245,12 @@ When used as part of `crm-ui-kit-full-component`, do NOT run `yarn lint` after t
 
 The templates above are the source of truth — do NOT read these proactively. Open ONE of these files only if the user's request hits a specific edge case the templates don't cover:
 
-| Edge case                                    | File to read (one only)                  |
-| -------------------------------------------- | ---------------------------------------- |
-| Optional theme keys (e.g. focus-visible)     | `src/components/Button/Button.themes.ts` |
-| `VisuallyHiddenInput` form-control wrapping  | `src/components/Switcher/Switcher.tsx`   |
-| Internal sub-component (e.g. `<Name>.Label`) | `src/components/Switcher/Switcher.tsx`   |
-| Ellipsis / line-clamp via `maxRows`          | `src/components/Text/Text.tsx`           |
+| Edge case                                    | File to read (one only)                               |
+| -------------------------------------------- | ----------------------------------------------------- |
+| Optional theme keys (e.g. focus-visible)     | `packages/ui-kit/src/components/Button/Button.themes.ts` |
+| `VisuallyHiddenInput` form-control wrapping  | `packages/ui-kit/src/components/Switcher/Switcher.tsx`   |
+| Internal sub-component (e.g. `<Name>.Label`) | `packages/ui-kit/src/components/Switcher/Switcher.tsx`   |
+| Ellipsis / line-clamp via `maxRows`          | `packages/ui-kit/src/components/Text/Text.tsx`           |
 
 Never browse a component's directory in full. Read exactly the one file that the table maps to your edge case.
 

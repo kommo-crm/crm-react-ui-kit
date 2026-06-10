@@ -7,6 +7,8 @@ description: End-to-end scaffolding of a brand-new crm-react-ui-kit component �
 
 This is a meta-skill that delegates to four specialized skills in a strict order. Read each sub-skill in turn — do NOT inline its instructions here.
 
+> **Monorepo:** the library is the **`packages/ui-kit`** workspace (`@kommo-crm/crm-react-ui-kit`); the Storybook app is `packages/storybook`. All component files (source + `__tests__/` + `__stories__/` + `__image_snapshots__/`) stay co-located under `packages/ui-kit/src/components/<Name>/`. Every `src/...` path below is relative to `packages/ui-kit/`, and every `yarn` script in Phases 2/5/6 must run **from `packages/ui-kit/`** (or via `yarn workspace @kommo-crm/crm-react-ui-kit <script>` / `turbo run <task>` from the repo root). Source imports use the `@ui-kit/*` alias — not the old bare `src/...` prefix.
+
 ## Self-Contained Workflow (MANDATORY — read first)
 
 These skills are intentionally self-contained. They encode every convention you need: file layout, naming, theming, templates for `.tsx`/`.props.ts`/`.themes.ts`/`.module.css`/`index.ts`, unit-test patterns, e2e cartesian patterns, Storybook stories, and `package.json` wiring.
@@ -14,10 +16,10 @@ These skills are intentionally self-contained. They encode every convention you 
 When you receive a task that activates this skill:
 
 1. **Do NOT explore the codebase to "learn conventions".** All conventions are already in the sub-skills.
-2. **Do NOT read `src/components/Spinner/`, `src/components/Text/`, `src/components/Button/`, etc. up-front.** They are NOT prerequisites. Templates in the sub-skills are the source of truth.
-3. **Do NOT read `package.json`, `tsconfig.json`, `jest.config.ts`, `playwright-ct.config.ts`, theme palette files, Storybook config, or any other infrastructure file** before producing the component. The sub-skills tell you exactly what to add to `package.json` in Phase 5; you only need to read it AT THAT MOMENT, not before.
+2. **Do NOT read `packages/ui-kit/src/components/Spinner/`, `.../Text/`, `.../Button/`, etc. up-front.** They are NOT prerequisites. Templates in the sub-skills are the source of truth.
+3. **Do NOT read `packages/ui-kit/package.json`, `tsconfig.json`, `packages/ui-kit/jest.config.ts`, `packages/ui-kit/playwright-ct.config.ts`, theme palette files, Storybook config, or any other infrastructure file** before producing the component. The sub-skills tell you exactly what to add to `packages/ui-kit/package.json` in Phase 5; you only need to read it AT THAT MOMENT, not before.
 4. **The ONLY allowed reads before Phase 1 are the four sub-skill files themselves** (`crm-ui-kit-component/SKILL.md`, `crm-ui-kit-unit-test/SKILL.md`, `crm-ui-kit-stories/SKILL.md`, `crm-ui-kit-e2e-test/SKILL.md`). Read them lazily, just before each phase.
-5. **You MAY consult a reference component file ONLY IF** a template in a sub-skill explicitly says "see `src/components/X/...` for an example of Y" AND the user's request needs that specific edge case. Even then, read ONE file, not a directory tour.
+5. **You MAY consult a reference component file ONLY IF** a template in a sub-skill explicitly says "see `packages/ui-kit/src/components/X/...` for an example of Y" AND the user's request needs that specific edge case. Even then, read ONE file, not a directory tour.
 6. **If something is unknown, ASK the user — do NOT explore the project to infer it.** The Phase 0 questionnaire below is the contract.
 
 Violation symptom (DO NOT do this): launching a `generalPurpose` / `explore` subagent at the start of the task to "study the project structure", "understand existing components", or "look up the theme palette". If you find yourself about to do this — STOP and re-read this section.
@@ -75,7 +77,7 @@ Do NOT open files while waiting for the user's answer.
 Read `crm-ui-kit-component/SKILL.md` and produce:
 
 ```
-src/components/<Name>/
+packages/ui-kit/src/components/<Name>/
 ├── index.ts
 ├── <Name>.tsx
 ├── <Name>.props.ts
@@ -95,13 +97,13 @@ After Phase 1, **read all three sub-skills in a single parallel batch**, then **
 - `crm-ui-kit-stories/SKILL.md`
 - `crm-ui-kit-e2e-test/SKILL.md`
 
-**Phase 2 — Unit tests** — produce `src/components/<Name>/__tests__/<Name>.test.tsx`.
-Run `yarn test <Name>` — fix failures before Phase 5.
+**Phase 2 — Unit tests** — produce `packages/ui-kit/src/components/<Name>/__tests__/<Name>.test.tsx`.
+Run `yarn test <Name>` from `packages/ui-kit/` — fix failures before Phase 5.
 
-**Phase 3 — Storybook stories** — produce:
+**Phase 3 — Storybook stories** — produce (co-located in ui-kit, NOT in packages/storybook):
 
 ```
-src/components/<Name>/__stories__/
+packages/ui-kit/src/components/<Name>/__stories__/
 ├── <Name>.stories.tsx
 ├── <Name>.mdx
 └── Themes.mdx
@@ -112,7 +114,7 @@ Each `!dev`-tagged per-theme story must exist for every entry in `Themes.mdx`.
 **Phase 4 — E2E visual tests** — produce:
 
 ```
-src/components/<Name>/__tests__/
+packages/ui-kit/src/components/<Name>/__tests__/
 ├── <Name>.e2e-playground.tsx
 └── <Name>.e2e.test.tsx
 ```
@@ -121,7 +123,7 @@ One playground wrapper per theme preset.
 
 ## Phase 5 — Package wiring
 
-Read `package.json` ONCE, then make ALL four changes in a single editing session (do not re-read between edits — a formatter runs on save and will reject a stale edit):
+Read `packages/ui-kit/package.json` ONCE, then make ALL four changes in a single editing session (do not re-read between edits — a formatter runs on save and will reject a stale edit). Build-output paths are still `./dist/...` (unchanged by the monorepo move):
 
 1. `exports` — add component entry:
 
@@ -151,29 +153,29 @@ Do NOT run `yarn lint` or `yarn test` here — both are part of Phase 6.
 
 ## Phase 6 — Lint, tests, and snapshots
 
-> **Requires Docker.** The snapshot command spins up containers defined in `docker-compose` to run Playwright. Make sure Docker is running before executing.
+> **Requires Docker.** The snapshot command spins up containers defined in `packages/ui-kit/docker-compose.yml` to run Playwright. Make sure Docker is running before executing.
 
-Run, in order:
+Run, in order, **from `packages/ui-kit/`** (there is NO `lint:fix` script — `yarn eslint` is `eslint --quiet`, so append `--fix` to autofix):
 
 ```bash
-yarn lint:fix                                   # eslint --fix: autofix + report non-fixable errors
-yarn tslint                                     # type-check (not included in lint:fix)
-yarn test                                       # all unit tests
-yarn test:e2e:update-snapshots -- -g "<Name>"   # visual snapshots in Docker
+yarn eslint --fix src/                       # autofix prettier/eslint violations under src/, report the rest
+yarn tslint                                  # type-check (tsc --noEmit -p tsconfig.build.json)
+yarn test                                    # all unit tests
+yarn test:e2e:update-snapshots -g "<Name>"   # visual snapshots in Docker
 ```
 
-`yarn lint:fix` runs `eslint --fix` — it autofixes every prettier/trailing-comma violation the templates produce AND exits non-zero on any remaining (non-autofixable) eslint error, so a clean exit proves eslint is green. It does NOT run `tslint`, so follow up with `yarn tslint` separately for the type check. Do NOT run `yarn lint` after `lint:fix` — the eslint half is redundant (it just re-checks what `lint:fix` already confirmed) and costs an extra cold start.
+`yarn eslint --fix src/` autofixes every prettier/trailing-comma violation the templates produce AND exits non-zero on any remaining (non-autofixable) eslint error, so a clean exit proves eslint is green. It does NOT run `tslint`, so follow up with `yarn tslint` separately for the type check. (`yarn lint` runs both `eslint src/` + `tslint` concurrently with no autofix — use it as a final verification, not for fixing.)
 
 Fix every lint / test error before starting the Docker snapshot run — lint failures there are cheap to resolve, and Docker setup takes minutes.
 
 ### If snapshot generation fails
 
-1. **First response:** run `yarn docker:clear-playwright-cache` and retry `yarn test:e2e:update-snapshots -- -g "<Name>"`. Stale volumes (node_modules_cache, playwright_cache) hold onto old bundler state that references files that no longer exist — clearing them resolves most transient failures (`vite-plugin-svgr` pointing at a deleted asset, `unexpected EOF`, etc.) without any code investigation.
-2. **Only if the retry still fails**, investigate the actual error (grep the repo for the missing import, check recent changes to `playwright/`, `storybook/`, or `src/tests/e2e/`).
+1. **First response:** clear the stale Docker volumes and retry. There is no dedicated cache-clear script; from `packages/ui-kit/` run `docker compose --env-file=./.env.docker down -v` (removes the `node_modules_cache`, `playwright_cache`, etc. named volumes for this compose project), then re-run `yarn test:e2e:update-snapshots -g "<Name>"`. Stale volumes hold onto old bundler state that references files that no longer exist — clearing them resolves most transient failures (`vite-plugin-svgr` pointing at a deleted asset, `unexpected EOF`, etc.) without any code investigation.
+2. **Only if the retry still fails**, investigate the actual error (grep the repo for the missing import, check recent changes to `packages/ui-kit/playwright/`, `packages/storybook/`, or `packages/ui-kit/src/tests/e2e/`).
 
 Do NOT jump straight to grepping the codebase on the first failure — Docker cache staleness is by far the most likely cause and the fix is a single command.
 
-**Use `-g`, NOT `--grep`.** `scripts/generate_env.docker.sh` parses only `-g` — `--grep` is silently dropped and the run fans out to the full suite, which can abort with `unexpected EOF` partway and leave orphan PNGs for `<Name>` behind.
+**Use `-g`, NOT `--grep`.** `packages/ui-kit/scripts/generate_env.docker.sh` parses only `-g` — `--grep` is silently dropped and the run fans out to the full suite, which can abort with `unexpected EOF` partway and leave orphan PNGs for `<Name>` behind.
 
 After the run, verify the snapshot set is COMPLETE:
 
@@ -181,21 +183,21 @@ After the run, verify the snapshot set is COMPLETE:
 expected = (number of test.describe blocks) × (appearances: 2) × (devices: 5)
 ```
 
-For a display component with Primary + Secondary themes that's `2 × 2 × 5 = 20` PNGs under `src/components/<Name>/__image_snapshots__/`. If the count is lower, you have orphans from an aborted run — delete the whole `__image_snapshots__/` directory for `<Name>` and re-run the command, rather than committing a partial set.
+For a display component with Primary + Secondary themes that's `2 × 2 × 5 = 20` PNGs under `packages/ui-kit/src/components/<Name>/__image_snapshots__/`. If the count is lower, you have orphans from an aborted run — delete the whole `__image_snapshots__/` directory for `<Name>` and re-run the command, rather than committing a partial set.
 
 Commit BOTH the source AND the snapshot files together in the same commit so reviewers can validate visually.
 
 ## Reference layouts (FALLBACK ONLY — do NOT read up-front)
 
-The templates in the sub-skills already cover every standard component shape. The list below is a fallback for ONE specific situation: a sub-skill template explicitly points you to `src/components/<X>/` for an edge case (e.g. "see Button for a focus-visible theme key"). Only then, read that ONE file. Never tour these directories proactively, never read more than the single file that the template referenced.
+The templates in the sub-skills already cover every standard component shape. The list below is a fallback for ONE specific situation: a sub-skill template explicitly points you to `packages/ui-kit/src/components/<X>/` for an edge case (e.g. "see Button for a focus-visible theme key"). Only then, read that ONE file. Never tour these directories proactively, never read more than the single file that the template referenced.
 
-| Reference                  | Read it ONLY if the template calls it out for…  |
-| -------------------------- | ----------------------------------------------- |
-| `src/components/Spinner/`  | Absolute-positioned content needing a wrapper   |
-| `src/components/Text/`     | Ellipsis / line-clamp behavior                  |
-| `src/components/Switcher/` | `Label` sub-component split for form controls   |
-| `src/components/Checkbox/` | Invalid state combined with controlled toggling |
-| `src/components/Button/`   | Internal hooks, ref-driven state, icon slots    |
+| Reference                               | Read it ONLY if the template calls it out for…  |
+| --------------------------------------- | ----------------------------------------------- |
+| `packages/ui-kit/src/components/Spinner/`  | Absolute-positioned content needing a wrapper   |
+| `packages/ui-kit/src/components/Text/`     | Ellipsis / line-clamp behavior                  |
+| `packages/ui-kit/src/components/Switcher/` | `Label` sub-component split for form controls   |
+| `packages/ui-kit/src/components/Checkbox/` | Invalid state combined with controlled toggling |
+| `packages/ui-kit/src/components/Button/`   | Internal hooks, ref-driven state, icon slots    |
 
 ## Final checklist
 
@@ -206,9 +208,9 @@ The templates in the sub-skills already cover every standard component shape. Th
 - [ ] <Name>.mdx and Themes.mdx render correctly
 - [ ] Playground wraps every theme preset
 - [ ] e2e cartesian covers behavioral props (no theme axis there)
-- [ ] package.json exports + typesVersions updated
-- [ ] yarn lint passes
-- [ ] yarn test passes
+- [ ] packages/ui-kit/package.json exports + typesVersions updated
+- [ ] yarn lint passes (run from packages/ui-kit)
+- [ ] yarn test passes (run from packages/ui-kit)
 - [ ] Snapshot count matches `describes × appearances × devices` — no orphans from an aborted run
 ```
 
