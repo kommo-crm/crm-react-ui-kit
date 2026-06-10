@@ -53,11 +53,9 @@ const DefaultSelectItems = [
     option: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {getOptionLabel(4)}{' '}
-        <Badge
-          theme={BadgeSafetyTheme}
-          title="Badge"
-          style={{ marginLeft: 8 }}
-        />
+        <Badge theme={BadgeSafetyTheme} style={{ marginLeft: 8 }}>
+          Badge
+        </Badge>
       </div>
     ),
     title: getOptionLabel(4),
@@ -98,9 +96,7 @@ const SelectWrapper = (props: SelectStoryProps) => {
   const handleChange = (item: SelectItem) => {
     props?.onChange!(item);
 
-    if ('value' in props) {
-      setValue(item);
-    }
+    setValue(item);
   };
 
   return (
@@ -207,9 +203,10 @@ const DefaultSelectItems = [
         ${i18n.t('Option')} 4{' '}
         <Badge
           theme={BadgeSafetyTheme}
-          title="Badge"
           style={{ marginLeft: 8 }}
-        />
+        >
+          Badge
+        </Badge>
       </div>
     ),
     title: ${i18n.t('Option')} 4,
