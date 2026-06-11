@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.16.1",
+  "version": "1.17.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -36,6 +36,7 @@
     "./CounterBadge": "./dist/components/CounterBadge/index.js",
     "./Badge": "./dist/components/Badge/index.js",
     "./Separator": "./dist/components/Separator/index.js",
+    "./Ribbon": "./dist/components/Ribbon/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -56,6 +57,7 @@
     "./assets/List.css": "./dist/assets/List.css",
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/Separator.css": "./dist/assets/Separator.css",
+    "./assets/Ribbon.css": "./dist/assets/Ribbon.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
@@ -132,6 +134,9 @@
       ],
       "Separator": [
         "./dist/components/Separator/index.d.ts"
+      ],
+      "Ribbon": [
+        "./dist/components/Ribbon/index.d.ts"
       ]
     }
   },
