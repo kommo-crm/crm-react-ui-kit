@@ -14,7 +14,7 @@ export interface UseContextMenuOptions {
    * The open state of the dropdown menu when it is initially rendered.
    * Use when you do not need to control its open state.
    */
-  defaultOpen?: boolean;
+  isDefaultOpen?: boolean;
   /**
    * The duration of the animation.
    */
