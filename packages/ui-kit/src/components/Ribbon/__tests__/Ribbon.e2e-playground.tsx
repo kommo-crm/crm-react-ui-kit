@@ -33,7 +33,7 @@ export const RibbonStandalonePlaygroundItem = ({
         style={{ position: 'relative', width: 300 }}
         theme={ContentBlockPrimaryTheme}
       >
-        <Ribbon {...p} text="Pro" theme={RibbonPrimaryTheme} />
+        <Ribbon {...p} label="Pro" theme={RibbonPrimaryTheme} />
 
         {sampleContent}
       </ContentBlock>
@@ -47,7 +47,7 @@ export const RibbonWithChildrenPlaygroundItem = ({
 }: ComponentPlaygroundProps<RibbonProps>) => (
   <ComponentPlayground<RibbonProps> appearance={appearance} props={props}>
     {(p) => (
-      <Ribbon {...p} text="Pro" theme={RibbonPrimaryTheme}>
+      <Ribbon {...p} label="Pro" theme={RibbonPrimaryTheme}>
         <ContentBlock style={{ width: 300 }} theme={ContentBlockPrimaryTheme}>
           {sampleContent}
         </ContentBlock>

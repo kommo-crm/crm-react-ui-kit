@@ -20,9 +20,9 @@ export interface RibbonProps extends DivProps {
    */
   children?: ReactNode;
   /**
-   * Ribbon text.
+   * Ribbon label.
    */
-  text?: string;
+  label?: ReactNode;
   /**
    * Ribbon tips offset from the top-right corner.
    */

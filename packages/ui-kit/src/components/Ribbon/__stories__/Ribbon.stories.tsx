@@ -33,7 +33,7 @@ function App() {
         }}
         theme={ContentBlockPrimaryTheme}
       >
-        <Ribbon text="Pro" theme={RibbonPrimaryTheme} />
+        <Ribbon label="Pro" theme={RibbonPrimaryTheme} />
 
         <Text theme={TextPrimaryTheme} size="m">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
@@ -42,7 +42,7 @@ function App() {
         </Text>
       </ContentBlock>
 
-      <Ribbon text="Pro" theme={RibbonPrimaryTheme}>
+      <Ribbon label="Pro" theme={RibbonPrimaryTheme}>
           <ContentBlock
             style={{
               width: '300px',
@@ -128,7 +128,7 @@ const meta = {
     );
   },
   args: {
-    text: 'Pro',
+    label: 'Pro',
     theme: RibbonPrimaryTheme,
     offset: 86,
   },

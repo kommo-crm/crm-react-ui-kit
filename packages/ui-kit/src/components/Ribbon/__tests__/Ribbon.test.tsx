@@ -12,7 +12,7 @@ const renderRibbonStandalone = (props?: Partial<RibbonProps>) => {
   return render(
     <Ribbon
       data-testid={DATA_RIBBON_TEST_ID}
-      text="Pro"
+      label="Pro"
       theme={RibbonPrimaryTheme}
       {...props}
     />
@@ -23,7 +23,7 @@ const renderRibbonWithChildren = (props?: Partial<RibbonProps>) => {
   return render(
     <Ribbon
       data-testid={DATA_RIBBON_TEST_ID}
-      text="Pro"
+      label="Pro"
       theme={RibbonPrimaryTheme}
       {...props}
     >
@@ -53,8 +53,8 @@ describe('Ribbon', () => {
     expect(element.classList).toHaveLength(3);
   });
 
-  it('should render ribbon text in standalone mode', () => {
-    renderRibbonStandalone({ text: 'Sale' });
+  it('should render ribbon label in standalone mode', () => {
+    renderRibbonStandalone({ label: 'Sale' });
 
     expect(screen.getByText('Sale')).toBeInTheDocument();
   });

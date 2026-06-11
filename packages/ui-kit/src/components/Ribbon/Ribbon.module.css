@@ -27,7 +27,7 @@
   background-color: var(--crm-ui-kit-ribbon-background-color);
 }
 
-.text {
+.label {
   color: var(--crm-ui-kit-ribbon-color);
   font-weight: var(--crm-ui-kit-ribbon-font-weight);
   font-size: var(--crm-ui-kit-ribbon-font-size);
