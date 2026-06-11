@@ -9,14 +9,30 @@ type DivProps = React.DetailedHTMLProps<
 
 export interface RibbonProps extends DivProps {
   /**
-   * Optional ribbon child element.
+   * Content to wrap with the ribbon.
    *
-   * When set, Ribbon renders an internal container with `position: relative`
-   * and anchors the ribbon to its top-right corner. The parent does not
-   * need its own positioning context.
+   * **With children** - Ribbon renders a `position: relative` container
+   * around the children and positions itself inside it. No extra CSS needed
+   * on the parent.
    *
-   * When omitted, only the ribbon is rendered (standalone mode). Must be placed
-   * inside a parent with a non-static position.
+   * ```tsx
+   * <Ribbon label="Pro" theme={RibbonPrimaryTheme}>
+   *   <Card>
+   *     {content}
+   *   </Card>
+   * </Ribbon>
+   * ```
+   *
+   * **Without children** - only the ribbon element is rendered. Place it
+   * inside a parent that already has non-static position so it can be
+   * anchored correctly.
+   *
+   * ```tsx
+   * <Card style={{ position: 'relative' }}>
+   *   <Ribbon label="Pro" theme={RibbonPrimaryTheme} />
+   *   {content}
+   * </Card>
+   * ```
    */
   children?: ReactNode;
   /**
