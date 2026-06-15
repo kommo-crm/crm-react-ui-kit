@@ -63,6 +63,14 @@ describe('cssMinifiedFormat', () => {
     expect(result).not.toContain('#aaa');
   });
 
+  it('applies prefix to css variable names', () => {
+    const result = format({
+      dictionary: makeDictionary(blueTokens),
+      options: { prefix: 'ui' },
+    });
+    expect(result).toContain('--ui-color-light-blue-500:#4c8bf7');
+  });
+
   it('joins vars with semicolons, no trailing semicolon', () => {
     const result = format({
       dictionary: makeDictionary(blueTokens),
@@ -186,10 +194,10 @@ describe('dtsFormat', () => {
     expect(result).toContain('export default _default');
   });
 
-  it('does not generate ColorShade if no depth-4 tokens', () => {
+  it('emits ColorShade = never if no depth-4 tokens', () => {
     const shallow = [makeToken(['color', 'blue'], '#4c8bf7', 'color-blue')];
     const result = format({ dictionary: makeDictionary(shallow), options: {} });
-    expect(result).toContain('export type ColorShade = ;');
+    expect(result).toContain('export type ColorShade = never;');
   });
 
   it('literal cssVar and value in declaration', () => {

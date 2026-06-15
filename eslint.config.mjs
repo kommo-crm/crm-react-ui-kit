@@ -2,8 +2,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import eslint from '@eslint/js';
 import globals from 'globals';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 import tseslint from 'typescript-eslint';
 import eslintReact from 'eslint-plugin-react';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -15,6 +13,8 @@ import importPlugin from 'eslint-plugin-import';
 import * as mdx from 'eslint-plugin-mdx';
 import hooksPlugin from 'eslint-plugin-react-hooks';
 import postCssModules from 'eslint-plugin-postcss-modules';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import{"eslint"}.Linter.FlatConfig[]} */
 export default tseslint.config(

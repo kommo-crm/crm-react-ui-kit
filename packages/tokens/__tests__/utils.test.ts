@@ -1,4 +1,4 @@
-import { deepMerge } from '../config/utils';
+import { deepMerge } from '../utils/deep-merge';
 
 describe('deepMerge', () => {
   it('merges flat keys', () => {

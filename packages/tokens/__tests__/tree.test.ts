@@ -1,4 +1,4 @@
-import { buildTree, isLeaf } from '../formats/tree';
+import { buildTree, isLeaf } from '../utils/tree';
 
 const token = (path: string[], value: string) => ({
   path,

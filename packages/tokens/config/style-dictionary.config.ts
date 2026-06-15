@@ -13,8 +13,9 @@ import { jsNestedFormat } from '../formats/js-nested';
 import { cssMinifiedFormat } from '../formats/css-minified';
 import { dtsFormat } from '../formats/dts-generator';
 
+import { deepMerge } from '../utils/deep-merge';
+
 import { validateCssContract } from './validate-contract';
-import { deepMerge } from './utils';
 
 StyleDictionary.registerFormat(jsNestedFormat);
 StyleDictionary.registerFormat(cssMinifiedFormat);

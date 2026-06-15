@@ -20,6 +20,33 @@ describe('Badge', () => {
     expect(Badge).toBeDefined();
   });
 
+  it('should render children content', () => {
+    renderBadge({});
+
+    expect(screen.getByTestId(dataTestId)).toHaveTextContent('Badge');
+  });
+
+  it('should fall back to deprecated title when no children', () => {
+    render(
+      <Badge data-testid={dataTestId} theme={BadgeSafetyTheme} title="Legacy" />
+    );
+
+    expect(screen.getByTestId(dataTestId)).toHaveTextContent('Legacy');
+  });
+
+  it('should prefer children over title', () => {
+    render(
+      <Badge data-testid={dataTestId} theme={BadgeSafetyTheme} title="Legacy">
+        Modern
+      </Badge>
+    );
+
+    const element = screen.getByTestId(dataTestId);
+
+    expect(element).toHaveTextContent('Modern');
+    expect(element).not.toHaveTextContent('Legacy');
+  });
+
   it('should apply custom span properties', async () => {
     const className = 'my-class';
 

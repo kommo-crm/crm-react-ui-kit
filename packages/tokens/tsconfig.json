@@ -8,7 +8,7 @@
     "config/**/*",
     "formats/**/*",
     "scripts/**/*",
-    "tokens.config.ts",
-    "config/types.ts"
+    "utils/**/*",
+    "tokens.config.ts"
   ]
 }
