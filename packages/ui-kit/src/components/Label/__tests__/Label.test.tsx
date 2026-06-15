@@ -40,7 +40,7 @@ const renderLabelGroup = (props: Partial<LabelGroupProps>) => {
   );
 };
 
-jest.mock('src/hooks/useThemeClassName');
+jest.mock('@ui-kit/hooks/useThemeClassName');
 
 describe('Label', () => {
   beforeEach(() => {

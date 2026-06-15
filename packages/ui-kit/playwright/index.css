@@ -1,6 +1,6 @@
 @import '../src/stylesheets/theme.css';
 @import '../src/stylesheets/icons.css';
-@import '../public/fonts/ptsans.css';
+@import '../../storybook/public/fonts/ptsans.css';
 
 /*
  * Disable properties that may affect the screenshot. 
