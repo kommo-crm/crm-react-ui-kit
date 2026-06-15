@@ -1,20 +1,10 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
 
 import { useOnOutsideClick } from '@kommo-crm/react-hooks';
 
 import { Portal } from '@ui-kit/components/Portal';
 
-import {
-  DropdownList as BaseList,
-  type DropdownListPlacement,
-} from '@ui-kit/components/DropdownList';
+import { DropdownList as BaseList } from '@ui-kit/components/DropdownList';
 
 import { mergeRefs } from '@ui-kit/lib/utils';
 
@@ -24,30 +14,11 @@ import { useSelectContext } from '../../Select.context';
 
 import { SelectItem } from '../../Select.types';
 
+import { useListPlacement } from './hooks';
+
 import { ListPortalProps, ListProps } from './List.props';
 
 type L = HTMLUListElement;
-
-const resolveListPlacement = (
-  placement: DropdownListPlacement,
-  listEl: HTMLUListElement
-): DropdownListPlacement => {
-  const { top, bottom, height } = listEl.getBoundingClientRect();
-  const viewportHeight = window.innerHeight;
-  const overflowsBottom = bottom > viewportHeight;
-  const overflowsTop = top < 0;
-  const tallerThanViewport = height > viewportHeight;
-
-  if (placement === 'bottom') {
-    return overflowsBottom ? 'top' : 'bottom';
-  }
-
-  if (overflowsTop || tallerThanViewport) {
-    return 'bottom';
-  }
-
-  return 'top';
-};
 
 const DISPLAY_NAME = 'Select.List';
 
@@ -92,58 +63,8 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
   }, [children]);
 
   const listRef = useRef<HTMLUListElement>(null);
-  const preferBottomFallbackRef = useRef(false);
-  const [placement, setPlacement] = useState<DropdownListPlacement>('bottom');
 
-  /**
-   * useLayoutEffect is used instead of useEffect to resolve the list placement
-   * and focus it before the browser paints. This prevents a visible flicker
-   * where the list briefly appears in the wrong position (e.g. bottom) before
-   * jumping to the correct one (e.g. top).
-   *
-   * On open, the effect may run twice when placement needs to change:
-   * 1st run — measures the list via getBoundingClientRect and updates placement state.
-   * 2nd run — placement is already correct, so the list gets focused.
-   *
-   * preferBottomFallbackRef guards against an infinite loop when neither
-   * placement fits (e.g. not enough space above or below). When the list in
-   * "top" placement resolves back to "bottom", we accept "bottom" as the final
-   * placement and skip re-resolving on the next run.
-   */
-  useLayoutEffect(() => {
-    if (!isOpened) {
-      preferBottomFallbackRef.current = false;
-      setPlacement('bottom');
-
-      return;
-    }
-
-    const listEl = listRef.current;
-
-    if (!listEl) {
-      return;
-    }
-
-    if (preferBottomFallbackRef.current) {
-      listEl.focus();
-
-      return;
-    }
-
-    const nextPlacement = resolveListPlacement(placement, listEl);
-
-    if (nextPlacement === placement) {
-      listEl.focus();
-
-      return;
-    }
-
-    if (nextPlacement === 'bottom' && placement === 'top') {
-      preferBottomFallbackRef.current = true;
-    }
-
-    setPlacement(nextPlacement);
-  }, [isOpened, placement]);
+  const placement = useListPlacement({ isOpened, listRef });
 
   const handleOutsideClick = useCallback(() => {
     if (isOpened) {
