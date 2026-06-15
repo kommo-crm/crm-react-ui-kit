@@ -34,6 +34,6 @@
 
 .listToTop {
   top: auto;
-  bottom: var(--crm-ui-kit-list-bottom-flipped);
-  left: var(--crm-ui-kit-list-left-flipped);
+  bottom: var(--crm-ui-kit-list-to-top-bottom);
+  left: var(--crm-ui-kit-list-to-top-left);
 }
