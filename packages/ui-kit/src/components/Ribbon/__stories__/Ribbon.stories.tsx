@@ -43,18 +43,18 @@ function App() {
       </ContentBlock>
 
       <Ribbon label="Pro" theme={RibbonPrimaryTheme}>
-          <ContentBlock
-            style={{
-              width: '300px',
-            }}
-            theme={ContentBlockPrimaryTheme}
-          >
-            <Text theme={TextPrimaryTheme} size="m">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-              consequuntur nam non vero voluptate reiciendis aliquid magnam aut
-              laudantium aspernatur.
-            </Text>
-          </ContentBlock>
+        <ContentBlock
+          style={{
+            width: '300px',
+          }}
+          theme={ContentBlockPrimaryTheme}
+        >
+          <Text theme={TextPrimaryTheme} size="m">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+            consequuntur nam non vero voluptate reiciendis aliquid magnam aut
+            laudantium aspernatur.
+          </Text>
+        </ContentBlock>
       </Ribbon>
     </div>
   );
