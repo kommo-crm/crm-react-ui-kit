@@ -27,8 +27,9 @@ export interface DropdownListProps
    */
   isOpened?: boolean;
   /**
-   * Vertical placement relative to the select root.
-   * Determined automatically if not explicitly specified.
+   * Vertical placement of the list relative to its anchor.
+   * Controlled internally by the consuming component (e.g. Select),
+   * which resolves it from the available viewport space. Defaults to 'bottom'.
    */
   placement?: DropdownListPlacement;
   /**
