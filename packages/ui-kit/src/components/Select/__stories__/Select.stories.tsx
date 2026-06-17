@@ -180,6 +180,54 @@ const IconsSelect = (props: SelectStoryProps) => {
   );
 };
 
+type BaseSelectProps = Omit<SelectStoryProps, 'description'> & {
+  width?: React.CSSProperties['width'];
+};
+
+const BaseSelect = (props: BaseSelectProps) => {
+  const { placeholder, value: valueProp, width = '100%', ...restProps } = props;
+
+  const isControlled = 'value' in props;
+
+  const [value, setValue] = useState<SelectProps['value'] | undefined>(
+    valueProp
+  );
+
+  const handleChange = (item: SelectItem) => {
+    props.onChange?.(item);
+
+    if (isControlled) {
+      setValue(item);
+    }
+  };
+
+  const controlledProps = isControlled ? { value } : {};
+
+  return (
+    <div style={{ width }}>
+      <Select.Root {...restProps} {...controlledProps} onChange={handleChange}>
+        <Select.Button
+          theme={props.selectButtonTheme || SelectButtonLightTheme}
+        >
+          <Select.Value placeholder={placeholder} />
+          <Select.Arrow theme={SelectArrowTheme} />
+        </Select.Button>
+
+        <Select.List theme={SelectListTheme}>
+          {DefaultSelectItems.map((item, index) => (
+            <Select.Item
+              theme={SelectItemTheme}
+              key={item.value}
+              item={item}
+              index={index}
+            />
+          ))}
+        </Select.List>
+      </Select.Root>
+    </div>
+  );
+};
+
 const USAGE = `
 import { useState } from "react";
 import {
@@ -279,53 +327,9 @@ const meta = {
     theme: SelectRootTheme,
   },
   component: Select,
-  render: (props: Omit<SelectStoryProps, 'description'>) => {
-    const { placeholder, value: valueProp, ...restProps } = props;
-
-    const isControlled = 'value' in props;
-
-    const [value, setValue] = useState<SelectProps['value'] | undefined>(
-      valueProp
-    );
-
-    const handleChange = (item: SelectItem) => {
-      props.onChange!(item);
-
-      if (isControlled) {
-        setValue(item);
-      }
-    };
-
-    const controlledProps = isControlled ? { value } : {};
-
-    return (
-      <div style={{ width: '100%' }}>
-        <Select.Root
-          {...restProps}
-          {...controlledProps}
-          onChange={handleChange}
-        >
-          <Select.Button
-            theme={props.selectButtonTheme || SelectButtonLightTheme}
-          >
-            <Select.Value placeholder={placeholder} />
-            <Select.Arrow theme={SelectArrowTheme} />
-          </Select.Button>
-
-          <Select.List theme={SelectListTheme}>
-            {DefaultSelectItems.map((item, index) => (
-              <Select.Item
-                theme={SelectItemTheme}
-                key={item.value}
-                item={item}
-                index={index}
-              />
-            ))}
-          </Select.List>
-        </Select.Root>
-      </div>
-    );
-  },
+  render: (props: Omit<SelectStoryProps, 'description'>) => (
+    <BaseSelect {...props} />
+  ),
 } satisfies Meta<typeof Select>;
 
 export default meta;
@@ -412,51 +416,6 @@ export const SelectButtonDark: StoryObj = {
   },
 };
 
-const PlacementSelect = (props: Omit<SelectStoryProps, 'description'>) => {
-  const { placeholder, value: valueProp, ...restProps } = props;
-
-  const [value, setValue] = useState<SelectProps['value'] | undefined>(
-    valueProp ?? DefaultSelectItems[0]
-  );
-
-  const handleChange = (item: SelectItem) => {
-    props.onChange?.(item);
-
-    if ('value' in props) {
-      setValue(item);
-    }
-  };
-
-  return (
-    <div style={{ width: 240 }}>
-      <Select.Root
-        {...restProps}
-        theme={SelectRootTheme}
-        value={value}
-        onChange={handleChange}
-      >
-        <Select.Button
-          theme={props.selectButtonTheme || SelectButtonLightTheme}
-        >
-          <Select.Value placeholder={placeholder} />
-          <Select.Arrow theme={SelectArrowTheme} />
-        </Select.Button>
-
-        <Select.List theme={SelectListTheme}>
-          {DefaultSelectItems.map((item, index) => (
-            <Select.Item
-              theme={SelectItemTheme}
-              key={item.value}
-              item={item}
-              index={index}
-            />
-          ))}
-        </Select.List>
-      </Select.Root>
-    </div>
-  );
-};
-
 export const Directions: StoryObj = {
   render: (props) => (
     <div
@@ -468,16 +427,18 @@ export const Directions: StoryObj = {
       }}
     >
       <div style={{ position: 'absolute', top: 24, left: 24 }}>
-        <PlacementSelect
+        <BaseSelect
           {...props}
+          width={240}
           theme={SelectRootTheme}
           value={DefaultSelectItems[0]}
         />
       </div>
 
       <div style={{ position: 'absolute', right: 24, bottom: 24 }}>
-        <PlacementSelect
+        <BaseSelect
           {...props}
+          width={240}
           theme={SelectRootTheme}
           value={DefaultSelectItems[0]}
         />

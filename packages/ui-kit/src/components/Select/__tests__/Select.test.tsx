@@ -9,6 +9,19 @@ import { Select, SelectArrowTheme, SelectItemTheme, SelectListTheme } from '..';
 import { SelectItem } from '../Select.types';
 import { SelectRootTheme } from '../Select.theme';
 
+const createRect = (rect: Partial<DOMRect>): DOMRect => ({
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  width: 0,
+  height: 0,
+  x: 0,
+  y: 0,
+  toJSON: () => ({}),
+  ...rect,
+});
+
 const defaultItems: SelectItem[] = [
   {
     value: 'Option 1',
@@ -139,17 +152,18 @@ describe('Select', () => {
       'getBoundingClientRect'
     );
 
-    getBoundingClientRect.mockReturnValue({
-      top: 400,
-      bottom: 650,
-      left: 0,
-      right: 100,
-      width: 100,
-      height: 250,
-      x: 0,
-      y: 400,
-      toJSON: () => ({}),
-    } as DOMRect);
+    getBoundingClientRect.mockReturnValue(
+      createRect({
+        top: 400,
+        bottom: 650,
+        left: 0,
+        right: 100,
+        width: 100,
+        height: 250,
+        x: 0,
+        y: 400,
+      })
+    );
 
     renderSelect();
 
@@ -183,7 +197,7 @@ describe('Select', () => {
       const isFlippedUp = this.className.includes('listToTop');
 
       if (isFlippedUp) {
-        return {
+        return createRect({
           top: -50,
           bottom: 450,
           left: 0,
@@ -192,11 +206,10 @@ describe('Select', () => {
           height: 500,
           x: 0,
           y: -50,
-          toJSON: () => ({}),
-        } as DOMRect;
+        });
       }
 
-      return {
+      return createRect({
         top: 400,
         bottom: 650,
         left: 0,
@@ -205,8 +218,7 @@ describe('Select', () => {
         height: 250,
         x: 0,
         y: 400,
-        toJSON: () => ({}),
-      } as DOMRect;
+      });
     });
 
     renderSelect();

@@ -81,7 +81,7 @@ export interface SelectTestProps {
   isDefaultOpen?: boolean;
   defaultValue?: SelectItem;
   useHeightWrapper?: boolean;
-  isPinnedToBottom?: boolean;
+  isOpenedToTop?: boolean;
 }
 
 const SelectContent = ({ items }: { items: SelectItem[] }) => (
@@ -109,7 +109,7 @@ const SelectPlayground = ({
   items,
 }: ComponentPlaygroundProps<SelectTestProps> & { items: SelectItem[] }) => (
   <ComponentPlayground<SelectTestProps> appearance={appearance} props={props}>
-    {({ useHeightWrapper, isPinnedToBottom, ...selectProps }) => {
+    {({ useHeightWrapper, isOpenedToTop, ...selectProps }) => {
       const makeSelectContent = () => {
         const content = <SelectContent items={items} />;
 
@@ -120,32 +120,21 @@ const SelectPlayground = ({
         );
       };
 
-      if (isPinnedToBottom) {
+      if (isOpenedToTop) {
         return (
-          <div style={{ display: 'flex' }}>
-            {([false, true] as const).map((isOpen) => (
-              <div
-                key={String(isOpen)}
-                style={{ position: 'relative', flex: 1, height: 150 }}
-              >
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: 24,
-                    right: 24,
-                    bottom: 24,
-                  }}
-                >
-                  <Select
-                    {...selectProps}
-                    isDefaultOpen={isOpen}
-                    theme={SelectRootTheme}
-                  >
-                    {makeSelectContent()}
-                  </Select>
-                </div>
-              </div>
-            ))}
+          <div style={{ position: 'relative', height: 150 }}>
+            <div
+              style={{
+                position: 'absolute',
+                left: 24,
+                right: 24,
+                bottom: 24,
+              }}
+            >
+              <Select {...selectProps} isDefaultOpen theme={SelectRootTheme}>
+                {makeSelectContent()}
+              </Select>
+            </div>
           </div>
         );
       }
