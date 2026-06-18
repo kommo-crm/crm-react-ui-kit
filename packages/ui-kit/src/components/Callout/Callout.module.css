@@ -1,4 +1,5 @@
 .wrapper {
+  position: relative;
   display: flex;
   padding: var(--crm-ui-kit-callout-padding);
   background-color: var(--crm-ui-kit-callout-background-color);
@@ -11,7 +12,14 @@
   color: var(--crm-ui-kit-callout-icon-color);
 }
 
+.content {
+  flex: 1;
+  padding-right: calc(var(--crm-ui-kit-callout-close-button-size) + 8px);
+}
+
 .closeButton {
+  position: absolute;
+  top: var(--crm-ui-kit-callout-padding);
+  right: var(--crm-ui-kit-callout-padding);
   flex-shrink: 0;
-  margin-left: 8px;
 }
