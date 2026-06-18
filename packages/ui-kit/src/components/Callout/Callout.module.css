@@ -14,7 +14,7 @@
 
 .content {
   flex: 1;
-  padding-right: calc(var(--crm-ui-kit-callout-close-button-size) + 8px);
+  padding-right: 32px;
 }
 
 .closeButton {
