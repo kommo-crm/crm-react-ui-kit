@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "ESNext"
+  },
+  "include": [
+    "config/**/*",
+    "formats/**/*",
+    "scripts/**/*",
+    "utils/**/*",
+    "tokens.config.ts"
+  ]
+}

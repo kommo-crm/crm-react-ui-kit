@@ -1,0 +1,4 @@
+# Generated artifacts
+dist/
+dist-ts/
+node_modules/

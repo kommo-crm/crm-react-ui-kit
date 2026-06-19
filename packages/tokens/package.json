@@ -1,0 +1,32 @@
+{
+  "name": "@kommo-crm/crm-tokens",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Design tokens for Kommo CRM UI",
+  "type": "module",
+  "main": "./dist/js/index.js",
+  "types": "./dist/js/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/js/index.js",
+      "types": "./dist/js/index.d.ts"
+    },
+    "./css/primitives": "./dist/css/primitives.min.css",
+    "./scss/primitives": "./dist/scss/_primitives.scss",
+    "./less/primitives": "./dist/less/_primitives.less",
+    "./json": "./dist/tokens.json"
+  },
+  "scripts": {
+    "prepublishOnly": "cp ../../LICENCE ./LICENCE",
+    "build": "tsx scripts/build.ts",
+    "dev": "tsx scripts/dev.ts",
+    "watch": "tsx scripts/watch.ts",
+    "clean": "rm -rf dist",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}

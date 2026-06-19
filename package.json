@@ -9,7 +9,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
-    "storybook": "turbo run storybook",
+    "storybook": "concurrently --kill-others-on-fail \"yarn workspace @kommo-crm/crm-tokens watch\" \"turbo run storybook\"",
     "build-storybook": "turbo run build-storybook",
     "prepare": "husky"
   },
@@ -32,6 +32,7 @@
     "eslint-plugin-react-hooks": "4.6.2",
     "globals": "15.9.0",
     "husky": "9.1.7",
+    "jest": "29.7.0",
     "prettier": "3.4.2",
     "turbo": "2.9.16",
     "typescript": "5.5.4",

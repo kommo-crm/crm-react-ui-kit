@@ -1,0 +1,172 @@
+import { Meta, Title } from '@storybook/blocks';
+import { i18n } from '@i18n';
+import ReactMarkdown from 'react-markdown';
+
+<Meta title="Tokens/Overview" />
+
+<Title>{i18n.t('Design Tokens')}</Title>
+
+<ReactMarkdown>
+  {i18n.t(
+    '`@kommo-crm/crm-tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.'
+  )}
+</ReactMarkdown>
+
+<ReactMarkdown>{'## ' + i18n.t('Installation')}</ReactMarkdown>
+
+**npm:**
+
+```sh
+npm i @kommo-crm/crm-tokens
+```
+
+**yarn:**
+
+```sh
+yarn add @kommo-crm/crm-tokens
+```
+
+**pnpm:**
+
+```sh
+pnpm add @kommo-crm/crm-tokens
+```
+
+---
+
+<ReactMarkdown>{'## ' + i18n.t('CSS')}</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t('Import adds CSS custom properties to `:root`.')}
+</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t('**Primitive tokens** (absolute values: colors, radii, font sizes):')}
+</ReactMarkdown>
+
+```css
+@import '@kommo-crm/crm-tokens/css/primitives';
+```
+
+<ReactMarkdown>
+  {i18n.t(
+    '**Semantic tokens** (theme-aware variables — import one or both themes):'
+  )}
+</ReactMarkdown>
+
+```css
+@import '@kommo-crm/crm-tokens/css/semantic/light';
+@import '@kommo-crm/crm-tokens/css/semantic/dark';
+```
+
+<ReactMarkdown>
+  {i18n.t('Use the variables anywhere after importing:')}
+</ReactMarkdown>
+
+```css
+.button {
+  background: var(--color-light-blue-500);
+  border-radius: var(--border-radius-default);
+}
+```
+
+---
+
+<ReactMarkdown>{'## ' + i18n.t('SCSS')}</ReactMarkdown>
+
+```scss
+@use '@kommo-crm/crm-tokens/scss/primitives' as *;
+@use '@kommo-crm/crm-tokens/scss/semantic/light' as *;
+```
+
+---
+
+<ReactMarkdown>{'## ' + i18n.t('Less')}</ReactMarkdown>
+
+```less
+@import '@kommo-crm/crm-tokens/less/primitives';
+@import '@kommo-crm/crm-tokens/less/semantic/light';
+```
+
+---
+
+<ReactMarkdown>{'## ' + i18n.t('JavaScript / TypeScript')}</ReactMarkdown>
+
+<ReactMarkdown>
+  {i18n.t(
+    "The JS export provides typed access to each token's resolved value and CSS variable name."
+  )}
+</ReactMarkdown>
+
+**Primitives:**
+
+```ts
+import { color, borderRadius, fontSize } from '@kommo-crm/crm-tokens';
+
+color.light.blue[500].value; // '#4c8bf7'
+color.light.blue[500].cssVar; // '--color-light-blue-500'
+
+borderRadius.default.value; // '4px'
+fontSize.base.value; // '15px'
+```
+
+**Semantic tokens:**
+
+```ts
+import lightTokens from '@kommo-crm/crm-tokens/js/semantic/light';
+import darkTokens from '@kommo-crm/crm-tokens/js/semantic/dark';
+
+lightTokens['background']['default'].cssVar; // '--background-default'
+```
+
+<ReactMarkdown>{i18n.t('Every token has the following shape:')}</ReactMarkdown>
+
+```ts
+interface Token {
+  value: string; // resolved CSS value
+  cssVar: string; // CSS custom property name (e.g. '--color-light-blue-500')
+}
+```
+
+---
+
+<ReactMarkdown>{'## ' + i18n.t('JSON')}</ReactMarkdown>
+
+<ReactMarkdown>{i18n.t('All tokens in a single file:')}</ReactMarkdown>
+
+```ts
+import tokens from '@kommo-crm/crm-tokens/json';
+```
+
+<ReactMarkdown>
+  {i18n.t(
+    "Useful for generating docs or integrating with tools that don't consume CSS."
+  )}
+</ReactMarkdown>
+
+---
+
+<ReactMarkdown>{'## ' + i18n.t('Token structure')}</ReactMarkdown>
+
+<table>
+  <thead>
+    <tr>
+      <th>{i18n.t('Category')}</th>
+      <th>{i18n.t('Path pattern')}</th>
+      <th>{i18n.t('Example variable')}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{i18n.t('Primitive colors')}</td>
+      <td>
+        <code>
+          color.{'{theme}'}.{'{group}'}.{'{shade}'}
+        </code>
+      </td>
+      <td>
+        <code>--color-dark-blue-500</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
