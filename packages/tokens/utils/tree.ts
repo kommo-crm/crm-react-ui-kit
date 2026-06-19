@@ -18,7 +18,7 @@ export function buildTree(tokens: TransformedToken[], prefix: string): TokenTree
     let node = root;
     for (let i = 0; i < parts.length - 1; i++) {
       const key = parts[i];
-      if (!node[key] || 'value' in (node[key] as object)) {
+      if (!node[key] || isLeaf(node[key])) {
         node[key] = {};
       }
       node = node[key] as TokenTree;

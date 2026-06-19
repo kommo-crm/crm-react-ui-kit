@@ -16,7 +16,7 @@ function buildInterface(tree: TokenTree, indent = ''): string {
       lines.push(`${indent}};`);
     } else {
       lines.push(`${indent}${JSON.stringify(key)}: {`);
-      lines.push(buildInterface(val as TokenTree, indent + '  '));
+      lines.push(buildInterface(val, indent + '  '));
       lines.push(`${indent}};`);
     }
   }
@@ -27,7 +27,7 @@ function buildInterface(tree: TokenTree, indent = ''): string {
 export const dtsFormat: Format = {
   name: 'custom/typescript-declarations',
   format: ({ dictionary, options }) => {
-    const prefix = (options?.prefix as string) ?? '';
+    const prefix: string = options?.prefix ?? '';
     const tree = buildTree(dictionary.allTokens, prefix);
 
     const shadeKeys = [

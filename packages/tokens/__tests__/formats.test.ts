@@ -2,18 +2,31 @@ import { cssMinifiedFormat } from '../formats/css-minified';
 import { jsNestedFormat } from '../formats/js-nested';
 import { dtsFormat } from '../formats/dts-generator';
 
-function makeToken(path: string[], value: string, name?: string) {
+interface TestToken {
+  path: string[];
+  value: string;
+  $value: string | undefined;
+  name: string;
+  filePath: string;
+  isSource: boolean;
+  original: { value: string };
+  type: 'color';
+  attributes: Record<string, never>;
+  comment: string | undefined;
+}
+
+function makeToken(path: string[], value: string, name?: string): TestToken {
   return {
     path,
     value,
-    $value: undefined as string | undefined,
+    $value: undefined,
     name: name ?? path.join('-'),
     filePath: '',
     isSource: true,
     original: { value },
-    type: 'color' as const,
+    type: 'color',
     attributes: {},
-    comment: undefined as string | undefined,
+    comment: undefined,
   };
 }
 

@@ -1,4 +1,4 @@
-import { buildTree, isLeaf } from '../utils/tree';
+import { buildTree, isLeaf, type TokenTree } from '../utils/tree';
 
 const token = (path: string[], value: string) => ({
   path,
@@ -46,8 +46,9 @@ describe('buildTree', () => {
     const tokens = [token(['color', 'blue', '500'], '#4c8bf7')];
     const tree = buildTree(tokens, 'crm');
 
-    const leaf = (tree.color as any).blue['500'];
-    expect(leaf.cssVar).toBe('--crm-color-blue-500');
+    expect(tree).toMatchObject({
+      color: { blue: { '500': { cssVar: '--crm-color-blue-500' } } },
+    });
   });
 
   it('builds multiple tokens under same parent', () => {
@@ -56,8 +57,7 @@ describe('buildTree', () => {
       token(['color', 'blue', '500'], '#4c8bf7'),
     ];
     const tree = buildTree(tokens, '');
-    const blue = (tree.color as any).blue;
-
+    const blue = (tree['color'] as TokenTree)['blue'] as TokenTree;
     expect(Object.keys(blue)).toEqual(['50', '500']);
   });
 
@@ -65,6 +65,9 @@ describe('buildTree', () => {
     const t = { ...token(['color', 'x'], '#aaa'), $value: '#bbb' };
     const tree = buildTree([t], '');
 
-    expect((tree.color as any).x.value).toBe('#bbb');
+    expect((tree['color'] as TokenTree)['x']).toEqual({
+      value: '#bbb',
+      cssVar: '--color-x',
+    });
   });
 });

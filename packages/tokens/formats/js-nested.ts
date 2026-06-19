@@ -1,5 +1,5 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
-import { buildTree, isLeaf, type TokenLeaf, type TokenTree } from '../utils/tree';
+import { buildTree, isLeaf, type TokenTree } from '../utils/tree';
 
 function serializeTree(
   tokenMap: Map<string, TransformedToken>,
@@ -10,14 +10,13 @@ function serializeTree(
   for (const [key, val] of Object.entries(tree)) {
     const currentPath = [...path, key];
     if (isLeaf(val)) {
-      const leaf = val as TokenLeaf;
       const token = tokenMap.get(currentPath.join('.'));
       lines.push(
-        `/** @cssVar ${leaf.cssVar} @value ${leaf.value}${token?.comment ? ` — ${token.comment}` : ''} */`,
-        `${JSON.stringify(key)}: { value: ${JSON.stringify(leaf.value)}, cssVar: ${JSON.stringify(leaf.cssVar)} },`
+        `/** @cssVar ${val.cssVar} @value ${val.value}${token?.comment ? ` — ${token.comment}` : ''} */`,
+        `${JSON.stringify(key)}: { value: ${JSON.stringify(val.value)}, cssVar: ${JSON.stringify(val.cssVar)} },`
       );
     } else {
-      const nested = serializeTree(tokenMap, val as TokenTree, currentPath);
+      const nested = serializeTree(tokenMap, val, currentPath);
       lines.push(
         `${JSON.stringify(key)}: {`,
         ...nested.map((l) => `  ${l}`),
@@ -31,7 +30,7 @@ function serializeTree(
 export const jsNestedFormat: Format = {
   name: 'custom/js-nested',
   format: ({ dictionary, options }) => {
-    const prefix = (options?.prefix as string) ?? '';
+    const prefix: string = options?.prefix ?? '';
     const sorted = dictionary.allTokens;
     const tree = buildTree(sorted, prefix);
     const tokenMap = new Map(sorted.map((t) => [t.path.join('.'), t]));
