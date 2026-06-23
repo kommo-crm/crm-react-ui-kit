@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import type { Token, ColorShade } from '@tokens/primitives';
+import { i18n } from '@i18n';
 
 interface ColorGroup {
   name: string;
@@ -175,7 +176,7 @@ function Swatch({ token, onShow }: SwatchProps) {
   const handleSwatchClick = useCallback(
     (e: React.MouseEvent) => {
       copyText(token.cssVar);
-      onShow(e, `Copied: ${token.cssVar}`);
+      onShow(e, `${i18n.t('Copied')}: ${token.cssVar}`);
     },
     [token.cssVar, onShow]
   );
@@ -184,7 +185,7 @@ function Swatch({ token, onShow }: SwatchProps) {
     (e: React.MouseEvent) => {
       e.stopPropagation();
       copyText(token.value);
-      onShow(e, `Copied: ${token.value}`);
+      onShow(e, `${i18n.t('Copied')}: ${token.value}`);
     },
     [token.value, onShow]
   );

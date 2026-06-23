@@ -1,30 +1,32 @@
 export default {
-  'Design Tokens': 'Tokens de design',
-  '`@kommo-crm/crm-tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.':
-    '`@kommo-crm/crm-tokens` é um pacote de tokens de design para o Kommo CRM. Fornece tokens primitivos e semânticos nos formatos CSS, SCSS, Less e JS/TS.',
+  'Design Tokens': 'Tokens de Design',
+  '`@kommo-crm/crm-tokens` is the shared design tokens package for Kommo CRM. It provides design values such as colors, spacing, border radii, and typography in CSS, SCSS, Less, and JavaScript/TypeScript formats.':
+    '`@kommo-crm/crm-tokens` é o pacote de tokens de design compartilhados da Kommo CRM. Ele fornece valores de design como cores, espaçamento, margem das bordas e tipografia nos formatos CSS, SCSS, Less e JavaScript/TypeScript.',
   'Installation': 'Instalação',
   'CSS': 'CSS',
-  'Import adds CSS custom properties to `:root`.':
-    'A importação adiciona propriedades personalizadas de CSS ao `:root`.',
-  '**Primitive tokens** (absolute values: colors, radii, font sizes):':
-    '**Tokens primitivos** (valores absolutos: cores, raios, tamanhos de fonte):',
-  '**Semantic tokens** (theme-aware variables — import one or both themes):':
-    '**Tokens semânticos** (variáveis com suporte a tema — importe um ou ambos os temas):',
-  'Use the variables anywhere after importing:':
+  'Import the package to add CSS custom properties to :root.':
+    'Importe o pacote para adicionar propriedades CSS personalizadas ao `:root`.',
+  '**Primitive tokens** are fixed values, such as palette colors, border radii, and font sizes:':
+    '**Tokens primitivos** são valores fixos, como cores de paleta, margens de borda e tamanhos de fonte:',
+  '**Semantic tokens** are theme-aware variables. Import the light theme, dark theme, or both, depending on your setup:':
+    '**Tokens semânticos** são variáveis ​​sensíveis ao tema. Importe os temas claro, escuro ou ambos, dependendo da configuração:',
+  'After importing the tokens, use the CSS custom properties anywhere you need:':
     'Use as variáveis em qualquer lugar após importá-las:',
   'SCSS': 'SCSS',
   'Less': 'Less',
   'JavaScript / TypeScript': 'JavaScript / TypeScript',
   "The JS export provides typed access to each token's resolved value and CSS variable name.":
     'A exportação JS fornece acesso tipado ao valor resolvido e ao nome da variável CSS de cada token.',
-  'Every token has the following shape:': 'Cada token tem a seguinte forma:',
+  'Every token has the following shape:': 'Cada token tem o seguinte formato:',
   'JSON': 'JSON',
-  'All tokens in a single file:': 'Todos os tokens em um único arquivo:',
-  "Useful for generating docs or integrating with tools that don't consume CSS.":
-    'Útil para gerar documentação ou integrar com ferramentas que não consomem CSS.',
-  'Token structure': 'Estrutura de tokens',
+  'All tokens in a single file:':
+    'Você pode importar todos os tokens de um único arquivo:',
+  "Useful for generating documentation or integrating with tools that don't support CSS variables.":
+    'Útil para gerar documentação ou integrar com ferramentas que não suportam variáveis ​​CSS.',
+  'Token structure': 'Estrutura de token',
   'Category': 'Categoria',
   'Path pattern': 'Padrão de caminho',
-  'Example variable': 'Variável de exemplo',
+  'Example variable': 'Variável de exemplo  ',
   'Primitive colors': 'Cores primitivas',
+  'Copied': 'Copiado',
 };

@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 
 <ReactMarkdown>
   {i18n.t(
-    '`@kommo-crm/crm-tokens` is a design tokens package for Kommo CRM. It provides primitive and semantic tokens in CSS, SCSS, Less, and JS/TS formats.'
+    '`@kommo-crm/crm-tokens` is the shared design tokens package for Kommo CRM. It provides design values such as colors, spacing, border radii, and typography in CSS, SCSS, Less, and JavaScript/TypeScript formats.'
   )}
 </ReactMarkdown>
 
@@ -37,11 +37,13 @@ pnpm add @kommo-crm/crm-tokens
 <ReactMarkdown>{'## ' + i18n.t('CSS')}</ReactMarkdown>
 
 <ReactMarkdown>
-  {i18n.t('Import adds CSS custom properties to `:root`.')}
+  {i18n.t('Import the package to add CSS custom properties to :root.')}
 </ReactMarkdown>
 
 <ReactMarkdown>
-  {i18n.t('**Primitive tokens** (absolute values: colors, radii, font sizes):')}
+  {i18n.t(
+    '**Primitive tokens** are fixed values, such as palette colors, border radii, and font sizes:'
+  )}
 </ReactMarkdown>
 
 ```css
@@ -50,7 +52,7 @@ pnpm add @kommo-crm/crm-tokens
 
 <ReactMarkdown>
   {i18n.t(
-    '**Semantic tokens** (theme-aware variables — import one or both themes):'
+    '**Semantic tokens** are theme-aware variables. Import the light theme, dark theme, or both, depending on your setup:'
   )}
 </ReactMarkdown>
 
@@ -60,7 +62,9 @@ pnpm add @kommo-crm/crm-tokens
 ```
 
 <ReactMarkdown>
-  {i18n.t('Use the variables anywhere after importing:')}
+  {i18n.t(
+    'After importing the tokens, use the CSS custom properties anywhere you need:'
+  )}
 </ReactMarkdown>
 
 ```css
@@ -140,7 +144,7 @@ import tokens from '@kommo-crm/crm-tokens/json';
 
 <ReactMarkdown>
   {i18n.t(
-    "Useful for generating docs or integrating with tools that don't consume CSS."
+    "Useful for generating documentation or integrating with tools that don't support CSS variables."
   )}
 </ReactMarkdown>
 
