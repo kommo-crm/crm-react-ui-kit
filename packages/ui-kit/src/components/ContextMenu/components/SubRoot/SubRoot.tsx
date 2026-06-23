@@ -50,7 +50,7 @@ export const __experimental_SubRoot = (props: ContextMenuSubRootProps) => {
   } = useContextMenuSubMenu({
     displayName: DISPLAY_NAME,
     mode: mode,
-    isDefaultOpen: isDefaultOpen || defaultOpen,
+    isDefaultOpen: isDefaultOpen ?? defaultOpen,
     onOpen,
     onAnimatedOpen,
   });
