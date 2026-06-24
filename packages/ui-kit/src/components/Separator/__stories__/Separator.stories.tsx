@@ -107,6 +107,58 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+const lightBgRender: Story['render'] = (props) => (
+  <div
+    style={{
+      ...CARD_STYLE,
+      justifyContent: 'center',
+      background: 'var(--crm-ui-kit-palette-background-primary)',
+    }}
+  >
+    <div style={HORIZONTAL_WRAPPER_STYLE}>
+      <Separator {...props} />
+    </div>
+  </div>
+);
+
+const darkBgRender: Story['render'] = (props) => (
+  <div
+    style={{
+      ...CARD_STYLE,
+      justifyContent: 'center',
+      background: 'var(--crm-ui-kit-palette-background-default)',
+    }}
+  >
+    <div style={HORIZONTAL_WRAPPER_STYLE}>
+      <Separator {...props} />
+    </div>
+  </div>
+);
+
+export const SeparatorRoundedLight: Story = {
+  tags: ['!dev'],
+  args: { theme: SeparatorRoundedLightTheme },
+  render: lightBgRender,
+};
+
+export const SeparatorSquaredLight: Story = {
+  tags: ['!dev'],
+  args: { theme: SeparatorSquaredLightTheme },
+  render: lightBgRender,
+};
+
+export const SeparatorRoundedDark: Story = {
+  tags: ['!dev'],
+  args: { theme: SeparatorRoundedDarkTheme },
+  render: darkBgRender,
+};
+
+export const SeparatorSquaredDark: Story = {
+  tags: ['!dev'],
+  args: { theme: SeparatorSquaredDarkTheme },
+  render: darkBgRender,
+};
+
 export const HowToUse: Story = {
   render: (props) => {
     const isVertical = props.orientation === 'vertical';
