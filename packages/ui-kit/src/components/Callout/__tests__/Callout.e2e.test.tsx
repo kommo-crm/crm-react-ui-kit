@@ -13,8 +13,8 @@ import {
 } from './Callout.e2e-playground';
 
 export const combinations = multiCartesian<CalloutTestProps>([
-  {},
-  { isClosable: [true] },
+  { shortContent: [true, false] },
+  { shortContent: [true, false], isClosable: [true] },
 ]);
 
 for (const props of combinations) {
