@@ -38,7 +38,7 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
     </div>
   );
 
-  if (children) {
+  if (children !== undefined) {
     return (
       <div
         ref={ref}
