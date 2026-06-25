@@ -38,7 +38,9 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
     </div>
   );
 
-  if (children !== undefined) {
+  const isStandaloneMode = children === undefined || children === null;
+
+  if (!isStandaloneMode) {
     return (
       <div
         ref={ref}
