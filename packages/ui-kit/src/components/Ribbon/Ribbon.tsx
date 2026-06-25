@@ -12,6 +12,8 @@ import s from './Ribbon.module.css';
 
 type D = HTMLDivElement;
 
+const SQRT2 = Math.sqrt(2);
+
 export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
   const {
     label,
@@ -28,7 +30,7 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
   const ribbonWrapperContent = (
     <div
       style={{
-        width: Math.sqrt(2) * offset,
+        width: SQRT2 * offset,
       }}
       className={cx(s.ribbon, themeClassName)}
     >
