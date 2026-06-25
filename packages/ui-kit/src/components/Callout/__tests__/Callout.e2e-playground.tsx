@@ -36,6 +36,10 @@ const MultiLineContent = (
   <Text theme={TextPrimaryTheme} size="l">
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
     ducimus inventore minima optio error unde incidunt atque. Minima, maxime?
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
+    ducimus inventore minima optio error unde incidunt atque. Minima, maxime?
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus ipsam
+    ducimus inventore minima optio error unde incidunt atque. Minima, maxime?
   </Text>
 );
 
