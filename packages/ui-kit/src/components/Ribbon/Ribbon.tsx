@@ -1,8 +1,6 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 import cx from 'classnames';
-
-import React from 'react';
 
 import { useThemeClassName } from '@ui-kit/hooks';
 
@@ -17,7 +15,7 @@ type D = HTMLDivElement;
 export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
   const {
     label,
-    className = '',
+    className,
     theme,
     offset = 86,
     children,
@@ -34,7 +32,7 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
       }}
       className={cx(s.ribbon, themeClassName)}
     >
-      <span className={cx(s.label)}>{label}</span>
+      <span className={s.label}>{label}</span>
     </div>
   );
 
@@ -53,7 +51,7 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
             width: offset,
             height: offset,
           }}
-          className={cx(s['ribbon-wrapper'], themeClassName)}
+          className={s['ribbon-wrapper']}
         >
           {ribbonWrapperContent}
         </div>
@@ -65,7 +63,7 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
     <div
       ref={ref}
       style={{ width: offset, height: offset, ...style }}
-      className={cx(s['ribbon-wrapper'], themeClassName, className)}
+      className={cx(s['ribbon-wrapper'], className)}
       {...rest}
     >
       {ribbonWrapperContent}

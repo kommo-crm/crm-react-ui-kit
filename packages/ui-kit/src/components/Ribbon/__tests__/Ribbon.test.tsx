@@ -47,10 +47,9 @@ describe('Ribbon', () => {
     expect(element).toHaveClass(className);
     /**
      * 1. Module className (ribbon-wrapper)
-     * 2. Theme className
      * 3. Additional class `my-class`
      */
-    expect(element.classList).toHaveLength(3);
+    expect(element.classList).toHaveLength(2);
   });
 
   it('should render ribbon label in standalone mode', () => {
