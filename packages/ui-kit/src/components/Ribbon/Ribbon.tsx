@@ -21,6 +21,7 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
     theme,
     offset = 86,
     children,
+    style = {},
     ...rest
   } = props;
 
@@ -39,7 +40,12 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
 
   if (children) {
     return (
-      <div ref={ref} className={cx(s.container, className)} {...rest}>
+      <div
+        ref={ref}
+        className={cx(s.container, className)}
+        style={style}
+        {...rest}
+      >
         {children}
 
         <div
@@ -58,10 +64,7 @@ export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
   return (
     <div
       ref={ref}
-      style={{
-        width: offset,
-        height: offset,
-      }}
+      style={{ width: offset, height: offset, ...style }}
       className={cx(s['ribbon-wrapper'], themeClassName, className)}
       {...rest}
     >
