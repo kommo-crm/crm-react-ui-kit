@@ -11,7 +11,12 @@ import {
   RibbonWithChildrenPlaygroundItem,
 } from './Ribbon.e2e-playground';
 
-export const combinations = multiCartesian<RibbonProps>([{}]);
+export const combinations = multiCartesian<RibbonProps>([
+  {},
+  {
+    offset: [50, 100],
+  },
+]);
 
 for (const props of combinations) {
   const label = prettyProps(props);

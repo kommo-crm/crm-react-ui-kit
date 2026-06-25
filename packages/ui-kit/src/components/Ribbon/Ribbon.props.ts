@@ -23,9 +23,10 @@ export interface RibbonProps extends DivProps {
    * </Ribbon>
    * ```
    *
-   * **Without children** - only the ribbon element is rendered. Place it
-   * inside a parent that already has non-static position so it can be
-   * anchored correctly.
+   * **Without children** - only the ribbon element is rendered. It
+   * has `position: absolute` and is positioned to the top-right corner via
+   * `top` and `right`. Place it inside a parent with non-static position so
+   * it can be anchored correctly.
    *
    * ```tsx
    * <Card style={{ position: 'relative' }}>
