@@ -81,7 +81,27 @@ export interface SelectTestProps {
   isDefaultOpen?: boolean;
   defaultValue?: SelectItem;
   useHeightWrapper?: boolean;
+  isOpenedToTop?: boolean;
 }
+
+const SelectContent = ({ items }: { items: SelectItem[] }) => (
+  <>
+    <Select.Button theme={SelectButtonLightTheme} key="button">
+      <Select.Value placeholder="Select option" />
+      <Select.Arrow theme={SelectArrowTheme} />
+    </Select.Button>
+    <Select.List key="list" theme={ListTheme}>
+      {items.map((item, index) => (
+        <Select.Item
+          theme={SelectItemTheme}
+          key={item.value}
+          item={item}
+          index={index}
+        />
+      ))}
+    </Select.List>
+  </>
+);
 
 const SelectPlayground = ({
   appearance,
@@ -89,34 +109,40 @@ const SelectPlayground = ({
   items,
 }: ComponentPlaygroundProps<SelectTestProps> & { items: SelectItem[] }) => (
   <ComponentPlayground<SelectTestProps> appearance={appearance} props={props}>
-    {({ useHeightWrapper, ...selectProps }) => {
-      const content = (
-        <>
-          <Select.Button theme={SelectButtonLightTheme} key="button">
-            <Select.Value placeholder="Select option" />
-            <Select.Arrow theme={SelectArrowTheme} />
-          </Select.Button>
-          <Select.List key="list" theme={ListTheme}>
-            {items.map((item, index) => (
-              <Select.Item
-                theme={SelectItemTheme}
-                key={item.value}
-                item={item}
-                index={index}
-              />
-            ))}
-          </Select.List>
-        </>
-      );
+    {({ useHeightWrapper, isOpenedToTop, ...selectProps }) => {
+      const makeSelectContent = () => {
+        const content = <SelectContent items={items} />;
+
+        return useHeightWrapper ? (
+          <div style={{ height: '110px' }}>{content}</div>
+        ) : (
+          content
+        );
+      };
+
+      if (isOpenedToTop) {
+        return (
+          <div style={{ position: 'relative', height: 150 }}>
+            <div
+              style={{
+                position: 'absolute',
+                left: 24,
+                right: 24,
+                bottom: 24,
+              }}
+            >
+              <Select {...selectProps} isDefaultOpen theme={SelectRootTheme}>
+                {makeSelectContent()}
+              </Select>
+            </div>
+          </div>
+        );
+      }
 
       return (
         <div style={{ margin: '0 20px' }}>
           <Select {...selectProps} theme={SelectRootTheme}>
-            {useHeightWrapper ? (
-              <div style={{ height: '110px' }}>{content}</div>
-            ) : (
-              content
-            )}
+            {makeSelectContent()}
           </Select>
         </div>
       );

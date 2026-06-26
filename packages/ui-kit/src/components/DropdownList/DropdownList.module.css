@@ -31,3 +31,9 @@
 
   z-index: var(--crm-ui-kit-list-z-index);
 }
+
+.listToTop {
+  top: auto;
+  bottom: var(--crm-ui-kit-list-to-top-bottom);
+  left: var(--crm-ui-kit-list-to-top-left);
+}

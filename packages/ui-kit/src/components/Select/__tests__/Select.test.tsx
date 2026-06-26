@@ -125,4 +125,12 @@ describe('Select', () => {
 
     expect(screen.getByText('Option 2')).toBeInTheDocument();
   });
+
+  it('should focus the list when opened', () => {
+    renderSelect();
+
+    fireEvent.click(screen.getByRole('button'));
+
+    expect(document.activeElement).toBe(screen.getByRole('list'));
+  });
 });
