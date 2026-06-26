@@ -25,7 +25,7 @@ export const useContextMenuSubMenu = (
   const {
     displayName,
     mode: rootMode,
-    defaultOpen,
+    isDefaultOpen,
     onOpen,
     onAnimatedOpen,
   } = options;
@@ -40,7 +40,7 @@ export const useContextMenuSubMenu = (
     setSubMenuTriggerId,
   } = useSubMenuContext(displayName);
 
-  const [open, setOpen] = useState(isSubMenuOpen || defaultOpen || false);
+  const [open, setOpen] = useState(isSubMenuOpen || isDefaultOpen || false);
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
@@ -168,8 +168,8 @@ export const useContextMenuSubMenu = (
    */
   const handleOpenChange = (value: boolean) => {
     if (mode === ContextMenuMode.CLICK) {
-      if (defaultOpen !== undefined) {
-        setOpen(defaultOpen);
+      if (isDefaultOpen !== undefined) {
+        setOpen(isDefaultOpen);
 
         return;
       } else if (!value) {
