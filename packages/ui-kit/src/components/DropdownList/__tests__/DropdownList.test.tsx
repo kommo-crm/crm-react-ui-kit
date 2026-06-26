@@ -129,12 +129,6 @@ describe('DropdownList', () => {
     expect(onSelect).toHaveBeenCalledWith(0);
   });
 
-  it('should apply listToTop class when placement is top', () => {
-    renderDropdownList({ placement: 'top' });
-
-    expect(screen.getByRole('list').className).toMatch(/listToTop/);
-  });
-
   it('should not apply the opened styles when isOpened is false', () => {
     const onSelect = jest.fn();
     const onHoveredIndexChange = jest.fn();

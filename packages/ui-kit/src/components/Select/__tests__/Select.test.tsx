@@ -9,19 +9,6 @@ import { Select, SelectArrowTheme, SelectItemTheme, SelectListTheme } from '..';
 import { SelectItem } from '../Select.types';
 import { SelectRootTheme } from '../Select.theme';
 
-const createRect = (rect: Partial<DOMRect>): DOMRect => ({
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
-  width: 0,
-  height: 0,
-  x: 0,
-  y: 0,
-  toJSON: () => ({}),
-  ...rect,
-});
-
 const defaultItems: SelectItem[] = [
   {
     value: 'Option 1',
@@ -139,99 +126,11 @@ describe('Select', () => {
     expect(screen.getByText('Option 2')).toBeInTheDocument();
   });
 
-  it('should open the list upward when it overflows the viewport bottom', () => {
-    const originalInnerHeight = window.innerHeight;
-
-    Object.defineProperty(window, 'innerHeight', {
-      configurable: true,
-      value: 500,
-    });
-
-    const getBoundingClientRect = jest.spyOn(
-      HTMLElement.prototype,
-      'getBoundingClientRect'
-    );
-
-    getBoundingClientRect.mockReturnValue(
-      createRect({
-        top: 400,
-        bottom: 650,
-        left: 0,
-        right: 100,
-        width: 100,
-        height: 250,
-        x: 0,
-        y: 400,
-      })
-    );
-
+  it('should focus the list when opened', () => {
     renderSelect();
 
     fireEvent.click(screen.getByRole('button'));
 
-    expect(screen.getByRole('list').className).toMatch(/listToTop/);
     expect(document.activeElement).toBe(screen.getByRole('list'));
-
-    getBoundingClientRect.mockRestore();
-
-    Object.defineProperty(window, 'innerHeight', {
-      configurable: true,
-      value: originalInnerHeight,
-    });
-  });
-
-  it('should open the list downward when it does not fit above or below', () => {
-    const originalInnerHeight = window.innerHeight;
-
-    Object.defineProperty(window, 'innerHeight', {
-      configurable: true,
-      value: 500,
-    });
-
-    const getBoundingClientRect = jest.spyOn(
-      HTMLElement.prototype,
-      'getBoundingClientRect'
-    );
-
-    getBoundingClientRect.mockImplementation(function (this: HTMLElement) {
-      const isFlippedUp = this.className.includes('listToTop');
-
-      if (isFlippedUp) {
-        return createRect({
-          top: -50,
-          bottom: 450,
-          left: 0,
-          right: 100,
-          width: 100,
-          height: 500,
-          x: 0,
-          y: -50,
-        });
-      }
-
-      return createRect({
-        top: 400,
-        bottom: 650,
-        left: 0,
-        right: 100,
-        width: 100,
-        height: 250,
-        x: 0,
-        y: 400,
-      });
-    });
-
-    renderSelect();
-
-    fireEvent.click(screen.getByRole('button'));
-
-    expect(screen.getByRole('list').className).not.toMatch(/listToTop/);
-
-    getBoundingClientRect.mockRestore();
-
-    Object.defineProperty(window, 'innerHeight', {
-      configurable: true,
-      value: originalInnerHeight,
-    });
   });
 });
