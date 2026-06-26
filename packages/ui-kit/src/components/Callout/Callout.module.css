@@ -16,7 +16,7 @@
   flex: 1;
 }
 
-.content:not(:last-child) {
+.contentWithClose {
   padding-right: 32px;
 }
 
