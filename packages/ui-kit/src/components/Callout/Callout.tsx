@@ -41,7 +41,9 @@ export const Callout = forwardRef<D, CalloutProps>((props, ref) => {
     >
       {isIconAvailable && <Icon className={cx(s.icon)} />}
 
-      {children}
+      <div className={cx(s.content, { [s.contentWithClose]: onClose })}>
+        {children}
+      </div>
 
       {onClose && (
         <Button

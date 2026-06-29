@@ -8,7 +8,7 @@ import { type Props } from './DesignTokens.props';
 export const DesignTokens: FC<Props> = ({ colorValues }) => {
   return (
     <>
-      <h2>{i18n.t('Design tokens')}</h2>
+      <h3>{i18n.t('Design tokens')}</h3>
 
       <ColorPalette>
         {colorValues.map(({ key, value }) => (

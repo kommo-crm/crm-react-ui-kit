@@ -52,7 +52,8 @@
     border-radius: var(--crm-ui-kit-button-focus-visible-border-radius);
   }
 
-  &:not(.disabled):not(.loading):hover {
+  &:not(.disabled):not(.loading):hover,
+  &:not(.disabled):not(.loading)[data-highlighted] {
     color: var(--crm-ui-kit-button-hover-color);
     background: var(--crm-ui-kit-button-hover-background-color);
     border-width: var(--crm-ui-kit-button-hover-border-width);

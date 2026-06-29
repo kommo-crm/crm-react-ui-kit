@@ -21,7 +21,7 @@ export const useContextMenuSub = (
   const {
     displayName,
     mode: initialMode,
-    defaultOpen,
+    isDefaultOpen,
     onOpen,
     onAiming,
     aimingTolerance,
@@ -39,7 +39,7 @@ export const useContextMenuSub = (
 
   const triggerId = useId();
 
-  const [isOpen, setIsOpen] = useState(defaultOpen || false);
+  const [isOpen, setIsOpen] = useState(isDefaultOpen || false);
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [isOpenedByKeyboard, setIsOpenedByKeyboard] = useState(false);
@@ -207,11 +207,11 @@ export const useContextMenuSub = (
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (defaultOpen !== undefined) {
-      setIsOpen(defaultOpen);
-      onOpen?.(defaultOpen);
-      handleSubmenuOpen(defaultOpen);
-      setIsAnimatedOpen(defaultOpen);
+    if (isDefaultOpen !== undefined) {
+      setIsOpen(isDefaultOpen);
+      onOpen?.(isDefaultOpen);
+      handleSubmenuOpen(isDefaultOpen);
+      setIsAnimatedOpen(isDefaultOpen);
       setIsOpenedByKeyboard(false);
 
       return;
@@ -370,11 +370,11 @@ export const useContextMenuSub = (
     if (
       (activeItemId !== triggerId || isSubRootOpen) &&
       isOpen &&
-      defaultOpen === undefined
+      isDefaultOpen === undefined
     ) {
       handleCloseImmediate();
     }
-  }, [activeItemId, isOpen, defaultOpen]);
+  }, [activeItemId, isOpen, isDefaultOpen]);
 
   /**
    * Handles the hover close delay.
