@@ -47,7 +47,7 @@ describe('Ribbon', () => {
     expect(element).toHaveClass(className);
     /**
      * 1. Module className (ribbon-wrapper)
-     * 3. Additional class `my-class`
+     * 2. Additional class `my-class`
      */
     expect(element.classList).toHaveLength(2);
   });
