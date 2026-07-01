@@ -14,12 +14,14 @@ type D = HTMLDivElement;
 
 const SQRT2 = Math.sqrt(2);
 
+export const DEFAULT_OFFSET = 86;
+
 export const Ribbon = forwardRef<D, RibbonProps>((props, ref) => {
   const {
     label,
     className,
     theme,
-    offset = 86,
+    offset = DEFAULT_OFFSET,
     children,
     style = {},
     ...rest

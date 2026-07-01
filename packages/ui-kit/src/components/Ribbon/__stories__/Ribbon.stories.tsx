@@ -11,7 +11,7 @@ import {
 
 import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 
-import { Ribbon } from '..';
+import { DEFAULT_OFFSET, Ribbon } from '../Ribbon';
 import { RibbonPrimaryTheme } from '../Ribbon.themes';
 
 const themeMap = {
@@ -87,7 +87,7 @@ const meta = {
     offset: {
       control: { type: 'range', min: 0, max: 200, step: 1 },
       table: {
-        defaultValue: { summary: '86' },
+        defaultValue: { summary: String(DEFAULT_OFFSET) },
       },
     },
     theme: {
@@ -130,7 +130,7 @@ const meta = {
   args: {
     label: 'Pro',
     theme: RibbonPrimaryTheme,
-    offset: 86,
+    offset: DEFAULT_OFFSET,
   },
 } satisfies Meta<typeof Ribbon>;
 
