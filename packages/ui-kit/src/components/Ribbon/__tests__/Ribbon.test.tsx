@@ -79,4 +79,12 @@ describe('Ribbon', () => {
      */
     expect(element.classList).toHaveLength(2);
   });
+
+  it('should apply theme class to inner ribbon element', () => {
+    const { container } = renderRibbonStandalone();
+
+    const ribbon = container.querySelector('.ribbon');
+
+    expect(ribbon?.className).toMatch(/crm-ui-kit-theme/);
+  });
 });
