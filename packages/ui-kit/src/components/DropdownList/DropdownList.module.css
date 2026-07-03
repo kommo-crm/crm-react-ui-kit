@@ -34,5 +34,5 @@
 
 .listToTop {
   top: auto;
-  bottom: var(--crm-ui-kit-list-to-top-bottom);
+  bottom: var(--crm-ui-kit-list-to-top-bottom, 0px);
 }
