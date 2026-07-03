@@ -29,4 +29,5 @@ export default {
   'Example variable': 'Variável de exemplo',
   'Primitive colors': 'Cores primitivas',
   'Copied': 'Copiado',
+  'Copy failed': 'Falha ao copiar',
 };

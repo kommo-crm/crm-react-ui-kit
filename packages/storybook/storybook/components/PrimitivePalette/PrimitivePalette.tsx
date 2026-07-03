@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { Token, ColorShade } from '@tokens/primitives';
 import { i18n } from '@i18n';
+import { copyText } from '@storybook-utils/utils/copy';
 
 interface ColorGroup {
   name: string;
@@ -31,25 +32,6 @@ function contrastColor(hex: string): string {
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
   return luminance > 0.5 ? '#000000' : '#ffffff';
-}
-
-function legacyCopy(text: string): void {
-  const el = document.createElement('textarea');
-
-  el.value = text;
-  el.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
-}
-
-function copyText(text: string): void {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
-  } else {
-    legacyCopy(text);
-  }
 }
 
 const COLOR_GROUP_ORDER = [
@@ -182,18 +164,26 @@ function Swatch({ token, onShow }: SwatchProps) {
   const textColor = contrastColor(token.value);
 
   const handleSwatchClick = useCallback(
-    (e: React.MouseEvent) => {
-      copyText(token.cssVar);
-      onShow(e, `${i18n.t('Copied')}: ${token.cssVar}`);
+    async (e: React.MouseEvent) => {
+      try {
+        await copyText(token.cssVar);
+        onShow(e, `${i18n.t('Copied')}: ${token.cssVar}`);
+      } catch {
+        onShow(e, i18n.t('Copy failed'));
+      }
     },
     [token.cssVar, onShow]
   );
 
   const handleHexClick = useCallback(
-    (e: React.MouseEvent) => {
+    async (e: React.MouseEvent) => {
       e.stopPropagation();
-      copyText(token.value);
-      onShow(e, `${i18n.t('Copied')}: ${token.value}`);
+      try {
+        await copyText(token.value);
+        onShow(e, `${i18n.t('Copied')}: ${token.value}`);
+      } catch {
+        onShow(e, i18n.t('Copy failed'));
+      }
     },
     [token.value, onShow]
   );
