@@ -6,6 +6,10 @@
   "type": "module",
   "main": "./dist/js/index.js",
   "types": "./dist/js/index.d.ts",
+  "files": [
+    "dist",
+    "LICENCE"
+  ],
   "exports": {
     ".": {
       "import": "./dist/js/index.js",
