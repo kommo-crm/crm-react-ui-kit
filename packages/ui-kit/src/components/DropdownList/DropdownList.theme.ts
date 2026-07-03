@@ -14,9 +14,7 @@ type DropdownListThemeKey =
   | '--crm-ui-kit-list-border-style'
   | '--crm-ui-kit-list-color';
 
-type DropdownListThemeOptionalKey =
-  | '--crm-ui-kit-list-to-top-bottom'
-  | '--crm-ui-kit-list-to-top-left';
+type DropdownListThemeOptionalKey = '--crm-ui-kit-list-to-top-bottom';
 
 export type DropdownListThemeType = {
   [K in DropdownListThemeKey]: string;
@@ -42,5 +40,4 @@ export const DropdownListTheme: DropdownListThemeType = {
   '--crm-ui-kit-list-color': 'var(--crm-ui-kit-palette-text-primary)',
 
   '--crm-ui-kit-list-to-top-bottom': '0px',
-  '--crm-ui-kit-list-to-top-left': '-13px',
 };
