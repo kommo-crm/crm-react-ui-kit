@@ -1,5 +1,5 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
-import { buildTree, isLeaf, type TokenTree } from '../utils/tree';
+import { buildTree, isLeaf, toCamelCase, type TokenTree } from '../utils/tree';
 
 function serializeTree(
   tokenMap: Map<string, TransformedToken>,
@@ -36,7 +36,7 @@ export const jsNestedFormat: Format = {
     const tokenMap = new Map(sorted.map((t) => [t.path.join('.'), t]));
     const lines = serializeTree(tokenMap, tree);
     const exports = Object.keys(tree).map((key) => {
-      const camel = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+      const camel = toCamelCase(key);
       return `export const ${camel} = tree[${JSON.stringify(key)}];`;
     });
 

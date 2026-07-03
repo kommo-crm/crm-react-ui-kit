@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { Token, ColorShade } from '@tokens/primitives';
 import { i18n } from '@i18n';
 
@@ -148,6 +148,14 @@ function useTooltip() {
   });
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleShow = useCallback((e: React.MouseEvent, text: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -193,7 +201,6 @@ function Swatch({ token, onShow }: SwatchProps) {
   return (
     <>
       <div
-        title={token.cssVar}
         style={{
           ...styles.swatch,
           background: token.value,

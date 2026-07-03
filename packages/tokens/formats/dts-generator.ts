@@ -1,6 +1,6 @@
 import type { Format } from 'style-dictionary/types';
 
-import { buildTree, isLeaf, type TokenTree } from '../utils/tree';
+import { buildTree, isLeaf, toCamelCase, type TokenTree } from '../utils/tree';
 
 function buildInterface(tree: TokenTree, indent = ''): string {
   const lines: string[] = [];
@@ -33,7 +33,7 @@ export const dtsFormat: Format = {
     const shadeKeys = [
       ...new Set(
         dictionary.allTokens
-          .filter((t) => t.path.length === 4)
+          .filter((t) => t.path.length === 4 && t.path[0] === 'color')
           .map((t) => t.path[3])
       ),
     ].sort((a, b) => Number(a) - Number(b));
@@ -64,7 +64,7 @@ export const dtsFormat: Format = {
     ];
 
     for (const [key, val] of Object.entries(tree)) {
-      const camel = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+      const camel = toCamelCase(key);
       const TypeName = camel.charAt(0).toUpperCase() + camel.slice(1);
 
       lines.push(`export declare const ${camel}: {`);
@@ -77,7 +77,7 @@ export const dtsFormat: Format = {
     lines.push('declare const _default: {');
 
     for (const key of Object.keys(tree)) {
-      const camel = key.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+      const camel = toCamelCase(key);
 
       lines.push(`  ${JSON.stringify(key)}: typeof ${camel};`);
     }

@@ -9,7 +9,7 @@ export default {
   '**Primitive tokens** are fixed values, such as palette colors, border radii, and font sizes:':
     '**Tokens primitivos** são valores fixos, como cores de paleta, margens de borda e tamanhos de fonte:',
   '**Semantic tokens** are theme-aware variables. Import the light theme, dark theme, or both, depending on your setup:':
-    '**Tokens semânticos** são variáveis ​​sensíveis ao tema. Importe os temas claro, escuro ou ambos, dependendo da configuração:',
+    '**Tokens semânticos** são variáveis sensíveis ao tema. Importe os temas claro, escuro ou ambos, dependendo da configuração:',
   'After importing the tokens, use the CSS custom properties anywhere you need:':
     'Use as variáveis em qualquer lugar após importá-las:',
   'SCSS': 'SCSS',
@@ -22,11 +22,11 @@ export default {
   'All tokens in a single file:':
     'Você pode importar todos os tokens de um único arquivo:',
   "Useful for generating documentation or integrating with tools that don't support CSS variables.":
-    'Útil para gerar documentação ou integrar com ferramentas que não suportam variáveis ​​CSS.',
+    'Útil para gerar documentação ou integrar com ferramentas que não suportam variáveis CSS.',
   'Token structure': 'Estrutura de token',
   'Category': 'Categoria',
   'Path pattern': 'Padrão de caminho',
-  'Example variable': 'Variável de exemplo  ',
+  'Example variable': 'Variável de exemplo',
   'Primitive colors': 'Cores primitivas',
   'Copied': 'Copiado',
 };

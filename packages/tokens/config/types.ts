@@ -16,8 +16,10 @@ export interface TokensConfig {
   /** Theme map. Key = theme name, used as the output filename in dist */
   themes: Record<string, ThemeConfig>;
   /**
-   * CSS variable names that must be present in every build.
-   * Checked against dist/css/primitives.min.css after generation.
+   * Exact set of CSS variable names allowed in the primitives build —
+   * checked against dist/css/primitives.min.css after generation.
+   * The check fails on both missing AND extra variables, so every new
+   * primitive token must be added here or the build breaks.
    * Example: ["--color-light-blue-500", "--color-light-neutral-50"]
    */
   requiredTokens?: string[];

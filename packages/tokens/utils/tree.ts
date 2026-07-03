@@ -7,8 +7,23 @@ export interface TokenLeaf {
 
 export type TokenTree = { [key: string]: TokenTree | TokenLeaf };
 
+export function toKebabCase(segment: string): string {
+  return segment
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .toLowerCase();
+}
+
+export function toCamelCase(segment: string): string {
+  const camel = segment.replace(/-([a-z0-9])/g, (_, c: string) =>
+    c.toUpperCase()
+  );
+  return /^[0-9]/.test(camel) ? `_${camel}` : camel;
+}
+
 export function toCssVar(path: string[], prefix: string): string {
-  return prefix ? `--${prefix}-${path.join('-')}` : `--${path.join('-')}`;
+  const kebabPath = path.map(toKebabCase).join('-');
+  return prefix ? `--${prefix}-${kebabPath}` : `--${kebabPath}`;
 }
 
 export function buildTree(tokens: TransformedToken[], prefix: string): TokenTree {
