@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "description": "Design tokens for Kommo CRM UI",
+  "license": "SEE LICENSE IN LICENCE",
   "type": "module",
   "main": "./dist/js/index.js",
   "types": "./dist/js/index.d.ts",
@@ -21,7 +22,7 @@
     "./json": "./dist/tokens.json"
   },
   "scripts": {
-    "prepublishOnly": "cp ../../LICENCE ./LICENCE",
+    "prepublishOnly": "yarn build && cp ../../LICENCE ./LICENCE",
     "build": "tsx scripts/build.ts",
     "dev": "tsx scripts/dev.ts",
     "watch": "tsx scripts/watch.ts",
