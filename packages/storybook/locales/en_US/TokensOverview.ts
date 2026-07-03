@@ -8,8 +8,6 @@ export default {
     'Import the package to add CSS custom properties to :root.',
   '**Primitive tokens** are fixed values, such as palette colors, border radii, and font sizes:':
     '**Primitive tokens** are fixed values, such as palette colors, border radii, and font sizes:',
-  '**Semantic tokens** are theme-aware variables. Import the light theme, dark theme, or both, depending on your setup:':
-    '**Semantic tokens** are theme-aware variables. Import the light theme, dark theme, or both, depending on your setup:',
   'After importing the tokens, use the CSS custom properties anywhere you need:':
     'After importing the tokens, use the CSS custom properties anywhere you need:',
   'SCSS': 'SCSS',

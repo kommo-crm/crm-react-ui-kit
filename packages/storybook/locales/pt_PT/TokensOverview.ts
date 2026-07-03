@@ -8,8 +8,6 @@ export default {
     'Importe o pacote para adicionar propriedades CSS personalizadas ao `:root`.',
   '**Primitive tokens** are fixed values, such as palette colors, border radii, and font sizes:':
     '**Tokens primitivos** são valores fixos, como cores de paleta, margens de borda e tamanhos de fonte:',
-  '**Semantic tokens** are theme-aware variables. Import the light theme, dark theme, or both, depending on your setup:':
-    '**Tokens semânticos** são variáveis sensíveis ao tema. Importe os temas claro, escuro ou ambos, dependendo da configuração:',
   'After importing the tokens, use the CSS custom properties anywhere you need:':
     'Use as variáveis em qualquer lugar após importá-las:',
   'SCSS': 'SCSS',

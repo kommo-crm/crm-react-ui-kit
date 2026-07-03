@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { Token, ColorShade } from '@tokens/primitives';
 import { i18n } from '@i18n';
 import { copyText } from '@storybook-utils/utils/copy';
+import { getContrastColor } from '@storybook-utils/utils/getContrastColor';
 
 interface ColorGroup {
   name: string;
@@ -17,21 +18,6 @@ interface TooltipState {
   x: number;
   y: number;
   text: string;
-}
-
-function contrastColor(hex: string): string {
-  const clean = hex.replace('#', '');
-
-  if (!/^[0-9a-fA-F]{6}$/.test(clean)) {
-    return '#000000';
-  }
-
-  const r = parseInt(clean.substring(0, 2), 16);
-  const g = parseInt(clean.substring(2, 4), 16);
-  const b = parseInt(clean.substring(4, 6), 16);
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-  return luminance > 0.5 ? '#000000' : '#ffffff';
 }
 
 const COLOR_GROUP_ORDER = [
@@ -161,7 +147,7 @@ function Swatch({ token, onShow }: SwatchProps) {
   const [hovered, setHovered] = useState(false);
   const [hexHovered, setHexHovered] = useState(false);
 
-  const textColor = contrastColor(token.value);
+  const textColor = getContrastColor(token.value);
 
   const handleSwatchClick = useCallback(
     async (e: React.MouseEvent) => {
