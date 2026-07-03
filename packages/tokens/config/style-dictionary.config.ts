@@ -195,10 +195,21 @@ function buildIndex(root: string): void {
   writeFileSync(`${root}/js/index.d.ts`, content);
 }
 
-export async function build(): Promise<void> {
-  const tmpRoot = `dist.tmp-${process.pid}-${Date.now()}`;
+function cleanupStaleBuildDirs(): void {
+  for (const entry of readdirSync('.', { withFileTypes: true })) {
+    if (
+      entry.isDirectory() &&
+      /^dist\.(tmp|old)-/.test(entry.name)
+    ) {
+      rmSync(entry.name, { recursive: true, force: true });
+    }
+  }
+}
 
-  rmSync(tmpRoot, { recursive: true, force: true });
+export async function build(): Promise<void> {
+  cleanupStaleBuildDirs();
+
+  const tmpRoot = `dist.tmp-${process.pid}-${Date.now()}`;
 
   try {
     await buildPrimitives(tmpRoot).buildAllPlatforms();
@@ -234,7 +245,15 @@ export async function build(): Promise<void> {
     renameSync(tmpRoot, 'dist');
   } catch (err) {
     if (hadOldDist) {
-      renameSync(oldRoot, 'dist');
+      try {
+        renameSync(oldRoot, 'dist');
+      } catch (restoreErr) {
+        console.error(
+          `Failed to restore previous dist from ${oldRoot} after a failed build swap:`,
+          restoreErr
+        );
+        throw restoreErr;
+      }
     }
     throw err;
   }

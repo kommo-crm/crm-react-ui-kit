@@ -1,4 +1,4 @@
-import { buildTree, isLeaf } from '../utils/tree';
+import { buildTree, isLeaf, toCamelCase, toKebabCase, toCssVar } from '../utils/tree';
 
 const token = (path: string[], value: string) => ({
   path,
@@ -75,5 +75,55 @@ describe('buildTree', () => {
     expect(tree).toEqual({
       color: { x: { value: '#bbb', cssVar: '--color-x' } },
     });
+  });
+});
+
+describe('toKebabCase', () => {
+  it('leaves already-kebab/lowercase segments unchanged', () => {
+    expect(toKebabCase('color')).toBe('color');
+    expect(toKebabCase('light-blue')).toBe('light-blue');
+  });
+
+  it('inserts dashes between camelCase words', () => {
+    expect(toKebabCase('lightBlue')).toBe('light-blue');
+  });
+
+  it('handles consecutive-uppercase acronyms', () => {
+    expect(toKebabCase('XMLColor')).toBe('xml-color');
+    expect(toKebabCase('myHTTPHeader')).toBe('my-http-header');
+  });
+
+  it('leaves numeric segments unchanged', () => {
+    expect(toKebabCase('500')).toBe('500');
+  });
+});
+
+describe('toCamelCase', () => {
+  it('leaves already-camelCase/lowercase segments unchanged', () => {
+    expect(toCamelCase('color')).toBe('color');
+  });
+
+  it('converts kebab-case to camelCase', () => {
+    expect(toCamelCase('light-blue')).toBe('lightBlue');
+    expect(toCamelCase('my-color-2x')).toBe('myColor2x');
+  });
+
+  it('prefixes with underscore when the result starts with a digit', () => {
+    expect(toCamelCase('500')).toBe('_500');
+    expect(toCamelCase('100-percent')).toBe('_100Percent');
+  });
+});
+
+describe('toCssVar', () => {
+  it('kebab-cases every path segment before joining, regardless of source casing', () => {
+    expect(toCssVar(['color', 'lightBlue', '500'], '')).toBe(
+      '--color-light-blue-500'
+    );
+  });
+
+  it('applies prefix as-is (only path segments are kebab-cased)', () => {
+    expect(toCssVar(['color', 'lightBlue', '500'], 'crm')).toBe(
+      '--crm-color-light-blue-500'
+    );
   });
 });

@@ -1,13 +1,13 @@
 export default {
   'Design Tokens': 'Tokens de diseño',
-  '`@kommo-crm/crm-tokens` is the shared design tokens package for Kommo CRM. It provides design values such as colors, spacing, border radii, and typography in CSS, SCSS, Less, and JavaScript/TypeScript formats.':
-    '`@kommo-crm/crm-tokens` es el paquete compartido de tokens de diseño para Kommo CRM. Proporciona valores de diseño, como colores, espaciado, radios de borde y tipografía, en formatos CSS, SCSS, Less y JavaScript/TypeScript.',
+  '`@kommo-crm/crm-tokens` is the shared design tokens package for Kommo CRM. It currently provides color primitives in CSS, SCSS, Less, and JavaScript/TypeScript formats.':
+    '`@kommo-crm/crm-tokens` es el paquete compartido de tokens de diseño para Kommo CRM. Actualmente proporciona primitivas de color en formatos CSS, SCSS, Less y JavaScript/TypeScript.',
   'Installation': 'Instalación',
   'CSS': 'CSS',
   'Import the package to add CSS custom properties to :root.':
     'Importa el paquete para agregar propiedades personalizadas de CSS a `:root`.',
-  '**Primitive tokens** are fixed values, such as palette colors, border radii, and font sizes:':
-    'Los **tokens primitivos** son valores fijos, como los colores de la paleta, los radios de borde y los tamaños de fuente:',
+  '**Primitive tokens** are fixed values, such as palette colors:':
+    'Los **tokens primitivos** son valores fijos, como los colores de la paleta:',
   'After importing the tokens, use the CSS custom properties anywhere you need:':
     'Luego de importar los tokens, usa las propiedades personalizadas de CSS donde las necesites:',
   'SCSS': 'SCSS',
