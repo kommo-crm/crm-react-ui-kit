@@ -52,14 +52,9 @@ pnpm add @kommo-crm/crm-tokens
 
 <ReactMarkdown>
   {i18n.t(
-    '**Semantic tokens** are theme-aware variables. Import the light theme, dark theme, or both, depending on your setup:'
+    '**Semantic tokens** (theme-aware variables) are planned but not yet available.'
   )}
 </ReactMarkdown>
-
-```css
-@import '@kommo-crm/crm-tokens/css/semantic/light';
-@import '@kommo-crm/crm-tokens/css/semantic/dark';
-```
 
 <ReactMarkdown>
   {i18n.t(
@@ -70,7 +65,6 @@ pnpm add @kommo-crm/crm-tokens
 ```css
 .button {
   background: var(--color-light-blue-500);
-  border-radius: var(--border-radius-default);
 }
 ```
 
@@ -80,8 +74,11 @@ pnpm add @kommo-crm/crm-tokens
 
 ```scss
 @use '@kommo-crm/crm-tokens/scss/primitives' as *;
-@use '@kommo-crm/crm-tokens/scss/semantic/light' as *;
 ```
+
+<ReactMarkdown>
+  {i18n.t('Semantic tokens are planned but not yet available.')}
+</ReactMarkdown>
 
 ---
 
@@ -89,8 +86,11 @@ pnpm add @kommo-crm/crm-tokens
 
 ```less
 @import '@kommo-crm/crm-tokens/less/primitives';
-@import '@kommo-crm/crm-tokens/less/semantic/light';
 ```
+
+<ReactMarkdown>
+  {i18n.t('Semantic tokens are planned but not yet available.')}
+</ReactMarkdown>
 
 ---
 
@@ -105,23 +105,15 @@ pnpm add @kommo-crm/crm-tokens
 **Primitives:**
 
 ```ts
-import { color, borderRadius, fontSize } from '@kommo-crm/crm-tokens';
+import { color } from '@kommo-crm/crm-tokens';
 
 color.light.blue[500].value; // '#4c8bf7'
 color.light.blue[500].cssVar; // '--color-light-blue-500'
-
-borderRadius.default.value; // '4px'
-fontSize.base.value; // '15px'
 ```
 
-**Semantic tokens:**
-
-```ts
-import lightTokens from '@kommo-crm/crm-tokens/js/semantic/light';
-import darkTokens from '@kommo-crm/crm-tokens/js/semantic/dark';
-
-lightTokens['background']['default'].cssVar; // '--background-default'
-```
+<ReactMarkdown>
+  {i18n.t('Semantic tokens are planned but not yet available.')}
+</ReactMarkdown>
 
 <ReactMarkdown>{i18n.t('Every token has the following shape:')}</ReactMarkdown>
 
