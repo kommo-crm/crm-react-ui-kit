@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { Token, ColorShade } from '@tokens/primitives';
+
 import { i18n } from '@i18n';
 import { copyText } from '@storybook-utils/utils/copy';
 import { getContrastColor } from '@storybook-utils/utils/getContrastColor';
@@ -124,12 +125,12 @@ function useTooltip() {
     };
   }, []);
 
-  const handleShow = useCallback((e: React.MouseEvent, text: string) => {
+  const handleShow = useCallback((x: number, y: number, text: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    setTooltip({ visible: true, x: e.clientX, y: e.clientY, text });
+    setTooltip({ visible: true, x, y, text });
     timeoutRef.current = setTimeout(() => {
       setTooltip((t) => ({ ...t, visible: false }));
     }, 1800);
@@ -138,9 +139,27 @@ function useTooltip() {
   return { tooltip, handleShow };
 }
 
+function eventPoint(
+  e: React.MouseEvent | React.KeyboardEvent
+): [number, number] {
+  if ('clientX' in e && e.clientX !== 0) {
+    return [e.clientX, e.clientY];
+  }
+
+  const rect = e.currentTarget.getBoundingClientRect();
+
+  return [rect.left + rect.width / 2, rect.top + rect.height / 2];
+}
+
+function isActivationKey(e: React.KeyboardEvent): boolean {
+  return e.key === 'Enter' || e.key === ' ';
+}
+
+type ShowFn = (x: number, y: number, text: string) => void;
+
 interface SwatchProps {
   token: Token;
-  onShow: (e: React.MouseEvent, text: string) => void;
+  onShow: ShowFn;
 }
 
 function Swatch({ token, onShow }: SwatchProps) {
@@ -149,34 +168,75 @@ function Swatch({ token, onShow }: SwatchProps) {
 
   const textColor = getContrastColor(token.value);
 
-  const handleSwatchClick = useCallback(
-    async (e: React.MouseEvent) => {
+  const copy = useCallback(
+    async (value: string, x: number, y: number) => {
       try {
-        await copyText(token.cssVar);
-        onShow(e, `${i18n.t('Copied')}: ${token.cssVar}`);
+        await copyText(value);
+        onShow(x, y, `${i18n.t('Copied')}: ${value}`);
       } catch {
-        onShow(e, i18n.t('Copy failed'));
+        onShow(x, y, i18n.t('Copy failed'));
       }
     },
-    [token.cssVar, onShow]
+    [onShow]
+  );
+
+  const handleSwatchClick = useCallback(
+    (e: React.MouseEvent) => {
+      const [x, y] = eventPoint(e);
+
+      copy(token.cssVar, x, y);
+    },
+    [token.cssVar, copy]
+  );
+
+  const handleSwatchKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!isActivationKey(e)) {
+        return;
+      }
+
+      e.preventDefault();
+
+      const [x, y] = eventPoint(e);
+
+      copy(token.cssVar, x, y);
+    },
+    [token.cssVar, copy]
   );
 
   const handleHexClick = useCallback(
-    async (e: React.MouseEvent) => {
+    (e: React.MouseEvent) => {
       e.stopPropagation();
-      try {
-        await copyText(token.value);
-        onShow(e, `${i18n.t('Copied')}: ${token.value}`);
-      } catch {
-        onShow(e, i18n.t('Copy failed'));
-      }
+
+      const [x, y] = eventPoint(e);
+
+      copy(token.value, x, y);
     },
-    [token.value, onShow]
+    [token.value, copy]
+  );
+
+  const handleHexKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!isActivationKey(e)) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const [x, y] = eventPoint(e);
+
+      copy(token.value, x, y);
+    },
+    [token.value, copy]
   );
 
   return (
     <>
       <div
+        role="button"
+        tabIndex={0}
+        aria-label={`${i18n.t('Copy')} ${token.cssVar}`}
         style={{
           ...styles.swatch,
           background: token.value,
@@ -188,9 +248,15 @@ function Swatch({ token, onShow }: SwatchProps) {
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
         onClick={handleSwatchClick}
+        onKeyDown={handleSwatchKeyDown}
       />
       <div
+        role="button"
+        tabIndex={0}
+        aria-label={`${i18n.t('Copy')} ${token.value}`}
         style={{
           ...styles.hexLabel,
           cursor: 'pointer',
@@ -198,7 +264,10 @@ function Swatch({ token, onShow }: SwatchProps) {
         }}
         onMouseEnter={() => setHexHovered(true)}
         onMouseLeave={() => setHexHovered(false)}
+        onFocus={() => setHexHovered(true)}
+        onBlur={() => setHexHovered(false)}
         onClick={handleHexClick}
+        onKeyDown={handleHexKeyDown}
       >
         {token.value}
       </div>

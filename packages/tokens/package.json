@@ -28,6 +28,7 @@
     "dev": "tsx scripts/dev.ts",
     "watch": "tsx scripts/watch.ts",
     "clean": "rm -rf dist",
+    "lint": "eslint config formats scripts utils __tests__ tokens.config.ts",
     "test": "jest"
   },
   "devDependencies": {

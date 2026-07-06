@@ -1,4 +1,10 @@
-import { buildTree, isLeaf, toCamelCase, toKebabCase, toCssVar } from '../utils/tree';
+import {
+  buildTree,
+  isLeaf,
+  toCamelCase,
+  toKebabCase,
+  toCssVar,
+} from '../utils/tree';
 
 const token = (path: string[], value: string) => ({
   path,
@@ -75,6 +81,15 @@ describe('buildTree', () => {
     expect(tree).toEqual({
       color: { x: { value: '#bbb', cssVar: '--color-x' } },
     });
+  });
+
+  it('throws on a leaf/parent path collision instead of dropping tokens', () => {
+    const tokens = [
+      token(['color', 'blue'], '#4c8bf7'),
+      token(['color', 'blue', '500'], '#4c8bf7'),
+    ];
+
+    expect(() => buildTree(tokens, '')).toThrow('Token path collision');
   });
 });
 

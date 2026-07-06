@@ -1,4 +1,5 @@
 import type { Format, TransformedToken } from 'style-dictionary/types';
+
 import { buildTree, isLeaf, toCamelCase, type TokenTree } from '../utils/tree';
 
 function serializeTree(
@@ -7,23 +8,28 @@ function serializeTree(
   path: string[] = []
 ): string[] {
   const lines: string[] = [];
+
   for (const [key, val] of Object.entries(tree)) {
     const currentPath = [...path, key];
+
     if (isLeaf(val)) {
       const token = tokenMap.get(currentPath.join('.'));
+
       lines.push(
         `/** @cssVar ${val.cssVar} @value ${val.value}${token?.comment ? ` — ${token.comment}` : ''} */`,
         `${JSON.stringify(key)}: { value: ${JSON.stringify(val.value)}, cssVar: ${JSON.stringify(val.cssVar)} },`
       );
     } else {
       const nested = serializeTree(tokenMap, val, currentPath);
+
       lines.push(
         `${JSON.stringify(key)}: {`,
         ...nested.map((l) => `  ${l}`),
-        `},`
+        '},'
       );
     }
   }
+
   return lines;
 }
 
@@ -37,6 +43,7 @@ export const jsNestedFormat: Format = {
     const lines = serializeTree(tokenMap, tree);
     const exports = Object.keys(tree).map((key) => {
       const camel = toCamelCase(key);
+
       return `export const ${camel} = tree[${JSON.stringify(key)}];`;
     });
 

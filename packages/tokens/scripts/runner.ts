@@ -1,3 +1,4 @@
+/* eslint-disable no-console -- CLI watcher: stdout logging is the intended output */
 import { watch } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -11,10 +12,13 @@ let pending = false;
 async function rebuild(): Promise<void> {
   if (building) {
     pending = true;
+
     return;
   }
+
   building = true;
   const start = Date.now();
+
   try {
     await build();
     console.log(`[tokens] built in ${Date.now() - start}ms`);
@@ -22,6 +26,7 @@ async function rebuild(): Promise<void> {
     console.error('[tokens] build error:', err);
   } finally {
     building = false;
+
     if (pending) {
       pending = false;
       rebuild();

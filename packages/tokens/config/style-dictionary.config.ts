@@ -6,6 +6,7 @@ import {
   rmSync,
   renameSync,
   existsSync,
+  statSync,
 } from 'node:fs';
 
 import StyleDictionary from 'style-dictionary';
@@ -92,13 +93,21 @@ function buildPrimitives(root: string): StyleDictionary {
   });
 }
 
-function buildTheme(
-  root: string,
-  name: string,
-  source: string,
-  selector: string,
-  prefix = ''
-): StyleDictionary {
+interface BuildThemeOptions {
+  root: string;
+  name: string;
+  source: string;
+  selector: string;
+  prefix?: string;
+}
+
+function buildTheme({
+  root,
+  name,
+  source,
+  selector,
+  prefix = '',
+}: BuildThemeOptions): StyleDictionary {
   const semanticFilter = (token: { filePath: string }) =>
     token.filePath.includes(`semantic/${name}`);
 
@@ -195,14 +204,23 @@ function buildIndex(root: string): void {
   writeFileSync(`${root}/js/index.d.ts`, content);
 }
 
+// Leftover dirs younger than this may belong to a concurrent in-flight build
+// (e.g. `turbo watch` + a manual `yarn build`), so we leave them untouched.
+const STALE_BUILD_DIR_MS = 60 * 60 * 1000;
+
 function cleanupStaleBuildDirs(): void {
+  const now = Date.now();
+
   for (const entry of readdirSync('.', { withFileTypes: true })) {
-    if (
-      entry.isDirectory() &&
-      /^dist\.(tmp|old)-/.test(entry.name)
-    ) {
-      rmSync(entry.name, { recursive: true, force: true });
+    if (!entry.isDirectory() || !/^dist\.(tmp|old)-/.test(entry.name)) {
+      continue;
     }
+
+    if (now - statSync(entry.name).mtimeMs < STALE_BUILD_DIR_MS) {
+      continue;
+    }
+
+    rmSync(entry.name, { recursive: true, force: true });
   }
 }
 
@@ -221,10 +239,14 @@ export async function build(): Promise<void> {
       );
     }
 
-    for (const [name, { source, selector, prefix }] of Object.entries(
-      themes
-    )) {
-      await buildTheme(tmpRoot, name, source, selector, prefix).buildAllPlatforms();
+    for (const [name, { source, selector, prefix }] of Object.entries(themes)) {
+      await buildTheme({
+        root: tmpRoot,
+        name,
+        source,
+        selector,
+        prefix,
+      }).buildAllPlatforms();
     }
 
     buildMergedJson(tmpRoot);
@@ -255,6 +277,7 @@ export async function build(): Promise<void> {
         throw restoreErr;
       }
     }
+
     throw err;
   }
 

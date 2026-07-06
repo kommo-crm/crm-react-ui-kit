@@ -26,6 +26,7 @@ export default {
   'Path pattern': 'Path pattern',
   'Example variable': 'Example variable',
   'Primitive colors': 'Primitive colors',
+  'Copy': 'Copy',
   'Copied': 'Copied',
   'Copy failed': 'Copy failed',
 };

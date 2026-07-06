@@ -10,6 +10,7 @@ export const cssMinifiedFormat: Format = {
     const vars = dictionary.allTokens
       .map((t) => `${toCssVar(t.path, prefix)}:${String(t.$value ?? t.value)}`)
       .join(';');
+
     return `${selector}{${vars}}`;
   },
 };

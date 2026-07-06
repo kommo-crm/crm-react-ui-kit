@@ -1,4 +1,6 @@
 # Generated artifacts
 dist/
 dist-ts/
+dist.tmp-*/
+dist.old-*/
 node_modules/
