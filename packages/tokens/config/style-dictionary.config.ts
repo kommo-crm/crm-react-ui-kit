@@ -16,7 +16,7 @@ import { jsNestedFormat } from '../formats/js-nested';
 import { cssMinifiedFormat } from '../formats/css-minified';
 import { dtsFormat } from '../formats/dts-generator';
 
-import { deepMerge } from '../utils/deep-merge';
+import { deepMerge, detectCollisions } from '../utils/deep-merge';
 
 import { validateCssContract } from './validate-contract';
 
@@ -185,6 +185,15 @@ function buildMergedJson(root: string): void {
       string,
       unknown
     >;
+
+    const collisions = detectCollisions(merged, content);
+
+    if (collisions.length > 0) {
+      throw new Error(
+        `Token collision while merging "${file}": ` +
+          `${collisions.join(', ')} already defined by an earlier token file`
+      );
+    }
 
     deepMerge(merged, content);
   }

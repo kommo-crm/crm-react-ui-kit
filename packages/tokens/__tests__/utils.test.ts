@@ -1,4 +1,4 @@
-import { deepMerge } from '../utils/deep-merge';
+import { deepMerge, detectCollisions } from '../utils/deep-merge';
 
 describe('deepMerge', () => {
   it('merges flat keys', () => {
@@ -64,5 +64,60 @@ describe('deepMerge', () => {
 
   it('handles empty target', () => {
     expect(deepMerge({}, { a: 1 })).toEqual({ a: 1 });
+  });
+});
+
+describe('detectCollisions', () => {
+  it('reports no collisions for disjoint keys', () => {
+    expect(detectCollisions({ a: 1 }, { b: 2 })).toEqual([]);
+  });
+
+  it('reports no collisions when nested objects merge cleanly', () => {
+    const collisions = detectCollisions(
+      { color: { blue: '#00f' } },
+      { color: { red: '#f00' } }
+    );
+
+    expect(collisions).toEqual([]);
+  });
+
+  it('detects a leaf overwritten by another leaf', () => {
+    const collisions = detectCollisions(
+      { color: { blue: '#00f' } },
+      { color: { blue: '#4c8bf7' } }
+    );
+
+    expect(collisions).toEqual(['color.blue']);
+  });
+
+  it('detects a leaf overwritten by an object', () => {
+    const collisions = detectCollisions(
+      { color: { blue: '#4c8bf7' } },
+      { color: { blue: { 500: '#4c8bf7' } } }
+    );
+
+    expect(collisions).toEqual(['color.blue']);
+  });
+
+  it('detects an object overwritten by a leaf', () => {
+    const collisions = detectCollisions(
+      { color: { blue: { 500: '#4c8bf7' } } },
+      { color: { blue: '#4c8bf7' } }
+    );
+
+    expect(collisions).toEqual(['color.blue']);
+  });
+
+  it('treats arrays as leaves — reports collision', () => {
+    expect(detectCollisions({ a: [1, 2] }, { a: [3] })).toEqual(['a']);
+  });
+
+  it('reports multiple deeply-nested collisions', () => {
+    const collisions = detectCollisions(
+      { color: { blue: '#00f', red: '#f00' } },
+      { color: { blue: '#111', red: '#222' } }
+    );
+
+    expect(collisions.sort()).toEqual(['color.blue', 'color.red']);
   });
 });
