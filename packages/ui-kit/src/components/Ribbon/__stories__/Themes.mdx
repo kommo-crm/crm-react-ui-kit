@@ -1,0 +1,17 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as RibbonStories from './Ribbon.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { RibbonPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Ribbon/Themes" of={RibbonStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<ThemeVisualization theme={RibbonPrimaryTheme} of={RibbonStories.Default} />
+
+## RibbonPrimaryTheme
+
+```jsx
+import { RibbonPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Ribbon';
+```

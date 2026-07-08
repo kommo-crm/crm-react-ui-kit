@@ -1,0 +1,37 @@
+.container {
+  position: relative;
+
+  width: fit-content;
+  height: fit-content;
+}
+
+.ribbon-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.ribbon {
+  position: absolute;
+  transform-origin: 0 100%;
+  transform: rotateZ(45deg);
+  top: calc(var(--crm-ui-kit-ribbon-height) * -1);
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--crm-ui-kit-ribbon-height);
+
+  background-color: var(--crm-ui-kit-ribbon-background-color);
+}
+
+.label {
+  color: var(--crm-ui-kit-ribbon-color);
+  font-weight: var(--crm-ui-kit-ribbon-font-weight);
+  font-size: var(--crm-ui-kit-ribbon-font-size);
+  line-height: var(--crm-ui-kit-ribbon-line-height);
+  text-transform: var(--crm-ui-kit-ribbon-text-transform);
+  white-space: nowrap;
+}
