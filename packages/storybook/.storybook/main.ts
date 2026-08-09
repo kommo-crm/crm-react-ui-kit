@@ -9,9 +9,10 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 const config: StorybookConfig = {
   staticDirs: ['../public'],
   stories: [
+    '../../ui-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
     '../../ui-kit/src/**/!(*.ignore)*.mdx',
     '../stories/**/!(*.ignore).mdx',
-    '../../ui-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: [
     '@storybook/addon-essentials',
@@ -57,6 +58,7 @@ const config: StorybookConfig = {
           '@ui-kit': resolve(__dirname, '../../ui-kit/src'),
           '@storybook-utils': resolve(__dirname, '../storybook'),
           '@i18n': resolve(__dirname, './i18n.ts'),
+          '@tokens': resolve(__dirname, '../../tokens/dist/js'),
         },
       },
     });

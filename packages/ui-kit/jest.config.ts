@@ -17,6 +17,7 @@ const config: Config.InitialOptions = {
     '^@ui-kit/(.*)$': '<rootDir>/src/$1',
     '^@ui-kit$': '<rootDir>/src/index.ts',
     '^@storybook-utils/(.*)$': '<rootDir>/../storybook/storybook/$1',
+    '^src/(.*)$': '<rootDir>/src/$1',
   },
 };
 

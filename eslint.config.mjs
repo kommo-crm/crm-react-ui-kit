@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import eslint from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -11,6 +13,8 @@ import importPlugin from 'eslint-plugin-import';
 import * as mdx from 'eslint-plugin-mdx';
 import hooksPlugin from 'eslint-plugin-react-hooks';
 import postCssModules from 'eslint-plugin-postcss-modules';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import{"eslint"}.Linter.FlatConfig[]} */
 export default tseslint.config(
@@ -413,7 +417,7 @@ export default tseslint.config(
       'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: ['tsconfig.json', 'packages/*/tsconfig.json'],
+          project: [`${__dirname}/packages/*/tsconfig.json`],
         },
       },
     },

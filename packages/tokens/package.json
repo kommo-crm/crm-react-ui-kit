@@ -1,0 +1,43 @@
+{
+  "name": "@kommo-crm/crm-tokens",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Design tokens for Kommo CRM UI",
+  "license": "SEE LICENSE IN LICENCE",
+  "type": "module",
+  "main": "./dist/js/index.js",
+  "types": "./dist/js/index.d.ts",
+  "files": [
+    "dist",
+    "LICENCE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/js/index.d.ts",
+      "import": "./dist/js/index.js",
+      "default": "./dist/js/index.js"
+    },
+    "./css/primitives": "./dist/css/primitives.min.css",
+    "./scss/primitives": "./dist/scss/_primitives.scss",
+    "./less/primitives": "./dist/less/_primitives.less",
+    "./json": "./dist/tokens.json"
+  },
+  "scripts": {
+    "prepublishOnly": "yarn build && cp ../../LICENCE ./LICENCE",
+    "build": "tsx scripts/build.ts",
+    "dev": "tsx scripts/dev.ts",
+    "watch": "tsx scripts/watch.ts",
+    "clean": "rm -rf dist",
+    "lint": "eslint config formats scripts utils __tests__ tokens.config.ts",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@jest/types": "29.6.3",
+    "@swc/jest": "0.2.36",
+    "@types/jest": "29.5.12",
+    "jest": "29.7.0",
+    "style-dictionary": "^4.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}
