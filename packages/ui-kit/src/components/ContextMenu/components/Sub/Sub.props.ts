@@ -6,17 +6,8 @@ import { PointerDownOutsideEvent } from '../SubContent/SubContent.types';
 
 export type SubProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuSub>,
-  'onOpenChange' | 'defaultOpen'
+  'onOpenChange'
 > & {
-  /**
-   * The open state of the submenu when it is initially rendered.
-   * Use when you do not need to control its open state.
-   */
-  isDefaultOpen?: boolean;
-  /**
-   * @deprecated Use `isDefaultOpen` instead.
-   */
-  defaultOpen?: boolean;
   /**
    * Defines how the submenu is triggered.
    *
@@ -72,7 +63,7 @@ export interface ContextMenuSubContextProps {
   /**
    * Indicates whether the submenu is initially open.
    */
-  isDefaultOpen?: boolean;
+  defaultOpen?: boolean;
   /**
    * Indicates whether the submenu's open animation is currently active.
    */

@@ -58,7 +58,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
   const {
     isAnimatedOpen,
     mode,
-    isDefaultOpen,
+    defaultOpen,
     isOpen,
     triggerRef,
     contentRef,
@@ -91,11 +91,11 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
 
   const springStyles = useSpring({
     opacity:
-      (isContentPositioned && isAnimatedOpen) || isDefaultOpen !== undefined
+      (isContentPositioned && isAnimatedOpen) || defaultOpen !== undefined
         ? 1
         : 0,
     config:
-      mode === ContextMenuMode.CLICK || isDefaultOpen !== undefined
+      mode === ContextMenuMode.CLICK || defaultOpen !== undefined
         ? { duration: 0 }
         : { duration: animationDuration, easing: easings.easeInOutCubic },
   });

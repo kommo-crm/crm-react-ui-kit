@@ -16,8 +16,6 @@ import {
   TextInheritColorTheme,
 } from '@ui-kit/components/Text';
 
-import { Button, ButtonIconSmallGhostTheme } from '@ui-kit/components/Button';
-
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';
 import { ContentProps } from '../components/Content';
@@ -62,15 +60,17 @@ const ContextMenuComponent = ({
   };
 
   return (
-    <ContextMenu.Root mode={ContextMenuMode.CLICK} isDefaultOpen>
-      <ContextMenu.Trigger asChild>
-        <Button theme={ButtonIconSmallGhostTheme}>
-          <ContextMenuTriggerIcon
-            width={16}
-            height={16}
-            style={{ display: 'flex' }}
-          />
-        </Button>
+    <ContextMenu.Root mode={ContextMenuMode.CLICK} defaultOpen>
+      <ContextMenu.Trigger
+        style={{
+          all: 'unset',
+          display: 'flex',
+          padding: '4px',
+          color: 'var(--crm-ui-kit-palette-text-secondary-dark)',
+          cursor: 'pointer',
+        }}
+      >
+        <ContextMenuTriggerIcon />
       </ContextMenu.Trigger>
 
       <ContextMenu.Portal>
@@ -97,7 +97,7 @@ const ContextMenuComponent = ({
             <ContextMenu.ItemRightSlot>
               <ContextMenu.experimental_SubRoot
                 mode={ContextMenuMode.CLICK}
-                isDefaultOpen={isDefaultOpenSubMenu}
+                defaultOpen={isDefaultOpenSubMenu}
               >
                 <ContextMenu.experimental_SubRoot.Trigger
                   style={{
@@ -150,7 +150,7 @@ const ContextMenuComponent = ({
 
           <ContextMenu.Sub
             mode={ContextMenuMode.CLICK}
-            isDefaultOpen={isDefaultOpenSub}
+            defaultOpen={isDefaultOpenSub}
           >
             <ContextMenu.SubTrigger>
               <Text theme={TextInheritColorTheme} size="l" isEllipsis>

@@ -41,7 +41,7 @@ export const SubTrigger = forwardRef<El, SubTriggerProps>((props, ref) => {
   const {
     mode,
     isOpen,
-    isDefaultOpen,
+    defaultOpen,
     triggerId,
     triggerRef,
     setIsOpen,
@@ -103,11 +103,11 @@ export const SubTrigger = forwardRef<El, SubTriggerProps>((props, ref) => {
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
 
-    if (mode === ContextMenuMode.CLICK || isDefaultOpen !== undefined) {
+    if (mode === ContextMenuMode.CLICK || defaultOpen !== undefined) {
       e.preventDefault();
       e.stopPropagation();
 
-      if (isDefaultOpen === undefined) {
+      if (defaultOpen === undefined) {
         setIsOpen(!isOpen);
       }
     }

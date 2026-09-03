@@ -18,7 +18,6 @@ export const Sub = (props: SubProps) => {
     children,
     mode: initialMode = ContextMenuMode.HOVER,
     onOpen,
-    isDefaultOpen,
     defaultOpen,
     shouldCloseRootMenuOnSelect = true,
     shouldCloseCurrentMenuOnSelect = true,
@@ -51,7 +50,7 @@ export const Sub = (props: SubProps) => {
   } = useContextMenuSub({
     displayName: DISPLAY_NAME,
     mode: initialMode,
-    isDefaultOpen: isDefaultOpen ?? defaultOpen,
+    defaultOpen,
     onOpen,
     onAiming,
     aimingTolerance,
@@ -64,7 +63,7 @@ export const Sub = (props: SubProps) => {
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       isAnimatedOpen={isAnimatedOpen}
-      isDefaultOpen={isDefaultOpen ?? defaultOpen}
+      defaultOpen={defaultOpen}
       onContentEnter={handleContentEnter}
       onContentLeave={handleContentLeave}
       onOpenByKeyboard={onOpenByKeyboard}
