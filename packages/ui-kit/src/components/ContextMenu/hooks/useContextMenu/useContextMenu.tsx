@@ -26,7 +26,7 @@ export const useContextMenu = (
 ): UseContextMenuResult => {
   const {
     mode: rootMode,
-    isDefaultOpen,
+    defaultOpen,
     animationDuration,
     hoverCloseDelay,
     isOpen: isOpenForcefully,
@@ -41,7 +41,7 @@ export const useContextMenu = (
   const id = useId();
 
   const [isOpen, setIsOpen] = useState(
-    isOpenForcefully ?? isDefaultOpen ?? false
+    isOpenForcefully ?? defaultOpen ?? false
   );
   const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
   const [skipAnimation, setSkipAnimation] = useState(false);
@@ -274,11 +274,7 @@ export const useContextMenu = (
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (isOpenForcefully !== undefined) {
-      return;
-    }
-
-    if (mode === ContextMenuMode.CLICK && isDefaultOpen !== undefined) {
+    if (mode === ContextMenuMode.CLICK && defaultOpen !== undefined) {
       return;
     }
 
@@ -440,7 +436,7 @@ export const useContextMenu = (
    * on the newly opened menu.
    */
   useEffect(() => {
-    if (isOpenForcefully !== undefined) {
+    if (isOpenForcefully === false) {
       return;
     }
 
@@ -536,7 +532,7 @@ export const useContextMenu = (
    */
   useFocusChange({
     elements: isOpen ? [contentRef, triggerRef] : [],
-    enabled: isOpen && isOpenForcefully === undefined,
+    enabled: isOpen,
     onFocusOutside: (event) => {
       const focusedElement = event.target;
 
@@ -612,10 +608,6 @@ export const useContextMenu = (
   };
 
   const handleCloseMenuImmediately = (preventFocusRestore?: boolean) => {
-    if (isOpenForcefully !== undefined) {
-      return;
-    }
-
     closeMenuImmediately({ preventFocusRestore });
   };
 

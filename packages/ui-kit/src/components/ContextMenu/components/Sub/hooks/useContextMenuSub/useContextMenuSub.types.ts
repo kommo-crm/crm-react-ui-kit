@@ -16,7 +16,7 @@ export interface UseContextMenuSubOptions {
   /**
    * The open state of the dropdown menu when it is initially rendered.
    */
-  isDefaultOpen?: boolean;
+  defaultOpen?: boolean;
   /**
    * Called when submenu open state changes.
    */

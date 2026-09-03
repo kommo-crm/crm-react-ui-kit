@@ -18,7 +18,6 @@ const DISPLAY_NAME = 'ContextMenu.__experimental_SubRoot';
 export const __experimental_SubRoot = (props: ContextMenuSubRootProps) => {
   const {
     children,
-    isDefaultOpen,
     defaultOpen,
     mode = ContextMenuMode.HOVER,
     shouldCloseCurrentMenuOnSelect = true,
@@ -50,7 +49,7 @@ export const __experimental_SubRoot = (props: ContextMenuSubRootProps) => {
   } = useContextMenuSubMenu({
     displayName: DISPLAY_NAME,
     mode: mode,
-    isDefaultOpen: isDefaultOpen ?? defaultOpen,
+    defaultOpen,
     onOpen,
     onAnimatedOpen,
   });

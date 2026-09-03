@@ -42,7 +42,6 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     children,
     mode,
     isOpen: isOpenForcefully,
-    isDefaultOpen,
     defaultOpen,
     shouldCloseCurrentMenuOnSelect = true,
     onOpen,
@@ -80,7 +79,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     onChildAiming,
   } = useContextMenu({
     mode: mode as ContextMenuMode,
-    isDefaultOpen: isDefaultOpen ?? defaultOpen,
+    defaultOpen,
     animationDuration: ANIMATION_DURATION,
     hoverCloseDelay: HOVER_CLOSE_DELAY,
     isOpen: isOpenForcefully,
