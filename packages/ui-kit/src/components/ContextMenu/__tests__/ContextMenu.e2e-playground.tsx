@@ -16,7 +16,7 @@ import {
   TextInheritColorTheme,
 } from '@ui-kit/components/Text';
 
-import { Button, ButtonIconSmallGhostTheme } from '@ui-kit/components/Button';
+import { Button, ButtonIconSmallGhostTheme } from 'src/components/Button';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
 import { ContextMenu } from '..';
