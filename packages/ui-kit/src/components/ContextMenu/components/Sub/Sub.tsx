@@ -8,6 +8,10 @@ import {
   DEFAULT_AIMING_TOLERANCE,
 } from '../../ContextMenu';
 
+import { useContextMenuTheme } from '../../hooks';
+
+import { ContextMenuThemeProvider } from '../../ContextMenu.context';
+
 import { useContextMenuSub } from './hooks';
 
 import { SubProps } from './Sub.props';
@@ -25,6 +29,7 @@ export const Sub = (props: SubProps) => {
     onAiming,
     aimingTolerance = DEFAULT_AIMING_TOLERANCE,
     aimingIdleTimeout = DEFAULT_AIMING_IDLE_TIMEOUT,
+    theme,
 
     ...rest
   } = props;
@@ -58,37 +63,41 @@ export const Sub = (props: SubProps) => {
     aimingIdleTimeout,
   });
 
+  const themeClassName = useContextMenuTheme(theme);
+
   return (
-    <ContextMenuSubProvider
-      mode={mode}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      isAnimatedOpen={isAnimatedOpen}
-      isDefaultOpen={isDefaultOpen ?? defaultOpen}
-      onContentEnter={handleContentEnter}
-      onContentLeave={handleContentLeave}
-      onOpenByKeyboard={onOpenByKeyboard}
-      triggerId={triggerId}
-      contentRef={contentRef}
-      triggerRef={triggerRef}
-      onChildOpen={onChildOpen}
-      onSubRootOpen={onSubRootOpen}
-      shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
-      shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
-      closeMenuImmediately={closeMenuImmediately}
-      itemWithFocusedInput={itemWithFocusedInput}
-      setItemWithFocusedInput={setItemWithFocusedInput}
-      isAiming={isAiming}
-      onPointerDownOutside={handlePointerDownOutside}
-    >
-      <RadixDropdownMenuSub
-        open={isOpen}
-        onOpenChange={handleOpenChange}
-        {...rest}
+    <ContextMenuThemeProvider themeClassName={themeClassName}>
+      <ContextMenuSubProvider
+        mode={mode}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        isAnimatedOpen={isAnimatedOpen}
+        isDefaultOpen={isDefaultOpen ?? defaultOpen}
+        onContentEnter={handleContentEnter}
+        onContentLeave={handleContentLeave}
+        onOpenByKeyboard={onOpenByKeyboard}
+        triggerId={triggerId}
+        contentRef={contentRef}
+        triggerRef={triggerRef}
+        onChildOpen={onChildOpen}
+        onSubRootOpen={onSubRootOpen}
+        shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
+        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
+        closeMenuImmediately={closeMenuImmediately}
+        itemWithFocusedInput={itemWithFocusedInput}
+        setItemWithFocusedInput={setItemWithFocusedInput}
+        isAiming={isAiming}
+        onPointerDownOutside={handlePointerDownOutside}
       >
-        {children}
-      </RadixDropdownMenuSub>
-    </ContextMenuSubProvider>
+        <RadixDropdownMenuSub
+          open={isOpen}
+          onOpenChange={handleOpenChange}
+          {...rest}
+        >
+          {children}
+        </RadixDropdownMenuSub>
+      </ContextMenuSubProvider>
+    </ContextMenuThemeProvider>
   );
 };
 

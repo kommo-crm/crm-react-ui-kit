@@ -1,8 +1,10 @@
 .content {
-  min-width: 50px;
-  background-color: var(--crm-ui-kit-palette-background-primary);
-  border: 1px solid var(--crm-ui-kit-palette-border-default);
-  border-radius: var(--crm-ui-kit-border-radius-default);
-  box-shadow: var(--crm-ui-kit-palette-context-menu-box-shadow);
+  min-width: var(--crm-ui-kit-context-menu-content-min-width);
+  background: var(--crm-ui-kit-context-menu-content-background);
+  border: var(--crm-ui-kit-context-menu-content-border-width)
+    var(--crm-ui-kit-context-menu-content-border-style)
+    var(--crm-ui-kit-context-menu-content-border-color);
+  border-radius: var(--crm-ui-kit-context-menu-content-border-radius);
+  box-shadow: var(--crm-ui-kit-context-menu-content-box-shadow);
   overflow: hidden;
 }

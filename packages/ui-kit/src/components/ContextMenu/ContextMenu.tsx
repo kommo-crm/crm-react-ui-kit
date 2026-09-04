@@ -1,7 +1,11 @@
 import React from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
-import { useContextMenu, useContextMenuKeyboardNavigation } from './hooks';
+import {
+  useContextMenu,
+  useContextMenuKeyboardNavigation,
+  useContextMenuTheme,
+} from './hooks';
 
 import { ContextMenuRootProps } from './ContextMenu.props';
 import { ContextMenuMode } from './ContextMenu.enums';
@@ -28,6 +32,7 @@ import { __experimental_SubRoot } from './components/SubRoot/SubRoot';
 import {
   ContextMenuProvider,
   ContextMenuRootProvider,
+  ContextMenuThemeProvider,
   DISPLAY_NAME,
 } from './ContextMenu.context';
 
@@ -50,6 +55,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     onAiming,
     aimingTolerance = DEFAULT_AIMING_TOLERANCE,
     aimingIdleTimeout = DEFAULT_AIMING_IDLE_TIMEOUT,
+    theme,
 
     ...rest
   } = props;
@@ -91,54 +97,58 @@ const ContextMenu = (props: ContextMenuRootProps) => {
     aimingIdleTimeout,
   });
 
+  const themeClassName = useContextMenuTheme(theme);
+
   const { navigationContentRef } = useContextMenuKeyboardNavigation({
     isOpen: isOpenForcefully ?? isOpen,
     isAnimatedOpen,
   });
 
   return (
-    <ContextMenuRootProvider
-      closeRootMenuImmediately={closeMenuImmediately}
-      navigationContentRef={navigationContentRef}
-    >
-      <ContextMenuProvider
-        mode={rootMode}
-        triggerRef={triggerRef}
-        contentRef={contentRef}
-        isAnimatedOpen={isAnimatedOpen}
-        skipAnimation={skipAnimation}
-        animationDuration={animationDuration}
-        hoverCloseDelay={hoverCloseDelay}
-        closeMenuImmediately={closeMenuImmediately}
-        onContentEnter={onContentEnter}
-        onContentLeave={onContentLeave}
-        onOpenByKeyboard={onOpenByKeyboard}
-        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
-        onChildOpen={onChildOpen}
-        isOpen={isOpen}
-        onSubmenuOpen={onSubmenuOpen}
-        isRootContentBlocked={isRootContentBlocked}
-        isChildOpen={isChildOpen}
-        itemWithFocusedInput={itemWithFocusedInput}
-        setItemWithFocusedInput={setItemWithFocusedInput}
-        shouldPreventFocusRestore={shouldPreventFocusRestore}
-        setOnFocusOutside={setOnFocusOutside}
-        isChildAiming={isChildAiming}
-        onChildAiming={onChildAiming}
+    <ContextMenuThemeProvider themeClassName={themeClassName}>
+      <ContextMenuRootProvider
+        closeRootMenuImmediately={closeMenuImmediately}
+        navigationContentRef={navigationContentRef}
       >
-        <RadixDropdownMenuRoot
-          open={isOpenForcefully ?? isOpen}
-          onOpenChange={onOpenChange}
-          /**
-           * Necessary for hover mode to work correctly.
-           */
-          modal={false}
-          {...rest}
+        <ContextMenuProvider
+          mode={rootMode}
+          triggerRef={triggerRef}
+          contentRef={contentRef}
+          isAnimatedOpen={isAnimatedOpen}
+          skipAnimation={skipAnimation}
+          animationDuration={animationDuration}
+          hoverCloseDelay={hoverCloseDelay}
+          closeMenuImmediately={closeMenuImmediately}
+          onContentEnter={onContentEnter}
+          onContentLeave={onContentLeave}
+          onOpenByKeyboard={onOpenByKeyboard}
+          shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
+          onChildOpen={onChildOpen}
+          isOpen={isOpen}
+          onSubmenuOpen={onSubmenuOpen}
+          isRootContentBlocked={isRootContentBlocked}
+          isChildOpen={isChildOpen}
+          itemWithFocusedInput={itemWithFocusedInput}
+          setItemWithFocusedInput={setItemWithFocusedInput}
+          shouldPreventFocusRestore={shouldPreventFocusRestore}
+          setOnFocusOutside={setOnFocusOutside}
+          isChildAiming={isChildAiming}
+          onChildAiming={onChildAiming}
         >
-          {children}
-        </RadixDropdownMenuRoot>
-      </ContextMenuProvider>
-    </ContextMenuRootProvider>
+          <RadixDropdownMenuRoot
+            open={isOpenForcefully ?? isOpen}
+            onOpenChange={onOpenChange}
+            /**
+             * Necessary for hover mode to work correctly.
+             */
+            modal={false}
+            {...rest}
+          >
+            {children}
+          </RadixDropdownMenuRoot>
+        </ContextMenuProvider>
+      </ContextMenuRootProvider>
+    </ContextMenuThemeProvider>
   );
 };
 

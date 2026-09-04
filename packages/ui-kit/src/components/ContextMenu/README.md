@@ -8,6 +8,7 @@ A comprehensive, feature-rich context menu component built on top of Radix UI's 
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
 - [Component API](#component-api)
+- [Theming](#theming)
 - [Modes](#modes)
 - [SubRoot (Experimental Feature)](#subroot-experimental-feature)
 - [Advanced Features](#advanced-features)
@@ -306,6 +307,82 @@ Decorative arrow pointer that points toward the menu trigger. Automatically posi
 Utility component that blocks pointer and focus events to prevent accidental interactions. Used internally by `SubRoot` when a submenu is open. Automatically simulates mouseenter events on menu items when the blocker is removed if the cursor was over it.
 
 **Note:** This component is primarily used internally. Most users won't need to use it directly.
+
+## Theming
+
+`ContextMenu` is styled through CSS custom properties passed to `ContextMenu.Root` as the `theme` prop.
+
+The prop is **optional**: when it is omitted the menu falls back to `ContextMenuTheme`, so existing code keeps working without changes.
+
+```tsx
+import {
+  ContextMenu,
+  ContextMenuTheme,
+  type ContextMenuThemeType,
+} from '@kommo-crm/crm-react-ui-kit/ContextMenu';
+
+const CompactContextMenuTheme: ContextMenuThemeType = {
+  ...ContextMenuTheme,
+  '--crm-ui-kit-context-menu-item-padding': '6px 12px',
+  '--crm-ui-kit-context-menu-content-border-radius': '8px',
+};
+
+<ContextMenu.Root mode="click" theme={CompactContextMenuTheme}>
+  {/* ... */}
+</ContextMenu.Root>;
+```
+
+The theme object must be a stable reference (a module-level constant or a `useMemo` result) — a new object on every render creates a new generated class each time.
+
+`ContextMenu.Root` renders no DOM element of its own and the menu is rendered in a portal, so the generated theme class is applied to every content root — `Content`, `SubContent` and `SubRoot.Content`. CSS custom properties are inherited, so all nested parts (items, label, icons, indicator, right slot, arrow) pick the theme up from the content they belong to.
+
+### Theming a submenu
+
+`Sub` and `SubRoot` accept a `theme` of their own, so a submenu can be themed independently from the menu that opens it. A submenu without a `theme` inherits the theme of the level it is rendered in, and levels can be nested to any depth.
+
+```tsx
+<ContextMenu.Root mode="click" theme={MenuTheme}>
+  {/* ... */}
+  <ContextMenu.Content>
+    <ContextMenu.Sub mode="hover" theme={SubmenuTheme}>
+      <ContextMenu.SubTrigger>{/* ... */}</ContextMenu.SubTrigger>
+
+      <ContextMenu.Portal>
+        {/* themed with SubmenuTheme, not MenuTheme */}
+        <ContextMenu.SubContent>{/* ... */}</ContextMenu.SubContent>
+      </ContextMenu.Portal>
+    </ContextMenu.Sub>
+  </ContextMenu.Content>
+</ContextMenu.Root>
+```
+
+### Tokens
+
+| Token                                                    | Default                                             | Applies to                                        |
+| -------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
+| `--crm-ui-kit-context-menu-content-min-width`            | `50px`                                              | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-content-background-color`     | `var(--crm-ui-kit-palette-background-primary)`      | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-content-border-width`         | `1px`                                               | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-content-border-style`         | `solid`                                             | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-content-border-color`         | `var(--crm-ui-kit-palette-border-default)`          | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-content-border-radius`        | `var(--crm-ui-kit-border-radius-default)`           | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-content-box-shadow`           | `var(--crm-ui-kit-palette-context-menu-box-shadow)` | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-item-padding`                 | `10px 16px`                                         | `Item`, `CheckboxItem`, `RadioItem`, `SubTrigger` |
+| `--crm-ui-kit-context-menu-item-color`                   | `var(--crm-ui-kit-palette-text-primary)`            | `Item`, `CheckboxItem`, `RadioItem`, `SubTrigger` |
+| `--crm-ui-kit-context-menu-item-background-color`        | `var(--crm-ui-kit-palette-background-primary)`      | `Item`, `CheckboxItem`, `RadioItem`, `SubTrigger` |
+| `--crm-ui-kit-context-menu-item-highlighted-background`  | `var(--crm-ui-kit-palette-background-default)`      | Highlighted item                                  |
+| `--crm-ui-kit-context-menu-item-disabled-color`          | `var(--crm-ui-kit-palette-text-secondary-light)`    | Disabled item                                     |
+| `--crm-ui-kit-context-menu-item-danger-color`            | `var(--crm-ui-kit-color-error)`                     | `Item` with `isDanger`                            |
+| `--crm-ui-kit-context-menu-item-checked-color`           | `var(--crm-ui-kit-palette-active-element-900)`      | Checked `CheckboxItem` / `RadioItem`              |
+| `--crm-ui-kit-context-menu-label-padding`                | `10px 16px`                                         | `Label`                                           |
+| `--crm-ui-kit-context-menu-label-color`                  | `var(--crm-ui-kit-palette-text-primary)`            | `Label`                                           |
+| `--crm-ui-kit-context-menu-label-background-color`       | `var(--crm-ui-kit-palette-background-primary)`      | `Label`                                           |
+| `--crm-ui-kit-context-menu-item-icon-min-width`          | `16px`                                              | `ItemIcon`                                        |
+| `--crm-ui-kit-context-menu-item-icon-margin-right`       | `8px`                                               | `ItemIcon`                                        |
+| `--crm-ui-kit-context-menu-item-indicator-margin-right`  | `8px`                                               | `ItemIndicator`                                   |
+| `--crm-ui-kit-context-menu-item-right-slot-padding-left` | `8px`                                               | `ItemRightSlot`                                   |
+| `--crm-ui-kit-context-menu-arrow-fill`                   | `var(--crm-ui-kit-palette-background-primary)`      | `Arrow`                                           |
+| `--crm-ui-kit-context-menu-arrow-border-fill`            | `var(--crm-ui-kit-palette-border-default)`          | `Arrow` border                                    |
 
 ## Modes
 

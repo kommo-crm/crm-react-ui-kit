@@ -15,7 +15,12 @@ import ContextMenuTriggerIcon from '@storybook-utils/icons/trigger.svg';
 import { Text, TextInheritColorTheme } from '@ui-kit/components/Text';
 
 import { ContextMenuMode } from '../ContextMenu.enums';
-import { ContextMenu, ContextMenuRootProps } from '..';
+import {
+  ContextMenu,
+  ContextMenuRootProps,
+  ContextMenuTheme,
+  ContextMenuThemeType,
+} from '..';
 import { ContextMenuSubRootProps } from '../components/SubRoot/SubRoot.props';
 import { SubProps } from '../components/Sub';
 import { contextMenuBus } from '../hooks/useContextMenu/utils';
@@ -30,6 +35,28 @@ const DATA_SUB_CONTENT_TEST_ID = 'ContextMenuSubContent';
 const DATA_SUB_ROOT_TRIGGER_TEST_ID = 'ContextMenuSubRootTrigger';
 const DATA_SUB_ROOT_CONTENT_TEST_ID = 'ContextMenuSubRootContent';
 const DATA_INPUT_TEST_ID = 'InputInMenuItem';
+
+const THEME_CLASS_NAME_PREFIX = 'crm-ui-kit-theme-';
+
+const CUSTOM_THEME: ContextMenuThemeType = {
+  ...ContextMenuTheme,
+  '--crm-ui-kit-context-menu-item-padding': '4px 8px',
+};
+
+const SUBMENU_THEME: ContextMenuThemeType = {
+  ...ContextMenuTheme,
+  '--crm-ui-kit-context-menu-item-padding': '2px 4px',
+};
+
+const getThemeClassName = (element: HTMLElement) =>
+  Array.from(element.classList).find((className) =>
+    className.startsWith(THEME_CLASS_NAME_PREFIX)
+  );
+
+const getInjectedStyles = (className: string) =>
+  Array.from(document.head.querySelectorAll('style'))
+    .map((style) => style.textContent ?? '')
+    .find((content) => content.includes(`.${className}`)) ?? '';
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
@@ -1754,6 +1781,102 @@ describe('ContextMenu', () => {
       // 5) First menu must NOT reopen, second menu stays open
       expect(screen.queryByTestId('FirstMenuContent')).not.toBeInTheDocument();
       expect(screen.getByTestId('SecondMenuContent')).toBeInTheDocument();
+    });
+  });
+
+  describe('Theme', () => {
+    it('Content gets the default theme when the `theme` prop is omitted', async () => {
+      await renderContextMenu({ rootProps: { isOpen: true } });
+
+      const themeClassName = getThemeClassName(
+        screen.getByTestId(DATA_CONTENT_TEST_ID)
+      );
+
+      expect(themeClassName).toBeDefined();
+      expect(getInjectedStyles(themeClassName as string)).toContain(
+        '--crm-ui-kit-context-menu-item-padding: 10px 16px;'
+      );
+    });
+
+    it('Content gets the theme passed to Root', async () => {
+      await renderContextMenu({
+        rootProps: { isOpen: true, theme: CUSTOM_THEME },
+      });
+
+      const themeClassName = getThemeClassName(
+        screen.getByTestId(DATA_CONTENT_TEST_ID)
+      );
+
+      expect(themeClassName).toBeDefined();
+      expect(getInjectedStyles(themeClassName as string)).toContain(
+        '--crm-ui-kit-context-menu-item-padding: 4px 8px;'
+      );
+    });
+
+    it('Sub theme overrides the theme inherited from Root', async () => {
+      await renderContextMenu({
+        rootProps: { theme: CUSTOM_THEME },
+        subProps: { theme: SUBMENU_THEME },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      const contentThemeClassName = getThemeClassName(
+        screen.getByTestId(DATA_CONTENT_TEST_ID)
+      );
+      const subContentThemeClassName = getThemeClassName(
+        screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)
+      );
+
+      expect(subContentThemeClassName).not.toBe(contentThemeClassName);
+      expect(getInjectedStyles(subContentThemeClassName as string)).toContain(
+        '--crm-ui-kit-context-menu-item-padding: 2px 4px;'
+      );
+    });
+
+    it('SubRoot theme overrides the theme inherited from Root', async () => {
+      await renderContextMenu({
+        rootProps: { theme: CUSTOM_THEME },
+        subRootProps: { theme: SUBMENU_THEME },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      const contentThemeClassName = getThemeClassName(
+        screen.getByTestId(DATA_CONTENT_TEST_ID)
+      );
+      const subRootContentThemeClassName = getThemeClassName(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      );
+
+      expect(subRootContentThemeClassName).not.toBe(contentThemeClassName);
+      expect(
+        getInjectedStyles(subRootContentThemeClassName as string)
+      ).toContain('--crm-ui-kit-context-menu-item-padding: 2px 4px;');
+    });
+
+    it('SubContent and SubRoot content get the same theme as Root', async () => {
+      await renderContextMenu({ rootProps: { theme: CUSTOM_THEME } });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      const themeClassName = getThemeClassName(
+        screen.getByTestId(DATA_CONTENT_TEST_ID)
+      );
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      expect(
+        getThemeClassName(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID))
+      ).toBe(themeClassName);
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      expect(
+        getThemeClassName(screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID))
+      ).toBe(themeClassName);
     });
   });
 });
