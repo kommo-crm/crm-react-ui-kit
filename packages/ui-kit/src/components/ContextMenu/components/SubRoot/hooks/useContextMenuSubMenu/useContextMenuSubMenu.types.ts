@@ -17,6 +17,12 @@ export interface UseContextMenuSubMenuOptions {
    */
   isDefaultOpen?: boolean;
   /**
+   * The controlled open state of the submenu.
+   * When passed, the internal state is not used and the submenu only reports
+   * the requested state via `onOpen`.
+   */
+  isOpen?: boolean;
+  /**
    * The callback function to be called when the context menu is opened.
    */
   onOpen?: (open: boolean) => void;

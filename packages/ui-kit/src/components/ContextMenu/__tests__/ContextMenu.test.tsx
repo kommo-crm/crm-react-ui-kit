@@ -1651,6 +1651,384 @@ describe('ContextMenu', () => {
     });
   });
 
+  describe('Controlled open state', () => {
+    it('Menu stays open on trigger click when isOpen is true, but reports the intent', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({ rootProps: { isOpen: true, onOpen } });
+
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(onOpen).toHaveBeenCalledWith(false);
+    });
+
+    it('Menu stays closed on trigger click when isOpen is false, but reports the intent', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({ rootProps: { isOpen: false, onOpen } });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+      expect(onOpen).toHaveBeenCalledWith(true);
+    });
+
+    it('Menu reports the intent to close on every trigger click when isOpen is true', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({ rootProps: { isOpen: true, onOpen } });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(onOpen).toHaveBeenCalledTimes(2);
+      expect(onOpen).toHaveBeenNthCalledWith(1, false);
+      expect(onOpen).toHaveBeenNthCalledWith(2, false);
+    });
+
+    it('Menu stays open on Escape when isOpen is true, but reports the intent', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({ rootProps: { isOpen: true, onOpen } });
+
+      await userEvent.keyboard('{Escape}');
+
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(onOpen).toHaveBeenCalledWith(false);
+    });
+
+    it('Menu follows the isOpen prop', async () => {
+      const { rerender } = render(
+        <ContextMenu.Root mode={ContextMenuMode.CLICK} isOpen={false}>
+          <ContextMenu.Trigger data-testid={DATA_TRIGGER_TEST_ID}>
+            <ContextMenuTriggerIcon />
+          </ContextMenu.Trigger>
+
+          <ContextMenu.Portal>
+            <ContextMenu.Content
+              disableAutoPositioning
+              data-testid={DATA_CONTENT_TEST_ID}
+            >
+              <ContextMenu.Item data-testid={DATA_ITEM_TEST_ID}>
+                <Text theme={TextInheritColorTheme} size="l">
+                  Item 1
+                </Text>
+              </ContextMenu.Item>
+            </ContextMenu.Content>
+          </ContextMenu.Portal>
+        </ContextMenu.Root>
+      );
+
+      expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+
+      rerender(
+        <ContextMenu.Root mode={ContextMenuMode.CLICK} isOpen>
+          <ContextMenu.Trigger data-testid={DATA_TRIGGER_TEST_ID}>
+            <ContextMenuTriggerIcon />
+          </ContextMenu.Trigger>
+
+          <ContextMenu.Portal>
+            <ContextMenu.Content
+              disableAutoPositioning
+              data-testid={DATA_CONTENT_TEST_ID}
+            >
+              <ContextMenu.Item data-testid={DATA_ITEM_TEST_ID}>
+                <Text theme={TextInheritColorTheme} size="l">
+                  Item 1
+                </Text>
+              </ContextMenu.Item>
+            </ContextMenu.Content>
+          </ContextMenu.Portal>
+        </ContextMenu.Root>
+      );
+
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+    });
+  });
+
+  describe('onOpen callback', () => {
+    it('Calls onOpen once per open state change', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({ rootProps: { onOpen } });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(onOpen.mock.calls).toEqual([[true]]);
+
+      await userEvent.keyboard('{Escape}');
+
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+      });
+
+      expect(onOpen.mock.calls).toEqual([[true], [false]]);
+    });
+
+    it('Calls onOpen once per open state change in hover mode', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        rootProps: { mode: ContextMenuMode.HOVER, onOpen },
+      });
+
+      await userEvent.hover(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+      });
+
+      expect(onOpen.mock.calls).toEqual([[true]]);
+    });
+
+    it('Does not call onOpen when another menu is opened while this one is closed', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({ rootProps: { onOpen } });
+
+      act(() => {
+        contextMenuBus.emit({ id: 'another-menu', isAiming: () => false });
+      });
+
+      expect(onOpen).not.toHaveBeenCalled();
+    });
+
+    it('Menu opened with isDefaultOpen closes on Escape in click mode', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({ rootProps: { isDefaultOpen: true, onOpen } });
+
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+
+      await userEvent.keyboard('{Escape}');
+
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+      });
+
+      expect(onOpen.mock.calls).toEqual([[false]]);
+    });
+  });
+
+  describe('SubRoot closing on select', () => {
+    /**
+     * Waits until the SubRoot content is positioned and interactive.
+     */
+    const openSubRoot = async () => {
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      await act(async () => {
+        await waitFor(() => {
+          expect(screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)).toHaveStyle(
+            { pointerEvents: 'auto' }
+          );
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      });
+    };
+
+    it('Keeps SubRoot open on select of an item that does not close it', async () => {
+      await renderContextMenu();
+
+      await openSubRoot();
+
+      await userEvent.click(
+        screen.getByText('ShouldNotCloseCurrentMenuOnSelect item in SubRoot')
+      );
+
+      expect(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+    });
+
+    it('Keeps SubRoot open on select of a disabled item', async () => {
+      await renderContextMenu();
+
+      await openSubRoot();
+
+      await userEvent.click(screen.getByText('Disabled item in SubRoot'));
+
+      expect(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+    });
+
+    it('Keeps SubRoot open when its own shouldCloseCurrentMenuOnSelect is false', async () => {
+      await renderContextMenu({
+        subRootProps: { shouldCloseCurrentMenuOnSelect: false },
+      });
+
+      await openSubRoot();
+
+      await userEvent.click(screen.getByText('Item in SubRoot'));
+
+      expect(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+    });
+
+    it('Closes SubRoot on select of a regular item', async () => {
+      await renderContextMenu();
+
+      await openSubRoot();
+
+      await userEvent.click(screen.getByText('Item in SubRoot'));
+
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)).toBeNull();
+      });
+    });
+  });
+
+  describe('Controlled submenus', () => {
+    it('Sub stays open on trigger click when isOpen is true, but reports the intent', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        subProps: { mode: ContextMenuMode.CLICK, isOpen: true, onOpen },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeInTheDocument();
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      expect(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(onOpen).toHaveBeenCalledWith(false);
+    });
+
+    it('Sub stays closed on trigger click when isOpen is false, but reports the intent', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        subProps: { mode: ContextMenuMode.CLICK, isOpen: false, onOpen },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
+      expect(onOpen).toHaveBeenCalledWith(true);
+    });
+
+    it('SubRoot stays open on trigger click when isOpen is true, but reports the intent', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        subRootProps: { mode: ContextMenuMode.CLICK, isOpen: true, onOpen },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      expect(
+        screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+      ).toBeInTheDocument();
+      expect(onOpen).toHaveBeenCalledWith(false);
+    });
+
+    it('SubRoot stays closed on trigger click when isOpen is false, but reports the intent', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        subRootProps: { mode: ContextMenuMode.CLICK, isOpen: false, onOpen },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      expect(screen.queryByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)).toBeNull();
+      expect(onOpen).toHaveBeenCalledWith(true);
+    });
+
+    it('Calls Sub onOpen once per open state change', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        subProps: { mode: ContextMenuMode.CLICK, onOpen },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(onOpen).not.toHaveBeenCalled();
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).toBeInTheDocument();
+      });
+
+      expect(onOpen.mock.calls).toEqual([[true]]);
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
+      });
+
+      expect(onOpen.mock.calls).toEqual([[true], [false]]);
+    });
+
+    it('Calls SubRoot onOpen once per open state change', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        subRootProps: { mode: ContextMenuMode.CLICK, onOpen },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(onOpen).not.toHaveBeenCalled();
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_ROOT_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId(DATA_SUB_ROOT_CONTENT_TEST_ID)
+        ).toBeInTheDocument();
+      });
+
+      expect(onOpen.mock.calls).toEqual([[true]]);
+    });
+
+    it('Sub with isDefaultOpen is not frozen and follows interactions', async () => {
+      await renderContextMenu({
+        subProps: { mode: ContextMenuMode.CLICK, isDefaultOpen: true },
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).toBeInTheDocument();
+      });
+
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
+      });
+    });
+  });
+
   describe('Menu synchronization', () => {
     beforeEach(() => {
       // Clear any leaked timers from previous tests

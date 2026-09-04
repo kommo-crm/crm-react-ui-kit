@@ -6,13 +6,20 @@ import { PointerDownOutsideEvent } from '../SubContent/SubContent.types';
 
 export type SubProps = Omit<
   ComponentPropsWithoutRef<typeof RadixDropdownMenuSub>,
-  'onOpenChange' | 'defaultOpen'
+  'onOpenChange' | 'defaultOpen' | 'open'
 > & {
   /**
    * The open state of the submenu when it is initially rendered.
    * Use when you do not need to control its open state.
    */
   isDefaultOpen?: boolean;
+  /**
+   * The controlled open state of the submenu.
+   * When passed, the submenu is fully controlled by the consumer: it never
+   * opens or closes on its own and only reports the requested state
+   * via `onOpen`.
+   */
+  isOpen?: boolean;
   /**
    * @deprecated Use `isDefaultOpen` instead.
    */
@@ -25,6 +32,10 @@ export type SubProps = Omit<
   mode?: ContextMenuModeType;
   /**
    * Called when submenu open state changes.
+   *
+   * In controlled mode (the `isOpen` prop is passed) the submenu doesn't change
+   * its own state, so the callback reports the interaction that requests
+   * the change and the consumer decides whether to apply it.
    */
   onOpen?: (isOpen: boolean) => void;
   /**
@@ -70,15 +81,16 @@ export interface ContextMenuSubContextProps {
    */
   mode: ContextMenuModeType;
   /**
-   * Indicates whether the submenu is initially open.
+   * Indicates whether the open state of the submenu is controlled
+   * by the consumer.
    */
-  isDefaultOpen?: boolean;
+  isControlled?: boolean;
   /**
    * Indicates whether the submenu's open animation is currently active.
    */
   isAnimatedOpen: boolean;
   /**
-   * Sets the open state of the submenu.
+   * Sets the open state of the submenu and notifies the consumer via `onOpen`.
    */
   setIsOpen: (isOpen: boolean) => void;
   /**

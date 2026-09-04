@@ -93,11 +93,12 @@ A clickable menu item.
 
 **Data attributes:**
 
-| Attribute             | Description                                                              |
-| --------------------- | ------------------------------------------------------------------------ |
-| `data-item`           | Always present. Marker for Item component.                               |
-| `data-highlighted`    | Present when item is highlighted (hover/focus).                          |
-| `data-non-selectable` | Present for non-selectable items (items that don't close menu on click). |
+| Attribute             | Description                                                                                                                             |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `data-item`           | Always present. Marker for Item component.                                                                                              |
+| `data-highlighted`    | Present when item is highlighted (hover/focus).                                                                                         |
+| `data-non-selectable` | Present for non-selectable items (items that don't close menu on click).                                                                |
+| `data-keep-menu-open` | Present when selecting the item doesn't close its menu (`shouldCloseCurrentMenuOnSelect={false}`, a disabled or a non-selectable item). |
 
 ### [ContextMenu.Sub](./components/Sub/Sub.tsx)
 
@@ -412,15 +413,16 @@ Menu opens on mouse hover and closes when mouse leaves. Includes configurable de
 
 ### Key Differences from Sub
 
-| Feature                         | Sub                            | SubRoot (Experimental)                                                                        |
-| ------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------- |
-| **Implementation**              | Uses Radix UI `Sub` primitive  | Uses Radix UI `Root` primitive                                                                |
-| **Trigger Location**            | Must be `SubTrigger` component | Can use `SubRoot.Trigger` inside Item/CheckboxItem/RadioItem (recommended in `ItemRightSlot`) |
-| **Content Component**           | `SubContent`                   | `SubRoot.Content`                                                                             |
-| **Control**                     | Managed by parent context      | More independent with its own context                                                         |
-| **Use Case**                    | Standard nested menus          | Custom trigger placement, especially in item right slots                                      |
-| **Default Mode**                | `hover`                        | `hover`                                                                                       |
-| **shouldCloseRootMenuOnSelect** | `true` (default)               | `false` (default)                                                                             |
+| Feature                            | Sub                            | SubRoot (Experimental)                                                                        |
+| ---------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------- |
+| **Implementation**                 | Uses Radix UI `Sub` primitive  | Uses Radix UI `Root` primitive                                                                |
+| **Trigger Location**               | Must be `SubTrigger` component | Can use `SubRoot.Trigger` inside Item/CheckboxItem/RadioItem (recommended in `ItemRightSlot`) |
+| **Content Component**              | `SubContent`                   | `SubRoot.Content`                                                                             |
+| **Control**                        | Managed by parent context      | More independent with its own context                                                         |
+| **Use Case**                       | Standard nested menus          | Custom trigger placement, especially in item right slots                                      |
+| **Default Mode**                   | `hover`                        | `hover`                                                                                       |
+| **shouldCloseCurrentMenuOnSelect** | `true` (default)               | `true` (default)                                                                              |
+| **shouldCloseRootMenuOnSelect**    | `true` (default)               | `true` (default)                                                                              |
 
 ### When to Use SubRoot
 
@@ -552,6 +554,15 @@ The `useContextMenuSubMenu` hook used by `SubRoot` requires two contexts:
 
 This is why `SubRoot` **must** be used inside `ContextMenu.Item`, `ContextMenu.CheckboxItem`, or `ContextMenu.RadioItem` (which provide `SubMenuProvider`), and these items must be within a `ContextMenu.Root` hierarchy (which provides `ContextMenuProvider`). While `ItemRightSlot` is recommended for placement, any location within these item components is valid.
 
+**Closing on select:**
+
+`SubRoot` closes on a click anywhere inside its content, not only on a menu
+item, so that a click on the padding or on a `Label` closes it as well. Items
+that don't close their menu when selected are the exception: a click on such an
+item (or on anything nested in it) keeps `SubRoot` open. That covers
+`shouldCloseCurrentMenuOnSelect={false}` on the item or on `SubRoot` itself,
+disabled items and non-selectable ones.
+
 **Technical Characteristics:**
 
 - Uses `useContextMenuSubMenu` hook instead of `useContextMenuSub`
@@ -578,9 +589,8 @@ If you need to migrate from `Sub` to `SubRoot`:
 2. Replace `<ContextMenu.Sub>` with `<ContextMenu.experimental_SubRoot>`
 3. Replace `<ContextMenu.SubTrigger>` with `<ContextMenu.experimental_SubRoot.Trigger>`
 4. Replace `<ContextMenu.SubContent>` with `<ContextMenu.experimental_SubRoot.Content>`
-5. Review `shouldCloseRootMenuOnSelect` prop (different default: `false` vs `true`)
-6. Test hover/click behavior thoroughly
-7. Verify keyboard navigation works as expected
+5. Test hover/click behavior thoroughly
+6. Verify keyboard navigation works as expected
 
 **Recommendation:**
 
@@ -692,6 +702,26 @@ const [isOpen, setIsOpen] = useState(false);
 <ContextMenu.Root mode="click" isOpen={isOpen} onOpen={setIsOpen}>
   {/* ... */}
 </ContextMenu.Root>;
+```
+
+When `isOpen` is passed, the open state belongs to the consumer: the menu never
+opens or closes on its own. Every interaction that would change the open state
+(trigger click, hover, `Escape`, outside click, item select, another menu being
+opened) is reported through `onOpen`, and it is up to the consumer to update the
+prop. As long as the prop stays `true`, the menu remains open.
+
+Without `isOpen` the menu is uncontrolled: `isDefaultOpen` only sets the initial
+state, and `onOpen` is called once per actual open state change.
+
+`ContextMenu.Sub` and `ContextMenu.experimental_SubRoot` follow the same
+contract:
+
+```tsx
+const [isSubOpen, setIsSubOpen] = useState(false);
+
+<ContextMenu.Sub mode="click" isOpen={isSubOpen} onOpen={setIsSubOpen}>
+  {/* ... */}
+</ContextMenu.Sub>;
 ```
 
 ## Keyboard Navigation

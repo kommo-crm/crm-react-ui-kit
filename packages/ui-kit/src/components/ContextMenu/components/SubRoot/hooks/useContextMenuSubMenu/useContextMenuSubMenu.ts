@@ -26,6 +26,7 @@ export const useContextMenuSubMenu = (
     displayName,
     mode: rootMode,
     isDefaultOpen,
+    isOpen: isOpenForcefully,
     onOpen,
     onAnimatedOpen,
   } = options;
@@ -40,8 +41,49 @@ export const useContextMenuSubMenu = (
     setSubMenuTriggerId,
   } = useSubMenuContext(displayName);
 
-  const [open, setOpen] = useState(isSubMenuOpen || isDefaultOpen || false);
-  const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
+  /**
+   * The submenu is controlled when the `isOpen` prop is passed.
+   * In this case the open state belongs to the consumer and the internal state
+   * is never used, so an interaction can't close (or open) the submenu on its
+   * own - it only notifies the consumer via `onOpen`.
+   */
+  const isControlled = isOpenForcefully !== undefined;
+
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(
+    isSubMenuOpen || isDefaultOpen || false
+  );
+  const [uncontrolledIsAnimatedOpen, setUncontrolledIsAnimatedOpen] =
+    useState(false);
+
+  const open = isControlled ? isOpenForcefully : uncontrolledOpen;
+  const isAnimatedOpen = isControlled
+    ? isOpenForcefully
+    : uncontrolledIsAnimatedOpen;
+
+  /**
+   * Updates the internal open state.
+   * Does nothing in controlled mode, where the state is owned by the consumer.
+   */
+  const setOpen = (value: boolean) => {
+    if (isControlled) {
+      return;
+    }
+
+    setUncontrolledOpen(value);
+  };
+
+  /**
+   * Updates the internal animated open state.
+   * Does nothing in controlled mode, where it follows the `isOpen` prop.
+   */
+  const setIsAnimatedOpen = (value: boolean) => {
+    if (isControlled) {
+      return;
+    }
+
+    setUncontrolledIsAnimatedOpen(value);
+  };
+
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [isChildOpen, setIsChildOpen] = useState(false);
   const [childMode, setChildMode] = useState<ContextMenuModeType | null>(null);
@@ -69,6 +111,7 @@ export const useContextMenuSubMenu = (
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isFirstRender = useRef(true);
+  const isParentAnimatedOpenFirstRun = useRef(true);
 
   const isTouchDevice = useIsTouchDevice();
 
@@ -80,7 +123,44 @@ export const useContextMenuSubMenu = (
   /**
    * The open state of the submenu.
    */
-  const isOpen = isSubMenuOpen || open;
+  const isOpen = isControlled ? isOpenForcefully : isSubMenuOpen || open;
+
+  const onOpenCallbackRef = useRef(onOpen);
+  const lastReportedOpenRef = useRef(isOpen);
+
+  /**
+   * The ref is kept in sync on every render, so the callback called from
+   * timers is never stale.
+   */
+  onOpenCallbackRef.current = onOpen;
+
+  /**
+   * Notifies the consumer about the open state change.
+   *
+   * The same value is never reported twice in a row, which prevents duplicated
+   * calls from the overlapping open/close paths.
+   *
+   * In controlled mode the actual state is the `isOpen` prop, so the callback
+   * reports every interaction that requests a different state, even if the
+   * consumer keeps the prop unchanged.
+   */
+  const emitOpen = (value: boolean) => {
+    if (isControlled) {
+      if (value !== isOpenForcefully) {
+        onOpenCallbackRef.current?.(value);
+      }
+
+      return;
+    }
+
+    if (lastReportedOpenRef.current === value) {
+      return;
+    }
+
+    lastReportedOpenRef.current = value;
+
+    onOpenCallbackRef.current?.(value);
+  };
 
   const handleSubmenuOpen = (value: boolean) => {
     /**
@@ -117,7 +197,7 @@ export const useContextMenuSubMenu = (
   const handleClose = (closeRootMenu: boolean = false) => {
     setIsSubMenuOpen?.(false);
     setOpen(false);
-    onOpen?.(false);
+    emitOpen(false);
     setIsInsideContent(false);
 
     if (closeRootMenu) {
@@ -152,13 +232,24 @@ export const useContextMenuSubMenu = (
   /**
    * Closes the menu immediately.
    */
+  /**
+   * Sets the open state and notifies the consumer.
+   * Used by the trigger, which changes the state directly in click mode.
+   */
+  const changeOpen = (value: boolean) => {
+    emitOpen(value);
+    setOpen(value);
+    setIsSubMenuOpen?.(value);
+  };
+
   const closeMenuImmediately = () => {
     focusParentItem(triggerRef.current);
 
     clearTimers();
     setIsAnimatedOpen(false);
     setIsSubMenuOpen?.(false);
-    onOpen?.(false);
+    setOpen(false);
+    emitOpen(false);
     setIsInsideContent(false);
     setIsOpenedByKeyboard(false);
   };
@@ -167,14 +258,8 @@ export const useContextMenuSubMenu = (
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (mode === ContextMenuMode.CLICK) {
-      if (isDefaultOpen !== undefined) {
-        setOpen(isDefaultOpen);
-
-        return;
-      } else if (!value) {
-        focusParentItem(triggerRef.current);
-      }
+    if (mode === ContextMenuMode.CLICK && !value) {
+      focusParentItem(triggerRef.current);
     }
 
     if (value) {
@@ -188,7 +273,8 @@ export const useContextMenuSubMenu = (
       }
 
       setIsSubMenuOpen?.(true);
-      onOpen?.(true);
+      setOpen(true);
+      emitOpen(true);
     } else {
       requestClose();
     }
@@ -238,7 +324,8 @@ export const useContextMenuSubMenu = (
 
       setIsAnimatedOpen(true);
       setIsSubMenuOpen?.(true);
-      onOpen?.(true);
+      setOpen(true);
+      emitOpen(true);
       setIsInsideContent(true);
     }
   };
@@ -362,6 +449,16 @@ export const useContextMenuSubMenu = (
    * after which we focused on the distant parent.
    */
   useEffect(() => {
+    /**
+     * Skipped on mount, otherwise a submenu opened with `isDefaultOpen`
+     * is closed right away under a parent that never animates (click mode).
+     */
+    if (isParentAnimatedOpenFirstRun.current) {
+      isParentAnimatedOpenFirstRun.current = false;
+
+      return;
+    }
+
     if (!parentIsAnimatedOpen) {
       requestClose();
     }
@@ -388,11 +485,12 @@ export const useContextMenuSubMenu = (
   }, [triggerId]);
 
   /**
-   * Calls the onOpen callback function when the submenu is opened or closed.
+   * Reports the open state changed outside of the handlers above
+   * (for example by the parent menu via the submenu context).
    */
   useEffect(() => {
     if (mode === ContextMenuMode.CLICK) {
-      onOpen?.(isOpen);
+      emitOpen(isOpen);
 
       /**
        * It is necessary for instant closure of menus located
@@ -421,6 +519,6 @@ export const useContextMenuSubMenu = (
     onChildOpen: handleChildOpen,
     itemWithFocusedInput,
     setItemWithFocusedInput,
-    setIsSubMenuOpen,
+    setIsSubMenuOpen: changeOpen,
   };
 };
