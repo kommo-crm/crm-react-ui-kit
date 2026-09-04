@@ -1,0 +1,93 @@
+name: UI-kit V2 proposal
+description: Record a future breaking change, API redesign or legacy removal for the next major version of UI Kit
+title: '[uikit-v2] '
+labels: ['uikit-v2', 'untriaged']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template when you realise during development that something **cannot be safely changed in the current version** of UI Kit — an inconvenient API, legacy logic, a rename, or an architecture that needs rework.
+
+        All issues with the [`uikit-v2`](https://github.com/kommo-crm/crm-react-ui-kit/labels/uikit-v2) label form the single backlog of future breaking changes. The architecture team reviews it during quarterly planning.
+
+        For anything that can ship in the current version, use the [feature request](https://github.com/kommo-crm/crm-react-ui-kit/issues/new?labels=Feature+request&template=FEATURE_REQUEST.yml) or [issue](https://github.com/kommo-crm/crm-react-ui-kit/issues/new?template=ISSUE.yml) template instead.
+  - type: input
+    id: component-area
+    attributes:
+      label: Component / Area
+      description: Which component or area the problem belongs to.
+      placeholder: Button, Select, Modal, Theme tokens, Build, …
+    validations:
+      required: true
+  - type: dropdown
+    id: change-type
+    attributes:
+      label: Change type
+      description: Select everything that applies — used to group the backlog during planning.
+      multiple: true
+      options:
+        - API change (props / types / exports)
+        - Behavior change
+        - Legacy logic removal
+        - Component / prop rename
+        - Architecture rework
+        - Theme tokens / CSS variables
+        - Accessibility
+        - Dependencies
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: current-problem
+    attributes:
+      label: Current problem
+      description: Describe the current problem, limitation or architectural pain.
+      placeholder: |
+        Current Button API is inconsistent with other components.
+        Legacy behavior complicates support and maintenance.
+    validations:
+      required: true
+  - type: textarea
+    id: why-not-now
+    attributes:
+      label: Why it cannot be fixed now
+      description: Explain why the change cannot be shipped safely in the current version.
+      placeholder: |
+        This change may break existing consumers.
+        Requires API redesign.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-change
+    attributes:
+      label: Proposed change for V2
+      description: Briefly describe the intended change for the next major version. Keep it short — this is a proposal, not a migration guide.
+      placeholder: |
+        Unify API with Input component.
+        Remove legacy props.
+    validations:
+      required: true
+  - type: input
+    id: code-marker
+    attributes:
+      label: Code marker location
+      description: If the problem lives in a specific place in the code, leave a `@uikit-v2` marker next to that logic and put the path here.
+      placeholder: packages/ui-kit/src/components/Button/Button.tsx:42
+  - type: textarea
+    id: related-links
+    attributes:
+      label: Related links
+      description: Pull requests, Jira tickets, links to code, related commits and discussions.
+      placeholder: |
+        - PR: https://github.com/kommo-crm/crm-react-ui-kit/pull/98
+        - Jira: UIKIT-123
+        - Code: packages/ui-kit/src/components/Button/Button.props.ts#L10-L24
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: 'I searched the [`uikit-v2` backlog](https://github.com/kommo-crm/crm-react-ui-kit/issues?q=is%3Aissue+label%3Auikit-v2) and this proposal is not a duplicate'
+          required: true
+        - label: 'A `@uikit-v2 Issue: #<number>` marker is left in the code, or the change is not tied to a specific place'
+          required: false
