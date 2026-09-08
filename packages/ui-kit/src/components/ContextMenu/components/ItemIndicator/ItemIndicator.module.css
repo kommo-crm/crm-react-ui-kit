@@ -1,5 +1,5 @@
 .item_indicator {
   display: flex;
   color: inherit;
-  margin-right: 8px;
+  margin-right: var(--crm-ui-kit-context-menu-item-indicator-margin-right);
 }

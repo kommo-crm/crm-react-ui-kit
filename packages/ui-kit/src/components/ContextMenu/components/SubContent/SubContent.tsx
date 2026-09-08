@@ -9,7 +9,10 @@ import { LevelProvider, useLevelContext } from '../../providers/LevelProvider';
 
 import { useContextMenuSubContext } from '../Sub/Sub.context';
 
-import { useContextMenuContext } from '../../ContextMenu.context';
+import {
+  useContextMenuContext,
+  useContextMenuThemeContext,
+} from '../../ContextMenu.context';
 
 import { useContentPositioning } from '../../hooks/useContentPositioning/useContentPositioning';
 
@@ -76,6 +79,8 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
   } = useContextMenuSubContext(DISPLAY_NAME);
 
   const { animationDuration } = useContextMenuContext(DISPLAY_NAME);
+
+  const { themeClassName } = useContextMenuThemeContext(DISPLAY_NAME);
 
   const { level } = useLevelContext(DISPLAY_NAME);
 
@@ -169,7 +174,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
         >
           <RadixDropdownMenuSubContent
             ref={mergeRefs(contentRef, ref)}
-            className={cx(s.sub_content, className)}
+            className={cx(s.sub_content, themeClassName, className)}
             sideOffset={sideOffset}
             collisionPadding={collisionPadding}
             alignOffset={offset}

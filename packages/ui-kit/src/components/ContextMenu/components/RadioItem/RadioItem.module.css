@@ -2,24 +2,26 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 16px;
-  color: var(--crm-ui-kit-palette-text-primary);
-  background-color: var(--crm-ui-kit-palette-background-primary);
+  padding: var(--crm-ui-kit-context-menu-item-padding);
+  color: var(--crm-ui-kit-context-menu-item-color);
+  background: var(--crm-ui-kit-context-menu-item-background);
   cursor: pointer;
   user-select: none;
   outline: none;
   text-decoration: none;
 
   &[data-disabled] {
-    color: var(--crm-ui-kit-palette-text-secondary-light);
+    color: var(--crm-ui-kit-context-menu-item-disabled-color);
     cursor: auto;
   }
 
   &[data-highlighted] {
-    background-color: var(--crm-ui-kit-palette-background-default);
+    background: var(
+      --crm-ui-kit-context-menu-item-highlighted-background
+    );
   }
 
   &[data-state='checked'] {
-    color: var(--crm-ui-kit-palette-active-element-900);
+    color: var(--crm-ui-kit-context-menu-item-checked-color);
   }
 }

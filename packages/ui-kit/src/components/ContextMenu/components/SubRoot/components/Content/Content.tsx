@@ -18,7 +18,10 @@ import {
   useLevelContext,
 } from '../../../../providers/LevelProvider';
 
-import { useContextMenuContext } from '../../../../ContextMenu.context';
+import {
+  useContextMenuContext,
+  useContextMenuThemeContext,
+} from '../../../../ContextMenu.context';
 
 import { ContextMenuMode } from '../../../../ContextMenu.enums';
 
@@ -111,6 +114,8 @@ export const Content = forwardRef<El, Props>((props, ref) => {
   } = useContextMenuContext(DISPLAY_NAME);
 
   const { level } = useLevelContext(DISPLAY_NAME);
+
+  const { themeClassName } = useContextMenuThemeContext(DISPLAY_NAME);
 
   const { align, offset, isPositioned } = useContentPositioning({
     direction,
@@ -275,7 +280,7 @@ export const Content = forwardRef<El, Props>((props, ref) => {
         >
           <RadixDropdownMenuContent
             ref={mergeRefs(contentRef, ref)}
-            className={cx(s.content, className)}
+            className={cx(s.content, themeClassName, className)}
             style={{
               ...(style || {}),
               pointerEvents:

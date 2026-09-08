@@ -1,0 +1,27 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as ContextMenuStories from './ContextMenu.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { ContextMenuTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/ContextMenu/Themes" of={ContextMenuStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={ContextMenuStories.Default} />
+
+## ContextMenuTheme
+
+```jsx
+import { ContextMenuTheme } from '@kommo-crm/crm-react-ui-kit/ContextMenu';
+```
+
+<ThemeVisualization theme={ContextMenuTheme} />
+
+The `theme` prop is optional — a menu without it is rendered with `ContextMenuTheme`.
+
+`Sub` and `SubRoot` accept a `theme` of their own, so a submenu can be themed
+independently; without one it inherits the theme of the level it is rendered in.
+
+Surfaces are themed with `background` rather than `background-color`, so a token
+can hold a gradient or several painting layers, not just a plain color.

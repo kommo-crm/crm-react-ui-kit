@@ -3,6 +3,6 @@
   align-items: center;
   justify-content: end;
   color: inherit;
-  min-width: 16px;
-  margin-right: 8px;
+  min-width: var(--crm-ui-kit-context-menu-item-icon-min-width);
+  margin-right: var(--crm-ui-kit-context-menu-item-icon-margin-right);
 }
