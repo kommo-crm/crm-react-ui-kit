@@ -40,10 +40,20 @@ export const useContextMenu = (
 
   const id = useId();
 
-  const [isOpen, setIsOpen] = useState(
-    isOpenForcefully ?? isDefaultOpen ?? false
+  /**
+   * The menu is controlled when the `isOpen` prop is passed.
+   * In this case the open state belongs to the consumer and the internal state
+   * is never used, so a user interaction can't close (or open) the menu on its
+   * own - it only notifies the consumer via `onOpen`.
+   */
+  const isControlled = isOpenForcefully !== undefined;
+
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(
+    isDefaultOpen ?? false
   );
-  const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
+  const [uncontrolledIsAnimatedOpen, setUncontrolledIsAnimatedOpen] =
+    useState(false);
+
   const [skipAnimation, setSkipAnimation] = useState(false);
   const [isInsideContent, setIsInsideContent] = useState(false);
   const [openedByKeyboard, setOpenedByKeyboard] = useState(false);
@@ -53,6 +63,35 @@ export const useContextMenu = (
   const [itemWithFocusedInput, setItemWithFocusedInput] = useState<
     string | null
   >(null);
+
+  const isOpen = isControlled ? isOpenForcefully : uncontrolledIsOpen;
+  const isAnimatedOpen = isControlled
+    ? isOpenForcefully
+    : uncontrolledIsAnimatedOpen;
+
+  /**
+   * Updates the internal open state.
+   * Does nothing in controlled mode, where the state is owned by the consumer.
+   */
+  const setIsOpen = (value: boolean) => {
+    if (isControlled) {
+      return;
+    }
+
+    setUncontrolledIsOpen(value);
+  };
+
+  /**
+   * Updates the internal animated open state.
+   * Does nothing in controlled mode, where it follows the `isOpen` prop.
+   */
+  const setIsAnimatedOpen = (value: boolean) => {
+    if (isControlled) {
+      return;
+    }
+
+    setUncontrolledIsAnimatedOpen(value);
+  };
 
   /**
    * Use ref to track isInsideContent for use in intervals
@@ -69,6 +108,43 @@ export const useContextMenu = (
   const isHoveredRef = useRef(false);
   const handleContentEnterRef = useRef<() => void>(noop);
   const onFocusOutsideCallbackRef = useRef(onFocusOutside);
+  const onOpenCallbackRef = useRef(onOpen);
+  const lastReportedOpenRef = useRef(isOpen);
+
+  /**
+   * The ref is kept in sync on every render, so the callback called from
+   * timers is never stale.
+   */
+  onOpenCallbackRef.current = onOpen;
+
+  /**
+   * Notifies the consumer about the open state change.
+   *
+   * The same value is never reported twice in a row, which prevents duplicated
+   * calls from the overlapping close paths (timers,
+   * the context menu bus, focus loss).
+   *
+   * In controlled mode the actual state is the `isOpen` prop, so the callback
+   * reports every interaction that requests a different state, even if the
+   * consumer keeps the prop unchanged.
+   */
+  const emitOpen = (value: boolean) => {
+    if (isControlled) {
+      if (value !== isOpenForcefully) {
+        onOpenCallbackRef.current?.(value);
+      }
+
+      return;
+    }
+
+    if (lastReportedOpenRef.current === value) {
+      return;
+    }
+
+    lastReportedOpenRef.current = value;
+
+    onOpenCallbackRef.current?.(value);
+  };
 
   const isTouchDevice = useIsTouchDevice();
 
@@ -105,7 +181,7 @@ export const useContextMenu = (
     pendingCloseRef.current = false;
     isHoveredRef.current = false;
     setIsOpen(false);
-    onOpen?.(false);
+    emitOpen(false);
     setIsInsideContent(false);
     isInsideContentRef.current = false;
     setIsRootContentBlocked(false);
@@ -244,7 +320,7 @@ export const useContextMenu = (
     setSkipAnimation(skipAnimationFlag);
     setIsAnimatedOpen(false);
     setIsOpen(false);
-    onOpen?.(false);
+    emitOpen(false);
     setIsInsideContent(false);
     isInsideContentRef.current = false;
     setIsRootContentBlocked(false);
@@ -274,14 +350,6 @@ export const useContextMenu = (
    * Handles the open state change.
    */
   const handleOpenChange = (value: boolean) => {
-    if (isOpenForcefully !== undefined) {
-      return;
-    }
-
-    if (mode === ContextMenuMode.CLICK && isDefaultOpen !== undefined) {
-      return;
-    }
-
     if (value) {
       if (closeTimerRef.current) {
         clearTimeout(closeTimerRef.current);
@@ -301,9 +369,9 @@ export const useContextMenu = (
       }
 
       setIsOpen(true);
-      onOpen?.(true);
+      emitOpen(true);
 
-      if (isOpenForcefully !== false) {
+      if (!isControlled || isOpenForcefully) {
         contextMenuBus.emit({
           id,
           isAiming,
@@ -366,14 +434,14 @@ export const useContextMenu = (
 
       setIsAnimatedOpen(true);
       setIsOpen(true);
-      onOpen?.(true);
+      emitOpen(true);
       setIsInsideContent(true);
       isInsideContentRef.current = true;
 
       deferredEmitRef.current = setTimeout(() => {
         deferredEmitRef.current = null;
 
-        if (isOpenForcefully !== false) {
+        if (!isControlled || isOpenForcefully) {
           contextMenuBus.emit({
             id,
             isAiming,
@@ -440,10 +508,6 @@ export const useContextMenu = (
    * on the newly opened menu.
    */
   useEffect(() => {
-    if (isOpenForcefully !== undefined) {
-      return;
-    }
-
     const unsubscribe = contextMenuBus.subscribe(({ id: openedId }) => {
       if (openedId !== id) {
         closeMenuImmediately({
@@ -454,7 +518,7 @@ export const useContextMenu = (
     });
 
     return unsubscribe;
-  }, [id, isOpenForcefully]);
+  }, [id]);
 
   /**
    * When another menu's aiming stops and cursor is hovering this menu's
@@ -536,7 +600,7 @@ export const useContextMenu = (
    */
   useFocusChange({
     elements: isOpen ? [contentRef, triggerRef] : [],
-    enabled: isOpen && isOpenForcefully === undefined,
+    enabled: isOpen,
     onFocusOutside: (event) => {
       const focusedElement = event.target;
 
@@ -612,10 +676,6 @@ export const useContextMenu = (
   };
 
   const handleCloseMenuImmediately = (preventFocusRestore?: boolean) => {
-    if (isOpenForcefully !== undefined) {
-      return;
-    }
-
     closeMenuImmediately({ preventFocusRestore });
   };
 

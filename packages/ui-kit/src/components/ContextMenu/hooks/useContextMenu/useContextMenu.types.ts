@@ -24,7 +24,9 @@ export interface UseContextMenuOptions {
    */
   hoverCloseDelay: number;
   /**
-   * The callback function to be called when the context menu is opened.
+   * The callback function to be called when the open state of the context menu
+   * changes. In controlled mode it reports the requested state, since the menu
+   * doesn't change its own state.
    */
   onOpen?: (open: boolean) => void;
   /**
@@ -32,7 +34,9 @@ export interface UseContextMenuOptions {
    */
   onAnimatedOpen?: (open: boolean) => void;
   /**
-   * Whether the context menu is open forcefully.
+   * The controlled open state of the context menu.
+   * When passed, the internal state is not used and the menu only reports
+   * the requested state via `onOpen`.
    */
   isOpen?: boolean;
   /**
