@@ -155,15 +155,6 @@ const meta = {
     },
   },
   component: Accordion,
-  argTypes: {
-    type: {
-      control: 'radio',
-      options: ['single', 'multiple'],
-    },
-    isCollapsible: {
-      control: 'boolean',
-    },
-  },
   args: {
     theme: AccordionTheme,
     defaultValue: items[0].value,

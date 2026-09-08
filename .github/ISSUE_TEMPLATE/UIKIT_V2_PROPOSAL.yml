@@ -1,7 +1,7 @@
 name: UI-kit V2 proposal
 description: Record a future breaking change, API redesign or legacy removal for the next major version of UI Kit
 title: '[uikit-v2] '
-labels: ['uikit-v2', 'untriaged']
+labels: ['uikit-v2']
 body:
   - type: markdown
     attributes:
