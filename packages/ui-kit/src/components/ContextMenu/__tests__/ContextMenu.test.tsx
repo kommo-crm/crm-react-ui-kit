@@ -2006,12 +2006,73 @@ describe('ContextMenu', () => {
       expect(onOpen.mock.calls).toEqual([[true]]);
     });
 
-    it('Sub with isDefaultOpen is not frozen and follows interactions', async () => {
+    it('Sub with isDefaultOpen stays open under a Root with isDefaultOpen', async () => {
+      const onOpen = jest.fn();
+
       await renderContextMenu({
-        subProps: { mode: ContextMenuMode.CLICK, isDefaultOpen: true },
+        rootProps: { isDefaultOpen: true },
+        subProps: {
+          mode: ContextMenuMode.CLICK,
+          isDefaultOpen: true,
+          onOpen,
+        },
+      });
+
+      await waitFor(() => {
+        expect(
+          screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).toBeInTheDocument();
+      });
+
+      /**
+       * The parent content autofocuses its first item right after mount, which
+       * Radix reports as a focus outside the submenu. The submenu has to keep
+       * its own open state instead of being closed by it.
+       */
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      });
+
+      expect(screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeInTheDocument();
+      expect(onOpen).not.toHaveBeenCalled();
+    });
+
+    it('Sub with isDefaultOpen is open initially and is not frozen', async () => {
+      const onOpen = jest.fn();
+
+      await renderContextMenu({
+        subProps: {
+          mode: ContextMenuMode.CLICK,
+          isDefaultOpen: true,
+          onOpen,
+        },
       });
 
       await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      /**
+       * The initial open state survives the mount, so the submenu is shown
+       * as soon as the parent menu is opened, without any interaction.
+       */
+      await waitFor(() => {
+        expect(
+          screen.getByTestId(DATA_SUB_CONTENT_TEST_ID)
+        ).toBeInTheDocument();
+      });
+
+      expect(onOpen).not.toHaveBeenCalled();
+
+      /**
+       * The submenu is already open, so the first click on the trigger
+       * closes it.
+       */
+      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
+
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
+      });
+
+      expect(onOpen.mock.calls).toEqual([[false]]);
 
       await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
 
@@ -2021,11 +2082,7 @@ describe('ContextMenu', () => {
         ).toBeInTheDocument();
       });
 
-      await userEvent.click(screen.getByTestId(DATA_SUB_TRIGGER_TEST_ID));
-
-      await waitFor(() => {
-        expect(screen.queryByTestId(DATA_SUB_CONTENT_TEST_ID)).toBeNull();
-      });
+      expect(onOpen.mock.calls).toEqual([[false], [true]]);
     });
   });
 
