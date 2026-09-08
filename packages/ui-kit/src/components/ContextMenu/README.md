@@ -361,7 +361,7 @@ The theme object must be a stable reference (a module-level constant or a `useMe
 | Token                                                    | Default                                             | Applies to                                        |
 | -------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
 | `--crm-ui-kit-context-menu-content-min-width`            | `50px`                                              | `Content`, `SubContent`, `SubRoot.Content`        |
-| `--crm-ui-kit-context-menu-content-background-color`     | `var(--crm-ui-kit-palette-background-primary)`      | `Content`, `SubContent`, `SubRoot.Content`        |
+| `--crm-ui-kit-context-menu-content-background`           | `var(--crm-ui-kit-palette-background-primary)`      | `Content`, `SubContent`, `SubRoot.Content`        |
 | `--crm-ui-kit-context-menu-content-border-width`         | `1px`                                               | `Content`, `SubContent`, `SubRoot.Content`        |
 | `--crm-ui-kit-context-menu-content-border-style`         | `solid`                                             | `Content`, `SubContent`, `SubRoot.Content`        |
 | `--crm-ui-kit-context-menu-content-border-color`         | `var(--crm-ui-kit-palette-border-default)`          | `Content`, `SubContent`, `SubRoot.Content`        |
@@ -369,14 +369,14 @@ The theme object must be a stable reference (a module-level constant or a `useMe
 | `--crm-ui-kit-context-menu-content-box-shadow`           | `var(--crm-ui-kit-palette-context-menu-box-shadow)` | `Content`, `SubContent`, `SubRoot.Content`        |
 | `--crm-ui-kit-context-menu-item-padding`                 | `10px 16px`                                         | `Item`, `CheckboxItem`, `RadioItem`, `SubTrigger` |
 | `--crm-ui-kit-context-menu-item-color`                   | `var(--crm-ui-kit-palette-text-primary)`            | `Item`, `CheckboxItem`, `RadioItem`, `SubTrigger` |
-| `--crm-ui-kit-context-menu-item-background-color`        | `var(--crm-ui-kit-palette-background-primary)`      | `Item`, `CheckboxItem`, `RadioItem`, `SubTrigger` |
+| `--crm-ui-kit-context-menu-item-background`              | `var(--crm-ui-kit-palette-background-primary)`      | `Item`, `CheckboxItem`, `RadioItem`, `SubTrigger` |
 | `--crm-ui-kit-context-menu-item-highlighted-background`  | `var(--crm-ui-kit-palette-background-default)`      | Highlighted item                                  |
 | `--crm-ui-kit-context-menu-item-disabled-color`          | `var(--crm-ui-kit-palette-text-secondary-light)`    | Disabled item                                     |
 | `--crm-ui-kit-context-menu-item-danger-color`            | `var(--crm-ui-kit-color-error)`                     | `Item` with `isDanger`                            |
 | `--crm-ui-kit-context-menu-item-checked-color`           | `var(--crm-ui-kit-palette-active-element-900)`      | Checked `CheckboxItem` / `RadioItem`              |
 | `--crm-ui-kit-context-menu-label-padding`                | `10px 16px`                                         | `Label`                                           |
 | `--crm-ui-kit-context-menu-label-color`                  | `var(--crm-ui-kit-palette-text-primary)`            | `Label`                                           |
-| `--crm-ui-kit-context-menu-label-background-color`       | `var(--crm-ui-kit-palette-background-primary)`      | `Label`                                           |
+| `--crm-ui-kit-context-menu-label-background`             | `var(--crm-ui-kit-palette-background-primary)`      | `Label`                                           |
 | `--crm-ui-kit-context-menu-item-icon-min-width`          | `16px`                                              | `ItemIcon`                                        |
 | `--crm-ui-kit-context-menu-item-icon-margin-right`       | `8px`                                               | `ItemIcon`                                        |
 | `--crm-ui-kit-context-menu-item-indicator-margin-right`  | `8px`                                               | `ItemIndicator`                                   |
