@@ -312,17 +312,17 @@ Utility component that blocks pointer and focus events to prevent accidental int
 
 `ContextMenu` is styled through CSS custom properties passed to `ContextMenu.Root` as the `theme` prop.
 
-The prop is **optional**: when it is omitted the menu falls back to `ContextMenuTheme`, so existing code keeps working without changes.
+The prop is **optional**: when it is omitted the menu falls back to `ContextMenuPrimaryTheme`, so existing code keeps working without changes.
 
 ```tsx
 import {
   ContextMenu,
-  ContextMenuTheme,
+  ContextMenuPrimaryTheme,
   type ContextMenuThemeType,
 } from '@kommo-crm/crm-react-ui-kit/ContextMenu';
 
 const CompactContextMenuTheme: ContextMenuThemeType = {
-  ...ContextMenuTheme,
+  ...ContextMenuPrimaryTheme,
   '--crm-ui-kit-context-menu-item-padding': '6px 12px',
   '--crm-ui-kit-context-menu-content-border-radius': '8px',
 };

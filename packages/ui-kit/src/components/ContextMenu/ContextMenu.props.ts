@@ -70,13 +70,13 @@ export type ContextMenuRootProps = Omit<
    * Object with CSS theme properties.
    *
    * Optional for backward compatibility: when omitted, the menu is rendered
-   * with `ContextMenuTheme`.
+   * with `ContextMenuPrimaryTheme`.
    *
    * `Sub` and `SubRoot` accept a `theme` of their own, so a submenu can be
    * themed independently; by default a submenu inherits the theme of the
    * level it is rendered in.
    *
-   * @default ContextMenuTheme
+   * @default ContextMenuPrimaryTheme
    */
   theme?: ContextMenuThemeType;
 };

@@ -18,7 +18,7 @@ import { ContextMenuMode } from '../ContextMenu.enums';
 import {
   ContextMenu,
   ContextMenuRootProps,
-  ContextMenuTheme,
+  ContextMenuPrimaryTheme,
   ContextMenuThemeType,
 } from '..';
 import { ContextMenuSubRootProps } from '../components/SubRoot/SubRoot.props';
@@ -39,12 +39,12 @@ const DATA_INPUT_TEST_ID = 'InputInMenuItem';
 const THEME_CLASS_NAME_PREFIX = 'crm-ui-kit-theme-';
 
 const CUSTOM_THEME: ContextMenuThemeType = {
-  ...ContextMenuTheme,
+  ...ContextMenuPrimaryTheme,
   '--crm-ui-kit-context-menu-item-padding': '4px 8px',
 };
 
 const SUBMENU_THEME: ContextMenuThemeType = {
-  ...ContextMenuTheme,
+  ...ContextMenuPrimaryTheme,
   '--crm-ui-kit-context-menu-item-padding': '2px 4px',
 };
 

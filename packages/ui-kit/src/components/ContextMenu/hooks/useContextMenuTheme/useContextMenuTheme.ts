@@ -1,7 +1,7 @@
 import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import {
-  ContextMenuTheme,
+  ContextMenuPrimaryTheme,
   ContextMenuThemeType,
 } from '../../ContextMenu.themes';
 import {
@@ -14,7 +14,7 @@ import {
  *
  * A level that receives a `theme` is themed with it, otherwise it inherits the
  * theme of the level it is rendered in. The root level falls back to
- * `ContextMenuTheme`, which keeps `theme` optional and the component backward
+ * `ContextMenuPrimaryTheme`, which keeps `theme` optional and the component backward
  * compatible.
  */
 export const useContextMenuTheme = (theme?: ContextMenuThemeType) => {
@@ -22,7 +22,7 @@ export const useContextMenuTheme = (theme?: ContextMenuThemeType) => {
     useContextMenuThemeContext(THEME_DISPLAY_NAME);
 
   const ownThemeClassName = useThemeClassName<ContextMenuThemeType>(
-    theme ?? ContextMenuTheme
+    theme ?? ContextMenuPrimaryTheme
   );
 
   if (theme || !inheritedThemeClassName) {

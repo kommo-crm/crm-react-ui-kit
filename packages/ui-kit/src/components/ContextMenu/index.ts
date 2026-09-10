@@ -1,6 +1,6 @@
 export { ContextMenu } from './ContextMenu';
 export { type ContextMenuRootProps } from './ContextMenu.props';
 export {
-  ContextMenuTheme,
+  ContextMenuPrimaryTheme,
   type ContextMenuThemeType,
 } from './ContextMenu.themes';

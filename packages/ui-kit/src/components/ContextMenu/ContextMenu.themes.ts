@@ -29,7 +29,7 @@ type ContextMenuThemeKey =
 
 export type ContextMenuThemeType = KeyType<ContextMenuThemeKey>;
 
-export const ContextMenuTheme: ContextMenuThemeType = {
+export const ContextMenuPrimaryTheme: ContextMenuThemeType = {
   '--crm-ui-kit-context-menu-content-min-width': '50px',
   '--crm-ui-kit-context-menu-content-background':
     'var(--crm-ui-kit-palette-background-primary)',
