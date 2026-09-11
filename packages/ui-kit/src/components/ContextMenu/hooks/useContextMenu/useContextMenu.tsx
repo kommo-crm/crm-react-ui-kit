@@ -48,6 +48,20 @@ export const useContextMenu = (
    */
   const isControlled = isOpenForcefully !== undefined;
 
+  /**
+   * The prop is kept in a ref and updated on every render, so the callbacks
+   * captured once (the context menu bus subscription, timers) always read
+   * the current controlled state instead of the one seen on mount.
+   */
+  const isOpenForcefullyRef = useRef(isOpenForcefully);
+
+  isOpenForcefullyRef.current = isOpenForcefully;
+
+  /**
+   * Reads the controlled state from the ref.
+   */
+  const getIsControlled = () => isOpenForcefullyRef.current !== undefined;
+
   const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(
     isDefaultOpen ?? false
   );
@@ -74,7 +88,7 @@ export const useContextMenu = (
    * Does nothing in controlled mode, where the state is owned by the consumer.
    */
   const setIsOpen = (value: boolean) => {
-    if (isControlled) {
+    if (getIsControlled()) {
       return;
     }
 
@@ -86,7 +100,7 @@ export const useContextMenu = (
    * Does nothing in controlled mode, where it follows the `isOpen` prop.
    */
   const setIsAnimatedOpen = (value: boolean) => {
-    if (isControlled) {
+    if (getIsControlled()) {
       return;
     }
 
@@ -129,8 +143,8 @@ export const useContextMenu = (
    * consumer keeps the prop unchanged.
    */
   const emitOpen = (value: boolean) => {
-    if (isControlled) {
-      if (value !== isOpenForcefully) {
+    if (getIsControlled()) {
+      if (value !== isOpenForcefullyRef.current) {
         onOpenCallbackRef.current?.(value);
       }
 
@@ -371,7 +385,7 @@ export const useContextMenu = (
       setIsOpen(true);
       emitOpen(true);
 
-      if (!isControlled || isOpenForcefully) {
+      if (!getIsControlled() || isOpenForcefullyRef.current) {
         contextMenuBus.emit({
           id,
           isAiming,
@@ -441,7 +455,7 @@ export const useContextMenu = (
       deferredEmitRef.current = setTimeout(() => {
         deferredEmitRef.current = null;
 
-        if (!isControlled || isOpenForcefully) {
+        if (!getIsControlled() || isOpenForcefullyRef.current) {
           contextMenuBus.emit({
             id,
             isAiming,

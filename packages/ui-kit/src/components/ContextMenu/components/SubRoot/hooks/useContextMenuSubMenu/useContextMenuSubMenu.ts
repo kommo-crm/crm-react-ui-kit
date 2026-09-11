@@ -199,6 +199,7 @@ export const useContextMenuSubMenu = (
     setOpen(false);
     emitOpen(false);
     setIsInsideContent(false);
+    setIsOpenedByKeyboard(false);
 
     if (closeRootMenu) {
       closeRootMenuImmediately?.();

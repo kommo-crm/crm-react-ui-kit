@@ -1747,6 +1747,60 @@ describe('ContextMenu', () => {
 
       expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
     });
+
+    it('Menu mounted closed reports the close when another menu is opened', async () => {
+      const onOpen = jest.fn();
+
+      const ControlledMenu = () => {
+        const [isOpen, setIsOpen] = useState(false);
+
+        return (
+          <ContextMenu.Root
+            mode={ContextMenuMode.CLICK}
+            isOpen={isOpen}
+            onOpen={(value) => {
+              onOpen(value);
+              setIsOpen(value);
+            }}
+          >
+            <ContextMenu.Trigger data-testid={DATA_TRIGGER_TEST_ID}>
+              <ContextMenuTriggerIcon />
+            </ContextMenu.Trigger>
+
+            <ContextMenu.Portal>
+              <ContextMenu.Content
+                disableAutoPositioning
+                data-testid={DATA_CONTENT_TEST_ID}
+              >
+                <ContextMenu.Item data-testid={DATA_ITEM_TEST_ID}>
+                  <Text theme={TextInheritColorTheme} size="l">
+                    Item 1
+                  </Text>
+                </ContextMenu.Item>
+              </ContextMenu.Content>
+            </ContextMenu.Portal>
+          </ContextMenu.Root>
+        );
+      };
+
+      render(<ControlledMenu />);
+
+      await userEvent.click(screen.getByTestId(DATA_TRIGGER_TEST_ID));
+
+      expect(screen.getByTestId(DATA_CONTENT_TEST_ID)).toBeInTheDocument();
+
+      onOpen.mockClear();
+
+      act(() => {
+        contextMenuBus.emit({ id: 'another-menu', isAiming: () => false });
+      });
+
+      expect(onOpen).toHaveBeenCalledWith(false);
+
+      await waitFor(() => {
+        expect(screen.queryByTestId(DATA_CONTENT_TEST_ID)).toBeNull();
+      });
+    });
   });
 
   describe('onOpen callback', () => {
