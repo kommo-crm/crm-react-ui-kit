@@ -26,8 +26,9 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     /**
-     * Docgen is what fills the props table: prop names, types, and the JSDoc
-     * shown in the Description column.
+     * Docgen is what fills the props table: prop names, types, the JSDoc shown
+     * in the Description column and the `@default` tags shown in the Default
+     * column.
      *
      * - `include` fixes a monorepo regression. The plugin globs it relative to
      *   `process.cwd()`, which is `packages/storybook` when Storybook is
@@ -36,8 +37,22 @@ const config: StorybookConfig = {
      *   file in here happened to import made it into the docgen program; every
      *   other one lost its `__docgenInfo`, and its props table fell back to
      *   types inferred from `args` — a bare `object`, with the Description
-     *   column empty. Absolute paths are immune to the cwd change. The second
-     *   entry keeps this package's own components covered, as they were before.
+     *   column empty. Absolute paths make the glob itself cwd-independent.
+     * - `tsconfigPath` covers the other half of the same problem. The plugin
+     *   defaults it to the literal `'./tsconfig.json'`, which `getTSConfigFile`
+     *   resolves against `process.cwd()` and, on failure, silently swallows
+     *   into `{}`. Started from the monorepo root — where there is no
+     *   `tsconfig.json`, only `tsconfig.base.json` — the compiler would end up
+     *   without `baseUrl`/`paths`, `@ui-kit/*` imports would stop resolving and
+     *   the tables would empty out again through a different entry point.
+     * - The `include` glob skips `*.test.tsx`, `*.e2e.test.tsx`,
+     *   `*.e2e-playground.tsx` and `*.stories.tsx`: they were half of the 194
+     *   files in the docgen program and add nothing to it. `exclude` cannot do
+     *   this — the plugin feeds it to the module filter only, while the TS
+     *   program is built from `include` alone.
+     * - The second entry is spelled `../storybook` rather than `../` because
+     *   glob does not descend into dot-directories, so the wider pattern never
+     *   covered `.storybook/**` in the first place.
      * - `shouldExtractLiteralValuesFromEnum` reports a string-literal union as
      *   `enum` plus its members, so Storybook renders a radio or a select
      *   instead of a free-text field — `Accordion.type` turns into a choice of
@@ -52,9 +67,13 @@ const config: StorybookConfig = {
      *   it changes nothing today and only pins that behaviour in place.
      */
     reactDocgenTypescriptOptions: {
+      tsconfigPath: resolve(__dirname, '../tsconfig.json'),
       include: [
-        resolve(__dirname, '../../ui-kit/src/**/*.tsx'),
-        resolve(__dirname, '../**/*.tsx'),
+        resolve(
+          __dirname,
+          '../../ui-kit/src/**/!(*.test|*.e2e.test|*.e2e-playground|*.stories).tsx'
+        ),
+        resolve(__dirname, '../storybook/**/*.tsx'),
       ],
       shouldExtractLiteralValuesFromEnum: true,
       shouldRemoveUndefinedFromOptional: true,
