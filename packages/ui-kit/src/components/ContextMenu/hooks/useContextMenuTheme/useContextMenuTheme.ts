@@ -21,6 +21,7 @@ export const useContextMenuTheme = (theme?: ContextMenuThemeType) => {
   const { themeClassName: inheritedThemeClassName } =
     useContextMenuThemeContext(THEME_DISPLAY_NAME);
 
+  // @uikit-v2 Issue: #109
   const ownThemeClassName = useThemeClassName<ContextMenuThemeType>(
     theme ?? ContextMenuPrimaryTheme
   );

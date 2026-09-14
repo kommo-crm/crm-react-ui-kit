@@ -80,6 +80,7 @@ export type SubProps = Omit<
    * When omitted, the submenu inherits the theme of the menu level it is
    * rendered in.
    */
+  // @uikit-v2 Issue: #109
   theme?: ContextMenuThemeType;
 };
 

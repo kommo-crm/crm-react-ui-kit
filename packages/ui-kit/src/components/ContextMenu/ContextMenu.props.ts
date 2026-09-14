@@ -84,6 +84,7 @@ export type ContextMenuRootProps = Omit<
    *
    * @default ContextMenuPrimaryTheme
    */
+  // @uikit-v2 Issue: #109
   theme?: ContextMenuThemeType;
 };
 
