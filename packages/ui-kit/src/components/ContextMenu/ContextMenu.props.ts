@@ -10,6 +10,10 @@ export type ContextMenuRootProps = Omit<
 > & {
   /**
    * Called whenever the open state of the menu changes.
+   *
+   * In controlled mode (the `isOpen` prop is passed) the menu doesn't change
+   * its own state, so the callback reports the interaction that requests
+   * the change and the consumer decides whether to apply it.
    */
   onOpen?: (isOpen: boolean) => void;
   /**
@@ -39,7 +43,9 @@ export type ContextMenuRootProps = Omit<
    */
   shouldCloseCurrentMenuOnSelect?: boolean;
   /**
-   * Whether the context menu is open forcefully.
+   * The controlled open state of the menu.
+   * When passed, the menu is fully controlled by the consumer: it never opens
+   * or closes on its own and only reports the requested state via `onOpen`.
    */
   isOpen?: boolean;
   /**

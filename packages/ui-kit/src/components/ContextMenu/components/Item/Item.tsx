@@ -14,6 +14,8 @@ import {
 
 import { useContextMenuRootContext } from '../../ContextMenu.context';
 
+import { KEEP_MENU_OPEN_ATTRIBUTE } from '../../utils';
+
 import type { ItemProps } from './Item.props';
 
 import { NonSelectableItem } from './components';
@@ -97,11 +99,28 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
     isSelectable: isSelectableConsideringInputFocus,
   });
 
+  /**
+   * Whether selecting this item closes the menu it belongs to.
+   *
+   * Also reported to the menu through `KEEP_MENU_OPEN_ATTRIBUTE`, so that menus
+   * closing on their own (`SubRoot`) respect the same decision.
+   */
+  const shouldCloseCurrentMenu =
+    isSelectableConsideringInputFocus &&
+    !isDisabled &&
+    shouldCloseCurrentMenuOnSelect &&
+    shouldCloseCurrentMenuOnSelectContext;
+
+  /**
+   * The attribute is spread, since it is only present when the item keeps
+   * its menu open.
+   */
+  const keepMenuOpenProps = shouldCloseCurrentMenu
+    ? {}
+    : { [KEEP_MENU_OPEN_ATTRIBUTE]: '' };
+
   const handleCloseOnClick = () => {
-    if (
-      shouldCloseCurrentMenuOnSelect &&
-      shouldCloseCurrentMenuOnSelectContext
-    ) {
+    if (shouldCloseCurrentMenu) {
       closeMenuImmediately();
 
       if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
@@ -117,17 +136,13 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
      */
     e.preventDefault();
 
-    if (isSelectableConsideringInputFocus && !isDisabled) {
-      handleCloseOnClick();
-    }
+    handleCloseOnClick();
 
     onSelect?.(e);
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isSelectableConsideringInputFocus && !isDisabled) {
-      handleCloseOnClick();
-    }
+    handleCloseOnClick();
 
     onClick?.(e);
   };
@@ -156,6 +171,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           data-highlighted={isSubMenuOpen || dataHighlighted}
           disabled={isDisabled}
           data-item
+          {...keepMenuOpenProps}
           onSelect={handleSelect}
           onClick={handleClick}
           onFocus={handleFocus}
@@ -185,6 +201,7 @@ export const Item = forwardRef<HTMLDivElement, ItemProps>((props, ref) => {
           )}
           data-item
           data-non-selectable
+          {...keepMenuOpenProps}
           onFocus={onFocus}
           onMouseEnter={onMouseEnter}
           onBlur={onBlur}

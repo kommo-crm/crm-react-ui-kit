@@ -24,6 +24,8 @@ import { ContextMenuMode } from '../../../../ContextMenu.enums';
 
 import { useContentPositioning } from '../../../../hooks';
 
+import { isMenuCloseAllowedOnSelect } from '../../../../utils';
+
 import type { ContentProps } from '../../../Content';
 
 import { Direction } from '../../../Content';
@@ -219,6 +221,14 @@ export const Content = forwardRef<El, Props>((props, ref) => {
     e.stopPropagation();
 
     onPointerUp?.(e);
+
+    /**
+     * Items that don't close their menu when selected (and everything nested
+     * in them) must not close this menu either.
+     */
+    if (!isMenuCloseAllowedOnSelect(e.target)) {
+      return;
+    }
 
     /**
      * Otherwise, onSelect on Item will not have time to work out.

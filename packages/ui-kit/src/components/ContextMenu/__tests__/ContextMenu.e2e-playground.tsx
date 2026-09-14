@@ -28,11 +28,11 @@ export interface ContextMenuComponentProps {
    */
   direction?: ContentProps['direction'];
   /**
-   * Whether the sub menu is default open.
+   * Whether the SubRoot menu is kept open.
    */
   isDefaultOpenSubMenu?: boolean;
   /**
-   * Whether the sub menu is default open.
+   * Whether the Sub menu is kept open.
    */
   isDefaultOpenSub?: boolean;
   /**
@@ -97,7 +97,7 @@ const ContextMenuComponent = ({
             <ContextMenu.ItemRightSlot>
               <ContextMenu.experimental_SubRoot
                 mode={ContextMenuMode.CLICK}
-                isDefaultOpen={isDefaultOpenSubMenu}
+                isOpen={isDefaultOpenSubMenu}
               >
                 <ContextMenu.experimental_SubRoot.Trigger
                   style={{
@@ -150,7 +150,7 @@ const ContextMenuComponent = ({
 
           <ContextMenu.Sub
             mode={ContextMenuMode.CLICK}
-            isDefaultOpen={isDefaultOpenSub}
+            isOpen={isDefaultOpenSub}
           >
             <ContextMenu.SubTrigger>
               <Text theme={TextInheritColorTheme} size="l" isEllipsis>
