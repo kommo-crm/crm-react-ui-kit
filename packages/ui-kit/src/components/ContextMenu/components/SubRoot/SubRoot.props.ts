@@ -5,7 +5,7 @@ import { ContextMenuThemeType } from '../../ContextMenu.themes';
 
 export type ContextMenuSubRootProps = Omit<
   RadixDropdownMenuRootProps,
-  'onOpenChange' | 'modal' | 'defaultOpen'
+  'onOpenChange' | 'modal' | 'defaultOpen' | 'open'
 > & {
   /**
    * The open state of the submenu when it is initially rendered.
@@ -13,11 +13,22 @@ export type ContextMenuSubRootProps = Omit<
    */
   isDefaultOpen?: boolean;
   /**
+   * The controlled open state of the submenu.
+   * When passed, the submenu is fully controlled by the consumer: it never
+   * opens or closes on its own and only reports the requested state
+   * via `onOpen`.
+   */
+  isOpen?: boolean;
+  /**
    * @deprecated Use `isDefaultOpen` instead.
    */
   defaultOpen?: boolean;
   /**
    * Called whenever the open state of the menu changes.
+   *
+   * In controlled mode (the `isOpen` prop is passed) the submenu doesn't change
+   * its own state, so the callback reports the interaction that requests
+   * the change and the consumer decides whether to apply it.
    */
   onOpen?: (isOpen: boolean) => void;
   /**

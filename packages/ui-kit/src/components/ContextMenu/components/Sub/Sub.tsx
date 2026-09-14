@@ -24,6 +24,7 @@ export const Sub = (props: SubProps) => {
     onOpen,
     isDefaultOpen,
     defaultOpen,
+    isOpen: isOpenForcefully,
     shouldCloseRootMenuOnSelect = true,
     shouldCloseCurrentMenuOnSelect = true,
     onAiming,
@@ -57,6 +58,7 @@ export const Sub = (props: SubProps) => {
     displayName: DISPLAY_NAME,
     mode: initialMode,
     isDefaultOpen: isDefaultOpen ?? defaultOpen,
+    isOpen: isOpenForcefully,
     onOpen,
     onAiming,
     aimingTolerance,
@@ -72,7 +74,6 @@ export const Sub = (props: SubProps) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         isAnimatedOpen={isAnimatedOpen}
-        isDefaultOpen={isDefaultOpen ?? defaultOpen}
         onContentEnter={handleContentEnter}
         onContentLeave={handleContentLeave}
         onOpenByKeyboard={onOpenByKeyboard}

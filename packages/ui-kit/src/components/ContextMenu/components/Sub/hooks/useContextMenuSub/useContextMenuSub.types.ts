@@ -1,5 +1,4 @@
 import { RefObject } from 'react';
-import { Dispatch, SetStateAction } from 'react';
 
 import { ContextMenuModeType } from '../../../../ContextMenu.types';
 import { PointerDownOutsideEvent } from '../../../SubContent/SubContent.types';
@@ -17,6 +16,12 @@ export interface UseContextMenuSubOptions {
    * The open state of the dropdown menu when it is initially rendered.
    */
   isDefaultOpen?: boolean;
+  /**
+   * The controlled open state of the submenu.
+   * When passed, the internal state is not used and the submenu only reports
+   * the requested state via `onOpen`.
+   */
+  isOpen?: boolean;
   /**
    * Called when submenu open state changes.
    */
@@ -48,9 +53,9 @@ export interface UseContextMenuSubResult {
    */
   isOpen: boolean;
   /**
-   * Sets the open state of the submenu.
+   * Sets the open state of the submenu and notifies the consumer via `onOpen`.
    */
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: (isOpen: boolean) => void;
   /**
    * Whether the submenu is animated open.
    */

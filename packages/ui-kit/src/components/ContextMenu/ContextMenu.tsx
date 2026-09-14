@@ -100,7 +100,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
   const themeClassName = useContextMenuTheme(theme);
 
   const { navigationContentRef } = useContextMenuKeyboardNavigation({
-    isOpen: isOpenForcefully ?? isOpen,
+    isOpen,
     isAnimatedOpen,
   });
 
@@ -136,7 +136,7 @@ const ContextMenu = (props: ContextMenuRootProps) => {
           onChildAiming={onChildAiming}
         >
           <RadixDropdownMenuRoot
-            open={isOpenForcefully ?? isOpen}
+            open={isOpen}
             onOpenChange={onOpenChange}
             /**
              * Necessary for hover mode to work correctly.

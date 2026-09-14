@@ -20,7 +20,7 @@ import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import type { SubContentProps } from './SubContent.props';
 
-import { PointerDownOutsideEvent } from './SubContent.types';
+import { FocusOutsideEvent, PointerDownOutsideEvent } from './SubContent.types';
 
 import s from './SubContent.module.css';
 
@@ -42,6 +42,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
     onMouseMove,
     onEscapeKeyDown,
     onPointerDownOutside,
+    onFocusOutside,
 
     ...rest
   } = props;
@@ -61,7 +62,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
   const {
     isAnimatedOpen,
     mode,
-    isDefaultOpen,
+    isControlled,
     isOpen,
     triggerRef,
     contentRef,
@@ -95,12 +96,9 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
   });
 
   const springStyles = useSpring({
-    opacity:
-      (isContentPositioned && isAnimatedOpen) || isDefaultOpen !== undefined
-        ? 1
-        : 0,
+    opacity: (isContentPositioned && isAnimatedOpen) || isControlled ? 1 : 0,
     config:
-      mode === ContextMenuMode.CLICK || isDefaultOpen !== undefined
+      mode === ContextMenuMode.CLICK || isControlled
         ? { duration: 0 }
         : { duration: animationDuration, easing: easings.easeInOutCubic },
   });
@@ -144,6 +142,23 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
     onPointerDownOutside?.(e);
   };
 
+  /**
+   * Radix closes the submenu whenever the focus leaves its content, which
+   * conflicts with the open state owned by `useContextMenuSub`. The most
+   * visible case is `isDefaultOpen`: the parent content autofocuses its first
+   * item right after mount, Radix treats that focus as outside the submenu and
+   * closes it before it is ever shown.
+   *
+   * Preventing the default stops that path (`composeEventHandlers` skips
+   * Radix's own handler), so closing stays driven by the hook - the same way it
+   * already is for the pointer down outside.
+   */
+  const handleFocusOutside = (e: FocusOutsideEvent) => {
+    e.preventDefault();
+
+    onFocusOutside?.(e);
+  };
+
   return (
     <LevelProvider
       activeItemId={activeItemId}
@@ -180,6 +195,7 @@ export const SubContent = forwardRef<El, SubContentProps>((props, ref) => {
             alignOffset={offset}
             onEscapeKeyDown={handleEscapeKeyDown}
             onPointerDownOutside={handlePointerDownOutside}
+            onFocusOutside={handleFocusOutside}
             data-menu-level={level + 1}
             {...rest}
           >

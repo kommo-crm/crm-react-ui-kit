@@ -38,7 +38,6 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
     isOpen,
     triggerRef,
     mode,
-    isSubMenuOpen,
     setIsSubMenuOpen,
     triggerId,
     onContentEnter,
@@ -96,7 +95,11 @@ export const Trigger = forwardRef<El, TriggerProps>((props, ref) => {
    */
   const handlePointerUp = (e: React.PointerEvent<HTMLButtonElement>) => {
     if (mode === ContextMenuMode.CLICK) {
-      setIsSubMenuOpen?.(!isSubMenuOpen);
+      /**
+       * `isOpen` is used instead of `isSubMenuOpen`, since the submenu can also
+       * be opened by its own state (for example with `isDefaultOpen`).
+       */
+      setIsSubMenuOpen?.(!isOpen);
     }
 
     onPointerUp?.(e);

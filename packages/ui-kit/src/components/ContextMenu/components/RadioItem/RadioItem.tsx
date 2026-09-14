@@ -10,6 +10,8 @@ import { useContextMenuItemFocus, useSubMenu } from '../../hooks';
 
 import { useContextMenuRootContext } from '../../ContextMenu.context';
 
+import { KEEP_MENU_OPEN_ATTRIBUTE } from '../../utils';
+
 import type { RadioItemProps } from './RadioItem.props';
 
 import s from './RadioItem.module.css';
@@ -83,11 +85,27 @@ export const RadioItem = forwardRef<El, RadioItemProps>((props, ref) => {
     onPointerMove,
   });
 
+  /**
+   * Whether selecting this item closes the menu it belongs to.
+   *
+   * Also reported to the menu through `KEEP_MENU_OPEN_ATTRIBUTE`, so that menus
+   * closing on their own (`SubRoot`) respect the same decision.
+   */
+  const shouldCloseCurrentMenu =
+    !isDisabled &&
+    shouldCloseCurrentMenuOnSelect &&
+    shouldCloseCurrentMenuOnSelectContext;
+
+  /**
+   * The attribute is spread, since it is only present when the item keeps
+   * its menu open.
+   */
+  const keepMenuOpenProps = shouldCloseCurrentMenu
+    ? {}
+    : { [KEEP_MENU_OPEN_ATTRIBUTE]: '' };
+
   const handleCloseOnClick = () => {
-    if (
-      shouldCloseCurrentMenuOnSelect &&
-      shouldCloseCurrentMenuOnSelectContext
-    ) {
+    if (shouldCloseCurrentMenu) {
       closeMenuImmediately();
 
       if (shouldCloseRootMenuOnSelect && shouldCloseRootMenuOnSelectContext) {
@@ -129,6 +147,7 @@ export const RadioItem = forwardRef<El, RadioItemProps>((props, ref) => {
       disabled={isDisabled}
       data-highlighted={isSubMenuOpen || dataHighlighted}
       data-item
+      {...keepMenuOpenProps}
       value={value}
       onSelect={handleSelect}
       onClick={handleClick}
