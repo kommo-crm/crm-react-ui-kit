@@ -3,6 +3,7 @@ import { type DropdownMenuProps as RadixDropdownMenuRootProps } from '@radix-ui/
 import type { FocusChangeEvent } from '@ui-kit/hooks';
 
 import { ContextMenuModeType } from './ContextMenu.types';
+import { ContextMenuThemeType } from './ContextMenu.themes';
 
 export type ContextMenuRootProps = Omit<
   RadixDropdownMenuRootProps,
@@ -71,6 +72,20 @@ export type ContextMenuRootProps = Omit<
    * @default 200
    */
   aimingIdleTimeout?: number;
+  /**
+   * Object with CSS theme properties.
+   *
+   * Optional for backward compatibility: when omitted, the menu is rendered
+   * with `ContextMenuPrimaryTheme`.
+   *
+   * `Sub` and `SubRoot` accept a `theme` of their own, so a submenu can be
+   * themed independently; by default a submenu inherits the theme of the
+   * level it is rendered in.
+   *
+   * @default ContextMenuPrimaryTheme
+   */
+  // @uikit-v2 Issue: #109
+  theme?: ContextMenuThemeType;
 };
 
 export interface ContextMenuContextProps {
@@ -234,4 +249,16 @@ export interface ContextMenuRootContextProps {
    * Reference to the DOM element containing the menu content.
    */
   navigationContentRef: React.RefObject<HTMLDivElement>;
+}
+
+export interface ContextMenuThemeContextProps {
+  /**
+   * Class name holding the CSS custom properties of the menu theme.
+   *
+   * Menu levels render no DOM element of their own and their content is
+   * rendered in a portal, so the class is applied to the content of the level
+   * (`Content`, `SubContent`, `SubRoot.Content`) instead. CSS variables are
+   * inherited, so all nested parts pick the theme up from there.
+   */
+  themeClassName: string;
 }

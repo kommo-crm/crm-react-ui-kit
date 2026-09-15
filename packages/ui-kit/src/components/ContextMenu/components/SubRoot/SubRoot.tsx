@@ -1,7 +1,12 @@
 import React from 'react';
 import { Root as RadixDropdownMenuRoot } from '@radix-ui/react-dropdown-menu';
 
-import { ContextMenuProvider } from '../../ContextMenu.context';
+import {
+  ContextMenuProvider,
+  ContextMenuThemeProvider,
+} from '../../ContextMenu.context';
+
+import { useContextMenuTheme } from '../../hooks';
 import { ContextMenuMode } from '../../ContextMenu.enums';
 
 import { FocusBlocker } from '../FocusBlocker';
@@ -26,6 +31,7 @@ export const __experimental_SubRoot = (props: ContextMenuSubRootProps) => {
     shouldCloseRootMenuOnSelect = true,
     onOpen,
     onAnimatedOpen,
+    theme,
 
     ...rest
   } = props;
@@ -57,45 +63,49 @@ export const __experimental_SubRoot = (props: ContextMenuSubRootProps) => {
     onAnimatedOpen,
   });
 
-  return (
-    <ContextMenuProvider
-      mode={rootMode}
-      triggerRef={triggerRef}
-      contentRef={contentRef}
-      isAnimatedOpen={isAnimatedOpen}
-      animationDuration={animationDuration}
-      hoverCloseDelay={hoverCloseDelay}
-      closeMenuImmediately={closeMenuImmediately}
-      onContentEnter={onContentEnter}
-      onContentLeave={onContentLeave}
-      isSubMenuOpen={isOpen}
-      setIsSubMenuOpen={setIsSubMenuOpen}
-      triggerId={triggerId}
-      onOpenByKeyboard={onOpenByKeyboard}
-      shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
-      shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
-      onChildOpen={onChildOpen}
-      isOpen={isOpen}
-      itemWithFocusedInput={itemWithFocusedInput}
-      setItemWithFocusedInput={setItemWithFocusedInput}
-    >
-      <RadixDropdownMenuRoot
-        open={isOpen}
-        onOpenChange={onOpenChange}
-        modal={false}
-        {...rest}
-      >
-        {children}
+  const themeClassName = useContextMenuTheme(theme);
 
-        {isOpen && (
-          <FocusBlocker
-            onClick={() => {
-              closeMenuImmediately();
-            }}
-          />
-        )}
-      </RadixDropdownMenuRoot>
-    </ContextMenuProvider>
+  return (
+    <ContextMenuThemeProvider themeClassName={themeClassName}>
+      <ContextMenuProvider
+        mode={rootMode}
+        triggerRef={triggerRef}
+        contentRef={contentRef}
+        isAnimatedOpen={isAnimatedOpen}
+        animationDuration={animationDuration}
+        hoverCloseDelay={hoverCloseDelay}
+        closeMenuImmediately={closeMenuImmediately}
+        onContentEnter={onContentEnter}
+        onContentLeave={onContentLeave}
+        isSubMenuOpen={isOpen}
+        setIsSubMenuOpen={setIsSubMenuOpen}
+        triggerId={triggerId}
+        onOpenByKeyboard={onOpenByKeyboard}
+        shouldCloseCurrentMenuOnSelect={shouldCloseCurrentMenuOnSelect}
+        shouldCloseRootMenuOnSelect={shouldCloseRootMenuOnSelect}
+        onChildOpen={onChildOpen}
+        isOpen={isOpen}
+        itemWithFocusedInput={itemWithFocusedInput}
+        setItemWithFocusedInput={setItemWithFocusedInput}
+      >
+        <RadixDropdownMenuRoot
+          open={isOpen}
+          onOpenChange={onOpenChange}
+          modal={false}
+          {...rest}
+        >
+          {children}
+
+          {isOpen && (
+            <FocusBlocker
+              onClick={() => {
+                closeMenuImmediately();
+              }}
+            />
+          )}
+        </RadixDropdownMenuRoot>
+      </ContextMenuProvider>
+    </ContextMenuThemeProvider>
   );
 };
 

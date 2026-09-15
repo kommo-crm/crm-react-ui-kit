@@ -2,5 +2,5 @@
   display: flex;
   align-items: center;
   margin-left: auto;
-  padding-left: 8px;
+  padding-left: var(--crm-ui-kit-context-menu-item-right-slot-padding-left);
 }

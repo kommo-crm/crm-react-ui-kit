@@ -5,3 +5,4 @@ export { useItemInnerFocus } from './useItemInnerFocus/useItemInnerFocus';
 export { useContextMenuItemFocus } from './useContextMenuItemFocus/useContextMenuItemFocus';
 export { useInnerFocusTracker } from './useInnerFocusTracker/useInnerFocusTracker';
 export { useContextMenuKeyboardNavigation } from './useContextMenuKeyboardNavigation/useContextMenuKeyboardNavigation';
+export { useContextMenuTheme } from './useContextMenuTheme/useContextMenuTheme';

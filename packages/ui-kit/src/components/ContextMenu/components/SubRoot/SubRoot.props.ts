@@ -1,6 +1,7 @@
 import { type DropdownMenuProps as RadixDropdownMenuRootProps } from '@radix-ui/react-dropdown-menu';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
+import { ContextMenuThemeType } from '../../ContextMenu.themes';
 
 export type ContextMenuSubRootProps = Omit<
   RadixDropdownMenuRootProps,
@@ -55,4 +56,12 @@ export type ContextMenuSubRootProps = Omit<
    * @default true
    */
   shouldCloseCurrentMenuOnSelect?: boolean;
+  /**
+   * Object with CSS theme properties applied to the submenu.
+   *
+   * When omitted, the submenu inherits the theme of the menu level it is
+   * rendered in.
+   */
+  // @uikit-v2 Issue: #109
+  theme?: ContextMenuThemeType;
 };

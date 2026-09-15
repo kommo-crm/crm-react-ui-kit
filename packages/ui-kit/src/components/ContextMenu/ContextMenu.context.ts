@@ -3,6 +3,7 @@ import { createComponentContext } from '@ui-kit/lib/react';
 import {
   ContextMenuContextProps,
   ContextMenuRootContextProps,
+  ContextMenuThemeContextProps,
 } from './ContextMenu.props';
 
 const DISPLAY_NAME = 'ContextMenu';
@@ -38,6 +39,25 @@ const ROOT_DISPLAY_NAME = 'ContextMenu.Root';
 const [ContextMenuRootProvider, useContextMenuRootContext] =
   createComponentContext<ContextMenuRootContextProps>(ROOT_DISPLAY_NAME);
 
+const THEME_DISPLAY_NAME = 'ContextMenu.Theme';
+
+/**
+ * Context that carries the class name holding the CSS custom properties
+ * of the menu theme.
+ *
+ * Separated from both other contexts because it is the only piece of state
+ * that every menu level may override: `Root`, `Sub` and `SubRoot` each render
+ * their own provider, so a nested menu can be themed independently while
+ * inheriting the theme of its parent by default.
+ *
+ * The default value keeps consumers rendered outside of a themed level
+ * working instead of throwing.
+ */
+const [ContextMenuThemeProvider, useContextMenuThemeContext] =
+  createComponentContext<ContextMenuThemeContextProps>(THEME_DISPLAY_NAME, {
+    themeClassName: '',
+  });
+
 export {
   ContextMenuProvider,
   useContextMenuContext,
@@ -45,4 +65,7 @@ export {
   ContextMenuRootProvider,
   useContextMenuRootContext,
   ROOT_DISPLAY_NAME,
+  ContextMenuThemeProvider,
+  useContextMenuThemeContext,
+  THEME_DISPLAY_NAME,
 };

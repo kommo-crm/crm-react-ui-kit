@@ -18,6 +18,7 @@ import { LevelProvider } from '../../providers/LevelProvider';
 import {
   useContextMenuContext,
   useContextMenuRootContext,
+  useContextMenuThemeContext,
 } from '../../ContextMenu.context';
 
 import { ContextMenuMode } from '../../ContextMenu.enums';
@@ -118,6 +119,8 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
   });
 
   const { navigationContentRef } = useContextMenuRootContext(DISPLAY_NAME);
+
+  const { themeClassName } = useContextMenuThemeContext(DISPLAY_NAME);
 
   /**
    * Register focus outside handler to allow preventing menu closure.
@@ -248,7 +251,7 @@ export const Content = forwardRef<El, ContentProps>((props, ref) => {
         >
           <RadixDropdownMenuContent
             ref={mergeRefs(contentRef, navigationContentRef, ref)}
-            className={cx(s.content, className)}
+            className={cx(s.content, themeClassName, className)}
             style={{
               ...(style || {}),
               pointerEvents:

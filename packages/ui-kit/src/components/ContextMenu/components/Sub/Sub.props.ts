@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { Sub as RadixDropdownMenuSub } from '@radix-ui/react-dropdown-menu';
 
 import { ContextMenuModeType } from '../../ContextMenu.types';
+import { ContextMenuThemeType } from '../../ContextMenu.themes';
 import { PointerDownOutsideEvent } from '../SubContent/SubContent.types';
 
 export type SubProps = Omit<
@@ -73,6 +74,14 @@ export type SubProps = Omit<
    * @default 200
    */
   aimingIdleTimeout?: number;
+  /**
+   * Object with CSS theme properties applied to the submenu.
+   *
+   * When omitted, the submenu inherits the theme of the menu level it is
+   * rendered in.
+   */
+  // @uikit-v2 Issue: #109
+  theme?: ContextMenuThemeType;
 };
 
 export interface ContextMenuSubContextProps {

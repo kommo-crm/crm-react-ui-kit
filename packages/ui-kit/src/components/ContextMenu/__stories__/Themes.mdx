@@ -1,0 +1,19 @@
+import { Title, Meta, Canvas } from '@storybook/blocks';
+import * as ContextMenuStories from './ContextMenu.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { ContextMenuPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/ContextMenu/Themes" of={ContextMenuStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+<Canvas of={ContextMenuStories.Default} />
+
+## ContextMenuPrimaryTheme
+
+```jsx
+import { ContextMenuPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/ContextMenu';
+```
+
+<ThemeVisualization theme={ContextMenuPrimaryTheme} />
