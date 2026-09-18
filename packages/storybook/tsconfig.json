@@ -6,7 +6,8 @@
       "@ui-kit/*": ["../ui-kit/src/*"],
       "@ui-kit": ["../ui-kit/src/index"],
       "@storybook-utils/*": ["./storybook/*"],
-      "@i18n": ["./.storybook/i18n.ts"]
+      "@i18n": ["./.storybook/i18n.ts"],
+      "@tokens/*": ["../tokens/dist/js/*"]
     }
   },
   "include": ["./**/*.tsx", "./**/*.ts", ".storybook/**/*", "../ui-kit/src/**/*.d.ts"],

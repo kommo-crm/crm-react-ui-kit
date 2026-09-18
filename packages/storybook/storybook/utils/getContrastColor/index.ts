@@ -1,0 +1,1 @@
+export { getContrastColor } from './getContrastColor';

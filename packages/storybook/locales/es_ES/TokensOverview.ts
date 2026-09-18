@@ -1,0 +1,33 @@
+export default {
+  'Design Tokens': 'Tokens de diseño',
+  '`@kommo-crm/crm-tokens` is the shared design tokens package for Kommo CRM. It currently provides color primitives in CSS, SCSS, Less, and JavaScript/TypeScript formats.':
+    '`@kommo-crm/crm-tokens` es el paquete compartido de tokens de diseño para Kommo CRM. Actualmente proporciona primitivas de color en formatos CSS, SCSS, Less y JavaScript/TypeScript.',
+  'Installation': 'Instalación',
+  'CSS': 'CSS',
+  'Import the package to add CSS custom properties to :root.':
+    'Importa el paquete para agregar propiedades personalizadas de CSS a `:root`.',
+  '**Primitive tokens** are fixed values, such as palette colors:':
+    'Los **tokens primitivos** son valores fijos, como los colores de la paleta:',
+  'After importing the tokens, use the CSS custom properties anywhere you need:':
+    'Luego de importar los tokens, usa las propiedades personalizadas de CSS donde las necesites:',
+  'SCSS': 'SCSS',
+  'Less': 'Less',
+  'JavaScript / TypeScript': 'JavaScript / TypeScript',
+  "The JS export provides typed access to each token's resolved value and CSS variable name.":
+    'La exportación de JS proporciona acceso tipado al valor resuelto y al nombre de la variable CSS de cada token.',
+  'Every token has the following shape:':
+    'Cada token tiene la siguiente estructura:',
+  'JSON': 'JSON',
+  'All tokens in a single file:':
+    'Puedes importar todos los tokens desde un único archivo:',
+  "Useful for generating documentation or integrating with tools that don't support CSS variables.":
+    'Esto resulta útil para generar documentación o integrarlos con herramientas que no admiten variables CSS.',
+  'Token structure': 'Estructura de los tokens',
+  'Category': 'Categoría',
+  'Path pattern': 'Patrón de ruta',
+  'Example variable': 'Variable de ejemplo',
+  'Primitive colors': 'Colores primitivos',
+  'Copy': 'Copiar',
+  'Copied': 'Copiado',
+  'Copy failed': 'Error al copiar',
+};

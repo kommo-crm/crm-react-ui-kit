@@ -38,6 +38,8 @@ const preview: Preview = {
         order: [
           'Getting Started',
           ['Getting Started', 'Component theming'],
+          'Tokens',
+          ['Overview', 'Primitives', '*'],
           'Typography',
           'Components',
         ],
