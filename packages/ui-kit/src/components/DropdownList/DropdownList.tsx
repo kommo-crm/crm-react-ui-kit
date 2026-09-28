@@ -21,6 +21,7 @@ export const DropdownList = forwardRef<L, DropdownListProps>((props, ref) => {
     theme,
     children,
     isOpened,
+    placement = 'bottom',
     hoveredIndex = 0,
     onSelect = noop,
     onToggle = noop,
@@ -52,6 +53,7 @@ export const DropdownList = forwardRef<L, DropdownListProps>((props, ref) => {
           themeClassName,
           {
             [s.opened]: isOpened,
+            [s.listToTop]: placement === 'top',
           },
           className
         )}
