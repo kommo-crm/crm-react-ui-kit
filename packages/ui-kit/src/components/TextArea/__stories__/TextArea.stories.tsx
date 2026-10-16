@@ -110,6 +110,18 @@ export const States: Story = {
   },
 };
 
+export const Rows: Story = {
+  render: (props) => {
+    return (
+      <div style={baseContainerStyles}>
+        <TextArea {...props} rows={1} placeholder="rows={1}" />
+        <TextArea {...props} rows={2} placeholder="rows={2}" />
+        <TextArea {...props} rows={4} placeholder="rows={4}" />
+      </div>
+    );
+  },
+};
+
 export const Autosize: Story = {
   args: {
     isAutosized: true,
