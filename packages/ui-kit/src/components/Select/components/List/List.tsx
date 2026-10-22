@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { forwardRef, useCallback, useMemo, useRef } from 'react';
 
 import { useOnOutsideClick } from '@kommo-crm/react-hooks';
 
@@ -19,6 +13,8 @@ import { noop } from '@ui-kit/utils';
 import { useSelectContext } from '../../Select.context';
 
 import { SelectItem } from '../../Select.types';
+
+import { useListPlacement } from './hooks';
 
 import { ListPortalProps, ListProps } from './List.props';
 
@@ -68,11 +64,13 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
 
   const listRef = useRef<HTMLUListElement>(null);
 
+  const placement = useListPlacement({ isOpened, listRef });
+
   const handleOutsideClick = useCallback(() => {
     if (isOpened) {
       onOpen(false);
     }
-  }, [isOpened]);
+  }, [isOpened, onOpen]);
 
   useOnOutsideClick({
     ref: listRef,
@@ -97,21 +95,13 @@ export const List = forwardRef<L, ListProps>((props, ref) => {
     [onChange, items]
   );
 
-  useEffect(() => {
-    /**
-     * When opening the list, we transfer focus to it.
-     */
-    if (isOpened) {
-      listRef.current?.focus();
-    }
-  }, [isOpened]);
-
   return (
     <ListPortal container={container}>
       <BaseList
         className={className}
         ref={mergeRefs(listRef, ref)}
         isOpened={isOpened}
+        placement={placement}
         theme={theme}
         onHoveredIndexChange={handleHoveredIndexChange}
         onToggle={handleListToggle}

@@ -29,6 +29,13 @@ export const combinations = multiCartesian<SelectTestProps>([
     useHeightWrapper: [true],
     defaultValue: [{ value: 'option1', option: 'Option 1' }],
   },
+  {
+    isOpenedToTop: [true],
+  },
+  {
+    isOpenedToTop: [true],
+    defaultValue: [{ value: 'option1', option: 'Option 1' }],
+  },
 ]);
 
 for (const props of combinations) {
@@ -37,7 +44,18 @@ for (const props of combinations) {
   test.describe('Select', () => {
     test(
       label,
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
+        if (props.isOpenedToTop) {
+          const viewportSize = page.viewportSize();
+
+          if (viewportSize) {
+            await page.setViewportSize({
+              width: viewportSize.width,
+              height: 150,
+            });
+          }
+        }
+
         await mount(
           <SelectPlaygroundItem appearance={appearance} props={props} />
         );
@@ -49,7 +67,18 @@ for (const props of combinations) {
   test.describe('Select with JSX options', () => {
     test(
       label,
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
+        if (props.isOpenedToTop) {
+          const viewportSize = page.viewportSize();
+
+          if (viewportSize) {
+            await page.setViewportSize({
+              width: viewportSize.width,
+              height: 150,
+            });
+          }
+        }
+
         await mount(
           <SelectPlaygroundItemWithJsxOptions
             appearance={appearance}
