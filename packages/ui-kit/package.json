@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./Grid": "./dist/components/Grid/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
     "./Spinner": "./dist/components/Spinner/index.js",
     "./Link": "./dist/components/Link/index.js",
@@ -64,6 +65,9 @@
   },
   "typesVersions": {
     "*": {
+      "Grid": [
+        "./dist/components/Grid/index.d.ts"
+      ],
       "Switcher": [
         "./dist/components/Switcher/index.d.ts"
       ],
