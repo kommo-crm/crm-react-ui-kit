@@ -7,8 +7,6 @@ import { noop } from '@ui-kit/utils';
 
 import { mergeRefs } from '@ui-kit/lib/utils';
 
-import { CustomScrollClassName } from '@ui-kit/stylesheets/utils/BaseClasses';
-
 import { Text } from '../Text/Text';
 
 import { TextPrimaryTheme } from '../Text/Text.themes';
@@ -56,7 +54,7 @@ export const TextArea = forwardRef<I, TextAreaProps>((props, ref) => {
         <textarea
           style={{ maxHeight }}
           ref={mergeRefs(resizeElementRef, ref)}
-          className={cx(CustomScrollClassName, s.textarea, {
+          className={cx(s.textarea, {
             [s.placeholder_visible]: isPlaceholderVisibleOnFocus,
           })}
           disabled={isDisabled}

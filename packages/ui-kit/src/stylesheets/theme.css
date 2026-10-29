@@ -161,6 +161,19 @@
     --crm-ui-kit-border-radius-default
   );
   --crm-ui-kit-palette-scrollbar-thumb-border-radius: 30px;
+  --crm-ui-kit-palette-scroll-area-track-background: var(
+    --crm-ui-kit-color-light-gray
+  );
+  --crm-ui-kit-palette-scrollbar-fade-top-background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  --crm-ui-kit-palette-scrollbar-fade-bottom-background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
 
   --crm-ui-kit-disabled-opacity: 0.6;
 
@@ -254,6 +267,19 @@
 
   --crm-ui-kit-palette-scrollbar-thumb-background: var(
     --crm-ui-kit-color-cello
+  );
+  --crm-ui-kit-palette-scroll-area-track-background: var(
+    --crm-ui-kit-color-dark-slate-blue
+  );
+  --crm-ui-kit-palette-scrollbar-fade-top-background: linear-gradient(
+    0deg,
+    rgba(21, 48, 67, 0) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  --crm-ui-kit-palette-scrollbar-fade-bottom-background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(21, 48, 67, 0) 100%
   );
 
   --crm-ui-kit-palette-button-classic-hover-background: var(

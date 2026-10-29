@@ -37,6 +37,7 @@
     "./Badge": "./dist/components/Badge/index.js",
     "./Separator": "./dist/components/Separator/index.js",
     "./Ribbon": "./dist/components/Ribbon/index.js",
+    "./ScrollArea": "./dist/components/ScrollArea/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -58,6 +59,7 @@
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/Ribbon.css": "./dist/assets/Ribbon.css",
+    "./assets/ScrollArea.css": "./dist/assets/ScrollArea.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
@@ -137,6 +139,9 @@
       ],
       "Ribbon": [
         "./dist/components/Ribbon/index.d.ts"
+      ],
+      "ScrollArea": [
+        "./dist/components/ScrollArea/index.d.ts"
       ]
     }
   },
@@ -201,6 +206,7 @@
   "dependencies": {
     "@kommo-crm/react-hooks": "1.2.1",
     "@radix-ui/react-dropdown-menu": "2.1.15",
+    "@radix-ui/react-scroll-area": "1.2.9",
     "@react-spring/web": "10.0.1",
     "classnames": "2.5.1",
     "i18next": "24.2.2",

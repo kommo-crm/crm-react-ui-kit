@@ -1,0 +1,31 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as ScrollAreaStories from './ScrollArea.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { ScrollAreaSurfaceTheme, ScrollAreaCompactTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/ScrollArea/Themes" of={ScrollAreaStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## ScrollAreaSurfaceTheme
+
+```jsx
+import { ScrollAreaSurfaceTheme } from '@kommo-crm/crm-react-ui-kit/ScrollArea';
+```
+
+<ThemeVisualization
+  theme={ScrollAreaSurfaceTheme}
+  of={ScrollAreaStories.ScrollAreaSurface}
+/>
+
+## ScrollAreaCompactTheme
+
+```jsx
+import { ScrollAreaCompactTheme } from '@kommo-crm/crm-react-ui-kit/ScrollArea';
+```
+
+<ThemeVisualization
+  theme={ScrollAreaCompactTheme}
+  of={ScrollAreaStories.ScrollAreaCompact}
+/>
