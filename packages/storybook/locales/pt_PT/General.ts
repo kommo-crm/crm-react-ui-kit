@@ -171,9 +171,9 @@ export default {
   'Team': 'Equipe',
   'Automation': 'Automação',
   'Tabs general content':
-    'Nome da conta, idioma, fuso horário e formato de data. Estas configurações se aplicam a todos os usuários da conta.',
+    'Nome, idioma, fuso horário e formato de data do espaço de trabalho. Essas configurações se aplicam a todos os usuários do espaço de trabalho.',
   'Tabs team content':
-    'Usuários, grupos e permissões de acesso. Convide colegas e escolha o que cada um pode ver e editar.',
+    'Gerencie usuários, grupos e permissões de acesso. Convide os membros da equipe e controle o que eles podem ver e editar.',
   'Tabs automation content':
-    'Gatilhos e bots que movem os leads e criam tarefas.',
+    'Gatilhos e bots que movem leads e criam tarefas automaticamente.',
 };

@@ -171,9 +171,9 @@ export default {
   'Team': 'Team',
   'Automation': 'Automation',
   'Tabs general content':
-    'Account name, language, time zone and date format. These settings apply to every user of the account.',
+    'Workspace name, language, time zone, and date format. These settings apply to all users in the workspace.',
   'Tabs team content':
-    'Users, groups and access rights. Invite teammates and choose what each of them can see and edit.',
+    'Manage users, groups, and access permissions. Invite teammates and control what they can see and edit.',
   'Tabs automation content':
-    'Triggers and bots that move leads and create tasks.',
+    'Triggers and bots that automatically move leads and create tasks.',
 };

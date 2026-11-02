@@ -171,9 +171,9 @@ export default {
   'Team': 'Equipo',
   'Automation': 'Automatización',
   'Tabs general content':
-    'Nombre de la cuenta, idioma, zona horaria y formato de fecha. Estos ajustes se aplican a todos los usuarios de la cuenta.',
+    'Nombre, idioma, zona horaria y formato de la fecha del espacio de trabajo. Esta configuración se aplica a todos los usuarios del espacio de trabajo.',
   'Tabs team content':
-    'Usuarios, grupos y permisos de acceso. Invita a tus compañeros y elige qué puede ver y editar cada uno.',
+    'Gestiona usuarios, grupos y permisos de acceso. Invita a tu equipo y controla qué pueden ver y editar.',
   'Tabs automation content':
-    'Disparadores y bots que mueven los leads y crean tareas.',
+    'Disparadores y bots que mueven leads y crean tareas automáticamente.',
 };
