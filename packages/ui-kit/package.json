@@ -37,6 +37,7 @@
     "./Badge": "./dist/components/Badge/index.js",
     "./Separator": "./dist/components/Separator/index.js",
     "./Ribbon": "./dist/components/Ribbon/index.js",
+    "./Flex": "./dist/components/Flex/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -137,6 +138,9 @@
       ],
       "Ribbon": [
         "./dist/components/Ribbon/index.d.ts"
+      ],
+      "Flex": [
+        "./dist/components/Flex/index.d.ts"
       ]
     }
   },
@@ -201,6 +205,7 @@
   "dependencies": {
     "@kommo-crm/react-hooks": "1.2.1",
     "@radix-ui/react-dropdown-menu": "2.1.15",
+    "@radix-ui/react-slot": "1.2.3",
     "@react-spring/web": "10.0.1",
     "classnames": "2.5.1",
     "i18next": "24.2.2",

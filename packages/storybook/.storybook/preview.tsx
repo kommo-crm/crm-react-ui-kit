@@ -39,6 +39,7 @@ const preview: Preview = {
           'Getting Started',
           ['Getting Started', 'Component theming'],
           'Typography',
+          'Layout',
           'Components',
         ],
       },
