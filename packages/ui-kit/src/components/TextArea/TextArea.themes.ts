@@ -22,6 +22,7 @@ type TextAreaThemeKey =
   | '--crm-ui-kit-textarea-disabled-opacity'
   | '--crm-ui-kit-textarea-placeholder-color'
   | '--crm-ui-kit-textarea-background-color'
+  | '--crm-ui-kit-textarea-scrollbar-width'
   | '--crm-ui-kit-textarea-scrollbar-thumb-background'
   | '--crm-ui-kit-textarea-scrollbar-offset';
 
@@ -62,6 +63,7 @@ const TextAreaBaseValues: Omit<
   '--crm-ui-kit-textarea-min-height': '56px',
   '--crm-ui-kit-textarea-border-width': '1px',
   '--crm-ui-kit-textarea-border-style': 'solid',
+  '--crm-ui-kit-textarea-scrollbar-width': '6px',
   '--crm-ui-kit-textarea-scrollbar-thumb-background':
     'var(--crm-ui-kit-palette-scrollbar-thumb-background)',
   '--crm-ui-kit-textarea-scrollbar-offset': '4px',
