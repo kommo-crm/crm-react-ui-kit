@@ -16,12 +16,12 @@ export interface TabsProps
    * The value of the active tab when it is stored by the parent
    * (controlled mode).
    */
-  value?: string;
+  value?: RadixTabsProps['value'];
   /**
    * The value of the tab that is active on the first render when the
    * component stores the active tab itself (uncontrolled mode).
    */
-  defaultValue?: string;
+  defaultValue?: RadixTabsProps['defaultValue'];
   /**
    * Called when another tab is selected. Selecting the active tab
    * does not call it.
@@ -32,7 +32,7 @@ export interface TabsProps
    * right on focus (`automatic`) or by `Enter` / `Space` (`manual`).
    * @default automatic
    */
-  activationMode?: 'automatic' | 'manual';
+  activationMode?: RadixTabsProps['activationMode'];
   /**
    * `Tabs.List` and `Tabs.Content` elements.
    */

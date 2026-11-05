@@ -5,7 +5,7 @@ export interface TriggerProps extends Omit<RadixTabsTriggerProps, 'disabled'> {
   /**
    * The value of the tab.
    */
-  value: string;
+  value: RadixTabsTriggerProps['value'];
   /**
    * Content of the tab.
    */

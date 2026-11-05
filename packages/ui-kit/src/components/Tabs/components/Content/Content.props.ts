@@ -5,7 +5,7 @@ export interface ContentProps extends RadixTabsContentProps {
   /**
    * The value of the tab the panel belongs to.
    */
-  value: string;
+  value: RadixTabsContentProps['value'];
   /**
    * Content of the panel.
    */
