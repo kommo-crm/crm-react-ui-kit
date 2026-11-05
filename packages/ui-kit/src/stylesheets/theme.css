@@ -93,6 +93,7 @@
   --crm-ui-kit-color-mulled-wine: #53455d;
   --crm-ui-kit-color-apple-green: #e3f3ed;
   --crm-ui-kit-color-big-stone: #182a39;
+  --crm-ui-kit-color-alabaster: #fbfbfb;
 
   --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-onyx);
   --crm-ui-kit-palette-text-secondary-light: var(
@@ -161,6 +162,19 @@
     --crm-ui-kit-border-radius-default
   );
   --crm-ui-kit-palette-scrollbar-thumb-border-radius: 30px;
+  --crm-ui-kit-palette-scroll-area-track-background: var(
+    --crm-ui-kit-color-light-gray
+  );
+  --crm-ui-kit-palette-scrollbar-fade-top-background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  --crm-ui-kit-palette-scrollbar-fade-bottom-background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
 
   --crm-ui-kit-disabled-opacity: 0.6;
 
@@ -190,6 +204,10 @@
     0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 
   --crm-ui-kit-palette-spinner-border-color: var(--crm-ui-kit-color-blueberry);
+
+  --crm-ui-kit-palette-select-button-hover-background: var(
+    --crm-ui-kit-color-alabaster
+  );
 
   --crm-ui-kit-palette-badge-color-green: var(--crm-ui-kit-color-deep-sea);
   --crm-ui-kit-palette-badge-background-color-green: var(--crm-ui-kit-color-ottoman);
@@ -254,6 +272,23 @@
 
   --crm-ui-kit-palette-scrollbar-thumb-background: var(
     --crm-ui-kit-color-cello
+  );
+  --crm-ui-kit-palette-scroll-area-track-background: var(
+    --crm-ui-kit-color-dark-slate-blue
+  );
+  --crm-ui-kit-palette-scrollbar-fade-top-background: linear-gradient(
+    0deg,
+    rgba(21, 48, 67, 0) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  --crm-ui-kit-palette-scrollbar-fade-bottom-background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(21, 48, 67, 0) 100%
+  );
+
+  --crm-ui-kit-palette-select-button-hover-background: var(
+    --crm-ui-kit-color-dark-gunmetal
   );
 
   --crm-ui-kit-palette-button-classic-hover-background: var(

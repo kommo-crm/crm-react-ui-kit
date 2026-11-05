@@ -29,8 +29,6 @@
   line-height: var(--crm-ui-kit-textarea-line-height);
   font-weight: var(--crm-ui-kit-textarea-font-weight);
   color: var(--crm-ui-kit-textarea-color);
-  /* Only for Firefox */
-  scrollbar-color: var(--crm-ui-kit-palette-scrollbar-thumb-background) inherit;
 
   outline: none;
   border: none;
@@ -45,6 +43,28 @@
 
   &:not(.placeholder_visible):focus::placeholder {
     color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Transparent border insets the thumb by 1px on every side */
+  &::-webkit-scrollbar-thumb {
+    border: 1px solid transparent;
+    border-radius: var(--crm-ui-kit-palette-scrollbar-thumb-border-radius);
+    background: var(--crm-ui-kit-textarea-scrollbar-thumb-background);
+    background-clip: padding-box;
+  }
+
+  /* Only for Firefox: Chrome 121+ ignores ::-webkit-scrollbar once scrollbar-color is set */
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-color: var(--crm-ui-kit-textarea-scrollbar-thumb-background)
+      transparent;
   }
 
   &:disabled {

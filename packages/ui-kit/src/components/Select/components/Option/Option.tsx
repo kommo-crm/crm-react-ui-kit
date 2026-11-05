@@ -10,7 +10,7 @@ import { OptionTextTheme } from './Option.theme';
 
 import s from './Option.module.css';
 
-const DISPLAY_NAME = 'Select.Value';
+const DISPLAY_NAME = 'Select.Option';
 
 type S = HTMLSpanElement;
 

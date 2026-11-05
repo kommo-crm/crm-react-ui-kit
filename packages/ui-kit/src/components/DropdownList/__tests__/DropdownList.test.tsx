@@ -1,39 +1,46 @@
-import React, { useRef } from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import React, { createRef } from 'react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
+import { noop } from '@ui-kit/utils';
 
 import { DropdownList, DropdownListTheme, DropdownListProps } from '..';
 
-const DropdownListWithRef = (props: DropdownListProps) => {
-  const listRef = useRef<HTMLUListElement>(null);
+/**
+ * jsdom has no ResizeObserver, Radix ScrollArea inside the list needs one.
+ */
+class ResizeObserverMock {
+  observe = noop;
 
-  return <DropdownList {...props} ref={listRef} />;
-};
+  unobserve = noop;
 
-const renderDropdownList = (props: Partial<DropdownListProps>) => {
+  disconnect = noop;
+}
+
+beforeAll(() => {
+  Object.defineProperty(window, 'ResizeObserver', {
+    configurable: true,
+    value: ResizeObserverMock,
+  });
+});
+
+const renderDropdownList = (
+  props: Partial<DropdownListProps> & React.RefAttributes<HTMLDivElement>
+) => {
   return render(
-    <DropdownListWithRef
-      role="list"
-      theme={DropdownListTheme}
-      isOpened
-      {...props}
-    >
-      <li>Item 1</li>
-      <li>Item 2</li>
-      <li>Item 3</li>
-    </DropdownListWithRef>
+    <DropdownList theme={DropdownListTheme} isOpened {...props}>
+      <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+      </ul>
+    </DropdownList>
   );
 };
 
 describe('DropdownList', () => {
   it('should be defined', () => {
     expect(DropdownList).toBeDefined();
-  });
-
-  it('should render as a list element', () => {
-    renderDropdownList({});
-
-    expect(screen.getByRole('list')).toBeInTheDocument();
   });
 
   it('should render children correctly', () => {
@@ -44,99 +51,36 @@ describe('DropdownList', () => {
     expect(screen.getByText('Item 3')).toBeInTheDocument();
   });
 
-  it('should apply custom className', () => {
-    const customClass = 'my-custom-class';
+  it('should apply custom className to the list box', () => {
+    const ref = createRef<HTMLDivElement>();
 
-    renderDropdownList({ className: customClass });
+    renderDropdownList({ className: 'my-custom-class', ref });
 
-    const element = screen.getByRole('list');
-
-    expect(element).toHaveClass(customClass);
+    expect(ref.current).toHaveClass('my-custom-class');
   });
 
-  it('should call onScroll callback when scrolled', () => {
-    const onScroll = jest.fn();
+  it('should render the children inside the scrollable viewport', () => {
+    const viewportRef = createRef<HTMLDivElement>();
 
-    renderDropdownList({ onScroll });
+    renderDropdownList({ viewportRef });
 
-    const element = screen.getByRole('list');
-
-    fireEvent.scroll(element);
-
-    expect(onScroll).toHaveBeenCalled();
+    expect(viewportRef.current).toContainElement(screen.getByText('Item 1'));
   });
 
-  it('should handle keyboard navigation', () => {
-    const onSelect = jest.fn();
-    const onToggle = jest.fn();
+  it('should report the scroll visibility when tracked', () => {
+    const onScrollVisibilityChange = jest.fn();
 
-    renderDropdownList({ onSelect, onToggle });
+    renderDropdownList({ onScrollVisibilityChange });
 
-    const element = screen.getByRole('list');
-
-    element.focus();
-
-    fireEvent.keyDown(element, { code: 'Enter' });
-
-    expect(onSelect).toHaveBeenCalledTimes(1);
-
-    fireEvent.keyDown(element, { code: 'Escape' });
-
-    expect(onToggle).toHaveBeenCalledTimes(1);
-  });
-
-  it('should call onHoveredIndexChange when hoveredIndex changes', () => {
-    const onHoveredIndexChange = jest.fn();
-
-    renderDropdownList({ onHoveredIndexChange });
-
-    const element = screen.getByRole('list');
-
-    element.focus();
-
-    act(() => {
-      fireEvent.keyDown(element, { code: 'ArrowDown' });
+    expect(onScrollVisibilityChange).toHaveBeenCalledWith({
+      isContentClippedAtTop: false,
+      isContentClippedAtBottom: false,
     });
-
-    expect(onHoveredIndexChange).toHaveBeenCalledWith(1);
-
-    act(() => {
-      fireEvent.keyDown(element, { code: 'ArrowUp' });
-    });
-
-    expect(onHoveredIndexChange).toHaveBeenCalledWith(1);
   });
 
-  it('should call onSelect with the correct index', () => {
-    const onSelect = jest.fn();
+  it('should render nothing when isOpened is false', () => {
+    renderDropdownList({ isOpened: false });
 
-    renderDropdownList({ onSelect });
-
-    const element = screen.getByRole('list');
-
-    element.focus();
-
-    fireEvent.keyDown(element, { code: 'ArrowDown' });
-    fireEvent.keyDown(element, { code: 'ArrowDown' });
-    fireEvent.keyDown(element, { code: 'Enter' });
-
-    expect(onSelect).toHaveBeenCalledWith(2);
-
-    fireEvent.keyDown(element, { code: 'ArrowUp' });
-    fireEvent.keyDown(element, { code: 'ArrowUp' });
-    fireEvent.keyDown(element, { code: 'Enter' });
-
-    expect(onSelect).toHaveBeenCalledWith(0);
-  });
-
-  it('should not apply the opened styles when isOpened is false', () => {
-    const onSelect = jest.fn();
-    const onHoveredIndexChange = jest.fn();
-
-    renderDropdownList({ isOpened: false, onSelect, onHoveredIndexChange });
-
-    const element = screen.queryByRole('list');
-
-    expect(element).not.toBeInTheDocument();
+    expect(screen.queryByText('Item 1')).not.toBeInTheDocument();
   });
 });

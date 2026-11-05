@@ -6,3 +6,7 @@
 .opened {
   z-index: var(--crm-ui-kit-select-opened-z-index);
 }
+
+.invalid_description {
+  margin-top: var(--crm-ui-kit-select-invalid-description-offset);
+}

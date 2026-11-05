@@ -6,3 +6,7 @@
 
   margin: var(--crm-ui-kit-select-margin);
 }
+
+.invalid {
+  color: var(--crm-ui-kit-select-arrow-error-color);
+}

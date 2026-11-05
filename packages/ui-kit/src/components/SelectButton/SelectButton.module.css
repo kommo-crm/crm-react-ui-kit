@@ -26,14 +26,20 @@
 
   outline: none;
 
-  &:focus-visible {
+  &:hover:not(:disabled) {
+    background: var(--crm-ui-kit-select-button-hover-background-color);
+  }
+
+  /* Highlighted on click too, not only on Tab */
+  &:focus {
     border: var(--crm-ui-kit-select-button-focus-visible-border);
   }
 }
 
-.invalid {
+/* Stays red while focused, together with the arrow */
+.invalid,
+.invalid:focus {
   border: var(--crm-ui-kit-select-button-error-border);
-  color: var(--crm-ui-kit-select-button-error-color);
 }
 
 .disabled {
