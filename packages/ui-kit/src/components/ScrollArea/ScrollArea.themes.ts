@@ -27,9 +27,9 @@ const ScrollAreaBaseThemeValues: Omit<
     'var(--crm-ui-kit-palette-scrollbar-thumb-border-radius)',
   '--crm-ui-kit-scroll-area-fade-height': '10px',
   '--crm-ui-kit-scroll-area-fade-top-background':
-    'var(--crm-ui-kit-palette-scrollbar-fade-top-background)',
+    'var(--crm-ui-kit-palette-scroll-area-fade-top-background)',
   '--crm-ui-kit-scroll-area-fade-bottom-background':
-    'var(--crm-ui-kit-palette-scrollbar-fade-bottom-background)',
+    'var(--crm-ui-kit-palette-scroll-area-fade-bottom-background)',
 };
 
 export const ScrollAreaSurfaceTheme: ScrollAreaThemeType = {
