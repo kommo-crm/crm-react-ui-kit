@@ -1,65 +1,49 @@
-import React, { forwardRef, MutableRefObject } from 'react';
+import React, { forwardRef } from 'react';
 import cx from 'classnames';
-import { useKeyboardListNavigation } from '@kommo-crm/react-hooks';
 
 import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import { CustomScrollClassName } from '@ui-kit/stylesheets/utils/BaseClasses';
-
-import { noop } from '@ui-kit/utils';
+import {
+  ScrollArea,
+  ScrollAreaSurfaceTheme,
+} from '@ui-kit/components/ScrollArea';
 
 import { DropdownListProps } from './DropdownList.props';
 import { DropdownListThemeType } from './DropdownList.theme';
 
 import s from './DropdownList.module.css';
 
-type L = HTMLUListElement;
+type D = HTMLDivElement;
 
-export const DropdownList = forwardRef<L, DropdownListProps>((props, ref) => {
+export const DropdownList = forwardRef<D, DropdownListProps>((props, ref) => {
   const {
     className = '',
     theme,
     children,
     isOpened,
-    hoveredIndex = 0,
-    onSelect = noop,
-    onToggle = noop,
-    onHoveredIndexChange = noop,
+    viewportRef,
+    onScrollVisibilityChange,
     ...rest
   } = props;
 
   const themeClassName = useThemeClassName<DropdownListThemeType>(theme);
 
-  const { onKeyDown } = useKeyboardListNavigation({
-    itemsLength: React.Children.toArray(children).length,
-    onSelect,
-    onToggle,
-    isOpened,
-    listRef: ref as MutableRefObject<HTMLUListElement>,
-    hoveredIndex,
-    onHoveredIndexChange,
-  });
-
   return (
     isOpened && (
-      <ul
-        onKeyDown={onKeyDown}
+      <div
         ref={ref}
-        tabIndex={0}
-        className={cx(
-          CustomScrollClassName,
-          s.list,
-          themeClassName,
-          {
-            [s.opened]: isOpened,
-          },
-          className
-        )}
-        role="list"
+        className={cx(s.list, themeClassName, className)}
         {...rest}
       >
-        {children}
-      </ul>
+        <ScrollArea
+          ref={viewportRef}
+          className={s.scroll_area}
+          theme={ScrollAreaSurfaceTheme}
+          onScrollVisibilityChange={onScrollVisibilityChange}
+        >
+          {children}
+        </ScrollArea>
+      </div>
     )
   );
 });

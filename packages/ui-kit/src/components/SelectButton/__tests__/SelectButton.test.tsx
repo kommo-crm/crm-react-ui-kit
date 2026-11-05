@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { SelectButton, SelectButtonProps, SelectButtonLightTheme } from '..';
+import { SelectButton, SelectButtonProps, SelectButtonTheme } from '..';
 
 const renderSelectButton = (props: Partial<SelectButtonProps>) => {
   const handleToggle = jest.fn();
@@ -10,7 +10,7 @@ const renderSelectButton = (props: Partial<SelectButtonProps>) => {
   return render(
     <SelectButton
       role="selectButton"
-      theme={SelectButtonLightTheme}
+      theme={SelectButtonTheme}
       onToggle={handleToggle}
       {...props}
     />

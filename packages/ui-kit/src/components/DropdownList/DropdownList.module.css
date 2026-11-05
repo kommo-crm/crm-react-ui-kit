@@ -1,33 +1,33 @@
+/*
+ * Position, --crm-ui-kit-list-anchor-width and
+ * --crm-ui-kit-list-available-height are set inline by the consuming component.
+ */
 .list {
-  display: none;
-  z-index: 'auto';
-  -webkit-overflow-scrolling: touch;
-
-  padding: 0;
-  margin: 0;
-  color: var(--crm-ui-kit-list-color);
-}
-
-.opened {
   position: absolute;
-  top: var(--crm-ui-kit-list-top);
-  left: var(--crm-ui-kit-list-left);
-  overflow: auto;
+  z-index: var(--crm-ui-kit-list-z-index);
 
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: var(--crm-ui-kit-list-width);
-  max-height: var(--crm-ui-kit-list-max-height);
+  max-height: min(
+    var(--crm-ui-kit-list-max-height),
+    var(--crm-ui-kit-list-available-height, var(--crm-ui-kit-list-max-height))
+  );
   padding-right: var(--crm-ui-kit-list-padding-right);
   margin-right: var(--crm-ui-kit-list-margin-right);
-  box-sizing: content-box;
+  box-sizing: border-box;
+  overflow: hidden;
 
+  color: var(--crm-ui-kit-list-color);
   background-color: var(--crm-ui-kit-list-background-color);
   border-width: var(--crm-ui-kit-list-border-width);
   border-style: var(--crm-ui-kit-list-border-style);
   border-color: var(--crm-ui-kit-list-border-color);
-
   border-radius: var(--crm-ui-kit-list-border-radius);
   outline: var(--crm-ui-kit-list-outline);
+}
 
-  z-index: var(--crm-ui-kit-list-z-index);
+/* Shrinks to the list max-height, the viewport inside scrolls the rest */
+.scroll_area {
+  min-height: 0;
 }

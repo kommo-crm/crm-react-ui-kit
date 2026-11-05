@@ -1,0 +1,5 @@
+.label {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: 6px;
+}

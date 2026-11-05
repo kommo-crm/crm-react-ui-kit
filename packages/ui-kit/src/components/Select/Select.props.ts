@@ -9,6 +9,7 @@ import { ButtonProps } from './components/Button/Button';
 import { SelectRootThemeType } from './Select.theme';
 import { IconProps } from './components/Icon/Icon.props';
 import { OptionProps } from './components/Option/Option.props';
+import { LabelProps } from './components/Label/Label.props';
 
 type BaseSelectProps = {
   /**
@@ -52,6 +53,12 @@ export type SelectProps = {
    * Flag whether the select is valid.
    */
   isInvalid?: boolean;
+  /**
+   * Error text shown under the button.
+   *
+   * Used with `isInvalid: true`.
+   */
+  invalidDescription?: string;
   /**
    * Whether the Select is blocked.
    */
@@ -99,6 +106,15 @@ export type SelectContextProps = BaseSelectProps & {
    * Flag whether the list is open.
    */
   isOpened: boolean;
+  /**
+   * Element the list is positioned against: the button,
+   * or the root when there is no button.
+   */
+  anchorElement: HTMLElement | null;
+  /**
+   * Registers the button element the list is positioned against.
+   */
+  onButtonElementChange: (element: HTMLButtonElement | null) => void;
 };
 
 export type SelectType = React.ForwardRefExoticComponent<
@@ -138,4 +154,8 @@ export type SelectType = React.ForwardRefExoticComponent<
    * Option component.
    */
   Option: React.ForwardRefExoticComponent<OptionProps>;
+  /**
+   * Label component, shown before the value inside the button.
+   */
+  Label: React.ForwardRefExoticComponent<LabelProps>;
 };

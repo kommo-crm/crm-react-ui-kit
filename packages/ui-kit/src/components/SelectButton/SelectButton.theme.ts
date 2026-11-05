@@ -1,5 +1,6 @@
 type SelectButtonThemeKey =
   | '--crm-ui-kit-select-button-background-color'
+  | '--crm-ui-kit-select-button-hover-background-color'
   | '--crm-ui-kit-select-button-padding'
   | '--crm-ui-kit-select-button-height'
   | '--crm-ui-kit-select-button-z-index'
@@ -13,7 +14,6 @@ type SelectButtonThemeKey =
   | '--crm-ui-kit-select-button-disabled-border-opacity'
   | '--crm-ui-kit-select-button-disabled-border-color'
   | '--crm-ui-kit-select-button-error-border'
-  | '--crm-ui-kit-select-button-error-color'
   | '--crm-ui-kit-select-button-focus-visible-border'
   | '--crm-ui-kit-select-button-color';
 
@@ -33,7 +33,8 @@ const SelectButtonBaseValues: Omit<
   '--crm-ui-kit-select-button-width': '100%',
   '--crm-ui-kit-select-button-background-color':
     'var(--crm-ui-kit-palette-background-primary)',
-  '--crm-ui-kit-select-button-error-color': 'var(--crm-ui-kit-color-error)',
+  '--crm-ui-kit-select-button-hover-background-color':
+    'var(--crm-ui-kit-palette-select-button-hover-background)',
   '--crm-ui-kit-select-button-border-radius':
     'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-select-button-padding': '0px 7px 0px 9px',
@@ -43,11 +44,11 @@ const SelectButtonBaseValues: Omit<
   '--crm-ui-kit-select-button-font-size': 'var(--crm-ui-kit-base-font-size)',
   '--crm-ui-kit-select-button-line-height': '20px',
   '--crm-ui-kit-select-button-focus-visible-border':
-    '1px solid var(--crm-ui-kit-palette-border-active)',
+    'var(--crm-ui-kit-select-button-border-width) solid var(--crm-ui-kit-palette-focus-visible-color)',
   '--crm-ui-kit-select-button-color': 'var(--crm-ui-kit-palette-text-primary)',
 };
 
-export const SelectButtonLightTheme: SelectButtonThemeType = {
+export const SelectButtonTheme: SelectButtonThemeType = {
   ...SelectButtonBaseValues,
 
   '--crm-ui-kit-select-button-border':
@@ -60,15 +61,15 @@ export const SelectButtonLightTheme: SelectButtonThemeType = {
     'var(--crm-ui-kit-select-button-border-width) solid var(--crm-ui-kit-palette-border-primary)',
 };
 
-export const SelectButtonDarkTheme: SelectButtonThemeType = {
-  ...SelectButtonBaseValues,
+/**
+ * @deprecated This theme will be removed in a future major version.
+ * Use {@link SelectButtonTheme} instead.
+ */
+export const SelectButtonLightTheme = SelectButtonTheme;
 
-  '--crm-ui-kit-select-button-border':
-    'var(--crm-ui-kit-select-button-border-width) solid var(--crm-ui-kit-palette-border-primary)',
-
-  '--crm-ui-kit-select-button-error-border':
-    'var(--crm-ui-kit-select-button-border-width) solid var(--crm-ui-kit-palette-border-error)',
-
-  '--crm-ui-kit-select-button-disabled-border':
-    'var(--crm-ui-kit-select-button-border-width) solid var(--crm-ui-kit-palette-border-primary)',
-};
+/**
+ * @deprecated This theme will be removed in a future major version.
+ * Use {@link SelectButtonTheme} instead: the button has one border
+ * in both color themes.
+ */
+export const SelectButtonDarkTheme = SelectButtonTheme;

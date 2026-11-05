@@ -1,0 +1,1 @@
+export { isSelectPrevented } from './isSelectPrevented';

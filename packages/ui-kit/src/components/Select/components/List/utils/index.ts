@@ -1,0 +1,1 @@
+export { getNextIndex } from './getNextIndex';

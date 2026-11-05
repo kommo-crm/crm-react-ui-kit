@@ -1,15 +1,16 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, Ref } from 'react';
+
+import { type ScrollAreaVisibilityState } from '@ui-kit/components/ScrollArea';
 
 import { DropdownListThemeType } from './DropdownList.theme';
 
-export interface DropdownListProps
-  extends Omit<HTMLAttributes<HTMLUListElement>, 'onSelect'> {
+export interface DropdownListProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Object with CSS theme properties.
    */
   theme: DropdownListThemeType;
   /**
-   * Child elements that will be displayed inside the component.
+   * Content of the list, scrolled inside the component.
    */
   children: React.ReactNode;
   /**
@@ -17,27 +18,15 @@ export interface DropdownListProps
    */
   className?: string;
   /**
-   * Custom CSS class for a list item.
-   */
-  itemClassName?: string;
-  /**
    * Flag indicates whether the component is in the open state.
    */
   isOpened?: boolean;
   /**
-   * A callback that works on selecting a list item.
+   * Ref to the scrollable viewport of the list.
    */
-  onSelect?: (index: number) => void;
+  viewportRef?: Ref<HTMLDivElement>;
   /**
-   * A callback that works on opening/closing a component.
+   * Called when the content becomes clipped or unclipped at the top or bottom.
    */
-  onToggle?: (toggle: boolean) => void;
-  /**
-   * A callback that works on changing the active element in the list.
-   */
-  onHoveredIndexChange?: (index: number) => void;
-  /**
-   * Index of the hovered element.
-   */
-  hoveredIndex?: number;
+  onScrollVisibilityChange?: (state: ScrollAreaVisibilityState) => void;
 }

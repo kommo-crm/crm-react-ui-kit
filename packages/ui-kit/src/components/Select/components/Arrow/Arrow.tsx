@@ -6,6 +6,8 @@ import DropdownArrowIcon from '@ui-kit/icons/dropdownArrow.svg';
 
 import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
+import { useSelectContext } from '../../Select.context';
+
 import { ArrowProps } from './Arrow.props';
 
 import s from './Arrow.module.css';
@@ -26,8 +28,18 @@ export const Arrow = forwardRef<S, ArrowProps>((props, ref) => {
 
   const themeClassName = useThemeClassName(theme);
 
+  const { isInvalid } = useSelectContext(DISPLAY_NAME);
+
   return (
-    <span className={cx(s.wrapper, className, themeClassName)} ref={ref}>
+    <span
+      className={cx(
+        s.wrapper,
+        { [s.invalid]: isInvalid },
+        className,
+        themeClassName
+      )}
+      ref={ref}
+    >
       {children}
     </span>
   );

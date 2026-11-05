@@ -1,4 +1,10 @@
-import React, { forwardRef, useCallback, useEffect, useRef } from 'react';
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
 import {
   SelectButton,
@@ -18,14 +24,29 @@ type I = HTMLButtonElement;
 
 export const Button = forwardRef<I, ButtonProps>((props, ref) => {
   const { theme, ...rest } = props;
-  const { isDisabled, onOpen, isOpened, isInvalid, value } =
-    useSelectContext(DISPLAY_NAME);
+  const {
+    isDisabled,
+    onOpen,
+    isOpened,
+    isInvalid,
+    value,
+    onButtonElementChange,
+  } = useSelectContext(DISPLAY_NAME);
 
   const selectButtonRef = useRef<HTMLButtonElement>(null);
 
+  /**
+   * The button is registered as the anchor of the list.
+   * A new merged callback on every render would reattach the refs.
+   */
+  const mergedRef = useMemo(
+    () => mergeRefs<I>(selectButtonRef, onButtonElementChange, ref),
+    [onButtonElementChange, ref]
+  );
+
   const handleToggle = useCallback(() => {
     onOpen(!isOpened);
-  }, [onOpen]);
+  }, [onOpen, isOpened]);
 
   useEffect(() => {
     return () => {
@@ -48,7 +69,7 @@ export const Button = forwardRef<I, ButtonProps>((props, ref) => {
 
   return (
     <SelectButton
-      ref={mergeRefs(selectButtonRef, ref)}
+      ref={mergedRef}
       onToggle={handleToggle}
       title={title}
       theme={theme}

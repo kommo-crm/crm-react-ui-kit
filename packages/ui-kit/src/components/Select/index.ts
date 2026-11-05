@@ -19,6 +19,7 @@ export {
   type DropdownListThemeType as SelectListThemeType,
 } from '../DropdownList';
 export {
+  SelectButtonTheme,
   SelectButtonLightTheme,
   SelectButtonDarkTheme,
   type SelectButtonThemeType,
