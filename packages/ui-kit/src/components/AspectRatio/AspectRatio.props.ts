@@ -9,7 +9,7 @@ export interface AspectRatioProps
    *
    * @default 1
    */
-  ratio?: number;
+  ratio?: RadixAspectRatioProps['ratio'];
   /**
    * Renders the single child element as the content element instead of
    * its own one. Classes, `style`, handlers and `ref` are merged with
@@ -19,7 +19,7 @@ export interface AspectRatioProps
    *
    * @default false
    */
-  asChild?: boolean;
+  asChild?: RadixAspectRatioProps['asChild'];
   /**
    * Content stretched to the block. With `asChild` — a single React element
    * that becomes the content element.
