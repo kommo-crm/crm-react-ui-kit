@@ -230,6 +230,9 @@
     var(--crm-ui-kit-color-light-gray) 18%,
     var(--crm-ui-kit-color-platinum) 33%
   );
+
+  --crm-ui-kit-palette-progress-bar-track-color: var(--crm-ui-kit-color-cultured);
+  --crm-ui-kit-palette-progress-bar-fill-color: var(--crm-ui-kit-color-blueberry);
 }
 
 :root[data-crm-ui-kit-theme='alternative'] {
@@ -340,5 +343,12 @@
     var(--crm-ui-kit-color-dark-slate-gray) 8%,
     var(--crm-ui-kit-color-petrol-blue) 18%,
     var(--crm-ui-kit-color-dark-slate-gray) 33%
+  );
+
+  --crm-ui-kit-palette-progress-bar-track-color: var(
+    --crm-ui-kit-color-dark-gunmetal
+  );
+  --crm-ui-kit-palette-progress-bar-fill-color: var(
+    --crm-ui-kit-color-metallic-blue
   );
 }

@@ -10,6 +10,14 @@ type TextArea = Omit<
 
 export interface TextAreaProps extends TextArea {
   /**
+   * Initial height of the field in lines of text.
+   *
+   * Positive integer. Values less than 1 are ignored and the default is used.
+   * There is no upper limit, use `maxHeight` to cap the height.
+   * @default 2
+   */
+  rows?: number;
+  /**
    * Valid value is entered or not.
    *
    * If true the appropriate styles will be applied.

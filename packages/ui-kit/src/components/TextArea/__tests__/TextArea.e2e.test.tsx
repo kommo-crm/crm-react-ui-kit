@@ -27,6 +27,14 @@ export const combinations = multiCartesian<TextAreaTestProps>([
     value: ['Jhon', undefined],
     isDisabled: [true, false],
   },
+  {
+    rows: [1, 2, 4],
+    placeholder: ['Name'],
+  },
+  {
+    rows: [2],
+    value: ['Line 1\nLine 2\nLine 3\nLine 4'],
+  },
 ]);
 
 const scrollCombinations = multiCartesian<TextAreaTestProps>([

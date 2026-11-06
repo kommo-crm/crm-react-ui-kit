@@ -1,0 +1,20 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as ProgressBarStories from './ProgressBar.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { ProgressBarPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/ProgressBar/Themes" of={ProgressBarStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## ProgressBarPrimaryTheme
+
+```jsx
+import { ProgressBarPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/ProgressBar';
+```
+
+<ThemeVisualization
+  theme={ProgressBarPrimaryTheme}
+  of={ProgressBarStories.ProgressBarPrimary}
+/>

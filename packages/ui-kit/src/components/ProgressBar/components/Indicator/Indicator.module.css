@@ -1,0 +1,6 @@
+.indicator {
+  width: var(--crm-ui-kit-progress-bar-indicator-width);
+  height: 100%;
+  border-radius: var(--crm-ui-kit-progress-bar-border-radius);
+  background: var(--crm-ui-kit-progress-bar-indicator-background);
+}

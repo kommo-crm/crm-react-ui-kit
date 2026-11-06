@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.24.0",
+  "version": "1.25.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -14,6 +14,7 @@
     },
     "./ScrollArea": "./dist/components/ScrollArea/index.js",
     "./AspectRatio": "./dist/components/AspectRatio/index.js",
+    "./ProgressBar": "./dist/components/ProgressBar/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
     "./Spinner": "./dist/components/Spinner/index.js",
     "./Link": "./dist/components/Link/index.js",
@@ -43,6 +44,7 @@
     "./Flex": "./dist/components/Flex/index.js",
     "./Skeleton": "./dist/components/Skeleton/index.js",
     "./assets/ScrollArea.css": "./dist/assets/ScrollArea.css",
+    "./assets/ProgressBar.css": "./dist/assets/ProgressBar.css",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -76,6 +78,9 @@
       ],
       "AspectRatio": [
         "./dist/components/AspectRatio/index.d.ts"
+      ],
+      "ProgressBar": [
+        "./dist/components/ProgressBar/index.d.ts"
       ],
       "Switcher": [
         "./dist/components/Switcher/index.d.ts"
@@ -225,6 +230,7 @@
     "@kommo-crm/react-hooks": "1.2.1",
     "@radix-ui/react-aspect-ratio": "1.1.7",
     "@radix-ui/react-dropdown-menu": "2.1.15",
+    "@radix-ui/react-progress": "1.1.7",
     "@radix-ui/react-scroll-area": "1.2.9",
     "@radix-ui/react-slot": "1.2.3",
     "@radix-ui/react-tabs": "1.1.12",
