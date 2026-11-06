@@ -1,3 +1,5 @@
+import { TextPrimaryTheme, type TextTheme } from '@ui-kit/components/Text';
+
 type TextAreaThemeKey =
   | '--crm-ui-kit-textarea-font-size'
   | '--crm-ui-kit-textarea-font-weight'
@@ -51,7 +53,7 @@ const TextAreaBaseValues: Omit<
   '--crm-ui-kit-textarea-disabled-opacity': '0.6',
   '--crm-ui-kit-textarea-font-weight': '400',
   '--crm-ui-kit-textarea-font-size': 'var(--crm-ui-kit-base-font-size)',
-  '--crm-ui-kit-textarea-line-height': '19px',
+  '--crm-ui-kit-textarea-line-height': '20px',
   '--crm-ui-kit-textarea-padding-top': '8px',
   '--crm-ui-kit-textarea-padding-horizontal': '9px',
   '--crm-ui-kit-textarea-padding-bottom': '7px',
@@ -59,12 +61,13 @@ const TextAreaBaseValues: Omit<
     'var(--crm-ui-kit-border-radius-default)',
   '--crm-ui-kit-textarea-spacing': '4px',
   '--crm-ui-kit-textarea-width': '100%',
-  '--crm-ui-kit-textarea-min-height': '56px',
+  '--crm-ui-kit-textarea-min-height':
+    'calc(var(--crm-ui-kit-textarea-line-height) + var(--crm-ui-kit-textarea-padding-top) + var(--crm-ui-kit-textarea-padding-bottom))',
   '--crm-ui-kit-textarea-border-width': '1px',
   '--crm-ui-kit-textarea-border-style': 'solid',
   '--crm-ui-kit-textarea-scrollbar-thumb-background':
     'var(--crm-ui-kit-palette-scrollbar-thumb-background)',
-  '--crm-ui-kit-textarea-scrollbar-offset': '4px',
+  '--crm-ui-kit-textarea-scrollbar-offset': '1px',
 };
 
 export const TextareaLightTheme: TextAreaTheme = {
@@ -77,4 +80,9 @@ export const TextareaDarkTheme: TextAreaTheme = {
   ...TextAreaBaseValues,
   '--crm-ui-kit-textarea-border-color':
     'var(--crm-ui-kit-palette-border-primary)',
+};
+
+export const TextAreaInvalidTextTheme: TextTheme = {
+  ...TextPrimaryTheme,
+  '--crm-ui-kit-text-color': 'var(--crm-ui-kit-textarea-error-color)',
 };

@@ -67,7 +67,6 @@
 }
 
 .invalid_description {
-  color: var(--crm-ui-kit-textarea-error-color);
   margin-top: var(--crm-ui-kit-textarea-spacing);
 }
 

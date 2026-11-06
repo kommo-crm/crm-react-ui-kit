@@ -23,6 +23,14 @@ export const combinations = multiCartesian<TextAreaProps>([
     value: ['Jhon', undefined],
     isDisabled: [true, false],
   },
+  {
+    rows: [1, 2, 4],
+    placeholder: ['Name'],
+  },
+  {
+    rows: [2],
+    value: ['Line 1\nLine 2\nLine 3\nLine 4'],
+  },
 ]);
 
 for (const props of combinations) {

@@ -11,12 +11,13 @@ import { CustomScrollClassName } from '@ui-kit/stylesheets/utils/BaseClasses';
 
 import { Text } from '../Text/Text';
 
-import { TextPrimaryTheme } from '../Text/Text.themes';
-
 import { useAutosizeTextarea } from './hooks';
 
 import { type TextAreaProps } from './TextArea.props';
-import { type TextAreaTheme } from './TextArea.themes';
+import {
+  TextAreaInvalidTextTheme,
+  type TextAreaTheme,
+} from './TextArea.themes';
 
 import s from './TextArea.module.css';
 
@@ -69,7 +70,7 @@ export const TextArea = forwardRef<I, TextAreaProps>((props, ref) => {
         <Text
           className={cx(s.invalid_description)}
           size="m"
-          theme={TextPrimaryTheme}
+          theme={TextAreaInvalidTextTheme}
         >
           {invalidDescription}
         </Text>
