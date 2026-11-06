@@ -8,7 +8,7 @@ type RadixProgressRootProps = ComponentPropsWithoutRef<
 >;
 
 export interface ProgressBarRootProps
-  extends Omit<RadixProgressRootProps, 'value' | 'max' | 'getValueLabel'> {
+  extends Omit<RadixProgressRootProps, 'value'> {
   /**
    * Object with CSS theme properties.
    */
@@ -26,12 +26,12 @@ export interface ProgressBarRootProps
    *
    * @default 100
    */
-  max?: number;
+  max?: RadixProgressRootProps['max'];
   /**
    * Returns the text read by assistive technologies (`aria-valuetext`).
    * By default it's the rounded percentage, e.g. `"42%"`.
    */
-  getValueLabel?: (value: number, max: number) => string;
+  getValueLabel?: RadixProgressRootProps['getValueLabel'];
   /**
    * `ProgressBar.Indicator` that renders the filled part of the track.
    */
