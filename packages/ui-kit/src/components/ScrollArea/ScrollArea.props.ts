@@ -22,7 +22,7 @@ export interface ScrollAreaProps extends NativeViewportAttributes {
   /**
    * Object with CSS theme properties.
    */
-  theme: ScrollAreaThemeType;
+  'theme': ScrollAreaThemeType;
   /**
    * When the scrollbar is visible:
    * `auto` - always, while the content overflows the area,
@@ -32,7 +32,7 @@ export interface ScrollAreaProps extends NativeViewportAttributes {
    * `always` - always, even when the content fits the area.
    * @default auto
    */
-  type?: 'auto' | 'scroll' | 'hover' | 'always';
+  'type'?: 'auto' | 'scroll' | 'hover' | 'always';
   /**
    * Delay in ms before the scrollbar hides after scrolling stops
    * or the pointer leaves the area.
@@ -40,31 +40,46 @@ export interface ScrollAreaProps extends NativeViewportAttributes {
    * Used with `type: 'scroll'` and `type: 'hover'`.
    * @default 600
    */
-  scrollHideDelay?: number;
+  'scrollHideDelay'?: number;
   /**
    * The area scrolls without a visible scrollbar.
    * @default false
    */
-  isScrollbarHidden?: boolean;
+  'isScrollbarHidden'?: boolean;
   /**
    * Shows shadows at the edges beyond which there is more content.
    * @default false
    */
-  isFadeEnabled?: boolean;
+  'isFadeEnabled'?: boolean;
   /**
    * Called when the content becomes clipped or unclipped at the top or bottom.
    */
-  onScrollVisibilityChange?: (state: ScrollAreaVisibilityState) => void;
+  'onScrollVisibilityChange'?: (state: ScrollAreaVisibilityState) => void;
+  /**
+   * Pass `0` when the content has no focusable elements:
+   * otherwise Safari does not let the user scroll the area with the keyboard.
+   * Use together with `role="region"` and `aria-label`.
+   */
+  'tabIndex'?: number;
+  /**
+   * Pass `region` together with `tabIndex={0}`,
+   * so screen readers announce the focused area.
+   */
+  'role'?: React.AriaRole;
+  /**
+   * Accessible name of the area. Required when `role="region"` is set.
+   */
+  'aria-label'?: string;
   /**
    * Class of the root element. Sets the size of the area: `height` or `max-height`.
    */
-  className?: string;
+  'className'?: string;
   /**
    * Style of the root element.
    */
-  style?: React.CSSProperties;
+  'style'?: React.CSSProperties;
   /**
    * Content of the area.
    */
-  children: React.ReactNode;
+  'children': React.ReactNode;
 }
