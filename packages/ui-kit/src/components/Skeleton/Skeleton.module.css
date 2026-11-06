@@ -1,0 +1,62 @@
+@keyframes skeletonAnimation {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(800px);
+  }
+}
+
+.inline {
+  display: inline-block;
+}
+
+/*
+ * `visibility: hidden` hides the content, takes it out of Tab navigation
+ * and the accessibility tree; the placeholder layer turns visibility back on.
+ */
+.skeleton {
+  position: relative;
+  isolation: isolate;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/*
+ * Clipping lives on this layer, not on the wrapper: `overflow: hidden` there
+ * would move an inline-block's baseline and keep children margins from
+ * collapsing, so the wrapper would change size when loading ends.
+ */
+.layer {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  border-radius: var(--crm-ui-kit-skeleton-border-radius);
+  visibility: visible;
+}
+
+.layer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -800px;
+  right: 0;
+  background-image: var(--crm-ui-kit-skeleton-background);
+  background-position: 362px 0;
+  background-size: 800px 100%;
+  forced-color-adjust: none;
+  animation: skeletonAnimation 1.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer::before {
+    background-position: 0 0;
+    animation: none;
+  }
+}

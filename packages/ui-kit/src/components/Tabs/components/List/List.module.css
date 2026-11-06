@@ -1,0 +1,14 @@
+.list {
+  display: flex;
+  align-self: flex-start;
+  max-width: 100%;
+  overflow-x: auto;
+  gap: var(--crm-ui-kit-tabs-list-spacing);
+  box-shadow: inset 0 calc(-1 * var(--crm-ui-kit-tabs-list-border-width)) 0 0
+    var(--crm-ui-kit-tabs-list-border-color);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

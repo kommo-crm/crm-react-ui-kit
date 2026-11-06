@@ -10,6 +10,6 @@
       "@i18n": ["../storybook/.storybook/i18n.ts"]
     }
   },
-  "include": ["./**/*.tsx", "./**/*.ts"],
+  "include": ["./**/*.tsx", "./**/*.ts", "../storybook/storybook/**/*.d.ts"],
   "exclude": ["node_modules"]
 }

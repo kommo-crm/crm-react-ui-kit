@@ -210,6 +210,13 @@
   --crm-ui-kit-palette-badge-background-color-blue: var(--crm-ui-kit-color-solitude);
 
   --crm-ui-kit-palette-counter-badge-background: var(--crm-ui-kit-color-flush-mahogany);
+
+  --crm-ui-kit-palette-skeleton-background: linear-gradient(
+    to right,
+    var(--crm-ui-kit-color-platinum) 8%,
+    var(--crm-ui-kit-color-light-gray) 18%,
+    var(--crm-ui-kit-color-platinum) 33%
+  );
 }
 
 :root[data-crm-ui-kit-theme='alternative'] {
@@ -301,4 +308,11 @@
   --crm-ui-kit-palette-badge-background-color-blue: var(--crm-ui-kit-color-astronaut);
 
   --crm-ui-kit-palette-counter-badge-background: var(--crm-ui-kit-color-medium-carmine);
+
+  --crm-ui-kit-palette-skeleton-background: linear-gradient(
+    to right,
+    var(--crm-ui-kit-color-dark-slate-gray) 8%,
+    var(--crm-ui-kit-color-petrol-blue) 18%,
+    var(--crm-ui-kit-color-dark-slate-gray) 33%
+  );
 }
