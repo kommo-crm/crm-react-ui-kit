@@ -38,6 +38,7 @@
     "./Separator": "./dist/components/Separator/index.js",
     "./Ribbon": "./dist/components/Ribbon/index.js",
     "./Flex": "./dist/components/Flex/index.js",
+    "./Skeleton": "./dist/components/Skeleton/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -59,6 +60,7 @@
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/Ribbon.css": "./dist/assets/Ribbon.css",
+    "./assets/Skeleton.css": "./dist/assets/Skeleton.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
@@ -141,6 +143,9 @@
       ],
       "Flex": [
         "./dist/components/Flex/index.d.ts"
+      ],
+      "Skeleton": [
+        "./dist/components/Skeleton/index.d.ts"
       ]
     }
   },
