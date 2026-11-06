@@ -1,0 +1,17 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as TabsStories from './Tabs.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { TabsPrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Tabs/Themes" of={TabsStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## TabsPrimaryTheme
+
+```jsx
+import { TabsPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Tabs';
+```
+
+<ThemeVisualization theme={TabsPrimaryTheme} of={TabsStories.TabsPrimary} />
