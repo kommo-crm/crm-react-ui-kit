@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./AspectRatio": "./dist/components/AspectRatio/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
     "./Spinner": "./dist/components/Spinner/index.js",
     "./Link": "./dist/components/Link/index.js",
@@ -68,6 +69,9 @@
   },
   "typesVersions": {
     "*": {
+      "AspectRatio": [
+        "./dist/components/AspectRatio/index.d.ts"
+      ],
       "Switcher": [
         "./dist/components/Switcher/index.d.ts"
       ],
@@ -214,6 +218,7 @@
   },
   "dependencies": {
     "@kommo-crm/react-hooks": "1.2.1",
+    "@radix-ui/react-aspect-ratio": "1.1.7",
     "@radix-ui/react-dropdown-menu": "2.1.15",
     "@radix-ui/react-slot": "1.2.3",
     "@radix-ui/react-tabs": "1.1.12",
