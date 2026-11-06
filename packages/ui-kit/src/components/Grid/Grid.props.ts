@@ -39,7 +39,7 @@ interface GridOwnProps {
   /**
    * Rows of the grid (`grid-template-rows`).
    * A number creates that many equal rows,
-   * any other string is used as is, e.g. `'auto 1fr'`.
+   * any other string is used as is, e.g. `'200px 1fr'`.
    */
   rows?: GridTemplate;
   /**
@@ -52,22 +52,21 @@ interface GridOwnProps {
    */
   flow?: GridFlow;
   /**
-   * Alignment of the items inside their cells (`align-items`).
+   * Alignment of the items inside their cells along the block axis
+   * (`align-items`).
    *
    * @default stretch
    */
   align?: GridAlign;
   /**
-   * Distribution of the tracks along the inline axis (`justify-content`).
-   * `between` pushes the tracks to the edges and splits free space equally.
+   * Distribution of the column tracks along the inline axis
+   * (`justify-content`).
    *
    * @default start
    */
   justify?: GridJustify;
   /**
-   * Distribution of the row tracks along the block axis (`align-content`)
-   * when the grid is shorter than the container. `between`, `around` and
-   * `evenly` are `space-between`, `space-around` and `space-evenly`.
+   * Distribution of the row tracks along the block axis (`align-content`).
    */
   alignContent?: GridAlignContent;
   /**

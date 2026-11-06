@@ -35,7 +35,7 @@ export type GridFlow =
 export type GridAlign = 'start' | 'center' | 'end' | 'baseline' | 'stretch';
 
 /**
- * Distribution of the tracks along the inline axis.
+ * Distribution of the column tracks along the inline axis.
  */
 export type GridJustify = 'start' | 'center' | 'end' | 'between';
 
