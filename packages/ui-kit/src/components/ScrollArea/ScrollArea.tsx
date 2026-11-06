@@ -65,19 +65,12 @@ export const ScrollArea = forwardRef<El, ScrollAreaProps>((props, ref) => {
       style={style}
       type={type}
       scrollHideDelay={scrollHideDelay}
+      data-type={type}
       data-fade-top={(isFadeEnabled && isContentClippedAtTop) || undefined}
       data-fade-bottom={
         (isFadeEnabled && isContentClippedAtBottom) || undefined
       }
     >
-      <RadixScrollArea.Viewport
-        ref={mergedViewportRef}
-        className={s.viewport}
-        onScroll={handleScroll}
-        {...rest}
-      >
-        {children}
-      </RadixScrollArea.Viewport>
       <RadixScrollArea.Scrollbar
         orientation="vertical"
         className={cx(s.scrollbar, {
@@ -86,6 +79,14 @@ export const ScrollArea = forwardRef<El, ScrollAreaProps>((props, ref) => {
       >
         <RadixScrollArea.Thumb className={s.thumb} />
       </RadixScrollArea.Scrollbar>
+      <RadixScrollArea.Viewport
+        ref={mergedViewportRef}
+        className={s.viewport}
+        onScroll={handleScroll}
+        {...rest}
+      >
+        {children}
+      </RadixScrollArea.Viewport>
     </RadixScrollArea.Root>
   );
 });

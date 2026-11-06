@@ -7,6 +7,6 @@ export const AREA_HEIGHT = 120;
 
 /**
  * How many items fit into AREA_HEIGHT without a scrollbar:
- * an item is 28px high in the browser.
+ * an item is 20px high in the browser.
  */
-export const MAX_FITTING_ITEMS_COUNT = 4;
+export const MAX_FITTING_ITEMS_COUNT = 6;

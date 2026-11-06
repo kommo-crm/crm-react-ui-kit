@@ -36,8 +36,21 @@
   }
 }
 
+/**
+ * The Radix scrollbar overlays the content. While it stays visible,
+ * the content is moved out from under it, like a native classic scrollbar.
+ * With hover and scroll types it appears temporarily, so the offset
+ * would shift the layout on every appearance.
+ */
+.scroll_area:is([data-type='auto'], [data-type='always'])
+  > .scrollbar:not(.scrollbar_hidden)
+  ~ .viewport {
+  padding-right: var(--crm-ui-kit-scroll-area-scrollbar-offset);
+}
+
 .viewport {
   flex: 1 1 auto;
+  box-sizing: border-box;
   width: 100%;
 
   border-radius: inherit;

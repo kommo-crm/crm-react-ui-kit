@@ -114,17 +114,13 @@ export const Type: Story = {
             {item.type}
           </Text>
           <ScrollArea {...args} type={item.type}>
-            {'text' in item ? (
-              <Text
-                theme={TextPrimaryTheme}
-                size="l"
-                style={{ display: 'block', padding: '12px 16px' }}
-              >
-                {item.text}
-              </Text>
-            ) : (
-              args.children
-            )}
+            <Text
+              theme={TextPrimaryTheme}
+              size="l"
+              style={{ display: 'block' }}
+            >
+              {'text' in item ? item.text : LONG_TEXT}
+            </Text>
           </ScrollArea>
         </div>
       ))}

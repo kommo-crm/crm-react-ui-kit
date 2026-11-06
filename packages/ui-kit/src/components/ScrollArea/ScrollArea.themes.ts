@@ -1,5 +1,6 @@
 type ScrollAreaThemeKey =
   | '--crm-ui-kit-scroll-area-scrollbar-size'
+  | '--crm-ui-kit-scroll-area-scrollbar-offset'
   | '--crm-ui-kit-scroll-area-thumb-offset'
   | '--crm-ui-kit-scroll-area-track-background'
   | '--crm-ui-kit-scroll-area-track-border-radius'
@@ -19,6 +20,8 @@ const ScrollAreaBaseThemeValues: Omit<
   | '--crm-ui-kit-scroll-area-thumb-offset'
   | '--crm-ui-kit-scroll-area-track-background'
 > = {
+  '--crm-ui-kit-scroll-area-scrollbar-offset':
+    'var(--crm-ui-kit-scroll-area-scrollbar-size)',
   '--crm-ui-kit-scroll-area-track-border-radius':
     'var(--crm-ui-kit-palette-scrollbar-track-border-radius)',
   '--crm-ui-kit-scroll-area-thumb-background':

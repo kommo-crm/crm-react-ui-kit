@@ -75,7 +75,7 @@ const ScrollAreaTestItem = (props: {
           theme={TextPrimaryTheme}
           size="l"
           isEllipsis={isEllipsis}
-          style={{ display: 'block', padding: '4px 8px' }}
+          style={{ display: 'block' }}
         >
           {isEllipsis
             ? `Item ${index + 1} with a long title that does not fit`
