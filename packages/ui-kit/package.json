@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.21.0",
+  "version": "1.22.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -27,6 +27,7 @@
     "./Select": "./dist/components/Select/index.js",
     "./CheckboxGroup": "./dist/components/CheckboxGroup/index.js",
     "./FilterTabs": "./dist/components/FilterTabs/index.js",
+    "./Tabs": "./dist/components/Tabs/index.js",
     "./Button": "./dist/components/Button/index.js",
     "./ConfigProvider": "./dist/components/ConfigProvider/index.js",
     "./ContentBlock": "./dist/components/ContentBlock/index.js",
@@ -38,7 +39,7 @@
     "./Separator": "./dist/components/Separator/index.js",
     "./Ribbon": "./dist/components/Ribbon/index.js",
     "./Flex": "./dist/components/Flex/index.js",
-    "./Tabs": "./dist/components/Tabs/index.js",
+    "./Skeleton": "./dist/components/Skeleton/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -54,13 +55,14 @@
     "./assets/Accordion.css": "./dist/assets/Accordion.css",
     "./assets/CheckboxGroup.css": "./dist/assets/CheckboxGroup.css",
     "./assets/FilterTabs.css": "./dist/assets/FilterTabs.css",
+    "./assets/Tabs.css": "./dist/assets/Tabs.css",
     "./assets/Button.css": "./dist/assets/Button.css",
     "./assets/CounterBadge.css": "./dist/assets/CounterBadge.css",
     "./assets/List.css": "./dist/assets/List.css",
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/Ribbon.css": "./dist/assets/Ribbon.css",
-    "./assets/Tabs.css": "./dist/assets/Tabs.css",
+    "./assets/Skeleton.css": "./dist/assets/Skeleton.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
@@ -111,6 +113,9 @@
       "FilterTabs": [
         "./dist/components/FilterTabs/index.d.ts"
       ],
+      "Tabs": [
+        "./dist/components/Tabs/index.d.ts"
+      ],
       "Button": [
         "./dist/components/Button/index.d.ts"
       ],
@@ -144,8 +149,8 @@
       "Flex": [
         "./dist/components/Flex/index.d.ts"
       ],
-      "Tabs": [
-        "./dist/components/Tabs/index.d.ts"
+      "Skeleton": [
+        "./dist/components/Skeleton/index.d.ts"
       ]
     }
   },
