@@ -61,8 +61,9 @@
     background-clip: padding-box;
   }
 
-  /* Only for Firefox: Chrome 121+ ignores ::-webkit-scrollbar once scrollbar-color is set */
+  /* Only for Firefox: Chrome 121+ ignores ::-webkit-scrollbar once scrollbar-color or scrollbar-width is set */
   @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
     scrollbar-color: var(--crm-ui-kit-textarea-scrollbar-thumb-background)
       transparent;
   }
