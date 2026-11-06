@@ -15,6 +15,10 @@ import {
 
 const combinations = multiCartesian<SkeletonProps>([{}]);
 
+const elementCombinations = multiCartesian<SkeletonProps>([
+  { isLoading: [true, false] },
+]);
+
 test.skip(
   ({ platform }) => platform !== Platform.WEB,
   'Skeleton has no platform-specific styles'
@@ -35,6 +39,22 @@ for (const props of combinations) {
     );
   });
 
+  test.describe('Skeleton Circle', () => {
+    test(
+      label,
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <SkeletonCirclePlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}
+
+for (const props of elementCombinations) {
+  const label = prettyProps(props);
+
   test.describe('Skeleton Element', () => {
     test(
       label,
@@ -44,18 +64,6 @@ for (const props of combinations) {
             appearance={appearance}
             props={props}
           />
-        );
-        await expectScreenshotClippedToContent();
-      }
-    );
-  });
-
-  test.describe('Skeleton Circle', () => {
-    test(
-      label,
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
-        await mount(
-          <SkeletonCirclePlaygroundItem appearance={appearance} props={props} />
         );
         await expectScreenshotClippedToContent();
       }
