@@ -1,0 +1,24 @@
+.trigger {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--crm-ui-kit-tabs-trigger-elements-spacing);
+  margin: 0;
+  padding: var(--crm-ui-kit-tabs-trigger-padding);
+  border: none;
+  background: transparent;
+  color: var(--crm-ui-kit-tabs-trigger-color);
+  font-family: inherit;
+  font-size: var(--crm-ui-kit-tabs-trigger-font-size);
+  line-height: var(--crm-ui-kit-tabs-trigger-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+
+  &[data-state='active'] {
+    color: var(--crm-ui-kit-tabs-trigger-active-color);
+    box-shadow: inset 0
+      calc(-1 * var(--crm-ui-kit-tabs-trigger-indicator-height)) 0 0
+      var(--crm-ui-kit-tabs-trigger-indicator-color);
+  }
+}

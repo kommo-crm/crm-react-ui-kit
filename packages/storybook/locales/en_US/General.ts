@@ -5,6 +5,7 @@ export default {
   'Themes': 'Themes',
   'Typography': 'Typography',
   'Components': 'Components',
+  'Layout': 'Layout',
   'Default': 'Default',
   'Sizes': 'Sizes',
   'Ellipsis': 'Ellipsis',
@@ -165,4 +166,15 @@ export default {
   'Theming with Text component': 'Theming with Text component',
   'List theming description':
     '`List` inherits theme tokens from its parent `Text` component. Pass `theme` to `Text` — the `List` inside picks it up automatically without needing its own `theme` prop.',
+
+  /* Tabs */
+  'General': 'General',
+  'Team': 'Team',
+  'Automation': 'Automation',
+  'Tabs general content':
+    'Workspace name, language, time zone, and date format. These settings apply to all users in the workspace.',
+  'Tabs team content':
+    'Manage users, groups, and access permissions. Invite teammates and control what they can see and edit.',
+  'Tabs automation content':
+    'Triggers and bots that automatically move leads and create tasks.',
 };
