@@ -1,0 +1,31 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as SkeletonStories from './Skeleton.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { SkeletonPrimaryTheme, SkeletonCirclePrimaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/Skeleton/Themes" of={SkeletonStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## SkeletonPrimaryTheme
+
+```jsx
+import { SkeletonPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Skeleton';
+```
+
+<ThemeVisualization
+  theme={SkeletonPrimaryTheme}
+  of={SkeletonStories.SkeletonPrimary}
+/>
+
+## SkeletonCirclePrimaryTheme
+
+```jsx
+import { SkeletonCirclePrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Skeleton';
+```
+
+<ThemeVisualization
+  theme={SkeletonCirclePrimaryTheme}
+  of={SkeletonStories.SkeletonCirclePrimary}
+/>
