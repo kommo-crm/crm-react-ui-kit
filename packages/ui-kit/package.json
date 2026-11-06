@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./AspectRatio": "./dist/components/AspectRatio/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
     "./Spinner": "./dist/components/Spinner/index.js",
     "./Link": "./dist/components/Link/index.js",
@@ -37,7 +38,6 @@
     "./Badge": "./dist/components/Badge/index.js",
     "./Separator": "./dist/components/Separator/index.js",
     "./Ribbon": "./dist/components/Ribbon/index.js",
-    "./AspectRatio": "./dist/components/AspectRatio/index.js",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -64,6 +64,9 @@
   },
   "typesVersions": {
     "*": {
+      "AspectRatio": [
+        "./dist/components/AspectRatio/index.d.ts"
+      ],
       "Switcher": [
         "./dist/components/Switcher/index.d.ts"
       ],
@@ -138,9 +141,6 @@
       ],
       "Ribbon": [
         "./dist/components/Ribbon/index.d.ts"
-      ],
-      "AspectRatio": [
-        "./dist/components/AspectRatio/index.d.ts"
       ]
     }
   },
