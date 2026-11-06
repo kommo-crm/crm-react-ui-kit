@@ -5,6 +5,7 @@ export default {
   'Themes': 'Temas',
   'Typography': 'Tipografia',
   'Components': 'Componentes',
+  'Layout': 'Layout',
   'Default': 'Padrão',
   'Sizes': 'Tamanhos',
   'Ellipsis': 'Reticências',
