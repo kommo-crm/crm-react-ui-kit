@@ -27,6 +27,7 @@
     "./Select": "./dist/components/Select/index.js",
     "./CheckboxGroup": "./dist/components/CheckboxGroup/index.js",
     "./FilterTabs": "./dist/components/FilterTabs/index.js",
+    "./Tabs": "./dist/components/Tabs/index.js",
     "./Button": "./dist/components/Button/index.js",
     "./ConfigProvider": "./dist/components/ConfigProvider/index.js",
     "./ContentBlock": "./dist/components/ContentBlock/index.js",
@@ -54,6 +55,7 @@
     "./assets/Accordion.css": "./dist/assets/Accordion.css",
     "./assets/CheckboxGroup.css": "./dist/assets/CheckboxGroup.css",
     "./assets/FilterTabs.css": "./dist/assets/FilterTabs.css",
+    "./assets/Tabs.css": "./dist/assets/Tabs.css",
     "./assets/Button.css": "./dist/assets/Button.css",
     "./assets/CounterBadge.css": "./dist/assets/CounterBadge.css",
     "./assets/List.css": "./dist/assets/List.css",
@@ -110,6 +112,9 @@
       ],
       "FilterTabs": [
         "./dist/components/FilterTabs/index.d.ts"
+      ],
+      "Tabs": [
+        "./dist/components/Tabs/index.d.ts"
       ],
       "Button": [
         "./dist/components/Button/index.d.ts"
@@ -211,6 +216,7 @@
     "@kommo-crm/react-hooks": "1.2.1",
     "@radix-ui/react-dropdown-menu": "2.1.15",
     "@radix-ui/react-slot": "1.2.3",
+    "@radix-ui/react-tabs": "1.1.12",
     "@react-spring/web": "10.0.1",
     "classnames": "2.5.1",
     "i18next": "24.2.2",
