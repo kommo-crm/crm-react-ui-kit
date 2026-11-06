@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./ScrollArea": "./dist/components/ScrollArea/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
     "./Spinner": "./dist/components/Spinner/index.js",
     "./Link": "./dist/components/Link/index.js",
@@ -37,7 +38,7 @@
     "./Badge": "./dist/components/Badge/index.js",
     "./Separator": "./dist/components/Separator/index.js",
     "./Ribbon": "./dist/components/Ribbon/index.js",
-    "./ScrollArea": "./dist/components/ScrollArea/index.js",
+    "./assets/ScrollArea.css": "./dist/assets/ScrollArea.css",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
     "./assets/Spinner.css": "./dist/assets/Spinner.css",
@@ -59,12 +60,14 @@
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/Ribbon.css": "./dist/assets/Ribbon.css",
-    "./assets/ScrollArea.css": "./dist/assets/ScrollArea.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },
   "typesVersions": {
     "*": {
+      "ScrollArea": [
+        "./dist/components/ScrollArea/index.d.ts"
+      ],
       "Switcher": [
         "./dist/components/Switcher/index.d.ts"
       ],
@@ -139,9 +142,6 @@
       ],
       "Ribbon": [
         "./dist/components/Ribbon/index.d.ts"
-      ],
-      "ScrollArea": [
-        "./dist/components/ScrollArea/index.d.ts"
       ]
     }
   },
