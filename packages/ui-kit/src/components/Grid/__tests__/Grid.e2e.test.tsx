@@ -198,20 +198,6 @@ test.describe('Grid justify', () => {
   }
 });
 
-test.describe('Grid gap', () => {
-  for (const props of gapCombinations) {
-    test(
-      prettyProps(props),
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
-        await mount(
-          <GridPlaygroundItem appearance={appearance} props={props} />
-        );
-        await expectScreenshotClippedToContent();
-      }
-    );
-  }
-});
-
 test.describe('Grid alignContent', () => {
   for (const props of alignContentCombinations) {
     test(
@@ -228,6 +214,20 @@ test.describe('Grid alignContent', () => {
 
 test.describe('Grid justifyItems', () => {
   for (const props of justifyItemsCombinations) {
+    test(
+      prettyProps(props),
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <GridPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  }
+});
+
+test.describe('Grid gap', () => {
+  for (const props of gapCombinations) {
     test(
       prettyProps(props),
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
