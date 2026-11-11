@@ -51,6 +51,22 @@ const focusedCombinations = multiCartesian<ScrollAreaTestProps>([
 ]);
 
 /**
+ * With the hover type the content is not moved out from under
+ * the scrollbar, so positioned items reach it.
+ */
+const positionedCombinations = multiCartesian<ScrollAreaTestProps>([
+  {
+    itemsCount: [20],
+    isPositioned: [true],
+    type: ['hover'],
+    scrollPosition: ['middle'],
+  },
+]);
+
+const hoverScrollArea = (page: Page) =>
+  page.locator('[data-radix-scroll-area-viewport]').hover();
+
+/**
  * Playwright CT mounts only components referenced in JSX by their import
  * name, so each playground is written out instead of looping over them.
  */
@@ -133,6 +149,44 @@ for (const props of focusedCombinations) {
           />
         );
         await setFocusOnElement();
+        await waitForScrollArea(page, true);
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+}
+
+for (const props of positionedCombinations) {
+  const label = prettyProps(props);
+
+  test.describe('ScrollArea Surface Positioned', () => {
+    test(
+      label,
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ScrollAreaSurfacePlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await hoverScrollArea(page);
+        await waitForScrollArea(page, true);
+        await expectScreenshotClippedToContent();
+      }
+    );
+  });
+
+  test.describe('ScrollArea Compact Positioned', () => {
+    test(
+      label,
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <ScrollAreaCompactPlaygroundItem
+            appearance={appearance}
+            props={props}
+          />
+        );
+        await hoverScrollArea(page);
         await waitForScrollArea(page, true);
         await expectScreenshotClippedToContent();
       }

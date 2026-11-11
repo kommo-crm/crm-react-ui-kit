@@ -55,6 +55,9 @@
 
   border-radius: inherit;
 
+  /* Keeps z-index of the content below the scrollbar */
+  isolation: isolate;
+
   &:focus-visible {
     outline: var(--crm-ui-kit-palette-focus-visible-outline-width)
       var(--crm-ui-kit-palette-focus-visible-outline-style)
@@ -70,7 +73,9 @@
   }
 }
 
+/* Precedes the viewport in the DOM, so positioned content would paint over it */
 .scrollbar {
+  z-index: 1;
   display: flex;
   box-sizing: border-box;
   width: var(--crm-ui-kit-scroll-area-scrollbar-size);
