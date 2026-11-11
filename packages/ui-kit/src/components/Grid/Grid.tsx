@@ -62,7 +62,7 @@ const justifyItemsValue: Record<
   stretch: 'stretch',
 };
 
-const TRACK_COUNT_REGEXP = /^\d+$/;
+const TRACK_COUNT_REGEXP = /^[1-9]\d*$/;
 
 /**
  * Converts a `columns` / `rows` value to a `grid-template-*` value:
