@@ -30,13 +30,13 @@ interface GridOwnProps {
   display?: GridDisplay;
   /**
    * Columns of the grid (`grid-template-columns`).
-   * A number creates that many equal columns,
+   * A numeric string like `'3'` creates that many equal columns,
    * any other string is used as is, e.g. `'200px 1fr'`.
    */
   columns?: GridTemplate;
   /**
    * Rows of the grid (`grid-template-rows`).
-   * A number creates that many equal rows,
+   * A numeric string like `'3'` creates that many equal rows,
    * any other string is used as is, e.g. `'200px 1fr'`.
    */
   rows?: GridTemplate;

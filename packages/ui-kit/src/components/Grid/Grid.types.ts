@@ -4,8 +4,8 @@
 export type GridDisplay = 'grid' | 'inline-grid' | 'none';
 
 /**
- * Number of equal tracks or any `grid-template-*` value.
- * `'1'`…`'9'` are autocomplete hints, any number works.
+ * Numeric string for equal tracks or any `grid-template-*` value.
+ * `'1'`…`'9'` are autocomplete hints, any positive integer works.
  */
 export type GridTemplate =
   | '1'

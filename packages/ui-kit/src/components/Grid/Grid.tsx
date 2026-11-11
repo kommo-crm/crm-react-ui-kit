@@ -69,7 +69,7 @@ const TRACK_COUNT_REGEXP = /^[1-9]\d*$/;
 
 /**
  * Converts a `columns` / `rows` value to a `grid-template-*` value:
- * a number becomes that many equal tracks, any other string is kept as is.
+ * a numeric string becomes that many equal tracks, any other string is kept as is.
  *
  * `minmax(0, 1fr)` instead of `1fr`, otherwise a track can't shrink below
  * its content and the tracks stop being equal.
