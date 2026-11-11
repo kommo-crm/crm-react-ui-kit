@@ -9,6 +9,7 @@ import { Platform } from '@ui-kit/lib/platform';
 import { type GridProps } from '..';
 
 import {
+  GridAreasPlaygroundItem,
   GridDisplayPlaygroundItem,
   GridFlowPlaygroundItem,
   GridPlaygroundItem,
@@ -24,6 +25,13 @@ const columnsCombinations = multiCartesian<GridProps>([
 
 const rowsCombinations = multiCartesian<GridProps>([
   { columns: ['3'], rows: ['2', '24px 1fr'] },
+]);
+
+const AREAS = '"header header" "sidebar main" "footer footer"';
+
+const areasCombinations = multiCartesian<GridProps>([
+  { areas: [AREAS] },
+  { areas: [AREAS], columns: ['60px 1fr'] },
 ]);
 
 const flowCombinations = multiCartesian<GridProps>([
@@ -127,6 +135,20 @@ test.describe('Grid rows', () => {
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
           <GridPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  }
+});
+
+test.describe('Grid areas', () => {
+  for (const props of areasCombinations) {
+    test(
+      prettyProps(props),
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <GridAreasPlaygroundItem appearance={appearance} props={props} />
         );
         await expectScreenshotClippedToContent();
       }

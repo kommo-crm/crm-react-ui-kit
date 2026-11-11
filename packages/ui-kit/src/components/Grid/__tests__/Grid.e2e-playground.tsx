@@ -74,6 +74,25 @@ export const GridDisplayPlaygroundItem = ({
   </ComponentPlayground>
 );
 
+const AREA_NAMES = ['header', 'sidebar', 'main', 'footer'];
+
+export const GridAreasPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<GridProps>) => (
+  <ComponentPlayground<GridProps> appearance={appearance} props={props}>
+    {(p) => (
+      <Grid {...p} style={CONTAINER_STYLE}>
+        {AREA_NAMES.map((name) => (
+          <div key={name} style={{ ...ITEM_STYLE, gridArea: name }}>
+            {name}
+          </div>
+        ))}
+      </Grid>
+    )}
+  </ComponentPlayground>
+);
+
 /**
  * The third item spans two tracks, so sparse and dense flows
  * leave and fill a hole differently.

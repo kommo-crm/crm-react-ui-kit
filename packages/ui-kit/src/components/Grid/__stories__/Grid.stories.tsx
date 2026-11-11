@@ -146,3 +146,23 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+const AREA_NAMES = ['header', 'sidebar', 'main', 'footer'];
+
+export const Areas: Story = {
+  args: {
+    areas: '"header header" "sidebar main" "footer footer"',
+    columns: '120px 1fr',
+  },
+  render: (props) => (
+    <div style={FRAME_STYLE}>
+      <Grid {...props} style={CONTAINER_STYLE}>
+        {AREA_NAMES.map((name) => (
+          <div key={name} style={{ ...ITEM_STYLE, gridArea: name }}>
+            {name}
+          </div>
+        ))}
+      </Grid>
+    </div>
+  ),
+};
