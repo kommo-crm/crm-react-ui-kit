@@ -33,7 +33,13 @@ import {
 
 function App() {
   return (
-    <ScrollArea theme={ScrollAreaSurfaceTheme} style={{ height: 240 }}>
+    <ScrollArea
+      theme={ScrollAreaSurfaceTheme}
+      style={{ height: 240 }}
+      tabIndex={0}
+      role="region"
+      aria-label="Long text"
+    >
       <Text theme={TextPrimaryTheme} size="l">
         {text}
       </Text>
@@ -83,7 +89,9 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: { 'tabIndex': 0, 'role': 'region', 'aria-label': 'Long text' },
+};
 
 const TYPES = [
   { type: 'auto' },
