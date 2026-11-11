@@ -71,9 +71,12 @@ const meta = {
     ref: { table: { disable: true } },
   },
   args: {
-    theme: ScrollAreaSurfaceTheme,
-    style: AREA_STYLE,
-    children: (
+    'theme': ScrollAreaSurfaceTheme,
+    'style': AREA_STYLE,
+    'tabIndex': 0,
+    'role': 'region',
+    'aria-label': 'Long text',
+    'children': (
       <Text
         theme={TextPrimaryTheme}
         size="l"
@@ -89,9 +92,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: { 'tabIndex': 0, 'role': 'region', 'aria-label': 'Long text' },
-};
+export const Default: Story = {};
 
 const TYPES = [
   { type: 'auto' },
@@ -121,7 +122,11 @@ export const Type: Story = {
           <Text theme={TextPrimaryTheme} size="l">
             {item.type}
           </Text>
-          <ScrollArea {...args} type={item.type}>
+          <ScrollArea
+            {...args}
+            type={item.type}
+            aria-label={`${item.type} type`}
+          >
             <Text
               theme={TextPrimaryTheme}
               size="l"
