@@ -77,11 +77,7 @@ const meta = {
     'role': 'region',
     'aria-label': 'Long text',
     'children': (
-      <Text
-        theme={TextPrimaryTheme}
-        size="l"
-        style={{ display: 'block', padding: '12px 16px' }}
-      >
+      <Text theme={TextPrimaryTheme} size="l" style={{ display: 'block' }}>
         {LONG_TEXT}
       </Text>
     ),
