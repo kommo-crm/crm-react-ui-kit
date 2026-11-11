@@ -44,8 +44,8 @@ describe('Grid', () => {
     const { style } = screen.getByTestId(DATA_COMPONENT_TEST_ID);
 
     expect(style.display).toBe('grid');
-    expect(style.alignItems).toBe('stretch');
-    expect(style.justifyContent).toBe('start');
+    expect(style.alignItems).toBe('');
+    expect(style.justifyContent).toBe('');
   });
 
   it('should render children', () => {

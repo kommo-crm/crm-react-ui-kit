@@ -52,15 +52,11 @@ interface GridOwnProps {
   /**
    * Alignment of the items inside their cells along the block axis
    * (`align-items`).
-   *
-   * @default stretch
    */
   align?: GridAlign;
   /**
    * Distribution of the column tracks along the inline axis
    * (`justify-content`).
-   *
-   * @default start
    */
   justify?: GridJustify;
   /**
