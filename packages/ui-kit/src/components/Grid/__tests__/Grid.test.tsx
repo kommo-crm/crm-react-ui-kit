@@ -105,13 +105,13 @@ describe('Grid', () => {
   });
 
   describe('template', () => {
-    it('should set a single column and no other templates by default', () => {
+    it('should not set templates by default', () => {
       renderGrid();
 
       const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
 
       expect(getTemplates(element)).toEqual({
-        columns: 'repeat(1, minmax(0, 1fr))',
+        columns: '',
         rows: '',
         areas: '',
       });

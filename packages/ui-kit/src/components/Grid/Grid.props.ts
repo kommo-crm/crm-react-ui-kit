@@ -32,8 +32,6 @@ interface GridOwnProps {
    * Columns of the grid (`grid-template-columns`).
    * A number creates that many equal columns,
    * any other string is used as is, e.g. `'200px 1fr'`.
-   *
-   * @default 1
    */
   columns?: GridTemplate;
   /**

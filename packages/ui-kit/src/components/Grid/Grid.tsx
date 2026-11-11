@@ -81,7 +81,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
     style,
     children,
     display = 'grid',
-    columns = '1',
+    columns,
     rows,
     areas,
     flow,
@@ -99,7 +99,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
 
   const rootStyle: React.CSSProperties = {
     display,
-    gridTemplateColumns: getGridTemplate(columns),
+    gridTemplateColumns: columns && getGridTemplate(columns),
     gridTemplateRows: rows && getGridTemplate(rows),
     gridTemplateAreas: areas,
     gridAutoFlow: flow && flowValue[flow],
