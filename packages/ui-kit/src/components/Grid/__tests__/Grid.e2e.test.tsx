@@ -44,7 +44,15 @@ const alignCombinations = multiCartesian<GridProps>([
 const justifyCombinations = multiCartesian<GridProps>([
   {
     columns: ['repeat(3, 40px)'],
-    justify: ['start', 'center', 'end', 'between'],
+    justify: [
+      'start',
+      'center',
+      'end',
+      'between',
+      'around',
+      'evenly',
+      'stretch',
+    ],
   },
 ]);
 

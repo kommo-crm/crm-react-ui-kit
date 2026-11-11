@@ -35,6 +35,9 @@ const justifyValue: Record<GridJustify, React.CSSProperties['justifyContent']> =
     center: 'center',
     end: 'end',
     between: 'space-between',
+    around: 'space-around',
+    evenly: 'space-evenly',
+    stretch: 'stretch',
   };
 
 const alignContentValue: Record<

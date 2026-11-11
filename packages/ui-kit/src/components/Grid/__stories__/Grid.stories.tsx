@@ -97,7 +97,15 @@ const meta = {
     },
     justify: {
       control: 'select',
-      options: ['start', 'center', 'end', 'between'],
+      options: [
+        'start',
+        'center',
+        'end',
+        'between',
+        'around',
+        'evenly',
+        'stretch',
+      ],
     },
     alignContent: {
       control: 'select',

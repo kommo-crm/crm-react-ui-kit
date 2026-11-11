@@ -37,7 +37,14 @@ export type GridAlign = 'start' | 'center' | 'end' | 'baseline' | 'stretch';
 /**
  * Distribution of the column tracks along the inline axis.
  */
-export type GridJustify = 'start' | 'center' | 'end' | 'between';
+export type GridJustify =
+  | 'start'
+  | 'center'
+  | 'end'
+  | 'between'
+  | 'around'
+  | 'evenly'
+  | 'stretch';
 
 /**
  * Distribution of the row tracks along the block axis.
