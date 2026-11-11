@@ -26,6 +26,8 @@ type TextAreaThemeKey =
   | '--crm-ui-kit-textarea-background-color'
   | '--crm-ui-kit-textarea-scrollbar-width'
   | '--crm-ui-kit-textarea-scrollbar-thumb-background'
+  | '--crm-ui-kit-textarea-scrollbar-thumb-offset'
+  | '--crm-ui-kit-textarea-scrollbar-thumb-border-radius'
   | '--crm-ui-kit-textarea-scrollbar-offset';
 
 export type TextAreaTheme = {
@@ -69,6 +71,9 @@ const TextAreaBaseValues: Omit<
   '--crm-ui-kit-textarea-scrollbar-width': '6px',
   '--crm-ui-kit-textarea-scrollbar-thumb-background':
     'var(--crm-ui-kit-palette-scrollbar-thumb-background)',
+  '--crm-ui-kit-textarea-scrollbar-thumb-offset': '1px',
+  '--crm-ui-kit-textarea-scrollbar-thumb-border-radius':
+    'var(--crm-ui-kit-palette-scrollbar-thumb-border-radius)',
   '--crm-ui-kit-textarea-scrollbar-offset': '1px',
 };
 
