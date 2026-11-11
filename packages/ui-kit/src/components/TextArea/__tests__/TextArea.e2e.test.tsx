@@ -9,6 +9,7 @@ import {
   TextAreaDarkPlaygroundItem,
   type TextAreaTestProps,
 } from './TextArea.e2e-playground';
+import { SCROLLED_ATTRIBUTE } from './TextArea.e2e-constants';
 
 /**
  * Headless Chromium hides native scrollbars by default
@@ -85,10 +86,11 @@ for (const props of scrollCombinations) {
 
     test(
       label,
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
         await mount(
           <TextAreaLightPlaygroundItem appearance={appearance} props={props} />
         );
+        await page.locator(`textarea[${SCROLLED_ATTRIBUTE}]`).waitFor();
         await expectScreenshotClippedToContent();
       }
     );
@@ -102,10 +104,11 @@ for (const props of scrollCombinations) {
 
     test(
       label,
-      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
         await mount(
           <TextAreaDarkPlaygroundItem appearance={appearance} props={props} />
         );
+        await page.locator(`textarea[${SCROLLED_ATTRIBUTE}]`).waitFor();
         await expectScreenshotClippedToContent();
       }
     );

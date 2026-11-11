@@ -9,6 +9,8 @@ import { TextArea } from '../TextArea';
 import { TextareaLightTheme, TextareaDarkTheme } from '../TextArea.themes';
 import { type TextAreaProps } from '../TextArea.props';
 
+import { SCROLLED_ATTRIBUTE } from './TextArea.e2e-constants';
+
 export interface TextAreaTestProps extends TextAreaProps {
   /**
    * Scroll offset of the textarea content.
@@ -41,6 +43,12 @@ const TextAreaTestItem = (props: TextAreaTestProps) => {
         middle: Math.round(maxScrollTop / 2),
         end: maxScrollTop,
       }[scrollPosition];
+
+      /**
+       * The screenshot helper only waits for fonts,
+       * so the test waits for this marker instead of relying on timing
+       */
+      textarea.setAttribute(SCROLLED_ATTRIBUTE, '');
     };
 
     scroll();
