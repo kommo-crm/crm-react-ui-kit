@@ -10,7 +10,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 1;
 
     height: var(--crm-ui-kit-scroll-area-fade-height);
     visibility: hidden;
@@ -55,7 +55,7 @@
 
   border-radius: inherit;
 
-  /* Keeps z-index of the content below the scrollbar */
+  /* Keeps z-index of the content below the fade and the scrollbar */
   isolation: isolate;
 
   &:focus-visible {
@@ -73,9 +73,12 @@
   }
 }
 
-/* Precedes the viewport in the DOM, so positioned content would paint over it */
+/**
+ * Precedes the viewport in the DOM, so positioned content would paint over it.
+ * Above the fade: the fade covers only the content.
+ */
 .scrollbar {
-  z-index: 1;
+  z-index: 2;
   display: flex;
   box-sizing: border-box;
   width: var(--crm-ui-kit-scroll-area-scrollbar-size);
