@@ -1,0 +1,105 @@
+.scroll_area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    height: var(--crm-ui-kit-scroll-area-fade-height);
+    visibility: hidden;
+
+    pointer-events: none;
+  }
+
+  &::before {
+    top: 0;
+
+    background: var(--crm-ui-kit-scroll-area-fade-top-background);
+  }
+
+  &::after {
+    bottom: 0;
+
+    background: var(--crm-ui-kit-scroll-area-fade-bottom-background);
+  }
+
+  &[data-fade-top]::before,
+  &[data-fade-bottom]::after {
+    visibility: visible;
+  }
+}
+
+/**
+ * The Radix scrollbar overlays the content. While it stays visible,
+ * the content is moved out from under it, like a native classic scrollbar.
+ * With hover and scroll types it appears temporarily, so the offset
+ * would shift the layout on every appearance.
+ */
+.scroll_area:is([data-type='auto'], [data-type='always'])
+  > .scrollbar:not(.scrollbar_hidden)
+  ~ .viewport {
+  padding-right: var(--crm-ui-kit-scroll-area-scrollbar-offset);
+}
+
+.viewport {
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  width: 100%;
+
+  border-radius: inherit;
+
+  /* Keeps z-index of the content below the fade and the scrollbar */
+  isolation: isolate;
+
+  &:focus-visible {
+    outline: var(--crm-ui-kit-palette-focus-visible-outline-width)
+      var(--crm-ui-kit-palette-focus-visible-outline-style)
+      var(--crm-ui-kit-palette-focus-visible-color);
+    outline-offset: calc(
+      -1 * var(--crm-ui-kit-palette-focus-visible-outline-width)
+    );
+  }
+
+  /* Radix wraps children in display: table, so ellipsis content overflows the area */
+  & > div {
+    display: block !important;
+  }
+}
+
+/**
+ * Precedes the viewport in the DOM, so positioned content would paint over it.
+ * Above the fade: the fade covers only the content.
+ */
+.scrollbar {
+  z-index: 2;
+  display: flex;
+  box-sizing: border-box;
+  width: var(--crm-ui-kit-scroll-area-scrollbar-size);
+  padding: var(--crm-ui-kit-scroll-area-thumb-offset);
+
+  background: var(--crm-ui-kit-scroll-area-track-background);
+  border-radius: var(--crm-ui-kit-scroll-area-track-border-radius);
+
+  user-select: none;
+  touch-action: none;
+}
+
+.scrollbar_hidden {
+  display: none;
+}
+
+/* Radix sets the thumb height inline, flex only stretches it across the track width */
+.thumb {
+  position: relative;
+  flex: 1;
+
+  background: var(--crm-ui-kit-scroll-area-thumb-background);
+  border-radius: var(--crm-ui-kit-scroll-area-thumb-border-radius);
+}
