@@ -7,8 +7,16 @@ type RadixRootProps = ComponentPropsWithoutRef<typeof RadixTooltipRoot>;
 
 export type TooltipRootProps = Omit<
   RadixRootProps,
-  'open' | 'defaultOpen' | 'delayDuration' | 'disableHoverableContent'
+  | 'open'
+  | 'defaultOpen'
+  | 'onOpenChange'
+  | 'delayDuration'
+  | 'disableHoverableContent'
 > & {
+  /**
+   * Called when the open state changes.
+   */
+  onOpenChange?: RadixRootProps['onOpenChange'];
   /**
    * Controlled open state. The tooltip is controlled when it is not `undefined`.
    */

@@ -89,7 +89,7 @@ const meta = {
       source: { code: USAGE, language: 'jsx' },
     },
   },
-  component: Demo,
+  component: Tooltip.Root,
   argTypes: {
     theme: {
       control: 'select',
