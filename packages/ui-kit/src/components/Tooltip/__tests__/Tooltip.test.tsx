@@ -489,6 +489,20 @@ describe('Tooltip on touch', () => {
     expect(screen.getByRole('tooltip')).toBeInTheDocument();
   });
 
+  it('mouse press on the content does not keep the tooltip open on blur', async () => {
+    const { trigger } = renderTouchTooltip();
+
+    act(() => {
+      trigger.focus();
+    });
+    await screen.findByRole('tooltip');
+
+    firePointer(getVisibleContent()!, 'pointerdown', 'mouse');
+    trigger.blur();
+
+    await expectClosed();
+  });
+
   it('trigger blur without a tap on the content closes the tooltip', async () => {
     const { trigger } = renderTouchTooltip();
 

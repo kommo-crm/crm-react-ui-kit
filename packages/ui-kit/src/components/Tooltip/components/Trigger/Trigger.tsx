@@ -94,8 +94,11 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
     const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
       onBlur?.(event);
 
-      if (isContentPointerDownRef.current) {
-        isContentPointerDownRef.current = false;
+      const isContentPointerDown = isContentPointerDownRef.current;
+
+      isContentPointerDownRef.current = false;
+
+      if (isContentPointerDown) {
         /**
          * Radix closes on the trigger blur unless it is prevented. A tap on
          * the content moves focus away from the trigger after the first tap

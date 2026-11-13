@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef, useContext, useEffect } from 'react';
 import { Content as RadixTooltipContent } from '@radix-ui/react-tooltip';
 import cx from 'classnames';
 
@@ -17,6 +17,13 @@ export const Content = forwardRef<HTMLDivElement, TooltipContentProps>(
     const { themeClassName } = useContext(TooltipThemeContext);
     const { isContentPointerDownRef } = useContext(TooltipRootContext);
 
+    useEffect(
+      () => () => {
+        isContentPointerDownRef.current = false;
+      },
+      [isContentPointerDownRef]
+    );
+
     return (
       <RadixTooltipContent
         {...rest}
@@ -34,7 +41,7 @@ export const Content = forwardRef<HTMLDivElement, TooltipContentProps>(
         data-crm-ui-kit-surface="inverse"
         onPointerDownCapture={(event) => {
           onPointerDownCapture?.(event);
-          isContentPointerDownRef.current = true;
+          isContentPointerDownRef.current = event.pointerType === 'touch';
         }}
       >
         {children}
