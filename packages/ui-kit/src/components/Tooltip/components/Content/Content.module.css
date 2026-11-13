@@ -1,0 +1,17 @@
+.content {
+  box-sizing: var(--crm-ui-kit-tooltip-box-sizing);
+  max-width: var(--crm-ui-kit-tooltip-max-width);
+  padding: var(--crm-ui-kit-tooltip-padding);
+  border: 1px solid var(--crm-ui-kit-tooltip-border-color);
+  border-radius: var(--crm-ui-kit-tooltip-border-radius);
+  background: var(--crm-ui-kit-tooltip-background);
+  color: var(--crm-ui-kit-tooltip-text-color);
+  font-size: var(--crm-ui-kit-tooltip-font-size);
+  line-height: var(--crm-ui-kit-tooltip-line-height);
+  font-weight: var(--crm-ui-kit-tooltip-font-weight);
+  box-shadow: var(--crm-ui-kit-tooltip-box-shadow);
+  text-align: left;
+  overflow-wrap: break-word;
+  /* Radix copies this z-index to the popper wrapper */
+  z-index: var(--crm-ui-kit-tooltip-z-index);
+}

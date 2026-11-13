@@ -93,12 +93,14 @@
   --crm-ui-kit-color-mulled-wine: #53455d;
   --crm-ui-kit-color-apple-green: #e3f3ed;
   --crm-ui-kit-color-big-stone: #182a39;
+  --crm-ui-kit-color-mist-grey: #d5d8db;
 
   --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-onyx);
   --crm-ui-kit-palette-text-secondary-light: var(
     --crm-ui-kit-color-spanish-gray
   );
   --crm-ui-kit-palette-text-secondary-dark: var(--crm-ui-kit-color-dark-silver);
+  --crm-ui-kit-palette-text-primary-inverse: var(--crm-ui-kit-color-white);
 
   --crm-ui-kit-palette-active-element-900: var(--crm-ui-kit-color-blueberry);
 
@@ -117,6 +119,9 @@
   --crm-ui-kit-palette-background-secondary-800: var(
     --crm-ui-kit-color-mercury
   );
+  --crm-ui-kit-palette-background-secondary-inverse: var(
+    --crm-ui-kit-color-onyx
+  );
 
   --crm-ui-kit-palette-surface-background-color: var(
     --crm-ui-kit-color-ghost-white
@@ -128,6 +133,14 @@
 
   --crm-ui-kit-palette-link-primary: var(--crm-ui-kit-color-cobalt-blue);
   --crm-ui-kit-palette-link-hover-primary: var(--crm-ui-kit-color-navy-blue);
+  --crm-ui-kit-palette-link-primary-default: var(--crm-ui-kit-color-cobalt-blue);
+  --crm-ui-kit-palette-link-hover-primary-default: var(
+    --crm-ui-kit-color-navy-blue
+  );
+  --crm-ui-kit-palette-link-primary-inverse: var(--crm-ui-kit-color-dodger-blue);
+  --crm-ui-kit-palette-link-hover-primary-inverse: var(
+    --crm-ui-kit-color-dodger-blue
+  );
 
   --crm-ui-kit-palette-focus-visible-color: var(--crm-ui-kit-color-cobalt-blue);
 
@@ -189,6 +202,10 @@
       rgba(16, 24, 40, 0.03),
     0px 12px 16px -4px rgba(16, 24, 40, 0.08);
 
+  --crm-ui-kit-palette-box-shadow-primary: rgba(0, 0, 0, 0.1);
+
+  --crm-ui-kit-palette-tooltip-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+
   --crm-ui-kit-palette-spinner-border-color: var(--crm-ui-kit-color-blueberry);
 
   --crm-ui-kit-palette-badge-color-green: var(--crm-ui-kit-color-deep-sea);
@@ -233,16 +250,23 @@
   --crm-ui-kit-palette-background-secondary-800: var(
     --crm-ui-kit-color-firefly
   );
+  --crm-ui-kit-palette-background-secondary-inverse: var(
+    --crm-ui-kit-color-mist-grey
+  );
 
   --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-anti-flash-white);
   --crm-ui-kit-palette-text-secondary-light: var(
     --crm-ui-kit-color-shadow-blue
   );
   --crm-ui-kit-palette-text-secondary-dark: var(--crm-ui-kit-color-weldon-blue);
+  --crm-ui-kit-palette-text-primary-inverse: var(--crm-ui-kit-color-onyx);
 
   --crm-ui-kit-palette-link-primary: var(--crm-ui-kit-color-dodger-blue);
 
   --crm-ui-kit-palette-box-shadow-default: var(--crm-ui-kit-color-nato-blue);
+  --crm-ui-kit-palette-box-shadow-primary: transparent;
+
+  --crm-ui-kit-palette-tooltip-box-shadow: none;
 
   --crm-ui-kit-palette-border-default: var(--crm-ui-kit-color-slate-blue);
   --crm-ui-kit-palette-border-primary: var(--crm-ui-kit-color-dark-slate-gray);
@@ -261,6 +285,14 @@
   );
 
   --crm-ui-kit-palette-link-hover-primary: var(--crm-ui-kit-color-dodger-blue);
+  --crm-ui-kit-palette-link-primary-default: var(--crm-ui-kit-color-dodger-blue);
+  --crm-ui-kit-palette-link-hover-primary-default: var(
+    --crm-ui-kit-color-dodger-blue
+  );
+  --crm-ui-kit-palette-link-primary-inverse: var(--crm-ui-kit-color-cobalt-blue);
+  --crm-ui-kit-palette-link-hover-primary-inverse: var(
+    --crm-ui-kit-color-navy-blue
+  );
 
   --crm-ui-kit-palette-scrollbar-thumb-background: var(
     --crm-ui-kit-color-cello
@@ -324,5 +356,31 @@
   );
   --crm-ui-kit-palette-progress-bar-fill-color: var(
     --crm-ui-kit-color-metallic-blue
+  );
+}
+
+/*
+ * Must stay after the default and alternative rules: Storybook's
+ * ThemeVisualization reads the first two rules as the two appearances.
+ *
+ * `-default` tokens duplicate the regular ones because an inverse surface
+ * overrides the regular tokens, and a nested default surface restores them
+ * from `-default`.
+ */
+[data-crm-ui-kit-surface='inverse'] {
+  --crm-ui-kit-palette-link-primary: var(
+    --crm-ui-kit-palette-link-primary-inverse
+  );
+  --crm-ui-kit-palette-link-hover-primary: var(
+    --crm-ui-kit-palette-link-hover-primary-inverse
+  );
+}
+
+[data-crm-ui-kit-surface='default'] {
+  --crm-ui-kit-palette-link-primary: var(
+    --crm-ui-kit-palette-link-primary-default
+  );
+  --crm-ui-kit-palette-link-hover-primary: var(
+    --crm-ui-kit-palette-link-hover-primary-default
   );
 }

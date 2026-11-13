@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./Tooltip": "./dist/components/Tooltip/index.js",
     "./AspectRatio": "./dist/components/AspectRatio/index.js",
     "./ProgressBar": "./dist/components/ProgressBar/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
@@ -71,6 +72,9 @@
   },
   "typesVersions": {
     "*": {
+      "Tooltip": [
+        "./dist/components/Tooltip/index.d.ts"
+      ],
       "AspectRatio": [
         "./dist/components/AspectRatio/index.d.ts"
       ],
@@ -228,6 +232,7 @@
     "@radix-ui/react-progress": "1.1.7",
     "@radix-ui/react-slot": "1.2.3",
     "@radix-ui/react-tabs": "1.1.12",
+    "@radix-ui/react-tooltip": "1.2.7",
     "@react-spring/web": "10.0.1",
     "classnames": "2.5.1",
     "i18next": "24.2.2",
