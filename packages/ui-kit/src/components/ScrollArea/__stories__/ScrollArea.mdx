@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 
 <Title>ScrollArea</Title>
 
-<Canvas of={ScrollAreaStories.Default} />
+<Canvas of={ScrollAreaStories.AllThemes} />
 
 <ReactMarkdown>{'## ' + i18n.t('Usage')}</ReactMarkdown>
 
@@ -16,4 +16,4 @@ import ReactMarkdown from 'react-markdown';
 
 <ReactMarkdown>{'## ' + i18n.t('Props')}</ReactMarkdown>
 
-<Controls />
+<Controls of={ScrollAreaStories.AllThemes} />

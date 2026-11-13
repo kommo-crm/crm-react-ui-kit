@@ -3,7 +3,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
+import { Flex } from '@ui-kit/components/Flex';
 import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
+import { useStoryLabel } from '@ui-kit/hooks/useStoryLabel';
 
 import { ScrollArea, ScrollAreaSurfaceTheme, ScrollAreaCompactTheme } from '..';
 
@@ -29,21 +31,38 @@ const USAGE = `
 import {
   ScrollArea,
   ScrollAreaSurfaceTheme,
+  ScrollAreaCompactTheme,
 } from '@kommo-crm/crm-react-ui-kit/ScrollArea';
+import { Flex } from '@kommo-crm/crm-react-ui-kit/Flex';
+import { Text, TextPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/Text';
 
 function App() {
   return (
-    <ScrollArea
-      theme={ScrollAreaSurfaceTheme}
-      style={{ height: 240 }}
-      tabIndex={0}
-      role="region"
-      aria-label="Long text"
-    >
-      <Text theme={TextPrimaryTheme} size="l">
-        {text}
-      </Text>
-    </ScrollArea>
+    <Flex gap="6">
+      <ScrollArea
+        theme={ScrollAreaSurfaceTheme}
+        style={{ width: 320, height: 240 }}
+        tabIndex={0}
+        role="region"
+        aria-label="Long text"
+      >
+        <Text theme={TextPrimaryTheme} size="l">
+          {text}
+        </Text>
+      </ScrollArea>
+
+      <ScrollArea
+        theme={ScrollAreaCompactTheme}
+        style={{ width: 320, height: 240 }}
+        tabIndex={0}
+        role="region"
+        aria-label="Long text"
+      >
+        <Text theme={TextPrimaryTheme} size="l">
+          {text}
+        </Text>
+      </ScrollArea>
+    </Flex>
   );
 }
 `;
@@ -58,17 +77,21 @@ const meta = {
   },
   component: ScrollArea,
   argTypes: {
-    theme: {
+    'theme': {
       control: 'select',
       options: Object.keys(themeMap),
       mapping: themeMap,
     },
-    type: {
+    'type': {
       control: 'select',
       options: ['auto', 'scroll', 'hover', 'always'],
     },
-    children: { table: { disable: true } },
-    ref: { table: { disable: true } },
+    'children': { table: { disable: true } },
+    'ref': { table: { disable: true } },
+    'style': { table: { disable: true } },
+    'tabIndex': { table: { disable: true } },
+    'role': { table: { disable: true } },
+    'aria-label': { table: { disable: true } },
   },
   args: {
     'theme': ScrollAreaSurfaceTheme,
@@ -140,6 +163,31 @@ export const Type: Story = {
 export const IsFadeEnabled: Story = {
   name: 'isFadeEnabled',
   args: { theme: ScrollAreaCompactTheme, isFadeEnabled: true },
+};
+
+export const AllThemes: Story = {
+  tags: ['!dev'],
+  argTypes: {
+    theme: { control: false },
+  },
+  render: (args) => {
+    const surfaceLabel = useStoryLabel('ScrollAreaSurfaceTheme');
+    const compactLabel = useStoryLabel('ScrollAreaCompactTheme');
+
+    return (
+      <Flex gap="6">
+        <Flex direction="column" gap="2">
+          {surfaceLabel}
+          <ScrollArea {...args} theme={ScrollAreaSurfaceTheme} />
+        </Flex>
+
+        <Flex direction="column" gap="2">
+          {compactLabel}
+          <ScrollArea {...args} theme={ScrollAreaCompactTheme} />
+        </Flex>
+      </Flex>
+    );
+  },
 };
 
 export const ScrollAreaSurface: Story = {
