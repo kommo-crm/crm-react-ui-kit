@@ -1,5 +1,4 @@
 import React from 'react';
-import { type Page } from '@playwright/test';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
@@ -44,27 +43,13 @@ export const combinations = multiCartesian<ContextMenuComponentProps>([
   },
 ]);
 
-/**
- * Submenus are positioned once on open: a font swapped in after that
- * leaves them at a stale position.
- */
-const preloadFonts = async (page: Page) => {
-  await page.evaluate(() =>
-    Promise.all([
-      document.fonts.load('15px "PT Sans"'),
-      document.fonts.load('bold 15px "PT Sans"'),
-    ])
-  );
-};
-
 for (const props of combinations) {
   const label = prettyProps(props);
 
   test.describe('ContextMenu', () => {
     test(
       label,
-      async ({ mount, page, appearance, expectScreenshotClippedToContent }) => {
-        await preloadFonts(page);
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
         await mount(
           <ContextMenuPlaygroundItem appearance={appearance} props={props} />
         );
