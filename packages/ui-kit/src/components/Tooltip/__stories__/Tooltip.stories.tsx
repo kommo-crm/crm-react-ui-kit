@@ -29,9 +29,9 @@ function App() {
 
       <Tooltip.Portal>
         <Tooltip.Content>
-          ${i18n.t('Tooltip content')}{' '}
+          ${i18n.t('Plain text')}{' '}
           <Link theme={LinkPrimaryTheme} href="#">
-            ${i18n.t('Learn more')}
+            ${i18n.t('Go to Dashboard')}
           </Link>
           <Tooltip.Arrow />
         </Tooltip.Content>
@@ -55,7 +55,7 @@ type DemoProps = {
 
 const Demo = ({
   label = i18n.t('Hover me'),
-  content = i18n.t('Tooltip content'),
+  content = i18n.t('Plain text'),
   onTriggerClick,
   ...rootProps
 }: DemoProps) => (
@@ -116,9 +116,9 @@ export const Default: Story = {
       {...props}
       content={
         <>
-          {i18n.t('Tooltip content')}{' '}
+          {i18n.t('Plain text')}{' '}
           <Link theme={LinkPrimaryTheme} href="#">
-            {i18n.t('Learn more')}
+            {i18n.t('Go to Dashboard')}
           </Link>
         </>
       }
@@ -162,7 +162,7 @@ export const Controlled: Story = {
           theme={ButtonNeutralTheme}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          {i18n.t('Toggle')}
+          {i18n.t('Click me')}
         </Button>
 
         <Demo {...props} isOpen={isOpen} />
