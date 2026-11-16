@@ -17,6 +17,8 @@ const DISPLAY_NAME = 'Tooltip.Trigger';
 /**
  * Radix closes every open tooltip on this document event when one opens;
  * a tap opens the tooltip past Radix, so the event is sent by hand.
+ * Private `TOOLTIP_OPEN` of `@radix-ui/react-tooltip` 1.2.7, not exported;
+ * the "tap on another trigger" test fails if Radix renames it.
  */
 const RADIX_TOOLTIP_OPEN_EVENT = 'tooltip.open';
 
