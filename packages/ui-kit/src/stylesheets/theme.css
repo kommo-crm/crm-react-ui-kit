@@ -131,8 +131,12 @@
   );
   --crm-ui-kit-palette-surface-text-color: var(--crm-ui-kit-color-onyx);
 
-  --crm-ui-kit-palette-link-primary: var(--crm-ui-kit-color-cobalt-blue);
-  --crm-ui-kit-palette-link-hover-primary: var(--crm-ui-kit-color-navy-blue);
+  --crm-ui-kit-palette-link-primary: var(
+    --crm-ui-kit-palette-link-primary-default
+  );
+  --crm-ui-kit-palette-link-hover-primary: var(
+    --crm-ui-kit-palette-link-hover-primary-default
+  );
   --crm-ui-kit-palette-link-primary-default: var(--crm-ui-kit-color-cobalt-blue);
   --crm-ui-kit-palette-link-hover-primary-default: var(
     --crm-ui-kit-color-navy-blue
@@ -261,7 +265,9 @@
   --crm-ui-kit-palette-text-secondary-dark: var(--crm-ui-kit-color-weldon-blue);
   --crm-ui-kit-palette-text-primary-inverse: var(--crm-ui-kit-color-onyx);
 
-  --crm-ui-kit-palette-link-primary: var(--crm-ui-kit-color-dodger-blue);
+  --crm-ui-kit-palette-link-primary: var(
+    --crm-ui-kit-palette-link-primary-default
+  );
 
   --crm-ui-kit-palette-box-shadow-default: var(--crm-ui-kit-color-nato-blue);
   --crm-ui-kit-palette-box-shadow-primary: transparent;
@@ -284,7 +290,9 @@
     --crm-ui-kit-color-anti-flash-white
   );
 
-  --crm-ui-kit-palette-link-hover-primary: var(--crm-ui-kit-color-dodger-blue);
+  --crm-ui-kit-palette-link-hover-primary: var(
+    --crm-ui-kit-palette-link-hover-primary-default
+  );
   --crm-ui-kit-palette-link-primary-default: var(--crm-ui-kit-color-dodger-blue);
   --crm-ui-kit-palette-link-hover-primary-default: var(
     --crm-ui-kit-color-dodger-blue
@@ -363,9 +371,8 @@
  * Must stay after the default and alternative rules: Storybook's
  * ThemeVisualization reads the first two rules as the two appearances.
  *
- * `-default` tokens duplicate the regular ones because an inverse surface
- * overrides the regular tokens, and a nested default surface restores them
- * from `-default`.
+ * An inverse surface overrides the regular link tokens, and a nested default
+ * surface restores them from `-default`, which the regular ones reference.
  */
 [data-crm-ui-kit-surface='inverse'] {
   --crm-ui-kit-palette-link-primary: var(

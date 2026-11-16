@@ -1,4 +1,4 @@
-import { Declaration, type Rule } from 'css';
+import { type Comment, Declaration, type Rule } from 'css';
 
 import { type CrmUiKitCSSProperties } from '@ui-kit/lib/theme';
 
@@ -19,6 +19,52 @@ const getTokenFromCssVariable = (token: string) =>
     .replaceAll(/\n/g, '')
     .replaceAll(/\s+/g, '')
     .replace(/var\((--[^)]+)\)/g, '$1');
+
+const findDeclarationValue = (
+  declarations: Array<Declaration | Comment>,
+  variableName: string
+) =>
+  declarations.find(
+    (declaration): declaration is Declaration =>
+      declaration.type === 'declaration' &&
+      declaration.property !== undefined &&
+      getTokenFromCssVariable(declaration.property) === variableName
+  )?.value;
+
+/**
+ * Follows a `var()` chain down to a literal value: a palette token may
+ * reference another palette token rather than a color. Rules are searched
+ * in order, so the appearance rule goes first and the default rule after it.
+ */
+const resolveVariableValue = (
+  value: string | undefined,
+  declarationSets: Array<Array<Declaration | Comment>>
+) => {
+  const visited = new Set<string>();
+  let current = value;
+
+  while (current && isCssVariable(current)) {
+    const variableName = getTokenFromCssVariable(current);
+
+    if (visited.has(variableName)) {
+      return undefined;
+    }
+
+    visited.add(variableName);
+
+    current = undefined;
+
+    for (const declarations of declarationSets) {
+      current = findDeclarationValue(declarations, variableName);
+
+      if (current) {
+        break;
+      }
+    }
+  }
+
+  return current;
+};
 
 const getVariableValues = (
   rules: Rule[],
@@ -100,11 +146,14 @@ const getVariableValues = (
   }
 
   const defaultDeclarationVariableValue =
-    baseVariables[getTokenFromCssVariable(defaultDeclaration.value as string)];
+    resolveVariableValue(defaultDeclaration.value, [
+      defaultRule.declarations,
+    ]) ?? '';
 
-  const alternativeDeclarationVariableValue =
-    alternativeDeclaration?.value &&
-    baseVariables[getTokenFromCssVariable(alternativeDeclaration?.value)];
+  const alternativeDeclarationVariableValue = resolveVariableValue(
+    alternativeDeclaration?.value,
+    [alternativeRule.declarations, defaultRule.declarations]
+  );
 
   if (isColor(defaultDeclarationVariableValue)) {
     return {
