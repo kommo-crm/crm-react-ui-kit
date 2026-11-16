@@ -262,6 +262,21 @@ describe('Tooltip', () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
+  it('trigger outside Root throws', () => {
+    /**
+     * React logs the error thrown during render on its own.
+     */
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => undefined);
+
+    expect(() => render(<Tooltip.Trigger>Trigger</Tooltip.Trigger>)).toThrow(
+      '`Tooltip.Trigger` must be used within `Tooltip`'
+    );
+
+    consoleErrorSpy.mockRestore();
+  });
+
   it('trigger keeps a caller-provided type', () => {
     render(
       <Tooltip.Root theme={TooltipPrimaryTheme}>

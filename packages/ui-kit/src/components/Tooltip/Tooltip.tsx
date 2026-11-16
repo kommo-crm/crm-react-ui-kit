@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Provider as RadixTooltipProvider,
   Root as RadixTooltipRoot,
@@ -14,11 +8,7 @@ import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import { type TooltipRootProps } from './Tooltip.props';
 import { type TooltipThemeType } from './Tooltip.themes';
-import {
-  DISPLAY_NAME,
-  TooltipRootContext,
-  TooltipThemeContext,
-} from './Tooltip.context';
+import { DISPLAY_NAME, TooltipRootProvider } from './Tooltip.context';
 
 import { Trigger } from './components/Trigger';
 import { Portal } from './components/Portal';
@@ -39,11 +29,6 @@ const TooltipRoot = (props: TooltipRootProps) => {
   const [innerOpen, setInnerOpen] = useState(isDefaultOpen ?? false);
 
   const themeClassName = useThemeClassName<TooltipThemeType>(theme);
-
-  const themeContextValue = useMemo(
-    () => ({ themeClassName }),
-    [themeClassName]
-  );
 
   const open = isOpen ?? (!isDisabled && innerOpen);
 
@@ -70,34 +55,24 @@ const TooltipRoot = (props: TooltipRootProps) => {
 
   const isContentPointerDownRef = useRef(false);
 
-  const rootContextValue = useMemo(
-    () => ({
-      isOpen: open,
-      isDisabled,
-      isControlled: isOpen !== undefined,
-      onOpenChange: handleOpenChange,
-      isContentPointerDownRef,
-    }),
-    [open, isDisabled, isOpen, handleOpenChange]
-  );
-
   return (
-    <TooltipThemeContext.Provider value={themeContextValue}>
-      {/**
-       * Radix Root throws without a provider; Radix's default delay is 700 ms
-       */}
-      <RadixTooltipProvider delayDuration={0}>
-        <TooltipRootContext.Provider value={rootContextValue}>
-          <RadixTooltipRoot
-            {...rest}
-            open={open}
-            onOpenChange={handleOpenChange}
-          >
-            {children}
-          </RadixTooltipRoot>
-        </TooltipRootContext.Provider>
-      </RadixTooltipProvider>
-    </TooltipThemeContext.Provider>
+    /**
+     * Radix Root throws without a provider; Radix's default delay is 700 ms
+     */
+    <RadixTooltipProvider delayDuration={0}>
+      <TooltipRootProvider
+        themeClassName={themeClassName}
+        isOpen={open}
+        isDisabled={isDisabled}
+        isControlled={isOpen !== undefined}
+        onOpenChange={handleOpenChange}
+        isContentPointerDownRef={isContentPointerDownRef}
+      >
+        <RadixTooltipRoot {...rest} open={open} onOpenChange={handleOpenChange}>
+          {children}
+        </RadixTooltipRoot>
+      </TooltipRootProvider>
+    </RadixTooltipProvider>
   );
 };
 

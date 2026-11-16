@@ -1,8 +1,8 @@
-import React, { forwardRef, useContext, useEffect } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { Content as RadixTooltipContent } from '@radix-ui/react-tooltip';
 import cx from 'classnames';
 
-import { TooltipRootContext, TooltipThemeContext } from '../../Tooltip.context';
+import { useTooltipRootContext } from '../../Tooltip.context';
 
 import type { TooltipContentProps } from './Content.props';
 
@@ -14,8 +14,8 @@ export const Content = forwardRef<HTMLDivElement, TooltipContentProps>(
   (props, ref) => {
     const { children, className, onPointerDownCapture, ...rest } = props;
 
-    const { themeClassName } = useContext(TooltipThemeContext);
-    const { isContentPointerDownRef } = useContext(TooltipRootContext);
+    const { themeClassName, isContentPointerDownRef } =
+      useTooltipRootContext(DISPLAY_NAME);
 
     useEffect(
       () => () => {

@@ -1,6 +1,5 @@
 import React, {
   forwardRef,
-  useContext,
   useRef,
   type FocusEvent,
   type MouseEvent,
@@ -8,7 +7,7 @@ import React, {
 } from 'react';
 import { Trigger as RadixTooltipTrigger } from '@radix-ui/react-tooltip';
 
-import { TooltipRootContext } from '../../Tooltip.context';
+import { useTooltipRootContext } from '../../Tooltip.context';
 
 import type { TooltipTriggerProps } from './Trigger.props';
 
@@ -40,7 +39,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
       isControlled,
       onOpenChange,
       isContentPointerDownRef,
-    } = useContext(TooltipRootContext);
+    } = useTooltipRootContext(DISPLAY_NAME);
 
     /**
      * Open state at the touch `pointerdown`: Radix closes the tooltip on it,

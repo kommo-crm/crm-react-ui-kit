@@ -38,14 +38,11 @@ export type TooltipRootProps = Omit<
   theme: TooltipThemeType;
 };
 
-export type TooltipThemeContextProps = {
+export type TooltipRootContextProps = {
   /**
    * Class name holding the CSS custom properties of the theme.
    */
   themeClassName: string;
-};
-
-export type TooltipRootContextProps = {
   /**
    * Current open state of the tooltip.
    */
