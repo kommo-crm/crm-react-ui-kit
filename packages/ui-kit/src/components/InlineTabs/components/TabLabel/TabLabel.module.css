@@ -1,0 +1,15 @@
+.tabLabel {
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/**
+ * The measured width caps the label at the theme width; the tab grows from
+ * it in the panel.
+ */
+.measure {
+  max-width: var(--crm-ui-kit-inline-tabs-label-max-width);
+}

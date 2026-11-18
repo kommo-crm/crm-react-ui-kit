@@ -1,0 +1,22 @@
+.list {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: var(--crm-ui-kit-inline-tabs-height);
+  overflow: hidden;
+  background: var(--crm-ui-kit-inline-tabs-background);
+}
+
+.slider {
+  position: absolute;
+  bottom: 0;
+  height: var(--crm-ui-kit-inline-tabs-slider-height);
+  background: var(--crm-ui-kit-inline-tabs-slider-color);
+  pointer-events: none;
+
+  &[data-animated] {
+    transition:
+      left 0.2s ease,
+      width 0.1s;
+  }
+}

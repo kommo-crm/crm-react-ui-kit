@@ -1,0 +1,21 @@
+/**
+ * The list sets the basis to the width with the label capped at the theme
+ * width; the tab takes an equal share of the leftover width up to its full
+ * width, like the label widening in the card header.
+ */
+.tab {
+  display: flex;
+  flex: 1 0 auto;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: max-content;
+  height: 100%;
+
+  /**
+   * `display: flex` above overrides the `hidden` attribute of the tabs moved
+   * to the overflow menu.
+   */
+  &[hidden] {
+    display: none;
+  }
+}

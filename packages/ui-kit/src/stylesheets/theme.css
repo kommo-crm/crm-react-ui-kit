@@ -93,6 +93,11 @@
   --crm-ui-kit-color-mulled-wine: #53455d;
   --crm-ui-kit-color-apple-green: #e3f3ed;
   --crm-ui-kit-color-big-stone: #182a39;
+  --crm-ui-kit-color-cyprus: #203d49;
+  --crm-ui-kit-color-deep-cove: #03242f;
+  --crm-ui-kit-color-slate-green: #687a82;
+  --crm-ui-kit-color-lynch-green: #62757d;
+  --crm-ui-kit-color-river-bed: #39525d;
 
   --crm-ui-kit-palette-text-primary: var(--crm-ui-kit-color-onyx);
   --crm-ui-kit-palette-text-secondary-light: var(
@@ -220,6 +225,32 @@
 
   --crm-ui-kit-palette-progress-bar-track-color: var(--crm-ui-kit-color-cultured);
   --crm-ui-kit-palette-progress-bar-fill-color: var(--crm-ui-kit-color-blueberry);
+
+  --crm-ui-kit-palette-inline-tabs-text-color: var(
+    --crm-ui-kit-color-slate-green
+  );
+  --crm-ui-kit-palette-inline-tabs-primary-background: var(
+    --crm-ui-kit-color-cyprus
+  );
+  --crm-ui-kit-palette-inline-tabs-primary-hover-color: rgba(255, 255, 255, 0.6);
+  --crm-ui-kit-palette-inline-tabs-primary-selected-color: var(
+    --crm-ui-kit-color-white
+  );
+  --crm-ui-kit-palette-inline-tabs-primary-menu-separator-color: var(
+    --crm-ui-kit-color-river-bed
+  );
+  --crm-ui-kit-palette-inline-tabs-secondary-hover-color: var(
+    --crm-ui-kit-color-lynch-green
+  );
+  --crm-ui-kit-palette-inline-tabs-secondary-selected-color: var(
+    --crm-ui-kit-color-lynch-green
+  );
+  --crm-ui-kit-palette-inline-tabs-secondary-slider-color: var(
+    --crm-ui-kit-color-lynch-green
+  );
+  --crm-ui-kit-palette-inline-tabs-secondary-menu-selected-color: var(
+    --crm-ui-kit-color-cyprus
+  );
 }
 
 :root[data-crm-ui-kit-theme='alternative'] {
@@ -324,5 +355,12 @@
   );
   --crm-ui-kit-palette-progress-bar-fill-color: var(
     --crm-ui-kit-color-metallic-blue
+  );
+
+  --crm-ui-kit-palette-inline-tabs-primary-background: var(
+    --crm-ui-kit-color-deep-cove
+  );
+  --crm-ui-kit-palette-inline-tabs-secondary-menu-selected-color: var(
+    --crm-ui-kit-color-white
   );
 }

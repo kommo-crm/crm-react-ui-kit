@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./InlineTabs": "./dist/components/InlineTabs/index.js",
     "./AspectRatio": "./dist/components/AspectRatio/index.js",
     "./ProgressBar": "./dist/components/ProgressBar/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
@@ -42,6 +43,7 @@
     "./Ribbon": "./dist/components/Ribbon/index.js",
     "./Flex": "./dist/components/Flex/index.js",
     "./Skeleton": "./dist/components/Skeleton/index.js",
+    "./assets/InlineTabs.css": "./dist/assets/InlineTabs.css",
     "./assets/ProgressBar.css": "./dist/assets/ProgressBar.css",
     "./assets/Switcher.css": "./dist/assets/Switcher.css",
     "./assets/Select.css": "./dist/assets/Select.css",
@@ -71,6 +73,9 @@
   },
   "typesVersions": {
     "*": {
+      "InlineTabs": [
+        "./dist/components/InlineTabs/index.d.ts"
+      ],
       "AspectRatio": [
         "./dist/components/AspectRatio/index.d.ts"
       ],

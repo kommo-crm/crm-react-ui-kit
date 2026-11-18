@@ -1,0 +1,4 @@
+.counter {
+  flex-shrink: 0;
+  margin-left: var(--crm-ui-kit-inline-tabs-counter-spacing);
+}

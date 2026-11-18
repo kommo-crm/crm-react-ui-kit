@@ -1,0 +1,45 @@
+.content {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 100%;
+  font-family: inherit;
+}
+
+.panel {
+  padding: var(--crm-ui-kit-inline-tabs-trigger-padding);
+  color: var(--crm-ui-kit-inline-tabs-trigger-color);
+  font-size: var(--crm-ui-kit-base-font-size);
+  font-weight: var(--crm-ui-kit-inline-tabs-trigger-font-weight);
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+[data-state='active'] > .panel {
+  color: var(--crm-ui-kit-inline-tabs-trigger-selected-color);
+}
+
+.menu {
+  padding: var(--crm-ui-kit-inline-tabs-menu-item-padding);
+  color: var(--crm-ui-kit-inline-tabs-trigger-color);
+  font-weight: var(--crm-ui-kit-inline-tabs-trigger-font-weight);
+  transition: color 0.2s;
+}
+
+[data-selected] > .menu {
+  color: var(--crm-ui-kit-inline-tabs-menu-item-selected-color);
+}
+
+@media (hover: hover) {
+  [data-state='inactive']:hover > .panel {
+    color: var(--crm-ui-kit-inline-tabs-trigger-hover-color);
+  }
+
+  [data-highlighted]:not([data-selected]) > .menu {
+    color: var(--crm-ui-kit-inline-tabs-trigger-hover-color);
+  }
+}
