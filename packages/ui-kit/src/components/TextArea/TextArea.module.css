@@ -46,7 +46,7 @@
   }
 
   &::-webkit-scrollbar {
-    width: var(--crm-ui-kit-textarea-scrollbar-width);
+    width: var(--crm-ui-kit-textarea-scrollbar-width, 6px);
   }
 
   &::-webkit-scrollbar-track {
@@ -55,8 +55,12 @@
 
   /* Transparent border insets the thumb on every side */
   &::-webkit-scrollbar-thumb {
-    border: var(--crm-ui-kit-textarea-scrollbar-thumb-offset) solid transparent;
-    border-radius: var(--crm-ui-kit-textarea-scrollbar-thumb-border-radius);
+    border: var(--crm-ui-kit-textarea-scrollbar-thumb-offset, 1px) solid
+      transparent;
+    border-radius: var(
+      --crm-ui-kit-textarea-scrollbar-thumb-border-radius,
+      var(--crm-ui-kit-palette-scrollbar-thumb-border-radius)
+    );
     background: var(--crm-ui-kit-textarea-scrollbar-thumb-background);
     background-clip: padding-box;
   }

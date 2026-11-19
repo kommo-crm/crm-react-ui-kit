@@ -24,14 +24,22 @@ type TextAreaThemeKey =
   | '--crm-ui-kit-textarea-disabled-opacity'
   | '--crm-ui-kit-textarea-placeholder-color'
   | '--crm-ui-kit-textarea-background-color'
-  | '--crm-ui-kit-textarea-scrollbar-width'
   | '--crm-ui-kit-textarea-scrollbar-thumb-background'
-  | '--crm-ui-kit-textarea-scrollbar-thumb-offset'
-  | '--crm-ui-kit-textarea-scrollbar-thumb-border-radius'
   | '--crm-ui-kit-textarea-scrollbar-offset';
+
+/**
+ * Optional so that themes declared before these keys existed stay valid;
+ * the stylesheet falls back to the base theme values.
+ */
+type TextAreaThemeOptionalKey =
+  | '--crm-ui-kit-textarea-scrollbar-width'
+  | '--crm-ui-kit-textarea-scrollbar-thumb-offset'
+  | '--crm-ui-kit-textarea-scrollbar-thumb-border-radius';
 
 export type TextAreaTheme = {
   [K in TextAreaThemeKey]: string;
+} & {
+  [K in TextAreaThemeOptionalKey]?: string;
 };
 
 const TextAreaBaseValues: Omit<
