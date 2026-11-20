@@ -5,6 +5,7 @@ import MoreIcon from '@ui-kit/icons/more.svg';
 
 import { ContextMenu } from '../../../ContextMenu';
 import { InlineTabsContext } from '../../InlineTabs.context';
+import { InlineTabsMenuTheme } from '../../InlineTabs.themes';
 import {
   ListPlacementProvider,
   useListOverflowContext,
@@ -36,7 +37,11 @@ export const OverflowTab = () => {
   );
 
   return (
-    <ContextMenu.Root mode="hover" onOpen={onOpenChange}>
+    <ContextMenu.Root
+      theme={InlineTabsMenuTheme}
+      mode="hover"
+      onOpen={onOpenChange}
+    >
       <ContextMenu.Trigger ref={overflowRef} className={s.overflowTab}>
         <MoreIcon className={s.icon} aria-hidden />
         <Counter count={hiddenCount} />

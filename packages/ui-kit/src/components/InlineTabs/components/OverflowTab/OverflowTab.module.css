@@ -20,26 +20,15 @@
   flex-shrink: 0;
 }
 
-/**
- * The kit ContextMenu styles come from a sibling stylesheet with the same
- * specificity as a single class, so the selectors are doubled to win
- * regardless of the stylesheet order.
- */
-.menu.menu {
+.menu {
   box-sizing: border-box;
   max-width: var(--crm-ui-kit-inline-tabs-menu-max-width);
-  border: 0;
-  border-radius: 0;
-  background: var(--crm-ui-kit-inline-tabs-background);
-  box-shadow: none;
 }
 
-.menu .menuItem.menuItem {
+.menuItem {
   box-sizing: border-box;
   height: var(--crm-ui-kit-inline-tabs-menu-item-height);
-  padding: 0;
   border-top: 1px solid var(--crm-ui-kit-inline-tabs-menu-item-separator-color);
-  background: var(--crm-ui-kit-inline-tabs-background);
 
   &:first-child {
     border-top: 0;
