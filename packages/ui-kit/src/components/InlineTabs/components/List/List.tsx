@@ -1,0 +1,140 @@
+import React, {
+  forwardRef,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { List as RadixTabsList } from '@radix-ui/react-tabs';
+import cx from 'classnames';
+
+import { mergeRefs } from '@ui-kit/lib/utils';
+
+import { InlineTabsContext } from '../../InlineTabs.context';
+import { OverflowTab } from '../OverflowTab';
+
+import { useTabsLayout } from './hooks/useTabsLayout';
+import { useSlider } from './hooks/useSlider';
+
+import { parseListChildren } from './utils';
+
+import { MeasureLayer } from './components/MeasureLayer';
+import { PanelTab } from './components/PanelTab';
+
+import { type ListProps } from './List.props';
+import { ListOverflowProvider } from './List.context';
+
+import s from './List.module.css';
+
+type El = HTMLDivElement;
+
+export const List = forwardRef<El, ListProps>((props, ref) => {
+  const { className, children, ...rest } = props;
+
+  const { value } = useContext(InlineTabsContext);
+
+  const { tabs, listChildren } = parseListChildren(children);
+
+  const listRef = useRef<El>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
+  const overflowRef = useRef<HTMLButtonElement>(null);
+  const mergedRef = useMemo(() => mergeRefs(listRef, ref), [ref]);
+
+  const { visibleCount, tabWidths, isSettled } = useTabsLayout({
+    panelRef: listRef,
+    measureLayerRef: measureRef,
+    overflowButtonRef: overflowRef,
+    tabValues: tabs.map((tab) => tab.props.value),
+  });
+
+  const selectedTabRef = useRef<HTMLElement | null>(null);
+
+  /**
+   * A callback ref: the Radix trigger types its ref as a button, while the
+   * element under it is the tab div.
+   */
+  const setSelectedTab = useCallback((node: HTMLElement | null) => {
+    selectedTabRef.current = node;
+  }, []);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleMenuOpen = useCallback((isOpen: boolean) => {
+    setIsMenuOpen(isOpen);
+  }, []);
+
+  /**
+   * A menu item resets the refs inside its tab on unmount; a new key remounts
+   * the panel tab to attach them back.
+   */
+  const [menuGenerations, setMenuGenerations] = useState<
+    Record<string, number>
+  >({});
+  const handleMenuItemUnmount = useCallback((tabValue: string) => {
+    setMenuGenerations((generations) => ({
+      ...generations,
+      [tabValue]: (generations[tabValue] ?? 0) + 1,
+    }));
+  }, []);
+
+  const hiddenTabs = tabs.slice(visibleCount);
+
+  /** The menu unmounts with the overflow button without reporting onOpen(false). */
+  if (isMenuOpen && hiddenTabs.length === 0) {
+    setIsMenuOpen(false);
+  }
+
+  const slider = useSlider({
+    panelRef: listRef,
+    selectedTabRef,
+    overflowButtonRef: overflowRef,
+    value,
+    isSelectedHidden: hiddenTabs.some((tab) => tab.props.value === value),
+    isEnabled: isSettled,
+  });
+
+  return (
+    <RadixTabsList ref={mergedRef} className={cx(s.list, className)} {...rest}>
+      <MeasureLayer ref={measureRef} tabs={tabs} />
+
+      <ListOverflowProvider
+        hiddenTabs={hiddenTabs}
+        overflowRef={overflowRef}
+        onOpenChange={handleMenuOpen}
+        onMenuItemUnmount={handleMenuItemUnmount}
+      >
+        {listChildren.map((child) => {
+          if (child.kind === 'tab') {
+            const { tab, tabIndex } = child;
+
+            return (
+              <PanelTab
+                key={`tab:${tab.props.value}:${menuGenerations[tab.props.value] ?? 0}`}
+                tab={tab}
+                width={tabWidths[tabIndex]}
+                isHidden={tabIndex >= visibleCount}
+                tabRef={tab.props.value === value ? setSelectedTab : undefined}
+              />
+            );
+          }
+
+          return <React.Fragment key={child.key}>{child.node}</React.Fragment>;
+        })}
+
+        <OverflowTab />
+      </ListOverflowProvider>
+
+      {slider && !isMenuOpen && (
+        <span
+          className={s.slider}
+          data-inline-tabs-slider=""
+          data-animated={slider.animated ? '' : undefined}
+          style={{ left: slider.left, width: slider.width }}
+          aria-hidden
+        />
+      )}
+    </RadixTabsList>
+  );
+});
+
+List.displayName = 'InlineTabs.List';

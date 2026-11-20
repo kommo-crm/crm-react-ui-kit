@@ -1,0 +1,31 @@
+import { Title, Meta } from '@storybook/blocks';
+import * as InlineTabsStories from './InlineTabs.stories';
+import { ThemeVisualization } from '@storybook-utils/components';
+import { InlineTabsPrimaryTheme, InlineTabsSecondaryTheme } from '..';
+import { i18n } from '@i18n';
+
+<Meta title="Components/InlineTabs/Themes" of={InlineTabsStories} />
+
+<Title>{i18n.t('Themes')}</Title>
+
+## InlineTabsPrimaryTheme
+
+```jsx
+import { InlineTabsPrimaryTheme } from '@kommo-crm/crm-react-ui-kit/InlineTabs';
+```
+
+<ThemeVisualization
+  theme={InlineTabsPrimaryTheme}
+  of={InlineTabsStories.InlineTabsPrimary}
+/>
+
+## InlineTabsSecondaryTheme
+
+```jsx
+import { InlineTabsSecondaryTheme } from '@kommo-crm/crm-react-ui-kit/InlineTabs';
+```
+
+<ThemeVisualization
+  theme={InlineTabsSecondaryTheme}
+  of={InlineTabsStories.InlineTabsSecondary}
+/>

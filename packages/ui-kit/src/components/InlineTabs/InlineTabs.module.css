@@ -1,0 +1,4 @@
+.inlineTabs {
+  display: flex;
+  flex-direction: column;
+}

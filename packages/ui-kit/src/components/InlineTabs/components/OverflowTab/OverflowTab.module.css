@@ -1,0 +1,36 @@
+.overflowTab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--crm-ui-kit-inline-tabs-overflow-width);
+  height: 100%;
+  margin: 0 0 0 auto;
+  padding: var(--crm-ui-kit-inline-tabs-trigger-padding);
+  border: none;
+  background: transparent;
+  color: var(--crm-ui-kit-inline-tabs-trigger-color);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.menu {
+  box-sizing: border-box;
+  max-width: var(--crm-ui-kit-inline-tabs-menu-max-width);
+}
+
+.menuItem {
+  box-sizing: border-box;
+  height: var(--crm-ui-kit-inline-tabs-menu-item-height);
+  border-top: 1px solid var(--crm-ui-kit-inline-tabs-menu-item-separator-color);
+
+  &:first-child {
+    border-top: 0;
+  }
+}
