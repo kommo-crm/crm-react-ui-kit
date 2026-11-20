@@ -695,7 +695,7 @@ describe('InlineTabs', () => {
   it('should render the parts outside List without errors', () => {
     render(
       <>
-        <InlineTabs.Tab value="a" counter={2}>
+        <InlineTabs.Tab value="a" id="custom-a" counter={2}>
           <InlineTabs.TabMenuIcon data-testid="icon" />
           <InlineTabs.TabLabel>A</InlineTabs.TabLabel>
         </InlineTabs.Tab>
@@ -706,6 +706,7 @@ describe('InlineTabs', () => {
     expect(screen.getByText('2')).toBeInTheDocument();
     expect(screen.queryByTestId('icon')).not.toBeInTheDocument();
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(document.getElementById('custom-a')).toHaveTextContent('A');
   });
 
   describe('overflow menu', () => {
