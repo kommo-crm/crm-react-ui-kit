@@ -12,6 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./Grid": "./dist/components/Grid/index.js",
     "./AspectRatio": "./dist/components/AspectRatio/index.js",
     "./ProgressBar": "./dist/components/ProgressBar/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
@@ -71,6 +72,9 @@
   },
   "typesVersions": {
     "*": {
+      "Grid": [
+        "./dist/components/Grid/index.d.ts"
+      ],
       "AspectRatio": [
         "./dist/components/AspectRatio/index.d.ts"
       ],
