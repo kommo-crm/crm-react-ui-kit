@@ -220,6 +220,44 @@ describe('ScrollArea', () => {
     expect(viewport).toHaveStyle({ overflowY: 'scroll' });
   });
 
+  describe('thumb fallback', () => {
+    const sizeVar = '--crm-ui-kit-scroll-area-fallback-thumb-size';
+    const offsetVar = '--crm-ui-kit-scroll-area-fallback-thumb-offset';
+
+    beforeEach(() => {
+      jest.spyOn(Element.prototype, 'scrollHeight', 'get').mockReturnValue(300);
+      jest.spyOn(Element.prototype, 'clientHeight', 'get').mockReturnValue(100);
+      jest
+        .spyOn(HTMLElement.prototype, 'offsetHeight', 'get')
+        .mockReturnValue(100);
+    });
+
+    it('should draw the thumb on mount before Radix measures the scrollbar with type="auto"', () => {
+      const { root } = renderScrollArea({});
+      const scrollbar = getScrollbar(root) as HTMLElement;
+
+      expect(root).toHaveAttribute('data-overflow');
+      expect(scrollbar).toHaveAttribute('data-state', 'hidden');
+      expect(scrollbar.style.getPropertyValue(sizeVar)).toBe(
+        `${(100 * 100) / 300}px`
+      );
+      expect(scrollbar.style.getPropertyValue(offsetVar)).toBe('0px');
+    });
+
+    it('should not draw the thumb with isScrollbarHidden', () => {
+      const { root } = renderScrollArea({ isScrollbarHidden: true });
+
+      expect(root).not.toHaveAttribute('data-overflow');
+    });
+
+    it('should not draw the thumb with type="hover"', () => {
+      const { root } = renderScrollArea({ type: 'hover' });
+
+      expect(root).not.toHaveAttribute('data-overflow');
+      expect(getScrollbar(root)).not.toBeInTheDocument();
+    });
+  });
+
   it.each([
     {
       scrollTop: 0,
