@@ -387,7 +387,7 @@ describe('InlineTabs', () => {
     expect(getTabContent(screen.getByRole('menuitem'))).toHaveClass('custom-b');
   });
 
-  it('should render the Tab id once when the tab is in the menu', async () => {
+  it('should keep the Tab id only on the panel copy', async () => {
     mockLayout({ visibleCount: 1 });
 
     render(
@@ -407,6 +407,9 @@ describe('InlineTabs', () => {
 
     expect(document.querySelectorAll('#custom-a')).toHaveLength(1);
     expect(document.querySelectorAll('#custom-b')).toHaveLength(1);
+    expect(
+      document.getElementById('custom-b')?.closest('[role="tab"]')
+    ).toHaveAttribute('hidden');
     expect(getTabContent(getTab('A'))).toHaveAttribute('id', 'custom-a');
     expect(getTabContent(screen.getByRole('menuitem'))).not.toHaveAttribute(
       'id'
