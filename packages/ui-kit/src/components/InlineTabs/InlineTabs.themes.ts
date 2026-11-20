@@ -10,6 +10,7 @@ type InlineTabsThemeKey =
   | '--crm-ui-kit-inline-tabs-trigger-hover-color'
   | '--crm-ui-kit-inline-tabs-trigger-selected-color'
   | '--crm-ui-kit-inline-tabs-trigger-font-weight'
+  | '--crm-ui-kit-inline-tabs-trigger-line-height'
   | '--crm-ui-kit-inline-tabs-label-max-width'
   | '--crm-ui-kit-inline-tabs-counter-spacing'
   | '--crm-ui-kit-inline-tabs-slider-height'
@@ -31,6 +32,7 @@ const InlineTabsBaseThemeValues = {
   '--crm-ui-kit-inline-tabs-trigger-color':
     'var(--crm-ui-kit-palette-inline-tabs-text-color)',
   '--crm-ui-kit-inline-tabs-trigger-font-weight': '700',
+  '--crm-ui-kit-inline-tabs-trigger-line-height': '20px',
   '--crm-ui-kit-inline-tabs-label-max-width': '65px',
   '--crm-ui-kit-inline-tabs-counter-spacing': '4px',
   '--crm-ui-kit-inline-tabs-slider-height': '3px',

@@ -13,7 +13,7 @@
   color: var(--crm-ui-kit-inline-tabs-trigger-color);
   font-size: var(--crm-ui-kit-base-font-size);
   font-weight: var(--crm-ui-kit-inline-tabs-trigger-font-weight);
-  line-height: 20px;
+  line-height: var(--crm-ui-kit-inline-tabs-trigger-line-height);
   white-space: nowrap;
   cursor: pointer;
   transition: color 0.2s;
