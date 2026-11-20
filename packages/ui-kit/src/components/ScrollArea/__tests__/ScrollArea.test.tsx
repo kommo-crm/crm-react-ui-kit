@@ -46,21 +46,25 @@ beforeAll(() => {
     ResizeObserverMock as unknown as typeof ResizeObserver;
 });
 
-const renderScrollArea = (
-  props: Partial<React.ComponentPropsWithRef<typeof ScrollArea>>
-) => {
+type ScrollAreaTestProps = Partial<
+  React.ComponentPropsWithRef<typeof ScrollArea>
+>;
+
+const renderScrollArea = (props: ScrollAreaTestProps) => {
   const handleMockFn = jest.fn();
 
-  render(
+  const renderElement = (elementProps: ScrollAreaTestProps) => (
     <ScrollArea
       data-testid={viewportTestId}
       theme={ScrollAreaSurfaceTheme}
       onScroll={handleMockFn}
-      {...props}
+      {...elementProps}
     >
-      {props.children ?? 'Content'}
+      {elementProps.children ?? 'Content'}
     </ScrollArea>
   );
+
+  const { rerender } = render(renderElement(props));
 
   const viewport = screen.getByTestId(viewportTestId);
 
@@ -68,6 +72,8 @@ const renderScrollArea = (
     handleMockFn,
     viewport,
     root: viewport.parentElement as HTMLElement,
+    rerender: (nextProps: ScrollAreaTestProps) =>
+      rerender(renderElement(nextProps)),
   };
 };
 
@@ -242,6 +248,39 @@ describe('ScrollArea', () => {
         `${(100 * 100) / 300}px`
       );
       expect(scrollbar.style.getPropertyValue(offsetVar)).toBe('0px');
+    });
+
+    it('should move the thumb on scroll', () => {
+      const { root, viewport } = renderScrollArea({});
+
+      scrollViewport(viewport, 100);
+
+      const size = (100 * 100) / 300;
+
+      expect(
+        (getScrollbar(root) as HTMLElement).style.getPropertyValue(offsetVar)
+      ).toBe(`${(100 / 200) * (100 - size)}px`);
+    });
+
+    it('should clear the thumb when the scrollbar gets hidden', () => {
+      const { root, rerender } = renderScrollArea({});
+      const scrollbar = getScrollbar(root) as HTMLElement;
+
+      rerender({ isScrollbarHidden: true });
+
+      expect(root).not.toHaveAttribute('data-overflow');
+      expect(scrollbar.style.getPropertyValue(sizeVar)).toBe('');
+      expect(scrollbar.style.getPropertyValue(offsetVar)).toBe('');
+    });
+
+    it('should draw the thumb on the new scrollbar when type changes from "auto" to "always"', () => {
+      const { root, rerender } = renderScrollArea({});
+
+      rerender({ type: 'always' });
+
+      expect(
+        (getScrollbar(root) as HTMLElement).style.getPropertyValue(sizeVar)
+      ).toBe(`${(100 * 100) / 300}px`);
     });
 
     it('should not draw the thumb with isScrollbarHidden', () => {
