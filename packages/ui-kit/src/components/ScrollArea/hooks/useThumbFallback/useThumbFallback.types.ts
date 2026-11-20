@@ -22,7 +22,7 @@ export interface UseThumbFallbackOptions {
   viewportRef: RefObject<HTMLDivElement>;
   /**
    * The track the thumb moves in, receives the measured geometry
-   * as CSS variables.
+   * as CSS variables and `data-thumb-fallback`.
    */
   scrollbarRef: RefObject<HTMLDivElement>;
 }

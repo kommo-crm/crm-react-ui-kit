@@ -108,10 +108,10 @@
  * Radix sizes the thumb a few frames after mount and sets a wrong inline
  * height and transform until then, so the fallback overrides them.
  */
-.scroll_area[data-overflow] > .scrollbar[data-state='hidden'] {
+.scrollbar[data-thumb-fallback][data-state='hidden'] {
   visibility: visible;
 }
-.scroll_area[data-overflow] .thumb[data-state='hidden'] {
+.scrollbar[data-thumb-fallback] .thumb[data-state='hidden'] {
   visibility: visible;
   height: var(--crm-ui-kit-scroll-area-fallback-thumb-size) !important;
   transform: translateY(

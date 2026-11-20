@@ -13,10 +13,16 @@ const MIN_THUMB_SIZE = 18;
 const SIZE_VAR = '--crm-ui-kit-scroll-area-fallback-thumb-size';
 const OFFSET_VAR = '--crm-ui-kit-scroll-area-fallback-thumb-offset';
 
-const clearThumb = (root: HTMLElement, scrollbar: HTMLElement | null) => {
-  root.removeAttribute('data-overflow');
+const clearThumb = (scrollbar: HTMLElement | null) => {
+  scrollbar?.removeAttribute('data-thumb-fallback');
   scrollbar?.style.removeProperty(SIZE_VAR);
   scrollbar?.style.removeProperty(OFFSET_VAR);
+};
+
+const setOverflow = (root: HTMLElement, hasOverflow: boolean) => {
+  if (root.hasAttribute('data-overflow') !== hasOverflow) {
+    root.toggleAttribute('data-overflow', hasOverflow);
+  }
 };
 
 /**
@@ -34,22 +40,24 @@ export const useThumbFallback = (
 ): UseThumbFallbackResult => {
   const { isEnabled, type, rootRef, viewportRef, scrollbarRef } = options;
 
-  const updateThumb = useCallback(() => {
-    const root = rootRef.current;
+  /**
+   * Returns whether the content overflows, or null when nothing was measured.
+   */
+  const drawThumb = useCallback((): boolean | null => {
     const viewport = viewportRef.current;
     const scrollbar = scrollbarRef.current;
 
-    if (!isEnabled || !root || !viewport || !scrollbar) {
-      return;
+    if (!isEnabled || !viewport || !scrollbar) {
+      return null;
     }
 
     const { scrollTop, scrollHeight, offsetHeight } = viewport;
     const maxScrollPos = scrollHeight - offsetHeight;
 
     if (maxScrollPos <= 0) {
-      clearThumb(root, scrollbar);
+      clearThumb(scrollbar);
 
-      return;
+      return false;
     }
 
     const style = getComputedStyle(scrollbar);
@@ -75,10 +83,21 @@ export const useThumbFallback = (
     scrollbar.style.setProperty(SIZE_VAR, `${size}px`);
     scrollbar.style.setProperty(OFFSET_VAR, `${offset}px`);
 
-    if (!root.hasAttribute('data-overflow')) {
-      root.setAttribute('data-overflow', '');
+    if (!scrollbar.hasAttribute('data-thumb-fallback')) {
+      scrollbar.setAttribute('data-thumb-fallback', '');
     }
-  }, [isEnabled, rootRef, viewportRef, scrollbarRef]);
+
+    return true;
+  }, [isEnabled, viewportRef, scrollbarRef]);
+
+  const updateThumb = useCallback(() => {
+    const root = rootRef.current;
+    const hasOverflow = drawThumb();
+
+    if (root && hasOverflow !== null) {
+      setOverflow(root, hasOverflow);
+    }
+  }, [drawThumb, rootRef]);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -89,7 +108,8 @@ export const useThumbFallback = (
     }
 
     if (!isEnabled) {
-      clearThumb(root, scrollbarRef.current);
+      setOverflow(root, false);
+      clearThumb(scrollbarRef.current);
 
       return;
     }
@@ -100,10 +120,19 @@ export const useThumbFallback = (
       return;
     }
 
+    let frameId = 0;
+
     /**
-     * Unlike the Radix one, the callback is not deferred to the next frame.
+     * Unlike the Radix one, the thumb is drawn without waiting for the next
+     * frame. data-overflow changes the viewport padding, so it is deferred:
+     * resizing an observed element inside the callback makes the browser
+     * report "ResizeObserver loop completed with undelivered notifications".
      */
-    const resizeObserver = new ResizeObserver(updateThumb);
+    const resizeObserver = new ResizeObserver(() => {
+      drawThumb();
+      cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(updateThumb);
+    });
 
     resizeObserver.observe(viewport);
 
@@ -116,9 +145,18 @@ export const useThumbFallback = (
     }
 
     return () => {
+      cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
     };
-  }, [isEnabled, type, updateThumb, rootRef, viewportRef, scrollbarRef]);
+  }, [
+    isEnabled,
+    type,
+    drawThumb,
+    updateThumb,
+    rootRef,
+    viewportRef,
+    scrollbarRef,
+  ]);
 
   return { updateThumb };
 };
