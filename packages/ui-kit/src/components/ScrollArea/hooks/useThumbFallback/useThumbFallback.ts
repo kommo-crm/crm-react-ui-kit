@@ -53,10 +53,14 @@ export const useThumbFallback = (
     }
 
     const style = getComputedStyle(scrollbar);
+    /**
+     * parseInt, not parseFloat: Radix truncates the padding the same way,
+     * otherwise the thumb jumps by a subpixel when Radix takes over.
+     */
     const track =
       scrollbar.clientHeight -
-      parseFloat(style.paddingTop) -
-      parseFloat(style.paddingBottom);
+      (parseInt(style.paddingTop) || 0) -
+      (parseInt(style.paddingBottom) || 0);
     const size = Math.max(
       (track * offsetHeight) / scrollHeight,
       MIN_THUMB_SIZE
