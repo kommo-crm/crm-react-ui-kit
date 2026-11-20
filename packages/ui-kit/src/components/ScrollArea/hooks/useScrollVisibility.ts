@@ -1,4 +1,10 @@
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import {
+  type RefObject,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { type ScrollAreaVisibilityState } from '../ScrollArea.props';
 
@@ -15,6 +21,10 @@ interface UseScrollVisibilityOptions {
    */
   isEnabled: boolean;
   /**
+   * The scrolled element.
+   */
+  viewportRef: RefObject<HTMLDivElement>;
+  /**
    * Called with the first measured state and then on every change.
    */
   onChange?: (state: ScrollAreaVisibilityState) => void;
@@ -26,11 +36,9 @@ interface UseScrollVisibilityOptions {
  * `scrollTop` does not reach the maximum exactly.
  */
 export const useScrollVisibility = (options: UseScrollVisibilityOptions) => {
-  const { isEnabled, onChange } = options;
+  const { isEnabled, viewportRef, onChange } = options;
 
   const [state, setState] = useState(INITIAL_STATE);
-
-  const viewportRef = useRef<HTMLDivElement>(null);
 
   /**
    * The last state passed to onChange; null until the first measurement.
@@ -76,7 +84,7 @@ export const useScrollVisibility = (options: UseScrollVisibilityOptions) => {
     reportedStateRef.current = nextState;
     setState(nextState);
     onChangeRef.current?.(nextState);
-  }, [isEnabled]);
+  }, [isEnabled, viewportRef]);
 
   useLayoutEffect(() => {
     const viewport = viewportRef.current;
@@ -106,11 +114,10 @@ export const useScrollVisibility = (options: UseScrollVisibilityOptions) => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [isEnabled, updateVisibility]);
+  }, [isEnabled, updateVisibility, viewportRef]);
 
   return {
     ...state,
-    viewportRef,
     updateVisibility,
   };
 };

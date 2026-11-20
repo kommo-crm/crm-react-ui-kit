@@ -42,7 +42,7 @@
  * With hover and scroll types it appears temporarily, so the offset
  * would shift the layout on every appearance.
  */
-.scroll_area:is([data-type='auto'], [data-type='always'])
+.scroll_area:is([data-type='always'], [data-type='auto'][data-overflow])
   > .scrollbar:not(.scrollbar_hidden)
   ~ .viewport {
   padding-right: var(--crm-ui-kit-scroll-area-scrollbar-offset);
@@ -93,6 +93,30 @@
 
 .scrollbar_hidden {
   display: none;
+}
+
+/**
+ * With forceMount the scrollbar stays in the DOM without overflow.
+ * Hidden by visibility, not display: the fallback measures the track height.
+ */
+.scrollbar[data-state='hidden'],
+.thumb[data-state='hidden'] {
+  visibility: hidden;
+}
+
+/**
+ * Radix sizes the thumb a few frames after mount and sets a wrong inline
+ * height and transform until then, so the fallback overrides them.
+ */
+.scroll_area[data-overflow] > .scrollbar[data-state='hidden'] {
+  visibility: visible;
+}
+.scroll_area[data-overflow] .thumb[data-state='hidden'] {
+  visibility: visible;
+  height: var(--crm-ui-kit-scroll-area-fallback-thumb-size) !important;
+  transform: translateY(
+    var(--crm-ui-kit-scroll-area-fallback-thumb-offset)
+  ) !important;
 }
 
 /* Radix sets the thumb height inline, flex only stretches it across the track width */

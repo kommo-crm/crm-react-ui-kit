@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useMemo, useRef } from 'react';
 import cx from 'classnames';
 import * as RadixScrollArea from '@radix-ui/react-scroll-area';
 
@@ -6,7 +6,7 @@ import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
 import { mergeRefs } from '@ui-kit/lib/utils';
 
-import { useScrollVisibility } from './hooks';
+import { useScrollVisibility, useThumbFallback } from './hooks';
 
 import { type ScrollAreaProps } from './ScrollArea.props';
 import { type ScrollAreaThemeType } from './ScrollArea.themes';
@@ -35,33 +35,46 @@ export const ScrollArea = forwardRef<El, ScrollAreaProps>((props, ref) => {
   const isVisibilityTracked =
     isFadeEnabled || Boolean(onScrollVisibilityChange);
 
-  const {
-    isContentClippedAtTop,
-    isContentClippedAtBottom,
-    viewportRef,
-    updateVisibility,
-  } = useScrollVisibility({
-    isEnabled: isVisibilityTracked,
-    onChange: onScrollVisibilityChange,
-  });
+  const rootRef = useRef<El>(null);
+  const viewportRef = useRef<El>(null);
+  const scrollbarRef = useRef<El>(null);
 
   /**
    * A new merged callback on every render would make React detach
    * and reattach every ref, including the consumer's one.
    */
-  const mergedViewportRef = useMemo(
-    () => mergeRefs(viewportRef, ref),
-    [viewportRef, ref]
-  );
+  const mergedViewportRef = useMemo(() => mergeRefs(viewportRef, ref), [ref]);
+
+  const { isContentClippedAtTop, isContentClippedAtBottom, updateVisibility } =
+    useScrollVisibility({
+      isEnabled: isVisibilityTracked,
+      viewportRef,
+      onChange: onScrollVisibilityChange,
+    });
+
+  /**
+   * With hover and scroll types Radix hides the scrollbar on its own timers,
+   * a permanently mounted one would break them.
+   */
+  const isScrollbarPersistent = type === 'auto' || type === 'always';
+
+  const { updateThumb } = useThumbFallback({
+    isEnabled: isScrollbarPersistent && !isScrollbarHidden,
+    rootRef,
+    viewportRef,
+    scrollbarRef,
+  });
 
   const handleScroll = (event: React.UIEvent<El>) => {
     onScroll?.(event);
     updateVisibility();
+    updateThumb();
   };
 
   return (
     <RadixScrollArea.Root
       className={cx(s.scroll_area, themeClassName, className)}
+      ref={rootRef}
       style={style}
       type={type}
       scrollHideDelay={scrollHideDelay}
@@ -72,12 +85,17 @@ export const ScrollArea = forwardRef<El, ScrollAreaProps>((props, ref) => {
       }
     >
       <RadixScrollArea.Scrollbar
+        ref={scrollbarRef}
+        forceMount={isScrollbarPersistent || undefined}
         orientation="vertical"
         className={cx(s.scrollbar, {
           [s.scrollbar_hidden]: isScrollbarHidden,
         })}
       >
-        <RadixScrollArea.Thumb className={s.thumb} />
+        <RadixScrollArea.Thumb
+          forceMount={isScrollbarPersistent || undefined}
+          className={s.thumb}
+        />
       </RadixScrollArea.Scrollbar>
       <RadixScrollArea.Viewport
         ref={mergedViewportRef}
