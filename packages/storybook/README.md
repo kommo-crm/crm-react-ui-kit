@@ -10,10 +10,10 @@ Storybook documentation app for `@kommo-crm/crm-react-ui-kit`.
 
 ## Commands
 
-| Command | Description |
-| --- | --- |
-| `yarn storybook` | Start Storybook dev server on port 6006 |
-| `yarn build-storybook` | Build static Storybook |
+| Command                | Description                             |
+| ---------------------- | --------------------------------------- |
+| `yarn storybook`       | Start Storybook dev server on port 6006 |
+| `yarn build-storybook` | Build static Storybook                  |
 
 ## Docker Build
 

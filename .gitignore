@@ -79,6 +79,7 @@ e2e-results.json
 __diff_output__
 e2e-result.json
 packages/ui-kit/LICENCE
+packages/tokens/LICENCE
 
 # turborepo build output
 .turbo
