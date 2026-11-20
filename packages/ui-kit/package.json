@@ -1,7 +1,7 @@
 {
   "name": "@kommo-crm/crm-react-ui-kit",
   "description": "Ready-to-use React components which implements Kommo design",
-  "version": "1.25.0",
+  "version": "1.28.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
@@ -13,6 +13,7 @@
       "import": "./dist/index.js"
     },
     "./InlineTabs": "./dist/components/InlineTabs/index.js",
+    "./Grid": "./dist/components/Grid/index.js",
     "./AspectRatio": "./dist/components/AspectRatio/index.js",
     "./ProgressBar": "./dist/components/ProgressBar/index.js",
     "./Switcher": "./dist/components/Switcher/index.js",
@@ -75,6 +76,9 @@
     "*": {
       "InlineTabs": [
         "./dist/components/InlineTabs/index.d.ts"
+      ],
+      "Grid": [
+        "./dist/components/Grid/index.d.ts"
       ],
       "AspectRatio": [
         "./dist/components/AspectRatio/index.d.ts"
