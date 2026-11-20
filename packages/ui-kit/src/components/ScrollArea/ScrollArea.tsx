@@ -60,6 +60,7 @@ export const ScrollArea = forwardRef<El, ScrollAreaProps>((props, ref) => {
 
   const { updateThumb } = useThumbFallback({
     isEnabled: isScrollbarPersistent && !isScrollbarHidden,
+    type,
     rootRef,
     viewportRef,
     scrollbarRef,

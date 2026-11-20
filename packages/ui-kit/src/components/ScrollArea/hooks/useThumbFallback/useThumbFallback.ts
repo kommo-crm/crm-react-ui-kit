@@ -32,7 +32,7 @@ const clearThumb = (root: HTMLElement, scrollbar: HTMLElement | null) => {
 export const useThumbFallback = (
   options: UseThumbFallbackOptions
 ): UseThumbFallbackResult => {
-  const { isEnabled, rootRef, viewportRef, scrollbarRef } = options;
+  const { isEnabled, type, rootRef, viewportRef, scrollbarRef } = options;
 
   const updateThumb = useCallback(() => {
     const root = rootRef.current;
@@ -118,7 +118,7 @@ export const useThumbFallback = (
     return () => {
       resizeObserver.disconnect();
     };
-  }, [isEnabled, updateThumb, rootRef, viewportRef, scrollbarRef]);
+  }, [isEnabled, type, updateThumb, rootRef, viewportRef, scrollbarRef]);
 
   return { updateThumb };
 };
