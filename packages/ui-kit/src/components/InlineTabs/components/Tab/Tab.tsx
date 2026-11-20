@@ -28,10 +28,12 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>((props, ref) => {
 
   /**
    * The panel copy stays in the DOM even while the tab is in the menu,
-   * so only it gets the id: the others would duplicate it.
+   * so the menu and measure copies drop the id to keep it unique.
    */
   const omittedProps: (keyof typeof rest)[] =
-    placement === 'panel' ? ['value'] : ['value', 'id'];
+    placement === 'menu' || placement === 'measure'
+      ? ['value', 'id']
+      : ['value'];
 
   return (
     <div
