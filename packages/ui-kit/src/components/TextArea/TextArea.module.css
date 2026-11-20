@@ -46,6 +46,7 @@
   }
 
   &::-webkit-scrollbar {
+    /* @uikit-v2 Issue: #131 */
     width: var(--crm-ui-kit-textarea-scrollbar-width, 6px);
   }
 
@@ -55,8 +56,10 @@
 
   /* Transparent border insets the thumb on every side */
   &::-webkit-scrollbar-thumb {
+    /* @uikit-v2 Issue: #131 */
     border: var(--crm-ui-kit-textarea-scrollbar-thumb-offset, 1px) solid
       transparent;
+    /* @uikit-v2 Issue: #131 */
     border-radius: var(
       --crm-ui-kit-textarea-scrollbar-thumb-border-radius,
       var(--crm-ui-kit-palette-scrollbar-thumb-border-radius)

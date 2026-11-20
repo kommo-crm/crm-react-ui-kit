@@ -31,6 +31,7 @@ type TextAreaThemeKey =
  * Optional so that themes declared before these keys existed stay valid;
  * the stylesheet falls back to the base theme values.
  */
+// @uikit-v2 Issue: #131
 type TextAreaThemeOptionalKey =
   | '--crm-ui-kit-textarea-scrollbar-width'
   | '--crm-ui-kit-textarea-scrollbar-thumb-offset'
