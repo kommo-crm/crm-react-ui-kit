@@ -1,0 +1,7 @@
+.arrow {
+  fill: var(--crm-ui-kit-tooltip-background);
+}
+
+.arrow_border {
+  fill: var(--crm-ui-kit-tooltip-border-color);
+}
