@@ -13,10 +13,10 @@ const MIN_THUMB_SIZE = 18;
 const SIZE_VAR = '--crm-ui-kit-scroll-area-fallback-thumb-size';
 const OFFSET_VAR = '--crm-ui-kit-scroll-area-fallback-thumb-offset';
 
-const clearThumb = (root: HTMLElement) => {
+const clearThumb = (root: HTMLElement, scrollbar: HTMLElement | null) => {
   root.removeAttribute('data-overflow');
-  root.style.removeProperty(SIZE_VAR);
-  root.style.removeProperty(OFFSET_VAR);
+  scrollbar?.style.removeProperty(SIZE_VAR);
+  scrollbar?.style.removeProperty(OFFSET_VAR);
 };
 
 /**
@@ -47,7 +47,7 @@ export const useThumbFallback = (
     const maxScrollPos = scrollHeight - offsetHeight;
 
     if (maxScrollPos <= 0) {
-      clearThumb(root);
+      clearThumb(root, scrollbar);
 
       return;
     }
@@ -64,9 +64,16 @@ export const useThumbFallback = (
     const scrollPos = Math.min(Math.max(scrollTop, 0), maxScrollPos);
     const offset = (scrollPos / maxScrollPos) * (track - size);
 
-    root.setAttribute('data-overflow', '');
-    root.style.setProperty(SIZE_VAR, `${size}px`);
-    root.style.setProperty(OFFSET_VAR, `${offset}px`);
+    /**
+     * Custom properties are inherited, so on the root they would restyle
+     * the whole scrolled content on every scroll event.
+     */
+    scrollbar.style.setProperty(SIZE_VAR, `${size}px`);
+    scrollbar.style.setProperty(OFFSET_VAR, `${offset}px`);
+
+    if (!root.hasAttribute('data-overflow')) {
+      root.setAttribute('data-overflow', '');
+    }
   }, [isEnabled, rootRef, viewportRef, scrollbarRef]);
 
   useLayoutEffect(() => {
@@ -78,7 +85,7 @@ export const useThumbFallback = (
     }
 
     if (!isEnabled) {
-      clearThumb(root);
+      clearThumb(root, scrollbarRef.current);
 
       return;
     }
@@ -107,7 +114,7 @@ export const useThumbFallback = (
     return () => {
       resizeObserver.disconnect();
     };
-  }, [isEnabled, updateThumb, rootRef, viewportRef]);
+  }, [isEnabled, updateThumb, rootRef, viewportRef, scrollbarRef]);
 
   return { updateThumb };
 };
