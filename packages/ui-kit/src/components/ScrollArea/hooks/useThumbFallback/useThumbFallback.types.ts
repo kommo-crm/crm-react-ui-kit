@@ -13,7 +13,7 @@ export interface UseThumbFallbackOptions {
    */
   type: NonNullable<ScrollAreaProps['type']>;
   /**
-   * Receives the measured geometry as CSS variables and `data-overflow`.
+   * Receives `data-overflow`, which the content offset depends on.
    */
   rootRef: RefObject<HTMLDivElement>;
   /**
@@ -21,7 +21,8 @@ export interface UseThumbFallbackOptions {
    */
   viewportRef: RefObject<HTMLDivElement>;
   /**
-   * The track the thumb moves in.
+   * The track the thumb moves in, receives the measured geometry
+   * as CSS variables.
    */
   scrollbarRef: RefObject<HTMLDivElement>;
 }
