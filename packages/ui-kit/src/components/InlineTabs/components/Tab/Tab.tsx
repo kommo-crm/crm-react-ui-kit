@@ -26,6 +26,13 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>((props, ref) => {
 
   const { placement } = useListPlacementContext(DISPLAY_NAME);
 
+  /**
+   * The panel copy stays in the DOM even while the tab is in the menu,
+   * so only it gets the id: the others would duplicate it.
+   */
+  const omittedProps: (keyof typeof rest)[] =
+    placement === 'panel' ? ['value'] : ['value', 'id'];
+
   return (
     <div
       ref={ref}
@@ -34,7 +41,7 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>((props, ref) => {
         placement === 'menu' ? s.menu : s.panel,
         className
       )}
-      {...omit(rest, ['value'])}
+      {...omit(rest, omittedProps)}
     >
       {children}
       <Counter count={counter} />

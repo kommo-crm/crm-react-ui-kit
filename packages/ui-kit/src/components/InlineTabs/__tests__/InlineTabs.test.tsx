@@ -387,6 +387,32 @@ describe('InlineTabs', () => {
     expect(getTabContent(screen.getByRole('menuitem'))).toHaveClass('custom-b');
   });
 
+  it('should render the Tab id once when the tab is in the menu', async () => {
+    mockLayout({ visibleCount: 1 });
+
+    render(
+      <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="a">
+        <InlineTabs.List>
+          <InlineTabs.Tab value="a" id="custom-a">
+            A
+          </InlineTabs.Tab>
+          <InlineTabs.Tab value="b" id="custom-b">
+            B
+          </InlineTabs.Tab>
+        </InlineTabs.List>
+      </InlineTabs>
+    );
+
+    await userEvent.click(screen.getByRole('button'));
+
+    expect(document.querySelectorAll('#custom-a')).toHaveLength(1);
+    expect(document.querySelectorAll('#custom-b')).toHaveLength(1);
+    expect(getTabContent(getTab('A'))).toHaveAttribute('id', 'custom-a');
+    expect(getTabContent(screen.getByRole('menuitem'))).not.toHaveAttribute(
+      'id'
+    );
+  });
+
   it('should keep the tab semantics when Tab gets id, role and aria props', () => {
     render(
       <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="a">
