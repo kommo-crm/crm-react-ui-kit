@@ -256,6 +256,7 @@ describe('ScrollArea', () => {
 
       expect(root).toHaveAttribute('data-overflow');
       expect(scrollbar).toHaveAttribute('data-state', 'hidden');
+      expect(scrollbar).toHaveAttribute('data-thumb-fallback');
       expect(scrollbar.style.getPropertyValue(sizeVar)).toBe(
         `${(100 * 100) / 300}px`
       );
