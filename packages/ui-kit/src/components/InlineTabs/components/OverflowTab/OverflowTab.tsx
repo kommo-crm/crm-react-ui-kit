@@ -5,7 +5,6 @@ import MoreIcon from '@ui-kit/icons/more.svg';
 
 import { ContextMenu } from '../../../ContextMenu';
 import { InlineTabsContext } from '../../InlineTabs.context';
-import { InlineTabsMenuTheme } from '../../InlineTabs.themes';
 import {
   ListPlacementProvider,
   useListOverflowContext,
@@ -13,6 +12,8 @@ import {
 import { Counter } from '../Counter';
 
 import { MenuItemUnmountTracker } from './components/MenuItemUnmountTracker';
+
+import { InlineTabsMenuTheme } from './OverflowTab.themes';
 
 import s from './OverflowTab.module.css';
 
