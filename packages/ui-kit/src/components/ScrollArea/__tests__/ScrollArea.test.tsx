@@ -41,6 +41,18 @@ const triggerResize = () => {
   });
 };
 
+const runResizeCallbacks = () => {
+  act(() => {
+    resizeCallbacks.forEach((callback) => callback());
+  });
+};
+
+const advanceFrame = () => {
+  act(() => {
+    jest.advanceTimersByTime(16);
+  });
+};
+
 beforeAll(() => {
   window.ResizeObserver =
     ResizeObserverMock as unknown as typeof ResizeObserver;
@@ -260,6 +272,26 @@ describe('ScrollArea', () => {
       expect(
         (getScrollbar(root) as HTMLElement).style.getPropertyValue(offsetVar)
       ).toBe(`${(100 / 200) * (100 - size)}px`);
+    });
+
+    it('should clear the thumb at once and the overflow on the next frame when the content stops overflowing', () => {
+      jest.useFakeTimers();
+
+      const { root } = renderScrollArea({});
+      const scrollbar = getScrollbar(root) as HTMLElement;
+
+      jest.spyOn(Element.prototype, 'scrollHeight', 'get').mockReturnValue(100);
+
+      runResizeCallbacks();
+
+      expect(scrollbar).not.toHaveAttribute('data-thumb-fallback');
+      expect(scrollbar.style.getPropertyValue(sizeVar)).toBe('');
+      expect(scrollbar.style.getPropertyValue(offsetVar)).toBe('');
+      expect(root).toHaveAttribute('data-overflow');
+
+      advanceFrame();
+
+      expect(root).not.toHaveAttribute('data-overflow');
     });
 
     it('should clear the thumb when the scrollbar gets hidden', () => {
