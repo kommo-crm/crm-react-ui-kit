@@ -97,6 +97,12 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
 
       document.dispatchEvent(new CustomEvent(RADIX_TOOLTIP_OPEN_EVENT));
       onOpenChange(true);
+
+      /**
+       * Radix may not be stuck after all (a consumer prevented its
+       * `pointerdown`), and its focus handler would open the tooltip again.
+       */
+      event.preventDefault();
     };
 
     const handleClickCapture = (event: MouseEvent<HTMLButtonElement>) => {

@@ -644,6 +644,32 @@ describe('Tooltip on touch', () => {
     expect(onOpenChange.mock.calls).toEqual([[true]]);
   });
 
+  it('focus after a cancelled touch with a prevented pointerdown opens the tooltip once', async () => {
+    const onOpenChange = jest.fn();
+
+    render(
+      <Tooltip.Root theme={TooltipPrimaryTheme} onOpenChange={onOpenChange}>
+        <Tooltip.Trigger onPointerDown={(event) => event.preventDefault()}>
+          Trigger
+        </Tooltip.Trigger>
+        <Tooltip.Portal>
+          <Tooltip.Content>Hint</Tooltip.Content>
+        </Tooltip.Portal>
+      </Tooltip.Root>
+    );
+
+    const trigger = screen.getByRole('button', { name: 'Trigger' });
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+    act(() => {
+      trigger.focus();
+    });
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(onOpenChange.mock.calls).toEqual([[true]]);
+  });
+
   it('focus during a touch after a cancelled one does not open the tooltip', async () => {
     const { trigger } = renderTouchTooltip();
 
