@@ -51,10 +51,8 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
     const touchStartOpenRef = useRef<boolean | null>(null);
 
     /**
-     * Radix skips opening on focus while its trigger press is in progress and
-     * ends the press only on a document `pointerup`, so after `pointercancel`
-     * (a touch turned into a scroll) focus does not open it until the next
-     * `pointerup`. Internal behavior of `@radix-ui/react-tooltip`.
+     * Radix's press flag outlived a `pointercancel` (a touch turned into a
+     * scroll), so its focus handler will not open the tooltip.
      */
     const isRadixPressStuckRef = useRef(false);
 
