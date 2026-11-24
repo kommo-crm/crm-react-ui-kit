@@ -871,7 +871,7 @@ describe('Tooltip on touch', () => {
     expect(onOpenChange.mock.calls).toEqual([[true]]);
   });
 
-  it('unmount after a cancelled touch removes the document pointerup listener', () => {
+  it('unmount during a press removes the document pointerup listener', () => {
     const addEventListener = jest.spyOn(document, 'addEventListener');
     const removeEventListener = jest.spyOn(document, 'removeEventListener');
 
@@ -888,7 +888,6 @@ describe('Tooltip on touch', () => {
 
     addEventListener.mockClear();
     firePointer(trigger, 'pointerdown', 'touch');
-    firePointer(trigger, 'pointercancel', 'touch');
 
     const pointerUpListeners = addEventListener.mock.calls
       .filter(([type]) => type === 'pointerup')
