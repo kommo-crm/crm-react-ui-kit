@@ -91,7 +91,12 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
     const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
       onFocus?.(event);
 
-      if (!isRadixPressStuckRef.current || isDisabled || isOpen) {
+      if (
+        event.defaultPrevented ||
+        !isRadixPressStuckRef.current ||
+        isDisabled ||
+        isOpen
+      ) {
         return;
       }
 
