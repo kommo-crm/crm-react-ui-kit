@@ -1,6 +1,6 @@
 import { useLayoutEffect, useReducer, useRef, useState } from 'react';
 
-import { useResizeObserver } from '../../../../hooks/useResizeObserver';
+import { useResizeObserver } from '../../../../hooks';
 
 import type { SliderState, UseSliderOptions } from './useSlider.types';
 

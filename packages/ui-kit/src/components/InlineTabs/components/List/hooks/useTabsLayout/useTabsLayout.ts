@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
-import { useResizeObserver } from '../../../../hooks/useResizeObserver';
+import { useResizeObserver } from '../../../../hooks';
 import {
   doesSplitFit,
   getFirstCandidate,

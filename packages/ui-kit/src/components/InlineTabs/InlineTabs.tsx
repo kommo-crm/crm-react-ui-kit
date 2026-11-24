@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import { useThemeClassName } from '@ui-kit/hooks/useThemeClassName';
 
-import { useControllableState } from './hooks/useControllableState';
+import { useControllableState } from './hooks';
 
 import { type InlineTabsProps, type InlineTabsType } from './InlineTabs.props';
 import { type InlineTabsThemeType } from './InlineTabs.themes';
