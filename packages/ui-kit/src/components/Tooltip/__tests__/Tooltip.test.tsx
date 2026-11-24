@@ -410,6 +410,10 @@ describe('Tooltip', () => {
 });
 
 describe('Tooltip on touch', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   const renderTouchTooltip = (rootProps?: Partial<TooltipRootProps>) => {
     const onClick = jest.fn();
 
@@ -807,18 +811,20 @@ describe('Tooltip on touch', () => {
 
     document.addEventListener('tooltip.open', onTooltipOpenEvent);
 
-    firePointer(trigger, 'pointerdown', 'touch');
-    firePointer(trigger, 'pointercancel', 'touch');
-    act(() => {
-      trigger.focus();
-    });
-    await flushTimers();
+    try {
+      firePointer(trigger, 'pointerdown', 'touch');
+      firePointer(trigger, 'pointercancel', 'touch');
+      act(() => {
+        trigger.focus();
+      });
+      await flushTimers();
 
-    document.removeEventListener('tooltip.open', onTooltipOpenEvent);
-
-    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
-    expect(onOpenChange).not.toHaveBeenCalled();
-    expect(onTooltipOpenEvent).not.toHaveBeenCalled();
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+      expect(onOpenChange).not.toHaveBeenCalled();
+      expect(onTooltipOpenEvent).not.toHaveBeenCalled();
+    } finally {
+      document.removeEventListener('tooltip.open', onTooltipOpenEvent);
+    }
   });
 
   it('focus after a cancelled touch does not reopen an open tooltip', async () => {
@@ -898,9 +904,6 @@ describe('Tooltip on touch', () => {
     pointerUpListeners.forEach((listener) =>
       expect(removedListeners).toContain(listener)
     );
-
-    addEventListener.mockRestore();
-    removeEventListener.mockRestore();
   });
 
   it('focus after a cancelled touch keeps the focus handlers of an asChild trigger', async () => {
