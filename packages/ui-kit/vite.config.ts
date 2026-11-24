@@ -37,6 +37,7 @@ export default defineConfig({
                 'src/**/*.test.ts',
                 'src/**/*.stories.tsx',
                 'src/**/*.e2e-playground.tsx',
+                'src/**/*.e2e-constants.ts',
                 'src/tests/**',
               ],
             })
