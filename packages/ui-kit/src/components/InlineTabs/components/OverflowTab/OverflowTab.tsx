@@ -11,7 +11,7 @@ import {
 } from '../List/List.context';
 import { Counter } from '../Counter';
 
-import { MenuItemUnmountTracker } from './components/MenuItemUnmountTracker';
+import { MenuItemUnmountTracker } from './components';
 
 import { InlineTabsMenuTheme } from './OverflowTab.themes';
 
