@@ -21,7 +21,7 @@ const getTokenFromCssVariable = (token: string) =>
     .replace(/var\((--[^)]+)\)/g, '$1');
 
 const findDeclarationValue = (
-  declarations: Array<Declaration | Comment>,
+  declarations: (Declaration | Comment)[],
   variableName: string
 ) =>
   declarations.find(
@@ -38,7 +38,7 @@ const findDeclarationValue = (
  */
 const resolveVariableValue = (
   value: string | undefined,
-  declarationSets: Array<Array<Declaration | Comment>>
+  declarationSets: (Declaration | Comment)[][]
 ) => {
   const visited = new Set<string>();
   let current = value;
