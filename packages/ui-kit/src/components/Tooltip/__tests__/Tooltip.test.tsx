@@ -440,10 +440,17 @@ describe('Tooltip on touch', () => {
     fireEvent(element, event);
   };
 
+  /**
+   * A pointer click has `detail` 1; `fireEvent.click` defaults to 0, which
+   * is a keyboard click.
+   */
+  const firePointerClick = (element: HTMLElement) =>
+    fireEvent.click(element, { detail: 1 });
+
   const tap = (element: HTMLElement) => {
     firePointer(element, 'pointerdown', 'touch');
     firePointer(element, 'pointerup', 'touch');
-    fireEvent.click(element);
+    firePointerClick(element);
   };
 
   it('first tap opens the tooltip without activating the trigger', async () => {
@@ -549,7 +556,7 @@ describe('Tooltip on touch', () => {
     act(() => {
       trigger.focus();
     });
-    fireEvent.click(trigger);
+    firePointerClick(trigger);
 
     expect(await screen.findByRole('tooltip')).toBeInTheDocument();
     expect(onOpenChange.mock.calls).toEqual([[true]]);
@@ -604,7 +611,7 @@ describe('Tooltip on touch', () => {
     const { onClick, trigger } = renderTouchTooltip();
 
     firePointer(trigger, 'pointerdown', 'mouse');
-    fireEvent.click(trigger);
+    firePointerClick(trigger);
     await flushTimers();
 
     expect(onClick).toHaveBeenCalledTimes(1);
@@ -616,7 +623,47 @@ describe('Tooltip on touch', () => {
 
     firePointer(trigger, 'pointerdown', 'touch');
     firePointer(trigger, 'pointercancel', 'touch');
-    fireEvent.click(trigger);
+    firePointerClick(trigger);
+    await flushTimers();
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+  });
+
+  it('focus after a cancelled touch opens the tooltip once', async () => {
+    const onOpenChange = jest.fn();
+    const { trigger } = renderTouchTooltip({ onOpenChange });
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+    act(() => {
+      trigger.focus();
+    });
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(onOpenChange.mock.calls).toEqual([[true]]);
+  });
+
+  it('focus during a touch after a cancelled one does not open the tooltip', async () => {
+    const { trigger } = renderTouchTooltip();
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+    firePointer(trigger, 'pointerdown', 'touch');
+    act(() => {
+      trigger.focus();
+    });
+    await flushTimers();
+
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+  });
+
+  it('keyboard click after a touch without a click activates the trigger', async () => {
+    const { onClick, trigger } = renderTouchTooltip();
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointerup', 'touch');
+    fireEvent.click(trigger, { detail: 0 });
     await flushTimers();
 
     expect(onClick).toHaveBeenCalledTimes(1);

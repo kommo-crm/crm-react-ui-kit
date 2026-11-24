@@ -1,5 +1,7 @@
 import React, {
   forwardRef,
+  useCallback,
+  useEffect,
   useRef,
   type FocusEvent,
   type MouseEvent,
@@ -29,6 +31,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
       onPointerDown,
       onPointerCancel,
       onClickCapture,
+      onFocus,
       onBlur,
       ...rest
     } = props;
@@ -47,10 +50,29 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
      */
     const touchStartOpenRef = useRef<boolean | null>(null);
 
+    /**
+     * Radix skips opening on focus while its trigger press is in progress and
+     * ends the press only on a document `pointerup`, so after `pointercancel`
+     * (a touch turned into a scroll) focus does not open it until the next
+     * `pointerup`. Internal behavior of `@radix-ui/react-tooltip`.
+     */
+    const isRadixPressStuckRef = useRef(false);
+
+    const clearRadixPressStuck = useCallback(() => {
+      isRadixPressStuckRef.current = false;
+    }, []);
+
+    useEffect(
+      () => () =>
+        document.removeEventListener('pointerup', clearRadixPressStuck),
+      [clearRadixPressStuck]
+    );
+
     const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
       onPointerDown?.(event);
 
       isContentPointerDownRef.current = false;
+      isRadixPressStuckRef.current = false;
 
       touchStartOpenRef.current = event.pointerType === 'touch' ? isOpen : null;
     };
@@ -59,6 +81,22 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
       onPointerCancel?.(event);
 
       touchStartOpenRef.current = null;
+
+      isRadixPressStuckRef.current = true;
+      document.addEventListener('pointerup', clearRadixPressStuck, {
+        once: true,
+      });
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+      onFocus?.(event);
+
+      if (!isRadixPressStuckRef.current || isDisabled || isOpen) {
+        return;
+      }
+
+      document.dispatchEvent(new CustomEvent(RADIX_TOOLTIP_OPEN_EVENT));
+      onOpenChange(true);
     };
 
     const handleClickCapture = (event: MouseEvent<HTMLButtonElement>) => {
@@ -68,7 +106,16 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
 
       touchStartOpenRef.current = null;
 
-      if (wasOpen !== false || isDisabled || isControlled) {
+      /**
+       * A touch that ends without a click leaves the ref set; keyboard and
+       * `element.click()` clicks have `detail` 0 and are never a tap.
+       */
+      if (
+        wasOpen !== false ||
+        event.detail === 0 ||
+        isDisabled ||
+        isControlled
+      ) {
         return;
       }
 
@@ -121,6 +168,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
         onPointerDown={handlePointerDown}
         onPointerCancel={handlePointerCancel}
         onClickCapture={handleClickCapture}
+        onFocus={handleFocus}
         onBlur={handleBlur}
       />
     );
