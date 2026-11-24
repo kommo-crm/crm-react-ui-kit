@@ -1,10 +1,6 @@
-/**
- * Always first in the menu item, wherever it is placed inside the tab.
- */
 .tabMenuIcon {
   display: inline-flex;
   flex-shrink: 0;
-  order: -1;
   width: var(--crm-ui-kit-inline-tabs-menu-item-icon-size);
   height: var(--crm-ui-kit-inline-tabs-menu-item-icon-size);
   margin-right: var(--crm-ui-kit-inline-tabs-menu-item-icon-spacing);

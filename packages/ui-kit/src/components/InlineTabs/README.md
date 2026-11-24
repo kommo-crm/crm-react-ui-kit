@@ -138,7 +138,7 @@ Takes all `span` props and the ref.
 
 ### [InlineTabs.TabMenuIcon](./components/TabMenuIcon/TabMenuIcon.tsx)
 
-An icon of a tab shown only while the tab is in the overflow menu; in the panel it renders nothing. In the menu item it is always placed first, wherever it is inside the tab. The icon is sized by `--crm-ui-kit-inline-tabs-menu-item-icon-size`, and an `svg` inside it is stretched to that size.
+An icon of a tab shown only while the tab is in the overflow menu; in the panel it renders nothing. In the menu item it is rendered where it is placed inside the tab; put it before `InlineTabs.TabLabel` for the standard look. The icon is sized by `--crm-ui-kit-inline-tabs-menu-item-icon-size`, and an `svg` inside it is stretched to that size.
 
 Takes all `span` props and the ref.
 
