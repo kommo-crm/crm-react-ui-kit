@@ -697,6 +697,109 @@ describe('Tooltip on touch', () => {
     expect(onOpenChange).not.toHaveBeenCalled();
   });
 
+  it('focus after a cancelled touch does not open a disabled tooltip', async () => {
+    const onOpenChange = jest.fn();
+    const onTooltipOpenEvent = jest.fn();
+    const { trigger } = renderTouchTooltip({ isDisabled: true, onOpenChange });
+
+    document.addEventListener('tooltip.open', onTooltipOpenEvent);
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+    act(() => {
+      trigger.focus();
+    });
+    await flushTimers();
+
+    document.removeEventListener('tooltip.open', onTooltipOpenEvent);
+
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+    expect(onOpenChange).not.toHaveBeenCalled();
+    expect(onTooltipOpenEvent).not.toHaveBeenCalled();
+  });
+
+  it('focus after a cancelled touch does not reopen an open tooltip', async () => {
+    const onOpenChange = jest.fn();
+    const { trigger } = renderTouchTooltip({ isOpen: true, onOpenChange });
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+    act(() => {
+      trigger.focus();
+    });
+    await flushTimers();
+
+    expect(onOpenChange).not.toHaveBeenCalledWith(true);
+  });
+
+  it('focus after a cancelled touch requests opening a controlled tooltip once', async () => {
+    const onOpenChange = jest.fn();
+    const { trigger } = renderTouchTooltip({ isOpen: false, onOpenChange });
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+    act(() => {
+      trigger.focus();
+    });
+    await flushTimers();
+
+    expect(onOpenChange.mock.calls).toEqual([[true]]);
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+  });
+
+  it('focus after a cancelled touch and a later pointerup opens the tooltip once', async () => {
+    const onOpenChange = jest.fn();
+    const { trigger } = renderTouchTooltip({ onOpenChange });
+
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+    firePointer(document.body, 'pointerup', 'touch');
+    act(() => {
+      trigger.focus();
+    });
+
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+    expect(onOpenChange.mock.calls).toEqual([[true]]);
+  });
+
+  it('unmount after a cancelled touch removes the document pointerup listener', () => {
+    const addEventListener = jest.spyOn(document, 'addEventListener');
+    const removeEventListener = jest.spyOn(document, 'removeEventListener');
+
+    const { unmount } = render(
+      <Tooltip.Root theme={TooltipPrimaryTheme}>
+        <Tooltip.Trigger>Trigger</Tooltip.Trigger>
+        <Tooltip.Portal>
+          <Tooltip.Content>Hint</Tooltip.Content>
+        </Tooltip.Portal>
+      </Tooltip.Root>
+    );
+
+    const trigger = screen.getByRole('button', { name: 'Trigger' });
+
+    addEventListener.mockClear();
+    firePointer(trigger, 'pointerdown', 'touch');
+    firePointer(trigger, 'pointercancel', 'touch');
+
+    const pointerUpListeners = addEventListener.mock.calls
+      .filter(([type]) => type === 'pointerup')
+      .map(([, listener]) => listener);
+
+    unmount();
+
+    const removedListeners = removeEventListener.mock.calls
+      .filter(([type]) => type === 'pointerup')
+      .map(([, listener]) => listener);
+
+    expect(pointerUpListeners.length).toBeGreaterThan(0);
+    pointerUpListeners.forEach((listener) =>
+      expect(removedListeners).toContain(listener)
+    );
+
+    addEventListener.mockRestore();
+    removeEventListener.mockRestore();
+  });
+
   it('focus during a touch after a cancelled one does not open the tooltip', async () => {
     const { trigger } = renderTouchTooltip();
 
