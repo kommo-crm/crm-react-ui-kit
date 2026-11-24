@@ -272,7 +272,7 @@ describe('InlineTabs', () => {
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
-  it('should render TabMenuIcon first and the counter after the label in the menu item', async () => {
+  it('should render TabMenuIcon where it is placed and the counter last in the menu item', async () => {
     mockLayout({ visibleCount: 1 });
 
     render(
