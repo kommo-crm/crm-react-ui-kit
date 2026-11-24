@@ -1,4 +1,4 @@
-import React, { type KeyboardEvent } from 'react';
+import React from 'react';
 import { Trigger as RadixTabsTrigger } from '@radix-ui/react-tabs';
 
 import { ListPlacementProvider } from '../../List.context';
@@ -6,16 +6,6 @@ import { ListPlacementProvider } from '../../List.context';
 import { type PanelTabProps } from './PanelTab.props';
 
 import s from './PanelTab.module.css';
-
-/**
- * The tab is a div, so Space would scroll the page; Radix selects the tab on
- * it but leaves the default action to the native button it expects.
- */
-const handleTabKeyDown = (event: KeyboardEvent) => {
-  if (event.key === ' ') {
-    event.preventDefault();
-  }
-};
 
 /**
  * Tab in the panel. A tab in the menu keeps its hidden trigger: the panel of
@@ -33,7 +23,6 @@ export const PanelTab = (props: PanelTabProps) => {
         className={s.tab}
         style={{ flexBasis: width }}
         hidden={isHidden}
-        onKeyDown={handleTabKeyDown}
       >
         <div>{tab}</div>
       </RadixTabsTrigger>

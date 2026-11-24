@@ -665,6 +665,16 @@ describe('InlineTabs', () => {
     expect(isNotPrevented).toBe(false);
   });
 
+  it('should select the focused tab on Space', async () => {
+    const onChange = renderInlineTabs();
+
+    act(() => getTab('Main').focus());
+    await userEvent.keyboard('{ArrowRight} ');
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith('media');
+  });
+
   it('should keep the overflow button mounted when the split changes', () => {
     mockLayout({ visibleCount: 2 });
 

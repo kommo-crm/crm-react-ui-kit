@@ -30,7 +30,7 @@ import s from './List.module.css';
 type El = HTMLDivElement;
 
 export const List = forwardRef<El, ListProps>((props, ref) => {
-  const { className, children, ...rest } = props;
+  const { className, children, onKeyDown, ...rest } = props;
 
   const { value } = useContext(InlineTabsContext);
 
@@ -77,6 +77,25 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
     }));
   }, []);
 
+  /**
+   * The tab is a div, so Space would scroll the page: Radix selects the tab on
+   * it but leaves the default action to the native button it expects. The
+   * default is prevented here, after the event bubbles from the tab, because
+   * Radix skips its own handler for an already prevented event.
+   */
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<El>) => {
+      onKeyDown?.(event);
+
+      const target = event.target as HTMLElement;
+
+      if (event.key === ' ' && target.getAttribute('role') === 'tab') {
+        event.preventDefault();
+      }
+    },
+    [onKeyDown]
+  );
+
   const hiddenTabs = tabs.slice(visibleCount);
 
   /** The menu unmounts with the overflow button without reporting onOpen(false). */
@@ -94,7 +113,12 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
   });
 
   return (
-    <RadixTabsList ref={mergedRef} className={cx(s.list, className)} {...rest}>
+    <RadixTabsList
+      ref={mergedRef}
+      className={cx(s.list, className)}
+      {...rest}
+      onKeyDown={handleKeyDown}
+    >
       <MeasureLayer ref={measureRef} tabs={tabs} />
 
       <ListOverflowProvider
