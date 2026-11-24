@@ -45,8 +45,11 @@ import {
   InlineTabs,
   InlineTabsPrimaryTheme,
 } from '@kommo-crm/crm-react-ui-kit/InlineTabs';
+import SettingsIcon from './icons/settings.svg';
 
-function CardTabs({ counts, onSettingsOpen }) {
+function CardTabs(props) {
+  const { counts, onSettingsOpen } = props;
+
   const [tab, setTab] = useState('general');
 
   const handleChange = (value) => {
@@ -150,7 +153,7 @@ The panel of a tab. Requires a `value` that matches one `InlineTabs.Tab`. Has no
 
 - The list measures the tabs and shows as many of them as fit together with the overflow button. The rest move to the menu in the same order
 - The overflow button appears only while some tabs are hidden. It shows a badge with the sum of the counters of the hidden tabs
-- The menu opens on hover over the overflow button and by Enter when the button is focused. Selecting an item selects the tab the same way as a click on it
+- The menu opens on hover over the overflow button and by Enter, Space or Arrow Down when the button is focused. Selecting an item selects the tab the same way as a click on it
 - While a hidden tab is selected, its menu item is highlighted and the slider is shown under the overflow button
 - The slider is hidden while the menu is open
 - The split is updated when the list or the tabs change size: on resize, font load, a counter or a label change
@@ -228,22 +231,22 @@ The tokens below have the same default in both themes:
 
 The tokens below differ between the themes; see [`InlineTabs.themes.ts`](./InlineTabs.themes.ts) for the values:
 
-| Token                                                | Applies to                     |
-| ---------------------------------------------------- | ------------------------------ |
-| `--crm-ui-kit-inline-tabs-background`                | `List`                         |
-| `--crm-ui-kit-inline-tabs-trigger-hover-color`       | Hovered tab and menu item text |
-| `--crm-ui-kit-inline-tabs-trigger-selected-color`    | Selected tab text in the panel |
-| `--crm-ui-kit-inline-tabs-slider-color`              | Slider                         |
-| `--crm-ui-kit-inline-tabs-menu-item-separator-color` | Line between menu items        |
-| `--crm-ui-kit-inline-tabs-menu-item-selected-color`  | Selected tab text in the menu  |
+| Token                                                | Applies to                          |
+| ---------------------------------------------------- | ----------------------------------- |
+| `--crm-ui-kit-inline-tabs-background`                | `List`, overflow menu and its items |
+| `--crm-ui-kit-inline-tabs-trigger-hover-color`       | Hovered tab and menu item text      |
+| `--crm-ui-kit-inline-tabs-trigger-selected-color`    | Selected tab text in the panel      |
+| `--crm-ui-kit-inline-tabs-slider-color`              | Slider                              |
+| `--crm-ui-kit-inline-tabs-menu-item-separator-color` | Line between menu items             |
+| `--crm-ui-kit-inline-tabs-menu-item-selected-color`  | Selected tab text in the menu       |
 
 ## Keyboard Navigation
 
-- **Tab**: Moves focus to the selected tab, then to the overflow button and the selected panel
+- **Tab**: Moves focus to the selected tab, then to the overflow button and the selected panel; while the selected tab is in the overflow menu, to the first visible tab instead
 - **Arrow Right/Left**: Moves focus to the next/previous visible tab
 - **Home/End**: Moves focus to the first/last visible tab
 - **Enter/Space**: Selects the focused tab
-- **Enter** on the overflow button: Opens the menu and focuses its first item; **Arrow Up/Down** moves between the items, **Enter** selects one
+- **Enter/Space/Arrow Down** on the overflow button: Opens the menu and focuses its first item; **Arrow Up/Down** moves between the items, **Enter** selects one
 
 With `activationMode="automatic"`, a tab is selected as soon as it gets focus.
 
