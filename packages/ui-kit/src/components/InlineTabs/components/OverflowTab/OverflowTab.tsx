@@ -11,7 +11,7 @@ import {
 } from '../List/List.context';
 import { Counter } from '../Counter';
 
-import { MenuItemUnmountTracker } from './components';
+import { MenuItem } from './components';
 
 import { InlineTabsMenuTheme } from './OverflowTab.themes';
 
@@ -31,6 +31,10 @@ export const OverflowTab = () => {
   if (hiddenTabs.length === 0) {
     return null;
   }
+
+  const handleSelect = (tabValue: string) => {
+    select(tabValue);
+  };
 
   const hiddenCount = hiddenTabs.reduce(
     (sum, tab) => sum + (tab.props.counter ?? 0),
@@ -55,20 +59,13 @@ export const OverflowTab = () => {
         >
           <ListPlacementProvider placement="menu">
             {hiddenTabs.map((tab) => (
-              <React.Fragment key={tab.props.value}>
-                <ContextMenu.Item
-                  className={s.menuItem}
-                  data-selected={tab.props.value === value ? '' : undefined}
-                  aria-current={tab.props.value === value || undefined}
-                  onSelect={() => select(tab.props.value)}
-                >
-                  {tab}
-                </ContextMenu.Item>
-                <MenuItemUnmountTracker
-                  value={tab.props.value}
-                  onUnmount={onMenuItemUnmount}
-                />
-              </React.Fragment>
+              <MenuItem
+                key={tab.props.value}
+                tab={tab}
+                isSelected={tab.props.value === value}
+                onSelect={handleSelect}
+                onUnmount={onMenuItemUnmount}
+              />
             ))}
           </ListPlacementProvider>
         </ContextMenu.Content>
