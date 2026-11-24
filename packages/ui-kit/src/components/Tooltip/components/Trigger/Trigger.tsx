@@ -58,14 +58,23 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
      */
     const isRadixPressStuckRef = useRef(false);
 
-    const clearRadixPressStuck = useCallback(() => {
+    /**
+     * Mirror of Radix's `isPointerDownRef`: Radix sets it in its `pointerdown`
+     * handler, which runs right after ours unless the event is prevented, and
+     * clears it only on a document `pointerup`. A press Radix never saw must
+     * not mark it stuck, or focus would open the tooltip twice; a prevented
+     * press must not clear it, or focus would open it neither way.
+     */
+    const isRadixPressTrackedRef = useRef(false);
+
+    const clearRadixPress = useCallback(() => {
+      isRadixPressTrackedRef.current = false;
       isRadixPressStuckRef.current = false;
     }, []);
 
     useEffect(
-      () => () =>
-        document.removeEventListener('pointerup', clearRadixPressStuck),
-      [clearRadixPressStuck]
+      () => () => document.removeEventListener('pointerup', clearRadixPress),
+      [clearRadixPress]
     );
 
     const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
@@ -73,6 +82,13 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
 
       isContentPointerDownRef.current = false;
       isRadixPressStuckRef.current = false;
+
+      if (!event.defaultPrevented) {
+        isRadixPressTrackedRef.current = true;
+        document.addEventListener('pointerup', clearRadixPress, {
+          once: true,
+        });
+      }
 
       touchStartOpenRef.current = event.pointerType === 'touch' ? isOpen : null;
     };
@@ -82,10 +98,7 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
 
       touchStartOpenRef.current = null;
 
-      isRadixPressStuckRef.current = true;
-      document.addEventListener('pointerup', clearRadixPressStuck, {
-        once: true,
-      });
+      isRadixPressStuckRef.current = isRadixPressTrackedRef.current;
     };
 
     const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
@@ -102,12 +115,6 @@ export const Trigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
 
       document.dispatchEvent(new CustomEvent(RADIX_TOOLTIP_OPEN_EVENT));
       onOpenChange(true);
-
-      /**
-       * Radix may not be stuck after all (a consumer prevented its
-       * `pointerdown`), and its focus handler would open the tooltip again.
-       */
-      event.preventDefault();
     };
 
     const handleClickCapture = (event: MouseEvent<HTMLButtonElement>) => {
