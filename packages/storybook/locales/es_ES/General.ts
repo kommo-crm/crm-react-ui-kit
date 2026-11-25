@@ -27,6 +27,10 @@ export default {
   'Directions': 'Direcciones',
   'Modes': 'Modos',
   'Vertical Menu': 'Menú vertical',
+  'Areas': 'Áreas',
+  'Collision': 'Colisión',
+  'Long Content': 'Contenido largo',
+  'Controlled': 'Controlado',
 
   /* Used in docs */
   'Design tokens': 'Tokens de diseño',
