@@ -27,6 +27,7 @@ export default {
   'Directions': 'Directions',
   'Modes': 'Modes',
   'Vertical Menu': 'Vertical Menu',
+  'Type': 'Type',
 
   /* Used in docs */
   'Design tokens': 'Design tokens',
@@ -177,4 +178,7 @@ export default {
     'Manage users, groups, and access permissions. Invite teammates and control what they can see and edit.',
   'Tabs automation content':
     'Triggers and bots that automatically move leads and create tasks.',
+
+  /* ScrollArea */
+  'Long text': 'Long Text',
 };

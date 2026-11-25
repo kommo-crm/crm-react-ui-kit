@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
+import { i18n } from '@i18n';
+
 import { Flex } from '@ui-kit/components/Flex';
 import { Text, TextPrimaryTheme } from '@ui-kit/components/Text';
 import { useStoryLabel } from '@ui-kit/hooks/useStoryLabel';
@@ -98,7 +100,7 @@ const meta = {
     'style': AREA_STYLE,
     'tabIndex': 0,
     'role': 'region',
-    'aria-label': 'Long text',
+    'aria-label': i18n.t('Long text'),
     'children': (
       <Text theme={TextPrimaryTheme} size="l" style={{ display: 'block' }}>
         {LONG_TEXT}
