@@ -140,7 +140,7 @@ export const Collision: Story = {
     <>
       {TRIGGER_STYLES.map((style, index) => (
         <div key={index} style={{ position: 'fixed', ...style }}>
-          <Demo {...props} />
+          <Demo {...props} content="Lorem ipsum dolor sit amet." />
         </div>
       ))}
     </>
