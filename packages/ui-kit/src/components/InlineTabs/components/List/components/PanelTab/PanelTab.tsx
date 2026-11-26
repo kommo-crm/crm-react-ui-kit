@@ -23,6 +23,7 @@ export const PanelTab = (props: PanelTabProps) => {
         className={s.tab}
         style={{ flexBasis: width }}
         hidden={isHidden}
+        data-value={tab.props.value}
       >
         <div>{tab}</div>
       </RadixTabsTrigger>

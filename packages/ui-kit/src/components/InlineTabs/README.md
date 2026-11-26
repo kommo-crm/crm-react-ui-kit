@@ -130,7 +130,7 @@ A single tab. Requires a `value` that is unique within the list.
 
 Other `div` props (`className`, `title`, `data-*`, `aria-*`, …) and the ref go to the inner element with the tab content, not to the element with the `tab` role.
 
-Focus and keyboard handlers (`onFocus`, `onBlur`, `onKeyDown`, `onKeyUp`, …) are not part of the props: focus is on the element with the `tab` role or on the menu item, which wrap the inner element, so these events never reach it. Handle them on `InlineTabs.List` and check `event.target`, which has the `tab` role in the panel.
+Focus and keyboard handlers (`onFocus`, `onBlur`, `onKeyDown`, `onKeyUp`, …) are not part of the props: focus is on the element with the `tab` role or on the menu item, which wrap the inner element, so these events never reach it. Handle them on `InlineTabs.List` and check `event.target`, which has the `tab` role in the panel and the value of the tab in `data-value`.
 
 The list renders the children of a tab in several places: in the panel, in the overflow menu item and in a hidden measure layer. Each place gets its own instance of the children, so they must keep no state, effects or ids: the menu instance mounts anew every time the tab enters the menu.
 
@@ -266,3 +266,4 @@ The tokens below differ between the themes; see [`InlineTabs.themes.ts`](./Inlin
 
 - The children of an unselected `InlineTabs.Content` are unmounted, so their local state is lost when switching tabs
 - The selected tab and panel have `data-state="active"`, the others `data-state="inactive"`; the menu item of the selected hidden tab has `data-selected`
+- The element with the `tab` role has the value of the tab in `data-value`

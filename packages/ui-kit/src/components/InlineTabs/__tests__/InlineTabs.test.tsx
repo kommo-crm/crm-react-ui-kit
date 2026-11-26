@@ -398,6 +398,25 @@ describe('InlineTabs', () => {
     expect(getTabContent(getTab('A'))).toHaveAttribute('data-amp-key', 'tab-a');
   });
 
+  it('should expose the tab value on the element with the tab role', () => {
+    const onKeyDown = jest.fn((event: React.KeyboardEvent<HTMLElement>) =>
+      (event.target as HTMLElement).getAttribute('data-value')
+    );
+
+    render(
+      <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+        <InlineTabs.List onKeyDown={onKeyDown}>
+          <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+          <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+        </InlineTabs.List>
+      </InlineTabs>
+    );
+
+    fireEvent.keyDown(getTab('Media'), { key: 'a' });
+
+    expect(onKeyDown).toHaveReturnedWith('media');
+  });
+
   it('should pass div props of Tab to the tab and the menu item', async () => {
     mockLayout({ visibleCount: 1 });
 
