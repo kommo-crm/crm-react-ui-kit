@@ -40,30 +40,26 @@ export const OverflowTab = () => {
     return null;
   }
 
+  /**
+   * Checked on select, while the item is still mounted: by the time
+   * `onCloseAutoFocus` runs it is gone and focus is already on body. Only a
+   * selection restores focus: a menu closed by another menu opening must not
+   * take focus back from it.
+   */
   const handleSelect = (tabValue: string) => {
+    wasFocusInsideRef.current = Boolean(
+      contentRef.current?.contains(document.activeElement)
+    );
+
     select(tabValue);
   };
 
-  /**
-   * Checked on close, while the content is still mounted: by the time
-   * `onCloseAutoFocus` runs it is gone and focus is already on body.
-   */
   const handleOpen = (isOpen: boolean) => {
-    if (!isOpen) {
-      wasFocusInsideRef.current = Boolean(
-        contentRef.current?.contains(document.activeElement)
-      );
+    if (isOpen) {
+      wasFocusInsideRef.current = false;
     }
 
     onOpenChange(isOpen);
-  };
-
-  /**
-   * A click outside closes the menu before this handler runs, with focus still
-   * inside; focus then goes where the user clicked, even if it is body.
-   */
-  const handlePointerDownOutside = () => {
-    wasFocusInsideRef.current = false;
   };
 
   /**
@@ -107,7 +103,6 @@ export const OverflowTab = () => {
           ref={contentRef}
           direction="down-left"
           className={cx(s.menu, themeClassName)}
-          onPointerDownOutside={handlePointerDownOutside}
           onCloseAutoFocus={handleCloseAutoFocus}
         >
           <ListPlacementProvider placement="menu">

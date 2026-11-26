@@ -945,6 +945,49 @@ describe('InlineTabs', () => {
       expect(overflowButton).not.toHaveFocus();
     });
 
+    it('should not take focus back when another menu opening closes the menu', async () => {
+      mockLayout({ visibleCount: 1 });
+
+      render(
+        <>
+          <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+            <InlineTabs.List>
+              <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+              <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+            </InlineTabs.List>
+          </InlineTabs>
+          <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="news">
+            <InlineTabs.List>
+              <InlineTabs.Tab value="news">News</InlineTabs.Tab>
+              <InlineTabs.Tab value="archive">Archive</InlineTabs.Tab>
+            </InlineTabs.List>
+          </InlineTabs>
+        </>
+      );
+
+      const [firstButton, secondButton] = screen.getAllByRole('button');
+
+      act(() => firstButton.focus());
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => {
+        expect(screen.getByRole('menuitem', { name: 'Media' })).toHaveFocus();
+      });
+
+      await userEvent.hover(secondButton);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByRole('menuitem', { name: 'Media' })
+        ).not.toBeInTheDocument();
+      });
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(firstButton).not.toHaveFocus();
+      expect(
+        screen.getByRole('menuitem', { name: 'Archive' })
+      ).toBeInTheDocument();
+    });
+
     it('should set title and data attributes on the menu item', async () => {
       mockLayout({ visibleCount: 1 });
 
