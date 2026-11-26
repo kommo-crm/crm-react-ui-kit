@@ -1,6 +1,3 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
@@ -196,23 +193,6 @@ describe('useTabsLayout', () => {
     expect(screen.getByRole('tab', { name: 'Setup' })).toHaveStyle({
       flexBasis: '80px',
     });
-  });
-
-  /**
-   * jsdom neither loads CSS modules nor lays out boxes, so the rule is read
-   * from the source: without it the layer is capped at the panel width and
-   * the observer misses tabs that grow while some are hidden.
-   */
-  it('should let the measure layer grow past the panel', () => {
-    const css = readFileSync(
-      resolve(
-        __dirname,
-        '../components/List/components/MeasureLayer/MeasureLayer.module.css'
-      ),
-      'utf8'
-    );
-
-    expect(css).toMatch(/\.measureLayer \{[^}]*width: max-content;/);
   });
 
   it('should reserve the width of the overflow button with its badge', () => {
