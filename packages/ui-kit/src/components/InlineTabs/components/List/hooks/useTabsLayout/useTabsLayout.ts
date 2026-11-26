@@ -45,7 +45,13 @@ const measure = (panel: Element, measureLayer: Element): Measurements => ({
 export const useTabsLayout = (
   options: UseTabsLayoutOptions
 ): UseTabsLayoutResult => {
-  const { panelRef, measureLayerRef, overflowButtonRef, tabValues } = options;
+  const {
+    panelRef,
+    measureLayerRef,
+    measureTabRefs,
+    overflowButtonRef,
+    tabValues,
+  } = options;
 
   const tabsKey = tabValues.join('\n');
 
@@ -106,12 +112,13 @@ export const useTabsLayout = (
   useLayoutEffect(startSearch, [startSearch, tabsKey]);
 
   /**
-   * The measure layer catches size changes inside the tabs (fonts, counters,
-   * new labels), the button catches its badge. Each starts a new search, and
-   * the final button keeps the size it had, so the observer stays quiet.
+   * The copies catch size changes inside the tabs (fonts, counters, new
+   * labels), even when they keep the layer width; the button catches its
+   * badge. Each starts a new search, and the final button keeps the size it
+   * had, so the observer stays quiet.
    */
   useResizeObserver({
-    targets: [panelRef, measureLayerRef, overflowButtonRef],
+    targets: [panelRef, measureLayerRef, ...measureTabRefs, overflowButtonRef],
     onResize: startSearch,
   });
 

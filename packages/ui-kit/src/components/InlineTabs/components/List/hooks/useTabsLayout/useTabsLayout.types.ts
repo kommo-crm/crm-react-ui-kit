@@ -16,6 +16,10 @@ export interface UseTabsLayoutOptions {
    */
   measureLayerRef: React.RefObject<HTMLElement>;
   /**
+   * Copies in the measure layer, by the tab index.
+   */
+  measureTabRefs: React.RefObject<HTMLElement>[];
+  /**
    * The overflow button rendered for the current split.
    */
   overflowButtonRef: React.RefObject<HTMLElement>;

@@ -1,4 +1,5 @@
 import React, {
+  createRef,
   forwardRef,
   useCallback,
   useContext,
@@ -44,9 +45,16 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
   const overflowRef = useRef<HTMLButtonElement>(null);
   const mergedRef = useMemo(() => mergeRefs(listRef, ref), [ref]);
 
+  const tabCount = tabs.length;
+  const measureTabRefs = useMemo(
+    () => Array.from({ length: tabCount }, () => createRef<HTMLDivElement>()),
+    [tabCount]
+  );
+
   const { visibleCount, tabWidths, isSettled } = useTabsLayout({
     panelRef: listRef,
     measureLayerRef: measureRef,
+    measureTabRefs,
     overflowButtonRef: overflowRef,
     tabValues: tabs.map((tab) => tab.props.value),
   });
@@ -182,7 +190,7 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
       {...rest}
       onKeyDown={handleKeyDown}
     >
-      <MeasureLayer ref={measureRef} tabs={tabs} />
+      <MeasureLayer ref={measureRef} tabs={tabs} tabRefs={measureTabRefs} />
 
       <ListOverflowProvider
         hiddenTabs={hiddenTabs}

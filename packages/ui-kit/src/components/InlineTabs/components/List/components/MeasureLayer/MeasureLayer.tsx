@@ -15,13 +15,17 @@ import tabStyles from '../PanelTab/PanelTab.module.css';
  */
 export const MeasureLayer = forwardRef<HTMLSpanElement, MeasureLayerProps>(
   (props, ref) => {
-    const { tabs } = props;
+    const { tabs, tabRefs } = props;
 
     return (
       <span ref={ref} className={s.measureLayer} aria-hidden>
         <ListPlacementProvider placement="measure">
-          {tabs.map((tab) => (
-            <div key={tab.props.value} className={tabStyles.tab}>
+          {tabs.map((tab, index) => (
+            <div
+              key={tab.props.value}
+              ref={tabRefs[index]}
+              className={tabStyles.tab}
+            >
               {tab}
             </div>
           ))}

@@ -13,6 +13,7 @@ let tabWidth = 100;
 let overflowButtonWidth = 0;
 let liveTabWidth = 0;
 let overflowWidthByVisibleTabs: Record<number, number> | null = null;
+let copyWidthByLabel: Record<string, number> | null = null;
 
 interface MockObserver {
   callback: ResizeObserverCallback;
@@ -73,6 +74,7 @@ describe('useTabsLayout', () => {
     overflowButtonWidth = 0;
     liveTabWidth = 0;
     overflowWidthByVisibleTabs = null;
+    copyWidthByLabel = null;
 
     function widthOf(element: Element) {
       if (element.getAttribute('role') === 'tablist') {
@@ -91,9 +93,11 @@ describe('useTabsLayout', () => {
         return liveTabWidth;
       }
 
-      return element.parentElement?.getAttribute('aria-hidden') === 'true'
-        ? tabWidth
-        : 0;
+      if (element.parentElement?.getAttribute('aria-hidden') !== 'true') {
+        return 0;
+      }
+
+      return copyWidthByLabel?.[element.textContent ?? ''] ?? tabWidth;
     }
 
     Element.prototype.getBoundingClientRect = function getBoundingClientRect(
@@ -166,6 +170,28 @@ describe('useTabsLayout', () => {
     resize(measureLayer);
 
     expect(screen.getAllByRole('tab')).toHaveLength(1);
+  });
+
+  it('should re-measure when tab copies resize without changing the layer width', () => {
+    mockResizeObserver();
+
+    const { container } = renderTabs();
+
+    const [mainCopy] = Array.from(
+      container.querySelectorAll('[role="tablist"] > [aria-hidden="true"] > *')
+    );
+
+    expect(isObserved(mainCopy)).toBe(true);
+
+    copyWidthByLabel = { Main: 120, Setup: 80 };
+    resize(mainCopy);
+
+    expect(screen.getByRole('tab', { name: 'Main' })).toHaveStyle({
+      flexBasis: '120px',
+    });
+    expect(screen.getByRole('tab', { name: 'Setup' })).toHaveStyle({
+      flexBasis: '80px',
+    });
   });
 
   /**
