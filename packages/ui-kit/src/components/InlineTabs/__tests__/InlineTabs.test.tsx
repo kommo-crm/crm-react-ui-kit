@@ -353,6 +353,28 @@ describe('InlineTabs', () => {
     ).toBeInTheDocument();
   });
 
+  it('should add the hidden counter to the overflowButtonAriaLabel name', () => {
+    mockLayout({ visibleCount: 1 });
+
+    render(
+      <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+        <InlineTabs.List overflowButtonAriaLabel="More tabs">
+          <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+          <InlineTabs.Tab value="media" counter={5}>
+            Media
+          </InlineTabs.Tab>
+          <InlineTabs.Tab value="setup" counter={7}>
+            Setup
+          </InlineTabs.Tab>
+        </InlineTabs.List>
+      </InlineTabs>
+    );
+
+    expect(
+      screen.getByRole('button', { name: 'More tabs 12' })
+    ).toBeInTheDocument();
+  });
+
   it('should set the measured width as the flex basis of the tab', () => {
     mockLayout({ tabWidths: [90.5, 65, 65] });
 

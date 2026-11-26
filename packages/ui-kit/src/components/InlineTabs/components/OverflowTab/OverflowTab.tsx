@@ -10,6 +10,7 @@ import {
   useListOverflowContext,
 } from '../List/List.context';
 import { Counter } from '../Counter';
+import { formatCounter } from '../../utils';
 
 import { MenuItem } from './components';
 
@@ -83,6 +84,17 @@ export const OverflowTab = () => {
     0
   );
 
+  const hiddenCountText = formatCounter(hiddenCount);
+
+  /**
+   * `aria-label` replaces the button content, so the counter text is added to
+   * the name.
+   */
+  const ariaLabel =
+    overflowButtonAriaLabel && hiddenCountText
+      ? `${overflowButtonAriaLabel} ${hiddenCountText}`
+      : overflowButtonAriaLabel;
+
   return (
     <ContextMenu.Root
       theme={InlineTabsMenuTheme}
@@ -92,7 +104,7 @@ export const OverflowTab = () => {
       <ContextMenu.Trigger
         ref={overflowRef}
         className={s.overflowTab}
-        aria-label={overflowButtonAriaLabel}
+        aria-label={ariaLabel}
       >
         <MoreIcon className={s.icon} aria-hidden />
         <Counter count={hiddenCount} />

@@ -115,9 +115,9 @@ The row of tabs. Has the height of `--crm-ui-kit-inline-tabs-height`, the theme 
 
 `InlineTabs.Tab` elements must be direct children of the list; fragments, arrays and conditions are fine. Any other children are rendered as is in their place, but their width is not reserved in the layout, so they can be cut off.
 
-| Prop                      | Type     | Default | Description                                                                                                     |
-| ------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------- |
-| `overflowButtonAriaLabel` | `string` | —       | Accessible name of the overflow button. Without it the button has no name when the hidden tabs have no counters |
+| Prop                      | Type     | Default | Description                                                                                                                                                    |
+| ------------------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `overflowButtonAriaLabel` | `string` | —       | Accessible name of the overflow button; the counter of the hidden tabs is added to it. Without it the button has no name when the hidden tabs have no counters |
 
 ### [InlineTabs.Tab](./components/Tab/Tab.tsx)
 
