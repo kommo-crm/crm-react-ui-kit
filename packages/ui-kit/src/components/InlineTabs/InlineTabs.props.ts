@@ -9,7 +9,10 @@ import { type TabMenuIconProps } from './components/TabMenuIcon';
 import { type ContentProps } from './components/Content';
 
 export interface InlineTabsProps
-  extends Omit<RadixTabsProps, 'onValueChange' | 'onChange' | 'orientation'> {
+  extends Omit<
+    RadixTabsProps,
+    'onValueChange' | 'onChange' | 'orientation' | 'activationMode'
+  > {
   /**
    * Object with CSS theme properties.
    */
@@ -24,14 +27,6 @@ export interface InlineTabsProps
    * uncontrolled mode.
    */
   defaultValue?: RadixTabsProps['defaultValue'];
-  /**
-   * When a tab is selected while focus moves with the arrow keys: on focus
-   * (`automatic`) or on Enter/Space (`manual`). `manual` keeps a hybrid tab
-   * from firing `onChange` during arrow navigation.
-   *
-   * @default manual
-   */
-  activationMode?: RadixTabsProps['activationMode'];
   /**
    * Called when a tab other than the selected one is clicked or activated.
    */

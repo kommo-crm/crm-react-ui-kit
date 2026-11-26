@@ -98,17 +98,14 @@ The `settings` tab here is a hybrid tab: it opens a modal instead of switching t
 
 The root component. All other parts must be its descendants. Renders a `div` laid out as a column: the list on top, the panels below.
 
-| Prop             | Type                      | Default  | Description                                                                                  |
-| ---------------- | ------------------------- | -------- | -------------------------------------------------------------------------------------------- |
-| `theme`          | `InlineTabsThemeType`     | —        | **Required.** Object with CSS theme properties                                               |
-| `value`          | `string`                  | —        | The selected tab in controlled mode                                                          |
-| `defaultValue`   | `string`                  | —        | The tab that is selected on the first render in uncontrolled mode                            |
-| `onChange`       | `(value: string) => void` | —        | Called when another tab is clicked or activated. Selecting the selected tab does not call it |
-| `activationMode` | `'automatic' \| 'manual'` | `manual` | Whether a tab is selected as soon as it gets focus with the arrow keys, or by Enter / Space  |
+| Prop           | Type                      | Default | Description                                                                                  |
+| -------------- | ------------------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `theme`        | `InlineTabsThemeType`     | —       | **Required.** Object with CSS theme properties                                               |
+| `value`        | `string`                  | —       | The selected tab in controlled mode                                                          |
+| `defaultValue` | `string`                  | —       | The tab that is selected on the first render in uncontrolled mode                            |
+| `onChange`     | `(value: string) => void` | —       | Called when another tab is clicked or activated. Selecting the selected tab does not call it |
 
 `onChange` receives the value directly as a string, not an event object. Radix's `onValueChange` is replaced by `onChange` and is not part of the props.
-
-The default `activationMode` is `manual`, unlike `Tabs`: with `automatic`, moving focus over a hybrid tab with the arrow keys would call `onChange` for it.
 
 Tabs are horizontal only: `orientation` is not part of the props.
 
@@ -251,8 +248,6 @@ The tokens below differ between the themes; see [`InlineTabs.themes.ts`](./Inlin
 - **Home/End**: Moves focus to the first/last visible tab
 - **Enter/Space**: Selects the focused tab
 - **Enter/Space/Arrow Down** on the overflow button: Opens the menu and focuses its first item; **Arrow Up/Down** moves between the items, **Enter** selects one
-
-With `activationMode="automatic"`, a tab is selected as soon as it gets focus.
 
 ## Accessibility
 

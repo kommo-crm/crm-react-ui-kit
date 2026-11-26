@@ -133,7 +133,7 @@ describe('InlineTabs', () => {
     expect(getTab('Setup')).toHaveAttribute('aria-selected', 'false');
   });
 
-  it('should use manual activation by default', async () => {
+  it('should not select a tab on focus', async () => {
     const onChange = renderInlineTabs();
 
     act(() => getTab('Main').focus());

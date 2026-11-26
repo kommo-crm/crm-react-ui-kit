@@ -139,16 +139,11 @@ const meta = {
       options: Object.keys(themeMap),
       mapping: themeMap,
     },
-    activationMode: {
-      control: 'radio',
-      options: ['automatic', 'manual'],
-    },
     children: { control: false },
     asChild: { control: false },
   },
   args: {
     theme: InlineTabsPrimaryTheme,
-    activationMode: 'manual',
     onChange: action('onChange'),
   },
   render: (props) => (

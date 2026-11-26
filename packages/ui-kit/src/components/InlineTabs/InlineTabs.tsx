@@ -27,7 +27,6 @@ export const InlineTabs = forwardRef<El, InlineTabsProps>((props, ref) => {
     value: valueProp,
     defaultValue,
     onChange,
-    activationMode = 'manual',
     children,
     ...rest
   } = props;
@@ -61,7 +60,7 @@ export const InlineTabs = forwardRef<El, InlineTabsProps>((props, ref) => {
         {...rest}
         value={value ?? ''}
         onValueChange={handleValueChange}
-        activationMode={activationMode}
+        activationMode="manual"
         orientation="horizontal"
       >
         {children}
