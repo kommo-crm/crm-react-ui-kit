@@ -27,8 +27,20 @@ type TextAreaThemeKey =
   | '--crm-ui-kit-textarea-scrollbar-thumb-background'
   | '--crm-ui-kit-textarea-scrollbar-offset';
 
+/**
+ * Optional so that themes declared before these keys existed stay valid;
+ * the stylesheet falls back to the base theme values.
+ */
+// @uikit-v2 Issue: #131
+type TextAreaThemeOptionalKey =
+  | '--crm-ui-kit-textarea-scrollbar-width'
+  | '--crm-ui-kit-textarea-scrollbar-thumb-offset'
+  | '--crm-ui-kit-textarea-scrollbar-thumb-border-radius';
+
 export type TextAreaTheme = {
   [K in TextAreaThemeKey]: string;
+} & {
+  [K in TextAreaThemeOptionalKey]?: string;
 };
 
 const TextAreaBaseValues: Omit<
@@ -65,8 +77,12 @@ const TextAreaBaseValues: Omit<
     'calc(var(--crm-ui-kit-textarea-line-height) + var(--crm-ui-kit-textarea-padding-top) + var(--crm-ui-kit-textarea-padding-bottom))',
   '--crm-ui-kit-textarea-border-width': '1px',
   '--crm-ui-kit-textarea-border-style': 'solid',
+  '--crm-ui-kit-textarea-scrollbar-width': '6px',
   '--crm-ui-kit-textarea-scrollbar-thumb-background':
     'var(--crm-ui-kit-palette-scrollbar-thumb-background)',
+  '--crm-ui-kit-textarea-scrollbar-thumb-offset': '1px',
+  '--crm-ui-kit-textarea-scrollbar-thumb-border-radius':
+    'var(--crm-ui-kit-palette-scrollbar-thumb-border-radius)',
   '--crm-ui-kit-textarea-scrollbar-offset': '1px',
 };
 
