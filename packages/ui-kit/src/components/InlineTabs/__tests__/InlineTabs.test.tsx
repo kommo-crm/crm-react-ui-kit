@@ -911,6 +911,31 @@ describe('InlineTabs', () => {
       expect(screen.getByRole('button')).toHaveFocus();
     });
 
+    it('should not move focus to the overflow button when a hidden List child other than Tab loses it', () => {
+      mockLayout({ visibleCount: 1 });
+
+      render(
+        <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+          <InlineTabs.List overflowButtonAriaLabel="More tabs">
+            <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+            <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+            <button type="button">Filter</button>
+          </InlineTabs.List>
+        </InlineTabs>
+      );
+
+      const filter = screen.getByRole('button', { name: 'Filter' });
+
+      act(() => filter.focus());
+
+      filter.hidden = true;
+      fireEvent.focusOut(filter);
+
+      expect(
+        screen.getByRole('button', { name: 'More tabs' })
+      ).not.toHaveFocus();
+    });
+
     it('should keep focus on an outside element the menu was closed by', async () => {
       mockLayout({ visibleCount: 1 });
 

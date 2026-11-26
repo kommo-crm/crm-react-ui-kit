@@ -126,7 +126,12 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
     const handleFocusOut = (event: FocusEvent) => {
       const { target, relatedTarget } = event;
 
-      if (!(target instanceof HTMLElement) || !target.hidden || relatedTarget) {
+      if (
+        !(target instanceof HTMLElement) ||
+        target.getAttribute('role') !== 'tab' ||
+        !target.hidden ||
+        relatedTarget
+      ) {
         return;
       }
 
