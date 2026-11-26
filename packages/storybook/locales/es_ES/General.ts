@@ -31,6 +31,7 @@ export default {
   'Collision': 'Colisión',
   'Long Content': 'Contenido largo',
   'Controlled': 'Controlado',
+  'Type': 'Tipo',
 
   /* Used in docs */
   'Design tokens': 'Tokens de diseño',
@@ -181,4 +182,7 @@ export default {
     'Gestiona usuarios, grupos y permisos de acceso. Invita a tu equipo y controla qué pueden ver y editar.',
   'Tabs automation content':
     'Disparadores y bots que mueven leads y crean tareas automáticamente.',
+
+  /* ScrollArea */
+  'Long text': 'Texto largo',
 };
