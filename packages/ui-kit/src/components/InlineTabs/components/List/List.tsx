@@ -41,7 +41,7 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
   const { tabs, listChildren } = parseListChildren(children);
 
   const listRef = useRef<El>(null);
-  const measureRef = useRef<HTMLSpanElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
   const overflowRef = useRef<HTMLButtonElement>(null);
   const mergedRef = useMemo(() => mergeRefs(listRef, ref), [ref]);
 

@@ -13,12 +13,12 @@ import tabStyles from '../PanelTab/PanelTab.module.css';
  * the hidden ones have no size. The copies exist whatever the split is, and
  * they add no tab stops or Radix items to the list.
  */
-export const MeasureLayer = forwardRef<HTMLSpanElement, MeasureLayerProps>(
+export const MeasureLayer = forwardRef<HTMLDivElement, MeasureLayerProps>(
   (props, ref) => {
     const { tabs, tabRefs } = props;
 
     return (
-      <span ref={ref} className={s.measureLayer} aria-hidden>
+      <div ref={ref} className={s.measureLayer} aria-hidden>
         <ListPlacementProvider placement="measure">
           {tabs.map((tab, index) => (
             <div
@@ -30,7 +30,7 @@ export const MeasureLayer = forwardRef<HTMLSpanElement, MeasureLayerProps>(
             </div>
           ))}
         </ListPlacementProvider>
-      </span>
+      </div>
     );
   }
 );
