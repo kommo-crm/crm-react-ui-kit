@@ -4,6 +4,7 @@ import { useResizeObserver } from '../../../../hooks';
 import {
   doesSplitFit,
   getFirstCandidate,
+  toPx,
   type Measurements,
 } from '../../utils';
 
@@ -28,9 +29,25 @@ const NOT_MEASURED: UseTabsLayoutResult = {
  */
 const getWidth = (element: Element) => element.getBoundingClientRect().width;
 
+/**
+ * The box minus padding and border: computed `width` depends on
+ * `box-sizing`, and `clientWidth` is rounded.
+ */
+const getContentWidth = (element: Element) => {
+  const style = getComputedStyle(element);
+
+  return (
+    getWidth(element) -
+    toPx(style.paddingLeft) -
+    toPx(style.paddingRight) -
+    toPx(style.borderLeftWidth) -
+    toPx(style.borderRightWidth)
+  );
+};
+
 const measure = (panel: Element, measureLayer: Element): Measurements => ({
   tabWidths: Array.from(measureLayer.children).map(getWidth),
-  panelWidth: getWidth(panel),
+  panelWidth: getContentWidth(panel),
 });
 
 /**

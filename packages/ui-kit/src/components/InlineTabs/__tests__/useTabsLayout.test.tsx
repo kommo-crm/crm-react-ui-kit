@@ -12,6 +12,7 @@ let panelWidth = 400;
 let tabWidth = 100;
 let overflowButtonWidth = 0;
 let liveTabWidth = 0;
+let liveTabLeft = 0;
 let overflowWidthByVisibleTabs: Record<number, number> | null = null;
 let copyWidthByLabel: Record<string, number> | null = null;
 
@@ -54,10 +55,10 @@ const resize = (target: Element) => {
 const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
 const originalResizeObserver = global.ResizeObserver;
 
-const renderTabs = () =>
+const renderTabs = (listStyle?: React.CSSProperties) =>
   render(
     <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
-      <InlineTabs.List>
+      <InlineTabs.List style={listStyle}>
         <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
         <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
         <InlineTabs.Tab value="setup">Setup</InlineTabs.Tab>
@@ -73,6 +74,7 @@ describe('useTabsLayout', () => {
     tabWidth = 100;
     overflowButtonWidth = 0;
     liveTabWidth = 0;
+    liveTabLeft = 0;
     overflowWidthByVisibleTabs = null;
     copyWidthByLabel = null;
 
@@ -103,7 +105,9 @@ describe('useTabsLayout', () => {
     Element.prototype.getBoundingClientRect = function getBoundingClientRect(
       this: Element
     ) {
-      return { left: 0, width: widthOf(this) } as DOMRect;
+      const left = this.getAttribute('role') === 'tab' ? liveTabLeft : 0;
+
+      return { left, width: widthOf(this) } as DOMRect;
     };
   });
 
@@ -334,6 +338,32 @@ describe('useTabsLayout', () => {
     resize(screen.getByRole('button'));
 
     expect(screen.getAllByRole('tab')).toHaveLength(1);
+  });
+
+  it('should split the content box of a panel with padding and border', () => {
+    mockResizeObserver();
+    panelWidth = 320;
+
+    renderTabs({
+      paddingLeft: '10px',
+      paddingRight: '10px',
+      borderLeft: '5px solid',
+      borderRight: '5px solid',
+    });
+
+    expect(screen.getAllByRole('tab')).toHaveLength(2);
+  });
+
+  it('should place the slider under the tab inside the panel border', () => {
+    mockResizeObserver();
+    liveTabWidth = 100;
+    liveTabLeft = 5;
+
+    const { container } = renderTabs({ borderLeft: '5px solid' });
+
+    expect(container.querySelector('[data-inline-tabs-slider]')).toHaveStyle({
+      left: '0px',
+    });
   });
 
   it('should move the slider when the panel resizes without a new split', () => {
