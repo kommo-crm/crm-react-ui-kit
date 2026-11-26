@@ -6,7 +6,24 @@ import type { TabsTriggerProps as RadixTabsTriggerProps } from '@radix-ui/react-
  */
 export type TabPlacement = 'panel' | 'menu' | 'measure';
 
-export interface TabProps extends React.HTMLAttributes<HTMLDivElement> {
+/**
+ * Focus and keyboard events happen on the tab trigger or the menu item, which
+ * wrap the element that gets the props, so these handlers would never fire.
+ */
+type FocusAndKeyboardHandlers =
+  | 'onFocus'
+  | 'onFocusCapture'
+  | 'onBlur'
+  | 'onBlurCapture'
+  | 'onKeyDown'
+  | 'onKeyDownCapture'
+  | 'onKeyUp'
+  | 'onKeyUpCapture'
+  | 'onKeyPress'
+  | 'onKeyPressCapture';
+
+export interface TabProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, FocusAndKeyboardHandlers> {
   /**
    * The value of the tab. Values must be unique within the list.
    */
