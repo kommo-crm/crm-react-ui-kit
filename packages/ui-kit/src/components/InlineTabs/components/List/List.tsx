@@ -30,7 +30,8 @@ import s from './List.module.css';
 type El = HTMLDivElement;
 
 export const List = forwardRef<El, ListProps>((props, ref) => {
-  const { className, children, onKeyDown, ...rest } = props;
+  const { className, children, overflowButtonAriaLabel, onKeyDown, ...rest } =
+    props;
 
   const { value } = useContext(InlineTabsContext);
 
@@ -124,6 +125,7 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
       <ListOverflowProvider
         hiddenTabs={hiddenTabs}
         overflowRef={overflowRef}
+        overflowButtonAriaLabel={overflowButtonAriaLabel}
         onOpenChange={handleMenuOpen}
         onMenuItemUnmount={handleMenuItemUnmount}
       >

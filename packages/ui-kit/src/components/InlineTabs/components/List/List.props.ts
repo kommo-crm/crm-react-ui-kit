@@ -11,6 +11,10 @@ export interface ListProps extends Omit<RadixTabsListProps, 'children'> {
    * layout. Values must be unique.
    */
   children?: React.ReactNode;
+  /**
+   * Accessible name of the overflow button.
+   */
+  overflowButtonAriaLabel?: string;
 }
 
 export interface ListPlacementContextProps {
@@ -29,6 +33,10 @@ export interface ListOverflowContextProps {
    * Ref of the overflow button, measured by the layout.
    */
   overflowRef: React.Ref<HTMLButtonElement>;
+  /**
+   * Accessible name of the overflow button.
+   */
+  overflowButtonAriaLabel?: ListProps['overflowButtonAriaLabel'];
   /**
    * Reports the open state of the overflow menu.
    */

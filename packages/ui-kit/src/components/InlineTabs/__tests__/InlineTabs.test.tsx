@@ -336,6 +336,23 @@ describe('InlineTabs', () => {
     expect(screen.getByRole('button').textContent).toBe('');
   });
 
+  it('should name the overflow button with overflowButtonAriaLabel', () => {
+    mockLayout({ visibleCount: 1 });
+
+    render(
+      <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+        <InlineTabs.List overflowButtonAriaLabel="More tabs">
+          <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+          <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+        </InlineTabs.List>
+      </InlineTabs>
+    );
+
+    expect(
+      screen.getByRole('button', { name: 'More tabs' })
+    ).toBeInTheDocument();
+  });
+
   it('should set the measured width as the flex basis of the tab', () => {
     mockLayout({ tabWidths: [90.5, 65, 65] });
 

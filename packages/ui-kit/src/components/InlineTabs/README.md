@@ -118,6 +118,10 @@ The row of tabs. Has the height of `--crm-ui-kit-inline-tabs-height`, the theme 
 
 `InlineTabs.Tab` elements must be direct children of the list; fragments, arrays and conditions are fine. Any other children are rendered as is in their place, but their width is not reserved in the layout, so they can be cut off.
 
+| Prop                      | Type     | Default | Description                                                                                                     |
+| ------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------- |
+| `overflowButtonAriaLabel` | `string` | —       | Accessible name of the overflow button. Without it the button has no name when the hidden tabs have no counters |
+
 ### [InlineTabs.Tab](./components/Tab/Tab.tsx)
 
 A single tab. Requires a `value` that is unique within the list.
@@ -256,6 +260,7 @@ With `activationMode="automatic"`, a tab is selected as soon as it gets focus.
 - The selected tab has `aria-selected="true"`; the menu item of a selected hidden tab has `aria-current`
 - A hidden tab keeps its element with the `tab` role in the list, so the panel of a selected hidden tab stays labelled by it
 - The measure layer is hidden from assistive technologies
+- The overflow button gets its accessible name from `overflowButtonAriaLabel` of `InlineTabs.List`; the icon is hidden from assistive technologies
 - Custom `role` and `aria-*` props of `InlineTabs.Tab` go to the inner element and do not replace the tab semantics
 
 ## Notes

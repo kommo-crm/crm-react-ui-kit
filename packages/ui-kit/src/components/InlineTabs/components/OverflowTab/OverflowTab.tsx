@@ -24,8 +24,13 @@ const DISPLAY_NAME = 'InlineTabs.OverflowTab';
  * after its children, only while some tabs are hidden.
  */
 export const OverflowTab = () => {
-  const { hiddenTabs, overflowRef, onOpenChange, onMenuItemUnmount } =
-    useListOverflowContext(DISPLAY_NAME);
+  const {
+    hiddenTabs,
+    overflowRef,
+    overflowButtonAriaLabel,
+    onOpenChange,
+    onMenuItemUnmount,
+  } = useListOverflowContext(DISPLAY_NAME);
   const { themeClassName, value, select } = useContext(InlineTabsContext);
 
   if (hiddenTabs.length === 0) {
@@ -47,7 +52,11 @@ export const OverflowTab = () => {
       mode="hover"
       onOpen={onOpenChange}
     >
-      <ContextMenu.Trigger ref={overflowRef} className={s.overflowTab}>
+      <ContextMenu.Trigger
+        ref={overflowRef}
+        className={s.overflowTab}
+        aria-label={overflowButtonAriaLabel}
+      >
         <MoreIcon className={s.icon} aria-hidden />
         <Counter count={hiddenCount} />
       </ContextMenu.Trigger>
