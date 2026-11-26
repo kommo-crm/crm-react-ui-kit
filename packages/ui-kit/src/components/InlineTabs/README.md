@@ -130,7 +130,9 @@ A single tab. Requires a `value` that is unique within the list.
 
 Other `div` props (`className`, `title`, `data-*`, `aria-*`, …) and the ref go to the inner element with the tab content, not to the element with the `tab` role.
 
-The list renders the children of a tab in several places: in the panel, in the overflow menu item and in a hidden measure layer. Each place gets its own instance of the children, so they must keep no state, effects or ids: the menu instance mounts anew every time the tab enters the menu. The `id` of a tab stays only on the panel copy.
+The list renders the children of a tab in several places: in the panel, in the overflow menu item and in a hidden measure layer. Each place gets its own instance of the children, so they must keep no state, effects or ids: the menu instance mounts anew every time the tab enters the menu.
+
+The props of a tab go to the panel copy and, except `id`, to the menu copy; the measure copy gets only `className` and `style`. The panel copy stays in the DOM, hidden, while the tab is in the menu, so while the menu is open an attribute such as `data-testid` is found twice: query the menu item within the menu.
 
 ### [InlineTabs.TabLabel](./components/TabLabel/TabLabel.tsx)
 

@@ -27,13 +27,15 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>((props, ref) => {
   const { placement } = useListPlacementContext(DISPLAY_NAME);
 
   /**
-   * The panel copy stays in the DOM even while the tab is in the menu,
-   * so the menu and measure copies drop the id to keep it unique.
+   * The panel copy stays in the DOM even while the tab is in the menu, so the
+   * menu copy drops the id to keep it unique. The measure copy always exists
+   * and gets only what affects its width, so `data-*`, `aria-*` and handlers
+   * are not duplicated there.
    */
-  const omittedProps: (keyof typeof rest)[] =
-    placement === 'menu' || placement === 'measure'
-      ? ['value', 'id']
-      : ['value'];
+  const ownProps =
+    placement === 'measure'
+      ? { style: rest.style }
+      : omit(rest, placement === 'menu' ? ['value', 'id'] : ['value']);
 
   return (
     <div
@@ -43,7 +45,7 @@ export const Tab = forwardRef<HTMLDivElement, TabProps>((props, ref) => {
         placement === 'menu' ? s.menu : s.panel,
         className
       )}
-      {...omit(rest, omittedProps)}
+      {...ownProps}
     >
       {children}
       <Counter count={counter} />

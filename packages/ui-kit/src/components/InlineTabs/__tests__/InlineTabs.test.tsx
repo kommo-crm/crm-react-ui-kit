@@ -487,6 +487,32 @@ describe('InlineTabs', () => {
     expect(measureLayer?.querySelector('button, [tabindex]')).toBeNull();
   });
 
+  it('should pass only className and style of Tab to the measure copy', () => {
+    const { container } = render(
+      <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="a">
+        <InlineTabs.List>
+          <InlineTabs.Tab
+            value="a"
+            className="custom-a"
+            style={{ letterSpacing: '1px' }}
+            title="Tab A"
+            data-testid="tab-a"
+          >
+            A
+          </InlineTabs.Tab>
+        </InlineTabs.List>
+      </InlineTabs>
+    );
+
+    const measureCopy = container.querySelector(
+      '[aria-hidden="true"] .custom-a'
+    );
+
+    expect(screen.getAllByTestId('tab-a')).toHaveLength(1);
+    expect(measureCopy).toHaveStyle({ letterSpacing: '1px' });
+    expect(measureCopy).not.toHaveAttribute('title');
+  });
+
   it('should render Tab in conditional and mapped children in order', () => {
     const isMediaShown = true;
 
