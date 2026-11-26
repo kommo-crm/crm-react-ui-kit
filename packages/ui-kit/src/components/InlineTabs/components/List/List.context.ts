@@ -16,7 +16,7 @@ export const [ListPlacementProvider, useListPlacementContext] =
 export const [ListOverflowProvider, useListOverflowContext] =
   createComponentContext<ListOverflowContextProps>(DISPLAY_NAME, {
     hiddenTabs: [],
-    overflowRef: null,
+    overflowRef: { current: null },
     onOpenChange: () => undefined,
     onMenuItemUnmount: () => undefined,
   });

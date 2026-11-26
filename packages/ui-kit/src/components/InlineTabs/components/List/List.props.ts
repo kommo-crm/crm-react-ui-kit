@@ -32,7 +32,7 @@ export interface ListOverflowContextProps {
   /**
    * Ref of the overflow button, measured by the layout.
    */
-  overflowRef: React.Ref<HTMLButtonElement>;
+  overflowRef: React.RefObject<HTMLButtonElement>;
   /**
    * Accessible name of the overflow button.
    */

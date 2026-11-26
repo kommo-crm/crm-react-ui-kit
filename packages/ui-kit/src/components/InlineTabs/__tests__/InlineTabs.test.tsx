@@ -790,6 +790,87 @@ describe('InlineTabs', () => {
       expect(reopenedSetup).toHaveAttribute('data-selected');
     });
 
+    it('should return focus to the overflow button after a keyboard selection in the menu', async () => {
+      mockLayout({ visibleCount: 1 });
+
+      const onChange = jest.fn();
+
+      renderOverflowTabs({ onChange });
+
+      const overflowButton = screen.getByRole('button');
+
+      act(() => overflowButton.focus());
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => {
+        expect(screen.getAllByRole('menuitem')[0]).toHaveFocus();
+      });
+      await userEvent.keyboard('{Enter}');
+
+      expect(onChange).toHaveBeenCalledWith('media');
+      await waitFor(() => {
+        expect(screen.queryByRole('menuitem')).not.toBeInTheDocument();
+      });
+      await waitFor(() => {
+        expect(overflowButton).toHaveFocus();
+      });
+    });
+
+    it('should keep focus on an outside element the menu was closed by', async () => {
+      mockLayout({ visibleCount: 1 });
+
+      render(
+        <>
+          <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+            <InlineTabs.List>
+              <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+              <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+            </InlineTabs.List>
+          </InlineTabs>
+          <input aria-label="Outside" />
+        </>
+      );
+
+      act(() => screen.getByRole('button').focus());
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => {
+        expect(screen.getByRole('menuitem')).toHaveFocus();
+      });
+
+      const input = screen.getByRole('textbox', { name: 'Outside' });
+
+      await userEvent.click(input);
+
+      await waitFor(() => {
+        expect(screen.queryByRole('menuitem')).not.toBeInTheDocument();
+      });
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(input).toHaveFocus();
+    });
+
+    it('should not move focus to the overflow button after a click on an empty place', async () => {
+      mockLayout({ visibleCount: 1 });
+
+      renderOverflowTabs();
+
+      const overflowButton = screen.getByRole('button');
+
+      act(() => overflowButton.focus());
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => {
+        expect(screen.getAllByRole('menuitem')[0]).toHaveFocus();
+      });
+
+      await userEvent.click(document.body);
+
+      await waitFor(() => {
+        expect(screen.queryByRole('menuitem')).not.toBeInTheDocument();
+      });
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      expect(overflowButton).not.toHaveFocus();
+    });
+
     it('should set title and data attributes on the menu item', async () => {
       mockLayout({ visibleCount: 1 });
 
