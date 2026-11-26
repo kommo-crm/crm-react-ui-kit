@@ -936,6 +936,46 @@ describe('InlineTabs', () => {
       ).not.toHaveFocus();
     });
 
+    it('should move focus to the overflow button when a hidden tab loses it to nowhere', () => {
+      mockLayout({ visibleCount: 1 });
+
+      renderOverflowTabs();
+
+      const setup = screen.getAllByRole('tab', { hidden: true })[2];
+
+      act(() => setup.focus());
+      fireEvent.focusOut(setup);
+
+      expect(screen.getByRole('button')).toHaveFocus();
+    });
+
+    it('should move focus to the overflow button when a tab loses it before the button is attached', () => {
+      const renderTabs = () => (
+        <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+          <InlineTabs.List>
+            <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+            <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+            <InlineTabs.Tab value="setup">Setup</InlineTabs.Tab>
+          </InlineTabs.List>
+        </InlineTabs>
+      );
+
+      const { rerender } = render(renderTabs());
+
+      const setup = getTab('Setup');
+
+      act(() => setup.focus());
+
+      setup.hidden = true;
+      fireEvent.focusOut(setup);
+      act(() => setup.blur());
+
+      mockLayout({ visibleCount: 1 });
+      rerender(renderTabs());
+
+      expect(screen.getByRole('button')).toHaveFocus();
+    });
+
     it('should keep focus on an outside element the menu was closed by', async () => {
       mockLayout({ visibleCount: 1 });
 
