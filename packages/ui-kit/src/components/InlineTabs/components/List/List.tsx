@@ -2,6 +2,8 @@ import React, {
   forwardRef,
   useCallback,
   useContext,
+  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -96,6 +98,66 @@ export const List = forwardRef<El, ListProps>((props, ref) => {
     },
     [onKeyDown]
   );
+
+  const isFocusLostRef = useRef(false);
+
+  /**
+   * A tab that moves to the menu gets `hidden`, and Chrome drops focus from
+   * its trigger to body in the middle of the commit, often before the overflow
+   * button is inserted. A native listener: React ignores events dispatched
+   * during its commit, so `onBlur` never sees this blur. Without the button
+   * yet, the loss is left for the layout effect below.
+   */
+  useEffect(() => {
+    const list = listRef.current;
+
+    if (!list) {
+      return undefined;
+    }
+
+    const handleFocusOut = (event: FocusEvent) => {
+      const { target, relatedTarget } = event;
+
+      if (!(target instanceof HTMLElement) || !target.hidden || relatedTarget) {
+        return;
+      }
+
+      if (overflowRef.current?.isConnected) {
+        overflowRef.current.focus();
+      } else {
+        isFocusLostRef.current = true;
+      }
+    };
+
+    list.addEventListener('focusout', handleFocusOut);
+
+    return () => {
+      list.removeEventListener('focusout', handleFocusOut);
+    };
+  }, []);
+
+  /**
+   * Runs in the list, after the overflow button of the commit is attached.
+   * Browsers that keep focus on a hidden element give no blur, so the focused
+   * hidden tab is checked too.
+   */
+  useLayoutEffect(() => {
+    const activeElement = document.activeElement;
+
+    const isOnHiddenTab =
+      activeElement instanceof HTMLElement &&
+      activeElement.hidden &&
+      Boolean(listRef.current?.contains(activeElement));
+    const isLostToBody =
+      isFocusLostRef.current &&
+      (!activeElement || activeElement === document.body);
+
+    isFocusLostRef.current = false;
+
+    if (isOnHiddenTab || isLostToBody) {
+      overflowRef.current?.focus();
+    }
+  }, [visibleCount]);
 
   const hiddenTabs = tabs.slice(visibleCount);
 

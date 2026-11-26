@@ -841,6 +841,27 @@ describe('InlineTabs', () => {
       });
     });
 
+    it('should move focus to the overflow button when the focused tab moves to the menu', () => {
+      const renderTabs = () => (
+        <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+          <InlineTabs.List>
+            <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+            <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+            <InlineTabs.Tab value="setup">Setup</InlineTabs.Tab>
+          </InlineTabs.List>
+        </InlineTabs>
+      );
+
+      const { rerender } = render(renderTabs());
+
+      act(() => getTab('Setup').focus());
+
+      mockLayout({ visibleCount: 1 });
+      rerender(renderTabs());
+
+      expect(screen.getByRole('button')).toHaveFocus();
+    });
+
     it('should keep focus on an outside element the menu was closed by', async () => {
       mockLayout({ visibleCount: 1 });
 
