@@ -657,6 +657,33 @@ describe('InlineTabs', () => {
     expect(positions).not.toContain(-1);
   });
 
+  it('should not remount a List child when a conditional sibling toggles', () => {
+    const onMount = jest.fn();
+
+    const Filter = () => {
+      React.useEffect(() => onMount(), []);
+
+      return <span>Filter</span>;
+    };
+
+    const tree = (isLoading: boolean) => (
+      <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+        <InlineTabs.List>
+          <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+          {isLoading && <span>Loading</span>}
+          <Filter />
+        </InlineTabs.List>
+      </InlineTabs>
+    );
+
+    const { rerender } = render(tree(true));
+
+    rerender(tree(false));
+    rerender(tree(true));
+
+    expect(onMount).toHaveBeenCalledTimes(1);
+  });
+
   it('should keep the trigger of a hidden selected tab for its panel label', () => {
     mockLayout({ visibleCount: 1 });
 

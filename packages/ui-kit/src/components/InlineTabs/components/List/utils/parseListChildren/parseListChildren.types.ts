@@ -30,10 +30,24 @@ export type ListChild =
        */
       node: React.ReactNode;
       /**
-       * React key of the child, counted among the other children only.
+       * React key of the child, stable while the markup slot is the same.
        */
       key: string;
     };
+
+/**
+ * A list child taken out of arrays and fragments.
+ */
+export interface FlatChild {
+  /**
+   * The child itself.
+   */
+  node: React.ReactNode;
+  /**
+   * React key of the child within the whole list.
+   */
+  key: string;
+}
 
 /**
  * List children split into tabs and the render order.

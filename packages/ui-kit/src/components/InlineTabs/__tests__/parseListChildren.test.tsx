@@ -6,6 +6,11 @@ import { parseListChildren } from '../components/List/utils';
 const getValues = (children: React.ReactNode) =>
   parseListChildren(children).tabs.map((tab) => tab.props.value);
 
+const getOtherKeys = (children: React.ReactNode) =>
+  parseListChildren(children).listChildren.flatMap((child) =>
+    child.kind === 'other' ? [child.key] : []
+  );
+
 describe('parseListChildren', () => {
   it('returns tabs in order with their props', () => {
     const { tabs } = parseListChildren(
@@ -79,37 +84,59 @@ describe('parseListChildren', () => {
     );
 
     expect(listChildren).toMatchObject([
-      { kind: 'other', key: 'other:0', node: 'text' },
+      { kind: 'other', node: 'text' },
       { kind: 'tab', tab: tabs[0], tabIndex: 0 },
-      { kind: 'other', key: 'other:1' },
+      { kind: 'other' },
       { kind: 'tab', tab: tabs[1], tabIndex: 1 },
-      { kind: 'other', key: 'other:2' },
+      { kind: 'other' },
     ]);
   });
 
-  it('keeps the keys of other children when tabs are added', () => {
-    const overflow = <span>overflow</span>;
-
-    const getKeys = (children: React.ReactNode) =>
-      parseListChildren(children).listChildren.flatMap((child) =>
-        child.kind === 'other' ? [child.key] : []
+  it('keeps the keys of other children when a conditional tab shows', () => {
+    const getKeys = (isShown: boolean) =>
+      getOtherKeys(
+        <>
+          <Tab value="a" />
+          {isShown && <Tab value="b" />}
+          <span>overflow</span>
+        </>
       );
 
-    expect(
-      getKeys(
+    expect(getKeys(true)).toEqual(getKeys(false));
+  });
+
+  it('keeps the key of a child after a conditional sibling', () => {
+    const getKeys = (isLoading: boolean) =>
+      getOtherKeys(
         <>
-          <Tab value="a" />
-          {overflow}
+          {isLoading && <span>spinner</span>}
+          <span>filter</span>
         </>
-      )
-    ).toEqual(
-      getKeys(
+      );
+
+    expect(getKeys(true)[1]).toBe(getKeys(false)[0]);
+  });
+
+  it('moves the key with an explicitly keyed child', () => {
+    const [x, y] = getOtherKeys([<span key="x" />, <span key="y" />]);
+
+    expect(getOtherKeys([<span key="y" />, <span key="x" />])).toEqual([y, x]);
+  });
+
+  it('gives unique keys to the children of different fragments', () => {
+    const keys = getOtherKeys(
+      <>
         <>
-          <Tab value="a" />
-          <Tab value="b" />
-          {overflow}
+          <span />
+          text
         </>
-      )
+        <>
+          <span />
+          text
+        </>
+      </>
     );
+
+    expect(new Set(keys).size).toBe(4);
   });
 });
