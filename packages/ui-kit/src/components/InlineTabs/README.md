@@ -68,7 +68,7 @@ function CardTabs(props) {
       value={tab}
       onChange={handleChange}
     >
-      <InlineTabs.List>
+      <InlineTabs.List overflowButtonAriaLabel="More tabs">
         <InlineTabs.Tab value="general" counter={counts.general}>
           <InlineTabs.TabLabel>General</InlineTabs.TabLabel>
         </InlineTabs.Tab>

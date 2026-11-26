@@ -49,7 +49,7 @@ function CardTabs({ counts, onSettingsOpen }) {
       value={tab}
       onChange={handleChange}
     >
-      <InlineTabs.List>
+      <InlineTabs.List overflowButtonAriaLabel="More tabs">
         <InlineTabs.Tab value="general" counter={counts.general}>
           <InlineTabs.TabLabel>${i18n.t('General')}</InlineTabs.TabLabel>
         </InlineTabs.Tab>
@@ -149,7 +149,7 @@ const meta = {
   render: (props) => (
     <ResizableFrame>
       <InlineTabs.Root {...props} defaultValue="general">
-        <InlineTabs.List>
+        <InlineTabs.List overflowButtonAriaLabel="More tabs">
           {TABS.map(({ value, label }) => (
             <InlineTabs.Tab key={value} value={value}>
               <InlineTabs.TabLabel>{i18n.t(label)}</InlineTabs.TabLabel>
@@ -237,7 +237,7 @@ export const Default: StoryObj<DefaultArgs> = {
     return (
       <ResizableFrame>
         <InlineTabs.Root {...props} onChange={handleChange}>
-          <InlineTabs.List>
+          <InlineTabs.List overflowButtonAriaLabel="More tabs">
             {Object.entries(tabs).map(([value, { label, counter }]) => (
               <InlineTabs.Tab key={value} value={value} counter={counter}>
                 <InlineTabs.TabLabel>{label}</InlineTabs.TabLabel>
