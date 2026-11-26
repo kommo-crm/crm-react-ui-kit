@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   align-items: flex-end;
+  flex-shrink: 0;
   height: var(--crm-ui-kit-inline-tabs-height);
   overflow: hidden;
   background: var(--crm-ui-kit-inline-tabs-background);
