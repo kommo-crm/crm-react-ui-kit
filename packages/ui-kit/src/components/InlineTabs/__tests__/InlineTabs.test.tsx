@@ -863,6 +863,29 @@ describe('InlineTabs', () => {
       });
     });
 
+    it('should expose the tab value on the menu item to the list handlers', async () => {
+      mockLayout({ visibleCount: 1 });
+
+      const onKeyDown = jest.fn((event: React.KeyboardEvent<HTMLElement>) =>
+        (event.target as HTMLElement).getAttribute('data-value')
+      );
+
+      render(
+        <InlineTabs theme={InlineTabsPrimaryTheme} defaultValue="main">
+          <InlineTabs.List onKeyDown={onKeyDown}>
+            <InlineTabs.Tab value="main">Main</InlineTabs.Tab>
+            <InlineTabs.Tab value="media">Media</InlineTabs.Tab>
+          </InlineTabs.List>
+        </InlineTabs>
+      );
+
+      const [item] = await openMenu();
+
+      fireEvent.keyDown(item, { key: 'a' });
+
+      expect(onKeyDown).toHaveReturnedWith('media');
+    });
+
     it('should select a hidden tab from the menu in uncontrolled mode', async () => {
       mockLayout({ visibleCount: 1 });
 

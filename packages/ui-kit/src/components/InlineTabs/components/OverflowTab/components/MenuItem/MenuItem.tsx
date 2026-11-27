@@ -21,6 +21,7 @@ export const MenuItem = (props: MenuItemProps) => {
       className={s.menuItem}
       data-selected={isSelected ? '' : undefined}
       aria-current={isSelected || undefined}
+      data-value={value}
       onSelect={() => onSelect(value)}
     >
       {tab}
