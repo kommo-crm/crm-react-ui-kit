@@ -65,6 +65,20 @@ describe('getStaleVisibleCount', () => {
       tabValues: ['d', 'a', 'b'],
       expected: 2,
     },
+    {
+      name: 'every tab removed with the menu',
+      values: ['a', 'b', 'c'],
+      visibleCount: 2,
+      tabValues: [],
+      expected: 0,
+    },
+    {
+      name: 'the only hidden tab replaced by a tab appended',
+      values: ['a', 'b', 'c'],
+      visibleCount: 2,
+      tabValues: ['a', 'b', 'd'],
+      expected: 2,
+    },
   ])('should handle $name', (testCase) => {
     expect(
       getStaleVisibleCount({
