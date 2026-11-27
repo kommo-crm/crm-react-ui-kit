@@ -4,6 +4,7 @@ import { useResizeObserver } from '../../../../hooks';
 import {
   doesSplitFit,
   getFirstCandidate,
+  getStaleVisibleCount,
   toPx,
   type Measurements,
 } from '../../utils';
@@ -49,28 +50,6 @@ const measure = (panel: Element, measureLayer: Element): Measurements => ({
   tabWidths: Array.from(measureLayer.children).map(getWidth),
   panelWidth: getContentWidth(panel),
 });
-
-/**
- * Until the new tabs are measured, the tabs visible in the split stay
- * visible: by the old indexes, a tab inserted before a visible one would be
- * hidden for a commit, and Chrome drops focus from a hidden tab to body.
- * While a menu tab remains, the last tab stays in the menu, so the overflow
- * button does not unmount and take its focus away.
- */
-const getStaleVisibleCount = (split: Split, tabValues: string[]) => {
-  const splitValues = split.tabsKey.split('\n');
-  const visibleValues = new Set(splitValues.slice(0, split.visibleCount));
-  const hiddenValues = new Set(splitValues.slice(split.visibleCount));
-
-  const count = tabValues.reduce(
-    (result, value, index) => (visibleValues.has(value) ? index + 1 : result),
-    0
-  );
-
-  return tabValues.some((value) => hiddenValues.has(value))
-    ? Math.min(count, tabValues.length - 1)
-    : count;
-};
 
 /**
  * Splits the tabs into visible ones and the overflow menu.
@@ -174,7 +153,7 @@ export const useTabsLayout = (
 
   return {
     visibleCount: isStale
-      ? getStaleVisibleCount(split, tabValues)
+      ? getStaleVisibleCount({ split, tabValues })
       : split.visibleCount,
     tabWidths: split.measurements.tabWidths,
     isSettled: split.isSettled && !isStale,
