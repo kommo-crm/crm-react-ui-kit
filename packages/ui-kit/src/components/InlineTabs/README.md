@@ -259,7 +259,7 @@ The tokens below differ between the themes; see [`InlineTabs.themes.ts`](./Inlin
 - The selected tab has `aria-selected="true"`; the menu item of a selected hidden tab has `aria-current`
 - A hidden tab keeps its element with the `tab` role in the list, so the panel of a selected hidden tab stays labelled by it
 - The measure layer is hidden from assistive technologies
-- The overflow button gets its accessible name from `overflowButtonAriaLabel` of `InlineTabs.List`; the icon is hidden from assistive technologies
+- The overflow button gets its accessible name from `overflowButtonAriaLabel` of `InlineTabs.List` followed by the counter of the hidden tabs, if they have counters; the icon is hidden from assistive technologies
 - Custom `role` and `aria-*` props of `InlineTabs.Tab` go to the inner element and do not replace the tab semantics
 
 ## Notes
