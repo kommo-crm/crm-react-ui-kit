@@ -3,13 +3,13 @@
  */
 export interface GetStaleVisibleCountParams {
   /**
-   * Values of the previous tabs the split was searched for, joined.
+   * Values of the previous tabs the split was searched for, joined with `\n`.
    */
   tabsKey: string;
   /**
    * How many leading previous tabs the split keeps in the panel.
    */
-  visibleCount: number;
+  previousVisibleCount: number;
   /**
    * Values of the current tabs in display order.
    */

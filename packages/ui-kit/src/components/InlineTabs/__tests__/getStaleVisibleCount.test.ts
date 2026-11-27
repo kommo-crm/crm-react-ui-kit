@@ -83,7 +83,7 @@ describe('getStaleVisibleCount', () => {
     expect(
       getStaleVisibleCount({
         tabsKey: testCase.values.join('\n'),
-        visibleCount: testCase.visibleCount,
+        previousVisibleCount: testCase.visibleCount,
         tabValues: testCase.tabValues,
       })
     ).toBe(testCase.expected);
