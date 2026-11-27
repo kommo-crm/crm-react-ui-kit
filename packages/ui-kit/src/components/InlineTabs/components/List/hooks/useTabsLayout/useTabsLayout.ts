@@ -153,7 +153,11 @@ export const useTabsLayout = (
 
   return {
     visibleCount: isStale
-      ? getStaleVisibleCount({ split, tabValues })
+      ? getStaleVisibleCount({
+          tabsKey: split.tabsKey,
+          visibleCount: split.visibleCount,
+          tabValues,
+        })
       : split.visibleCount,
     tabWidths: split.measurements.tabWidths,
     isSettled: split.isSettled && !isStale,

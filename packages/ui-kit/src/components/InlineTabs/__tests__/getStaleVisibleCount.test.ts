@@ -1,12 +1,5 @@
 import { getStaleVisibleCount } from '../components/List/utils';
 
-const getSplit = (values: string[], visibleCount: number) => ({
-  tabsKey: values.join('\n'),
-  measurements: { tabWidths: values.map(() => 50), panelWidth: 0 },
-  visibleCount,
-  isSettled: true,
-});
-
 describe('getStaleVisibleCount', () => {
   it.each([
     {
@@ -75,7 +68,8 @@ describe('getStaleVisibleCount', () => {
   ])('should handle $name', (testCase) => {
     expect(
       getStaleVisibleCount({
-        split: getSplit(testCase.values, testCase.visibleCount),
+        tabsKey: testCase.values.join('\n'),
+        visibleCount: testCase.visibleCount,
         tabValues: testCase.tabValues,
       })
     ).toBe(testCase.expected);

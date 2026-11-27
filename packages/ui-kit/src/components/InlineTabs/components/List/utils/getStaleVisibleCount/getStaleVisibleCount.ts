@@ -11,17 +11,17 @@ import type { GetStaleVisibleCountParams } from './getStaleVisibleCount.types';
 export const getStaleVisibleCount = (
   params: GetStaleVisibleCountParams
 ): number => {
-  const { split, tabValues } = params;
+  const { tabsKey, visibleCount, tabValues } = params;
 
-  const splitValues = split.tabsKey.split('\n');
-  const visibleValues = new Set(splitValues.slice(0, split.visibleCount));
+  const splitValues = tabsKey.split('\n');
+  const visibleValues = new Set(splitValues.slice(0, visibleCount));
 
   const count = tabValues.reduce(
     (result, value, index) => (visibleValues.has(value) ? index + 1 : result),
     0
   );
 
-  const hadMenu = split.visibleCount < splitValues.length;
+  const hadMenu = visibleCount < splitValues.length;
   const hasMenuCandidate = tabValues.some((value) => !visibleValues.has(value));
 
   return hadMenu && hasMenuCandidate
