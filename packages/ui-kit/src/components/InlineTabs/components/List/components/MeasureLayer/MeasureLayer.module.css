@@ -1,0 +1,10 @@
+.measureLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: max-content;
+  height: 100%;
+  visibility: hidden;
+  pointer-events: none;
+}

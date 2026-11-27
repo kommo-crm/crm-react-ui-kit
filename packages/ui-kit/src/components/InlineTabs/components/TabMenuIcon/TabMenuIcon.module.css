@@ -1,0 +1,12 @@
+.tabMenuIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--crm-ui-kit-inline-tabs-menu-item-icon-size);
+  height: var(--crm-ui-kit-inline-tabs-menu-item-icon-size);
+  margin-right: var(--crm-ui-kit-inline-tabs-menu-item-icon-spacing);
+
+  & > svg {
+    width: 100%;
+    height: 100%;
+  }
+}
