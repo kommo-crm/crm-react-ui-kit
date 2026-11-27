@@ -1,11 +1,13 @@
 import React from 'react';
 import { type Page } from '@playwright/test';
+import { expect } from '@playwright/experimental-ct-react';
 
 import { test } from '@crm-react-ui-kit-e2e/test';
 
 import { multiCartesian, prettyProps } from '@ui-kit/tests/e2e/utils';
 
 import {
+  InlineTabsFocusPlaygroundItem,
   InlineTabsPrimaryPlaygroundItem,
   InlineTabsSecondaryPlaygroundItem,
   type InlineTabsTestProps,
@@ -104,3 +106,30 @@ for (const props of combinations) {
     );
   });
 }
+
+test.describe('InlineTabs focus', () => {
+  test('keeps focus on a tab shifted by a tab inserted before it', async ({
+    mount,
+    page,
+    appearance,
+  }) => {
+    const tabs = ['Main', 'Products', 'Media'];
+
+    const component = await mount(
+      <InlineTabsFocusPlaygroundItem appearance={appearance} props={{ tabs }} />
+    );
+
+    await page.locator('[data-inline-tabs-slider]').waitFor();
+    await page.getByRole('tab', { name: 'Media' }).focus();
+
+    await component.update(
+      <InlineTabsFocusPlaygroundItem
+        appearance={appearance}
+        props={{ tabs: ['New', ...tabs] }}
+      />
+    );
+
+    await expect(page.getByRole('tab')).toHaveCount(4);
+    await expect(page.getByRole('tab', { name: 'Media' })).toBeFocused();
+  });
+});

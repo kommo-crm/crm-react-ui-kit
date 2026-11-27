@@ -129,3 +129,37 @@ export const InlineTabsSecondaryPlaygroundItem = ({
     {(p) => <InlineTabsScenario {...p} theme={InlineTabsSecondaryTheme} />}
   </ComponentPlayground>
 );
+
+export interface InlineTabsFocusTestProps {
+  /**
+   * Values of the tabs in display order; each value is the tab label too.
+   */
+  tabs: string[];
+}
+
+export const InlineTabsFocusPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<InlineTabsFocusTestProps>) => (
+  <ComponentPlayground<InlineTabsFocusTestProps>
+    appearance={appearance}
+    props={props}
+  >
+    {(p) => (
+      <div style={{ width: PANEL_WIDTH.WIDE }}>
+        <InlineTabs.Root
+          theme={InlineTabsPrimaryTheme}
+          defaultValue={p.tabs[0]}
+        >
+          <InlineTabs.List>
+            {p.tabs.map((tab) => (
+              <InlineTabs.Tab key={tab} value={tab}>
+                <InlineTabs.TabLabel>{tab}</InlineTabs.TabLabel>
+              </InlineTabs.Tab>
+            ))}
+          </InlineTabs.List>
+        </InlineTabs.Root>
+      </div>
+    )}
+  </ComponentPlayground>
+);
